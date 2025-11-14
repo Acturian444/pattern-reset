@@ -51,7 +51,7 @@ Disallow: /logs/
 Allow: /sitemap.xml
 
 # Sitemap location
-Sitemap: https://www.joinheartmatters.com/sitemap.xml
+Sitemap: https://mypatternreset.com/sitemap.xml
 
 # Crawl delay (optional - helps with server load)
 Crawl-delay: 1 

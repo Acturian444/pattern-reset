@@ -22,6 +22,17 @@
   ],
   "redirects": [
     {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "resetmypattern.com"
+        }
+      ],
+      "destination": "https://mypatternreset.com/:path*",
+      "permanent": true
+    },
+    {
       "source": "/letitout",
       "destination": "/letitout.html",
       "permanent": true

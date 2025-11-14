@@ -27,17 +27,17 @@
     <meta property="og:title" content="Breakup Recovery Course: Get Over Your Ex & Attract Healthy Love | Heart Matters™">
     <meta property="og:description" content="You're emotionally tied to your ex. You keep repeating the same patterns. It's time to cut ties and reset. The Breakup Reset: A 22-day program to release emotional attachment, break cycles, and attract healthy love.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.joinheartmatters.com/">
-    <meta property="og:image" content="https://www.joinheartmatters.com/images/HeartMattersLogo.png">
+    <meta property="og:url" content="https://mypatternreset.com/">
+    <meta property="og:image" content="https://mypatternreset.com/images/HeartMattersLogo.png">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.joinheartmatters.com/">
+    <link rel="canonical" href="https://mypatternreset.com/">
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Breakup Recovery Course: Get Over Your Ex & Attract Healthy Love | Heart Matters™">
     <meta name="twitter:description" content="You're emotionally tied to your ex. You keep repeating the same patterns. It's time to cut ties and reset. The Breakup Reset: A 22-day program to release emotional attachment, break cycles, and attract healthy love.">
-    <meta name="twitter:image" content="https://www.joinheartmatters.com/images/HeartMattersLogo.png">
+    <meta name="twitter:image" content="https://mypatternreset.com/images/HeartMattersLogo.png">
     
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -46,8 +46,8 @@
       "@type": "Organization",
       "name": "Heart Matters™",
       "description": "Break free from toxic relationship patterns. Cut ties with your ex, break cycles, and attract healthy love through The Breakup Reset program.",
-      "url": "https://www.joinheartmatters.com/",
-      "logo": "https://www.joinheartmatters.com/images/HeartMattersLogo.png",
+      "url": "https://mypatternreset.com/",
+      "logo": "https://mypatternreset.com/images/HeartMattersLogo.png",
       "sameAs": [
         "https://www.instagram.com/heartmatters__/",
         "https://www.tiktok.com/@heartmatters__"
@@ -366,6 +366,1040 @@
         }
     }
 
+    /* Quiz Section Styles */
+    .quiz-section {
+        background: #fffcf1;
+        padding: 8rem 0 4rem 0;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .quiz-container {
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+
+    .quiz-intro {
+        text-align: center;
+        margin-bottom: 3rem;
+        max-width: 1200px;
+        width: 100%;
+        background: #ca0013;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 3rem 2.5rem;
+        min-height: 560px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .quiz-heart-icon {
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    .quiz-heart-icon svg {
+        width: 48px;
+        height: 48px;
+        transition: transform 0.3s ease;
+    }
+
+    .quiz-heart-icon:hover svg {
+        transform: scale(1.1);
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+        50% {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+    }
+
+    .quiz-title {
+        font-family: 'Anton', sans-serif;
+        font-size: 2.7rem;
+        color: #fff;
+        margin-bottom: 1rem;
+        text-align: center;
+        letter-spacing: 1px;
+        font-weight: 700;
+        text-transform: none;
+        line-height: 1.2;
+    }
+
+    .quiz-subtitle {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 2rem;
+        line-height: 1.7;
+    }
+
+    .quiz-intro .btn-mission-primary {
+        background: #fff;
+        color: #000000;
+        border: 2px solid #fff;
+        padding: 1.1rem 2.5rem;
+        font-size: 1.1rem;
+        min-height: 56px;
+        cursor: pointer;
+    }
+
+    .quiz-intro .btn-mission-primary:hover,
+    .quiz-intro .btn-mission-primary:focus,
+    .quiz-intro .btn-mission-primary:active {
+        background: transparent;
+        color: #fffcf1;
+        border: 2px solid #fff;
+        outline: none;
+    }
+
+    .quiz-content {
+        width: 100%;
+        max-width: 1200px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 3rem 2.5rem;
+        min-height: 560px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+
+    .quiz-progress {
+        width: 100%;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .quiz-progress-bar {
+        height: 10px;
+        background: #e0e0e0;
+        border-radius: 5px;
+        flex-grow: 1;
+        position: relative;
+    }
+
+    .quiz-progress-bar-fill {
+        height: 100%;
+        background: #ca0013;
+        border-radius: 5px;
+        transition: width 0.3s ease-in-out;
+    }
+
+    .quiz-progress-text {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #333;
+        white-space: nowrap;
+    }
+
+    .quiz-question-container {
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+
+    .quiz-question {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #000;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .quiz-options {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .quiz-option {
+        background: #f9f9f9;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .quiz-option:hover {
+        background: #f0f0f0;
+        border-color: #ca0013;
+    }
+
+    .quiz-option.selected {
+        background: #ca0013;
+        border-color: #ca0013;
+    }
+
+    .quiz-option.selected .quiz-option-text {
+        color: #fff;
+    }
+
+    .quiz-option-text {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .quiz-birthdate-input {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    #quiz-birthdate-input {
+        background: #f9f9f9;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 1rem 1.5rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #333;
+        width: 100%;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    #quiz-birthdate-input:hover {
+        background: #f0f0f0;
+        border-color: #ca0013;
+    }
+
+    #quiz-birthdate-input:focus {
+        background: #fff;
+        border-color: #ca0013;
+        box-shadow: 0 0 0 3px rgba(202, 0, 19, 0.1);
+    }
+
+    .quiz-birthdate-hint {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.875rem;
+        color: #666;
+        font-style: italic;
+        margin-top: 0.25rem;
+    }
+
+    .quiz-navigation {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .quiz-navigation-buttons {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    #quiz-prev-btn,
+    #quiz-next-btn {
+        flex: 1;
+        max-width: 200px;
+        transition: all 0.3s ease;
+    }
+
+    /* Inactive Next button state (no answer selected) */
+    #quiz-next-btn.btn-mission {
+        opacity: 0.7;
+    }
+
+    #quiz-next-btn.btn-mission:hover {
+        opacity: 1;
+        background: transparent;
+        color: #ca0013;
+        border-color: #ca0013;
+    }
+
+    /* Active Next button state (answer selected) */
+    #quiz-next-btn.btn-mission-primary {
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    #quiz-next-btn.btn-mission-primary:hover,
+    #quiz-next-btn.btn-mission-primary:focus {
+        background: #000 !important;
+        color: #fff !important;
+        border-color: #000 !important;
+    }
+
+    /* Previous button - grey inactive style */
+    #quiz-prev-btn.btn-mission {
+        background: transparent !important;
+        color: #666 !important;
+        border: 2px solid #999 !important;
+        opacity: 1;
+    }
+
+    #quiz-prev-btn.btn-mission:hover,
+    #quiz-prev-btn.btn-mission:focus {
+        background: #666 !important;
+        color: #fff !important;
+        border-color: #666 !important;
+        opacity: 1;
+    }
+
+    .quiz-error-message {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.95rem;
+        color: #ca0013;
+        text-align: center;
+        margin: 0.75rem auto 0;
+        padding: 0.75rem 1.25rem;
+        background: rgba(202, 0, 19, 0.08);
+        border: 1px solid rgba(202, 0, 19, 0.2);
+        border-radius: 8px;
+        width: auto;
+        min-width: fit-content;
+        max-width: none;
+        animation: fadeIn 0.3s ease-out;
+        white-space: nowrap;
+        display: inline-block;
+        box-sizing: border-box;
+    }
+
+    .quiz-results {
+        width: 100%;
+        max-width: 1200px;
+        background: #ca0013;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        padding: 3rem 2.5rem;
+        min-height: 560px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .quiz-score-display {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 3rem;
+        font-weight: 700;
+        color: #ca0013;
+        margin-bottom: 1.5rem;
+    }
+
+    .quiz-results-title {
+        font-family: 'Anton', sans-serif;
+        font-size: 2.7rem;
+        color: #fff;
+        margin-bottom: 1rem;
+        text-align: center;
+        letter-spacing: 1px;
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: 1.2;
+        margin-top: 0;
+    }
+
+    .quiz-results-description {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #ca0013;
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+    }
+
+    .quiz-pattern-details {
+        width: 100%;
+        max-width: 700px;
+        margin: 2rem 0;
+        text-align: left;
+    }
+
+    .quiz-pattern-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+        background: #f9f9f9;
+        border-radius: 8px;
+        border-left: 4px solid #ca0013;
+    }
+
+    .quiz-pattern-label {
+        font-family: 'Anton', sans-serif;
+        font-size: 1.2rem;
+        color: #000;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .quiz-pattern-text {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1rem;
+        color: #333;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    .quiz-pattern-cta-section {
+        background: #fff;
+        border: 2px solid #ca0013;
+        border-left: 4px solid #ca0013;
+    }
+
+    .quiz-pattern-cta-text {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ca0013;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    .quiz-email-capture {
+        width: 100%;
+        max-width: 600px;
+        margin-top: 0;
+    }
+
+    .quiz-email-title {
+        font-family: 'Anton', sans-serif;
+        font-size: 1.8rem;
+        color: #fff;
+        margin-bottom: 2rem;
+        margin-top: 0;
+        text-align: center;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        text-transform: none;
+    }
+
+    .quiz-email-subtitle {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.125rem;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .quiz-email-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .quiz-email-form button[type="submit"] {
+        width: 100%;
+        max-width: 100%;
+        padding: 0.9rem 1rem;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 1rem;
+        letter-spacing: 1.5px;
+        box-sizing: border-box;
+    }
+
+    /* Button styling for quiz results form on red background */
+    .quiz-results .btn-mission-primary {
+        background: #000;
+        color: #fff !important;
+        border: 2px solid #000;
+    }
+
+    .quiz-results .btn-mission-primary:hover,
+    .quiz-results .btn-mission-primary:focus {
+        background: transparent;
+        color: #fff;
+        border-color: #fff;
+    }
+
+    #quiz-name-input,
+    #quiz-email-input,
+    #quiz-phone-input {
+        padding: 0.9rem 1rem;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 4px;
+        font-size: 1rem;
+        font-family: 'DM Sans', sans-serif;
+        color: #000;
+        background: rgba(255, 255, 255, 0.85);
+        width: 100%;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    #quiz-name-input:focus,
+    #quiz-email-input:focus,
+    #quiz-phone-input:focus {
+        outline: none;
+        border-color: #fff;
+        background: rgba(255, 255, 255, 0.95);
+    }
+
+    .quiz-success-message {
+        text-align: center;
+        width: 100%;
+        max-width: 100%;
+        padding: 2rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .quiz-success-title {
+        font-family: 'Anton', sans-serif;
+        font-size: 2.2rem;
+        color: #fff;
+        margin-bottom: 1rem;
+        margin-top: 0;
+        text-align: center;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        text-transform: none;
+        line-height: 1.3;
+    }
+
+    .quiz-success-subtitle {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.125rem;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .quiz-success-pattern-name {
+        font-family: 'Anton', sans-serif;
+        font-size: 2rem;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 2.5rem;
+        margin-top: 0;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: 1.2;
+        border: 2px solid #fff;
+        border-radius: 12px;
+        padding: 1rem 2rem;
+        display: inline-block;
+    }
+
+    .quiz-success-ready {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 0.75rem;
+        line-height: 1.5;
+    }
+
+    .quiz-success-description {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.125rem;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+    }
+
+    .quiz-success-description .desktop-break,
+    .quiz-subtitle .desktop-break {
+        display: inline;
+    }
+
+    .quiz-success-cta {
+        display: inline-block;
+        width: auto;
+        min-width: 280px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .quiz-cta-section {
+        width: 100%;
+        max-width: 600px;
+        margin-top: 2rem;
+    }
+
+    .quiz-cta-text {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.125rem;
+        color: #333;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+
+    .quiz-cta-text:last-of-type {
+        margin-bottom: 2rem;
+    }
+
+    @media (min-width: 601px) and (max-width: 900px) {
+        .quiz-title {
+            font-size: 2.2rem;
+            margin-bottom: 1.3rem;
+        }
+        .quiz-subtitle {
+            font-size: 1.1rem;
+        }
+        .quiz-results-title {
+            font-size: 2.2rem;
+            color: #fff;
+            text-transform: uppercase !important;
+        }
+        .quiz-score-display {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .quiz-success-title {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 0.9rem;
+        }
+        .quiz-success-subtitle {
+            margin-bottom: 1.75rem;
+            color: #fff;
+        }
+        .quiz-success-pattern-name {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 2.25rem;
+            border: 2px solid #fff;
+            border-radius: 12px;
+            padding: 0.875rem 1.75rem;
+            display: inline-block;
+        }
+        .quiz-success-ready {
+            font-size: 1.15rem;
+            color: #fff;
+        }
+        .quiz-success-description {
+            margin-bottom: 2.25rem;
+            color: #fff;
+        }
+        .quiz-success-message {
+            padding: 1.75rem 2rem;
+        }
+        .quiz-success-description .desktop-break,
+        .quiz-subtitle .desktop-break {
+            display: none;
+        }
+        .quiz-intro .btn-mission-primary {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            min-height: 52px;
+            background: #fff;
+            color: #000000;
+        }
+        .quiz-intro .btn-mission-primary:hover,
+        .quiz-intro .btn-mission-primary:focus,
+        .quiz-intro .btn-mission-primary:active {
+            background: transparent;
+            color: #fffcf1;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .quiz-section {
+            padding: 6rem 0 2.5rem 0;
+        }
+        .quiz-container {
+            padding: 0 1rem;
+        }
+        .quiz-intro {
+            margin-bottom: 2rem;
+            padding: 2rem 1.5rem;
+            margin: 0;
+            max-width: 100%;
+            min-height: 450px;
+        }
+        .quiz-heart-icon {
+            margin-bottom: 1rem;
+        }
+        .quiz-heart-icon svg {
+            width: 40px;
+            height: 40px;
+        }
+        .quiz-title {
+            font-size: 1.8rem !important;
+            margin-bottom: 0.8rem !important;
+        }
+        .quiz-subtitle {
+            font-size: 1.125rem !important;
+            line-height: 1.8 !important;
+            margin-bottom: 1.5rem;
+        }
+        .quiz-intro .btn-mission-primary {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            min-height: 50px;
+            width: 100%;
+            max-width: 300px;
+            background: #fff;
+            color: #000000;
+        }
+        .quiz-intro .btn-mission-primary:hover,
+        .quiz-intro .btn-mission-primary:focus,
+        .quiz-intro .btn-mission-primary:active {
+            background: transparent;
+            color: #fffcf1;
+        }
+        .quiz-content {
+            padding: 2rem 1.5rem;
+            margin: 0;
+            max-width: 100%;
+            min-height: 450px;
+        }
+        .quiz-progress {
+            margin-bottom: 1.5rem;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+        }
+        .quiz-progress-text {
+            text-align: left;
+            white-space: nowrap;
+        }
+        .quiz-question {
+            font-size: 1.25rem !important;
+            margin-bottom: 1rem;
+        }
+        .quiz-options {
+            margin-bottom: 1.5rem;
+            gap: 0.8rem;
+        }
+        .quiz-option {
+            padding: 0.8rem 1rem;
+        }
+        .quiz-option-text {
+            font-size: 0.95rem !important;
+        }
+        .quiz-navigation {
+            gap: 0.8rem;
+        }
+        .quiz-navigation-buttons {
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        #quiz-prev-btn,
+        #quiz-next-btn {
+            max-width: 100%;
+            width: 100%;
+        }
+        .quiz-error-message {
+            max-width: 100%;
+            width: 100%;
+            font-size: 0.9rem;
+            padding: 0.75rem 1rem;
+            white-space: normal;
+            display: block;
+            margin: 0.5rem auto 0;
+        }
+        #quiz-birthdate-input {
+            padding: 0.8rem 1rem;
+            font-size: 0.95rem;
+        }
+        .quiz-birthdate-hint {
+            font-size: 0.8rem;
+        }
+        .quiz-results {
+            padding: 2rem 1.5rem;
+            margin: 0;
+            max-width: 100%;
+            min-height: 450px;
+        }
+        .quiz-score-display {
+            font-size: 2.5rem !important;
+            margin-bottom: 1rem !important;
+        }
+        .quiz-results-title {
+            font-size: 1.8rem !important;
+            margin-bottom: 0.8rem !important;
+            color: #fff !important;
+            text-transform: uppercase !important;
+        }
+        .quiz-results-description {
+            font-size: 1.125rem !important;
+            margin-bottom: 1.5rem !important;
+            color: #fff !important;
+        }
+        .quiz-pattern-details {
+            margin: 1.5rem 0;
+            max-width: 100%;
+        }
+        .quiz-pattern-section {
+            margin-bottom: 1.5rem;
+            padding: 1.25rem;
+        }
+        .quiz-pattern-label {
+            font-size: 1rem !important;
+            margin-bottom: 0.5rem;
+        }
+        .quiz-pattern-text {
+            font-size: 0.95rem !important;
+        }
+        .quiz-pattern-cta-text {
+            font-size: 1rem !important;
+        }
+        .quiz-email-capture {
+            margin-bottom: 1.5rem;
+            margin-top: 0;
+        }
+        .quiz-email-title {
+            font-size: 1.5rem !important;
+            margin-bottom: 1.5rem !important;
+            margin-top: 0 !important;
+            color: #fff !important;
+        }
+        .quiz-email-subtitle {
+            font-size: 1rem !important;
+            margin-bottom: 1rem !important;
+            color: #fff !important;
+        }
+        .quiz-email-form button[type="submit"] {
+            padding: 0.9rem 1rem;
+            font-size: 1rem;
+            letter-spacing: 1.5px;
+            width: 100%;
+            white-space: normal;
+            box-sizing: border-box;
+        }
+        .quiz-cta-text {
+            font-size: 1rem !important;
+            margin-bottom: 0.8rem !important;
+        }
+        .quiz-cta-text:last-of-type {
+            margin-bottom: 1.5rem !important;
+        }
+        .quiz-success-title {
+            font-size: 1.8rem !important;
+            margin-bottom: 0.75rem !important;
+            color: #fff !important;
+        }
+        .quiz-success-subtitle {
+            font-size: 1rem !important;
+            margin-bottom: 1.5rem !important;
+            color: #fff !important;
+        }
+        .quiz-success-pattern-name {
+            font-size: 1.6rem !important;
+            margin-bottom: 2rem !important;
+            margin-top: 0 !important;
+            color: #fff !important;
+            border: 2px solid #fff !important;
+            border-radius: 10px !important;
+            padding: 0.75rem 1.5rem !important;
+            display: inline-block !important;
+        }
+        .quiz-success-ready {
+            font-size: 1.125rem !important;
+            margin-bottom: 0.5rem !important;
+            color: #fff !important;
+        }
+        .quiz-success-description {
+            font-size: 1rem !important;
+            margin-bottom: 2rem !important;
+            color: #fff !important;
+        }
+        .quiz-success-description .desktop-break,
+        .quiz-subtitle .desktop-break {
+            display: none !important;
+        }
+        .quiz-success-cta {
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: auto !important;
+            margin-bottom: 0 !important;
+        }
+        .quiz-success-message {
+            padding: 1.5rem 1.5rem !important;
+        }
+    }
+
+    /* FAQ Section Styles - Matching Course Outline Design */
+    .faq-section {
+        background: #fffcf1;
+        padding: 5rem 0 0 0;
+    }
+
+    .faq-section .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .faq-title {
+        font-family: 'Anton', sans-serif;
+        color: #000;
+        font-size: 2.5rem;
+        text-align: center;
+        letter-spacing: 1px;
+        margin-bottom: 2.5rem;
+        text-transform: uppercase;
+    }
+
+    .faq-container {
+        max-width: 820px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .faq-item {
+        border: 1px solid #ca0013;
+        border-radius: 16px;
+        background: transparent;
+        overflow: hidden;
+    }
+
+    .faq-question {
+        width: 100%;
+        background: none;
+        border: none;
+        outline: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: 'Anton', sans-serif;
+        color: #ca0013;
+        font-size: 1.1rem;
+        padding: 1.1rem 1.3rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-align: left;
+    }
+
+    .faq-question.active {
+        background: #fffcf1;
+    }
+
+    .faq-question i {
+        font-size: 1.3rem;
+        color: #ca0013;
+        margin-left: 1rem;
+        transition: transform 0.3s;
+        display: inline-block;
+    }
+
+    .faq-question.active i {
+        transform: rotate(180deg);
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        background: transparent;
+        transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1);
+        padding: 0 1.3rem;
+    }
+
+    .faq-answer.active {
+        max-height: 800px;
+        padding-top: 0.5rem;
+        padding-bottom: 1.1rem;
+    }
+
+    .faq-answer p {
+        font-family: 'DM Sans', sans-serif;
+        color: #222;
+        font-size: 1rem;
+        padding: 0.35rem 0;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .faq-answer ul {
+        margin: 0.5rem 0;
+        padding-left: 1.5rem;
+    }
+
+    .faq-answer li {
+        font-family: 'DM Sans', sans-serif;
+        color: #222;
+        font-size: 1rem;
+        padding: 0.2rem 0;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    /* Mobile FAQ Styles */
+    @media (max-width: 600px) {
+        .faq-section {
+            padding: 2.2rem 0 0 0;
+        }
+        .faq-section .container {
+            padding: 0 1rem;
+        }
+        .faq-title {
+            font-size: 1.75rem;
+        }
+        .faq-container {
+            max-width: 99vw;
+            gap: 0.7rem;
+        }
+        .faq-question {
+            font-size: 1rem;
+            padding: 0.85rem 0.9rem;
+        }
+        .faq-question i {
+            font-size: 1.1rem;
+            margin-left: 0.7rem;
+        }
+        .faq-answer {
+            padding: 0 0.9rem;
+        }
+        .faq-answer.active {
+            padding-top: 0.3rem;
+            padding-bottom: 0.7rem;
+            max-height: 300px;
+        }
+        .faq-answer p,
+        .faq-answer li {
+            font-size: 0.97rem;
+            padding: 0.28rem 0;
+        }
+    }
 
     </style>
 </head>
@@ -382,341 +1416,622 @@
                 </button>
                 <ul class="nav-links nav-left">
                     <li><a href="letitout.html">LET IT OUT</a></li>
-                    <li><a href="theheartroom.html">THE HEART ROOM</a></li>
                 </ul>
-                <a href="index.html" class="logo-text center-logo">Heart Matters</a>
+                <a href="index.html" class="center-logo active" aria-label="Home">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Outer spiral ring -->
+                        <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" 
+                              stroke="currentColor" 
+                              stroke-width="2.5" 
+                              fill="none" 
+                              stroke-linecap="round" 
+                              stroke-linejoin="round"/>
+                        <!-- Middle spiral ring -->
+                        <path d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" 
+                              stroke="currentColor" 
+                              stroke-width="2.5" 
+                              fill="none" 
+                              stroke-linecap="round" 
+                              stroke-linejoin="round"/>
+                        <!-- Inner spiral ring -->
+                        <path d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" 
+                              stroke="currentColor" 
+                              stroke-width="2.5" 
+                              fill="none" 
+                              stroke-linecap="round" 
+                              stroke-linejoin="round"/>
+                        <!-- Center point connecting all rings -->
+                        <circle cx="50" cy="50" r="3.5" fill="currentColor"/>
+                    </svg>
+                </a>
                 <ul class="nav-links nav-right">
                     <li><a href="product/breakup-course.html" id="desktopBreakupResetLink">THE BREAKUP RESET</a></li>
                     <li id="myCourseLink" style="display: none;"><a href="course/breakup-course.html" id="desktopContinueBreakupResetLink">CONTINUE THE BREAKUP RESET</a></li>
-                    <li><a href="info.html">JOIN THE MOVEMENT</a></li>
+                    <!-- Join the Movement hidden temporarily -->
                 </ul>
             </nav>
         </div>
         <div class="menu-overlay" id="menuOverlay">
             <nav>
                 <a href="letitout.html">LET IT OUT</a>
-                <a href="theheartroom.html">THE HEART ROOM</a>
                 <a id="mobileBreakupResetLink" href="product/breakup-course.html">THE BREAKUP RESET</a>
                 <a id="mobileCourseLink" href="course/breakup-course.html" style="display: none;">Continue The Breakup Reset</a>
-                <a href="info.html">JOIN THE MOVEMENT</a>
             </nav>
         </div>
     </header>
 
     <main>
         <section id="home-hero" class="hero">
-            <video class="hero-bg-video desktop-video" 
-                   autoplay 
-                   loop 
-                   muted 
-                   playsinline 
-                   webkit-playsinline
-                   preload="metadata"
-                   loading="eager"
-                   aria-hidden="true">
-                <source src="images/Hero Section background video.mp4?v=2" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            
-            <video class="hero-bg-video mobile-video" 
-                   autoplay 
-                   loop 
-                   muted 
-                   playsinline 
-                   webkit-playsinline
-                   x-webkit-airplay="allow"
-                   preload="metadata"
-                   loading="eager"
-                   aria-hidden="true">
-                <source src="images/Hero Section background mobile.mp4?v=1" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-
             <div class="hero-content">
                 <div class="hero-text">
-                    <!-- Removed h1 and subtitle from hero section -->
+                    <h1 class="hero-headline">Break your pattern. Reset your life.</h1>
+                    <p class="hero-subheading">A 22-day live experience that helps you break the cycles keeping you stuck and build the habits, confidence, and clarity to move forward.</p>
+                    <a href="#quiz-section" class="hero-cta-btn">Take the Free Quiz</a>
                 </div>
                 <div class="hero-image">
-                    <!-- Image removed: now using background video in CSS -->
+                    <!-- Image background set via CSS -->
                 </div>
             </div>
-            <div class="hero-tagline-cta" style="margin-bottom: 0.5rem;">
-              <a href="product/breakup-course.html" class="hero-letitout-btn">START THE BREAKUP RESET</a>
-            </div>
             <style>
-            /* Desktop video always visible on desktop */
-            @media (min-width: 769px) {
-                .mobile-video {
-                    display: none !important;
-                }
-                .desktop-video {
-                    display: block !important;
-                }
+            /* Hero section background color */
+            #home-hero.hero {
+                background-color: #1a1a1a;
+                position: relative;
             }
             
-            /* Mobile video only on mobile */
-            @media (max-width: 768px) {
-                .desktop-video {
-                    display: none !important;
-                }
-                .mobile-video {
-                    display: block !important;
-                }
-            }
-            
-            .hero-tagline-cta {
+            /* Hero content styling */
+            #home-hero .hero-content {
+              position: relative;
+              z-index: 3;
+              width: 100%;
               display: flex;
-              flex-direction: column;
               align-items: center;
               justify-content: center;
-              z-index: 2;
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
             }
             
-            @media (max-width: 600px) {
-              .hero-tagline-cta {
-                justify-content: center;
-                top: 65%;
-                bottom: auto;
-                left: 50%;
-                right: auto;
-                transform: translate(-50%, -50%);
-                margin-bottom: 0;
-                padding-bottom: 0;
-              }
+            #home-hero .hero-text {
+              text-align: center;
+              max-width: 900px;
+              padding: 0 2rem;
             }
-            .hero-tagline {
+            
+            .hero-headline {
+              color: #fffcf1;
+              font-family: 'Anton', sans-serif;
+              font-size: 2.5rem;
+              font-weight: 700;
+              text-align: center;
+              margin-bottom: 1.5rem;
+              letter-spacing: 0.5px;
+              line-height: 1.3;
+              text-transform: uppercase !important;
+            }
+            
+            .hero-headline br {
+              display: block;
+            }
+            
+            .hero-subheading {
               color: #fffcf1;
               font-family: 'DM Sans', sans-serif;
               font-size: 1.25rem;
-              font-weight: 700;
+              font-weight: 500;
               text-align: center;
-              margin-bottom: 0.7rem;
-              letter-spacing: 0.5px;
-              text-shadow: 0 2px 12px rgba(0,0,0,0.13);
+              margin-bottom: 2rem;
+              line-height: 1.6;
+              max-width: 700px;
+              margin-left: auto;
+              margin-right: auto;
             }
-            .hero-letitout-btn {
+            
+            .hero-cta-btn {
+              display: inline-block;
               color: #000000;
-              background: rgba(255, 252, 241, 0.9);
+              background: #fffcf1;
               border: 2px solid #fffcf1;
               border-radius: 4px;
               font-family: 'DM Sans', sans-serif;
               font-size: 1rem;
               font-weight: 700;
-              padding: 0.7rem 1.2rem;
+              padding: 0.9rem 2rem;
               text-decoration: none;
               text-align: center;
-              margin-bottom: 0.2rem;
-              transition: background 0.2s, color 0.2s, border-color 0.2s;
-              box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+              text-transform: uppercase;
               letter-spacing: 1px;
+              transition: background 0.3s, color 0.3s, border-color 0.3s;
+              box-shadow: none;
+              cursor: pointer;
             }
-            .hero-letitout-btn:hover, .hero-letitout-btn:focus {
-              background: #ca0013;
-              color: #fffcf1;
-              border-color: #ca0013;
+            
+            .hero-cta-btn:hover, .hero-cta-btn:focus {
+              background: transparent;
+              color: #fffcf1 !important;
+              border-color: #fffcf1;
               outline: none;
             }
-            @media (max-width: 600px) {
-              .hero-tagline {
-                font-size: 1rem;
-                margin-bottom: 0.5rem;
+            
+            /* Smooth scroll behavior */
+            html {
+              scroll-behavior: smooth;
+            }
+            
+            /* Tablet styles */
+            @media (max-width: 900px) {
+              .hero-headline {
+                font-size: 2rem !important;
+                margin-bottom: 1.25rem;
+                line-height: 1.3;
+                text-transform: uppercase !important;
               }
-              .hero-letitout-btn {
-                font-size: 0.9rem;
-                padding: 0.6rem 1.8rem;
-                white-space: nowrap;
-                margin-top: 1rem;
-                min-width: auto;
-                width: auto;
-                background: rgba(255, 252, 241, 0.9);
-                color: #000000;
+              
+              .hero-subheading {
+                font-size: 1.1rem;
+                margin-bottom: 1.75rem;
+                padding: 0 1rem;
               }
-              .hero-tagline-cta {
-                margin-bottom: 0.3rem;
+              
+              .hero-cta-btn {
+                font-size: 0.95rem;
+                padding: 0.85rem 1.75rem;
+              }
+              
+              #home-hero .hero-text {
+                padding: 0 1.5rem;
               }
             }
+            
+            /* Mobile styles */
+            @media (max-width: 600px) {
+              .hero-headline {
+                font-size: 1.7rem !important;
+                margin-bottom: 1rem;
+                line-height: 1.35;
+                letter-spacing: 0.3px;
+                text-transform: uppercase !important;
+              }
+              
+              .hero-subheading {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+                padding: 0 0.5rem;
+                line-height: 1.5;
+              }
+              
+              .hero-cta-btn {
+                font-size: 0.9rem;
+                padding: 0.8rem 1.5rem;
+                width: auto;
+                min-width: 200px;
+              }
+              
+              #home-hero .hero-text {
+                padding: 0 1rem;
+              }
+            }
+            
+            /* Small mobile styles */
             @media (max-width: 480px) {
-              .hero-tagline-cta {
-                top: 70%;
+              .hero-headline {
+                font-size: 1.4rem !important;
+                margin-bottom: 0.9rem;
+                text-transform: uppercase !important;
+              }
+              
+              .hero-subheading {
+                font-size: 0.95rem;
+                margin-bottom: 1.25rem;
+              }
+              
+              .hero-cta-btn {
+                font-size: 0.85rem;
+                padding: 0.75rem 1.25rem;
+                min-width: 180px;
               }
             }
             </style>
-            
-            <script>
-            // Ensure video autoplay works and prevent stuck looping
-            document.addEventListener('DOMContentLoaded', function() {
-                const desktopVideo = document.querySelector('.desktop-video');
-                const mobileVideo = document.querySelector('.mobile-video');
-                
-                // Function to ensure video loops properly
-                function setupVideoLooping(video) {
-                    if (!video) return;
-                    
-                    // Force play on mobile devices
-                    video.play().catch(function(error) {
-                        console.log('Video autoplay failed:', error);
-                        // Retry play on user interaction with proper cleanup
-                        const retry = () => {
-                            video.play().finally(() => {
-                                document.removeEventListener('touchstart', retry);
-                            });
-                        };
-                        document.addEventListener('touchstart', retry, { once: true });
-                    });
-                    
-                    // Safeguard: Force loop if video gets stuck (backup for HTML loop attribute)
-                    video.addEventListener('ended', function() {
-                        this.currentTime = 0;
-                        this.play().catch(function(error) {
-                            console.log('Video restart failed:', error);
-                        });
-                    });
-                }
-                
-                setupVideoLooping(desktopVideo);
-                setupVideoLooping(mobileVideo);
-            });
-            </script>
 
         </section>
 
         <!-- BEGIN: Horizontal Scrolling Quotes Bar -->
         <div class="scrolling-quotes-bar">
           <div class="scrolling-quotes-track">
-            <span class="scrolling-quote">I'M READY TO LET GO OF MY EX</span>
-            <span class="scrolling-quote">I'M READY TO ATTRACT HEALTHY LOVE</span>
-            <span class="scrolling-quote">I'M READY TO DATE WITH CONFIDENCE</span>
-            <span class="scrolling-quote">I'M READY TO FEEL LIKE MYSELF AGAIN</span>
+            <span class="scrolling-quote">BREAK THE CYCLE OF SELF-SABOTAGE.</span>
+            <span class="scrolling-quote">STOP CHOOSING COMFORT OVER GROWTH.</span>
+            <span class="scrolling-quote">22 DAYS TO CHANGE YOUR STORY.</span>
             <!-- Duplicate for seamless loop -->
-            <span class="scrolling-quote">I'M READY TO LET GO OF MY EX</span>
-            <span class="scrolling-quote">I'M READY TO ATTRACT HEALTHY LOVE</span>
-            <span class="scrolling-quote">I'M READY TO DATE WITH CONFIDENCE</span>
-            <span class="scrolling-quote">I'M READY TO FEEL LIKE MYSELF AGAIN</span>
+            <span class="scrolling-quote">BREAK THE CYCLE OF SELF-SABOTAGE.</span>
+            <span class="scrolling-quote">STOP CHOOSING COMFORT OVER GROWTH.</span>
+            <span class="scrolling-quote">22 DAYS TO CHANGE YOUR STORY.</span>
           </div>
         </div>
         <!-- END: Horizontal Scrolling Quotes Bar -->
 
-        <section id="mission-section" class="mission-modern">
-            <h2 class="mission-modern-title">
-              <span class="highlight">Let Go & Break the Cycle</span>
-            </h2>
-            <p class="mission-modern-text">
-              You're emotionally tied to your ex. You keep repeating the same patterns. You're stuck in a cycle — and you're tired of it. <span style="color: #ca0013;">It's time to cut ties with your ex, your patterns, and your old self.</span> The Breakup Reset is a 22-day program that helps you release emotional attachment and reset yourself — so you can attract healthy love, date with confidence, and finally feel like yourself again. Are you ready to let go of what no longer serves you and take back your power?
-            </p>
-            <div class="mission-buttons">
-                <a href="product/breakup-course.html" class="btn btn-mission btn-mission-primary">START THE BREAKUP RESET</a>
-            </div>
-        </section>
-
         <!-- Start Here Section -->
         <section class="start-here-section">
             <div class="start-here-content">
-                <h2 class="start-here-title" style="color: #ca0013; margin-bottom: 3rem;">Start Your Journey</h2>
+                <h2 class="start-here-title" style="color: #ca0013; margin-bottom: 1rem;">How It Works</h2>
+                <p class="start-here-subtitle" style="color: #000000; font-family: 'DM Sans', sans-serif; font-size: 1.25rem; font-weight: 500; text-align: center; margin-bottom: 3rem; line-height: 1.6;">Get your pattern, your score, and your next step in minutes.</p>
                 <style>
                   .mobile-break { display: none; }
                   @media (max-width: 600px) { .mobile-break { display: inline; } }
                   
-                  /* Mobile card styling to match "What You'll Get" section */
-                  @media (max-width: 600px) {
+                  /* Section spacing */
+                  .start-here-section {
+                    margin-top: 4rem;
+                    padding-top: 2rem;
+                  }
+                  
+                  /* Grid layout for 3 boxes */
+                  .start-here-card-grid {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 2.5rem;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 0 2rem;
+                    align-items: stretch;
+                  }
+                  
+                  .start-here-card {
+                    background: #fffcf1;
+                    border-radius: 12px;
+                    padding: 2.5rem 2rem;
+                    text-align: center;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                    display: flex;
+                    flex-direction: column;
+                    min-height: 380px;
+                    box-sizing: border-box;
+                  }
+                  
+                  .start-here-card:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+                  }
+                  
+                  .step-number {
+                    font-family: 'Anton', sans-serif;
+                    font-size: 2rem;
+                    font-weight: 700;
+                    color: #fffcf1;
+                    line-height: 1;
+                  }
+                  
+                  .start-here-icon {
+                    width: 60px;
+                    height: 60px;
+                    background: #ca0013;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 1.75rem;
+                    flex-shrink: 0;
+                  }
+                  
+                  .start-here-card h3 {
+                    font-family: 'Anton', sans-serif;
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    margin-bottom: 1.25rem;
+                    text-align: center;
+                    color: #000000;
+                    line-height: 1.3;
+                  }
+                  
+                  .start-here-card p {
+                    font-family: 'DM Sans', sans-serif;
+                    font-size: 1.125rem;
+                    color: #000000;
+                    line-height: 1.7;
+                    text-align: center;
+                    margin: 0;
+                    flex-grow: 1;
+                  }
+                  
+                  /* Tablet styling */
+                  @media (max-width: 900px) {
+                    .start-here-section {
+                      margin-top: 3.5rem;
+                      padding-top: 1.5rem;
+                    }
                     .start-here-title {
+                      margin-bottom: 1rem !important;
+                    }
+                    .start-here-subtitle {
+                      font-size: 1.15rem !important;
                       margin-bottom: 3rem !important;
                     }
+                    .start-here-card-grid {
+                      grid-template-columns: repeat(3, 1fr);
+                      gap: 1.75rem;
+                      padding: 0 1.5rem;
+                    }
                     .start-here-card {
-                      padding: 1.5rem;
-                      max-width: 340px;
-                      margin: 0 auto;
-                      background: #fffcf1;
-                      border-radius: 12px;
+                      padding: 2rem 1.5rem;
+                      min-height: 360px;
                     }
-                    
+                    .start-here-icon {
+                      margin: 0 auto 1.5rem;
+                    }
                     .start-here-card h3 {
-                      font-size: 1.5rem !important;
-                      font-family: 'Anton', sans-serif;
-                      font-weight: 700;
-                      letter-spacing: 0.5px;
-                      text-transform: uppercase;
+                      font-size: 1.3rem;
                       margin-bottom: 1rem;
-                      text-align: center;
                     }
-                    
                     .start-here-card p {
-                      font-family: 'DM Sans', sans-serif;
-                      font-size: 1.125rem !important;
-                      color: #000000;
-                      line-height: 1.6;
-                      text-align: center;
+                      font-size: 1rem;
+                    }
+                  }
+                  
+                  /* Mobile card styling */
+                  @media (max-width: 600px) {
+                    .start-here-section {
+                      margin-top: 5rem;
+                      padding-top: 2.5rem;
+                    }
+                    .start-here-title {
+                      margin-bottom: 1rem !important;
+                    }
+                    .start-here-subtitle {
+                      font-size: 1.1rem !important;
+                      margin-bottom: 3rem !important;
+                      padding-left: 1.5rem !important;
+                      padding-right: 1.5rem !important;
+                    }
+                    .start-here-card-grid {
+                      grid-template-columns: 1fr;
+                      gap: 2rem;
+                      padding: 0 1rem;
+                      max-width: 450px;
+                    }
+                    .start-here-card {
+                      padding: 2rem 1.5rem;
+                      max-width: 100%;
+                      min-height: auto;
                     }
                     
                     .start-here-icon {
                       width: 60px;
                       height: 60px;
-                      background: #ca0013;
-                      border-radius: 50%;
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      margin: 0 auto 1rem;
+                      margin: 0 auto 1.5rem;
                     }
                     
-                    .start-here-icon svg {
-                      width: 24px;
-                      height: 24px;
-                      color: #fff;
+                    .start-here-card h3 {
+                      font-size: 1.4rem !important;
+                      margin-bottom: 1rem;
+                    }
+                    
+                    .start-here-card p {
+                      font-size: 1.125rem !important;
+                    }
+                    
+                    .step-number {
+                      font-size: 2rem;
                     }
                   }
                 </style>
                 <div class="start-here-card-grid">
-                    <!-- Card 1 -->
-                    <a href="product/breakup-course.html" class="start-here-card start-here-clickable">
+                    <!-- Step 1 -->
+                    <div class="start-here-card">
                         <div class="start-here-icon" aria-hidden="true">
-                          <!-- Heart Icon -->
-                          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fffcf1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transform: translate(0px, 0px);">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                          </svg>
+                          <span class="step-number">1</span>
                         </div>
-                        <h3>The Breakup Reset</h3>
-                        <p>Break free from your ex<br>Cut ties with old patterns<br>22-day reset program</p>
-                    </a>
-                    <!-- Card 2 -->
-                    <a href="letitout.html" class="start-here-card start-here-clickable">
+                        <h3>Take the Pattern Reset Quiz</h3>
+                        <p>Answer quick psychology-based questions to reveal the emotional pattern driving your love, money, health, and identity.</p>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="start-here-card">
                         <div class="start-here-icon" aria-hidden="true">
-                          <!-- Pen/Writing Icon -->
-                          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#fffcf1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 6l4 4L10 26H6v-4L22 6z"/>
-                            <path d="M20 8l4 4"/>
-                          </svg>
+                          <span class="step-number">2</span>
                         </div>
-                        <h3>LET IT OUT</h3>
-                        <p>Write what you're holding in<br>Release what you're carrying<br>Anonymous. No judgment</p>
-                    </a>
-                    <!-- Card 3 -->
-                    <a href="theheartroom.html" class="start-here-card start-here-clickable">
+                        <h3>See Your Pattern and Score</h3>
+                        <p>Get your dominant pattern, your score, and the truth about what's keeping you stuck.</p>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="start-here-card">
                         <div class="start-here-icon" aria-hidden="true">
-                          <!-- Microphone Icon -->
-                          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="#fffcf1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="13" y="5" width="6" height="14" rx="3"/>
-                            <path d="M8 15v2a8 8 0 0 0 16 0v-2"/>
-                            <line x1="16" y1="27" x2="16" y2="30"/>
-                            <line x1="12" y1="30" x2="20" y2="30"/>
-                          </svg>
+                          <span class="step-number">3</span>
                         </div>
-                        <h3>The Heart Room</h3>
-                        <p>Say what you never said<br>Watch or share your story<br>Streaming on TikTok Live</p>
-                    </a>
+                        <h3>Get Your Personalized Report</h3>
+                        <p>See how your pattern affects your life and what your Reset Focus will be.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
+        <!-- Quiz Section -->
+        <section id="quiz-section" class="quiz-section">
+            <div class="quiz-container">
+                <div class="quiz-intro" id="quiz-intro">
+                    <div class="quiz-heart-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <h2 class="quiz-title">What's your pattern?</h2>
+                    <p class="quiz-subtitle">The patterns you repeat shape how you love, think, and show up in life.<br class="desktop-break"> Find yours and learn how to break it for good.</p>
+                    <button type="button" class="btn btn-mission btn-mission-primary" id="start-quiz-btn">Start the Free Quiz</button>
+                </div>
 
+                <div class="quiz-content" id="quiz-content" style="display: none;">
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" id="quiz-progress-bar"></div>
+                        <span class="quiz-progress-text" id="quiz-progress-text">1 of 19</span>
+                    </div>
 
+                    <div class="quiz-question-container" id="quiz-question-container">
+                        <!-- Questions will be dynamically inserted here -->
+                    </div>
 
+                    <div class="quiz-navigation">
+                        <div class="quiz-navigation-buttons">
+                            <button class="btn btn-mission" id="quiz-prev-btn" style="display: none;">Previous</button>
+                            <button class="btn btn-mission" id="quiz-next-btn">Next</button>
+                        </div>
+                        <div class="quiz-error-message" id="quiz-error-message" style="display: none;">Please select an answer before continuing.</div>
+                    </div>
+                </div>
 
+                <div class="quiz-results" id="quiz-results" style="display: none;">
+                    <div class="quiz-results-content">
+                        <div id="quiz-results-main">
+                            <h3 class="quiz-email-title">Get Your Full Personalized Report</h3>
+                            <div class="quiz-email-capture" id="quiz-email-capture">
+                                <h2 class="quiz-results-title" id="quiz-results-title"></h2>
+                                <p class="quiz-email-subtitle">See your pattern, your score, and what's keeping you stuck so you know exactly how to break it.</p>
+                                <form class="quiz-email-form" id="quiz-email-form" action="https://docs.google.com/forms/d/e/1FAIpQLSdMfNDBBsnuE2Q1_Gn57Y_FJmpWTw0h00bTStNd5Bju07mTKA/formResponse" method="POST" target="quiz-hidden-iframe">
+                                    <input type="text" id="quiz-name-input" name="entry.XXXXX" placeholder="Your name" required>
+                                    <input type="email" id="quiz-email-input" name="entry.649844771" placeholder="Your email" required>
+                                    <input type="tel" id="quiz-phone-input" name="entry.XXXXX" placeholder="Your phone number" required>
+                                    <input type="hidden" id="quiz-score-hidden" name="entry.673635167">
+                                    <input type="hidden" id="quiz-pattern-hidden" name="entry.XXXXX">
+                                    <button type="submit" class="btn btn-mission btn-mission-primary">Unlock My Personalized Report</button>
+                                </form>
+                                <iframe name="quiz-hidden-iframe" style="display:none;"></iframe>
+                            </div>
+                        </div>
 
+                        <div class="quiz-success-message" id="quiz-success-message" style="display: none;">
+                            <h2 class="quiz-success-title">You Unlocked Your Pattern</h2>
+                            <p class="quiz-success-subtitle">Your personalized report is in your inbox.</p>
+                            <p class="quiz-success-pattern-name" id="quiz-success-pattern-name"></p>
+                            <p class="quiz-success-ready">Ready to break the cycle?</p>
+                            <p class="quiz-success-description">Start the 22-Day Breakup Reset to cut emotional cords<br class="desktop-break">keeping you stuck.</p>
+                            <a href="product/breakup-course.html" class="btn btn-mission btn-mission-primary quiz-success-cta">START THE RESET</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <h2 class="faq-title">Pattern Reset Quiz FAQ</h2>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            What's a Pattern — and why does it matter?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p><strong>Your pattern is the invisible cycle that runs your life until you reset it.</strong></p>
+                            <p>The Pattern is the subconscious loop that drives how you love, think, act, and repeat outcomes. It's the emotional program learned in childhood through reward, rejection, and survival. The automatic response that repeats until it's made conscious.</p>
+                            <p>In simple terms: <strong>Your pattern is the invisible habit behind your emotions, relationships, health, and success.</strong></p>
+                            <p>It's the root cause behind cycles of self-sabotage, avoidance, overgiving, fear, and control. Until you see it, you can't change it. And until you change it, you'll keep repeating the same outcomes.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            How does my pattern affect my life?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Your pattern shows up in <strong>every area of your life</strong> — and it's running the same unconscious script across all of them:</p>
+                            <ul>
+                                <li><strong>Love</strong> – who you attract, how you connect, when you pull away</li>
+                                <li><strong>Self-worth</strong> – the internal voice that dictates what you think you deserve</li>
+                                <li><strong>Habits</strong> – what you repeat when stressed or afraid</li>
+                                <li><strong>Money</strong> – how you earn, spend, and self-limit based on safety</li>
+                                <li><strong>Health</strong> – how you cope, regulate, and seek comfort</li>
+                            </ul>
+                            <p>The same pattern that keeps you stuck in relationships is the same one limiting your confidence, sabotaging your goals, and holding you back from the life you want.</p>
+                            <p><strong>Breaking it means everything changes together.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            How did I get this pattern?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Your pattern formed through early attachment and emotional conditioning. It's the way your nervous system learned to stay safe, even when it keeps you stuck.</p>
+                            <p>It was created through:</p>
+                            <ul>
+                                <li>Repetition of reward or rejection patterns in childhood</li>
+                                <li>Nervous-system wiring tied to safety and identity</li>
+                                <li>Emotional conditioning that became automatic</li>
+                            </ul>
+                            <p>And it's reinforced daily through thought loops, emotional avoidance, and unprocessed memory. Every time you react the same way, you're strengthening the pattern.</p>
+                            <p><strong>You're not broken. You're repeating a pattern. And it's time to break it.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            What is this quiz and what will I learn?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>This isn't a game. It's a mirror.</p>
+                            <p>The Pattern Reset Quiz reveals the emotional code behind your choices. It shows you which unconscious pattern is keeping you stuck — the one shaping every relationship, decision, and outcome.</p>
+                            <p>In just 2 minutes, you'll discover:</p>
+                            <ul>
+                                <li>Your core emotional pattern — the invisible cycle running your life</li>
+                                <li>How it shows up in love, self-worth, habits, money, and health</li>
+                                <li>The shadow behaviors you fall into when stressed or afraid</li>
+                                <li>What you need to release to break free</li>
+                            </ul>
+                            <p><strong>Every habit, heartbreak, and hesitation comes from one pattern. It's time to reset yours.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            What do I get after the quiz?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>You'll receive a <strong>custom Pattern result</strong> in your inbox — completely free.</p>
+                            <p>Your personalized report includes:</p>
+                            <ul>
+                                <li>Your specific pattern type and how it operates</li>
+                                <li>How it shows up across all areas of your life</li>
+                                <li>The behaviors keeping you stuck</li>
+                                <li>What you need to release to break the cycle</li>
+                                <li>Your unique next step for healing</li>
+                            </ul>
+                            <p>This clarity can shift how you see yourself, your relationships, and your life forever.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            How do I actually break my pattern?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Breaking the pattern requires three steps:</p>
+                            <ul>
+                                <li><strong>Awareness</strong> – naming and recognizing your pattern (this quiz gives you that)</li>
+                                <li><strong>Interruption</strong> – creating new actions under pressure</li>
+                                <li><strong>Reset</strong> – sustaining new identity through repetition</li>
+                            </ul>
+                            <p><strong>The 22-Day Reset</strong> is a live experience that embodies this evidence-based cycle. It helps you break the cycles keeping you stuck and build the habits, confidence, and clarity to move forward.</p>
+                            <p>Therapists and spiritual teachers agree: 22 days is long enough to change behavior and short enough to stay consistent. This reset blends science with meaning — psychology with ritual. It's not therapy. It's not journaling fluff. It's a daily pattern breaker built on emotional healing and self-leadership.</p>
+                            <p><strong>When you change the pattern, you change everything — love, confidence, health, and purpose.</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            Is the quiz really free?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p><strong>Yes. 100% free.</strong></p>
+                            <p>The quiz and your personalized Pattern result are completely free. No credit card required. No hidden fees.</p>
+                            <p>If you want to go deeper and actually break your pattern, the 22-Day Reset is an optional one-time purchase — designed for those ready to truly let go and reset their life.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </main>
 
@@ -724,38 +2039,6 @@
         <div class="footer-content">
             <div class="footer-main">
                 <!-- Removed social-links div from here -->
-            </div>
-            
-            <div class="newsletter">
-                <h3 class="newsletter-title">Join the Movement</h3>
-                <p class="newsletter-subtext">Gentle reminders, heartfelt drops, and honest reflections — sent with love.</p>
-                <form class="signup-form" id="signupForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdMfNDBBsnuE2Q1_Gn57Y_FJmpWTw0h00bTStNd5Bju07mTKA/formResponse" method="POST" target="hidden-iframe">
-                    <div class="form-group">
-                        <input type="email" name="entry.649844771" placeholder="Email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="newsletterPhone" class="visually-hidden">Phone number (optional)</label>
-                        <input id="newsletterPhone"
-                               type="tel"
-                               name="entry.673635167"
-                               placeholder="Phone (optional)"
-                               inputmode="tel"
-                               pattern="[+]?[0-9]{10,15}">
-                    </div>
-                    <button type="submit" class="btn-main">Join the Movement</button>
-                </form>
-                <iframe name="hidden-iframe" style="display:none;"></iframe>
-                <div id="form-success" class="form-success">Thank you for signing up!</div>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/heartmatters__/" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-instagram"></i>
-                        <span>Instagram</span>
-                    </a>
-                    <a href="https://www.tiktok.com/@heartmatters__?lang=en" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-tiktok"></i>
-                        <span>TikTok</span>
-                    </a>
-                </div>
             </div>
             
             <div class="copyright">
@@ -767,8 +2050,8 @@
     <div id="signup-popup" class="modal-popup">
         <div class="modal-content">
             <button class="modal-close" aria-label="Close popup" onclick="closePopup()">&times;</button>
-            <h3 class="modal-title">Be Part of the Movement</h3>
-            <p class="modal-subtext">Get drops, stories, and reminders that speak to your heart.</p>
+            <h3 class="modal-title">Cut Ties. Break Patterns.<br>Begin Again.</h3>
+            <p class="modal-subtext">Join thousands breaking free. Get weekly empowerment in your inbox.</p>
             <form class="signup-form popup-form" id="popupSignupForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdMfNDBBsnuE2Q1_Gn57Y_FJmpWTw0h00bTStNd5Bju07mTKA/formResponse" method="POST" target="hidden-iframe">
                 <div class="form-group">
                     <input type="email" name="entry.649844771" placeholder="Email" required>
@@ -778,11 +2061,11 @@
                     <input id="popupNewsletterPhone"
                            type="tel"
                            name="entry.673635167"
-                           placeholder="Phone (optional)"
+                           placeholder="Phone"
                            inputmode="tel"
                                                        pattern="[+]?[0-9]{10,15}">
                 </div>
-                <button type="submit" class="btn-main">Join Us</button>
+                <button type="submit" class="btn-main">I'm Ready</button>
             </form>
             <div id="popup-form-success" class="form-success">Thank you for signing up!</div>
         </div>
@@ -831,7 +2114,7 @@
         setTimeout(function() {
             form.reset();
             submitButton.disabled = false;
-            submitButton.textContent = 'Join Us';
+            submitButton.textContent = "I'm Ready";
             document.getElementById('popup-form-success').style.display = 'block';
             setTimeout(function() {
                 document.getElementById('popup-form-success').style.display = 'none';
@@ -841,21 +2124,27 @@
     });
 
     // Existing footer form logic
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-        var form = this;
-        var submitButton = form.querySelector('button[type="submit"]');
-        submitButton.disabled = true;
-        submitButton.textContent = 'Submitting...';
-        setTimeout(function() {
-            form.reset();
-            submitButton.disabled = false;
-            submitButton.textContent = 'Join Us';
-            document.getElementById('form-success').style.display = 'block';
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+        signupForm.addEventListener('submit', function(e) {
+            var form = this;
+            var submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
             setTimeout(function() {
-                document.getElementById('form-success').style.display = 'none';
-            }, 3000);
-        }, 1200);
-    });
+                form.reset();
+                submitButton.disabled = false;
+                submitButton.textContent = 'Join Us';
+                const formSuccess = document.getElementById('form-success');
+                if (formSuccess) {
+                    formSuccess.style.display = 'block';
+                    setTimeout(function() {
+                        formSuccess.style.display = 'none';
+                    }, 3000);
+                }
+            }, 1200);
+        });
+    }
 
     function openMenu() {
         document.getElementById('menuOverlay').classList.add('open');
@@ -921,6 +2210,1097 @@
                     });
                 }
             });
+        }
+    });
+
+    // Personality Pattern Definitions - New 8 Archetypes
+    const personalityPatterns = {
+        'fixer': {
+            name: 'The Fixer',
+            driver: 'control',
+            rootEmotion: 'Control',
+            coreBelief: 'If I solve it, I\'m safe.',
+            strength: 'Responsible & capable',
+            shadow: 'Overfunctioning → burnout',
+            resetFocus: 'Allow others to own their part',
+            identity: 'You take charge and solve problems, believing that if you can fix things, you\'ll stay safe and in control.',
+            cta: 'The 22-Day Reset will help you release the need to control everything and allow others to take responsibility for their own lives.'
+        },
+        'perfectionist': {
+            name: 'The Perfectionist',
+            driver: 'control',
+            rootEmotion: 'Control',
+            coreBelief: 'If I do it right, I\'ll be loved.',
+            strength: 'Disciplined & driven',
+            shadow: 'Shame & rigidity',
+            resetFocus: 'Self-acceptance & rest',
+            identity: 'You strive for excellence, believing that doing things perfectly will earn you love and acceptance.',
+            cta: 'The 22-Day Reset will help you embrace self-acceptance, release shame, and find rest without perfection.'
+        },
+        'escaper': {
+            name: 'The Escaper',
+            driver: 'avoidance',
+            rootEmotion: 'Avoidance',
+            coreBelief: 'If I don\'t feel it, it can\'t hurt me.',
+            strength: 'Free & creative',
+            shadow: 'Disconnection',
+            resetFocus: 'Face emotions without fleeing',
+            identity: 'You avoid difficult feelings and situations, using freedom and spontaneity as protection from pain.',
+            cta: 'The 22-Day Reset will help you face your emotions without fleeing and build deeper connections.'
+        },
+        'overthinker': {
+            name: 'The Overthinker',
+            driver: 'avoidance',
+            rootEmotion: 'Avoidance',
+            coreBelief: 'If I analyze enough, I\'ll feel safe.',
+            strength: 'Insightful & intelligent',
+            shadow: 'Paralysis & anxiety',
+            resetFocus: 'Act before over-analyzing',
+            identity: 'You analyze everything deeply, believing that understanding will protect you from uncertainty and pain.',
+            cta: 'The 22-Day Reset will help you move from analysis to action and break free from paralysis.'
+        },
+        'pleaser': {
+            name: 'The Pleaser',
+            driver: 'validation',
+            rootEmotion: 'Validation',
+            coreBelief: 'If they\'re happy, I\'m okay.',
+            strength: 'Empathetic & kind',
+            shadow: 'People-pleasing → resentment',
+            resetFocus: 'Honesty & boundaries',
+            identity: 'You prioritize others\' happiness, believing that keeping people happy will keep you safe and loved.',
+            cta: 'The 22-Day Reset will help you set boundaries, speak your truth, and release the need to please everyone.'
+        },
+        'performer': {
+            name: 'The Performer',
+            driver: 'validation',
+            rootEmotion: 'Validation',
+            coreBelief: 'If I impress, I belong.',
+            strength: 'Charismatic & motivated',
+            shadow: 'Burnout & emptiness',
+            resetFocus: 'Authenticity over image',
+            identity: 'You work hard to impress and achieve, believing that success and recognition will make you belong.',
+            cta: 'The 22-Day Reset will help you find authenticity beyond performance and connect with your true self.'
+        },
+        'guarded-one': {
+            name: 'The Guarded One',
+            driver: 'fear-of-rejection',
+            rootEmotion: 'Fear of Rejection',
+            coreBelief: 'If I don\'t open up, I won\'t get hurt.',
+            strength: 'Independent',
+            shadow: 'Isolation & loneliness',
+            resetFocus: 'Emotional vulnerability',
+            identity: 'You protect yourself by staying independent and closed off, believing that not opening up will prevent rejection.',
+            cta: 'The 22-Day Reset will help you safely open up, practice vulnerability, and build genuine connections.'
+        },
+        'overgiver': {
+            name: 'The Overgiver',
+            driver: 'fear-of-rejection',
+            rootEmotion: 'Fear of Rejection',
+            coreBelief: 'If I give more, they won\'t leave.',
+            strength: 'Loyal & generous',
+            shadow: 'Self-neglect',
+            resetFocus: 'Balance & self-worth',
+            identity: 'You give endlessly to others, believing that giving more will prevent abandonment and rejection.',
+            cta: 'The 22-Day Reset will help you balance giving with receiving and recognize your own worth.'
+        }
+    };
+
+    // Quiz Functionality - New 19 Question System
+    // Questions organized by life areas: Love (4), Money (4), Health (4), Identity (4), Reflection (2), Birth Date (1)
+    const quizData = [
+        // Love & Connection (Questions 1-4)
+        {
+            question: "When someone I care about pulls away, my first move is to:",
+            options: [
+                { text: "Step in and try to fix what went wrong.", score: 3, driver: 'control' },
+                { text: "Act casual and avoid the heavy talk.", score: 3, driver: 'avoidance' },
+                { text: "Do more to win them back.", score: 3, driver: 'validation' },
+                { text: "Emotionally withdraw to protect myself.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "I feel safest in relationships when:",
+            options: [
+                { text: "I can set the pace and keep things on track.", score: 3, driver: 'control' },
+                { text: "Nothing feels too serious or intense.", score: 3, driver: 'avoidance' },
+                { text: "I am reassured and appreciated.", score: 3, driver: 'validation' },
+                { text: "I keep some distance until I trust fully.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "During conflict, I usually:",
+            options: [
+                { text: "Take charge and resolve it quickly.", score: 3, driver: 'control' },
+                { text: "Step away or distract myself.", score: 3, driver: 'avoidance' },
+                { text: "Apologize or smooth things over fast.", score: 3, driver: 'validation' },
+                { text: "Emotionally withdraw and go quiet.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "When love feels uncertain, I tend to:",
+            options: [
+                { text: "Plan and try to control the outcome.", score: 3, driver: 'control' },
+                { text: "Change the subject or avoid the talk.", score: 3, driver: 'avoidance' },
+                { text: "Please more to feel wanted.", score: 3, driver: 'validation' },
+                { text: "Pull back so I cannot be hurt.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        // Money & Security (Questions 5-8)
+        {
+            question: "My relationship with money often feels:",
+            options: [
+                { text: "Safe only when I am fully in control.", score: 3, driver: 'control' },
+                { text: "Stressful, so I avoid thinking about it.", score: 3, driver: 'avoidance' },
+                { text: "Tied to my value and success.", score: 3, driver: 'validation' },
+                { text: "Uncertain, and I fear losing it.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "When a money problem hits, I:",
+            options: [
+                { text: "Go into fix mode with plans and tasks.", score: 3, driver: 'control' },
+                { text: "Delay and hope it feels easier later.", score: 3, driver: 'avoidance' },
+                { text: "Feel like I failed or let people down.", score: 3, driver: 'validation' },
+                { text: "Freeze and worry about worst cases.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "Success to me mostly means:",
+            options: [
+                { text: "Stability and control over my life.", score: 3, driver: 'control' },
+                { text: "Freedom and flexible choices.", score: 3, driver: 'avoidance' },
+                { text: "Being respected and recognized.", score: 3, driver: 'validation' },
+                { text: "Feeling safe and secure with a cushion.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "When my income changes, I usually:",
+            options: [
+                { text: "Rework the plan and tighten systems.", score: 3, driver: 'control' },
+                { text: "Avoid looking closely for a while.", score: 3, driver: 'avoidance' },
+                { text: "Link it to how worthy I am.", score: 3, driver: 'validation' },
+                { text: "Worry and become guarded with spending.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        // Health & Habits (Questions 9-12)
+        {
+            question: "When I feel overwhelmed, I usually:",
+            options: [
+                { text: "Make a clear plan and structure my day.", score: 3, driver: 'control' },
+                { text: "Numb out or distract myself.", score: 3, driver: 'avoidance' },
+                { text: "Look for praise or support to keep going.", score: 3, driver: 'validation' },
+                { text: "Pull back from others and keep to myself.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "I stay consistent with routines when:",
+            options: [
+                { text: "I control the schedule and rules.", score: 3, driver: 'control' },
+                { text: "I feel inspired or in the mood.", score: 3, driver: 'avoidance' },
+                { text: "Someone notices and cheers me on.", score: 3, driver: 'validation' },
+                { text: "I feel safe and emotionally held.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "My biggest health challenge is:",
+            options: [
+                { text: "Overworking and doing too much.", score: 3, driver: 'control' },
+                { text: "Avoiding discomfort or boredom.", score: 3, driver: 'avoidance' },
+                { text: "Needing outside motivation to start.", score: 3, driver: 'validation' },
+                { text: "Quitting when I feel unseen or alone.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "When my routine breaks, I:",
+            options: [
+                { text: "Get strict and push myself harder.", score: 3, driver: 'control' },
+                { text: "Say I will restart later, then delay.", score: 3, driver: 'avoidance' },
+                { text: "Feel guilty and look for approval again.", score: 3, driver: 'validation' },
+                { text: "Isolate and stop talking about it.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        // Identity & Purpose (Questions 13-16)
+        {
+            question: "When I think about my direction in life, I:",
+            options: [
+                { text: "Plan deeply and try to control outcomes.", score: 3, driver: 'control' },
+                { text: "Switch paths or keep it open.", score: 3, driver: 'avoidance' },
+                { text: "Focus on how others will see me.", score: 3, driver: 'validation' },
+                { text: "Doubt if I truly belong anywhere.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "My biggest fear about failing is:",
+            options: [
+                { text: "Losing control of what happens next.", score: 3, driver: 'control' },
+                { text: "Having to face hard feelings.", score: 3, driver: 'avoidance' },
+                { text: "Disappointing people who believed in me.", score: 3, driver: 'validation' },
+                { text: "Being rejected or left behind.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "I feel most like myself when:",
+            options: [
+                { text: "I am leading and creating structure.", score: 3, driver: 'control' },
+                { text: "I am free and spontaneous.", score: 3, driver: 'avoidance' },
+                { text: "I am appreciated and seen.", score: 3, driver: 'validation' },
+                { text: "I am understood at a deep level.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "Under pressure, I tend to:",
+            options: [
+                { text: "Take charge and handle it fast.", score: 3, driver: 'control' },
+                { text: "Avoid it or procrastinate.", score: 3, driver: 'avoidance' },
+                { text: "Push harder to prove myself.", score: 3, driver: 'validation' },
+                { text: "Shut down emotionally to stay safe.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        // Reflection (Questions 17-18)
+        {
+            question: "The hardest thing for me to let go of right now is:",
+            options: [
+                { text: "Control of people or outcomes.", score: 3, driver: 'control' },
+                { text: "Discomfort I keep avoiding.", score: 3, driver: 'avoidance' },
+                { text: "The need for approval.", score: 3, driver: 'validation' },
+                { text: "Fear of being rejected.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        {
+            question: "Right now, my sense of self-worth depends most on:",
+            options: [
+                { text: "How well I manage and perform.", score: 3, driver: 'control' },
+                { text: "How easy and pressure-free life feels.", score: 3, driver: 'avoidance' },
+                { text: "How much others value or praise me.", score: 3, driver: 'validation' },
+                { text: "Whether I feel fully accepted.", score: 3, driver: 'fear-of-rejection' }
+            ]
+        },
+        // Birth Date (Question 19) - Special handling
+        {
+            question: "What is your birth date?",
+            questionType: 'birthdate',
+            options: [] // Will be handled as text input
+        }
+    ];
+
+    let currentQuestion = 0;
+    let answers = [];
+    let totalScore = 0;
+    let quizCompleted = false;
+    let formSubmitted = false;
+    let birthDate = null; // Store birth date for personalization
+    let driverScores = {
+        'control': 0,
+        'avoidance': 0,
+        'validation': 0,
+        'fear-of-rejection': 0
+    };
+
+    // Save quiz state to localStorage
+    function saveQuizState() {
+        const quizState = {
+            currentQuestion: currentQuestion,
+            answers: answers,
+            totalScore: totalScore,
+            quizCompleted: quizCompleted,
+            formSubmitted: formSubmitted,
+            birthDate: birthDate,
+            driverScores: driverScores
+        };
+        localStorage.setItem('heartMattersQuizState', JSON.stringify(quizState));
+    }
+
+    // Load quiz state from localStorage
+    function loadQuizState() {
+        const savedState = localStorage.getItem('heartMattersQuizState');
+        if (savedState) {
+            try {
+                const state = JSON.parse(savedState);
+                currentQuestion = state.currentQuestion || 0;
+                answers = state.answers || [];
+                totalScore = state.totalScore || 0;
+                quizCompleted = state.quizCompleted || false;
+                formSubmitted = state.formSubmitted || false;
+                birthDate = state.birthDate || null;
+                driverScores = state.driverScores || {
+                    'control': 0,
+                    'avoidance': 0,
+                    'validation': 0,
+                    'fear-of-rejection': 0
+                };
+                return true;
+            } catch (e) {
+                console.error('Error loading quiz state:', e);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    // Clear quiz state from localStorage
+    function clearQuizState() {
+        localStorage.removeItem('heartMattersQuizState');
+        currentQuestion = 0;
+        answers = [];
+        totalScore = 0;
+        quizCompleted = false;
+        formSubmitted = false;
+        birthDate = null;
+        driverScores = {
+            'control': 0,
+            'avoidance': 0,
+            'validation': 0,
+            'fear-of-rejection': 0
+        };
+    }
+
+    // Astrological calculation functions
+    function getSunSign(month, day) {
+        const signs = [
+            { name: 'Capricorn', start: [12, 22], end: [1, 19] },
+            { name: 'Aquarius', start: [1, 20], end: [2, 18] },
+            { name: 'Pisces', start: [2, 19], end: [3, 20] },
+            { name: 'Aries', start: [3, 21], end: [4, 19] },
+            { name: 'Taurus', start: [4, 20], end: [5, 20] },
+            { name: 'Gemini', start: [5, 21], end: [6, 20] },
+            { name: 'Cancer', start: [6, 21], end: [7, 22] },
+            { name: 'Leo', start: [7, 23], end: [8, 22] },
+            { name: 'Virgo', start: [8, 23], end: [9, 22] },
+            { name: 'Libra', start: [9, 23], end: [10, 22] },
+            { name: 'Scorpio', start: [10, 23], end: [11, 21] },
+            { name: 'Sagittarius', start: [11, 22], end: [12, 21] }
+        ];
+        
+        for (let sign of signs) {
+            if (sign.start[0] === month && day >= sign.start[1]) return sign.name;
+            if (sign.end[0] === month && day <= sign.end[1]) return sign.name;
+            // Handle Capricorn (Dec 22 - Jan 19)
+            if (sign.name === 'Capricorn') {
+                if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) return sign.name;
+            }
+        }
+        return 'Unknown';
+    }
+
+    function getElement(sign) {
+        const fire = ['Aries', 'Leo', 'Sagittarius'];
+        const earth = ['Taurus', 'Virgo', 'Capricorn'];
+        const air = ['Gemini', 'Libra', 'Aquarius'];
+        const water = ['Cancer', 'Scorpio', 'Pisces'];
+        
+        if (fire.includes(sign)) return 'fire';
+        if (earth.includes(sign)) return 'earth';
+        if (air.includes(sign)) return 'air';
+        if (water.includes(sign)) return 'water';
+        return 'unknown';
+    }
+
+    function getAgeRange(birthDate) {
+        const today = new Date();
+        const birth = new Date(birthDate);
+        const age = today.getFullYear() - birth.getFullYear();
+        const monthDiff = today.getMonth() - birth.getMonth();
+        const actualAge = monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate()) ? age - 1 : age;
+        
+        if (actualAge >= 18 && actualAge <= 27) return '18-27';
+        if (actualAge >= 28 && actualAge <= 38) return '28-38';
+        if (actualAge >= 39 && actualAge <= 50) return '39-50';
+        if (actualAge >= 51) return '51+';
+        return 'unknown';
+    }
+
+    function parseBirthDate(dateString) {
+        // Format: MM/DD/YYYY
+        const parts = dateString.split('/');
+        if (parts.length !== 3) return null;
+        
+        const month = parseInt(parts[0], 10);
+        const day = parseInt(parts[1], 10);
+        const year = parseInt(parts[2], 10);
+        
+        if (isNaN(month) || isNaN(day) || isNaN(year)) return null;
+        if (month < 1 || month > 12) return null;
+        if (day < 1 || day > 31) return null;
+        
+        return {
+            month: month,
+            day: day,
+            year: year,
+            dateString: dateString
+        };
+    }
+
+    function initQuiz() {
+        // Try to restore quiz state on page load
+        const hasSavedState = loadQuizState();
+        
+        if (hasSavedState) {
+            const quizIntro = document.getElementById('quiz-intro');
+            const quizContent = document.getElementById('quiz-content');
+            const quizResults = document.getElementById('quiz-results');
+            const quizResultsMain = document.getElementById('quiz-results-main');
+            const quizSuccessMessage = document.getElementById('quiz-success-message');
+            
+            if (formSubmitted && quizSuccessMessage) {
+                // Form was submitted, show success message
+                if (quizIntro) quizIntro.style.display = 'none';
+                if (quizContent) quizContent.style.display = 'none';
+                if (quizResults) quizResults.style.display = 'flex';
+                if (quizResultsMain) quizResultsMain.style.display = 'none';
+                quizSuccessMessage.style.display = 'block';
+                restoreSuccessMessage();
+            } else if (quizCompleted && quizResults) {
+                // Quiz was completed, show results form
+                if (quizIntro) quizIntro.style.display = 'none';
+                if (quizContent) quizContent.style.display = 'none';
+                quizResults.style.display = 'flex';
+                if (quizResultsMain) quizResultsMain.style.display = 'block';
+                if (quizSuccessMessage) quizSuccessMessage.style.display = 'none';
+                restoreResults();
+            } else if ((answers.length > 0 || currentQuestion > 0) && quizContent) {
+                // Quiz is in progress, restore to current question
+                if (quizIntro) quizIntro.style.display = 'none';
+                quizContent.style.display = 'flex';
+                renderQuestion();
+                updateProgress();
+            }
+        }
+        const startBtn = document.getElementById('start-quiz-btn');
+        const quizIntro = document.getElementById('quiz-intro');
+        const quizContent = document.getElementById('quiz-content');
+        const quizResults = document.getElementById('quiz-results');
+
+        if (startBtn) {
+            startBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                console.log('Quiz button clicked!');
+                
+                // Get fresh references in case DOM changed
+                const intro = document.getElementById('quiz-intro');
+                const content = document.getElementById('quiz-content');
+                const results = document.getElementById('quiz-results');
+                
+                if (!intro || !content || !results) {
+                    console.error('Quiz elements not found:', { intro, content, results });
+                    return;
+                }
+                
+                // Clear previous state
+                clearQuizState();
+                
+                // Hide intro and results, show quiz content
+                intro.style.display = 'none';
+                results.style.display = 'none';
+                content.style.display = 'flex';
+                
+                // Reset quiz variables
+                currentQuestion = 0;
+                answers = [];
+                totalScore = 0;
+                quizCompleted = false;
+                formSubmitted = false;
+                
+                // Render first question
+                if (typeof renderQuestion === 'function') {
+                    renderQuestion();
+                } else {
+                    console.error('renderQuestion function not found');
+                }
+                
+                if (typeof updateProgress === 'function') {
+                    updateProgress();
+                } else {
+                    console.error('updateProgress function not found');
+                }
+                
+                // Save initial state
+                saveQuizState();
+            });
+        } else {
+            console.error('Start quiz button not found!');
+        }
+
+        const nextBtn = document.getElementById('quiz-next-btn');
+        const prevBtn = document.getElementById('quiz-prev-btn');
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const errorMessage = document.getElementById('quiz-error-message');
+                const question = quizData[currentQuestion];
+                
+                // Birth date question (index 18) is optional, skip validation
+                if (question.questionType !== 'birthdate' && answers[currentQuestion] === undefined) {
+                    // Show inline error message
+                    if (errorMessage) {
+                        errorMessage.style.display = 'block';
+                        // Scroll error into view smoothly
+                        errorMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                    return;
+                }
+
+                // Hide error message if answer is selected or birth date question
+                if (errorMessage) {
+                    errorMessage.style.display = 'none';
+                }
+
+                if (currentQuestion < quizData.length - 1) {
+                    currentQuestion++;
+                    renderQuestion();
+                    updateProgress();
+                    saveQuizState(); // Save progress
+                } else {
+                    calculateResults();
+                }
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                if (currentQuestion > 0) {
+                    currentQuestion--;
+                    renderQuestion();
+                    updateProgress();
+                    saveQuizState(); // Save progress
+                }
+            });
+        }
+
+        // Email form submission
+        const emailForm = document.getElementById('quiz-email-form');
+        if (emailForm) {
+            emailForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const nameInput = document.getElementById('quiz-name-input');
+                const emailInput = document.getElementById('quiz-email-input');
+                const phoneInput = document.getElementById('quiz-phone-input');
+                
+                const name = nameInput.value.trim();
+                const email = emailInput.value.trim();
+                const phone = phoneInput.value.trim();
+                
+                // Validation
+                if (!name) {
+                    alert('Please enter your name.');
+                    return;
+                }
+                
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+                
+                if (!phone) {
+                    alert('Please enter your phone number.');
+                    return;
+                }
+
+                // Get pattern data
+                const patternKey = determinePattern(totalScore, answers);
+                const pattern = personalityPatterns[patternKey];
+
+                // Submit to Google Forms
+                const tempForm = document.createElement('form');
+                tempForm.action = 'https://docs.google.com/forms/d/e/1FAIpQLSdMfNDBBsnuE2Q1_Gn57Y_FJmpWTw0h00bTStNd5Bju07mTKA/formResponse';
+                tempForm.method = 'POST';
+                tempForm.target = 'quiz-hidden-iframe';
+                tempForm.style.display = 'none';
+
+                // Name field (update with actual Google Form entry ID)
+                const inputName = document.createElement('input');
+                inputName.type = 'hidden';
+                inputName.name = 'entry.XXXXX'; // Update with actual entry ID for name
+                inputName.value = name;
+                tempForm.appendChild(inputName);
+
+                // Email field
+                const inputEmail = document.createElement('input');
+                inputEmail.type = 'hidden';
+                inputEmail.name = 'entry.649844771';
+                inputEmail.value = email;
+                tempForm.appendChild(inputEmail);
+
+                // Phone field (update with actual Google Form entry ID)
+                const inputPhone = document.createElement('input');
+                inputPhone.type = 'hidden';
+                inputPhone.name = 'entry.XXXXX'; // Update with actual entry ID for phone
+                inputPhone.value = phone;
+                tempForm.appendChild(inputPhone);
+
+                // Score field (max is 18 questions × 3 points = 54)
+                const inputScore = document.createElement('input');
+                inputScore.type = 'hidden';
+                inputScore.name = 'entry.673635167';
+                inputScore.value = `${totalScore}/54`;
+                tempForm.appendChild(inputScore);
+
+                // Pattern field (update with actual Google Form entry ID)
+                const inputPattern = document.createElement('input');
+                inputPattern.type = 'hidden';
+                inputPattern.name = 'entry.XXXXX'; // Update with actual entry ID for pattern
+                inputPattern.value = pattern.name;
+                tempForm.appendChild(inputPattern);
+
+                // Birth date field (update with actual Google Form entry ID)
+                if (birthDate) {
+                    const inputBirthDate = document.createElement('input');
+                    inputBirthDate.type = 'hidden';
+                    inputBirthDate.name = 'entry.XXXXX'; // Update with actual entry ID for birth date
+                    inputBirthDate.value = birthDate;
+                    tempForm.appendChild(inputBirthDate);
+                    
+                    // Calculate and submit astrological data
+                    const parsedDate = parseBirthDate(birthDate);
+                    if (parsedDate) {
+                        const sunSign = getSunSign(parsedDate.month, parsedDate.day);
+                        const element = getElement(sunSign);
+                        const ageRange = getAgeRange(birthDate);
+                        
+                        // Sun sign field
+                        const inputSunSign = document.createElement('input');
+                        inputSunSign.type = 'hidden';
+                        inputSunSign.name = 'entry.XXXXX'; // Update with actual entry ID
+                        inputSunSign.value = sunSign;
+                        tempForm.appendChild(inputSunSign);
+                        
+                        // Element field
+                        const inputElement = document.createElement('input');
+                        inputElement.type = 'hidden';
+                        inputElement.name = 'entry.XXXXX'; // Update with actual entry ID
+                        inputElement.value = element;
+                        tempForm.appendChild(inputElement);
+                        
+                        // Age range field
+                        const inputAgeRange = document.createElement('input');
+                        inputAgeRange.type = 'hidden';
+                        inputAgeRange.name = 'entry.XXXXX'; // Update with actual entry ID
+                        inputAgeRange.value = ageRange;
+                        tempForm.appendChild(inputAgeRange);
+                    }
+                }
+                
+                // Driver scores (for analytics)
+                const inputDriverScores = document.createElement('input');
+                inputDriverScores.type = 'hidden';
+                inputDriverScores.name = 'entry.XXXXX'; // Update with actual entry ID
+                inputDriverScores.value = JSON.stringify(driverScores);
+                tempForm.appendChild(inputDriverScores);
+
+                document.body.appendChild(tempForm);
+                tempForm.submit();
+
+                // Mark form as submitted and save state
+                formSubmitted = true;
+                saveQuizState();
+
+                // Show success message with pattern name
+                setTimeout(() => {
+                    document.getElementById('quiz-results-main').style.display = 'none';
+                    const patternNameElement = document.getElementById('quiz-success-pattern-name');
+                    if (patternNameElement) {
+                        patternNameElement.textContent = pattern.name;
+                    }
+                    document.getElementById('quiz-success-message').style.display = 'block';
+                }, 500);
+            });
+        }
+    }
+
+    function updateNextButtonState() {
+        const nextBtn = document.getElementById('quiz-next-btn');
+        const question = quizData[currentQuestion];
+        
+        if (!nextBtn) return;
+        
+        // Update button text
+        nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'See Results' : 'Next';
+        
+        // Birth date question is optional, so button is always active (filled)
+        if (question.questionType === 'birthdate') {
+            nextBtn.classList.remove('btn-mission');
+            nextBtn.classList.add('btn-mission-primary');
+            return;
+        }
+        
+        // For regular questions, check if answer is selected
+        const hasAnswer = answers[currentQuestion] !== undefined;
+        
+        if (hasAnswer) {
+            // Answer selected: filled red (active)
+            nextBtn.classList.remove('btn-mission');
+            nextBtn.classList.add('btn-mission-primary');
+        } else {
+            // No answer: outlined (inactive)
+            nextBtn.classList.remove('btn-mission-primary');
+            nextBtn.classList.add('btn-mission');
+        }
+    }
+
+    function renderQuestion() {
+        const questionContainer = document.getElementById('quiz-question-container');
+        const question = quizData[currentQuestion];
+        const prevBtn = document.getElementById('quiz-prev-btn');
+        const nextBtn = document.getElementById('quiz-next-btn');
+        const errorMessage = document.getElementById('quiz-error-message');
+
+        // Hide error message when rendering new question
+        if (errorMessage) {
+            errorMessage.style.display = 'none';
+        }
+
+        if (prevBtn) {
+            prevBtn.style.display = currentQuestion > 0 ? 'block' : 'none';
+        }
+
+        // Update Next button state based on answer selection
+        updateNextButtonState();
+
+        if (questionContainer) {
+            // Handle birth date question differently
+            if (question.questionType === 'birthdate') {
+                questionContainer.innerHTML = `
+                    <div class="quiz-question">${question.question}</div>
+                    <div class="quiz-birthdate-input">
+                        <input type="text" 
+                               id="quiz-birthdate-input" 
+                               placeholder="MM/DD/YYYY" 
+                               value="${birthDate || ''}"
+                               maxlength="10"
+                               pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}">
+                        <small class="quiz-birthdate-hint">Enter as MM/DD/YYYY (optional)</small>
+                    </div>
+                `;
+                
+                // Add input formatting for birth date
+                const birthDateInput = document.getElementById('quiz-birthdate-input');
+                if (birthDateInput) {
+                    birthDateInput.addEventListener('input', function(e) {
+                        let value = e.target.value.replace(/\D/g, '');
+                        if (value.length >= 2) {
+                            value = value.substring(0, 2) + '/' + value.substring(2);
+                        }
+                        if (value.length >= 5) {
+                            value = value.substring(0, 5) + '/' + value.substring(5, 9);
+                        }
+                        e.target.value = value;
+                        birthDate = value;
+                        saveQuizState();
+                    });
+                }
+            } else {
+                // Regular multiple choice question
+                questionContainer.innerHTML = `
+                    <div class="quiz-question">${question.question}</div>
+                    <div class="quiz-options">
+                        ${question.options.map((option, index) => `
+                            <div class="quiz-option ${answers[currentQuestion] === index ? 'selected' : ''}" data-index="${index}">
+                                <span class="quiz-option-text">${String.fromCharCode(65 + index)}. ${option.text}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                // Add click handlers for options
+                const optionElements = questionContainer.querySelectorAll('.quiz-option');
+                optionElements.forEach((optionEl, index) => {
+                    optionEl.addEventListener('click', () => {
+                        // Remove selected from all options
+                        optionElements.forEach(el => el.classList.remove('selected'));
+                        // Add selected to clicked option
+                        optionEl.classList.add('selected');
+                        // Save answer
+                        answers[currentQuestion] = index;
+                        saveQuizState(); // Save answer selection
+                        
+                        // Update Next button to active state (filled red)
+                        updateNextButtonState();
+                        
+                        // Hide error message when user selects an answer
+                        const errorMessage = document.getElementById('quiz-error-message');
+                        if (errorMessage) {
+                            errorMessage.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        }
+    }
+
+    function updateProgress() {
+        const progressBar = document.getElementById('quiz-progress-bar');
+        const progressText = document.getElementById('quiz-progress-text');
+        const progress = ((currentQuestion + 1) / quizData.length) * 100;
+
+        if (progressBar) {
+            progressBar.innerHTML = `<div class="quiz-progress-bar-fill" style="width: ${progress}%"></div>`;
+        }
+
+        if (progressText) {
+            progressText.textContent = `${currentQuestion + 1} of ${quizData.length}`;
+        }
+    }
+
+    function determinePattern(driverScores, answers) {
+        // New driver-based pattern determination
+        // Find dominant driver (highest score)
+        const sortedDrivers = Object.entries(driverScores)
+            .sort((a, b) => b[1] - a[1]);
+        
+        const dominantDriver = sortedDrivers[0][0];
+        const dominantScore = sortedDrivers[0][1];
+        const secondaryDriver = sortedDrivers[1][0];
+        const secondaryScore = sortedDrivers[1][1];
+        
+        // Determine pattern based on dominant driver
+        // Each driver has 2 archetypes - use domain-specific responses to differentiate
+        
+        if (dominantDriver === 'control') {
+            // Compare Fixer vs Perfectionist
+            // Look at questions 1-4 (Love domain) and 13-16 (Identity domain)
+            // Fixer: more action-oriented, takes charge
+            // Perfectionist: more detail-oriented, needs to do it right
+            
+            let fixerScore = 0;
+            let perfectionistScore = 0;
+            
+            // Check Love domain questions (0-3) for control responses
+            for (let i = 0; i < 4; i++) {
+                if (answers[i] !== undefined) {
+                    const option = quizData[i].options[answers[i]];
+                    if (option.driver === 'control') {
+                        // Question 1 (index 0): "Step in and try to fix" = Fixer
+                        // Question 2 (index 1): "Set the pace" = Fixer
+                        if (i === 0 || i === 1) fixerScore += option.score;
+                        // Question 3 (index 2): "Take charge and resolve" = Fixer
+                        if (i === 2) fixerScore += option.score;
+                    }
+                }
+            }
+            
+            // Check Identity domain questions (12-15) for control responses
+            for (let i = 12; i < 16; i++) {
+                if (answers[i] !== undefined) {
+                    const option = quizData[i].options[answers[i]];
+                    if (option.driver === 'control') {
+                        // Question 13 (index 12): "Plan deeply" = Perfectionist
+                        // Question 16 (index 15): "Take charge" = Fixer
+                        if (i === 12) perfectionistScore += option.score;
+                        if (i === 15) fixerScore += option.score;
+                    }
+                }
+            }
+            
+            return fixerScore >= perfectionistScore ? 'fixer' : 'perfectionist';
+        }
+        
+        if (dominantDriver === 'avoidance') {
+            // Compare Escaper vs Overthinker
+            // Escaper: avoids by fleeing/numbing
+            // Overthinker: avoids by analyzing
+            
+            let escaperScore = 0;
+            let overthinkerScore = 0;
+            
+            // Check Health domain (8-11) - Escaper numbs out, Overthinker analyzes
+            for (let i = 8; i < 12; i++) {
+                if (answers[i] !== undefined) {
+                    const option = quizData[i].options[answers[i]];
+                    if (option.driver === 'avoidance') {
+                        // Question 9 (index 8): "Numb out" = Escaper
+                        if (i === 8) escaperScore += option.score;
+                        // Question 10 (index 9): "Feel inspired" = Escaper (mood-based)
+                        if (i === 9) escaperScore += option.score;
+                    }
+                }
+            }
+            
+            // Check Identity domain (12-15) - Overthinker plans/analyzes
+            for (let i = 12; i < 16; i++) {
+                if (answers[i] !== undefined) {
+                    const option = quizData[i].options[answers[i]];
+                    if (option.driver === 'avoidance') {
+                        // Question 13 (index 12): "Switch paths" = Escaper
+                        // But if they're avoiding through analysis, it's Overthinker
+                        if (i === 12) overthinkerScore += option.score;
+                    }
+                }
+            }
+            
+            return escaperScore >= overthinkerScore ? 'escaper' : 'overthinker';
+        }
+        
+        if (dominantDriver === 'validation') {
+            // Compare Pleaser vs Performer
+            // Pleaser: focuses on others' happiness
+            // Performer: focuses on achievement/recognition
+            
+            let pleaserScore = 0;
+            let performerScore = 0;
+            
+            // Check Love domain (0-3) - Pleaser apologizes/smooths over
+            for (let i = 0; i < 4; i++) {
+                if (answers[i] !== undefined) {
+                    const option = quizData[i].options[answers[i]];
+                    if (option.driver === 'validation') {
+                        // Question 3 (index 2): "Apologize or smooth things over" = Pleaser
+                        if (i === 2) pleaserScore += option.score;
+                        // Question 4 (index 3): "Please more" = Pleaser
+                        if (i === 3) pleaserScore += option.score;
+                    }
+                }
+            }
+            
+            // Check Money domain (4-7) - Performer links to value/success
+            for (let i = 4; i < 8; i++) {
+                if (answers[i] !== undefined) {
+                    const option = quizData[i].options[answers[i]];
+                    if (option.driver === 'validation') {
+                        // Question 5 (index 4): "Tied to my value" = Performer
+                        // Question 7 (index 6): "Respected and recognized" = Performer
+                        if (i === 4 || i === 6) performerScore += option.score;
+                    }
+                }
+            }
+            
+            return pleaserScore >= performerScore ? 'pleaser' : 'performer';
+        }
+        
+        if (dominantDriver === 'fear-of-rejection') {
+            // Compare Guarded One vs Overgiver
+            // Guarded One: withdraws, keeps distance
+            // Overgiver: gives more to prevent leaving
+            
+            let guardedScore = 0;
+            let overgiverScore = 0;
+            
+            // Check Love domain (0-3) - Guarded withdraws, Overgiver gives more
+            for (let i = 0; i < 4; i++) {
+                if (answers[i] !== undefined) {
+                    const option = quizData[i].options[answers[i]];
+                    if (option.driver === 'fear-of-rejection') {
+                        // Question 1 (index 0): "Emotionally withdraw" = Guarded
+                        // Question 4 (index 3): "Pull back" = Guarded
+                        if (i === 0 || i === 3) guardedScore += option.score;
+                        // Question 3 (index 2): "Emotionally withdraw" = Guarded
+                        if (i === 2) guardedScore += option.score;
+                    }
+                }
+            }
+            
+            // Check Reflection (16-17) - Overgiver gives more
+            for (let i = 16; i < 18; i++) {
+                if (answers[i] !== undefined) {
+                    const option = quizData[i].options[answers[i]];
+                    if (option.driver === 'fear-of-rejection') {
+                        // Both can show fear, but Overgiver pattern shows in giving
+                        // Guarded shows in Question 1 withdrawal
+                        if (i === 17) overgiverScore += option.score;
+                    }
+                }
+            }
+            
+            return guardedScore >= overgiverScore ? 'guarded-one' : 'overgiver';
+        }
+        
+        // Fallback
+        return 'fixer';
+    }
+
+    function calculateResults() {
+        // Reset driver scores
+        driverScores = {
+            'control': 0,
+            'avoidance': 0,
+            'validation': 0,
+            'fear-of-rejection': 0
+        };
+        
+        totalScore = 0;
+        
+        // Calculate driver scores and total score (skip birth date question - index 18)
+        answers.forEach((answerIndex, questionIndex) => {
+            if (questionIndex < 18 && answerIndex !== undefined) { // Skip birth date question
+                const option = quizData[questionIndex].options[answerIndex];
+                if (option && option.driver && option.score !== undefined) {
+                    driverScores[option.driver] += option.score;
+                    totalScore += option.score;
+                }
+            }
+        });
+
+        // Determine personality pattern using driver scores
+        const patternKey = determinePattern(driverScores, answers);
+        const pattern = personalityPatterns[patternKey];
+        
+        // Calculate secondary pattern (hybrid) if applicable
+        // Note: Secondary pattern calculation would require a separate function
+        // For now, we'll just use the dominant pattern
+
+        // Mark quiz as completed
+        quizCompleted = true;
+        saveQuizState(); // Save completed state
+
+        // Hide quiz content, show results
+        document.getElementById('quiz-content').style.display = 'none';
+        document.getElementById('quiz-results').style.display = 'flex';
+        
+        // Update results display with pattern information
+        document.getElementById('quiz-results-title').textContent = `You're ${pattern.name}`;
+        
+        // Set hidden form fields
+        const scoreHidden = document.getElementById('quiz-score-hidden');
+        const patternHidden = document.getElementById('quiz-pattern-hidden');
+        if (scoreHidden) {
+            scoreHidden.value = `${totalScore}/54`;
+        }
+        if (patternHidden) {
+            patternHidden.value = pattern.name;
+        }
+
+        // Scroll to results
+        document.getElementById('quiz-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Restore results display when quiz was previously completed
+    function restoreResults() {
+        const patternKey = determinePattern(totalScore, answers);
+        const pattern = personalityPatterns[patternKey];
+        
+        // Update results display
+        document.getElementById('quiz-results-title').textContent = `You're ${pattern.name}`;
+        
+        // Set hidden form fields
+        const scoreHidden = document.getElementById('quiz-score-hidden');
+        const patternHidden = document.getElementById('quiz-pattern-hidden');
+        if (scoreHidden) {
+            scoreHidden.value = `${totalScore}/54`;
+        }
+        if (patternHidden) {
+            patternHidden.value = pattern.name;
+        }
+    }
+
+    // Restore success message display when form was previously submitted
+    function restoreSuccessMessage() {
+        const patternKey = determinePattern(totalScore, answers);
+        const pattern = personalityPatterns[patternKey];
+        
+        // Update success message with pattern name
+        const patternNameElement = document.getElementById('quiz-success-pattern-name');
+        if (patternNameElement) {
+            patternNameElement.textContent = pattern.name;
+        }
+    }
+
+    // Initialize quiz on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            initQuiz();
+        } catch (error) {
+            console.error('Error initializing quiz:', error);
         }
     });
 
@@ -1070,6 +3450,27 @@
         // Example: To manually update the count, call:
         // window.updateHeartsCount(800000);
     });
+
+    // FAQ Accordion Functionality
+    function toggleFAQ(button) {
+        const faqItem = button.parentElement;
+        const answer = faqItem.querySelector('.faq-answer');
+        const isActive = button.classList.contains('active');
+        
+        // Close all other FAQ items
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        document.querySelectorAll('.faq-answer').forEach(ans => {
+            ans.classList.remove('active');
+        });
+        
+        // Toggle current FAQ item
+        if (!isActive) {
+            button.classList.add('active');
+            answer.classList.add('active');
+        }
+    }
 
     </script>
 </body>
