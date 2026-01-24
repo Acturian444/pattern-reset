@@ -23,7 +23,7 @@ const OLD_CONFIG = {
     domain: 'joinheartmatters.com',
     brandName: 'Heart Matters',
     brandNameTM: 'Heart Matters™',
-    googleAnalyticsId: 'G-ST1QJZ92B0',
+    googleAnalyticsId: 'G-ZEZQRBTLR7',
     contactEmail: 'info@joinheartmatters.com',
     instagram: 'heartmatters__',
     tiktok: '@heartmatters__',

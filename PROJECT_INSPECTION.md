@@ -138,7 +138,7 @@
    - Redirects to `/course/breakup-course.html?session={CHECKOUT_SESSION_ID}`
    - Course page verifies payment via `/api/verify-checkout`
    - If verified: Sets `localStorage.courseUnlocked_breakup = 'true'`
-   - Navigation updates to show "CONTINUE THE BREAKUP RESET"
+   - Navigation updates to show "Continue Pattern Reset"
 
 **Page Sections:**
 1. Hero with CTA

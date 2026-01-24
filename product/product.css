@@ -1087,7 +1087,7 @@
     }
     
     .breakup-course-page .product-hero {
-        background: url('../images/Course Hero Mobile.jpg') center center/cover no-repeat;
+        background: #252526;
         min-height: 80vh;
         padding: 0; /* Ensure no padding to connect with header */
     }
@@ -1178,7 +1178,7 @@
 
 /* Page-specific hero styles */
 .breakup-course-page .product-hero {
-  background: url('../images/Course Hero.jpg') center center/cover no-repeat;
+  background: #252526;
   position: relative;
   padding: 0;
   margin-top: 0;
@@ -1224,7 +1224,7 @@
 /* Move this to the end of the file for proper override */
 @media (max-width: 600px) {
   .breakup-course-page .product-hero {
-    background: url('../images/Course Hero Mobile.jpg') center center/cover no-repeat;
+    background: #252526;
     height: 95vh;
     padding: 0 0 3rem 0;
     margin-top: 0;
