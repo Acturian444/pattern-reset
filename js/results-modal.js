@@ -490,6 +490,7 @@
                             exactAge: exactAge,
                             relationshipStatus: relationshipStatus,
                             firstName: firstName,
+                            birthDate: birthDate,
                             sortedDrivers: sortedDriversWithPercentages,
                             answers: state.answers || [], // Pass answers for personalized story
                             driverScores: driverScores,
@@ -508,10 +509,12 @@
                             }
                         });
                         
-                        // Add PDF download button and journaling after results are rendered
+                        // Initialize workbook downloads, invite button, journaling, and pill selector after results are rendered
                         setTimeout(() => {
-                            addPDFDownloadButton(container, pattern, firstName);
+                            initWorkbookDownloads(container, pattern, firstName);
+                            initInviteQuizButton(container);
                             initJournaling(container, pattern);
+                            initWorkbookPills(container, pattern);
                         }, 500);
                     } catch (e) {
                         console.error('Error rendering results:', e);
@@ -566,9 +569,11 @@
         
         // Initialize workbook download buttons in Your Next Step section
         initWorkbookDownloads(container, pattern, firstName);
+        // Initialize invite quiz button
+        initInviteQuizButton(container);
     }
     
-    // Initialize workbook download buttons (full report, workbook, affirmation card)
+    // Initialize workbook download buttons (full report, workbook)
     function initWorkbookDownloads(container, pattern, firstName) {
         const downloadButtons = container.querySelectorAll('.workbook-download-btn');
         downloadButtons.forEach(btn => {
@@ -578,11 +583,75 @@
                     downloadPDFReport(container, pattern, firstName);
                 } else if (downloadType === 'workbook') {
                     downloadWorkbookPDF(container, pattern, firstName);
-                } else if (downloadType === 'affirmation-card') {
-                    downloadAffirmationCard(container, pattern, firstName);
                 }
             };
         });
+    }
+
+    // Initialize invite quiz button - copy quiz link to clipboard
+    function initInviteQuizButton(container) {
+        const btn = container.querySelector('#cta-invite-quiz-btn');
+        if (!btn) return;
+        const quizUrl = window.location.origin + (window.location.pathname || '/') + '#quiz-section';
+        btn.onclick = function() {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(quizUrl).then(function() {
+                    showInviteToast(container, 'Link copied! Send it to anyone who would benefit.');
+                    const textSpan = btn.querySelector('.cta-invite-btn-text');
+                    if (textSpan) {
+                        textSpan.textContent = 'Copied!';
+                        setTimeout(function() { textSpan.textContent = 'Copy Quiz Link'; }, 2000);
+                    }
+                }).catch(function() {
+                    fallbackCopyQuizLink(quizUrl, container, btn);
+                });
+            } else {
+                fallbackCopyQuizLink(quizUrl, container, btn);
+            }
+        };
+    }
+
+    function fallbackCopyQuizLink(url, container, btn) {
+        const ta = document.createElement('textarea');
+        ta.value = url;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            document.execCommand('copy');
+            showInviteToast(container, 'Link copied! Send it to anyone who would benefit.');
+            const textSpan = btn.querySelector('.cta-invite-btn-text');
+            if (textSpan) {
+                textSpan.textContent = 'Copied!';
+                setTimeout(function() { textSpan.textContent = 'Copy Quiz Link'; }, 2000);
+            }
+        } catch (e) {
+            showInviteToast(container, 'Could not copy. Share this link: ' + url, true);
+        }
+        document.body.removeChild(ta);
+    }
+
+    function showInviteToast(container, message, isError) {
+        const existing = container.querySelector('.cta-invite-toast');
+        if (existing) existing.remove();
+        const toast = document.createElement('div');
+        toast.className = 'cta-invite-toast' + (isError ? ' cta-invite-toast-error' : '');
+        toast.textContent = message;
+        const inviteCard = container.querySelector('.cta-invite-container');
+        if (inviteCard) {
+            inviteCard.style.position = 'relative';
+            inviteCard.appendChild(toast);
+            setTimeout(function() {
+                if (toast.parentNode) toast.classList.add('cta-invite-toast-visible');
+            }, 10);
+            setTimeout(function() {
+                toast.classList.remove('cta-invite-toast-visible');
+                setTimeout(function() {
+                    if (toast.parentNode) toast.remove();
+                }, 300);
+            }, 3000);
+        }
     }
     
     // Helper function to wait for fonts and content to be ready
@@ -620,47 +689,22 @@
         waitForContentReady(() => {
             setTimeout(() => {
                 try {
-                    // Get the "How to Break Your Pattern" accordion section - FIX: use data-section attribute
-                    const accordion = container.querySelector('.accordion-item[data-section="how-to-break"]');
-                    if (!accordion) {
-                        // Fallback: try to find it by class and check if it exists
-                        const allAccordions = container.querySelectorAll('.accordion-item');
-                        let foundAccordion = null;
-                        allAccordions.forEach(acc => {
-                            if (acc.getAttribute('data-section') === 'how-to-break') {
-                                foundAccordion = acc;
-                            }
-                        });
-                        if (!foundAccordion) {
-                            alert('Workbook section not found. Please ensure the "How to Break Your Pattern" section is visible in the results.');
-                            if (btn) {
-                                btn.innerHTML = originalHTML;
-                                btn.disabled = false;
-                            }
-                            return;
+                    // Get the workbook outer box (visible container, Parts 1–4 collapsible inside)
+                    const workbookBox = container.querySelector('.workbook-outer-box');
+                    if (!workbookBox) {
+                        alert('Workbook section not found. Please ensure the Pattern Reset Workbook is visible in the results.');
+                        if (btn) {
+                            btn.innerHTML = originalHTML;
+                            btn.disabled = false;
                         }
-                        accordion = foundAccordion;
+                        return;
                     }
                 
                     // Clone the workbook section
-                    const workbookClone = accordion.cloneNode(true);
+                    const workbookClone = workbookBox.cloneNode(true);
                     
-                    // Expand it and ensure all content is visible
-                    const content = workbookClone.querySelector('.accordion-content');
-                    if (content) {
-                        content.style.maxHeight = 'none';
-                        content.style.height = 'auto';
-                        content.style.display = 'block';
-                        content.style.visibility = 'visible';
-                        content.style.opacity = '1';
-                        content.style.padding = '1.5rem 2rem';
-                    }
-                    
-                    // Remove accordion header button
-                    const headerBtn = workbookClone.querySelector('.accordion-header');
-                    if (headerBtn) {
-                        headerBtn.remove();
-                    }
+                    // Expand all collapsible parts (details) so PDF includes full content
+                    workbookClone.querySelectorAll('details.workbook-part-details').forEach(d => d.setAttribute('open', ''));
                     
                     // Ensure all nested content is visible
                     workbookClone.querySelectorAll('*').forEach(el => {
@@ -682,10 +726,27 @@
                     }
                     
                     // Replace journal UI with actual answers
-                    workbookClone.querySelectorAll('li[data-journal-id]').forEach(li => {
-                        const journalId = li.getAttribute('data-journal-id');
+                    workbookClone.querySelectorAll('[data-journal-id]').forEach(el => {
+                        if (el.classList && el.classList.contains('workbook-pill-group')) {
+                            const areasRaw = journalData['p1-life-pattern-merged-areas'];
+                            const extra = journalData['p1-life-pattern-merged-extra'] || '';
+                            let areas = [];
+                            try {
+                                if (areasRaw) areas = JSON.parse(areasRaw);
+                            } catch (e) {}
+                            const parts = [];
+                            if (areas.length) parts.push('<strong>Areas:</strong> ' + areas.join(', '));
+                            if (extra) parts.push('<strong>Anything else:</strong> ' + extra.replace(/\n/g, '<br>'));
+                            const answerDiv = document.createElement('div');
+                            answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
+                            answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + (parts.length ? parts.join('<br>') : 'No selections yet') + '</p>';
+                            el.replaceWith(answerDiv);
+                            return;
+                        }
+                        const journalId = el.getAttribute('data-journal-id');
+                        if (journalId === 'p1-life-pattern-merged-extra') return;
                         const answer = journalData[journalId];
-                        const journalUI = li.querySelector('.journal-ui');
+                        const journalUI = el.querySelector('.journal-ui');
                         if (journalUI && answer) {
                             const answerDiv = document.createElement('div');
                             answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 0.75rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
@@ -695,7 +756,7 @@
                             journalUI.remove();
                         }
                     });
-                    
+
                     // Remove all buttons
                     workbookClone.querySelectorAll('button').forEach(b => b.remove());
                 
@@ -850,7 +911,7 @@
                 const definitePurpose = journalData['p0-intention'] || `I am breaking my ${pattern.name} pattern to create the life I want.`;
                 const why = journalData['p0-why'] || 'Because I deserve freedom from this pattern.';
                 const vision = journalData['p1-vision-1'] || 'I see myself living free from this pattern, making choices aligned with who I\'m becoming.';
-                const identity = journalData['p1-vision-2'] || 'I am someone who breaks my pattern.';
+                const identity = journalData['p2-desire-identity'] || journalData['p1-vision-2'] || 'I am someone who breaks my pattern.';
                 const oneYear = journalData['p3-g-1yr'] || 'I will know I\'ve broken this pattern when I consistently choose differently.';
                 
                 // Create card HTML (wallet-sized, printable)
@@ -981,57 +1042,146 @@
             var raw = localStorage.getItem(storageKey);
             if (raw) data = JSON.parse(raw);
         } catch (e) { data = {}; }
-        function trunc(s, n) { if (!s) return ''; return s.length <= n ? s : s.slice(0, n) + '\u2026'; }
         function saveData() { try { localStorage.setItem(storageKey, JSON.stringify(data)); } catch (e) {} }
-        var items = container.querySelectorAll('li[data-journal-id]');
-        items.forEach(function(li) {
-            var id = li.getAttribute('data-journal-id');
-            var ui = li.querySelector('.journal-ui');
+        var items = container.querySelectorAll('[data-journal-id]');
+        var saveTimeouts = {};
+        items.forEach(function(el) {
+            if (el.classList && el.classList.contains('workbook-pill-group')) return;
+            var id = el.getAttribute('data-journal-id');
+            var ui = el.querySelector('.journal-ui');
             if (!ui) return;
-            var trigger = ui.querySelector('.journal-trigger');
-            var preview = ui.querySelector('.journal-preview');
-            var previewText = ui.querySelector('.journal-preview-text');
-            var editBtn = ui.querySelector('.journal-edit');
             var entry = ui.querySelector('.journal-entry');
-            var textarea = entry ? entry.querySelector('textarea') : null;
-            var saveBtn = ui.querySelector('.journal-save');
-            var cancelBtn = ui.querySelector('.journal-cancel');
-            if (!trigger || !preview || !entry || !textarea || !saveBtn || !cancelBtn) return;
-            function showEntry() {
-                trigger.style.display = 'none';
-                preview.style.display = 'none';
-                entry.style.display = 'block';
-                textarea.value = data[id] || '';
-                textarea.focus();
-            }
-            function hideEntry(showPreview) {
-                entry.style.display = 'none';
-                if (showPreview && data[id]) {
-                    previewText.textContent = trunc(data[id], 80);
-                    preview.style.display = '';
-                    trigger.style.display = 'none';
-                } else {
-                    preview.style.display = 'none';
-                    trigger.style.display = '';
-                }
-            }
+            var textarea = entry ? entry.querySelector('textarea.journal-textarea') : null;
+            var savedIndicator = entry ? entry.querySelector('.journal-saved-indicator') : null;
+            if (!entry || !textarea) return;
+            
+            // Load existing data
             if (data[id]) {
-                previewText.textContent = trunc(data[id], 80);
-                preview.style.display = '';
-                trigger.style.display = 'none';
+                textarea.value = data[id];
             }
-            trigger.addEventListener('click', showEntry);
-            if (editBtn) editBtn.addEventListener('click', showEntry);
-            saveBtn.addEventListener('click', function() {
+            
+            // Auto-save on input with debounce
+            textarea.addEventListener('input', function() {
                 var val = textarea.value.trim();
-                if (val) data[id] = val; else delete data[id];
-                saveData();
-                hideEntry(true);
+                if (val) {
+                    data[id] = val;
+                } else {
+                    delete data[id];
+                }
+                
+                // Clear existing timeout
+                if (saveTimeouts[id]) {
+                    clearTimeout(saveTimeouts[id]);
+                }
+                
+                // Save after 500ms of no typing
+                saveTimeouts[id] = setTimeout(function() {
+                    saveData();
+                    // Show saved indicator briefly
+                    if (savedIndicator) {
+                        savedIndicator.style.display = 'block';
+                        setTimeout(function() {
+                            savedIndicator.style.display = 'none';
+                        }, 1500);
+                    }
+                }, 500);
             });
-            cancelBtn.addEventListener('click', function() { hideEntry(true); });
+            
+            // Auto-resize textarea
+            textarea.addEventListener('input', function() {
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            });
+            
+            // Set initial height
+            if (textarea.value) {
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            }
         });
     }
-    
+
+    // Workbook pill selector (Part 1 Q2): life areas + dynamic pains display when area selected
+    function initWorkbookPills(container, pattern) {
+        if (!container || !pattern || !pattern.name) return;
+        var storageKey = 'patternReset_journal_' + pattern.name;
+        var data = {};
+        try {
+            var raw = localStorage.getItem(storageKey);
+            if (raw) data = JSON.parse(raw);
+        } catch (e) { data = {}; }
+        function saveData() { try { localStorage.setItem(storageKey, JSON.stringify(data)); } catch (e) {} }
+
+        var group = container.querySelector('.workbook-pill-group[data-journal-id="p1-life-pattern-merged"]');
+        if (!group) return;
+
+        var areasKey = 'p1-life-pattern-merged-areas';
+        var areasEl = group.querySelector('.workbook-pills[data-pill-group="areas"]');
+        var painsContainer = group.querySelector('.workbook-pains-display-container');
+        var painsLabel = painsContainer ? painsContainer.querySelector('.workbook-pains-area-names') : null;
+        var painsPills = painsContainer ? painsContainer.querySelector('.workbook-pains-display-pills') : null;
+
+        function refreshPainsDisplay() {
+            if (!painsContainer || !painsPills || typeof window.getCombinedPainsByArea !== 'function') return;
+            var selected = [];
+            if (areasEl) {
+                areasEl.querySelectorAll('.workbook-pill.selected').forEach(function(p) {
+                    selected.push(p.getAttribute('data-value'));
+                });
+            }
+            if (selected.length === 0) {
+                painsContainer.style.display = 'none';
+                return;
+            }
+            var seen = {};
+            var pills = [];
+            selected.forEach(function(area) {
+                var combined = window.getCombinedPainsByArea(area, pattern.name);
+                (combined || []).forEach(function(p) {
+                    if (!seen[p]) { seen[p] = true; pills.push(p); }
+                });
+            });
+            painsLabel.textContent = selected.join(', ');
+            painsPills.innerHTML = pills.map(function(p) {
+                return '<span class="workbook-pill workbook-pill-display">' + p + '</span>';
+            }).join('');
+            painsContainer.style.display = 'block';
+        }
+
+        function loadAndRestore() {
+            var areas = [];
+            try {
+                if (data[areasKey]) areas = JSON.parse(data[areasKey]);
+            } catch (e) {}
+            if (areasEl) {
+                areasEl.querySelectorAll('.workbook-pill').forEach(function(pill) {
+                    var v = pill.getAttribute('data-value');
+                    if (areas.indexOf(v) >= 0) pill.classList.add('selected');
+                    else pill.classList.remove('selected');
+                });
+            }
+            refreshPainsDisplay();
+        }
+        loadAndRestore();
+
+        function onPillClick(container, key) {
+            if (!container) return;
+            container.querySelectorAll('.workbook-pill').forEach(function(pill) {
+                pill.addEventListener('click', function() {
+                    pill.classList.toggle('selected');
+                    var vals = [];
+                    container.querySelectorAll('.workbook-pill.selected').forEach(function(p) {
+                        vals.push(p.getAttribute('data-value'));
+                    });
+                    data[key] = JSON.stringify(vals);
+                    saveData();
+                    if (key === areasKey) refreshPainsDisplay();
+                });
+            });
+        }
+        onPillClick(areasEl, areasKey);
+    }
+
     // Generate and download PDF report
     function downloadPDFReport(container, pattern, firstName) {
         // Check if html2pdf is available
@@ -1150,17 +1300,33 @@
                     }
                     
                     // Replace journal UI with actual answers in the cloned content
-                    contentClone.querySelectorAll('li[data-journal-id]').forEach(li => {
-                        const journalId = li.getAttribute('data-journal-id');
+                    contentClone.querySelectorAll('[data-journal-id]').forEach(el => {
+                        if (el.classList && el.classList.contains('workbook-pill-group')) {
+                            const areasRaw = journalData['p1-life-pattern-merged-areas'];
+                            const extra = journalData['p1-life-pattern-merged-extra'] || '';
+                            let areas = [];
+                            try {
+                                if (areasRaw) areas = JSON.parse(areasRaw);
+                            } catch (e) {}
+                            const parts = [];
+                            if (areas.length) parts.push('<strong>Areas:</strong> ' + areas.join(', '));
+                            if (extra) parts.push('<strong>Anything else:</strong> ' + extra.replace(/\n/g, '<br>'));
+                            const answerDiv = document.createElement('div');
+                            answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
+                            answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + (parts.length ? parts.join('<br>') : 'No selections yet') + '</p>';
+                            el.replaceWith(answerDiv);
+                            return;
+                        }
+                        if (el.getAttribute('data-journal-id') === 'p1-life-pattern-merged-extra') return;
+                        const journalId = el.getAttribute('data-journal-id');
                         const answer = journalData[journalId];
-                        const journalUI = li.querySelector('.journal-ui');
+                        const journalUI = el.querySelector('.journal-ui');
                         if (journalUI && answer) {
                             const answerDiv = document.createElement('div');
                             answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 0.75rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
                             answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + answer.replace(/\n/g, '<br>') + '</p>';
                             journalUI.replaceWith(answerDiv);
                         } else if (journalUI) {
-                            // Remove journal UI if no answer
                             journalUI.remove();
                         }
                     });
@@ -1177,6 +1343,10 @@
                         }
                     });
                     
+                    // Hide invite section in PDF (not actionable in static PDF)
+                    const inviteContainer = contentClone.querySelector('.cta-invite-container');
+                    if (inviteContainer) inviteContainer.style.display = 'none';
+
                     // Remove CTA link but keep the text
                     const ctaLinks = contentClone.querySelectorAll('.cta-section a, .btn-results-cta');
                     ctaLinks.forEach(link => {

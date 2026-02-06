@@ -7,7 +7,7 @@
     window.ResultsRenderer = {
         // Load and render full results content
         renderFullResults: function(container, data) {
-            const { pattern, archetype, patternDominance, dominanceLabel, driverPercentages, totalScore, exactAge, relationshipStatus, firstName, birthDate, sortedDrivers, answers, driverScores } = data;
+            const { pattern, archetype, patternDominance, dominanceLabel, driverPercentages, totalScore, exactAge, relationshipStatus, firstName, sortedDrivers, answers, driverScores } = data;
             
             // Get driver names and descriptions
             const driverNames = {
@@ -83,7 +83,6 @@
                 exactAge,
                 relationshipStatus,
                 firstName,
-                birthDate: birthDate || null,
                 sortedDrivers: sortedDriversArray,
                 driverNames,
                 driverDescriptions,
@@ -109,7 +108,7 @@
             pattern, archetype, patternDominance, dominanceLabel, 
             driverPercentages, firstName, sortedDrivers, 
             driverNames, driverDescriptions, personalizedIntro, nextResetDate,
-            exactAge, relationshipStatus, answers, driverScores, quizData, birthDate
+            exactAge, relationshipStatus, answers, driverScores, quizData
         } = data;
         
         // Safety checks - ensure required data exists
@@ -157,7 +156,7 @@
             <div class="results-hero-section">
             <div class="results-header">
                     <h1 class="results-title">Hi <span class="user-name-red">${firstName || 'there'}</span>,<br>This Is the Pattern That's Been Running Your Life</h1>
-                    <p class="results-subtitle">You're not broken. You've been repeating something you couldn't see until now. Below, your free Pattern Reset Workbook: a self-paced blueprint to break your pattern and transform your life.</p>
+                    <p class="results-subtitle">You're not broken. You've been repeating something you couldn't see—until now.</p>
             </div>
             
                 <!-- Pattern Display - Professional & Clean -->
@@ -171,9 +170,9 @@
                         ${pattern.coreBelief ? `<div class="pattern-core-belief-preview">"${pattern.coreBelief}"</div>` : ''}
                         ${getAllDriversGrid(sortedDriversArray, driverPercentagesObj)}
                     </div>
-                    </div>
                 </div>
-                
+            </div>
+            
             <!-- Visual Divider -->
             <div class="results-section-divider"></div>
             
@@ -183,151 +182,20 @@
                 ${getQuickSummary(archetype, pattern, patternDominance, dominanceLabel, firstName, exactAge, relationshipStatus, answers, quizData || window.quizData || [], sortedDriversArray, driverPercentagesObj)}
                 
                 <!-- Dive Deeper - Expandable Hero Content -->
-                ${getComprehensiveHeroContent(archetype, pattern, patternDominance, dominanceLabel, answers, sortedDriversArray, driverPercentagesObj, firstName, exactAge, relationshipStatus, quizData || window.quizData || [], birthDate)}
-            
-                <!-- Divider + Section intro (matches border-top pattern used in Emotional Drivers, etc.) -->
-                <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 2rem;">
-                    <h2 class="about-pattern-title" style="margin-bottom: 0.5rem;">Transform Your Life in One Day</h2>
-                    <p class="content-text" style="color: #555; font-size: 1rem; font-weight: 400; margin: 0 0 1.5rem 0; line-height: 1.6;">You've seen your pattern. The workbook below is your one-day reset—from autopilot to you choosing who you're becoming.</p>
-                    
-                    <h4 class="how-developed-title" style="color: #ca0013; font-weight: 700; margin-bottom: 0.75rem;">You Don't Have to Wait for Life to Break You</h4>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 400; line-height: 1.7;">Most people only change when life forces them to change through trauma, loss, breakdown, or hitting rock bottom. We carry patterns that drive our lives and keep us stuck in loops of trauma we haven't processed, problems that repeat, unhappiness that feels unshakeable, and lack of progress in all areas of life. Until we see it, the pattern runs on autopilot. We can't change what we can't see.</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 400; line-height: 1.7;"><strong>You don't have to wait for a breakdown to have a breakthrough.</strong> Instead of letting your pattern run your life, you can choose to interrupt it consciously. This reset is where that happens. You choose the life you want and how you want to live it.</p>
-                    <p style="margin: 0 0 0.5rem 0; font-weight: 700; color: #000; font-size: 0.95rem;"><span style="background: rgba(202, 0, 19, 0.06); padding: 0.5rem 1rem; border-radius: 8px; display: inline-block;">Your Before / After</span></p>
-                    <p class="content-text" style="margin-bottom: 2rem; color: #000; font-weight: 400; line-height: 1.7;">Moving from before to after requires an identity shift. Get clear on who you want to become, then commit to aligning with that version every day. That's when you reprogram yourself and break free from the loop. The workbook below is where you make it real.</p>
-                    
-                    <h4 class="how-developed-title" style="color: #ca0013; font-weight: 700; margin-bottom: 0.75rem;">Pattern Interruption</h4>
-                    <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">Your pattern formed in childhood as a survival strategy and became deeply encoded. It runs on autopilot long after it stopped serving you. One decision can truly change your life. Here's how it formed—and how pattern interruption breaks the cycle:</p>
-                    <div class="pattern-interrupt-diagram" style="margin-bottom: 1.5rem;">
-                        <p style="margin: 0 0 0.75rem 0; font-weight: 700; font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">How Your Pattern Formed</p>
-                        <div style="display: flex; flex-direction: column; gap: 0;">
-                            <div style="padding: 1rem 1.25rem; background: #fff; border-radius: 8px 8px 0 0; border: 1px solid rgba(0,0,0,0.06); border-bottom: none; display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">1</span>
-                                <div><p style="margin: 0 0 0.35rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Childhood Experience</p><p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #555;">Created a core fear or need (unsafe, unseen, unworthy, out of control)</p></div>
-                            </div>
-                            <div style="height: 1px; background: #eee; margin: 0 1rem;"></div>
-                            <div style="padding: 1rem 1.25rem; background: #fff; border-left: 1px solid rgba(0,0,0,0.06); border-right: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">2</span>
-                                <div><p style="margin: 0 0 0.35rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Emotional Driver Developed</p><p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #555;">Strategy to cope ("If I control things, I'm safe" / "If I get approval, I'm worthy" / etc.)</p></div>
-                            </div>
-                            <div style="height: 1px; background: #eee; margin: 0 1rem;"></div>
-                            <div style="padding: 1rem 1.25rem; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-top: none; border-radius: 0 0 8px 8px; display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">3</span>
-                                <div><p style="margin: 0 0 0.35rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Pattern Became Automatic</p><p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #555;">Years of repetition wired it in. Your subconscious (95% of behavior) learned: "This is how I survive. This is who I am."</p></div>
-                            </div>
-                        </div>
-                        <div style="margin: 1rem 0; padding: 1.25rem; background: rgba(202, 0, 19, 0.06); border-radius: 8px; border: 1px solid rgba(202, 0, 19, 0.25); text-align: center;">
-                            <p style="margin: 0; font-weight: 700; font-size: 1rem; color: #ca0013;">⟳ Pattern Interruption</p>
-                            <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: #555; line-height: 1.5;">Hits the pause button on autopilot. Creates a moment of awareness—conscious choice where there was only automatic reaction.</p>
-                        </div>
-                        <p style="margin: 0 0 0.75rem 0; font-weight: 700; font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">How to Interrupt It</p>
-                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                            <div style="padding: 1rem 1.25rem; background: #fff; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">1</span>
-                                <div><p style="margin: 0 0 0.2rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Awareness</p><p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: #555;">Face your pattern head-on. Notice when the pattern shows up instead of running on autopilot.</p></div>
-                            </div>
-                            <div style="padding: 1rem 1.25rem; background: #fff; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">2</span>
-                                <div><p style="margin: 0 0 0.2rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Conscious Decision</p><p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: #555;">Choose to change. Make the deliberate choice to act differently in that moment.</p></div>
-                            </div>
-                            <div style="padding: 1rem 1.25rem; background: #fff; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">3</span>
-                                <div><p style="margin: 0 0 0.2rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Daily Practice</p><p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: #555;">Reset through repetition. Repeatedly choose the new way until it becomes your default.</p></div>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7; font-style: italic; color: #666;">That pattern served you then. It may not serve you now. The same brain that wired it in can rewire it. But it doesn't change on its own. It changes when you choose.</p>
-                    <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;"><strong>There is a moment when everything shifts:</strong> when you see the pattern clearly and decide to interrupt it. That moment—that mental shift—is when transformation begins. Not when life breaks you. Not when you've hit rock bottom. When you choose. Clarity plus decision. That's when you draw the line between who you've been and who you're becoming.</p>
-                    <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;"><strong>One decision starts it.</strong> Choosing every day makes it stick. Each time you interrupt the old pattern and choose differently, you strengthen the new pathway. Over time, those choices compound. They stop feeling like effort and start feeling like who you are. That's the <strong>identity shift</strong>: the accumulation of daily choices that rewires what's been running on autopilot—until the new way becomes who you are without trying.</p>
-                    <p class="content-text" style="margin-bottom: 2rem; color: #000; font-weight: 600; line-height: 1.7;">You've seen your pattern. That's the clarity. The decision is yours. The workbook supports that choice.</p>
-
-                    <h4 class="how-developed-title" style="color: #ca0013; font-weight: 700; margin-bottom: 0.75rem;">Before Your Reset</h4>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; font-size: 0.95rem; line-height: 1.6;">Things to know before you begin:</p>
-                    <ul style="margin: 0 0 2rem 0; padding-left: 1.5rem; line-height: 1.8; color: #333;">
-                        <li style="margin-bottom: 0.75rem;"><strong>You're not broken.</strong> There's nothing wrong with you. Your pattern isn't a flaw—it's something you developed to survive.</li>
-                        <li style="margin-bottom: 0.75rem;"><strong>Self-compassion beats self-criticism.</strong> Criticism fuels shame and keeps you stuck. Compassion builds resilience and supports transformation.</li>
-                        <li style="margin-bottom: 0.75rem;"><strong>Own who you are. You're already enough.</strong> Stop waiting to be perfect. Worth isn't earned through perfection—it's inherent. When you own who you are now, things become easier.</li>
-                        <li style="margin-bottom: 0.75rem;"><strong>Step back from the inner critic.</strong> See yourself as a kind observer would: from a distance, with kindness. Radical self-acceptance, not judgment.</li>
-                        <li style="margin-bottom: 0.75rem;"><strong>Choose to change from self-love.</strong> Keep your word to yourself. Make decisions from who you're becoming.</li>
-                        <li style="margin-bottom: 0.75rem;"><strong>This workbook isn't about fixing you.</strong> It's about becoming who you already are: complete, whole, and free from the patterns that keep you stuck.</li>
-                        <li style="margin-bottom: 0;"><strong>Progress over perfection.</strong> Aligned action is what matters. Change takes time; your brain needs it. You can't rush lasting change. Patience is what makes it stick.</li>
-                    </ul>
-                    
-                    <div style="margin-bottom: 2rem;">
-                        <h4 class="how-developed-title" style="color: #ca0013; font-weight: 700; margin-bottom: 0.75rem;">10 Principles for Transformation</h4>
-                        <p class="content-text" style="margin-bottom: 0;">These principles explain how transformation works. They draw on neuroscience, psychology, and behavior change research. Expand any to learn why each one matters.</p>
-                        <details class="principles-outer">
-                            <summary class="principles-trigger">
-                                <span>Expand to learn the 10 principles</span>
-                                <span class="principle-chevron" aria-hidden="true">▶</span>
-                            </summary>
-                            <div class="principles-list">
-                                <details class="principle-card">
-                                    <summary><span>Your Brain Doesn't Know What's Real—It Believes What You Repeat</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Your brain doesn't know what's real. It believes what you repeat. If you keep saying "I'm broke" or "There are no good men out there," your brain goes, I got it—and life keeps proving you right. Understanding this principle helps you notice what you've been repeating so you can choose new patterns.</div>
-                                </details>
-                                <details class="principle-card">
-                                    <summary><span>Feelings Matter More Than Thoughts</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Your body is the signal, and emotions are the confirmation. You don't manifest what you want—you manifest what feels normal to you. If you feel that love is unsafe, you might keep attracting emotionally unavailable people. This is why feeling the cost of your pattern creates the emotional charge needed for real change.</div>
-                                </details>
-                                <details class="principle-card">
-                                    <summary><span>Your Subconscious Runs 95% of Your Life</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Your subconscious runs 95% of your life. If it's programmed for lack or struggle, logic won't fix it. But repetition plus emotion can rewire it. For example, if you grew up watching financial struggle and your subconscious learned that was normal, you may keep recreating it until you stop that loop and reprogram it. Understanding this principle helps you work with your subconscious, not just logic.</div>
-                                </details>
-                                <details class="principle-card">
-                                    <summary><span>Your Nervous System Decides What You Attract</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">If you're always stressed and in survival mode, you will manifest survival, not abundance. When your nervous system feels calm about what you want, that's when it can draw it in. Understanding this principle helps you see why your pattern interrupt—moving out of survival mode and into choice—matters.</div>
-                                </details>
-                                <details class="principle-card">
-                                    <summary><span>Identity Is the True Magnet</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Manifestation isn't about getting—it's about becoming. Ask yourself: Who would you be if you already had all that you wanted? Who would you be if it had already worked out? If you keep seeing yourself as someone who doesn't get love, that's what you'll manifest more of. Understanding this principle helps you shift your identity first, then act from that place.</div>
-                                </details>
-                                <details class="principle-card">
-                                    <summary><span>Your Brain Learns Through Imagination</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">This is why visualization works—or if you can't visualize, you can use another sense. Your mind rehearses your future. If you keep imagining failure, your brain prepares you for that exactly. If you vividly imagine who you're becoming, your brain prepares for that instead. Understanding this principle helps you see why rehearsing your future matters.</div>
-                                </details>
-                                <details class="principle-card">
-                                    <summary><span>Consistency Beats Intensity</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">One single affirmation won't rewire years of conditioning, but small shifts daily can. If you only focus on change when you're panicking, that stress becomes the pattern in your mind. Understanding this principle helps you see why consistent daily practice—not occasional intensity—rewires neural pathways more effectively.</div>
-                                </details>
-                                <details class="principle-card">
-                                    <summary><span>Doubt Doesn't Stop Transformation. Fear Does.</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">You can doubt and still move forward. Doubt is normal—you can doubt and still come back to your vision. But fear keeps you stuck. If you're scared of being abandoned, you might unconsciously keep pushing people away. Fear activates survival mode, reinforcing the old pattern. Understanding this principle helps you name your fear and choose awareness anyway.</div>
-                                </details>
-                                <details class="principle-card">
-                                    <summary><span>Actions Matter, But Aligned Action</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Never force anything. Inspired action feels natural, obvious, not exhausting. When you take action from the new version of yourself, it becomes much simpler. But if your actions come from desperation, the results will also come from desperation. Understanding this principle helps you identify what the person you're becoming would do—that's aligned action.</div>
-                                </details>
-                                <details class="principle-card">
-                                    <summary><span>Your Environment Reinforces Your Beliefs</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Your phone, your room, your routines—they all reprogram you. That's why you need to redesign what you have around you. If your surroundings reflect chaos and lack, your nervous system stays there. If your environment reflects who you're becoming, it reinforces your new identity. Understanding this principle helps you see why your surroundings constantly influence you.</div>
-                                </details>
-                            </div>
-                            <p class="principles-footer">Neuroscience shows 21–66 days of consistent practice rewires neural pathways. These principles are for awareness and education. The workbook gives you a structure to apply them.</p>
-                        </details>
-                    </div>
-            </div>
-            
-                <!-- Bridge to workbook -->
-                <div style="margin-bottom: 3rem;">
-                    <div style="margin-bottom: 0; padding: 1.25rem; background: rgba(202, 0, 19, 0.06); border-radius: 8px; border-left: 4px solid rgba(202, 0, 19, 0.3);">
-                        <p class="content-text" style="margin-bottom: 0; color: #000; font-weight: 600; line-height: 1.7;"><span style="color: #ca0013;">This is where your transformation begins.</span> The quiz gave you awareness; the workbook gives you the structure. One day, one reset. All it takes is a decision—a choice. Break your pattern. Create your after. The moment is now.</p>
-                    </div>
+                ${getComprehensiveHeroContent(archetype, pattern, patternDominance, dominanceLabel, answers, sortedDriversArray, driverPercentagesObj, firstName, exactAge, relationshipStatus, quizData || window.quizData || [])}
+                
+                <p class="content-text" style="margin: 1.5rem 0 1rem 0; color: #555;">Next: <strong>Your free Pattern Reset Workbook</strong>. A self-paced blueprint to break your pattern and transform your life.</p>
+                
+                <!-- ACCORDION: Your Pattern Reset Workbook (merged) -->
+                <div class="results-accordion">
+                    ${getAccordionSection('how-to-break', 'Your Pattern Reset Workbook', getMergedHowToBreakPattern(pattern, firstName, archetype), false)}
                 </div>
                 
-                <!-- Workbook: visible box, Parts 1–4 collapsible inside -->
-                <div class="workbook-outer-box">
-                    <h3 class="workbook-outer-title">Your <span style="color: #ca0013;">Pattern Reset</span> Workbook</h3>
-                    <div class="workbook-outer-content">
-                        ${getMergedHowToBreakPattern(pattern, firstName, archetype, birthDate, exactAge)}
-                    </div>
-                </div>
-                
-                <!-- Continue Your Transformation - Modern CTA Section -->
-            <div class="cta-section">
-                    <div class="cta-header">
-                        <h4 class="cta-title">Continue Your Transformation</h4>
-                        <p class="cta-description">Work through your workbook at your own pace. When your pattern shows up, use your interrupt and choose differently. Every practice session builds new neural pathways.</p>
+                <!-- Your Next Step - Minimal Modern Design -->
+                <div class="cta-section">
+                    <div style="margin-bottom: 1.5rem;">
+                        <h4 class="cta-title" style="font-size: 1.15rem; margin-bottom: 0.75rem;">Continue Your Transformation</h4>
+                        <p class="content-text" style="color: #555; line-height: 1.7; margin: 0;">Work through your workbook at your own pace. When your pattern shows up, use your interrupt and choose differently. Every practice session builds new neural pathways.</p>
                     </div>
                     
                     <div class="workbook-downloads-container">
@@ -347,23 +215,16 @@
                                     <span class="btn-subtitle">With your answers</span>
                                 </span>
                             </button>
-                        </div>
-                    </div>
-
-                    <div class="cta-invite-container">
-                        <div class="cta-invite-card">
-                            <span class="cta-invite-icon"><i class="fas fa-paper-plane"></i></span>
-                            <div class="cta-invite-content">
-                                <p class="cta-invite-title">Invite Someone to Take the Quiz</p>
-                                <p class="cta-invite-subtitle">They'll get their own results and workbook.</p>
-                            </div>
-                            <button type="button" class="cta-invite-btn" id="cta-invite-quiz-btn">
-                                <span class="cta-invite-btn-text">Copy Quiz Link</span>
-                                <span class="cta-invite-btn-icon"><i class="fas fa-link"></i></span>
+                            <button type="button" class="workbook-download-btn" data-download-type="affirmation-card">
+                                <span class="btn-icon"><i class="fas fa-id-card"></i></span>
+                                <span class="btn-text">
+                                    <span class="btn-title">Affirmation Card</span>
+                                    <span class="btn-subtitle">Carry your purpose</span>
+                                </span>
                             </button>
                         </div>
-            </div>
-            
+                    </div>
+                    
                     <p class="workbook-note">Your answers are saved automatically. Return anytime to continue.</p>
                 </div>
             </div>
@@ -1275,19 +1136,6 @@
         'Balance & self-worth': 'I am someone who balances giving with receiving.'
     };
 
-    // Life-area affirmations (Part 3) — science-backed subconscious rewiring per area
-    const PATTERN_ROBOTIC_AFFIRMATIONS_BY_AREA = {
-        'The Escaper': { love: 'I am someone who stays present in intimacy. I feel emotions fully and I am safe when I feel.', money: 'I am someone who faces financial reality with calm clarity. I meet what is without fleeing.', health: 'I am someone who stays with my body and its signals. I feel what I feel and I am safe.', career: 'I am someone who shows up for difficult conversations and hard tasks. I face, I don\'t flee.', identity: 'I am worthy of feeling. I am safe when I am present with myself.', purpose: 'I am someone who moves toward what matters instead of numbing. I am aligned.', lifestyle: 'I am someone who chooses presence over escape. I live fully in each moment.' },
-        'The Fixer': { love: 'I am someone who listens without fixing. I trust others to own their part.', money: 'I am someone who lets others manage their own finances. I stay out of what isn\'t mine.', health: 'I am someone who cares for myself first. I allow others to handle their own health.', career: 'I am someone who delegates and trusts. I don\'t take over what belongs to others.', identity: 'I am worthy when I don\'t fix. I am safe when others struggle.', purpose: 'I am someone who allows rather than controls. I am aligned.', lifestyle: 'I am someone who receives as much as I give. I live with ease.' },
-        'The Perfectionist': { love: 'I am someone who connects without perfecting. Good enough is enough.', money: 'I am someone who makes decisions without endless analysis. I choose and move.', health: 'I am someone who rests without guilt. I am enough as I am.', career: 'I am someone who ships before it\'s perfect. Progress over perfection.', identity: 'I am worthy without achieving. I am enough.', purpose: 'I am someone who accepts and acts. I am aligned.', lifestyle: 'I am someone who chooses self-acceptance over perfection. I live with peace.' },
-        'The Overthinker': { love: 'I am someone who acts from the heart. I show up before I have all the answers.', money: 'I am someone who takes informed action. I move before over-analyzing.', health: 'I am someone who acts on my body\'s needs. I don\'t overthink self-care.', career: 'I am someone who does before I know. Action is my teacher.', identity: 'I am worthy when I act. I am safe when I move.', purpose: 'I am someone who acts toward what matters. I am aligned.', lifestyle: 'I am someone who chooses action over analysis. I live fully.' },
-        'The Pleaser': { love: 'I am someone who speaks my truth. I say no when I mean no.', money: 'I am someone who sets financial boundaries. I give from choice, not obligation.', health: 'I am someone who honors my limits. I rest when I need to.', career: 'I am someone who declines what doesn\'t serve me. My time has value.', identity: 'I am worthy when I say no. I am safe when I prioritize myself.', purpose: 'I am someone who keeps healthy boundaries. I am aligned.', lifestyle: 'I am someone who chooses honesty over approval. I live authentically.' },
-        'The Performer': { love: 'I am someone who shows up as myself. I am loved for who I am, not what I achieve.', money: 'I am someone who creates value without performing. My worth isn\'t tied to recognition.', health: 'I am someone who rests without proving. I don\'t need to earn rest.', career: 'I am someone who works from purpose, not applause. I am enough without the spotlight.', identity: 'I am worthy without achievement. I am enough as I am.', purpose: 'I am someone who chooses authenticity over image. I am aligned.', lifestyle: 'I am someone who lives for myself first. I live freely.' },
-        'The Guarded One': { love: 'I am someone who opens up when it\'s safe. I share what I feel.', money: 'I am someone who asks for what I need. I receive support.', health: 'I am someone who lets others in. I don\'t have to carry it alone.', career: 'I am someone who shares my ideas and feelings. I am safe when I\'m seen.', identity: 'I am worthy of being known. I am safe when I\'m vulnerable.', purpose: 'I am someone who opens when it\'s safe. I am aligned.', lifestyle: 'I am someone who chooses connection over protection. I live openly.' },
-        'The Overgiver': { love: 'I am someone who receives love fully. I let others give to me.', money: 'I am someone who receives abundance. I am worthy of financial ease.', health: 'I am someone who receives care. I don\'t have to earn rest or support.', career: 'I am someone who accepts help and recognition. I receive as much as I give.', identity: 'I am worthy when I receive. I am enough without overgiving.', purpose: 'I am someone who balances giving and receiving. I am aligned.', lifestyle: 'I am someone who chooses receiving over proving. I live in balance.' }
-    };
-    PATTERN_ROBOTIC_AFFIRMATIONS_BY_AREA['Withdrawer'] = PATTERN_ROBOTIC_AFFIRMATIONS_BY_AREA['The Guarded One'];
-
     const PATTERN_DAILY_LIFE_EXAMPLES = {
         'Fixer': [
             'In relationships, you jump in with solutions when your partner shares a problem, instead of just listening.',
@@ -1327,7 +1175,7 @@
         ],
         'Withdrawer': [
             'In relationships, when your partner gets too close, you pull away emotionally.',
-            'At work, you keep your distance from colleagues, avoiding deeper connection.',
+            'At work, you keep your distance from colleagues, avoiding connection at work.',
             'With finances, you hoard money, afraid to spend or invest, keeping everything "safe."',
             'In your health, you isolate yourself when you\'re struggling with health, not asking for help.'
         ],
@@ -1339,108 +1187,11 @@
         ],
         'The Guarded One': [
             'In relationships, when your partner gets too close, you pull away emotionally.',
-            'At work, you keep your distance from colleagues, avoiding deeper connection.',
+            'At work, you keep your distance from colleagues, avoiding connection at work.',
             'With finances, you hoard money, afraid to spend or invest, keeping everything "safe."',
             'In your health, you isolate yourself when you\'re struggling with health, not asking for help.'
         ]
     };
-
-    // Get "You said..." mirror line from Love Q0, with fallback to Money Q4 or Identity Q12
-    function getMirrorLine(answers, quizData, pattern) {
-        if (!answers || !Array.isArray(answers) || !quizData || quizData.length === 0) return '';
-        const pName = pattern && pattern.name ? pattern.name : '';
-        const mirrorPairs = [
-            { qIndex: 0, prompt: 'when someone pulls away you' },
-            { qIndex: 5, prompt: 'when a money problem hits you' },
-            { qIndex: 12, prompt: 'when you think about your direction in life you' }
-        ];
-        for (const { qIndex, prompt } of mirrorPairs) {
-            if (qIndex >= quizData.length) continue;
-            const ans = answers[qIndex];
-            if (ans === undefined || !quizData[qIndex] || !quizData[qIndex].options) continue;
-            const opt = quizData[qIndex].options[ans];
-            if (!opt || !opt.text) continue;
-            return `You told us ${prompt} "${opt.text}"—that's your ${pName} pattern in action.`;
-        }
-        return '';
-    }
-
-    // Get connecting-the-dots line: childhood → Love/Money (As a child, I felt safest when)
-    // Uses QUESTION_DOMAINS.CHILDHOOD for correct index (index 31 in 47-question quiz, 17 in 28-question quiz)
-    function getConnectingDotsLine(answers, quizData, pattern) {
-        if (!answers || !Array.isArray(answers) || !quizData || quizData.length === 0) return '';
-        const domains = (window.QUIZ_CONFIG && window.QUIZ_CONFIG.QUESTION_DOMAINS) || {};
-        const childhoodDomain = domains.CHILDHOOD || { start: 16, end: 21 };
-        const candidateIndices = [childhoodDomain.start + 1, 17];
-        let qIndex = -1;
-        for (const idx of candidateIndices) {
-            if (idx < quizData.length && quizData[idx] && quizData[idx].question && quizData[idx].question.indexOf('felt safest when') !== -1) {
-                qIndex = idx;
-                break;
-            }
-        }
-        if (qIndex === -1) return '';
-        const q = quizData[qIndex];
-        const ans = answers[qIndex];
-        if (ans === undefined || !q.options) return '';
-        const opt = q.options[ans];
-        if (!opt || !opt.text) return '';
-        let text = opt.text
-            .replace(/^I was\s/i, 'you were ')
-            .replace(/^I could\s/i, 'you could ')
-            .replace(/^I am\s/i, 'you are ')
-            .replace(/^I need\s/i, 'you need ')
-            .replace(/^I needed\s/i, 'you needed ')
-            .replace(/^I had\s/i, 'you had ')
-            .replace(/^I felt\s/i, 'you felt ')
-            .replace(/\bmy\b/gi, 'your');
-        if (text.length > 80) text = text.substring(0, 77) + '...';
-        const phrase = text.charAt(0).toLowerCase() + text.slice(1).replace(/\.$/, '');
-        return `In childhood you felt safest when ${phrase}. Same strategy—now running your relationships, money, and health.`;
-    }
-
-    // Build "What it looks like" — POV mirror moment: day-in-the-life, habits, mindset, cost, stuck loop
-    // Unique per pattern; no repetition with opening, Behind it, or connecting dots
-    function getWhatItLooksLike(pattern, archetype, complex) {
-        const pName = pattern && pattern.name ? pattern.name : '';
-        const prim = complex && complex.primary ? complex.primary : null;
-        const sec = complex && complex.secondary ? complex.secondary : null;
-        const archetypeName = archetype && archetype.name ? archetype.name : '';
-
-        const looksLikeByPattern = {
-            'Fixer': 'You wake up scanning for problems to solve—someone\'s upset, a project slipping, a friend struggling. You step in, take over, offer advice before they ask. You see people as needing you, and that feels safe. The cost: you\'re exhausted, relationships feel one-sided, and you\'ve lost track of your own dreams because you\'re managing everyone else\'s. The more you fix, the more they rely on you—and the more you burn out. Success and fulfillment get deferred while you overfunction.',
-            'Perfectionist': 'You wake up with a mental checklist—every task has to be "right" before you start or finish. You edit, revise, second-guess. You see the world as a judge and yourself as never quite good enough. The cost: opportunities pass while you\'re still preparing; you never feel satisfied; you burn out from the internal pressure. The need to be perfect keeps you paralyzed—acting feels risky, so you analyze instead, and life moves on without you.',
-            'Pleaser': 'You wake up attuned to everyone else\'s needs—your partner, your boss, your friend. You shape your day around what they want and say yes when you want to say no. You see people as needing to be kept happy; your own needs feel secondary. The cost: you\'ve lost yourself, resentment builds, relationships feel hollow because they\'re built on a version of you that isn\'t real. The more you please, the more they expect—and the more you resent. Fulfillment gets buried while you perform.',
-            'Performer': 'You wake up needing to prove something—today you\'ll achieve, impress, show your worth. You dress for the part, say the right things, grind. You see the world as an audience and yourself as only as valuable as your last win. The cost: you feel exhausted when the applause stops; relationships feel shallow because they love the performance, not the real you; success never satisfies because there\'s always another bar to clear. You\'re stuck because being "ordinary" feels terrifying, so you keep performing, and authentic happiness stays out of reach.',
-            'Escaper': 'You wake up and reach for distraction—scroll, busywork, anything but the hard conversation or the difficult feeling. When things get real, you "remember" something else you need to do. You see emotions as dangerous; staying busy feels like safety. The cost: you\'re disconnected from yourself and others; relationships stay surface-level; success stalls because you avoid the hard steps. The more you escape, the more the unresolved piles up—and the more overwhelming it feels. Real fulfillment never lands because you\'re never fully present.',
-            'Overthinker': 'You wake up in your head—every decision gets analyzed, every text decoded, every move second-guessed. You see the world as a puzzle to solve and action as risky until you\'ve thought it through. The cost: opportunities pass while you\'re still thinking; relationships suffer from over-analysis; success stalls because you never take the leap. The more you analyze, the more options appear—and the harder it gets to act. You\'re stuck because thinking feels safe and acting feels dangerous, so you stay in your head while life passes you by.',
-            'Withdrawer': 'You wake up protective—when someone gets close, you pull back. You keep a safe distance emotionally; connection feels risky. You see people as potential sources of pain; distance feels like safety. The cost: you\'re alone even when you\'re not; relationships stay shallow; success feels hollow without someone to share it with. The more you protect yourself, the lonelier you become—and the more you believe connection is dangerous. You\'re stuck because vulnerability feels life-threatening, so you keep your distance, and the connection you want stays out of reach.',
-            'Overgiver': 'You wake up ready to give—time, energy, money, attention. You pour it out, hoping they\'ll see your worth and stay. You see love as something you must earn; yourself as only valuable when you\'re needed. The cost: you\'re depleted and resentful; relationships feel unequal; success and happiness get sacrificed for others. The more you give, the more they take—and the more resentful you become. You\'re stuck because stopping feels like abandonment, so you keep giving, and your own life gets smaller.',
-            'The Guarded One': 'You wake up protective—when someone gets close, you pull back. You keep a safe distance emotionally; connection feels risky. You see people as potential sources of pain; distance feels like safety. The cost: you\'re alone even when you\'re not; relationships stay shallow; success feels hollow without someone to share it with. The more you protect yourself, the lonelier you become—and the more you believe connection is dangerous. You\'re stuck because vulnerability feels life-threatening, so you keep your distance, and the connection you want stays out of reach.',
-            'Guarded One': 'You wake up protective—when someone gets close, you pull back. You keep a safe distance emotionally; connection feels risky. You see people as potential sources of pain; distance feels like safety. The cost: you\'re alone even when you\'re not; relationships stay shallow; success feels hollow without someone to share it with. The more you protect yourself, the lonelier you become—and the more you believe connection is dangerous. You\'re stuck because vulnerability feels life-threatening, so you keep your distance, and the connection you want stays out of reach.'
-        };
-
-        let text = looksLikeByPattern[pName] || looksLikeByPattern['Fixer'];
-        if (prim) {
-            text += ' Your ' + prim + ' amplifies this—beliefs that drove you then, still driving you now.';
-            if (sec) text += ' Your ' + sec + ' adds another layer, making the pattern feel even more automatic.';
-        }
-        return text;
-    }
-
-    // Build "What powers it" text: driver % + short validation/survival line (trimmed for brevity)
-    function getWhatPowersItText(pattern, patternInfo, sortedDrivers, driverPercentages, driverNames) {
-        const d = sortedDrivers && sortedDrivers.length > 0 ? sortedDrivers[0][0] : 'control';
-        const pct = driverPercentages && driverPercentages[d] ? driverPercentages[d] : 0;
-        const d2 = sortedDrivers && sortedDrivers.length > 1 ? sortedDrivers[1][0] : null;
-        const pct2 = d2 && driverPercentages && driverPercentages[d2] ? driverPercentages[d2] : 0;
-        const dn = driverNames || { control: 'Control', avoidance: 'Avoidance', validation: 'Validation', 'fear-of-rejection': 'Fear of Rejection' };
-        let opening = `Your ${pattern.name} pattern is powered primarily by ${dn[d]} (${pct}%)`;
-        if (d2 && pct2 >= 15) opening += `, with ${dn[d2]} (${pct2}%) also influencing you`;
-        else opening += '—your primary emotional driver';
-        opening += '. What once kept you safe is now running on autopilot—and limiting you.';
-        return opening;
-    }
 
     // For "it pushes you to [X]" (Why It Happens) and "the need to [X] when you feel unsafe" (How It Developed)
     const PATTERN_COMPLEX_THEMES = {
@@ -1691,34 +1442,34 @@
         const driverContexts = {
             'control': {
                 title: 'Control Driver',
-                description: 'The need to manage situations and outcomes to feel safe. Activates when things feel chaotic or unpredictable—you take charge instinctively.',
-                howItApplies: `As ${archetype.name}, your control driver (${driverPercentages['control'] || 0}%) shows up as ${pattern.name.toLowerCase()}—you take charge and create structure when you feel unsafe.`,
-                impact: dominantDriver === 'control' ? 'Primary force behind your pattern.' : `Influences ${driverPercentages['control'] || 0}% of decisions—surfaces when you need to feel in charge.`
+                description: 'You seek safety through taking charge and solving problems.',
+                howItApplies: `As ${archetype.name}, your control driver (${dominantPercent}%) shows up as ${pattern.name.toLowerCase()}—you take charge and create structure when you feel unsafe. This is your primary way of feeling secure.`,
+                impact: dominantDriver === 'control' ? 'This is your dominant driver—it\'s the primary force behind your pattern.' : `While not your dominant driver, control still influences ${driverPercentages['control'] || 0}% of your decisions, showing up when you need to feel in charge.`
             },
             'avoidance': {
                 title: 'Avoidance Driver',
-                description: 'The need to stay free and avoid discomfort to feel safe. Activates when emotions or commitment feel threatening—you move, numb, or stay flexible.',
-                howItApplies: `As ${archetype.name}, your avoidance driver (${driverPercentages['avoidance'] || 0}%) shows up as ${pattern.name.toLowerCase()}—you stay mobile and avoid commitment when you feel unsafe.`,
-                impact: dominantDriver === 'avoidance' ? 'Primary force behind your pattern.' : `Influences ${driverPercentages['avoidance'] || 0}% of decisions—surfaces when you need to feel free.`
+                description: 'You avoid difficult emotions by staying free and flexible.',
+                howItApplies: `As ${archetype.name}, your avoidance driver (${driverPercentages['avoidance'] || 0}%) shows up as ${pattern.name.toLowerCase()}—you stay mobile and avoid commitment when you feel unsafe. This is how you protect yourself.`,
+                impact: dominantDriver === 'avoidance' ? 'This is your dominant driver—it\'s the primary force behind your pattern.' : `While not your dominant driver, avoidance still influences ${driverPercentages['avoidance'] || 0}% of your decisions, showing up when you need to feel free.`
             },
             'validation': {
                 title: 'Validation Driver',
-                description: 'The need for approval and recognition to feel worthy. Activates when you feel unseen—you achieve, perform, or please to earn acceptance.',
-                howItApplies: `As ${archetype.name}, your validation driver (${driverPercentages['validation'] || 0}%) shows up as ${pattern.name.toLowerCase()}—you perform and earn approval when you feel unsafe.`,
-                impact: dominantDriver === 'validation' ? 'Primary force behind your pattern.' : `Influences ${driverPercentages['validation'] || 0}% of decisions—surfaces when you need to feel valued.`
+                description: 'You seek approval through achievement and recognition.',
+                howItApplies: `As ${archetype.name}, your validation driver (${driverPercentages['validation'] || 0}%) shows up as ${pattern.name.toLowerCase()}—you perform and earn approval when you feel unsafe. This is how you feel worthy.`,
+                impact: dominantDriver === 'validation' ? 'This is your dominant driver—it\'s the primary force behind your pattern.' : `While not your dominant driver, validation still influences ${driverPercentages['validation'] || 0}% of your decisions, showing up when you need to feel valued.`
             },
             'fear-of-rejection': {
                 title: 'Fear of Rejection Driver',
-                description: 'The need to protect yourself from hurt or abandonment. Activates when vulnerability feels dangerous—you distance, perfect, or give to prevent rejection.',
-                howItApplies: `As ${archetype.name}, your fear of rejection driver (${driverPercentages['fear-of-rejection'] || 0}%) shows up as ${pattern.name.toLowerCase()}—you keep boundaries and protect yourself when you feel unsafe.`,
-                impact: dominantDriver === 'fear-of-rejection' ? 'Primary force behind your pattern.' : `Influences ${driverPercentages['fear-of-rejection'] || 0}% of decisions—surfaces when you need to protect yourself.`
+                description: 'You protect yourself by keeping distance and being perfect.',
+                howItApplies: `As ${archetype.name}, your fear of rejection driver (${driverPercentages['fear-of-rejection'] || 0}%) shows up as ${pattern.name.toLowerCase()}—you keep boundaries and protect yourself when you feel unsafe. This is how you stay safe.`,
+                impact: dominantDriver === 'fear-of-rejection' ? 'This is your dominant driver—it\'s the primary force behind your pattern.' : `While not your dominant driver, fear of rejection still influences ${driverPercentages['fear-of-rejection'] || 0}% of your decisions, showing up when you need to protect yourself.`
             }
         };
         
         return `
             <div class="emotional-drivers-breakdown">
                 <h3 class="drivers-section-title">Your 4 Emotional Drivers & How They Apply to You</h3>
-                <p class="drivers-intro">Your 4 emotional drivers are survival strategies—what you learned to do to feel safe. Each one shows up differently in your ${pattern.name} pattern:</p>
+                <p class="drivers-intro">These 4 emotional drivers show how your ${pattern.name} pattern operates. Here's how each one applies to you as ${archetype.name}:</p>
                 
                 <div class="drivers-grid">
                     ${sortedDrivers.map(([driver, percentage]) => {
@@ -2340,7 +2091,7 @@
         const patternExplanations = {
             'Fixer': {
                 quickDesc: 'You step in to solve problems and take charge, even when it\'s not yours to fix.',
-                whatItIs: 'When things feel out of control, you step in—fixing, solving, taking charge, even when it\'s not yours to fix. You believe fixing keeps you safe.',
+                whatItIs: 'The Fixer pattern means you automatically step in to solve problems—even when they\'re not yours to fix. You take responsibility for others\' emotions and outcomes, believing that if you can fix things, you\'ll stay safe and in control.',
                 howItsUnique: 'What makes your Fixer pattern unique is how it shows up in your specific life areas. Your answers revealed that you respond to stress by taking charge—fixing problems, managing situations, and creating solutions. This pattern is powered by your Control driver, which makes you feel safe when you\'re in charge.',
                 whatPowersIt: (driver) => `Your Fixer pattern is powered by your need for control (${driver} driver). When you feel stressed or uncertain, your Control driver activates, making you jump in to solve problems. This was a survival strategy that worked—it made you feel valuable and safe—but now it's limiting your ability to let others take responsibility.`,
                 origin: 'This pattern likely developed in childhood when you learned that your worth came from being helpful. Maybe you had to take care of siblings, or a parent needed you, or you learned that helping others was the only way to feel loved and safe.',
@@ -2354,7 +2105,7 @@
             },
             'Perfectionist': {
                 quickDesc: 'You push for flawlessness and get stuck making things right before acting.',
-                whatItIs: 'When there\'s a decision to make, you stall—analyzing, perfecting, waiting for the right moment. You believe perfection will protect you, but it keeps you paralyzed.',
+                whatItIs: 'The Perfectionist pattern means you automatically try to make everything flawless before acting. You overthink decisions and avoid risks to ensure you do everything "right," believing that perfection will protect you from criticism and rejection.',
                 howItsUnique: 'What makes your Perfectionist pattern unique is how it shows up in your specific life areas. Your answers revealed that you respond to stress by analyzing, perfecting, and ensuring everything is flawless. This pattern is powered by your Control driver, which makes you feel safe when everything is "right."',
                 whatPowersIt: (driver) => `Your Perfectionist pattern is powered by your need for control (${driver} driver). When you feel stressed or uncertain, your Control driver activates, making you strive for flawlessness. This was a survival strategy that worked—it protected you from criticism—but now it's causing you to miss opportunities and never feel good enough.`,
                 origin: 'This pattern likely developed in childhood when you learned that mistakes led to criticism, rejection, or punishment. Maybe you had to be perfect to earn love, or you learned that "good enough" wasn\'t safe.',
@@ -2368,7 +2119,7 @@
             },
             'Pleaser': {
                 quickDesc: 'You say yes and put others first, even when you\'re exhausted.',
-                whatItIs: 'When someone asks, you say yes—even when you want to say no. You shape yourself around what they want and lose yourself in the process.',
+                whatItIs: 'The Pleaser pattern means you automatically say yes and put others\' needs before your own—even when you\'re exhausted. You prioritize harmony over your own needs, believing that keeping others happy will keep you safe and loved.',
                 howItsUnique: 'What makes your Pleaser pattern unique is how it shows up in your specific life areas. Your answers revealed that you respond to stress by saying yes, avoiding conflict, and putting others first. This pattern is powered by your Validation driver, which makes you feel safe when others are happy with you.',
                 whatPowersIt: (driver) => `Your Pleaser pattern is powered by your need for validation (${driver} driver). When you feel stressed or uncertain, your Validation driver activates, making you prioritize others' approval. This was a survival strategy that worked—it kept you safe from conflict—but now it's causing you to lose yourself and feel resentful.`,
                 origin: 'This pattern likely developed in childhood when you learned that your needs didn\'t matter or that keeping others happy was the only way to feel safe. Maybe you had to manage a parent\'s emotions, or you learned that saying "no" led to rejection.',
@@ -2381,8 +2132,8 @@
                 ]
             },
             'Performer': {
-                quickDesc: 'You work to impress and achieve so you feel worthy and belong.',
-                whatItIs: 'When you feel unseen, you push harder—achieving, impressing, proving your worth. The applause stops and you feel empty.',
+                quickDesc: 'You work to impress and achieve so you feel worthy and that you belong.',
+                whatItIs: 'The Performer pattern means you automatically work harder to impress and earn approval. You achieve for others instead of yourself, believing that success and recognition will make you belong and feel worthy.',
                 howItsUnique: 'What makes your Performer pattern unique is how it shows up in your specific life areas. Your answers revealed that you respond to stress by achieving, performing, and seeking recognition. This pattern is powered by your Validation driver, which makes you feel safe when you\'re seen as successful.',
                 whatPowersIt: (driver) => `Your Performer pattern is powered by your need for validation (${driver} driver). When you feel stressed or uncertain, your Validation driver activates, making you work harder to prove your worth. This was a survival strategy that worked—it earned you approval—but now it's causing you to burn out and feel empty.`,
                 origin: 'This pattern likely developed in childhood when you learned that love and acceptance were conditional on achievement. Maybe you had to perform to earn attention, or you learned that being "good enough" required constant success.',
@@ -2396,7 +2147,7 @@
             },
             'Escaper': {
                 quickDesc: 'You stay busy and avoid difficult feelings so you don\'t have to face pain.',
-                whatItIs: 'When things get hard, you move—busy, distracted, anywhere but here. You stay moving so you don\'t have to sit with what you feel.',
+                whatItIs: 'The Escaper pattern means you automatically stay busy and avoid difficult feelings. You numb emotions and avoid deep conversations, believing that not feeling will keep you safe from pain and overwhelm.',
                 howItsUnique: 'What makes your Escaper pattern unique is how it shows up in your specific life areas. Your answers revealed that you respond to stress by staying busy, avoiding feelings, and keeping your options open. This pattern is powered by your Avoidance driver, which makes you feel safe when you\'re free and disconnected.',
                 whatPowersIt: (driver) => `Your Escaper pattern is powered by your need for avoidance (${driver} driver). When you feel stressed or uncertain, your Avoidance driver activates, making you escape through distraction and numbing. This was a survival strategy that worked—it protected you from overwhelming emotions—but now it's causing you to disconnect from yourself and others.`,
                 origin: 'This pattern likely developed in childhood when you learned that difficult emotions were overwhelming, unsafe, or led to rejection. Maybe you had to stay "positive" or "strong," or you learned that feeling deeply was dangerous.',
@@ -2410,7 +2161,7 @@
             },
             'Overthinker': {
                 quickDesc: 'You analyze everything before acting and get stuck in your head.',
-                whatItIs: 'When there\'s a choice to make, you stay in your head—analyzing, researching, figuring it out. You believe thinking will keep you safe, but it keeps you paralyzed.',
+                whatItIs: 'The Overthinker pattern means you automatically analyze everything before acting—often getting stuck in your head. You believe thinking will keep you safe, but this causes you to miss opportunities while analyzing.',
                 howItsUnique: 'What makes your Overthinker pattern unique is how it shows up in your specific life areas. Your answers revealed that you respond to stress by analyzing, thinking through every possibility, and trying to understand everything before acting. This pattern is powered by your Avoidance driver, which makes you feel safe when you\'re in your head instead of your heart.',
                 whatPowersIt: (driver) => `Your Overthinker pattern is powered by your need for avoidance (${driver} driver). When you feel stressed or uncertain, your Avoidance driver activates, making you think instead of feel. This was a survival strategy that worked—it protected you from making mistakes—but now it's causing you to feel paralyzed and miss opportunities.`,
                 origin: 'This pattern likely developed in childhood when you learned that acting without thinking was dangerous. Maybe you had to analyze every situation to stay safe, or you learned that understanding was more valuable than feeling.',
@@ -2424,21 +2175,21 @@
             },
             'Withdrawer': {
                 quickDesc: 'You pull away and protect yourself when someone gets too close.',
-                whatItIs: 'When someone gets close, you pull away. You want connection but closeness feels dangerous—so you protect yourself and end up alone.',
+                whatItIs: 'The Withdrawer pattern means you automatically pull away and protect yourself emotionally when someone gets too close. You keep emotional distance, believing that distance will keep you safe from rejection and hurt.',
                 howItsUnique: 'What makes your Withdrawer pattern unique is how it shows up in your specific life areas. Your answers revealed that you respond to stress by withdrawing, protecting yourself, and keeping emotional distance. This pattern is powered by your Fear of Rejection driver, which makes you feel safe when you\'re independent and disconnected.',
                 whatPowersIt: (driver) => `Your Withdrawer pattern is powered by your fear of rejection (${driver} driver). When you feel stressed or uncertain, your Fear of Rejection driver activates, making you pull away to protect yourself. This was a survival strategy that worked—it protected you from hurt—but now it's causing you to isolate and miss deep connections.`,
                 origin: 'This pattern likely developed in childhood when you learned that vulnerability was dangerous. Maybe you were rejected when you opened up, or you learned that independence was safer than connection.',
                 currentState: 'Right now, you\'re likely pushing people away when they get too close, protecting yourself, but creating the loneliness you fear. You want connection but don\'t know how to open up safely.',
                 dailyLifeExamples: [
                     'In relationships, when your partner gets too close, you pull away emotionally.',
-                    'At work, you keep your distance from colleagues, avoiding deeper connection.',
+                    'At work, you keep your distance from colleagues, avoiding connection at work.',
                     'With finances, you hoard money, afraid to spend or invest, keeping everything "safe."',
                     'In your health, you isolate yourself when you\'re struggling with health, not asking for help.'
                 ]
             },
             'Overgiver': {
                 quickDesc: 'You give more than you receive, hoping they\'ll see your worth and stay.',
-                whatItIs: 'When you want to be loved, you give everything—time, energy, gifts—hoping they\'ll see your worth. You\'re depleted, resentful, and they still don\'t reciprocate.',
+                whatItIs: 'The Overgiver pattern means you automatically give more than you receive, hoping they\'ll see your worth and stay. You sacrifice your needs, believing that giving will prevent abandonment and make you valuable.',
                 howItsUnique: 'What makes your Overgiver pattern unique is how it shows up in your specific life areas. Your answers revealed that you respond to stress by giving, sacrificing, and hoping others will reciprocate. This pattern is powered by your Fear of Rejection driver, which makes you feel safe when you\'re needed and valuable.',
                 whatPowersIt: (driver) => `Your Overgiver pattern is powered by your fear of rejection (${driver} driver). When you feel stressed or uncertain, your Fear of Rejection driver activates, making you give more to prevent abandonment. This was a survival strategy that worked—it kept people close—but now it's causing you to neglect yourself and feel resentful.`,
                 origin: 'This pattern likely developed in childhood when you learned that love was conditional on giving. Maybe you had to give to earn attention, or you learned that your needs didn\'t matter compared to others\'.',
@@ -2452,28 +2203,28 @@
             },
             'The Guarded One': {
                 quickDesc: 'You pull away and protect yourself when someone gets too close.',
-                whatItIs: 'When someone gets close, you pull away. You want connection but closeness feels dangerous—so you protect yourself and end up alone.',
+                whatItIs: 'The Guarded One pattern means you automatically pull away and protect yourself emotionally when someone gets too close. You keep emotional distance, believing that distance will keep you safe from rejection and hurt.',
                 howItsUnique: 'What makes your Guarded One pattern unique is how it shows up in your specific life areas. Your answers revealed that you respond to stress by withdrawing, protecting yourself, and keeping emotional distance. This pattern is powered by your Fear of Rejection driver, which makes you feel safe when you\'re independent and disconnected.',
                 whatPowersIt: (driver) => `Your Guarded One pattern is powered by your fear of rejection (${driver} driver). When you feel stressed or uncertain, your Fear of Rejection driver activates, making you pull away to protect yourself. This was a survival strategy that worked—it protected you from hurt—but now it's causing you to isolate and miss deep connections.`,
                 origin: 'This pattern likely developed in childhood when you learned that vulnerability was dangerous. Maybe you were rejected when you opened up, or you learned that independence was safer than connection.',
                 currentState: 'Right now, you\'re likely pushing people away when they get too close, protecting yourself, but creating the loneliness you fear. You want connection but don\'t know how to open up safely.',
                 dailyLifeExamples: [
                     'In relationships, when your partner gets too close, you pull away emotionally.',
-                    'At work, you keep your distance from colleagues, avoiding deeper connection.',
+                    'At work, you keep your distance from colleagues, avoiding connection at work.',
                     'With finances, you hoard money, afraid to spend or invest, keeping everything "safe."',
                     'In your health, you isolate yourself when you\'re struggling with health, not asking for help.'
                 ]
             },
             'Guarded One': {
                 quickDesc: 'You pull away and protect yourself when someone gets too close.',
-                whatItIs: 'When someone gets close, you pull away. You want connection but closeness feels dangerous—so you protect yourself and end up alone.',
+                whatItIs: 'The Guarded One pattern means you automatically pull away and protect yourself emotionally when someone gets too close. You keep emotional distance, believing that distance will keep you safe from rejection and hurt.',
                 howItsUnique: 'What makes your Guarded One pattern unique is how it shows up in your specific life areas. Your answers revealed that you respond to stress by withdrawing, protecting yourself, and keeping emotional distance. This pattern is powered by your Fear of Rejection driver, which makes you feel safe when you\'re independent and disconnected.',
                 whatPowersIt: (driver) => `Your Guarded One pattern is powered by your fear of rejection (${driver} driver). When you feel stressed or uncertain, your Fear of Rejection driver activates, making you pull away to protect yourself. This was a survival strategy that worked—it protected you from hurt—but now it's causing you to isolate and miss deep connections.`,
                 origin: 'This pattern likely developed in childhood when you learned that vulnerability was dangerous. Maybe you were rejected when you opened up, or you learned that independence was safer than connection.',
                 currentState: 'Right now, you\'re likely pushing people away when they get too close, protecting yourself, but creating the loneliness you fear. You want connection but don\'t know how to open up safely.',
                 dailyLifeExamples: [
                     'In relationships, when your partner gets too close, you pull away emotionally.',
-                    'At work, you keep your distance from colleagues, avoiding deeper connection.',
+                    'At work, you keep your distance from colleagues, avoiding connection at work.',
                     'With finances, you hoard money, afraid to spend or invest, keeping everything "safe."',
                     'In your health, you isolate yourself when you\'re struggling with health, not asking for help.'
                 ]
@@ -2516,26 +2267,18 @@
                     <p class="content-text" style="color: #000; margin: 0 0 1rem 0; font-weight: 400;">
                         ${firstName ? `${firstName}, ` : ''}${patternInfo.whatItIs}
                     </p>
-                    ${(function() {
-                        const mirrorLine = getMirrorLine(answers, quizData || window.quizData || [], pattern);
-                        return mirrorLine ? `<p class="content-text" style="color: #333; margin: 0 0 1rem 0; font-style: italic;">${mirrorLine}</p>` : '';
-                    })()}
-                    <!-- Behind it - Top driver percentages + short survival line -->
                     <p class="content-text" style="margin: 0 0 1rem 0;">
-                        <strong style="color: #000;">Behind it:</strong> ${getWhatPowersItText(pattern, patternInfo, sortedDrivers, driverPercentages, { control: 'Control', avoidance: 'Avoidance', validation: 'Validation', 'fear-of-rejection': 'Fear of Rejection' })}
+                        ${patternInfo.howItsUnique}
                     </p>
-
-                    <!-- What it looks like - day in the life, pattern-specific, personalized with complex -->
-                    <p class="content-text" style="margin: 0 0 1rem 0;">
-                        <strong style="color: #000;">What it looks like:</strong> ${getWhatItLooksLike(pattern, archetype, complex)}
+                    
+                    <!-- What Powers It -->
+                    <p class="content-text" style="margin: 0 0 1.5rem 0;">
+                        <strong style="color: #000;">What powers it:</strong> ${typeof patternInfo.whatPowersIt === 'function' ? patternInfo.whatPowersIt(dominantDriver) : patternInfo.whatPowersIt}
                     </p>
-                    ${(function() {
-                        const dotsLine = getConnectingDotsLine(answers, quizData || window.quizData || [], pattern);
-                        return dotsLine ? `<p class="content-text" style="color: #333; margin: 0 0 1rem 0; font-weight: 500;">${dotsLine}</p>` : '';
-                    })()}
+                    
                     <!-- Where you'll see it (pointer to How This Impacts Your Life) -->
                     <p class="content-text" style="color: #555; margin: 1rem 0 0 0;">
-                        Seeing it clearly is the first step. Open <strong>How This Impacts Your Life</strong> below for where it hits hardest in each area.
+                        You'll see it in relationships, work, money, and health. Open <strong>How This Impacts Your Life</strong> below for details.
                     </p>
                     
                     <!-- How It Developed (comprehensive version) -->
@@ -2600,7 +2343,7 @@
                                 <span style="color: #ca0013;">Your Pattern:</span> ${pattern.name}
                             </p>
                             <p class="content-text" style="color: #555; margin: 0;">
-                                As ${archetype.name}, your pattern is ${pattern.name}—the way your ${archetypeDriverPhrase} shows up in daily life.
+                                As ${archetype.name}, your pattern is ${pattern.name}—the specific way your ${archetypeDriverPhrase} shows up in behavior. ${patternQuickDesc}
                             </p>
                         </div>
                         
@@ -2635,7 +2378,7 @@
                                 <span style="color: #ca0013;">The good news:</span>
                             </p>
                             <p class="content-text" style="color: #555; margin: 0;">
-                                That pathway strengthened with repetition—and it can rewire with consistent new practice.
+                                It runs on autopilot: when you feel unsafe, your brain and body default to ${shadowBehavior}. That pathway strengthened with repetition—and it can rewire with consistent new practice.
                             </p>
                         </div>
                         
@@ -2746,15 +2489,52 @@
             driverListText += `, ${driverNames[secondaryDriver]} ${secondaryPercent}%`;
         }
 
-        // How Everything Connects - box only + caption (per user: only keep the box, add caption if needed)
         let explanation = '';
+
+        // Opening: What the percentage means
+        if (patternDominance >= 70) {
+            explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0 0 1rem 0; line-height: 1.6;">This pattern influences <strong>${patternDominance}% of your daily decisions</strong>—it's deeply wired and runs almost automatically. The remaining ${otherPatternsPercent}% represents other patterns that occasionally surface, but this one is your brain's default response.</p>`;
+        } else if (patternDominance >= 50) {
+            explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0 0 1rem 0; line-height: 1.6;">This pattern influences <strong>${patternDominance}% of your daily decisions</strong>. The other ${otherPatternsPercent}% represents competing patterns that create internal conflict—this is why you might feel pulled in different directions or uncertain about what you actually want.</p>`;
+        } else {
+            explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0 0 1rem 0; line-height: 1.6;">This pattern influences <strong>${patternDominance}% of your daily decisions</strong>. You have multiple patterns operating at similar levels (other patterns make up ${otherPatternsPercent}%), which explains why change can feel confusing—you're not just breaking one pattern, but navigating competing responses.</p>`;
+        }
+
+        // How everything connects - clear, simple explanation (no repetitive heading)
         explanation += `<div style="margin: 1rem 0; padding: 1rem; background: rgba(0, 0, 0, 0.02); border-radius: 6px; border-left: 3px solid #ca0013;">`;
         explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0 0 0.5rem 0; line-height: 1.6;"><strong>Your Emotional Drivers</strong> (${driverListText}) are what you learned to do to feel safe. They're your survival strategies.</p>`;
         explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0 0 0.5rem 0; line-height: 1.6;"><strong>Your Complexes</strong> (${complex.primary || 'complex'}${complex.secondary ? ' + ' + complex.secondary : ''}) are the beliefs that developed from those strategies. They're like the "rules" your brain follows.</p>`;
         explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0 0 0.5rem 0; line-height: 1.6;"><strong>Your Pattern</strong> (${pattern.name}) is what you actually do—the behavior that shows up when you're triggered.</p>`;
         explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0; line-height: 1.6;"><strong>Your Archetype</strong> is your style—how all of this shows up in your life.</p>`;
         explanation += `</div>`;
-        explanation += `<p style="font-size: 0.9rem; color: #666; margin: 0.75rem 0 0 0; line-height: 1.6; font-style: italic;">Understanding this flow helps you see why interrupting your pattern requires working with your drivers and complexes—not just changing surface behavior.</p>`;
+
+        // Simple flow explanation
+        explanation += `<p style="font-size: 0.95rem; color: #555; margin: 1rem 0 0.75rem 0; line-height: 1.6;">Your drivers created your complexes, which created your pattern. It's all connected—one thing led to another.</p>`;
+
+        // Why percentages differ
+        explanation += `<div style="margin: 1rem 0; padding: 1rem; background: rgba(0, 0, 0, 0.02); border-radius: 6px;">`;
+        explanation += `<p style="font-size: 0.95rem; color: #333; margin: 0 0 0.5rem 0; line-height: 1.6; font-weight: 600;">Why percentages differ:</p>`;
+        explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0 0 0.5rem 0; line-height: 1.6;">• <strong>Pattern ${patternDominance}%</strong> = How often you do ${pattern.name} behavior</p>`;
+        explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0; line-height: 1.6;">• <strong>${driverListText}</strong> = How much each survival strategy contributes overall</p>`;
+        explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0.5rem 0 0 0; line-height: 1.6; font-style: italic;">They're different because your drivers create multiple patterns, but ${pattern.name} shows up most (${patternDominance}%).</p>`;
+        explanation += `</div>`;
+
+        // Why two complexes (if applicable)
+        if (complex.secondary) {
+            explanation += `<div style="margin: 1rem 0; padding: 1rem; background: rgba(0, 0, 0, 0.02); border-radius: 6px;">`;
+            explanation += `<p style="font-size: 0.95rem; color: #333; margin: 0 0 0.5rem 0; line-height: 1.6; font-weight: 600;">Why two complexes:</p>`;
+            explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0; line-height: 1.6;">${complex.primary} (main one) drives your pattern. ${complex.secondary} (secondary) adds another layer, making it stronger.</p>`;
+            explanation += `</div>`;
+        }
+
+        // What this means for change
+        if (patternDominance >= 70) {
+            explanation += `<p style="font-size: 0.95rem; color: #555; margin: 1rem 0 0; line-height: 1.6;"><strong>What this means for change:</strong> Because this pattern is so dominant, breaking it will have the biggest impact on your life. It's also the most automatic, so change requires consistent awareness and intentional interruption—but the payoff is transformative.</p>`;
+        } else if (patternDominance >= 50) {
+            explanation += `<p style="font-size: 0.95rem; color: #555; margin: 1rem 0 0; line-height: 1.6;"><strong>What this means for change:</strong> While this is your dominant pattern, the ${otherPatternsPercent}% of competing patterns create internal conflict that makes change harder. You'll need to not only interrupt this pattern but also clarify which competing response you're moving toward.</p>`;
+        } else {
+            explanation += `<p style="font-size: 0.95rem; color: #555; margin: 1rem 0 0; line-height: 1.6;"><strong>What this means for change:</strong> With multiple patterns at similar levels, you have more flexibility—but also more confusion. The key is choosing one pattern to focus on breaking first, then the others will become clearer. Start here.</p>`;
+        }
 
         return explanation;
     }
@@ -2771,7 +2551,7 @@
     }
     
     // Comprehensive Hero Content - Strengths, Triggers, Consequences, Impact, Drivers
-    function getComprehensiveHeroContent(archetype, pattern, patternDominance, dominanceLabel, answers, sortedDrivers, driverPercentages, firstName, exactAge, relationshipStatus, quizData, birthDate) {
+    function getComprehensiveHeroContent(archetype, pattern, patternDominance, dominanceLabel, answers, sortedDrivers, driverPercentages, firstName, exactAge, relationshipStatus, quizData) {
         const dominantDriver = sortedDrivers[0][0];
         const dominantPercent = driverPercentages[dominantDriver];
         const complex = pattern.complex || {};
@@ -2782,7 +2562,7 @@
                 ${getStrengthsTriggersConsequences(pattern, archetype, complex)}
                 
                 <!-- How It Impacts Your Life -->
-                ${getHowItImpactsYourLife(pattern, archetype, complex, patternDominance, firstName, sortedDrivers, driverPercentages, exactAge, relationshipStatus, birthDate)}
+                ${getHowItImpactsYourLife(pattern, archetype, complex, patternDominance, firstName, sortedDrivers, driverPercentages, exactAge, relationshipStatus)}
                 
                 <!-- Emotional Drivers Visual - Clickable with Details -->
                 ${getSimplifiedDriversVisual(sortedDrivers, driverPercentages, dominantDriver, dominantPercent, firstName)}
@@ -3032,7 +2812,7 @@
     }
     
     // Get How It Impacts Your Life
-    function getHowItImpactsYourLife(pattern, archetype, complex, patternDominance, firstName, sortedDrivers, driverPercentages, exactAge, relationshipStatus, birthDate) {
+    function getHowItImpactsYourLife(pattern, archetype, complex, patternDominance, firstName, sortedDrivers, driverPercentages, exactAge, relationshipStatus) {
         // Get dominant driver info
         const dominantDriver = sortedDrivers && sortedDrivers[0] ? sortedDrivers[0][0] : 'control';
         const dominantPercent = driverPercentages && driverPercentages[dominantDriver] ? driverPercentages[dominantDriver] : 30;
@@ -3043,49 +2823,49 @@
                 id: 'love',
                 icon: '💕',
                 title: 'Love & Relationships',
-                getImpact: () => getLifeAreaImpact('love', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
+                getImpact: () => getLifeAreaImpact('love', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus)
             },
             {
                 id: 'money',
                 icon: '💰',
                 title: 'Money & Finances',
-                getImpact: () => getLifeAreaImpact('money', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
+                getImpact: () => getLifeAreaImpact('money', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus)
             },
             {
                 id: 'health',
                 icon: '🏃',
                 title: 'Health & Habits',
-                getImpact: () => getLifeAreaImpact('health', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
+                getImpact: () => getLifeAreaImpact('health', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus)
             },
             {
                 id: 'career',
                 icon: '💼',
                 title: 'Career & Work',
-                getImpact: () => getLifeAreaImpact('career', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
+                getImpact: () => getLifeAreaImpact('career', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus)
             },
             {
                 id: 'identity',
                 icon: '🎭',
                 title: 'Identity & Self-Worth',
-                getImpact: () => getLifeAreaImpact('identity', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
+                getImpact: () => getLifeAreaImpact('identity', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus)
             },
             {
                 id: 'purpose',
                 icon: '🎯',
                 title: 'Purpose & Goals',
-                getImpact: () => getLifeAreaImpact('purpose', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
+                getImpact: () => getLifeAreaImpact('purpose', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus)
             },
             {
                 id: 'lifestyle',
                 icon: '🌱',
                 title: 'Lifestyle & Daily Habits',
-                getImpact: () => getLifeAreaImpact('lifestyle', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
+                getImpact: () => getLifeAreaImpact('lifestyle', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus)
             },
             {
                 id: 'productivity',
                 icon: '⏰',
                 title: 'Productivity & Time',
-                getImpact: () => getLifeAreaImpact('productivity', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
+                getImpact: () => getLifeAreaImpact('productivity', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus)
             }
         ];
         
@@ -3130,26 +2910,12 @@
         `;
     }
     
-    // Optional one-sentence insight from birthdate (Sun/Moon). No astrology mentioned on front end.
-    function getLifeAreaInsight(area, birthDate) {
-        if (!birthDate || !window.AstrologyUtils) return '';
-        var moonSign = window.AstrologyUtils.getMoonSign(birthDate);
-        var sunSign = window.AstrologyUtils.getSunSign(birthDate);
-        var moonAreas = ['love', 'money', 'health', 'lifestyle', 'productivity'];
-        var sunAreas = ['identity', 'purpose', 'career'];
-        if (moonAreas.indexOf(area) !== -1 && moonSign) return window.AstrologyUtils.getMoonInsight(moonSign) || '';
-        if (sunAreas.indexOf(area) !== -1 && sunSign) return window.AstrologyUtils.getSunInsight(sunSign) || '';
-        return '';
-    }
-    
     // Helper function to generate condensed impact format
-    function generateCondensedImpact(summary, challenge, benefit, solution) {
-        const solutionBlock = solution ? `<p class="solution-text" style="margin-top: 1rem; padding: 1rem; background: #fffcf1; border-left: 3px solid #d4a84b; border-radius: 4px; font-size: 0.95rem; line-height: 1.6;"><strong style="color: #000;">How to overcome:</strong> ${solution}</p>` : '';
+    function generateCondensedImpact(summary, challenge, benefit) {
         return `
             <div class="life-area-detail-condensed">
                 <div class="impact-summary">
                     <p class="summary-text">${summary}</p>
-                    ${solutionBlock}
                 </div>
                 
                 <div class="challenge-benefit">
@@ -3167,112 +2933,96 @@
         `;
     }
     
-    // Generate detailed impact for each life area (birthDate optional for Sun/Moon insight)
-    function getLifeAreaImpact(area, pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) {
+    // Generate detailed impact for each life area
+    function getLifeAreaImpact(area, pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus) {
         const impactData = {
-            love: getLoveImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate),
-            money: getMoneyImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate),
-            health: getHealthImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate),
-            career: getCareerImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate),
-            identity: getIdentityImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate),
-            purpose: getPurposeImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate),
-            lifestyle: getLifestyleImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate),
-            productivity: getProductivityImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate)
+            love: getLoveImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus),
+            money: getMoneyImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge),
+            health: getHealthImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge),
+            career: getCareerImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge),
+            identity: getIdentityImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge),
+            purpose: getPurposeImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge),
+            lifestyle: getLifestyleImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge),
+            productivity: getProductivityImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge)
         };
         
         return impactData[area] || '<p>Impact data not available for this area.</p>';
     }
     
-    // Condensed impact functions - Summary = behavior + consequence; Challenge = belief, cost, or loop only (no repeat of summary)
-    function getImpactLookupName(patternName) {
-        return (patternName === 'The Guarded One' || patternName === 'Guarded One') ? 'Withdrawer' : patternName;
-    }
-    function getLoveImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) {
+    // Condensed impact functions - Unified summaries with challenges and benefits
+    function getLoveImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus) {
         const impactSummaries = {
             'Fixer': {
                 summary: relationshipStatus === 'single' 
-                    ? 'Your ' + pattern.name + ' pattern makes you jump in to "fix" dates who seem lost, believing solving their problems will make them stay. They pull away when they feel controlled, leaving you confused about why relationships don\'t work.'
-                    : 'Your ' + pattern.name + ' pattern makes you immediately solve your partner\'s problems—even when they need to handle it themselves. Resentment builds: you feel unappreciated, they feel controlled.',
-                challenge: 'A part of you believes you\'re only valuable when you\'re fixing things—so stepping back feels like losing your role.',
-                benefit: 'You stop fixing and start listening. Balanced partnership replaces overfunctioning—both of you show up, support each other, and feel seen. The relationship deepens because you\'re no longer carrying it alone; trust and intimacy grow when you let them step in.',
-                solution: (p, arch, cplx, rel) => 'Use the "pause-and-ask" rule: when your partner or a date shares a problem (their job stress, family conflict, anything they\'re struggling with), pause before offering solutions. Say: "Do you want my help figuring this out, or do you just need me to listen?" Most people want to be heard first—when you listen and reflect back ("That sounds really frustrating"), they feel seen. That builds intimacy faster than fixing. Your Anchor need for control is satisfied when you choose when to step in; stepping back when they want listening teaches your brain that connection can happen without you solving everything.'
+                    ? 'Your ${pattern.name} pattern makes you jump in to "fix" dates who seem lost, believing solving their problems will make them stay. But they pull away when they feel controlled, leaving you confused about why relationships don\'t work.'
+                    : 'Your ${pattern.name} pattern makes you immediately solve your partner\'s problems—even when they need to handle it themselves. This creates resentment: you feel unappreciated, they feel controlled.',
+                challenge: 'You struggle to let others take responsibility, which prevents them from growing and creates one-sided relationships.',
+                benefit: 'When you break this pattern, you\'ll experience balanced relationships where both partners can be vulnerable and support each other without one person overfunctioning.'
             },
             'Perfectionist': {
                 summary: relationshipStatus === 'single'
-                    ? 'Your ' + pattern.name + ' pattern makes you analyze every potential partner for flaws and overthink every text and date. You end up alone because no one meets your standards.'
-                    : 'Your ' + pattern.name + ' pattern makes you overthink every decision together, trying to make the "right" choice. Paralysis and missed opportunities follow; your partner feels they can\'t measure up.',
-                challenge: 'You never feel safe enough to choose, so you stay in analysis instead of connection.',
-                benefit: 'You choose instead of analyze. Real connection replaces the chase for "perfect"—you show up as you are, accept them as they are, and build a relationship based on presence, not impossible standards. The paralysis lifts; love becomes possible.',
-                solution: (p, arch, cplx, rel) => 'Set a "good enough" deadline: 3 dates or 3 weeks, then decide. Example: if you\'re dating, after date 3, ask yourself "Do I enjoy being with them?"—not "Are they perfect?" If you\'re in a relationship and stuck on a decision (where to live, how to spend the weekend), give yourself 48 hours, then pick the "good enough" option. Why it works: your brain is wired to find flaws when you analyze endlessly; committing to a timeframe forces you to feel instead of judge. The more you practice choosing despite imperfection, the less paralysis controls your love life.'
+                    ? 'Your ${pattern.name} pattern makes you analyze every potential partner for flaws, waiting for the "perfect" match. You overthink every text, every date—but end up alone because no one meets your impossible standards.'
+                    : 'Your ${pattern.name} pattern makes you overthink every decision together, trying to make the "right" choice. This leads to paralysis and missed opportunities. Your partner feels they can\'t measure up.',
+                challenge: 'Your perfectionism prevents you from taking risks in love, causing you to miss real connections while waiting for the impossible.',
+                benefit: 'When you break this pattern, you\'ll be able to connect authentically, accept imperfection, and build relationships based on real connection, not impossible standards.'
             },
             'Pleaser': {
                 summary: relationshipStatus === 'single'
-                    ? 'Your ' + pattern.name + ' pattern makes you say yes to dates you\'re not interested in and shape yourself to what they want. They leave when they realize it\'s not the real you.'
-                    : 'Your ' + pattern.name + ' pattern makes you say yes to everything your partner wants, even when exhausted. Resentment grows and you lose yourself; you don\'t know who you are outside of pleasing them.',
-                challenge: 'The more you please to feel safe, the less they know the real you—and the more you need their approval to feel okay.',
-                benefit: 'You say no without guilt and yes from desire. The real you shows up—attracting people who love who you actually are. Mutual respect replaces people-pleasing; you feel valued for your authenticity, not your compliance.',
-                solution: (p, arch, cplx, rel) => 'Before saying yes to anything—a date, a plan, a request—say: "Let me check my schedule" or "I need to think about it." Buy yourself 24 hours. Then ask: "Do I want this, or am I saying yes to avoid their disappointment?" Examples: say no to one date you\'re not excited about; decline one plan that exhausts you. Your People-Pleasing Complex makes you believe "no" will cause rejection—but the opposite is true. When you say no to what doesn\'t serve you, you attract people who respect boundaries and want the real you, not the version you perform.'
+                    ? 'Your ${pattern.name} pattern makes you say yes to dates you\'re not interested in, losing yourself trying to be what they want. They leave when they realize it\'s not the real you.'
+                    : 'Your ${pattern.name} pattern makes you say yes to everything your partner wants, even when exhausted. This leads to resentment and losing yourself in the relationship. You don\'t know who you are outside of pleasing them.',
+                challenge: 'You lose your identity in relationships, constantly adapting to what others want, which prevents authentic connection.',
+                benefit: 'When you break this pattern, you\'ll show up as your true self, attract people who love the real you, and build relationships based on mutual respect and authenticity.'
             },
             'Performer': {
                 summary: relationshipStatus === 'single'
-                    ? 'Your ' + pattern.name + ' pattern makes you work hard to impress dates—achieving, succeeding, showing your best self. They leave when they see the real you; you\'re exhausted from performing.'
-                    : 'Your ' + pattern.name + ' pattern makes you work hard to be the "perfect" partner, achieving to earn approval. You\'re exhausted and they don\'t see the real you—performing, not connecting.',
-                challenge: 'A part of you believes you\'re only worthy when you\'re impressive—so showing your vulnerable self feels dangerous.',
-                benefit: 'You stop performing and start connecting. Others see and love the real you—beyond achievements. Intimacy replaces exhaustion; you feel worthy for who you are, not what you accomplish. The mask comes off; the relationship deepens.',
-                solution: (p, arch, cplx, rel) => 'Share one small imperfection or uncertainty per week. Examples: "I was nervous before our date," "I\'m not sure how this will go," "I messed up at work today and it\'s bothering me." Your Catalyst drive for validation makes you hide anything that might reduce your worth—but people bond over shared vulnerability, not polished performance. When you share something imperfect, you give them permission to be real too. The relationship deepens because they finally see you, not the version you\'re performing.'
+                    ? 'Your ${pattern.name} pattern makes you work hard to impress dates—achieving, succeeding, showing your best self. But they leave when they see the real you, exhausted from performing.'
+                    : 'Your ${pattern.name} pattern makes you work hard to be the "perfect" partner, achieving to earn approval. But you\'re exhausted and they don\'t see the real you. You\'re performing, not connecting.',
+                challenge: 'You\'re so focused on impressing that you never show your authentic self, preventing deep intimacy and connection.',
+                benefit: 'When you break this pattern, you\'ll connect from a place of authenticity, allowing others to see and love the real you beyond achievements.'
             },
             'Escaper': {
                 summary: relationshipStatus === 'single'
-                    ? 'Your ' + pattern.name + ' pattern makes you stay busy, avoid deep conversations, and pull away when things get serious. You want connection but can\'t let yourself have it; intimacy feels threatening.'
-                    : 'Your ' + pattern.name + ' pattern makes you avoid conflict—staying busy, numbing feelings, or withdrawing. Distance and unresolved issues grow; your partner feels you\'re not present.',
-                challenge: 'Avoiding discomfort keeps you from the very closeness you want, so you stay alone inside the relationship.',
-                benefit: 'You stay present through hard conversations instead of escaping. Deep, secure relationships replace surface connections. Partners feel you\'re fully there; you finally feel seen, chosen, and able to receive love without shutting down. The intimacy you\'ve been avoiding becomes real.',
-                solution: (p, arch, cplx, rel) => 'When you feel the urge to leave—check your phone, change the subject, or physically exit—commit to staying 5 more minutes. Say: "I need a moment, but I\'m not leaving." Sit with the discomfort. Your Wanderer tendency is to escape when feelings get intense; small doses of "stay" rewire that habit. Start with low-stakes moments: when a conversation gets deep, when your partner shares something emotional. The more you practice staying through discomfort, the less your brain treats intimacy as a threat. Connection becomes possible because you stop running.'
+                    ? 'Your ${pattern.name} pattern makes you stay busy, avoid deep conversations, and pull away when things get serious. You want connection but can\'t let yourself have it because intimacy feels threatening.'
+                    : 'Your ${pattern.name} pattern makes you avoid conflict—staying busy, numbing feelings, or withdrawing. This creates distance and unresolved issues. Your partner feels you\'re not present.',
+                challenge: 'You avoid emotional intimacy to protect yourself, but this creates the loneliness and disconnection you\'re trying to escape.',
+                benefit: 'When you break this pattern, you\'ll be able to stay present through difficult emotions, build deep connections, and experience the intimacy you actually crave.'
             },
             'Overthinker': {
                 summary: relationshipStatus === 'single'
-                    ? 'Your ' + pattern.name + ' pattern makes you analyze every text and date, trying to figure out if they\'re "the one" before you know them. You get stuck in analysis paralysis and miss opportunities.'
-                    : 'Your ' + pattern.name + ' pattern makes you analyze every interaction, trying to figure out what they "really" mean. Anxiety and distance build; you\'re in your head instead of your heart.',
-                challenge: 'Figuring it out feels safer than feeling it—so you stay in your head instead of your heart.',
-                benefit: 'You trust your gut and act from your heart. Overthinking gives way to presence—you connect instead of analyze, feel instead of figure out. Relationships feel alive; you move toward what you want instead of staying stuck in your head.',
-                solution: (p, arch, cplx, rel) => 'When you catch yourself analyzing ("What did that text mean?" "Are we compatible?"), switch the question: "What do I feel right now?" Place your hand on your chest or belly and name the sensation—anxious, excited, scared, hopeful. Your brain defaults to thinking because it feels safer than feeling; grounding in your body interrupts that loop. In conversation, when you\'re tempted to decode their words, ask instead: "Can you tell me more?" Let them clarify instead of you guessing. Your Wanderer mind wants certainty—but love grows through presence, not analysis.'
+                    ? 'Your ${pattern.name} pattern makes you analyze every text, every date, trying to figure out if they\'re "the one" before you even know them. You get stuck in analysis paralysis, missing opportunities while thinking.'
+                    : 'Your ${pattern.name} pattern makes you analyze every interaction, trying to figure out what they "really" mean. This creates anxiety and distance. You\'re in your head instead of your heart.',
+                challenge: 'You overthink relationships instead of experiencing them, using analysis as a way to avoid vulnerability and real connection.',
+                benefit: 'When you break this pattern, you\'ll trust your instincts, be present in relationships, and connect from your heart instead of your head.'
             },
             'Withdrawer': {
                 summary: relationshipStatus === 'single'
-                    ? 'Your ' + pattern.name + ' pattern makes you push people away when they get too close, protecting yourself from rejection but creating the loneliness you fear.'
-                    : 'Your ' + pattern.name + ' pattern makes you pull away when your partner gets too close or vulnerable, creating the distance you fear. They feel rejected; you feel misunderstood.',
-                challenge: 'Closeness feels like it leads to hurt—so you leave before you can be left.',
-                benefit: 'You open up instead of pulling away. Vulnerability becomes possible—you let people in, stay present when they get close, and build the deep connections you\'ve been protecting yourself from. Loneliness ends; real intimacy begins.',
-                solution: (p, arch, cplx, rel) => 'Share one small true feeling or need before you pull away. Examples: "I felt hurt when you said that," "I need some space but I\'ll be back," "I\'m scared of getting too close." Your Guardian instinct is to protect through distance—but your Emotional Unavailability Complex keeps you lonelier the more you protect. Small disclosures feel risky, yet they build trust. When you share something real and they stay, your brain learns that closeness doesn\'t always lead to hurt. Start with one sentence per day; the compound effect rewires your avoidance.'
+                    ? 'Your ${pattern.name} pattern makes you push people away when they get too close, protecting yourself from rejection but creating the loneliness you fear.'
+                    : 'Your ${pattern.name} pattern makes you pull away when your partner gets too close or vulnerable, creating the distance you fear. They feel rejected, you feel misunderstood.',
+                challenge: 'You protect yourself through distance, but this creates the very abandonment and isolation you\'re trying to avoid.',
+                benefit: 'When you break this pattern, you\'ll be able to open up safely, practice vulnerability, and build the deep connections you actually want.'
             },
             'Overgiver': {
                 summary: relationshipStatus === 'single'
-                    ? 'Your ' + pattern.name + ' pattern makes you give everything—time, energy, attention—hoping they\'ll see your worth. They take and leave when you need something; you\'re left resentful and alone.'
-                    : 'Your ' + pattern.name + ' pattern makes you give more than you receive, hoping they\'ll reciprocate. You end up resentful and they feel smothered; you don\'t know how to receive love.',
-                challenge: 'If you give enough, they\'ll stay and you\'ll finally feel worthy—but the more you give from that place, the more depleted you become.',
-                benefit: 'Giving and receiving balance—you receive as much as you give, and feel valued for who you are, not what you provide. Resentment dissolves; the relationship deepens because you\'re no longer depleting yourself to earn love.',
-                solution: (p, arch, cplx, rel) => 'Accept one offer of help or care per week—even small ones. When they say "Let me get that," "I\'ll drive," or "What do you need?"—say yes. Don\'t deflect or repay immediately. Your Guardian pattern ties worth to giving; receiving feels like weakness or debt. But allowing them to give does two things: it teaches your brain you\'re worthy of care without earning it, and it deepens the bond because they get to contribute. Start with tiny accepts: "Yes, thank you." The more you practice receiving, the less you need to overgive to feel loved.'
+                    ? 'Your ${pattern.name} pattern makes you give everything—time, energy, attention—hoping they\'ll see your worth. But they take and leave when you need something, leaving you resentful and alone.'
+                    : 'Your ${pattern.name} pattern makes you give more than you receive, hoping they\'ll reciprocate. But you end up resentful and they feel smothered. You don\'t know how to receive love.',
+                challenge: 'You give from fear instead of love, creating codependent relationships where you neglect your own needs and attract people who take advantage.',
+                benefit: 'When you break this pattern, you\'ll experience balanced relationships where giving and receiving flow naturally, and you feel valued for who you are, not what you give.'
             }
         };
         
-        const data = impactSummaries[getImpactLookupName(pattern.name)] || impactSummaries['Fixer'];
-        const summaryText = data.summary;
-        const insight = getLifeAreaInsight('love', birthDate);
-        const challengeText = data.challenge + (insight ? ' ' + insight : '');
-        const solutionText = typeof data.solution === 'function' ? data.solution(pattern, archetype, complex, relationshipStatus) : (data.solution || '');
-        const solutionBlock = solutionText ? `<p class="solution-text" style="margin-top: 1rem; padding: 1rem; background: #fffcf1; border-left: 3px solid #d4a84b; border-radius: 4px; font-size: 0.95rem; line-height: 1.6;"><strong style="color: #000;">How to overcome:</strong> ${solutionText}</p>` : '';
+        const data = impactSummaries[pattern.name] || impactSummaries['Fixer'];
+        const summary = data.summary.replace('${pattern.name}', pattern.name);
         
         return `
             <div class="life-area-detail-condensed">
                 <div class="impact-summary">
-                    <p class="summary-text">${summaryText}</p>
-                    ${solutionBlock}
+                    <p class="summary-text">${summary}</p>
                 </div>
                 
                 <div class="challenge-benefit">
                     <div class="challenge-box">
                         <h4 class="challenge-title">Your Challenge:</h4>
-                        <p class="challenge-text">${challengeText}</p>
+                        <p class="challenge-text">${data.challenge}</p>
                     </div>
                     
                     <div class="benefit-box">
@@ -3284,75 +3034,63 @@
         `;
     }
     
-    function getMoneyImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate) {
+    function getMoneyImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge) {
         const impactSummaries = {
             'Fixer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you feel safe only when fully in control of finances. When money problems hit, you go into "fix mode"—creating plans, tightening systems. The constant control creates stress and prevents you from trusting the process.',
-                challenge: 'A part of you believes that if you\'re not in control, things will fall apart—so relaxing around money feels dangerous.',
-                benefit: 'Money flows without you micromanaging. Healthy systems replace constant control; you trust the process, delegate, and build security through clarity, not anxiety. Real wealth grows when you stop trying to fix everything yourself.',
-                solution: (p, arch, cplx, rel) => 'Pick one financial task that causes the most anxiety—checking statements, paying bills, tracking spending—and automate or delegate it. Examples: set up auto-pay, use a budgeting app that syncs automatically, or have a trusted partner or advisor handle one area. Your Anchor need for control makes you believe you must fix everything yourself—but when you delegate one piece and nothing falls apart, your brain learns that systems can hold without you. Start small; the proof builds trust.'
+                summary: 'Your ${pattern.name} pattern makes you feel safe only when fully in control of finances. When money problems hit, you go into "fix mode"—creating plans, tightening systems. But this constant control creates stress and prevents you from trusting the process.',
+                challenge: 'You overfunction with money, trying to control everything, which creates anxiety and prevents you from building sustainable financial habits.',
+                benefit: 'When you break this pattern, you\'ll create healthy financial systems without constant control, allowing money to flow while maintaining security.'
             },
             'Perfectionist': {
-                summary: 'Your ' + pattern.name + ' pattern makes you overthink every financial decision, trying to make the "perfect" choice. You analyze investments and budgets endlessly; paralysis causes you to miss opportunities and stay stuck.',
-                challenge: 'Waiting for perfect conditions means you never take the leap—so opportunities pass while you\'re still analyzing.',
-                benefit: 'You make confident financial decisions instead of endless analysis. Calculated risks replace paralysis; opportunities no longer pass you by. Wealth builds through action, not perfection—the "right" move becomes the move you take.',
-                solution: (p, arch, cplx, rel) => 'Give yourself 48 hours to research any financial decision—then decide. Example: when choosing an investment, savings account, or budget approach, set a timer. At 48 hours, pick the "good enough" option—the one that meets your core needs, not the perfect one. Why it works: more analysis past a point increases anxiety and decreases satisfaction; you end up second-guessing anyway. Your perfectionism keeps you stuck; a deadline forces action. Wealth builds through consistent "good enough" choices, not one perfect move.'
+                summary: 'Your ${pattern.name} pattern makes you overthink every financial decision, trying to make the "perfect" choice. You analyze investments and budgets endlessly—but this paralysis causes you to miss opportunities and stay stuck.',
+                challenge: 'Your perfectionism prevents you from taking calculated financial risks, causing you to miss growth opportunities while waiting for perfect conditions.',
+                benefit: 'When you break this pattern, you\'ll make confident financial decisions, take calculated risks, and build wealth without waiting for perfection.'
             },
             'Pleaser': {
-                summary: 'Your ' + pattern.name + ' pattern makes you spend money to please others—buying gifts, saying yes to expensive plans, showing you care through spending. You end up financially drained and resentful when others don\'t reciprocate.',
-                challenge: 'The more you spend to earn approval, the less you have for yourself—and the more you need their approval to feel okay.',
-                benefit: 'Money aligns with your values—you spend on what matters and say no to what doesn\'t. Boundaries replace people-pleasing; you build wealth and give from abundance, not depletion. Your finances reflect who you really are.',
-                solution: (p, arch, cplx, rel) => 'Before any social spend—dinner, gifts, group plans—script: "I\'m being mindful about my spending right now, so I\'ll need to pass" or "I\'d love to join for coffee instead of the full dinner." Say it once, clearly. Your Catalyst drive makes you believe saying no will cost you connection—but people respect boundaries more than they resent them. When you decline from a place of self-respect, you attract people who value you, not your wallet. Start with one decline per week.'
+                summary: 'Your ${pattern.name} pattern makes you spend money to please others—buying gifts, saying yes to expensive plans, trying to show you care through spending. But this leaves you financially drained and resentful when others don\'t reciprocate.',
+                challenge: 'You spend money to earn approval, which drains your finances and prevents you from building wealth or prioritizing your own financial goals.',
+                benefit: 'When you break this pattern, you\'ll spend money aligned with your values, set financial boundaries, and build wealth while still being generous from a place of abundance.'
             },
             'Performer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you spend money to impress—status symbols, expensive experiences, showing your worth through what you own. Financial stress grows and real wealth stays out of reach.',
-                challenge: 'Your worth can feel tied to what you have—so spending to look successful feels necessary.',
-                benefit: 'Spending stops being performance—you build real wealth aligned with who you are, not who you\'re trying to impress. Value comes from within; you feel worthy without needing to prove it through possessions. Financial freedom replaces exhaustion.',
-                solution: (p, arch, cplx, rel) => 'For any purchase over $100, wait 48 hours before buying. During that time, ask: "Am I buying this because I need or love it, or because I want to look successful?" Your Catalyst pattern ties worth to what you have; the cooling-off period separates impulse from intention. Examples: the luxury item, the expensive dinner to impress, the upgrade you don\'t need. When the urge passes, you\'ll often realize you were performing—and that realization weakens the pattern.'
+                summary: 'Your ${pattern.name} pattern makes you spend money to impress—buying status symbols, expensive experiences, trying to show your worth through what you own. But this creates financial stress and prevents you from building real wealth.',
+                challenge: 'You spend to prove your worth, which creates financial stress and prevents you from building sustainable wealth or financial security.',
+                benefit: 'When you break this pattern, you\'ll spend money aligned with your authentic values, build real wealth, and feel valuable without needing to prove it through spending.'
             },
             'Escaper': {
-                summary: 'Your ' + pattern.name + ' pattern makes you avoid dealing with money—ignoring bills, avoiding budgets, staying busy so you don\'t have to think about finances. Financial chaos grows and security never builds.',
-                challenge: 'Opening the statements or making a plan feels overwhelming—so you put it off and the mess grows.',
-                benefit: 'You face finances instead of avoiding them. Clarity replaces chaos—sustainable budgets, real security, and the freedom that comes from knowing exactly where you stand. The avoidance ends; the stability begins.',
-                solution: (p, arch, cplx, rel) => 'Spend 5 minutes every day on one money task—check your balance, open one bill, or log one expense. Set a daily alarm. Your Wanderer tendency is to stay busy so you don\'t have to feel the discomfort of facing money—but 5 minutes is too small to trigger full escape. Micro-actions build momentum: once you\'ve looked at your balance 7 days in a row, the dread drops. Clarity replaces chaos because you\'re no longer avoiding; you\'re building a habit of presence.'
+                summary: 'Your ${pattern.name} pattern makes you avoid dealing with money—ignoring bills, avoiding budgets, staying busy so you don\'t have to think about finances. But this creates financial chaos and prevents you from building security.',
+                challenge: 'You avoid financial responsibility, which creates chaos, debt, and prevents you from building the financial security you actually want.',
+                benefit: 'When you break this pattern, you\'ll face your finances with clarity, create sustainable budgets, and build the financial security that gives you real freedom.'
             },
             'Overthinker': {
-                summary: 'Your ' + pattern.name + ' pattern makes you analyze every financial decision endlessly, trying to figure out the "right" move. You research and compare; paralysis causes you to miss opportunities and stay stuck.',
-                challenge: 'Research feels safer than deciding—so you never place the bet and never move forward.',
-                benefit: 'You decide and act instead of analyze forever. Confident financial decisions replace paralysis—you take action despite uncertainty and build wealth through consistent choices. The research phase ends; the results phase begins.',
-                solution: (p, arch, cplx, rel) => 'Set a "research cap": 2 hours or 3 sources max for any financial decision—then decide. Example: choosing a savings account, investment, or budget tool—give yourself a limit, then pick. Your Wanderer mind believes more information means more safety; but past a point, more info increases anxiety and decreases satisfaction. You end up comparing forever. The cap forces action. Why it works: you\'ll never have perfect certainty; acting despite uncertainty is how wealth builds. The move you take beats the move you never make.'
+                summary: 'Your ${pattern.name} pattern makes you analyze every financial decision endlessly, trying to figure out the "right" move. You research and compare—but this paralysis causes you to miss opportunities and stay stuck.',
+                challenge: 'You overthink money decisions, using analysis as a way to avoid taking action, which causes you to miss opportunities and stay financially stagnant.',
+                benefit: 'When you break this pattern, you\'ll make confident financial decisions, take action despite uncertainty, and build wealth through consistent choices.'
             },
             'Withdrawer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you protect yourself financially by hoarding, avoiding risks, and keeping everything separate. You stay safe but miss building wealth and real partnerships.',
-                challenge: 'Trusting others with money feels risky—so you go it alone and limit your options.',
-                benefit: 'You take calculated risks instead of hoarding in fear. Wealth builds through smart investments and partnerships; trust replaces isolation. Financial security grows when you stop protecting yourself from opportunity.',
-                solution: (p, arch, cplx, rel) => 'Share one financial goal with a trusted friend or advisor this week. Examples: "I\'m trying to save for X," "I\'m nervous about investing," "I\'d like help understanding my options." Your Guardian pattern keeps everything separate because trust feels dangerous—but going it alone caps your growth. Small disclosure is a trust experiment: when you share and they don\'t judge or betray, your brain learns that collaboration can be safe. Start with one person; the compound effect opens doors you\'ve been closing.'
+                summary: 'Your ${pattern.name} pattern makes you protect yourself financially by hoarding, avoiding risks, and keeping everything separate. But this prevents you from building wealth and creating financial partnerships.',
+                challenge: 'You protect yourself through financial isolation, which prevents you from taking calculated risks, building wealth, or creating financial partnerships.',
+                benefit: 'When you break this pattern, you\'ll take calculated financial risks, build wealth through smart investments, and create financial partnerships that support your goals.'
             },
             'Overgiver': {
-                summary: 'Your ' + pattern.name + ' pattern makes you give money away—loaning to friends, paying for others, showing your worth through generosity. You end up financially drained and resentful when others don\'t reciprocate.',
-                challenge: 'If you give enough, they\'ll value you—but giving from that place depletes you and attracts takers.',
-                benefit: 'You give from abundance, not depletion—boundaries protect your wealth while generosity flows when it truly serves. You attract reciprocity instead of takers; your finances support you instead of draining you.',
-                solution: (p, arch, cplx, rel) => 'When tempted to give money—a loan, covering dinner, buying a gift—give 10% of what you\'re tempted to give. Example: tempted to lend $500? Offer $50 or a non-monetary form of help. Your Guardian pattern ties worth to generosity; depletion feels like proof you\'re needed. But depletion attracts takers and repels reciprocity. Giving less, intentionally, teaches your brain that you can be valued without emptying your account. When you give from overflow instead of depletion, you sustain yourself and attract people who give back.'
+                summary: 'Your ${pattern.name} pattern makes you give money away—loaning to friends, paying for others, trying to show your worth through generosity. But this leaves you financially drained and resentful when others don\'t reciprocate.',
+                challenge: 'You give money from fear instead of abundance, which drains your finances and prevents you from building wealth or financial security.',
+                benefit: 'When you break this pattern, you\'ll give from a place of abundance, set financial boundaries, and build wealth while still being generous when it truly serves.'
             }
         };
         
-        const data = impactSummaries[getImpactLookupName(pattern.name)] || impactSummaries['Fixer'];
-        const insight = getLifeAreaInsight('money', birthDate);
-        const challengeText = data.challenge + (insight ? ' ' + insight : '');
-        const solutionText = typeof data.solution === 'function' ? data.solution(pattern, archetype, complex, undefined) : (data.solution || '');
-        const solutionBlock = solutionText ? `<p class="solution-text" style="margin-top: 1rem; padding: 1rem; background: #fffcf1; border-left: 3px solid #d4a84b; border-radius: 4px; font-size: 0.95rem; line-height: 1.6;"><strong style="color: #000;">How to overcome:</strong> ${solutionText}</p>` : '';
+        const data = impactSummaries[pattern.name] || impactSummaries['Fixer'];
+        const summary = data.summary.replace('${pattern.name}', pattern.name);
         
         return `
             <div class="life-area-detail-condensed">
                 <div class="impact-summary">
-                    <p class="summary-text">${data.summary}</p>
-                    ${solutionBlock}
+                    <p class="summary-text">${summary}</p>
                 </div>
                 
                 <div class="challenge-benefit">
                     <div class="challenge-box">
                         <h4 class="challenge-title">Your Challenge:</h4>
-                        <p class="challenge-text">${challengeText}</p>
+                        <p class="challenge-text">${data.challenge}</p>
                     </div>
                     
                     <div class="benefit-box">
@@ -3364,75 +3102,62 @@
         `;
     }
     
-    function getHealthImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate) {
+    function getHealthImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge) {
         const impactSummaries = {
             'Fixer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you create clear plans and structure your day when overwhelmed, but you struggle to rest because you feel responsible for everything. Overfunctioning leads to burnout and exhaustion.',
-                challenge: 'A part of you believes that if you stop, everything will fall apart—so rest feels selfish or dangerous.',
-                benefit: 'Rest becomes part of the plan—you prioritize your wellbeing without guilt. Sustainable habits replace burnout; you build health through balance, not overfunctioning. Energy returns when you stop carrying everyone else\'s load.',
-                solution: (p, arch, cplx, rel) => 'Schedule rest as a "non-negotiable appointment"—20 minutes daily, same time every day. Put it in your calendar like a meeting. Examples: morning coffee alone, afternoon walk, evening wind-down. Your Anchor need for control makes you believe rest is optional or selfish—but when you treat it like an obligation, your brain stops fighting it. Why it works: rest isn\'t the absence of doing; it\'s an active choice. By scheduling it, you prove that you can stop and nothing falls apart—and that proof rewires the belief.'
+                summary: 'Your Fixer pattern makes you create clear plans and structure your day when overwhelmed, but you struggle to rest because you feel responsible for everything. Your biggest health challenge is overfunctioning leading to burnout and exhaustion.',
+                challenge: 'You can\'t rest because you feel responsible for everything, which leads to chronic burnout and prevents you from building sustainable health habits.',
+                benefit: 'When you break this pattern, you\'ll create healthy routines that include rest, prioritize your own wellbeing, and build sustainable habits without constant overfunctioning.'
             },
             'Perfectionist': {
-                summary: 'Your ' + pattern.name + ' pattern makes you create perfect health routines but struggle to stick with them because they\'re too rigid. When you "fail," you give up entirely. All-or-nothing prevents consistent habits.',
-                challenge: 'Perfect or quit—so one slip means abandoning the whole routine instead of adjusting.',
-                benefit: '"Good enough" replaces perfect—flexible, sustainable routines replace all-or-nothing cycles. Consistency wins; one slip no longer means quitting. Your health improves because you show up, not because you\'re flawless.',
-                solution: (p, arch, cplx, rel) => 'Aim for 80% of your plan—never 100%. Examples: planned 5 workouts? Do 4. Planned a perfect meal? Eat 80% healthy, 20% flexible. When you "fail," adjust instead of quit: "I did 2 workouts instead of 5—that\'s still 2 more than zero." Your perfectionism collapses when one slip triggers all-or-nothing—but 80% is built-in failure that doesn\'t collapse. Why it works: consistency beats intensity. Showing up imperfectly for months beats perfect execution for a week.'
+                summary: 'Your Perfectionist pattern makes you create perfect health routines but struggle to stick with them because they\'re too rigid. When you "fail," you give up entirely. This all-or-nothing approach prevents consistent habits.',
+                challenge: 'Your perfectionism creates rigid routines you can\'t maintain, leading to cycles of starting and stopping that prevent consistent health habits.',
+                benefit: 'When you break this pattern, you\'ll create flexible, sustainable health routines, accept "good enough," and build consistent habits without all-or-nothing thinking.'
             },
             'Pleaser': {
-                summary: 'Your ' + pattern.name + ' pattern makes you prioritize others\' health needs over your own and say yes to plans that exhaust you. Burnout, stress, and neglected wellbeing follow.',
-                challenge: 'Putting everyone else first means your body pays the price—you\'re last on your own list.',
-                benefit: 'Your health becomes a priority—you set boundaries around your energy and build sustainable habits that support you. Burnout ends; vitality returns. You\'re no longer last on your own list.',
-                solution: (p, arch, cplx, rel) => 'Do one thing for your health before doing anything for anyone else. Examples: 10-minute walk before checking messages, eat breakfast before helping kids, stretch before running errands. Put your oxygen mask on first—literally. Your Catalyst pattern puts everyone else first; when you prioritize yourself first, you prove that your body matters. Why it works: you can\'t pour from an empty cup. When you replenish first, you have more to give—and you model self-care instead of self-sacrifice.'
+                summary: 'Your Pleaser pattern makes you prioritize others\' health needs over your own, saying yes to plans that exhaust you. This leads to burnout, stress, and neglecting your own wellbeing.',
+                challenge: 'You put everyone else\'s health needs first, which leads to burnout, stress, and prevents you from prioritizing your own wellbeing.',
+                benefit: 'When you break this pattern, you\'ll prioritize your own health needs, set boundaries around your energy, and build sustainable wellness habits that support you.'
             },
             'Performer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you work out and eat well to look good and impress others; you\'re exhausted from performing. Health becomes about appearance, not wellbeing.',
-                challenge: 'Your value can feel tied to how you look—so rest and "good enough" feel like failure.',
-                benefit: 'Health becomes about wellbeing, not performance—you rest without guilt, build sustainable habits, and feel worthy beyond how you look. The performing ends; the authentic wellness begins.',
-                solution: (p, arch, cplx, rel) => 'Before choosing movement or rest, ask: "How do I feel?"—not "How do I look?" Examples: skip the punishing workout when exhausted; eat for energy, not aesthetics; rest when your body asks. Your Catalyst drive ties worth to appearance; shifting to internal attunement breaks that link. Why it works: performance-based health exhausts you because it\'s never enough. When you move and rest based on how you feel, you build sustainable habits—and worth that doesn\'t depend on the mirror.'
+                summary: 'Your Performer pattern makes you work out and eat well to look good and impress others, but you\'re exhausted from performing. Your health becomes about appearance, not wellbeing.',
+                challenge: 'You focus on health for appearance and performance, which exhausts you and prevents you from building sustainable wellness habits based on actual wellbeing.',
+                benefit: 'When you break this pattern, you\'ll focus on health for wellbeing, not appearance, build sustainable habits, and rest without guilt.'
             },
             'Escaper': {
-                summary: 'Your ' + pattern.name + ' pattern makes you avoid dealing with health issues—staying busy, numbing feelings, avoiding doctors. Distraction prevents you from addressing real concerns.',
-                challenge: 'Sitting with your body or booking the appointment feels scary—so you stay in motion and small issues grow.',
-                benefit: 'You face health instead of escaping—proactive habits replace avoidance, concerns get addressed before they grow. Clarity replaces chaos; your body becomes a priority instead of something you numb or ignore.',
-                solution: (p, arch, cplx, rel) => 'Spend 5 minutes daily sitting still and checking in with your body. No phone, no distraction. Ask: "What do I feel? Where do I feel it?" Scan from head to toe. Your Wanderer tendency keeps you in motion so you don\'t have to feel—but 5 minutes of presence breaks the escape habit. Once you can sit with your body, booking that appointment or addressing that concern becomes easier. Why it works: avoidance grows the dread; presence shrinks it. Small doses of feeling build capacity.'
+                summary: 'Your Escaper pattern makes you avoid dealing with health issues—staying busy, numbing feelings, avoiding doctors. You use distraction to avoid discomfort, but this prevents you from addressing real concerns.',
+                challenge: 'You avoid health issues to escape discomfort, which prevents you from addressing real concerns and building proactive wellness habits.',
+                benefit: 'When you break this pattern, you\'ll face health issues with clarity, build proactive wellness habits, and address concerns before they become problems.'
             },
             'Overthinker': {
-                summary: 'Your ' + pattern.name + ' pattern makes you analyze every health decision endlessly—diets, workouts, supplements—but paralysis prevents you from taking action. You think about health more than you practice it.',
-                challenge: 'Planning feels safer than starting—so you never take the first step and never improve.',
-                benefit: 'You act on health instead of endlessly researching—confident decisions replace paralysis, consistent habits build through practice. The first step happens; progress replaces perfectionism.',
-                solution: (p, arch, cplx, rel) => 'Set a 1-hour cap on health research—then pick one tiny action and do it. Examples: researched diets for an hour? Eat one vegetable today. Researched workouts? Do 2 push-ups. Your Wanderer mind believes more planning equals more safety—but action breaks paralysis. Why it works: tiny actions bypass analysis. You can\'t overthink 2 push-ups. Once you start, momentum builds—and the habit matters more than the perfect plan.'
+                summary: 'Your Overthinker pattern makes you analyze every health decision endlessly—researching diets, workouts, supplements—but this paralysis prevents you from taking action. You think about health more than you practice it.',
+                challenge: 'You overthink health decisions, using analysis as a way to avoid taking action, which prevents you from building consistent wellness habits.',
+                benefit: 'When you break this pattern, you\'ll make confident health decisions, take action despite uncertainty, and build consistent habits through practice, not perfection.'
             },
             'Withdrawer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you keep distance from health support—avoiding doctors, therapists, or wellness communities. Isolation prevents you from getting the help you need.',
-                challenge: 'Underneath is a belief that needing help is weak—so you go it alone and suffer in silence.',
-                benefit: 'You seek support instead of isolating—doctors, therapists, community. Wellness becomes collaborative; you get the help you need without suffering alone. Connection heals what isolation was hiding.',
-                solution: (p, arch, cplx, rel) => 'Take one small step this week: book one checkup, schedule one therapy session, or join one wellness group. Your Guardian pattern keeps you isolated because needing help feels dangerous—but going it alone keeps you stuck. When you ask for help, you prove that support is possible and that vulnerability doesn\'t always lead to hurt. Why it works: connection heals what isolation hides. Your Emotional Unavailability Complex keeps you alone—small steps toward support rewire that belief.'
+                summary: 'Your Withdrawer pattern makes you protect yourself by keeping distance from health support—avoiding doctors, therapists, or wellness communities. But this isolation prevents you from getting the help you need.',
+                challenge: 'You isolate from health support to protect yourself, which prevents you from getting the help you need and building wellness habits with support.',
+                benefit: 'When you break this pattern, you\'ll seek health support safely, build wellness habits with community, and get the help you need without isolation.'
             },
             'Overgiver': {
-                summary: 'Your ' + pattern.name + ' pattern makes you give your energy to everyone else, leaving nothing for yourself. You neglect your own health while taking care of others; exhaustion and burnout follow.',
-                challenge: 'If you take care of everyone else, you\'ll be needed and valued—but you end up depleted and invisible to yourself.',
-                benefit: 'Self-care balances giving—you prioritize your own health and build sustainable habits. Depletion ends; you give from overflow instead of emptiness. Your body stops being last on your list.',
-                solution: (p, arch, cplx, rel) => 'Make "energy deposits" before "energy withdrawals": eat, sleep, or move before caregiving. Examples: eat lunch before helping kids; sleep 7 hours before a big day of giving; take a 10-minute walk before visiting family. Your Guardian pattern depletes you because you believe you\'re only worthy when you\'re giving—but depletion helps no one. When you replenish first, you give from overflow. Why it works: you can\'t sustain giving from emptiness. Deposits before withdrawals keep you full.'
+                summary: 'Your Overgiver pattern makes you give your energy to everyone else, leaving nothing for yourself. You neglect your own health needs while taking care of others, leading to exhaustion and burnout.',
+                challenge: 'You give all your energy to others, leaving nothing for yourself, which leads to exhaustion and prevents you from prioritizing your own health needs.',
+                benefit: 'When you break this pattern, you\'ll balance giving with self-care, prioritize your own health needs, and build sustainable wellness habits that support you.'
             }
         };
         
-        const data = impactSummaries[getImpactLookupName(pattern.name)] || impactSummaries['Fixer'];
-        const insight = getLifeAreaInsight('health', birthDate);
-        const challengeText = data.challenge + (insight ? ' ' + insight : '');
-        const solutionText = typeof data.solution === 'function' ? data.solution(pattern, archetype, complex, undefined) : (data.solution || '');
-        const solutionBlock = solutionText ? `<p class="solution-text" style="margin-top: 1rem; padding: 1rem; background: #fffcf1; border-left: 3px solid #d4a84b; border-radius: 4px; font-size: 0.95rem; line-height: 1.6;"><strong style="color: #000;">How to overcome:</strong> ${solutionText}</p>` : '';
+        const data = impactSummaries[pattern.name] || impactSummaries['Fixer'];
         
         return `
             <div class="life-area-detail-condensed">
                 <div class="impact-summary">
                     <p class="summary-text">${data.summary}</p>
-                    ${solutionBlock}
                 </div>
                 
                 <div class="challenge-benefit">
                     <div class="challenge-box">
                         <h4 class="challenge-title">Your Challenge:</h4>
-                        <p class="challenge-text">${challengeText}</p>
+                        <p class="challenge-text">${data.challenge}</p>
                     </div>
                     
                     <div class="benefit-box">
@@ -3444,300 +3169,249 @@
         `;
     }
     
-    function getCareerImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate) {
+    function getCareerImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge) {
         const impactSummaries = {
             'Fixer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you step in to solve problems at work, even when they\'re not yours to fix. You take on extra responsibilities, believing if you solve everything, you\'ll be safe. Burnout follows and others don\'t grow.',
-                challenge: 'Underneath is a belief that your value at work depends on being the problem-solver—so stepping back feels like losing your place.',
-                benefit: 'You focus on your lane—others solve their problems while you advance your career. Burnout ends; leadership grows when you stop fixing everyone else. Your advancement becomes the priority.',
-                solution: (p, arch, cplx, rel) => 'When a colleague shares a work problem, wait 24 hours before offering help. Say: "I hear you—let me know if you want to brainstorm." Your Anchor need for control makes you jump in immediately; waiting teaches your brain that you\'re still valuable when you\'re not fixing. Why it works: when you step back, they learn to solve it—and you prove that your worth isn\'t tied to solving their problems. Your impact grows when others grow; fixing everything keeps everyone small.'
+                summary: 'Your Fixer pattern makes you step in to solve problems at work, even when they\'re not yours to fix. You take on extra responsibilities, believing if you solve everything, you\'ll be safe. But this leads to burnout and prevents others from growing.',
+                challenge: 'You overfunction at work, taking on responsibilities that aren\'t yours, which leads to burnout and prevents you from focusing on your own career growth.',
+                benefit: 'When you break this pattern, you\'ll focus on your own responsibilities, allow others to solve their problems, and advance your career without constant overfunctioning.'
             },
             'Perfectionist': {
-                summary: 'Your ' + pattern.name + ' pattern makes you overthink every work decision, trying to make the "perfect" choice. You analyze projects endlessly; paralysis and missed deadlines follow. Perfectionism blocks risks and advancement.',
-                challenge: 'Waiting for perfect conditions means you never ship—so opportunities go to those who act while you\'re still polishing.',
-                benefit: 'You ship instead of polish—confident decisions replace endless analysis, calculated risks replace paralysis. Opportunities no longer go to others while you\'re still perfecting. Career advancement accelerates.',
-                solution: (p, arch, cplx, rel) => 'Set a "ship date" before starting any project: decide when you\'ll deliver, then work backward. Example: "This report ships Friday"—then build the minimum viable version. Your perfectionism waits for perfect conditions; a deadline forces action. Why it works: done is better than perfect. Opportunities go to those who ship; those who polish miss the moment. Your career advances when you finish, not when you perfect.'
+                summary: 'Your Perfectionist pattern makes you overthink every work decision, trying to make the "perfect" choice. You analyze projects endlessly, leading to paralysis and missed deadlines. Your perfectionism prevents you from taking risks and advancing.',
+                challenge: 'Your perfectionism causes paralysis and missed opportunities, preventing you from taking calculated risks and advancing your career.',
+                benefit: 'When you break this pattern, you\'ll make confident work decisions, take calculated risks, and advance your career without waiting for perfection.'
             },
             'Pleaser': {
-                summary: 'Your ' + pattern.name + ' pattern makes you say yes to everything at work, trying to please everyone. You take on extra projects, work late, and prioritize others\' needs over your own. Burnout follows and what matters gets lost.',
-                challenge: 'The more you say yes to please others, the less time you have for your own goals—and the more you need their approval to feel okay.',
-                benefit: 'Boundaries replace people-pleasing—you prioritize your career goals and focus on what truly matters. Burnout ends; advancement begins when you stop saying yes to everyone else\'s priorities.',
-                solution: (p, arch, cplx, rel) => 'Before saying yes to any request, say: "I need to check my priorities—I\'ll get back to you." Give yourself 24 hours. Then ask: "Does this align with my goals, or am I saying yes to earn approval?" Your Catalyst pattern says yes automatically; the pause breaks that reflex. Why it works: people respect boundaries more than they resent them. When you protect your priorities, you advance—and you attract respect instead of more requests.'
+                summary: 'Your Pleaser pattern makes you say yes to everything at work, trying to please everyone. You take on extra projects, work late, and prioritize others\' needs over your own. This leads to burnout and prevents you from focusing on what matters.',
+                challenge: 'You say yes to everything to please others, which leads to burnout and prevents you from focusing on your own career priorities and growth.',
+                benefit: 'When you break this pattern, you\'ll set boundaries at work, prioritize your own career goals, and focus on what truly matters for your advancement.'
             },
             'Performer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you work hard to impress and earn approval, achieving and succeeding to prove your worth. You\'re exhausted from performing and don\'t know how to work authentically without recognition.',
-                challenge: 'Underneath is a belief that your worth is tied to recognition—so working without applause feels pointless.',
-                benefit: 'You work from authenticity instead of performance—advancement comes from true value, not applause. Worthiness no longer depends on recognition; the mask comes off and your career deepens.',
-                solution: (p, arch, cplx, rel) => 'Do one valuable task per week without telling anyone. Examples: draft a report no one asked for, help a colleague quietly, improve a process and don\'t announce it. Your Catalyst drive ties worth to recognition; invisible work breaks that link. Why it works: when you work without applause, you discover what you actually value—and that internal drive sustains careers longer than external validation. The recognition will come; first, prove to yourself that you matter without it.'
+                summary: 'Your Performer pattern makes you work hard to impress and earn approval, achieving and succeeding to prove your worth. But you\'re exhausted from performing, and you don\'t know how to work authentically without the need for recognition.',
+                challenge: 'You work to prove your worth through performance, which exhausts you and prevents you from working authentically and advancing based on your true value.',
+                benefit: 'When you break this pattern, you\'ll work authentically, advance based on your true value, and feel worthy without constant performance and recognition.'
             },
             'Escaper': {
-                summary: 'Your ' + pattern.name + ' pattern makes you avoid difficult conversations, challenging projects, and career risks. You stay busy with tasks that don\'t matter, avoiding the work that would actually advance your career.',
-                challenge: 'Stepping into the hard conversation or the big project feels risky—so you stay in safe tasks and stay stuck.',
-                benefit: 'You face challenges instead of escaping—difficult conversations, big projects, career risks. Stuck becomes unstuck; advancement happens when you stop avoiding what scares you. The hard work pays off.',
-                solution: (p, arch, cplx, rel) => 'Schedule one "hard thing" per week: one difficult conversation (asking for a raise, giving feedback) or one stretch project (the one you\'ve been avoiding). Put it on your calendar. Your Wanderer tendency keeps you busy with safe tasks; scheduling the hard thing forces you to show up. Why it works: avoidance grows the dread; small doses of "do it anyway" shrink it. Each time you face the hard thing, your brain learns it\'s survivable—and advancement follows.'
+                summary: 'Your Escaper pattern makes you avoid difficult conversations, challenging projects, and career risks. You stay busy with tasks that don\'t matter, avoiding the work that would actually advance your career.',
+                challenge: 'You avoid challenges and risks to escape discomfort, which prevents you from taking on projects that would advance your career and build your skills.',
+                benefit: 'When you break this pattern, you\'ll take on challenging projects, have difficult conversations, and advance your career by facing challenges instead of avoiding them.'
             },
             'Overthinker': {
-                summary: 'Your ' + pattern.name + ' pattern makes you analyze every career decision endlessly, trying to figure out the "right" path. You research and compare; paralysis causes you to miss opportunities and stay stuck.',
-                challenge: 'Weighing options feels safer than choosing—so you never pick a path and never move up.',
-                benefit: 'You choose and act instead of analyze forever—confident career decisions, action despite uncertainty. Advancement comes through consistent choices; paralysis ends when you stop waiting for certainty.',
-                solution: (p, arch, cplx, rel) => 'For any big career choice—job offer, project, direction—give yourself 1 week max to decide, then act. Example: "I\'ll decide by Friday." Your Wanderer mind believes more analysis means more safety—but past a point, more analysis increases anxiety and decreases satisfaction. Why it works: you\'ll never have perfect certainty. Advancement comes from acting despite uncertainty. The move you make beats the move you never make.'
+                summary: 'Your Overthinker pattern makes you analyze every career decision endlessly, trying to figure out the "right" path. You research and compare—but this paralysis causes you to miss opportunities and stay stuck.',
+                challenge: 'You overthink career decisions, using analysis as a way to avoid taking action, which causes you to miss opportunities and stay stuck in your current role.',
+                benefit: 'When you break this pattern, you\'ll make confident career decisions, take action despite uncertainty, and advance your career through consistent choices.'
             },
             'Withdrawer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you keep distance from colleagues, avoid networking, and stay isolated. You stay safe but miss the relationships that advance careers.',
-                challenge: 'Underneath is a belief that getting close at work will leave you exposed or hurt—so you go it alone and cap your growth.',
-                benefit: 'Connection replaces isolation—you build professional relationships, network authentically, and advance through collaboration. Career growth accelerates when you stop going it alone. The cap lifts.',
-                solution: (p, arch, cplx, rel) => 'Reach out to one person per week: invite someone for coffee, send a thank-you note, or ask a question. Your Guardian pattern keeps you isolated because closeness feels dangerous—but careers advance through relationships. Why it works: most opportunities come through weak ties—people you know but aren\'t close to. Small outreach compounds. When you connect, you open doors you didn\'t know existed. Your Emotional Unavailability Complex keeps you safe—and stuck.'
+                summary: 'Your Withdrawer pattern makes you protect yourself by keeping distance from colleagues, avoiding networking, and staying isolated. But this prevents you from building relationships that advance your career.',
+                challenge: 'You isolate from colleagues and avoid networking to protect yourself, which prevents you from building relationships that advance your career.',
+                benefit: 'When you break this pattern, you\'ll build professional relationships safely, network authentically, and advance your career through connection and collaboration.'
             },
             'Overgiver': {
-                summary: 'Your ' + pattern.name + ' pattern makes you give your time and energy to everyone else\'s projects, leaving nothing for your own growth. You help others succeed but neglect your own career advancement.',
-                challenge: 'If you help everyone else succeed, you\'ll be valued—but you end up invisible when it comes to your own advancement.',
-                benefit: 'Your advancement becomes visible—you balance helping others with your own growth and succeed without neglecting yourself. Invisibility ends; you get the recognition you\'ve been giving away.',
-                solution: (p, arch, cplx, rel) => 'Block 2 hours weekly for "your project" before helping anyone else. Put it in your calendar—first thing Monday, or whatever slot works. Your Guardian pattern gives first and leaves nothing for you; blocking your time first reverses that. Why it works: when you protect your priorities before saying yes to others, you advance without burning bridges. You still help—but from overflow, not depletion. Invisibility ends when you make your growth visible.'
+                summary: 'Your Overgiver pattern makes you give your time and energy to everyone else\'s projects, leaving nothing for your own growth. You help others succeed but neglect your own career advancement.',
+                challenge: 'You give all your time to others\' projects, leaving nothing for your own growth, which prevents you from advancing your own career.',
+                benefit: 'When you break this pattern, you\'ll balance helping others with your own career growth, prioritize your advancement, and succeed without neglecting yourself.'
             }
         };
         
-        const data = impactSummaries[getImpactLookupName(pattern.name)] || impactSummaries['Fixer'];
-        const insight = getLifeAreaInsight('career', birthDate);
-        const challengeText = data.challenge + (insight ? ' ' + insight : '');
-        const solutionText = typeof data.solution === 'function' ? data.solution(pattern, archetype, complex, undefined) : (data.solution || '');
-        return generateCondensedImpact(data.summary, challengeText, data.benefit, solutionText);
+        const data = impactSummaries[pattern.name] || impactSummaries['Fixer'];
+        
+        return generateCondensedImpact(data.summary, data.challenge, data.benefit);
     }
     
-    function getIdentityImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate) {
-        const shadowPart = pattern.shadow ? pattern.shadow.split(' → ')[1] : 'overfunctioning and burnout';
+    function getIdentityImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge) {
         const impactSummaries = {
             'Fixer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you define yourself by what you can fix and solve. You believe "' + (pattern.coreBelief || 'If I solve it, I\'m safe') + '," which gives you strength (' + (pattern.strength || 'responsible & capable') + ') but also creates ' + shadowPart + '.',
-                challenge: 'Underneath is a belief that you\'re only valuable when you\'re useful—so being "just you" without fixing feels like having no worth.',
-                benefit: 'Worth comes from who you are, not what you fix—you define yourself beyond your usefulness and feel valuable without solving everything. The exhaustion ends; identity expands.',
-                solution: (p, arch, cplx, rel) => 'Ask "Who am I when I\'m not fixing?" once a day—during your morning routine, commute, or before bed. Write or say one answer: "I am someone who…" without mentioning helping or solving. Your Anchor identity is tied to usefulness; this question creates space for identity beyond fixing. Why it works: you are more than your role. When you name who you are without solving, you prove to yourself that worth exists beyond usefulness—and that proof weakens the belief that you only matter when you\'re fixing.'
+                summary: `Your Fixer pattern makes you define yourself by what you can fix and solve. You believe "${pattern.coreBelief || 'If I solve it, I\'m safe'}", which gives you strength (${pattern.strength || 'responsible & capable'}) but also creates ${pattern.shadow ? pattern.shadow.split(' → ')[1] : 'overfunctioning and burnout'}.`,
+                challenge: 'You define yourself by fixing and solving, which makes you lose yourself when you can\'t control everything and prevents you from knowing who you are beyond being helpful.',
+                benefit: 'When you break this pattern, you\'ll know your worth beyond fixing, define yourself by who you are, not what you do, and feel valuable without solving everything.'
             },
             'Perfectionist': {
-                summary: 'Your ' + pattern.name + ' pattern makes you define yourself by being flawless and doing things right. You believe "' + (pattern.coreBelief || 'If I do it right, I\'ll be loved') + '," which gives you strength (' + (pattern.strength || 'disciplined & driven') + ') but also creates ' + (pattern.shadow ? pattern.shadow.split(' → ')[1] : 'shame and rigidity') + '.',
-                challenge: 'You never feel good enough, so you chase an impossible standard and never rest in who you are.',
-                benefit: 'You accept yourself as you are—worth no longer depends on perfection. Identity expands beyond flawlessness; you feel valuable without being flawless. The chase ends; peace begins.',
-                solution: (p, arch, cplx, rel) => 'When you catch self-criticism ("I should have…" "Why can\'t I…"), pause and say: "I\'m enough as I am." Say it out loud or in your head. Your perfectionism ties worth to flawlessness; self-compassion breaks that link. Why it works: shame grows when you criticize yourself; self-compassion shrinks it. When you treat yourself like a friend—with kindness, not perfection—you build identity that doesn\'t depend on being flawless.'
+                summary: `Your Perfectionist pattern makes you define yourself by being flawless and doing things right. You believe "${pattern.coreBelief || 'If I do it right, I\'ll be loved'}", which gives you strength (${pattern.strength || 'disciplined & driven'}) but also creates ${pattern.shadow ? pattern.shadow.split(' → ')[1] : 'shame and rigidity'}.`,
+                challenge: 'You define yourself by perfection, which makes you feel never good enough and prevents you from accepting yourself as you are.',
+                benefit: 'When you break this pattern, you\'ll accept yourself as you are, define yourself beyond perfection, and feel valuable without being flawless.'
             },
             'Pleaser': {
-                summary: 'Your ' + pattern.name + ' pattern makes you define yourself by keeping others happy. You believe "' + (pattern.coreBelief || 'If they\'re happy, I\'m okay') + '," which gives you strength (' + (pattern.strength || 'empathetic & kind') + ') but also creates ' + (pattern.shadow ? pattern.shadow.split(' → ')[1] : 'disconnection from your true self') + '.',
-                challenge: 'The more you shape yourself to others\' wants, the less you know who you are—and the more you need their approval to feel real.',
-                benefit: 'Your true identity emerges—you define yourself by who you are, not who others want you to be. Authenticity replaces people-pleasing; you feel valuable as your real self. The mask comes off.',
-                solution: (p, arch, cplx, rel) => 'Spend 10 minutes daily answering "What do I want?"—without considering anyone else. Write or speak: "I want…" and fill in the blank. Your People-Pleasing Complex defines you by others\' wants; this question reconnects you to your own. Why it works: when you please others constantly, you lose touch with your desires. Reconnecting to "I want" rebuilds identity from the inside out—and you attract people who want the real you, not the version you perform.'
+                summary: `Your Pleaser pattern makes you define yourself by keeping others happy. You believe "${pattern.coreBelief || 'If they\'re happy, I\'m okay'}", which gives you strength (${pattern.strength || 'empathetic & kind'}) but also creates ${pattern.shadow ? pattern.shadow.split(' → ')[1] : 'disconnection from your true self'}.`,
+                challenge: 'You define yourself by others\' happiness, which makes you lose your identity and prevents you from knowing who you really are.',
+                benefit: 'When you break this pattern, you\'ll know your true identity, define yourself by who you are, not who others want you to be, and feel valuable as your authentic self.'
             },
             'Performer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you define yourself by achievements and recognition. You believe "' + (pattern.coreBelief || 'If I impress, I belong') + '," which gives you strength (' + (pattern.strength || 'charismatic & motivated') + ') but also creates ' + (pattern.shadow ? pattern.shadow.split(' → ')[1] : 'burnout and emptiness') + '.',
-                challenge: 'Underneath is a belief that without achievement you\'re nothing—so stillness and "enough" feel like death.',
-                benefit: 'Worth comes from who you are, not what you achieve—identity expands beyond performance. You feel valuable without constant achievement; stillness no longer feels like death. The emptiness fills.',
-                solution: (p, arch, cplx, rel) => 'Do one activity per week with no goal or audience: walk, create, rest—for its own sake. No posting, no sharing, no metric. Your Catalyst drive ties worth to achievement; invisible activities break that link. Why it works: when you do something for its own sake, you prove to yourself that you matter without accomplishing. Identity expands beyond performance—and the emptiness fills because you\'re no longer chasing applause to feel real.'
+                summary: `Your Performer pattern makes you define yourself by achievements and recognition. You believe "${pattern.coreBelief || 'If I impress, I belong'}", which gives you strength (${pattern.strength || 'charismatic & motivated'}) but also creates ${pattern.shadow ? pattern.shadow.split(' → ')[1] : 'burnout and emptiness'}.`,
+                challenge: 'You define yourself by achievement, which makes you feel empty when you\'re not performing and prevents you from knowing who you are beyond success.',
+                benefit: 'When you break this pattern, you\'ll know your worth beyond achievement, define yourself by who you are, not what you achieve, and feel valuable without constant performance.'
             },
             'Escaper': {
-                summary: 'Your ' + pattern.name + ' pattern makes you define yourself by freedom and independence. You believe "' + (pattern.coreBelief || 'If I don\'t feel it, it can\'t hurt me') + '," which gives you strength (' + (pattern.strength || 'free & creative') + ') but also creates ' + (pattern.shadow ? pattern.shadow.split(' → ')[1] : 'disconnection from yourself') + '.',
-                challenge: 'Avoiding feelings means you never fully know yourself—so you stay free but empty.',
-                benefit: 'You connect with your authentic self—identity expands beyond freedom and avoidance. All emotions become acceptable; you feel valuable with feeling, not in spite of it. The emptiness fills.',
-                solution: (p, arch, cplx, rel) => 'Name one feeling per day without acting on it. When you notice an emotion—anxiety, sadness, anger, joy—say: "I feel [X]." Don\'t fix it, escape it, or analyze it. Just name it. Your Wanderer tendency avoids feeling; naming builds emotional self-knowledge. Why it works: avoidance keeps you disconnected from yourself; labeling emotions creates space for them without escape. The more you name, the more you know who you are—beyond freedom and mobility.'
+                summary: `Your Escaper pattern makes you define yourself by freedom and independence. You believe "${pattern.coreBelief || 'If I don\'t feel it, it can\'t hurt me'}", which gives you strength (${pattern.strength || 'free & creative'}) but also creates ${pattern.shadow ? pattern.shadow.split(' → ')[1] : 'disconnection from yourself'}.`,
+                challenge: 'You define yourself by avoiding feelings, which makes you lose connection to who you really are and prevents you from knowing your authentic self.',
+                benefit: 'When you break this pattern, you\'ll connect with your authentic self, define yourself by who you are, not what you avoid, and feel valuable with all your emotions.'
             },
             'Overthinker': {
-                summary: 'Your ' + pattern.name + ' pattern makes you define yourself by your intelligence and analysis. You believe "' + (pattern.coreBelief || 'If I analyze enough, I\'ll feel safe') + '," which gives you strength (' + (pattern.strength || 'insightful & intelligent') + ') but also creates ' + (pattern.shadow ? pattern.shadow.split(' → ')[1] : 'paralysis and anxiety') + '.',
-                challenge: 'Underneath is a belief that if you think hard enough, you\'ll be safe—so not knowing feels terrifying.',
-                benefit: 'Worth comes from who you are, not how much you think—identity expands beyond analysis. You feel valuable without constant figuring out; action replaces paralysis. The head quiets; the heart speaks.',
-                solution: (p, arch, cplx, rel) => 'When stuck in rumination ("What if…" "Why did they…"), ask: "What would I do if I already knew?" Then do that. Your Wanderer mind believes thinking will bring certainty—but action precedes certainty. Why it works: you\'ll never figure everything out. When you act from your values instead of waiting for clarity, you prove that worth comes from doing, not analyzing. The head quiets when the body moves.'
+                summary: `Your Overthinker pattern makes you define yourself by your intelligence and analysis. You believe "${pattern.coreBelief || 'If I analyze enough, I\'ll feel safe'}", which gives you strength (${pattern.strength || 'insightful & intelligent'}) but also creates ${pattern.shadow ? pattern.shadow.split(' → ')[1] : 'paralysis and anxiety'}.`,
+                challenge: 'You define yourself by thinking, which makes you feel stuck when you can\'t figure things out and prevents you from knowing who you are beyond analysis.',
+                benefit: 'When you break this pattern, you\'ll know your worth beyond thinking, define yourself by who you are, not what you analyze, and feel valuable without constant analysis.'
             },
             'Withdrawer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you define yourself by independence and protection. You believe "' + (pattern.coreBelief || 'If I don\'t open up, I won\'t get hurt') + '," which gives you strength (' + (pattern.strength || 'independent') + ') but also creates ' + (pattern.shadow ? pattern.shadow.split(' → ')[1] : 'isolation and loneliness') + '.',
-                challenge: 'Closeness feels like it leads to hurt—so you stay safe alone but never get to be fully known.',
-                benefit: 'Worth includes connection—you define yourself by who you are with others, not just alone. Isolation ends; you feel valuable in relationships. The protection lifts; intimacy becomes possible.',
-                solution: (p, arch, cplx, rel) => 'Share one small truth about yourself weekly with someone safe. Examples: "I felt hurt when…" "I\'m scared of…" "I need…" Your Guardian pattern defines you by protection; disclosure expands identity beyond walls. Why it works: when you share something real and they stay, your brain learns that closeness doesn\'t always lead to hurt. Your Emotional Unavailability Complex keeps you safe—and alone. Small disclosures rewire that belief.'
+                summary: `Your Withdrawer pattern makes you define yourself by independence and protection. You believe "${pattern.coreBelief || 'If I don\'t open up, I won\'t get hurt'}", which gives you strength (${pattern.strength || 'independent'}) but also creates ${pattern.shadow ? pattern.shadow.split(' → ')[1] : 'isolation and loneliness'}.`,
+                challenge: 'You define yourself by protection and distance, which makes you feel lonely and prevents you from knowing who you are in connection with others.',
+                benefit: 'When you break this pattern, you\'ll know your worth in connection, define yourself by who you are with others, not just alone, and feel valuable in relationships.'
             },
             'Overgiver': {
-                summary: 'Your ' + pattern.name + ' pattern makes you define yourself by giving and generosity. You believe "' + (pattern.coreBelief || 'If I give more, they won\'t leave') + '," which gives you strength (' + (pattern.strength || 'loyal & generous') + ') but also creates ' + (pattern.shadow ? pattern.shadow.split(' → ')[1] : 'self-neglect') + '.',
-                challenge: 'Underneath is a belief that you\'re only worthy when you\'re giving—so receiving or saying no feels like losing your value.',
-                benefit: 'Worth comes from who you are, not what you give—identity expands beyond generosity. You feel valuable without constant giving; receiving becomes possible. The depletion ends; reciprocity begins.',
-                solution: (p, arch, cplx, rel) => 'Accept one offer of help or care per week without reciprocating immediately. When they say "Let me get that" or "I\'ll help"—say "Thank you" and receive. Don\'t pay back right away. Your Guardian pattern ties worth to giving; receiving breaks that link. Why it works: when you allow others to give, you prove to yourself that you\'re worthy of care without earning it. Identity expands beyond generosity—and relationships deepen because reciprocity flows both ways.'
+                summary: `Your Overgiver pattern makes you define yourself by giving and generosity. You believe "${pattern.coreBelief || 'If I give more, they won\'t leave'}", which gives you strength (${pattern.strength || 'loyal & generous'}) but also creates ${pattern.shadow ? pattern.shadow.split(' → ')[1] : 'self-neglect'}.`,
+                challenge: 'You define yourself by giving, which makes you lose yourself when you can\'t give and prevents you from knowing who you are beyond generosity.',
+                benefit: 'When you break this pattern, you\'ll know your worth beyond giving, define yourself by who you are, not what you give, and feel valuable without constant generosity.'
             }
         };
         
-        const data = impactSummaries[getImpactLookupName(pattern.name)] || impactSummaries['Fixer'];
-        const insight = getLifeAreaInsight('identity', birthDate);
-        const challengeText = data.challenge + (insight ? ' ' + insight : '');
-        const solutionText = typeof data.solution === 'function' ? data.solution(pattern, archetype, complex, undefined) : (data.solution || '');
-        return generateCondensedImpact(data.summary, challengeText, data.benefit, solutionText);
+        const data = impactSummaries[pattern.name] || impactSummaries['Fixer'];
+        
+        return generateCondensedImpact(data.summary, data.challenge, data.benefit);
     }
     
-    function getPurposeImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate) {
+    function getPurposeImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge) {
         const impactSummaries = {
             'Fixer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you find purpose in helping others; you lose yourself in others\' goals. You take on their problems as your purpose and stop pursuing your authentic goals.',
-                challenge: 'Underneath is a belief that your purpose is to fix others—so pursuing your own dreams feels selfish or wrong.',
-                benefit: 'Your authentic purpose emerges—you pursue your own goals and help others without losing yourself. Fixing others\' problems no longer defines you; your purpose becomes yours. The clarity arrives.',
-                solution: (p, arch, cplx, rel) => 'Write: "What would I pursue if no one needed me?" Take 10 minutes and answer without editing. Your Anchor purpose gets lost in fixing others; this question separates your desires from others\' needs. Why it works: when you name what you\'d pursue without obligation, you reveal authentic purpose. The clarity often surprises you—and that clarity guides action.'
+                summary: 'Your Fixer pattern makes you find purpose in helping others, but you lose yourself in others\' goals. You take on their problems as your purpose, which prevents you from pursuing your authentic goals.',
+                challenge: 'You find purpose in fixing others\' problems, which prevents you from discovering and pursuing your own authentic purpose and goals.',
+                benefit: 'When you break this pattern, you\'ll discover your authentic purpose, pursue your own goals, and help others without losing yourself in their problems.'
             },
             'Perfectionist': {
-                summary: 'Your ' + pattern.name + ' pattern makes you wait for perfect conditions before pursuing purpose; paralysis follows. You analyze and plan endlessly but never take action because it\'s not "perfect" yet.',
-                challenge: 'Waiting for the perfect moment means you never start—so purpose stays in your head instead of your life.',
-                benefit: 'You pursue purpose despite imperfection—action replaces endless planning. Purpose builds through practice, not perfection; the perfect moment never arrives, but progress does. Paralysis ends.',
-                solution: (p, arch, cplx, rel) => 'Start with the "worst viable version": the smallest action you\'d take toward purpose today. Example: want to write? Write one paragraph. Want to build something? Do one step. Your perfectionism waits for the perfect moment; the worst viable version forces action. Why it works: purpose builds through practice, not planning. The perfect moment never arrives—but progress does when you start imperfectly.'
+                summary: 'Your Perfectionist pattern makes you wait for perfect conditions before pursuing purpose, causing paralysis. You analyze and plan endlessly, but never take action because it\'s not "perfect" yet.',
+                challenge: 'You wait for perfect conditions to pursue purpose, which causes paralysis and prevents you from taking action toward your authentic goals.',
+                benefit: 'When you break this pattern, you\'ll pursue your purpose despite imperfection, take action toward your goals, and build your purpose through practice, not perfection.'
             },
             'Pleaser': {
-                summary: 'Your ' + pattern.name + ' pattern makes you find purpose in pleasing others and lose your own direction. You adapt your purpose to what others want; your authentic goals get lost.',
-                challenge: 'The more you align with others\' expectations, the less you know what you actually want—and the more you need their approval to feel on track.',
-                benefit: 'Your authentic purpose emerges—direction aligns with who you really are, not others\' expectations. Purpose becomes yours; you pursue your own goals without needing approval to feel on track. The clarity arrives.',
-                solution: (p, arch, cplx, rel) => 'Ask "What matters to me?" once a week—without considering others\' expectations. Write or speak: "What matters to me is…" Your People-Pleasing Complex aligns purpose with others\' wants; this question reconnects you to your own. Why it works: when you pursue purpose from approval, you lose direction. Intrinsic goals sustain you; extrinsic approval exhausts you. The clarity arrives when you stop asking "What do they want?" and start asking "What do I want?"'
+                summary: 'Your Pleaser pattern makes you find purpose in pleasing others, losing your own direction. You adapt your purpose to what others want, which prevents you from pursuing your authentic goals.',
+                challenge: 'You find purpose in pleasing others, which prevents you from discovering and pursuing your own authentic purpose and direction.',
+                benefit: 'When you break this pattern, you\'ll discover your authentic purpose, pursue your own goals, and find direction that aligns with who you really are.'
             },
             'Performer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you find purpose in achievement, but you feel empty after reaching goals. You pursue purpose through success and recognition; deeper meaning stays out of reach.',
-                challenge: 'Underneath is a belief that purpose is something you earn through achievement—so when the applause stops, you feel lost.',
-                benefit: 'Purpose expands beyond achievement—deeper meaning replaces the need for applause. Goals fulfill you beyond recognition; when the applause stops, purpose remains. The emptiness fills.',
-                solution: (p, arch, cplx, rel) => 'Define one purpose-driven activity that has no audience or metric—something you do for its own sake. Examples: walk, create, learn, serve quietly. Your Catalyst drive ties purpose to achievement; invisible purpose breaks that link. Why it works: when purpose depends on applause, you feel empty when it stops. Meaning comes from values, not recognition. When you pursue something for its own sake, purpose remains even when no one\'s watching.'
+                summary: 'Your Performer pattern makes you find purpose in achievement, but you feel empty after reaching goals. You pursue purpose through success and recognition, which prevents you from finding deeper meaning.',
+                challenge: 'You find purpose in achievement, which makes you feel empty after reaching goals and prevents you from finding deeper, more meaningful purpose.',
+                benefit: 'When you break this pattern, you\'ll find purpose beyond achievement, discover deeper meaning, and pursue goals that fulfill you beyond recognition.'
             },
             'Escaper': {
-                summary: 'Your ' + pattern.name + ' pattern makes you avoid committing to purpose, staying mobile and free. You avoid defining your purpose to stay flexible; meaningful goals never get pursued.',
-                challenge: 'Choosing one path feels like closing the door on others—so you stay uncommitted and unfocused.',
-                benefit: 'You commit to purpose instead of staying uncommitted—meaningful goals replace endless flexibility. Life aligns with your values; freedom and direction coexist. The focus arrives.',
-                solution: (p, arch, cplx, rel) => 'Commit to one purpose experiment for 30 days—then reassess. Pick one direction, take small steps, and decide at day 30: continue, adjust, or release. Your Wanderer tendency avoids commitment; a time-bound experiment feels safer. Why it works: choosing one path doesn\'t close all doors—it opens one. Short-term commitment reduces fear of being trapped; you can always adjust. Purpose emerges through doing, not deciding forever.'
+                summary: 'Your Escaper pattern makes you avoid committing to purpose, staying mobile and free. You avoid defining your purpose to stay flexible, which prevents you from pursuing meaningful goals.',
+                challenge: 'You avoid committing to purpose to stay free, which prevents you from pursuing meaningful goals and building a life aligned with your values.',
+                benefit: 'When you break this pattern, you\'ll commit to your authentic purpose, pursue meaningful goals, and build a life aligned with your values while maintaining freedom.'
             },
             'Overthinker': {
-                summary: 'Your ' + pattern.name + ' pattern makes you analyze purpose endlessly but never take action. You think about your purpose constantly; paralysis prevents you from pursuing your goals.',
-                challenge: 'Thinking about purpose feels safer than choosing one—so you never commit and never live it.',
-                benefit: 'You act on purpose instead of analyzing—action replaces paralysis, goals get pursued despite uncertainty. Purpose builds through practice; thinking ends, living begins. The momentum builds.',
-                solution: (p, arch, cplx, rel) => 'Set a "purpose deadline": pick one action and do it within 48 hours. Example: "I will [write one page / reach out to one person / take one class] by [date]." Your Wanderer mind analyzes forever; a deadline forces action. Why it works: overthinking purpose keeps you stuck; action breaks paralysis. You discover purpose by doing—not by deciding. The 48-hour window is small enough to feel safe, big enough to matter.'
+                summary: 'Your Overthinker pattern makes you analyze purpose endlessly, but you never take action. You think about your purpose constantly, but this paralysis prevents you from pursuing your goals.',
+                challenge: 'You overthink your purpose, using analysis as a way to avoid taking action, which prevents you from pursuing your authentic goals.',
+                benefit: 'When you break this pattern, you\'ll take action toward your purpose, pursue your goals despite uncertainty, and build your purpose through practice, not perfection.'
             },
             'Withdrawer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you protect yourself from purpose, avoiding commitment. You avoid defining your purpose to prevent disappointment; meaningful goals stay out of reach.',
-                challenge: 'Underneath is a belief that hoping for something will only lead to hurt—so you don\'t dare want too much.',
-                benefit: 'You dare to want—commitment replaces protection, meaningful goals replace fear of disappointment. Life aligns with your values; hoping becomes possible again. The risk pays off.',
-                solution: (p, arch, cplx, rel) => 'Write one "daring desire" weekly—something you want but fear wanting. "I want to…" and fill in the blank. Your Guardian pattern protects you from hope; naming desires breaks that protection. Why it works: when you protect yourself from wanting, you avoid disappointment—and purpose. Naming what you want reduces the fear of wanting it. Hope becomes possible again when you dare to want.'
+                summary: 'Your Withdrawer pattern makes you protect yourself from purpose, avoiding commitment. You avoid defining your purpose to prevent disappointment, which prevents you from pursuing meaningful goals.',
+                challenge: 'You protect yourself from purpose to avoid disappointment, which prevents you from pursuing meaningful goals and building a life aligned with your values.',
+                benefit: 'When you break this pattern, you\'ll commit to your authentic purpose safely, pursue meaningful goals, and build a life aligned with your values without fear of disappointment.'
             },
             'Overgiver': {
-                summary: 'Your ' + pattern.name + ' pattern makes you find purpose in giving but neglect your own goals. You pursue purpose through serving others; your authentic goals get sidelined.',
-                challenge: 'Your purpose can feel like it\'s only to serve others—so wanting something for yourself feels wrong or greedy.',
-                benefit: 'Your purpose becomes visible—you pursue your own goals while still serving others. Giving balances with receiving; your life serves both you and them. Invisibility ends; your purpose gets a seat.',
-                solution: (p, arch, cplx, rel) => 'Block 1 hour weekly for "my purpose project" before serving others. Put it in your calendar—first thing Monday, or whatever works. Your Guardian pattern gives first and leaves nothing for you; blocking your purpose first reverses that. Why it works: when you protect your purpose before saying yes to others, you sustain both giving and self. Your purpose gets a seat; depletion ends.'
+                summary: 'Your Overgiver pattern makes you find purpose in giving, but you neglect your own goals. You pursue purpose through serving others, which prevents you from pursuing your authentic goals.',
+                challenge: 'You find purpose in giving to others, which prevents you from pursuing your own authentic goals and building a life aligned with your values.',
+                benefit: 'When you break this pattern, you\'ll balance giving with pursuing your own purpose, discover your authentic goals, and build a life that serves both you and others.'
             }
         };
         
-        const data = impactSummaries[getImpactLookupName(pattern.name)] || impactSummaries['Fixer'];
-        const insight = getLifeAreaInsight('purpose', birthDate);
-        const challengeText = data.challenge + (insight ? ' ' + insight : '');
-        const solutionText = typeof data.solution === 'function' ? data.solution(pattern, archetype, complex, undefined) : (data.solution || '');
-        return generateCondensedImpact(data.summary, challengeText, data.benefit, solutionText);
+        const data = impactSummaries[pattern.name] || impactSummaries['Fixer'];
+        
+        return generateCondensedImpact(data.summary, data.challenge, data.benefit);
     }
     
-    function getLifestyleImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate) {
+    function getLifestyleImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge) {
         const impactSummaries = {
             'Fixer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you fill your days solving others\' problems, leaving no time for yourself. You create structured routines, but they\'re focused on fixing, not living.',
-                challenge: 'Underneath is a belief that your time is only valid when it\'s spent on others—so time for yourself feels indulgent or wrong.',
-                benefit: 'Time for yourself becomes non-negotiable—you balance fixing with living and build routines that support your wellbeing. Your schedule reflects your priorities; indulgence becomes self-care. The guilt ends.',
-                solution: (p, arch, cplx, rel) => 'Block 15 minutes for yourself before doing anything for anyone else—same time every day. Examples: morning coffee alone, afternoon walk, evening wind-down. Put it in your calendar. Your Anchor pattern fills your days fixing others; blocking "me time" first proves your time is valid when spent on you. Why it works: when you anchor personal time to a fixed slot, it sticks. The guilt drops because you\'ve already "earned" it by putting it first.'
+                summary: 'Your Fixer pattern makes you fill your days solving others\' problems, leaving no time for yourself. You create structured routines, but they\'re focused on fixing, not living.',
+                challenge: 'You fill your days with fixing others\' problems, which leaves no time for your own life and prevents you from building a lifestyle that supports your wellbeing.',
+                benefit: 'When you break this pattern, you\'ll create a lifestyle that includes time for yourself, balance fixing with living, and build daily routines that support your wellbeing.'
             },
             'Perfectionist': {
-                summary: 'Your ' + pattern.name + ' pattern makes you create rigid routines that you can\'t maintain, leading to all-or-nothing cycles. You plan perfect days; when you "fail," you give up entirely.',
-                challenge: 'Perfect or quit—so one slip means abandoning the whole day instead of adjusting.',
-                benefit: 'Flexible routines replace rigid plans—one slip no longer means abandoning the day. Sustainable habits build; imperfection is accepted. Consistency wins over perfection. The cycle breaks.',
-                solution: (p, arch, cplx, rel) => 'Aim for 80% of your plan—never 100%. Planned 5 tasks? Do 4. Planned a perfect morning? Hit 80%. When you "fail," adjust instead of quit: "I did 3 of 5—that\'s still progress." Your perfectionism collapses when one slip triggers all-or-nothing; 80% is built-in flexibility. Why it works: consistency beats intensity. Showing up imperfectly for months beats perfect execution for a week. The cycle breaks when one slip no longer means abandoning the day.'
+                summary: 'Your Perfectionist pattern makes you create rigid routines that you can\'t maintain, leading to all-or-nothing cycles. You plan perfect days, but when you "fail," you give up entirely.',
+                challenge: 'You create rigid routines you can\'t maintain, which leads to cycles of starting and stopping that prevent you from building consistent lifestyle habits.',
+                benefit: 'When you break this pattern, you\'ll create flexible, sustainable daily routines, accept imperfection, and build consistent lifestyle habits without all-or-nothing thinking.'
             },
             'Pleaser': {
-                summary: 'Your ' + pattern.name + ' pattern makes you say yes to everything, filling your schedule with others\' priorities. You create a lifestyle around pleasing others; your own needs get no time.',
-                challenge: 'Your schedule reflects everyone else\'s priorities—so your own life never gets a slot.',
-                benefit: 'Your priorities get a slot—boundaries protect your time; daily routines support your wellbeing. Your schedule reflects you, not everyone else. Burnout ends; balance arrives. The slot opens.',
-                solution: (p, arch, cplx, rel) => 'Block your priorities in your calendar before accepting any requests. Put "my time" in first—workout, meal prep, rest—then fill the rest. When someone asks, say: "Let me check my schedule." Your People-Pleasing Complex fills your schedule with others\' priorities; blocking yours first prevents automatic yes. Why it works: when your priorities are already in the calendar, saying no to others is easier. Your schedule reflects you, not everyone else.'
+                summary: 'Your Pleaser pattern makes you say yes to everything, filling your schedule with others\' priorities. You create a lifestyle around pleasing others, leaving no time for your own needs.',
+                challenge: 'You fill your schedule with others\' priorities, which leaves no time for your own needs and prevents you from building a lifestyle that supports your wellbeing.',
+                benefit: 'When you break this pattern, you\'ll create a lifestyle that includes your own priorities, set boundaries around your time, and build daily routines that support your wellbeing.'
             },
             'Performer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you maintain a busy, achievement-focused lifestyle that exhausts you. You create routines around performing and achieving; rest gets no time.',
-                challenge: 'Underneath is a belief that rest is laziness—so slowing down feels like failing.',
-                benefit: 'Rest becomes part of the plan—achievement balances with authentic living. Daily routines support wellbeing; exhaustion no longer defines success. Slowing down feels like winning. The performing ends.',
-                solution: (p, arch, cplx, rel) => 'Schedule rest as a "performance requirement"—20 minutes daily, same time. Put it in your calendar: "Recovery block." Your Catalyst drive ties worth to productivity; reframing rest as strategic—not lazy—reduces guilt. Why it works: rest isn\'t the opposite of performance; it\'s part of it. When you treat rest as a requirement, your brain stops fighting it. Exhaustion drops; sustainable achievement rises.'
+                summary: 'Your Performer pattern makes you maintain a busy, achievement-focused lifestyle that exhausts you. You create routines around performing and achieving, leaving no time for rest.',
+                challenge: 'You maintain a lifestyle focused on performance, which exhausts you and prevents you from building daily routines that include rest and authentic living.',
+                benefit: 'When you break this pattern, you\'ll create a lifestyle that includes rest, balance achievement with authentic living, and build daily routines that support your wellbeing.'
             },
             'Escaper': {
-                summary: 'Your ' + pattern.name + ' pattern makes you avoid routine and stay busy to avoid feelings. You create a lifestyle of distraction and mobility; consistent habits never form.',
-                challenge: 'Routine means facing yourself—so you escape into busyness and never build a stable foundation.',
-                benefit: 'Consistent routines replace escape—stable habits form; you face feelings instead of staying busy. Routine means landing, not avoiding. The foundation builds; the running stops.',
-                solution: (p, arch, cplx, rel) => 'Start with one 5-minute "anchor habit"—something you do at the same time every day. Examples: morning coffee alone, evening wind-down, 5-minute stretch. Your Wanderer tendency avoids routine because routine means facing yourself; micro-habits feel safe. Why it works: tiny routines build stability without triggering escape. Once you have one anchor, you can stack others. Routine stops meaning "trapped" and starts meaning "grounded."'
+                summary: 'Your Escaper pattern makes you avoid routine and stay busy to avoid feelings. You create a lifestyle of distraction and mobility, which prevents you from building consistent habits.',
+                challenge: 'You avoid routine to escape feelings, which prevents you from building consistent lifestyle habits and creating a stable foundation for your life.',
+                benefit: 'When you break this pattern, you\'ll create consistent routines, build stable lifestyle habits, and face feelings without needing to escape or stay busy.'
             },
             'Overthinker': {
-                summary: 'Your ' + pattern.name + ' pattern makes you overthink daily decisions, causing paralysis. You analyze your lifestyle endlessly; action and consistent habits stay out of reach.',
-                challenge: 'Deciding feels risky—so you stay in analysis and never build the life you want.',
-                benefit: 'You decide and act instead of analyze—confident daily decisions replace paralysis. Lifestyle habits build through practice; the life you want becomes the life you live. The analysis ends; the living begins.',
-                solution: (p, arch, cplx, rel) => 'For small daily choices—what to eat, what to wear, what to do next—give yourself 2 minutes max, then act. Set a timer if needed. Your Wanderer mind analyzes to avoid deciding; a cap forces action. Why it works: most daily choices don\'t deserve deliberation. Limiting decision time frees mental energy for what matters. The life you want becomes the life you live when you stop overthinking the small stuff.'
+                summary: 'Your Overthinker pattern makes you overthink daily decisions, causing paralysis. You analyze your lifestyle endlessly, but this prevents you from taking action and building consistent habits.',
+                challenge: 'You overthink daily decisions, using analysis as a way to avoid taking action, which prevents you from building consistent lifestyle habits.',
+                benefit: 'When you break this pattern, you\'ll make confident daily decisions, take action despite uncertainty, and build consistent lifestyle habits through practice.'
             },
             'Withdrawer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you maintain isolated, protective daily habits. You create a lifestyle of distance and protection; connections and community stay out of reach.',
-                challenge: 'Underneath is a belief that connection is risky—so you build a life that keeps others at arm\'s length.',
-                benefit: 'Connection becomes part of life—community builds; daily habits support both independence and intimacy. Distance no longer protects; connection heals. The isolation ends; the belonging begins.',
-                solution: (p, arch, cplx, rel) => 'Add one small connection habit: weekly coffee with a friend, or daily text to someone you care about. Your Guardian pattern keeps you isolated; micro-connections break that habit. Why it works: connection heals what isolation hides. Regular small touchpoints reduce loneliness and build belonging. Your Emotional Unavailability Complex keeps you safe—and alone. One coffee, one text—the compound effect rewires the belief that connection is risky.'
+                summary: 'Your Withdrawer pattern makes you maintain isolated, protective daily habits. You create a lifestyle of distance and protection, which prevents you from building connections and community.',
+                challenge: 'You maintain an isolated lifestyle to protect yourself, which prevents you from building connections and community that support your wellbeing.',
+                benefit: 'When you break this pattern, you\'ll create a lifestyle that includes connection, build community safely, and maintain daily habits that support both independence and connection.'
             },
             'Overgiver': {
-                summary: 'Your ' + pattern.name + ' pattern makes you give your time to everyone else, leaving nothing for yourself. You create a lifestyle around giving; habits that support your own wellbeing never get built.',
-                challenge: 'If you give your time to others, you\'ll be needed—but you end up with no time or energy for yourself.',
-                benefit: 'Self-care balances giving—your needs get a slot; daily habits support both you and others. Depletion ends; you give from overflow. Your life includes you. The neglect ends.',
-                solution: (p, arch, cplx, rel) => 'Add "me first" to one routine: eat, rest, or move before caregiving. Examples: eat breakfast before helping kids, take a 10-minute walk before visiting family. Your Guardian pattern gives first; putting yourself first reverses that. Why it works: you can\'t pour from an empty cup. When you replenish before giving, you sustain both—and you model self-care instead of self-sacrifice. Depletion ends; giving from overflow begins.'
+                summary: 'Your Overgiver pattern makes you give your time to everyone else, leaving nothing for yourself. You create a lifestyle around giving, which prevents you from building habits that support your own wellbeing.',
+                challenge: 'You give all your time to others, which leaves nothing for yourself and prevents you from building lifestyle habits that support your own wellbeing.',
+                benefit: 'When you break this pattern, you\'ll create a lifestyle that balances giving with self-care, prioritize your own needs, and build daily habits that support both you and others.'
             }
         };
         
-        const data = impactSummaries[getImpactLookupName(pattern.name)] || impactSummaries['Fixer'];
-        const insight = getLifeAreaInsight('lifestyle', birthDate);
-        const challengeText = data.challenge + (insight ? ' ' + insight : '');
-        const solutionText = typeof data.solution === 'function' ? data.solution(pattern, archetype, complex, undefined) : (data.solution || '');
-        return generateCondensedImpact(data.summary, challengeText, data.benefit, solutionText);
+        const data = impactSummaries[pattern.name] || impactSummaries['Fixer'];
+        
+        return generateCondensedImpact(data.summary, data.challenge, data.benefit);
     }
     
-    function getProductivityImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, birthDate) {
+    function getProductivityImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge) {
         const impactSummaries = {
             'Fixer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you spend time solving others\' problems, leaving no time for your own goals. You\'re productive, but your productivity is focused on fixing, not your own priorities.',
-                challenge: 'Underneath is a belief that your time is only "well spent" when it\'s on others—so your own goals never get the slot.',
-                benefit: 'Your goals get the slot—productivity focuses on your priorities; helping others balances with your own. Time goes where it matters; exhaustion from fixing everyone else ends. Your time becomes yours.',
-                solution: (p, arch, cplx, rel) => 'Block your top priority first—before fixing anyone else. Put it in your calendar: "My most important task"—same time every day. Your Anchor pattern fills your time fixing others; blocking your goal first proves your time is valid when spent on you. Why it works: when you protect your most important task before saying yes to others, you advance without burning bridges. Productivity serves what matters; exhaustion from fixing everyone else ends.'
+                summary: 'Your Fixer pattern makes you spend time solving others\' problems, leaving no time for your own goals. You\'re productive, but your productivity is focused on fixing, not your own priorities.',
+                challenge: 'You spend your productive time on others\' problems, which leaves no time for your own goals and prevents you from being productive on what truly matters to you.',
+                benefit: 'When you break this pattern, you\'ll focus your productivity on your own goals, balance helping others with your priorities, and use your time for what truly matters.'
             },
             'Perfectionist': {
-                summary: 'Your ' + pattern.name + ' pattern makes you waste time perfecting instead of taking action. You\'re productive at perfecting; completing tasks and moving forward stay out of reach.',
-                challenge: 'Perfecting feels productive, but it\'s a way to avoid finishing—so you never ship.',
-                benefit: 'You ship instead of perfect—action replaces endless polishing, tasks get completed. Productivity moves you forward; perfecting no longer blocks finishing. The block lifts; progress begins.',
-                solution: (p, arch, cplx, rel) => 'Set a "done is better" deadline before starting any task: decide when you\'ll stop and ship. Example: "This draft ships Friday at 5pm." Your perfectionism polishes forever; a deadline forces completion. Why it works: done is better than perfect. Shipping imperfect work often beats endless polishing—because shipped work moves you forward; perfect work stays in your head. The block lifts when you decide when to stop.'
+                summary: 'Your Perfectionist pattern makes you waste time perfecting instead of taking action. You\'re productive at perfecting, but this prevents you from completing tasks and moving forward.',
+                challenge: 'You waste productive time perfecting instead of taking action, which prevents you from completing tasks and moving forward on your goals.',
+                benefit: 'When you break this pattern, you\'ll take action despite imperfection, complete tasks efficiently, and use your time productively to move forward on your goals.'
             },
             'Pleaser': {
-                summary: 'Your ' + pattern.name + ' pattern makes you say yes to everything, filling your time with others\' priorities. You\'re productive at pleasing; your own goals never get the slot.',
-                challenge: 'The more you say yes to others\' priorities, the less time you have for yours—and the more you need their approval to feel productive.',
-                benefit: 'Your goals get the slot—boundaries protect your time; productivity serves what truly matters. People-pleasing ends; your priorities get the focus. The exhaustion ends; the impact grows.',
-                solution: (p, arch, cplx, rel) => 'Before saying yes to any request, say: "I need to check my schedule—I\'ll get back to you." Give yourself 24 hours. Then ask: "Does this align with my priorities?" Your People-Pleasing Complex says yes automatically; the pause breaks that reflex. Why it works: when you pause before saying yes, you protect your priorities without damaging relationships. People respect boundaries more than they resent them. Your goals get the focus; exhaustion ends.'
+                summary: 'Your Pleaser pattern makes you say yes to everything, filling your time with others\' priorities. You\'re productive, but your productivity is focused on pleasing, not your own goals.',
+                challenge: 'You spend your productive time on others\' priorities, which leaves no time for your own goals and prevents you from being productive on what truly matters to you.',
+                benefit: 'When you break this pattern, you\'ll focus your productivity on your own goals, set boundaries around your time, and use your productivity for what truly matters.'
             },
             'Performer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you work constantly to prove your worth, never resting. You\'re productive at performing; sustainable productivity and rest stay out of reach.',
-                challenge: 'Underneath is a belief that rest is unearned—so you run until you crash.',
-                benefit: 'Sustainable productivity replaces burnout—rest becomes part of the plan. You use time productively without constant performance; exhaustion no longer defines worth. The running stops; the balance arrives.',
-                solution: (p, arch, cplx, rel) => 'Schedule rest as a "productivity block"—20 minutes between deep work. Put it in your calendar: "Recovery." Your Catalyst drive ties worth to output; reframing rest as strategic—not lazy—reduces guilt. Why it works: rest isn\'t the opposite of productivity; it\'s part of it. Rest intervals improve focus and output. When you treat rest as a block, your brain stops fighting it. The running stops; sustainable productivity arrives.'
+                summary: 'Your Performer pattern makes you work constantly to prove your worth, never resting. You\'re productive at performing, but this exhausts you and prevents you from sustainable productivity.',
+                challenge: 'You work constantly to prove your worth, which exhausts you and prevents you from building sustainable productivity habits that include rest.',
+                benefit: 'When you break this pattern, you\'ll build sustainable productivity habits, balance work with rest, and use your time productively without constant performance.'
             },
             'Escaper': {
-                summary: 'Your ' + pattern.name + ' pattern makes you stay busy to avoid feelings, wasting time on distractions. You\'re productive at staying busy; what truly matters never gets the focus.',
-                challenge: 'Staying busy feels productive—but it\'s a way to avoid feeling, so you never land on what actually matters.',
-                benefit: 'Focus replaces escape—productivity lands on what truly matters. You face feelings instead of distracting; time moves you forward. Busyness ends; impact begins. The avoidance stops; the progress starts.',
-                solution: (p, arch, cplx, rel) => 'Do one "priority task" before distractions each day. Before checking email, social media, or busywork—do one thing that actually matters. Your Wanderer tendency stays busy to avoid feeling; starting with meaning reduces escape. Why it works: when you start with what matters, momentum builds. Avoidance shrinks because you\'ve already landed on something meaningful. Busyness ends; impact begins.'
+                summary: 'Your Escaper pattern makes you stay busy to avoid feelings, wasting time on distractions. You\'re productive at staying busy, but this prevents you from being productive on what truly matters.',
+                challenge: 'You waste productive time on distractions to avoid feelings, which prevents you from being productive on what truly matters and moving forward on your goals.',
+                benefit: 'When you break this pattern, you\'ll focus your productivity on what truly matters, face feelings without distraction, and use your time productively to move forward.'
             },
             'Overthinker': {
-                summary: 'Your ' + pattern.name + ' pattern makes you spend time analyzing instead of acting. You\'re productive at thinking; action and completing tasks stay out of reach.',
-                challenge: 'Thinking feels productive—but it keeps you from doing, so tasks never get done.',
-                benefit: 'You act instead of analyze—action replaces paralysis; tasks get completed. Productivity moves you forward; overthinking no longer blocks doing. The thinking ends; the doing begins.',
-                solution: (p, arch, cplx, rel) => 'Use the "2-minute rule": if a task takes under 2 minutes, do it now. Don\'t add it to a list; don\'t analyze it. Just do it. Your Wanderer mind analyzes to avoid doing; immediate action bypasses overthinking for small tasks. Why it works: you can\'t overthink a 2-minute task. When you act immediately on small things, you build momentum for bigger ones. The thinking ends; the doing begins.'
+                summary: 'Your Overthinker pattern makes you spend time analyzing instead of acting. You\'re productive at thinking, but this prevents you from taking action and completing tasks.',
+                challenge: 'You waste productive time analyzing instead of acting, which prevents you from completing tasks and moving forward on your goals.',
+                benefit: 'When you break this pattern, you\'ll take action despite uncertainty, complete tasks efficiently, and use your time productively to move forward on your goals.'
             },
             'Withdrawer': {
-                summary: 'Your ' + pattern.name + ' pattern makes you isolate and protect your time, missing opportunities. You\'re productive alone; collaboration and productivity through connection stay out of reach.',
-                challenge: 'Underneath is a belief that involving others will slow you down or expose you—so you go it alone and cap your impact.',
-                benefit: 'Collaboration joins solo work—productivity grows through connection. You use time productively alone and with others; isolation no longer caps impact. The cap lifts; the results grow.',
-                solution: (p, arch, cplx, rel) => 'Add one collaboration per week: ask for input on a project, delegate a task, or co-work with someone. Your Guardian pattern keeps you isolated; collaboration breaks that habit. Why it works: productivity grows through connection. When you involve others, you often get better results—and you cap your isolation. Your Emotional Unavailability Complex keeps you safe—and caps your impact. Small collaborations rewire that belief.'
+                summary: 'Your Withdrawer pattern makes you isolate and protect your time, missing opportunities. You\'re productive alone, but this prevents you from collaborating and building productivity through connection.',
+                challenge: 'You isolate to protect your time, which prevents you from collaborating and building productivity through connection and community.',
+                benefit: 'When you break this pattern, you\'ll balance solo productivity with collaboration, build productivity through connection, and use your time productively both alone and with others.'
             },
             'Overgiver': {
-                summary: 'Your ' + pattern.name + ' pattern makes you give your time to everyone else, leaving nothing for yourself. You\'re productive at giving; your own goals never get the slot.',
-                challenge: 'If you give your time to others\' goals, you\'ll be valued—but you end up with no time for your own.',
-                benefit: 'Your goals get the slot—giving balances with your priorities. Time serves both you and others; depletion ends. Productivity includes you. The invisibility ends; your goals get the focus.',
-                solution: (p, arch, cplx, rel) => 'Block 2 hours weekly for "my goal" before helping others. Put it in your calendar—first thing Monday, or whatever works. Your Guardian pattern gives first; blocking your goal first reverses that. Why it works: when you protect your priorities before saying yes to others, you sustain both giving and productivity. Your goals get a seat; depletion ends. Invisibility ends when you make your growth visible.'
+                summary: 'Your Overgiver pattern makes you give your time to everyone else, leaving nothing for yourself. You\'re productive at giving, but this prevents you from being productive on your own goals.',
+                challenge: 'You spend your productive time on others\' goals, which leaves no time for your own goals and prevents you from being productive on what truly matters to you.',
+                benefit: 'When you break this pattern, you\'ll focus your productivity on your own goals, balance giving with your priorities, and use your time productively for both you and others.'
             }
         };
         
-        const data = impactSummaries[getImpactLookupName(pattern.name)] || impactSummaries['Fixer'];
-        const insight = getLifeAreaInsight('productivity', birthDate);
-        const challengeText = data.challenge + (insight ? ' ' + insight : '');
-        const solutionText = typeof data.solution === 'function' ? data.solution(pattern, archetype, complex, undefined) : (data.solution || '');
-        return generateCondensedImpact(data.summary, challengeText, data.benefit, solutionText);
+        const data = impactSummaries[pattern.name] || impactSummaries['Fixer'];
+        
+        return generateCondensedImpact(data.summary, data.challenge, data.benefit);
     }
     
     // Get Personalized Drivers Explanation
@@ -4602,12 +4276,12 @@
         // Opening: Personalized based on complex and pattern
         developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7; font-weight: 500;">${firstName ? firstName + ', ' : ''}Your <strong>${complex.primary}</strong>—which drives your ${pattern.name.toLowerCase()} pattern—didn't develop by accident. It formed as a <strong>protective mechanism</strong> during critical developmental periods when you needed to feel safe.</p>`;
 
-        // Section 1: The Emotional Driver Foundation (no percentages—see Behind it in About Your Pattern)
-        developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">Your <strong>${driverNames[dominantDriver]}</strong> driver—which drives your ${pattern.name.toLowerCase()} pattern—developed as a learned response when you needed to navigate uncertainty, threat, or emotional overwhelm.`;
+        // Section 1: The Emotional Driver Foundation
+        developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">Your pattern is primarily driven by <strong>${driverNames[dominantDriver]} (${dominantPercent}%)</strong>`;
         if (secondaryDriver && secondaryPercent >= 20) {
-            developmentStory += ` Your <strong>${driverNames[secondaryDriver]}</strong> driver also influences you, adding another layer to how this shows up.`;
+            developmentStory += `, with <strong>${driverNames[secondaryDriver]} (${secondaryPercent}%)</strong> as a secondary driver`;
         }
-        developmentStory += `</p>`;
+        developmentStory += `. These emotional drivers aren't random—they're <strong>learned responses</strong> that developed when you needed to navigate uncertainty, threat, or emotional overwhelm.</p>`;
 
         // Section 2: How the Complex Developed (personalized based on driver and trauma)
         // Get trauma-specific insights if available
@@ -4656,12 +4330,7 @@
         const shadowBehaviorPhrase = getShadowBehaviorVerb(pattern.shadow);
         developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">This is how your <strong>${complex.primary}</strong> connects to your ${pattern.name.toLowerCase()} pattern: Your complex created a <strong>core belief</strong>—"${pattern.coreBelief || 'If I do this, I\'m safe'}"—and your pattern became the <strong>behavioral expression</strong> of that belief. Every time you ${shadowBehaviorPhrase}, you're unconsciously trying to satisfy that core belief and feel safe.</p>`;
 
-        // Section 4: Secondary complex (when user has multiple complexes)
-        if (complex.secondary) {
-            developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">You also carry the <strong>${complex.secondary}</strong>—another belief layer that developed from your early experiences. Together, ${complex.primary} and ${complex.secondary} reinforce each other, which is why your ${pattern.name} pattern can feel so automatic and hard to interrupt.</p>`;
-        }
-
-        // Section 5: Why It Persists (neuroscience + psychology)
+        // Section 4: Why It Persists (neuroscience + psychology)
         if (exactAge) {
             developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">At ${exactAge}, this pattern has been running for ${exactAge >= 30 ? 'decades' : 'years'}. Research in neuroscience shows that <strong>repetition literally rewires your brain</strong>—the more you repeat a behavior, the stronger the neural pathway becomes. Your ${complex.primary.toLowerCase()} isn't just a habit; it's a <strong>deeply wired survival strategy</strong> that operates on autopilot.</p>`;
         } else {
@@ -4669,7 +4338,7 @@
         }
 
         // Section 5: The Hope (because it was learned, it can change)
-        developmentStory += `<p class="content-text" style="margin-bottom: 0; line-height: 1.7; color: #333;">Here's what matters most: <strong style="color: #ca0013;">Because this pattern was learned, it can be unlearned.</strong> Your brain can rewire itself through new experiences and consistent practice. Repetition and reinforcement created this pattern; the same mechanism can create new patterns that serve you better.</p>`;
+        developmentStory += `<p class="content-text" style="margin-bottom: 0; line-height: 1.7; font-weight: 500; color: #ca0013;">Here's what matters most: <strong>Because this pattern was learned, it can be unlearned.</strong> Your brain has the capacity to rewire itself through new experiences and consistent practice. The same mechanism that created this pattern—repetition and reinforcement—can create new patterns that serve you better.</p>`;
 
         return developmentStory;
     }
@@ -5224,356 +4893,13 @@
     }
     
     // Journal UI block for "Your Pattern Reset Workbook" prompts (reused under each journalable li)
-    // Always visible - no trigger button needed
-    function getJournalUI(placeholder) {
-        var ph = placeholder || 'Type your answer here...';
-        return '<div class="journal-ui"><div class="journal-entry"><textarea rows="3" placeholder="' + ph.replace(/"/g, '&quot;') + '" class="journal-textarea"></textarea><div class="journal-saved-indicator" style="display:none;"><span class="journal-saved-text">Saved</span></div></div></div>';
-    }
-
-    // Pattern-specific pain points for merged "What's not working" workbook question (general fallback)
-    function getPatternPainOptions(patternName) {
-        var name = (patternName === 'The Guarded One' || patternName === 'Guarded One') ? 'Withdrawer' : (patternName || 'Fixer');
-        var opts = {
-            'Fixer': ['Fixing everyone else\'s problems', 'Taking on too much', 'Burnout from overdoing', 'Can\'t let others solve their own issues', 'Exhausted from always being in charge'],
-            'Perfectionist': ['All-or-nothing thinking', 'Paralysis from perfectionism', 'Giving up when I "fail"', 'Rigid routines that don\'t stick', 'Fear of making mistakes'],
-            'Pleaser': ['Saying yes when I mean no', 'Putting others first always', 'Losing myself in relationships', 'Resentment from people-pleasing', 'Exhausted from absorbing others\' needs'],
-            'Performer': ['Exhausted from performing', 'Fear they\'ll see the real me', 'Achieving to impress', 'Empty after the applause', 'Can\'t show up authentically'],
-            'Escaper': ['Avoiding hard conversations', 'Staying busy to avoid feelings', 'Pulling away when things get serious', 'Numbing with distractions', 'Can\'t sit with discomfort'],
-            'Overthinker': ['Paralyzed by analysis', 'Can\'t stop overthinking', 'Missing opportunities while deciding', 'Anxiety from endless thinking', 'Stuck in my head instead of acting'],
-            'Withdrawer': ['Keeping emotional distance', 'Pushing people away', 'Staying isolated', 'Can\'t open up', 'Lonely even when I\'m not alone'],
-            'Overgiver': ['Giving more than I receive', 'Exhausted from overgiving', 'Resentful when others don\'t reciprocate', 'Can\'t receive', 'Feeling used']
-        };
-        return opts[name] || opts['Fixer'];
-    }
-    window.getPatternPainOptions = getPatternPainOptions;
-
-    // Universal human challenges/pains per life area - not pattern-specific
-    var UNIVERSAL_PAINS_BY_AREA = {
-        'Love': ['Loneliness', 'Fear of rejection', 'Communication breakdown', 'Trust issues', 'Unmet needs', 'Feeling unseen'],
-        'Money': ['Constant worry', 'Never enough feeling', 'Scarcity mindset', 'Comparison with others', 'Financial anxiety', 'Feeling stuck'],
-        'Health': ['Low energy', 'Neglecting self-care', 'Stress and burnout', 'Inconsistent habits', 'Body disconnect', 'Procrastinating on health'],
-        'Career': ['Unfulfilled at work', 'Fear of failure', 'Imposter syndrome', 'Burnout', 'Missing purpose', 'Stuck in comfort zone'],
-        'Identity': ['Not knowing who I am', 'People-pleasing', 'Comparison with others', 'Self-doubt', 'Fear of being seen', 'Living for others'],
-        'Purpose': ['Feeling lost', 'Lack of direction', 'Waiting for clarity', 'Fear of wrong path', 'Existential emptiness', 'Stuck in survival mode'],
-        'Lifestyle': ['No time for myself', 'Overwhelm', 'Out of balance', 'Rushing through life', 'Exhausted', 'No boundaries'],
-        'How I feel about myself': ['Not enough', 'Self-criticism', 'Shame', 'Comparing to others', 'Harsh inner critic', 'Feeling unworthy']
-    };
-
-    // Combined universal + pattern-specific pains per area. Exposed for initWorkbookPills.
-    window.getCombinedPainsByArea = function(area, patternName) {
-        var universal = UNIVERSAL_PAINS_BY_AREA[area] || [];
-        var patternSpecific = window.getPatternPainOptionsByArea ? window.getPatternPainOptionsByArea(area, patternName) : [];
-        var seen = {};
-        var out = [];
-        universal.forEach(function(p) {
-            if (!seen[p]) { seen[p] = true; out.push(p); }
-        });
-        (patternSpecific || []).forEach(function(p) {
-            if (!seen[p]) { seen[p] = true; out.push(p); }
-        });
-        return out;
-    };
-
-    // Pattern-specific pain points BY life area
-    // Exposed on window for results-modal.js to call when area selection changes
-    window.getPatternPainOptionsByArea = function(area, patternName) {
-        var name = (patternName === 'The Guarded One' || patternName === 'Guarded One') ? 'Withdrawer' : (patternName || 'Fixer');
-        var byArea = {
-            'Love': {
-                'Fixer': ['Fixing partner\'s problems', 'Taking charge in relationships', 'Can\'t let them own their part', 'Jumping in to solve their issues', 'Exhausted from always fixing'],
-                'Perfectionist': ['Waiting for the perfect partner', 'Analyzing every flaw before committing', 'Giving up when it\'s not "right"', 'Paralyzed by dating decisions', 'Can\'t show imperfections'],
-                'Pleaser': ['Saying yes when I mean no', 'Losing myself in the relationship', 'Putting their needs always first', 'Resentment from people-pleasing', 'Exhausted from absorbing their needs'],
-                'Performer': ['Exhausted from impressing them', 'Fear they\'ll see the real me', 'Achieving to earn their approval', 'Empty when the performance ends', 'Can\'t show up authentically'],
-                'Escaper': ['Avoiding hard conversations', 'Pulling away when things get serious', 'Staying busy to avoid feelings', 'Numbing with distractions', 'Can\'t sit with emotional discomfort'],
-                'Overthinker': ['Analyzing every text and interaction', 'Paralyzed by "what do they mean?"', 'Missing moments while overthinking', 'Anxiety from endless analysis', 'Stuck in my head instead of connecting'],
-                'Withdrawer': ['Keeping emotional distance', 'Pushing them away when they get close', 'Staying isolated in the relationship', 'Can\'t open up', 'Lonely even when together'],
-                'Overgiver': ['Giving more than I receive', 'Exhausted from overgiving', 'Resentful when they don\'t reciprocate', 'Can\'t receive love', 'Feeling used']
-            },
-            'Money': {
-                'Fixer': ['Controlling every financial detail', 'Fixing others\' money problems', 'Can\'t trust the process', 'Burnout from managing everything', 'Exhausted from always being in charge'],
-                'Perfectionist': ['Overthinking every financial decision', 'Paralysis from "perfect" choices', 'Missing opportunities while deciding', 'Giving up when plans "fail"', 'Rigid budgets that don\'t stick'],
-                'Pleaser': ['Spending to please others', 'Saying yes to expensive plans', 'Financially drained from generosity', 'Resentful when others don\'t reciprocate', 'Can\'t say no to money requests'],
-                'Performer': ['Spending to impress', 'Buying status to feel worthy', 'Financial stress from performing', 'Empty after the purchase', 'Can\'t build real wealth'],
-                'Escaper': ['Avoiding budgets and bills', 'Ignoring money to avoid anxiety', 'Staying busy so I don\'t think about finances', 'Financial chaos from avoidance', 'Can\'t face my financial reality'],
-                'Overthinker': ['Analyzing every financial move endlessly', 'Paralyzed by "right" investment', 'Missing opportunities while researching', 'Anxiety from endless comparison', 'Stuck analyzing instead of acting'],
-                'Withdrawer': ['Hoarding money, avoiding risk', 'Keeping finances separate from others', 'Can\'t build financial partnerships', 'Isolated from financial support', 'Protecting by not investing'],
-                'Overgiver': ['Giving money away to feel needed', 'Loaning to friends, not getting back', 'Financially drained from overgiving', 'Resentful when others don\'t reciprocate', 'Can\'t receive or invest in myself']
-            },
-            'Health': {
-                'Fixer': ['Overfunctioning with health routines', 'Taking charge of everyone\'s wellbeing', 'Burnout from overdoing', 'Can\'t rest when others need help', 'Exhausted from always being responsible'],
-                'Perfectionist': ['Perfect routines that don\'t stick', 'Giving up when I "fail" a workout', 'All-or-nothing with diet', 'Paralyzed by perfect health choices', 'Rigid habits that collapse'],
-                'Pleaser': ['Prioritizing others\' health over mine', 'Saying yes to plans that exhaust me', 'Burnout from putting everyone first', 'Neglecting my own wellbeing', 'Resentful from self-neglect'],
-                'Performer': ['Working out to impress', 'Health as appearance, not wellbeing', 'Exhausted from performing fitness', 'Can\'t sustain when no one\'s watching', 'Empty when the performance ends'],
-                'Escaper': ['Avoiding health issues', 'Staying busy to avoid discomfort', 'Numbing instead of addressing pain', 'Avoiding doctors and checkups', 'Distraction instead of real care'],
-                'Overthinker': ['Researching diets and workouts endlessly', 'Paralyzed by "perfect" health plan', 'Thinking about health more than doing it', 'Anxiety from endless analysis', 'Stuck researching instead of acting'],
-                'Withdrawer': ['Keeping distance from health support', 'Avoiding doctors and therapists', 'Isolated when struggling', 'Can\'t ask for help', 'Protecting by staying alone'],
-                'Overgiver': ['Giving energy to everyone else', 'Neglecting my own health needs', 'Exhausted from caring for others', 'Burnout from overgiving', 'Can\'t receive care']
-            },
-            'Career': {
-                'Fixer': ['Fixing everyone\'s work problems', 'Taking on others\' responsibilities', 'Burnout from overdoing', 'Can\'t let others grow', 'Exhausted from always solving'],
-                'Perfectionist': ['Overthinking every work decision', 'Paralysis from "perfect" choice', 'Missing deadlines from perfectionism', 'Giving up when projects "fail"', 'Can\'t take risks'],
-                'Pleaser': ['Saying yes to everything at work', 'Prioritizing others\' needs over mine', 'Burnout from people-pleasing', 'Can\'t focus on what matters', 'Resentful from overcommitting'],
-                'Performer': ['Exhausted from impressing at work', 'Achieving to earn approval', 'Can\'t work authentically', 'Empty after the recognition', 'Performing instead of creating'],
-                'Escaper': ['Avoiding difficult conversations', 'Staying busy with low-impact tasks', 'Avoiding career risks', 'Withdrawing from challenging projects', 'Numbing instead of facing challenges'],
-                'Overthinker': ['Analyzing every career move endlessly', 'Paralyzed by "right" path', 'Missing opportunities while deciding', 'Anxiety from endless research', 'Stuck in analysis instead of action'],
-                'Withdrawer': ['Keeping distance from colleagues', 'Avoiding networking', 'Staying isolated at work', 'Can\'t build relationships that advance', 'Protecting by staying disconnected'],
-                'Overgiver': ['Giving time to others\' projects', 'Neglecting my own career growth', 'Helping others succeed, not myself', 'Exhausted from overgiving', 'Can\'t receive opportunities']
-            },
-            'Identity': {
-                'Fixer': ['Seeing myself only as problem-solver', 'Worth tied to fixing', 'Can\'t receive help', 'Can\'t be vulnerable', 'Exhausted from always being capable'],
-                'Perfectionist': ['Worth tied to being flawless', 'Can\'t take risks', 'Can\'t be human', 'Fear of making mistakes', 'Identity as "the one who gets it right"'],
-                'Pleaser': ['Worth tied to pleasing', 'Can\'t know who I am outside serving', 'Identity as helper', 'Losing myself in others', 'Can\'t put myself first'],
-                'Performer': ['Worth tied to achievement', 'Can\'t be authentic', 'Can\'t be vulnerable', 'Identity as success', 'Empty when not performing'],
-                'Escaper': ['Worth tied to staying mobile', 'Can\'t build deep connections', 'Identity as "free"', 'Avoiding stability', 'Can\'t sit with who I am'],
-                'Overthinker': ['Worth tied to thinking', 'Can\'t trust instincts', 'Can\'t take action', 'Identity as "the thoughtful one"', 'Stuck in my head'],
-                'Withdrawer': ['Worth tied to staying safe', 'Can\'t experience intimacy', 'Identity as independent', 'Lonely from protecting', 'Can\'t open up'],
-                'Overgiver': ['Worth tied to giving', 'Can\'t receive', 'Can\'t know worth outside giving', 'Identity as needed', 'Resentful from overgiving']
-            },
-            'Purpose': {
-                'Fixer': ['Fixing instead of finding purpose', 'Taking charge of others\' paths', 'Burnout from overdoing', 'Can\'t let purpose emerge', 'Exhausted from controlling'],
-                'Perfectionist': ['Waiting for perfect purpose', 'Paralyzed by "right" path', 'Can\'t start until it\'s perfect', 'Giving up when it\'s not "right"', 'Fear of wrong choice'],
-                'Pleaser': ['Purpose defined by others', 'Losing my path to please', 'Can\'t pursue what I want', 'Resentful from following others', 'Exhausted from absorbing their goals'],
-                'Performer': ['Purpose as achievement', 'Pursuing what impresses', 'Empty when recognition fades', 'Can\'t find authentic purpose', 'Performing instead of becoming'],
-                'Escaper': ['Avoiding purpose to avoid feeling', 'Staying busy to avoid the question', 'Pulling away from commitment', 'Numbing instead of facing', 'Can\'t sit with what I want'],
-                'Overthinker': ['Analyzing purpose endlessly', 'Paralyzed by "right" path', 'Missing action while thinking', 'Anxiety from endless analysis', 'Stuck analyzing instead of doing'],
-                'Withdrawer': ['Keeping purpose at distance', 'Protecting from rejection', 'Can\'t pursue what scares me', 'Isolated from support', 'Staying safe instead of alive'],
-                'Overgiver': ['Purpose as serving others', 'Giving instead of receiving', 'Can\'t pursue my own path', 'Resentful from overgiving', 'Exhausted from others\' purpose']
-            },
-            'Lifestyle': {
-                'Fixer': ['Controlling daily routines', 'Fixing everyone\'s schedule', 'Burnout from overdoing', 'Can\'t let go of structure', 'Exhausted from managing'],
-                'Perfectionist': ['Perfect routines that collapse', 'All-or-nothing daily habits', 'Giving up when I "fail"', 'Rigid lifestyle that doesn\'t stick', 'Paralyzed by perfect choices'],
-                'Pleaser': ['Lifestyle built around others', 'Saying yes to plans that drain', 'No time for myself', 'Resentful from overcommitting', 'Exhausted from others\' schedule'],
-                'Performer': ['Lifestyle as performance', 'Exhausted from keeping up image', 'Can\'t relax authentically', 'Empty when alone', 'Performing in daily life'],
-                'Escaper': ['Avoiding structure', 'Staying busy to avoid stillness', 'Numbing with distractions', 'Can\'t establish routines', 'Fleeing instead of building'],
-                'Overthinker': ['Overthinking daily choices', 'Paralyzed by "right" routine', 'Analysis instead of action', 'Anxiety from endless planning', 'Stuck thinking instead of living'],
-                'Withdrawer': ['Keeping life separate', 'Avoiding shared activities', 'Isolated in daily routine', 'Can\'t open up to connection', 'Protecting by staying alone'],
-                'Overgiver': ['Giving time to everyone else', 'No time for my own life', 'Exhausted from overgiving', 'Resentful from neglect', 'Can\'t receive support']
-            },
-            'How I feel about myself': {
-                'Fixer': ['Worth tied to fixing', 'Can\'t receive', 'Shame when not needed', 'Exhausted from proving capability', 'Can\'t be vulnerable'],
-                'Perfectionist': ['Worth tied to perfection', 'Shame when I fail', 'Can\'t accept mistakes', 'Fear of being seen', 'Harsh self-criticism'],
-                'Pleaser': ['Worth tied to pleasing', 'Can\'t prioritize myself', 'Shame when I say no', 'Exhausted from absorbing', 'Losing sense of self'],
-                'Performer': ['Worth tied to achievement', 'Shame when not impressive', 'Can\'t show real me', 'Empty when not performing', 'Fear of being ordinary'],
-                'Escaper': ['Worth tied to staying free', 'Shame when I feel', 'Can\'t sit with myself', 'Avoiding self-reflection', 'Numbing self-doubt'],
-                'Overthinker': ['Worth tied to thinking', 'Shame when I act wrong', 'Can\'t trust myself', 'Anxiety from self-doubt', 'Stuck in self-analysis'],
-                'Withdrawer': ['Worth tied to safety', 'Shame when I need', 'Can\'t ask for love', 'Lonely from protecting', 'Fear of being seen'],
-                'Overgiver': ['Worth tied to giving', 'Shame when I receive', 'Can\'t prioritize myself', 'Resentful from overgiving', 'Fear of not being needed']
-            }
-        };
-        var areaData = byArea[area];
-        if (!areaData) return getPatternPainOptions(patternName);
-        return areaData[name] || getPatternPainOptions(patternName);
-    };
-
-    // Personalized insight for Primary Shift when user shared birth date.
-    // Picks Moon or Sun insight that best fits the pattern; closing is pattern-specific, not repetitive.
-    function getPrimaryShiftPersonalization(resetFocus, pattern, birthDate) {
-        if (!birthDate || !window.AstrologyUtils) return '';
-        var moonInsight = window.AstrologyUtils.getMoonInsight(window.AstrologyUtils.getMoonSign(birthDate));
-        var sunInsight = window.AstrologyUtils.getSunInsight(window.AstrologyUtils.getSunSign(birthDate));
-        if (!moonInsight && !sunInsight) return '';
-        var insight = pickBestInsightForPattern(moonInsight, sunInsight, pattern);
-        if (!insight) return '';
-        var closing = getPatternClosing(pattern);
-        return '<p class="workbook-primary-shift-insight">' + insight + ' ' + closing + '</p>';
-    }
-    function pickBestInsightForPattern(moonInsight, sunInsight, pattern) {
-        if (!moonInsight) return sunInsight;
-        if (!sunInsight) return moonInsight;
-        var rf = (pattern.resetFocus || '').toLowerCase();
-        var moonScore = 0, sunScore = 0;
-        var moonLower = (moonInsight || '').toLowerCase();
-        var sunLower = (sunInsight || '').toLowerCase();
-        if (rf.indexOf('emotion') >= 0 || rf.indexOf('flee') >= 0 || rf.indexOf('face') >= 0) {
-            if (moonLower.indexOf('emotion') >= 0 || moonLower.indexOf('feel') >= 0 || moonLower.indexOf('flee') >= 0 || moonLower.indexOf('distance') >= 0 || moonLower.indexOf('freedom') >= 0) moonScore++;
-            if (sunLower.indexOf('emotion') >= 0 || sunLower.indexOf('feel') >= 0 || sunLower.indexOf('freedom') >= 0 || sunLower.indexOf('detach') >= 0) sunScore++;
-        }
-        if (rf.indexOf('boundary') >= 0 || rf.indexOf('honesty') >= 0 || rf.indexOf('please') >= 0) {
-            if (moonLower.indexOf('harmony') >= 0 || moonLower.indexOf('absorb') >= 0 || moonLower.indexOf('boundary') >= 0 || moonLower.indexOf('receive') >= 0 || moonLower.indexOf('give') >= 0) moonScore++;
-            if (sunLower.indexOf('balance') >= 0 || sunLower.indexOf('boundary') >= 0 || sunLower.indexOf('partnership') >= 0) sunScore++;
-        }
-        if (rf.indexOf('rest') >= 0 || rf.indexOf('acceptance') >= 0 || rf.indexOf('perfect') >= 0) {
-            if (moonLower.indexOf('rest') >= 0 || moonLower.indexOf('right') >= 0 || moonLower.indexOf('self-criticism') >= 0) moonScore++;
-            if (sunLower.indexOf('rest') >= 0 || sunLower.indexOf('standard') >= 0 || sunLower.indexOf('improve') >= 0) sunScore++;
-        }
-        if (rf.indexOf('vulnerab') >= 0 || rf.indexOf('open') >= 0) {
-            if (moonLower.indexOf('guard') >= 0 || moonLower.indexOf('trust') >= 0 || moonLower.indexOf('depth') >= 0) moonScore++;
-            if (sunLower.indexOf('vulnerab') >= 0 || sunLower.indexOf('depth') >= 0 || sunLower.indexOf('transform') >= 0) sunScore++;
-        }
-        if (rf.indexOf('authentic') >= 0 || rf.indexOf('image') >= 0 || rf.indexOf('perform') >= 0) {
-            if (moonLower.indexOf('seen') >= 0 || moonLower.indexOf('valued') >= 0) moonScore++;
-            if (sunLower.indexOf('seen') >= 0 || sunLower.indexOf('recognition') >= 0) sunScore++;
-        }
-        if (rf.indexOf('act') >= 0 || rf.indexOf('analy') >= 0) {
-            if (moonLower.indexOf('unexamined') >= 0 || moonLower.indexOf('feeling') >= 0) moonScore++;
-            if (sunLower.indexOf('scatter') >= 0 || sunLower.indexOf('focus') >= 0) sunScore++;
-        }
-        if (rf.indexOf('own') >= 0 || rf.indexOf('allow') >= 0 || rf.indexOf('delegate') >= 0) {
-            if (moonLower.indexOf('receive') >= 0 || moonLower.indexOf('give') >= 0) moonScore++;
-            if (sunLower.indexOf('delegate') >= 0 || sunLower.indexOf('wait') >= 0) sunScore++;
-        }
-        if (rf.indexOf('balance') >= 0 || rf.indexOf('self-worth') >= 0) {
-            if (moonLower.indexOf('receive') >= 0 || moonLower.indexOf('give') >= 0 || moonLower.indexOf('boundary') >= 0) moonScore++;
-            if (sunLower.indexOf('boundary') >= 0 || sunLower.indexOf('self-interest') >= 0) sunScore++;
-        }
-        return sunScore > moonScore ? sunInsight : moonInsight;
-    }
-    function getPatternClosing(pattern) {
-        var name = (pattern && pattern.name) ? pattern.name.replace(/^The /, '') : '';
-        var closings = {
-            'Escaper': 'When you feel the urge to flee, pause—that\'s your moment to stay and feel.',
-            'Overthinker': 'When you catch yourself looping in analysis, that\'s your cue to take one small action instead.',
-            'Pleaser': 'When you feel the pull to absorb others\' needs, honor your own first.',
-            'Overgiver': 'When you\'re about to give past your limit, pause and ask what you need.',
-            'Fixer': 'When you\'re about to step in and fix, pause—let them own it.',
-            'Perfectionist': 'When you feel the pull to get it perfect, choose good enough.',
-            'Performer': 'When you\'re about to perform, show up as you are instead.',
-            'Guarded One': 'When you feel the walls go up, lean into one small moment of vulnerability.'
-        };
-        return closings[name] || 'When you notice this pull, pause—that\'s your cue to choose differently.';
-    }
-
-    // Foundation Section: Self-Acceptance & How Your Mind Works
-    // Integrates self-acceptance philosophy and 10 neuroscience principles
-    function getFoundationSection() {
-        return `
-            <!-- Foundation: Self-Acceptance & How Your Mind Works -->
-            <div style="margin-bottom: 2.5rem;">
-                <h3 class="workbook-main-title">The Foundation: You're Not Broken</h3>
-                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(202, 0, 19, 0.05); border-radius: 8px; border-left: 4px solid #ca0013;">
-                    <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 500; line-height: 1.7;">Your life will change completely the minute you understand: <strong>there's nothing wrong with you.</strong> You're not broken, and you don't need to heal yourself in order to experience abundance, wealth, freedom, richness, and love.</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #000; line-height: 1.7;">The paradox? It's the opposite: when you own and accept who you are, and learn to love yourself—not perfect, but complete—things become easy. You become magnetic. <strong>So stop fixing yourself. Allow yourself to naturally love and appreciate who you are, as you are, regardless of what you have or don't have.</strong></p>
-                    <p class="content-text" style="margin-bottom: 0; color: #000; line-height: 1.7; font-style: italic;">This workbook isn't about fixing you. It's about becoming who you already are—complete, whole, and free from the patterns that keep you stuck.</p>
-                </div>
-
-                <div style="margin-bottom: 2rem;">
-                    <h4 class="workbook-step-title">🧠 How Your Mind Actually Works: 10 Principles</h4>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555;">Understanding how your mind works is the foundation of the one-day reset. These principles map to Before → Line → After. Each Part applies specific principles—the protocol is designed to work with your brain, not against it.</p>
-                    
-                    <div style="display: flex; flex-direction: column; gap: 1.25rem;">
-                        <!-- Principle 1 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #2196F3;">
-                            <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">1. Your Brain Creates Reality Through Repetition</p>
-                            <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">Your brain doesn't distinguish between what's "real" and what you repeat. Neural pathways strengthen with every repeated thought, feeling, or action. If you keep saying "I'm broke" or "I'm not enough," your brain believes it. You can't change what you don't see. <strong>Applied in Part 1 (Before)</strong>: naming what drives you, and in Part 3 (The Line): each interrupt weakens the old pathway, each choice strengthens the new one.</p>
-                        </div>
-
-                        <!-- Principle 2 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #4caf50;">
-                            <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">2. Feelings Matter More Than Thoughts</p>
-                            <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">Your nervous system responds to emotional states, not just thoughts. You attract what feels normal and familiar. If love feels unsafe, you'll keep attracting it that way. You need to <strong>feel</strong> the cost of staying stuck more than you fear it—that creates the charge to change. <strong>Applied in Part 1 (Before)</strong>: "Feel the Cost" creates the emotional momentum for the line.</p>
-                        </div>
-
-                        <!-- Principle 3 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #9C27B0;">
-                            <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">3. Your Subconscious Runs 95% of Your Life</p>
-                            <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">Patterns operate below conscious awareness. Logic alone won't rewire years of conditioning. Repetition plus emotion will. This is why one day creates the <em>line</em>—the decision, the clarity—but <strong>Part 4 (Your After)</strong> daily practice is what rewires the subconscious. Consistency beats intensity. Small daily shifts reprogram what runs on autopilot.</p>
-                        </div>
-
-                        <!-- Principle 4 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #ff9800;">
-                            <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">4. Your Nervous System Decides What You Attract</p>
-                            <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">In survival mode, you attract survival—not the life you want. The pattern interrupt pulls you out of survival and into choice. When you pause and ask the interrupt, you create a gap where your nervous system can regulate. <strong>Applied in Part 2 (The Line)</strong>: spoken commitment charges the nervous system; <strong>Part 3 (The Line)</strong>: the interrupt itself creates that pause.</p>
-                        </div>
-
-                        <!-- Principle 5 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #ca0013;">
-                            <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">5. Identity Is the True Magnet</p>
-                            <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">Transformation isn't about getting—it's about becoming. Change who you believe you are, and your actions follow. <strong>Applied in Part 1 (Before)</strong>: "Create Your Vision: Who You're Becoming" and the new identity statement. <strong>Part 4 (Your After)</strong>: acting like the person you're becoming daily. Identity drives behavior.</p>
-                        </div>
-
-                        <!-- Principle 6 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #00bcd4;">
-                            <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">6. Your Brain Learns Through Imagination</p>
-                            <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">Your mind rehearses your future. Vividly imagining your After rewires your brain—you're literally rehearsing it. If you can't visualize, use another sense: What would it FEEL like? SOUND like? <strong>Applied in Part 1 (Before)</strong>: the vision exercise, the 3-year vision, closing your eyes and feeling the version of you who's already there.</p>
-                        </div>
-
-                        <!-- Principle 7 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #795548;">
-                            <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">7. Consistency Beats Intensity</p>
-                            <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">One day draws the line. Days 2 and beyond build the After. Small daily shifts rewire neural pathways more effectively than occasional intensity. <strong>Applied in Part 4 (Your After)</strong>: evening reflection, daily reminders, goals as lenses. Neuroplasticity requires repetition—21–66 days of practice. This day is the start.</p>
-                        </div>
-
-                        <!-- Principle 8 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #607d8b;">
-                            <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">8. Doubt Doesn't Stop Transformation. Fear Does.</p>
-                            <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">You can doubt and still move forward. Fear keeps you stuck—it activates survival mode and reinforces the old pattern. <strong>Applied in Part 2 (The Line)</strong>: name your fear, then choose awareness anyway. The decision to draw the line happens despite fear, not after it's gone.</p>
-                        </div>
-
-                        <!-- Principle 9 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #e91e63;">
-                            <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">9. Actions Matter. But Aligned Action.</p>
-                            <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">Inspired action comes from identity, not force. Ask: What would the person I'm becoming do? <strong>Applied in Part 1 (Before)</strong>: "One thing this week" and "Decision from who you're becoming." <strong>Part 4 (Your After)</strong>: daily actions timeblocked from your new identity. Aligned action feels natural; forced action exhausts.</p>
-                        </div>
-
-                        <!-- Principle 10 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #673ab7;">
-                            <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">10. Your Environment Reinforces Your Beliefs</p>
-                            <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">Your phone, room, routines—they reprogram you. If your environment reflects chaos, your nervous system stays in survival mode. If it reflects who you're becoming, it reinforces your new identity. <strong>Applied in Part 4 (Your After)</strong>: environment design. One change tomorrow so the new identity is obvious.</p>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(202, 0, 19, 0.06); border-radius: 6px; border-left: 4px solid #ca0013;">
-                        <p class="content-text" style="margin: 0 0 0.5rem 0; color: #000; font-weight: 600; line-height: 1.7;">One-Day Reset Protocol</p>
-                        <p class="content-text" style="margin: 0; color: #555; line-height: 1.7;"><strong>Before</strong> (Part 1): See the pattern. Name it. Feel its cost. Create your vision. — <strong>The Line</strong> (Parts 2 + 3): Decide. Interrupt. Choose differently. — <strong>Your After</strong> (Part 4): Evening reflection. Daily practice. Consciously choose every day. This workbook applies all 10 principles across that structure.</p>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    /**
-     * Life-in-weeks illustration: 104 cols × 40 rows = 4,160 weeks (average lifetime)
-     * Red circle position = user's age (weeks lived). Default 35 if no age.
-     */
-    function getLifeInWeeksIllustration(exactAge) {
-        var cols = 104, rows = 40;
-        var age = (exactAge != null && !isNaN(parseFloat(exactAge))) ? Math.min(80, Math.max(0, Math.floor(parseFloat(exactAge)))) : 35;
-        var weeksLived = age * 52;
-        var weekIndex = Math.min(weeksLived, cols * rows - 1);
-        var redRow = Math.floor(weekIndex / cols);
-        var redCol = weekIndex % cols;
-        var cfg = {
-            cols: cols,
-            rows: rows,
-            redRow: redRow,
-            redCol: redCol,
-            r: 0.7,
-            gap: 0.12,
-            pad: 0.6,
-            livedFill: '#999',
-            remainingStroke: '#ddd',
-            remainingFill: 'transparent',
-            brandRed: '#ca0013',
-            strokeWidth: 0.45
-        };
-        var cell = cfg.r * 2 + cfg.gap;
-        var contentW = (cfg.cols - 1) * cell + cfg.r * 2;
-        var contentH = (cfg.rows - 1) * cell + cfg.r * 2;
-        var w = cfg.pad * 2 + contentW;
-        var h = cfg.pad * 2 + contentH;
-        var circles = [];
-        for (var row = 0; row < cfg.rows; row++) {
-            for (var col = 0; col < cfg.cols; col++) {
-                var cx = cfg.pad + cfg.r + col * cell;
-                var cy = cfg.pad + cfg.r + row * cell;
-                var weekIdx = row * cfg.cols + col;
-                var isRed = weekIdx === weekIndex;
-                var isLived = weekIdx < weekIndex;
-                if (isRed) {
-                    circles.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + cfg.r + '" fill="' + cfg.brandRed + '" stroke="none"/>');
-                } else if (isLived) {
-                    circles.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + cfg.r + '" fill="' + cfg.livedFill + '" stroke="none"/>');
-                } else {
-                    circles.push('<circle cx="' + cx + '" cy="' + cy + '" r="' + cfg.r + '" fill="' + cfg.remainingFill + '" stroke="' + cfg.remainingStroke + '" stroke-width="' + cfg.strokeWidth + '"/>');
-                }
-            }
-        }
-        return '<div class="pattern-reset-illo" aria-hidden="true"><svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" class="pattern-reset-illo-svg">' + circles.join('') + '</svg></div>';
+    function getJournalUI() {
+        return '<div class="journal-ui"><button type="button" class="journal-trigger">Add your answer</button><div class="journal-preview" style="display:none;"><span class="journal-preview-label">Your answer: </span><span class="journal-preview-text"></span> <button type="button" class="journal-edit">Edit</button></div><div class="journal-entry" style="display:none;"><textarea rows="3" placeholder="Type your answer here..."></textarea><div class="journal-actions"><button type="button" class="journal-save">Save</button> <button type="button" class="journal-cancel">Cancel</button></div></div></div>';
     }
 
     // Pattern Reset Workbook: Before/After Transformation System
     // Core Philosophy: You don't have to wait for life to break you to change. You can choose your moment.
-    function getMergedHowToBreakPattern(pattern, firstName, archetype, birthDate, exactAge) {
+    function getMergedHowToBreakPattern(pattern, firstName, archetype) {
         if (!pattern || !pattern.name) {
             return '<p>Error: Pattern data incomplete.</p>';
         }
@@ -5610,195 +4936,181 @@
             ? pattern.complex.recoveryIndicators.map(i => '<li style="margin-bottom: 0.4rem;">' + i + '</li>').join('')
             : '<li>You notice yourself pausing before the old default.</li><li>You choose differently and feel less pulled by the pattern.</li><li>You feel more like the person you\'re becoming.</li>';
 
-        var illoAge = (exactAge != null && !isNaN(parseFloat(exactAge))) ? Math.min(80, Math.max(0, Math.floor(parseFloat(exactAge)))) : null;
-        var illoWeeksLived = illoAge != null ? illoAge * 52 : 1820;
-        var illoWeeksAhead = Math.max(0, 4160 - illoWeeksLived);
-        var illoNote = illoAge != null ? ' At ' + illoAge + ', the red circle is you—now. That\'s ' + illoWeeksLived + ' weeks lived, ' + illoWeeksAhead + ' ahead.' : '';
-
-        function getLifeAreaAffirmationsHTML(p) {
-            const areaAffirmations = PATTERN_ROBOTIC_AFFIRMATIONS_BY_AREA[p.name] || PATTERN_ROBOTIC_AFFIRMATIONS_BY_AREA['The Escaper'];
-            const areas = [{ key: 'love', label: 'Love & connection' }, { key: 'money', label: 'Money' }, { key: 'health', label: 'Health' }, { key: 'career', label: 'Career' }, { key: 'identity', label: 'Identity & self-worth' }, { key: 'purpose', label: 'Purpose' }, { key: 'lifestyle', label: 'Lifestyle' }];
-            return areas.filter(a => areaAffirmations[a.key]).map(a => '<div style="margin-bottom: 0.75rem;"><p class="content-text" style="margin: 0 0 0.25rem 0; font-size: 0.8rem; color: #ca0013; font-weight: 600;">' + a.label + '</p><p class="content-text" style="margin: 0; font-size: 0.95rem; color: #333;"><strong style="color: #ca0013;">' + areaAffirmations[a.key] + '</strong></p></div>').join('');
-        }
-
         return `
-            <div class="workbook-v2">
-            <div class="workbook-intro" style="margin-top: 1.5rem;">
-                ${getLifeInWeeksIllustration(exactAge)}
-                <p class="content-text" style="margin-bottom: 1rem; color: #555; font-size: 0.95rem;">Each circle is one week—4,160 in an average lifetime. Each week holds 7 days.${illoNote} You have a finite number; you can't add more. The only thing you control is making each one count. Your reset happens in one day: today. The red circle is that moment—the day you choose differently. Every week, every day that passes without it is time your pattern keeps running.</p>
-                <p class="workbook-intro-lead" style="margin: 0 0 1rem 0; font-size: 1.2rem; font-weight: 700; color: #ca0013; line-height: 1.5;">Make the decision. Interrupt your pattern. Step out of autopilot. Transform your life.</p>
-                <p class="content-text" style="margin-bottom: 1rem;">Today you draw the line between <strong>Your Before</strong> and <strong>Your After</strong>. <strong>Your Before</strong> is the pattern that's been running your life—the survival strategy that got you to today, the autopilot that protected you but also kept you stuck. <strong>This moment</strong> is the turning point: clarity, courage, the choice to become better. <strong>Your After</strong> is who you're becoming—built through daily practice and conscious choice, not autopilot.</p>
-                <p class="content-text" style="margin-bottom: 1rem;"><strong>Full accountability</strong>—no blame, no excuses. Each day is precious. Every time you choose differently instead of your pattern, you move forward. That's how change happens. Who you're becoming gets built one choice at a time.</p>
-                <p class="content-text" style="margin: 0; font-weight: 600; color: #000;">The more honest you are, the more this works.</p>
+            <!-- Opening Philosophy: Before/After Moment -->
+            <div style="margin-bottom: 2.5rem;">
+                <h3 class="workbook-main-title">You Don't Have to Wait for Life to Break You to Change</h3>
+                <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 500;">Most people only change when life forces them to—through trauma, loss, breakdown, or hitting rock bottom. We carry patterns that drive our lives, keeping us stuck in loops of trauma we haven't processed, problems that repeat, unhappiness that feels unshakeable, and lack of progress in all areas of life.</p>
+                <p class="content-text" style="margin-bottom: 1rem;">It feels hopeless because we don't know how to address it or where to start. It feels impossible because the pattern is invisible—we can't fix what we can't see.</p>
+                <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 600;">But you don't have to wait for a breakdown to have a breakthrough.</p>
+                <p class="content-text" style="margin-bottom: 0; color: #000;">The Pattern Quiz and pattern recognition provide the solution: <strong>awareness</strong> of what's been running your life, <strong>understanding</strong> of why it developed, and the power to <strong>consciously choose</strong> to change—before life forces it. Through awareness + decision + daily repetition, you can transform your life.</p>
             </div>
 
-            <div class="workbook-primary-shift">
-                <h4 class="workbook-primary-shift-title"><i class="fas fa-bullseye" style="color: #000; font-size: 1rem; margin-right: 0.4rem;"></i><strong>The Shift That Breaks Your Pattern</strong></h4>
-                <p class="workbook-primary-shift-focus">${resetFocus}</p>
-                ${pattern.coreBelief ? '<p class="workbook-primary-shift-belief">"' + pattern.coreBelief + '"</p>' : ''}
-                <p class="workbook-primary-shift-why">${challengesLine}</p>
-                <p class="workbook-pill-label" style="margin: 1rem 0 0.5rem 0;">Ways your ${pattern.name} pattern reinforces the struggle</p>
-                <div class="workbook-pills workbook-primary-shift-pills">
-                    ${getPatternPainOptions(pattern.name).map(function(p){ return '<span class="workbook-pill workbook-pill-display">' + p + '</span>'; }).join('')}
-                </div>
-                ${getPrimaryShiftPersonalization(resetFocus, pattern, birthDate)}
+            <div style="margin-bottom: 2rem;">
+                <h3 class="workbook-section-title">Your Pattern Reset Workbook</h3>
+                <p class="content-text" style="margin-bottom: 0.75rem;">This workbook is about <strong>choosing your moment</strong>—the line between your "before" and your "after." By answering these questions, you're not fixing your life. You're creating awareness. And awareness is the moment everything shifts.</p>
+                <p class="content-text" style="margin-bottom: 0.75rem; color: #ca0013; font-weight: 600;">This is where your after begins.</p>
+                <p class="content-text" style="margin-bottom: 0; color: #555; font-style: italic;">Work through each section. Your answers are saved automatically. You can complete this in one focused session, or return anytime to continue your transformation.</p>
             </div>
 
-            <div class="workbook-part-divider"></div>
-            <details class="workbook-part-details" data-part="1">
-                <summary class="workbook-part-summary">
-                    <span class="workbook-part-number part-1">1</span>
-                    <div class="workbook-part-summary-text">
-                        <span class="workbook-part-label">Part 1 — Your Before</span>
-                        <h4 class="workbook-part-title">Life Assessment</h4>
-                        <p class="workbook-part-subtitle">Your current life—what you love, what you're not happy with, and the cost of staying stuck.</p>
-                    </div>
-                    <span class="workbook-part-chevron" aria-hidden="true">▶</span>
-                </summary>
-                <div class="workbook-part-content">
-                <p class="workbook-why-line">Honest assessment of where you are. No judgment—just clarity. What's working. What's not. How your pattern reinforces it.</p>
+            <div class="reset-focus-box" style="margin-bottom: 2rem;">
+                <h4 class="workbook-focus-title">🎯 Your Primary Shift</h4>
+                <p class="workbook-focus-text">${resetFocus}</p>
+                <p class="content-text" style="margin: 0; color: #555;">${challengesLine}</p>
+            </div>
 
-                <div style="margin-bottom: 2rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.75rem;">1. What you love about your life</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">Name what's working. What do you value? What are you grateful for? (Relationships, health, work, creativity, freedom—whatever matters to you.)</p>
-                    <div data-journal-id="p1-life-love" style="margin-bottom: 0;">${getJournalUI('e.g., My relationships, my health, my creative work. The freedom to choose.')}</div>
+            <div style="margin-bottom: 2rem;">
+                <h4 class="workbook-step-title">✨ How This Works: The Science Behind Transformation</h4>
+                <p class="content-text" style="margin-bottom: 0.75rem;">This workbook is grounded in three core principles:</p>
+                <ul class="content-list" style="margin: 0.5rem 0 0 1.5rem; line-height: 1.8;">
+                    <li><strong>Clarity Creates Focus</strong> — When you know exactly what you want and what's not working, your brain finds the path. Clarity is the starting point of all transformation.</li>
+                    <li><strong>Your Brain Rewires Through Repetition</strong> — Every time you choose differently, you weaken the old neural pathway and strengthen a new one. Your brain literally reshapes itself through consistent practice.</li>
+                    <li><strong>Identity Drives Behavior</strong> — Change who you believe you are, and your actions follow. When you shift your identity, you shift your entire life.</li>
+                </ul>
+                <p class="content-text" style="margin: 1rem 0 0; color: #555; font-style: italic;">Neuroscience research shows it takes 21–66 days of consistent practice to rewire neural pathways. This workbook creates the moment of transformation—then gives you the structure to reinforce it through daily repetition.</p>
+            </div>
+            <!-- THE DECISION: Choosing Your Moment -->
+            <div style="margin-bottom: 2.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #ca0013 0%, #a00010 100%); color: #fff; border-radius: 50%; font-weight: 700; font-size: 1.1rem; flex-shrink: 0;" class="workbook-phase-number">0</span>
+                    <div>
+                        <h4 class="workbook-subsection-title">The Decision: Choosing Your Moment</h4>
+                        <p class="workbook-subsection-subtitle">Nothing changes until you choose to change. Patterns change when choices repeat.</p>
+                    </div>
+                </div>
+                <p class="content-text" style="margin-bottom: 1rem; color: #555; padding-left: 3.25rem;">Most people wait for life to force a moment. You're choosing yours right now. By completing this workbook, you're making a decision: <strong>I choose awareness over autopilot. I choose change over staying stuck. I choose my "after" over my "before."</strong></p>
+                <p class="content-text" style="margin-bottom: 1rem; color: #ca0013; font-weight: 600; padding-left: 3.25rem;">This decision is the line between who you were and who you're choosing to become.</p>
+                <ul class="content-list" style="margin: 0; padding-left: 3.25rem;">
+                    <li data-journal-id="p0-intention" style="margin-bottom: 1rem;"><strong>What's Your "After"?</strong> In one sentence, what do you want to create by breaking this pattern? What becomes possible when you choose differently? (Example: "I want to feel free from the need to fix everything, so I can focus on my own growth and have deeper, more equal relationships.") ${getJournalUI()}</li>
+                    <li data-journal-id="p0-why" style="margin-bottom: 1rem;"><strong>Why This Matters Now:</strong> What will breaking this pattern unlock in your life? What has staying stuck cost you? What becomes possible when you choose your moment? ${getJournalUI()}</li>
+                    <li data-journal-id="p0-commitment" style="margin-bottom: 0;"><strong>Your Commitment:</strong> How will you show up for this transformation? (Example: "I commit to using my interrupt daily and choosing differently when my pattern shows up.") ${getJournalUI()}</li>
+                </ul>
+            </div>
+
+            <!-- PHASE 1: Your "Before" - Awareness & Pattern Recognition -->
+            <div style="margin-bottom: 2.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%); color: #fff; border-radius: 50%; font-weight: 700; font-size: 1.1rem; flex-shrink: 0;" class="workbook-phase-number">1</span>
+                    <div>
+                        <h4 class="workbook-subsection-title">Your "Before": Seeing What's Been Running Your Life</h4>
+                        <p class="workbook-subsection-subtitle">Awareness is the moment everything shifts. You can't fix what you can't see.</p>
+                    </div>
+                </div>
+                <p class="content-text" style="margin-bottom: 1rem; color: #555; padding-left: 3.25rem;"><strong>Why this works:</strong> You can't change what you don't see. Naming the pattern, its hidden goal, and the limiting belief ("the enemy") reduces its power. Neuroscience research shows that awareness alone weakens automatic responses. This is where your transformation begins—by seeing what's been invisible.</p>
+                <p class="content-text" style="margin-bottom: 1.25rem; color: #888; padding-left: 3.25rem; font-style: italic;">💡 <strong>Tip:</strong> You don't need to answer every prompt. Choose 2–3 from each section. Quality over quantity.</p>
+                
+                <div style="margin-bottom: 1.5rem; padding-left: 3.25rem;">
+                    <p class="workbook-step-title" style="margin-bottom: 0.75rem;">Step 1: Name What's Driving It</p>
+                    <ul class="content-list" style="margin: 0 0 1.5rem 0;">
+                        <li data-journal-id="p1-goal" style="margin-bottom: 1rem;"><strong>Name the hidden goal.</strong> When I ${jump.whenIPattern}, what do I think I'm achieving? What am I really trying to get? ${outsider} ${getJournalUI()}</li>
+                        <li data-journal-id="p1-protecting" style="margin-bottom: 1rem;"><strong>What am I protecting?</strong> What am I protecting by ${jump.protectingBy}? What is that protection costing me? ${getJournalUI()}</li>
+                        <li data-journal-id="p1-enemy" style="margin-bottom: 0;"><strong>Name the enemy (limiting belief).</strong> The internal pattern or belief: ________. (Not circumstances. Not other people.) Start with: "${jump.enemyHint}" ${getJournalUI()}</li>
+                    </ul>
                 </div>
 
-                <div style="margin-bottom: 2rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.75rem;">2. What you're not happy with</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">What areas are you unhappy with? (Love, money, health, career, identity, purpose, lifestyle, how you feel about yourself.) Click the areas that apply. Write it down. You can't change what you won't face.</p>
-                    <div class="workbook-pill-group" data-journal-id="p1-life-pattern-merged">
-                        <p class="workbook-pill-label">Where is it not working?</p>
-                        <div class="workbook-pills" data-pill-group="areas">
-                            ${['Love', 'Money', 'Health', 'Career', 'Identity', 'Purpose', 'Lifestyle', 'How I feel about myself'].map(function(a){ return '<button type="button" class="workbook-pill" data-value="' + a.replace(/"/g, '&quot;') + '">' + a + '</button>'; }).join('')}
-                        </div>
-                        <div class="workbook-pains-display-container" data-pattern-name="${pattern.name}" style="display: none; margin-top: 1.25rem;">
-                            <p class="workbook-pill-label workbook-pains-display-label">Challenges in <span class="workbook-pains-area-names"></span></p>
-                            <div class="workbook-pills workbook-pains-display-pills"></div>
-                        </div>
-                        <div data-journal-id="p1-life-pattern-merged-extra" class="workbook-pill-extra" style="margin-top: 1rem;"><p class="workbook-pill-extra-label">Go deeper (optional): In one area you selected, what specifically hurts? One sentence.</p>${getJournalUI('e.g., In Love: the loneliness when I\'m with someone. In Money: the constant worry even when there\'s enough.')}</div>
-                    </div>
+                <div style="margin-bottom: 1.5rem; padding-left: 3.25rem;">
+                    <p class="workbook-step-title" style="margin-bottom: 0.75rem;">Step 2: Feel the Cost of Your "Before"</p>
+                    <p class="content-text" style="margin-bottom: 0.75rem; color: #666;">You need to feel what you're avoiding more than you fear it. This creates the emotional charge to change. What has staying stuck cost you? What will it cost if nothing changes?</p>
+                    <ul class="content-list" style="margin: 0 0 1.5rem 0;">
+                        <li data-journal-id="p1-avi-1" style="margin-bottom: 1rem;">If nothing changes in 5 years, describe an average Tuesday. What did never breaking this pattern cost? ${getJournalUI()}</li>
+                        <li data-journal-id="p1-avi-2" style="margin-bottom: 1rem;">Who is 5–10 years ahead on the same ${pName} path? What do you feel becoming them? ${getJournalUI()}</li>
+                        <li data-journal-id="p1-avi-3" style="margin-bottom: 1rem;"><strong>Identity to give up:</strong> "${jump.identityToGiveUp}" What would it cost you socially to no longer be that person? ${getJournalUI()}</li>
+                        <li data-journal-id="p1-avi-4" style="margin-bottom: 0;">What's the reason you're most reluctant to admit? What fear or belief has held you back? ${getJournalUI()}</li>
+                    </ul>
                 </div>
 
-                <div style="margin-bottom: 2rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.75rem;">3. Consequences if nothing changes</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">If nothing changes—what does life look like in 5 years? Pick one moment that hurts the most to imagine. Describe it in detail. Let yourself feel it for a few seconds—where do you notice it in your body? Self-compassion, not shame. That feeling is what you're choosing to interrupt.</p>
-                    <div data-journal-id="p1-avi-1" style="margin-bottom: 0;">${getJournalUI('e.g., I\'m 40, alone on a Sunday, scrolling. Same loop. I feel it in my chest—the heaviness. That\'s what I\'m interrupting.')}</div>
+                <div style="padding-left: 3.25rem;">
+                    <p class="workbook-step-title" style="margin-bottom: 0.75rem;">Step 3: Create Your "After" - Your Vision</p>
+                    <p class="content-text" style="margin-bottom: 0.75rem; color: #666;">Your brain doesn't know the difference between imagination and reality. Vividly imagining your future self—your "after"—rewires your brain. When you know what you want and what's not working, the path becomes clear.</p>
+                    <ul class="content-list" style="margin: 0;">
+                        <li data-journal-id="p1-vision-1" style="margin-bottom: 1rem;"><strong>Your 3-Year Vision:</strong> Snap your fingers: 3 years from now, what you actually want. Average Tuesday, same detail. Be specific—what does your day look like? ${getJournalUI()}</li>
+                        <li data-journal-id="p1-vision-2" style="margin-bottom: 1rem;"><strong>Your New Identity:</strong> What would you have to believe about yourself? Example: "${identityLine}" — write your version. ${getJournalUI()}</li>
+                        <li data-journal-id="p1-vision-3" style="margin-bottom: 0;"><strong>One Thing This Week:</strong> One thing you'd do this week if you were already that person: ${jump.oneThingThisWeek} ${getJournalUI()}</li>
+                    </ul>
                 </div>
+            </div>
+            <!-- PHASE 2: Drawing the Line - Interrupt & Choose Differently -->
+            <div style="margin-bottom: 2.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); color: #fff; border-radius: 50%; font-weight: 700; font-size: 1.1rem; flex-shrink: 0;" class="workbook-phase-number">2</span>
+                    <div>
+                        <h4 class="workbook-subsection-title">Drawing the Line: Interrupt &amp; Choose Differently</h4>
+                        <p class="workbook-subsection-subtitle">Identity drives behavior. Act like the person you're becoming. Choose differently—every day.</p>
+                    </div>
                 </div>
-            </details>
+                <p class="content-text" style="margin-bottom: 1rem; color: #555; padding-left: 3.25rem;"><strong>Why this works:</strong> Every time you interrupt the pattern and choose differently, you weaken the old neural pathway and strengthen a new one. This is how you draw the line between your "before" and your "after." Repetition rewires your brain. Patterns change when choices repeat.</p>
+                
+                <div style="margin-bottom: 1.5rem; padding-left: 3.25rem;">
+                    <p class="content-text" style="margin-bottom: 0.5rem; font-weight: 600; color: #000;"><strong>Your Pattern Interrupt:</strong></p>
+                    <p class="workbook-interrupt-text">"${jump.interrupt}"</p>
+                    <p class="content-text" style="margin: 0; color: #555;">${whyInterruptHits}</p>
+                </div>
 
-            <div class="workbook-part-divider"></div>
-            <details class="workbook-part-details" data-part="2">
-                <summary class="workbook-part-summary">
-                    <span class="workbook-part-number part-2">2</span>
-                    <div class="workbook-part-summary-text">
-                        <span class="workbook-part-label">Part 2 — The Line</span>
-                        <h4 class="workbook-part-title">Pattern Interruption</h4>
-                        <p class="workbook-part-subtitle">Gain clarity. Choose what you want. Radical honesty about what's keeping you stuck.</p>
-                    </div>
-                    <span class="workbook-part-chevron" aria-hidden="true">▶</span>
-                </summary>
-                <div class="workbook-part-content">
-                <p class="workbook-why-line">This is the moment. You've assessed your Before. Now: radical honesty, burning desire, the decision, and your pattern interrupt. Write your answers; it makes a difference.</p>
-                <div style="margin-bottom: 1.5rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">1. Radical honesty — What is keeping you stuck</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">Using what you named in Part 1, name the belief or pattern that keeps you stuck. Not circumstances. Not other people. Start with: "${jump.enemyHint}"</p>
-                    <div data-journal-id="p2-stuck" style="margin-bottom: 0;">${getJournalUI('e.g., I need to ___ to feel safe. I\'m protecting myself by...')}</div>
-                    </div>
-                <div style="margin-bottom: 1.5rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">2. Your burning desire &amp; new identity</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">What life do you want? What are you building toward? Now name who becomes: "I am the type of person who ______." Clarity creates the charge; transformation is becoming, not just getting.</p>
-                    <div data-journal-id="p2-desire-identity" style="margin-bottom: 0;">${getJournalUI('e.g., I want a life where I show up fully and feel connected. I am the type of person who faces discomfort instead of fleeing.')}</div>
-                </div>
-                <div style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; background: rgba(202, 0, 19, 0.06); border-radius: 8px; border: 2px solid #ca0013;">
-                    <p class="content-text" style="margin: 0 0 0.75rem 0; font-weight: 700; color: #ca0013; font-size: 1rem;">3. Your Definite Chief Aim</p>
-                    <p class="content-text" style="margin: 0 0 1rem 0; color: #555; font-size: 0.9rem; line-height: 1.6;">Write one clear statement. Be specific. Vague plans lead to vague results. Include: (1) <strong>What</strong> you want—the identity you're becoming / the ${pName} pattern you're breaking. (2) <strong>When</strong>—a specific date by which you'll have made the shift. (3) <strong>What you'll give in return</strong>—the daily practice, service, or commitment (e.g., using your interrupt, aligning with your new identity). Read aloud twice daily—morning and night—with emotion and faith until it saturates your subconscious.</p>
-                    <p class="content-text" style="margin: 0 0 0.5rem 0; color: #666; font-size: 0.85rem; font-style: italic;">Example structure: &ldquo;By [date], I will have broken my ${pName} pattern and become someone who ${resetFocus.toLowerCase()}. In return, I will [your commitment—e.g., use my interrupt daily, choose one aligned action, read this statement twice daily].&rdquo;</p>
-                    <div data-journal-id="p1-definite-aim" style="margin-top: 1rem;">${getJournalUI('e.g., By Dec 31, 2025, I will have broken my Escaper pattern and become someone who faces emotions instead of fleeing. In return, I will use my interrupt daily, choose one aligned action, and read this statement morning and night.')}</div>
-                    </div>
-                <div style="margin-bottom: 1.5rem; padding: 1rem 1.25rem; background: rgba(0, 0, 0, 0.03); border-radius: 6px; border-left: 4px solid #000;">
-                    <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">Your pattern interrupt</p>
-                    <p class="content-text" style="margin: 0; color: #555; font-size: 0.95rem;">When your ${pattern.name} pattern shows up, pause and ask: <strong>"${jump.interrupt}"</strong></p>
-                </div>
-                <div style="margin-bottom: 1.5rem; padding: 1rem 1.25rem; background: rgba(202, 0, 19, 0.04); border-radius: 6px; border-left: 4px solid #ca0013;">
-                    <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">Your 3 robotic affirmations — recite daily (first thing morning + before bed)</p>
-                    <p class="content-text" style="margin: 0 0 1rem 0; color: #555; font-size: 0.9rem;">Science-backed subconscious rewiring. Speak with intention and feeling, twice daily. Your brain accepts what you repeat.</p>
-                    <ol class="content-list" style="margin: 0; padding-left: 1.25rem; line-height: 2; font-size: 0.95rem; list-style: decimal;">
-                        <li style="margin-bottom: 0.75rem;"><strong style="color: #ca0013; font-weight: 700;">${jump.visionMVP}</strong></li>
-                        <li style="margin-bottom: 0.75rem;"><strong style="color: #ca0013; font-weight: 700;">My subconscious accepts what I repeat with feeling. I choose ${resetFocus.toLowerCase()} today.</strong></li>
-                        <li style="margin-bottom: 0;"><strong style="color: #ca0013; font-weight: 700;">I act from the identity I'm building—one aligned choice at a time.</strong></li>
+                <div style="padding-left: 3.25rem;">
+                    <p class="workbook-step-title" style="margin-bottom: 0.75rem;">How to Use This Daily:</p>
+                    <ol class="content-list" style="margin: 0 0 1rem 0; padding-left: 1.5rem;">
+                        <li style="margin-bottom: 0.75rem;"><strong>Set 2–3 phone reminders</strong> (e.g., 10am, 2pm, 6pm). When the reminder hits:</li>
+                        <li style="margin-bottom: 0.75rem;"><strong>Pause and ask your interrupt:</strong> "${jump.interrupt}"</li>
+                        <li style="margin-bottom: 0.75rem;"><strong>Notice what you're doing:</strong> Is it your pattern? What are you avoiding?</li>
+                        <li style="margin-bottom: 0;"><strong>Choose one different small action:</strong> What would the person you're becoming do instead?</li>
                     </ol>
-                    </div>
-                <div style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">5. One thing you'll do today</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">One small action that acts from your new identity. Concrete and doable today.</p>
-                    <div data-journal-id="p2-one-thing-today" style="margin-bottom: 0;">${getJournalUI('e.g., When I feel the urge to flee, I pause and ask my interrupt—just once today.')}</div>
+                    <p class="content-text" style="margin: 0; color: #888; font-style: italic;">💡 <strong>No need to write during the day.</strong> Just pause, reflect, and choose differently. Capture insights in your Evening practice below.</p>
                 </div>
-                    <p class="content-text" style="margin: 0 0 0.75rem 0; color: #666; font-size: 0.9rem;">Slip-ups are part of the process. The goal is practice, not perfection.</p>
-                    <p class="content-text" style="margin: 0; font-weight: 600; color: #000;">I'm drawing the line. I'm choosing to change.</p>
-                </div>
-            </details>
-
-            <div class="workbook-part-divider"></div>
-            <details class="workbook-part-details" data-part="3">
-                <summary class="workbook-part-summary">
-                    <span class="workbook-part-number part-3">3</span>
-                    <div class="workbook-part-summary-text">
-                        <span class="workbook-part-label">Part 3 — Your After</span>
-                        <h4 class="workbook-part-title">Identity Shift Protocol</h4>
-                        <p class="workbook-part-subtitle">Science-backed identity recoding: life areas, goals, habits, and affirmations aligned with who you're becoming.</p>
-                    </div>
-                    <span class="workbook-part-chevron" aria-hidden="true">▶</span>
-                </summary>
-                <div class="workbook-part-content">
-                <p class="workbook-why-line">Neuroscience shows neurons that fire together wire together. Identity-based habits prove behavior follows who you believe you are. This section rewires your ${pattern.name} pattern into the identity you're choosing—through visualization, repetition, and aligned action.</p>
-
-                <div style="margin-bottom: 1.25rem; padding: 1rem 1.25rem; background: rgba(0, 0, 0, 0.03); border-radius: 6px; border-left: 4px solid #000;">
-                    <p class="content-text" style="margin: 0; font-weight: 600; color: #000; font-size: 0.95rem;">No overthinking. No second-guessing. No comparing. No judging. No self-sabotage. Hyper-focus on the identity you are rehearsing. Feel it, speak it, act from it.</p>
-                </div>
-
-                <div style="margin-bottom: 1.5rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">1. Identity blueprint — Life areas reimagined</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">Describe the you who has already broken the ${pattern.name} pattern in each area: love &amp; connection, money &amp; work, health &amp; habits, relationships, self-worth. What do you believe? How do you feel? What do others notice? Add sensory detail so your brain treats it as real (visualization primes the reticular activating system).</p>
-                    <div data-journal-id="p3-identity-areas" style="margin-bottom: 0;">${getJournalUI('e.g., In Love: I believe I can be close and stay. I feel calm. Others notice I show up. In Money: I trust the process. I feel grounded.')}</div>
-                    </div>
-
-                <div style="margin-bottom: 1.5rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">2. Desired outcomes + habit stack</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">List 2–3 outcomes per area and the habit stack that makes them inevitable. Tie each goal to one cue or anchor in your day. Example: “After I finish my morning coffee, I review my ${pattern.name} interrupt and choose one aligned action.” Specificity + repetition rewires faster.</p>
-                    <div data-journal-id="p3-goals-habits" style="margin-bottom: 0;">${getJournalUI('e.g., Love: deeper connection. After morning coffee, I check in with one person. Money: peace. After I sit down, I review my interrupt.')}</div>
-                    </div>
-
-                <div style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; background: linear-gradient(135deg, rgba(202, 0, 19, 0.03) 0%, rgba(202, 0, 19, 0.08) 100%); border-radius: 8px; border: 2px solid rgba(202, 0, 19, 0.25);">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.25rem; color: #ca0013; font-weight: 700;">3. Your vision board — Dream big list</p>
-                    <p class="content-text" style="margin: 0 0 0.75rem 0; color: #ca0013; font-size: 0.9rem; font-weight: 600;">Dream big. Your brain can't tell the difference between a vividly imagined experience and a real one.</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">From the identity you've defined, list the things, experiences, and qualities you want. Write as if you're already living them—add sensory detail: what do you see, feel, experience? Elevated emotion (gratitude, joy, inspiration) primes your nervous system into a new future. Mental rehearsal wires your brain toward what you focus on.</p>
-                    <div data-journal-id="p3-vision-list" style="margin-bottom: 0;">${getJournalUI('e.g., A morning routine where I feel calm and present. A relationship where I\'m seen and safe. Financial freedom that lets me create without worry. A body I feel at home in. Experiences that fill me with awe.')}</div>
-                    </div>
-
-                <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: rgba(202, 0, 19, 0.06); border-radius: 6px; border-left: 4px solid #ca0013;">
-                    <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">4. Life-area affirmations — recite daily (morning + night)</p>
-                    <p class="content-text" style="margin: 0 0 0.75rem 0; color: #555; font-size: 0.95rem;">Science-backed subconscious rewiring by life area. Speak with intention and feeling. Repetition with emotion rewires the brain.</p>
-                    ${getLifeAreaAffirmationsHTML(pattern)}
-                    <p class="content-text" style="margin: 0 0 0.5rem 0; color: #666; font-size: 0.85rem; font-style: italic;">Add your own affirmations below, using the desires you wrote in Part 2:</p>
-                    <div data-journal-id="p3-my-affirmations" style="margin-top: 0.25rem;">${getJournalUI('e.g., I am worthy of connection. I choose courage over comfort today.')}</div>
-                    </div>
-
-                <p class="content-text" style="margin-top: 1.25rem; margin-bottom: 0; font-weight: 600; color: #000;">Who you're becoming is built by repetition + emotion + action. Rehearse it daily. The more honest and consistent you are, the faster the shift.</p>
-                </div>
-            </details>
-
-            <div class="workbook-part-divider"></div>
-
-            <div class="workbook-conclusion">
-                <h4 class="workbook-conclusion-title">After Day 1: Live With Intention</h4>
-                <p class="workbook-conclusion-lead">You've drawn the line. The rest is what you do with it.</p>
-                <p class="workbook-conclusion-copy">Recommendation: treat today as day one of a new loop. Each morning, reconnect with your Definite Chief Aim and your interrupt. When your ${pattern.name} pattern shows up, pause—ask your question, choose differently. One decision started this; daily alignment makes it stick. Neuroscience is clear: repeated choice rewires the brain. You don't need more time; you need to make the time you have count.</p>
-                <p class="workbook-conclusion-copy">Your potential isn't locked in the past. It's in every moment you choose who you're becoming over who you've been. Live with intention. Seek daily alignment. Use the remaining time you have to reinforce the identity you're building—not the pattern that was running you. You've seen it. You've named it. Now you get to choose it, again and again.</p>
-                <p class="workbook-conclusion-close"><strong>The workbook gave you the structure. The rest is yours.</strong></p>
             </div>
 
+            <!-- PHASE 3: Your "After" Begins - Daily Practice & Reinforcement -->
+            <div style="margin-bottom: 2.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%); color: #fff; border-radius: 50%; font-weight: 700; font-size: 1.1rem; flex-shrink: 0;" class="workbook-phase-number">3</span>
+                    <div>
+                        <h4 class="workbook-subsection-title">Your "After" Begins: Daily Practice &amp; Reinforcement</h4>
+                        <p class="workbook-subsection-subtitle">Persistence is what transforms the moment into lasting change.</p>
+                    </div>
+                </div>
+                <p class="content-text" style="margin-bottom: 1rem; color: #555; padding-left: 3.25rem;"><strong>Why this works:</strong> The workbook creates the moment of transformation. Daily practice deepens it. Evening reflection consolidates learning and primes your subconscious for tomorrow. Goals as "lenses" (not finish lines) keep you focused on who you're becoming, not just what you're achieving. This is how your "after" becomes your reality.</p>
+                
+                <div style="margin-bottom: 1.5rem; padding-left: 3.25rem;">
+                    <p class="workbook-step-title" style="margin-bottom: 0.75rem;">Evening Reflection (5–10 min):</p>
+                    <ul class="content-list" style="margin: 0 0 1.5rem 0;">
+                        <li data-journal-id="p3-1" style="margin-bottom: 1rem;">What feels most true about why you've been stuck? ${getJournalUI()}</li>
+                        <li data-journal-id="p3-2" style="margin-bottom: 1rem;"><strong>Actual enemy (limiting belief):</strong> Name the internal pattern or belief. Not circumstances. Not other people. Start with: "${jump.enemyHint}" ${getJournalUI()}</li>
+                        <li data-journal-id="p3-3" style="margin-bottom: 1rem;">One sentence: what you refuse to let your life become. (e.g. "${jump.antiVisionCompressed}") ${getJournalUI()}</li>
+                        <li data-journal-id="p3-4" style="margin-bottom: 1rem;">One sentence: what you're building toward. (e.g. "${jump.visionMVP}") ${getJournalUI()}</li>
+                        <li data-journal-id="p3-5" style="margin-bottom: 0;">One moment today when your pattern showed up—or where it usually does—what you were protecting, and what you chose (or would want to choose). ${getJournalUI()}</li>
+                    </ul>
+                </div>
+
+                <div style="padding-left: 3.25rem;">
+                    <p class="workbook-step-title" style="margin-bottom: 0.75rem;">Goals as Lenses:</p>
+                    <p class="content-text" style="margin-bottom: 0.75rem; color: #666;">Goals aren't finish lines—they're lenses that change how you see and act. When you know where you're going (your "after"), your brain finds the path. Clarity creates focus, and focus creates results.</p>
+                    <ul class="content-list" style="margin: 0;">
+                        <li data-journal-id="p3-g-1yr" style="margin-bottom: 1rem;"><strong>1 Year Lens:</strong> One concrete thing that would have to be true for you to know you've broken the ${pName} pattern. ${getJournalUI()}</li>
+                        <li data-journal-id="p3-g-1mo" style="margin-bottom: 1rem;"><strong>1 Month Lens:</strong> What would have to be true in one month for that 1-year to stay possible? ${getJournalUI()}</li>
+                        <li data-journal-id="p3-g-daily" style="margin-bottom: 0;"><strong>Daily Actions:</strong> What 2–3 actions will you timeblock tomorrow that the person you're becoming would do? (Tomorrow: also use your interrupt when the pattern shows up and choose one different small action.) ${getJournalUI()}</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Additional Support & Resources -->
+            <div style="margin-bottom: 2rem;">
+                <h4 class="workbook-step-title">What Helps You Break Free</h4>
+                ${whatHelpsHTML}
+            </div>
+
+            <!-- Progress Indicators -->
+            <div style="margin-bottom: 2rem;">
+                <h4 class="workbook-step-title" style="color: #4caf50;">How You'll Know You're Breaking Free</h4>
+                <ul class="content-list" style="margin: 0 0 1rem 0;">${breakingFreeHTML}</ul>
+                <p class="content-text" style="margin: 0; color: #555; font-style: italic;">Slip-ups are part of the process. The goal is practice, not perfection. Every time you choose differently, you're rewiring your brain.</p>
+            </div>
+
+            <!-- Closing: Your After Begins -->
+            <div style="margin-bottom: 1rem;">
+                <h4 class="workbook-step-title" style="font-weight: 700; margin-bottom: 0.75rem;">Your "After" Begins Now</h4>
+                <p class="content-text" style="margin-bottom: 0.75rem; color: #ca0013; font-weight: 600;">You've chosen your moment. You've drawn the line between your "before" and your "after."</p>
+                <p class="content-text" style="margin-bottom: 0.75rem;">This workbook is your blueprint. Use it daily. Return to it when you need clarity. Your answers are saved automatically—you can always come back and refine your vision, update your goals, or reflect on your progress.</p>
+                <p class="content-text" style="margin-bottom: 0.75rem; color: #555;"><strong>Remember:</strong> Transformation isn't linear. Some days you'll feel unstoppable. Other days you'll slip back into the old pattern. That's normal. What matters is that you keep showing up—that's how you reinforce your "after."</p>
+                <p class="content-text" style="margin: 0; color: #555; font-weight: 600;">Every practice session rewires your brain. Every choice strengthens the new pathway. Every day you choose differently, you're becoming the person you're meant to be.</p>
+                <p class="content-text" style="margin-top: 1rem; color: #000; font-weight: 600;">You don't need a breakdown to have a breakthrough. You chose your moment. Your transformation begins now.</p>
             </div>
         `;
     }
@@ -6615,3 +5927,4 @@
         `;
     }
 })();
+
