@@ -56,8 +56,8 @@
             return 'Unknown';
         },
         
-        // Get element from sign
-        getElement: function(sign) {
+        // Get zodiac element from sign (fire/earth/air/water)
+        getElementFromSign: function(sign) {
             const fire = ['Aries', 'Leo', 'Sagittarius'];
             const earth = ['Taurus', 'Virgo', 'Capricorn'];
             const air = ['Gemini', 'Libra', 'Aquarius'];
@@ -92,7 +92,7 @@
         },
         
         // Safe DOM element getter with error handling
-        getElement: function(id, errorMessage) {
+        getElementById: function(id, errorMessage) {
             const element = document.getElementById(id);
             if (!element && errorMessage) {
                 console.error(errorMessage);

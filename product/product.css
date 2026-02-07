@@ -1192,6 +1192,13 @@
   transform: translateY(-20px); /* Move content up for breakup course */
 }
 
+/* Light text on dark hero for accessibility */
+.breakup-course-page .product-preheader,
+.breakup-course-page .product-hero-text h1,
+.breakup-course-page .product-subtitle {
+  color: #fffcf1;
+}
+
 .still-healing-hoodie-page .product-hero,
 .healing-bracelet-page .product-hero,
 .growth-earrings-page .product-hero,
@@ -1230,6 +1237,11 @@
     margin-top: 0;
     margin-bottom: 0;
     top: 0 !important;
+  }
+  .breakup-course-page .product-preheader,
+  .breakup-course-page .product-hero-text h1,
+  .breakup-course-page .product-subtitle {
+    color: #fffcf1;
   }
   
   .price-note {

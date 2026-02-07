@@ -14,7 +14,7 @@
 - **File:** `js/config/firebase-config.js`
 - **Project ID:** `heart-matters-ceb3a` (OLD PROJECT)
 - **Auth Domain:** `heart-matters-ceb3a.firebaseapp.com`
-- **API Key:** `AIzaSyATtfn1844KAI0Y_kUKGht49b6GHRzGSEo`
+- **API Key:** `AIzaSy...REDACTED` (see Firebase Console)
 
 **What Needs to Happen:**
 1. ✅ **Create NEW Firebase Project** for Pattern Reset

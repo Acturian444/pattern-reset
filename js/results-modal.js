@@ -3,6 +3,14 @@
 (function() {
     'use strict';
     
+    // Escape HTML to prevent XSS when injecting user/localStorage data into innerHTML
+    function escapeHTML(str) {
+        if (str == null) return '';
+        const div = document.createElement('div');
+        div.textContent = String(str);
+        return div.innerHTML;
+    }
+    
     // Declare functions first so they can be assigned to window early
     let showResultsModal, closeResultsModal, loadAndRenderResults;
     
@@ -215,19 +223,11 @@
             }
         });
         
-        // Observe body and document for any additions/changes
-        toggleObserver.observe(document.body, {
-            childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['style', 'class', 'id']
-        });
-        
-        // Also observe document head in case styles are added
-        toggleObserver.observe(document.head, {
-            childList: true,
-            subtree: true
-        });
+        // Observe modal content for theme toggle additions (childList only to avoid attribute feedback loops)
+        const modalContentEl = document.getElementById('results-modal-content');
+        if (modalContentEl) {
+            toggleObserver.observe(modalContentEl, { childList: true, subtree: true });
+        }
         
         // Store observer on overlay for cleanup
         overlay._toggleObserver = toggleObserver;
@@ -257,6 +257,7 @@
             }
         };
         document.addEventListener('keydown', escHandler);
+        overlay._escHandler = escHandler;
     };
     
     // Assign to window immediately after definition (before other code runs)
@@ -279,6 +280,10 @@
                 overlay._toggleObserver.disconnect();
                 delete overlay._toggleObserver;
             }
+            if (overlay._escHandler) {
+                document.removeEventListener('keydown', overlay._escHandler);
+                delete overlay._escHandler;
+            }
             
             // Restore theme toggle if it was hidden by modal
             const themeToggle = document.getElementById('theme-toggle');
@@ -295,6 +300,8 @@
                 themeToggle.style.removeProperty('width');
                 themeToggle.style.removeProperty('height');
                 themeToggle.style.removeProperty('overflow');
+                themeToggle.style.removeProperty('clip');
+                themeToggle.style.removeProperty('clip-path');
                 
                 // Remove all data attributes
                 themeToggle.removeAttribute('data-hidden-by-modal');
@@ -403,7 +410,7 @@
                 
                 if (!pattern || !archetype) {
                     console.error('Pattern not found:', patternKey, 'Available patterns:', Object.keys(window.personalityPatterns));
-                    container.innerHTML = '<div class="no-results"><h2>Error Loading Results</h2><p>Pattern data not found. Pattern key: ' + patternKey + '</p><p>Available: ' + Object.keys(window.personalityPatterns).join(', ') + '</p></div>';
+                    container.innerHTML = '<div class="no-results"><h2>Error Loading Results</h2><p>Pattern data not found. Pattern key: ' + escapeHTML(patternKey) + '</p><p>Available: ' + escapeHTML(Object.keys(window.personalityPatterns).join(', ')) + '</p></div>';
                     return;
                 }
                 
@@ -518,7 +525,7 @@
                         }, 500);
                     } catch (e) {
                         console.error('Error rendering results:', e);
-                        container.innerHTML = '<div class="no-results"><h2>Error Rendering Results</h2><p>' + e.message + '</p></div>';
+                        container.innerHTML = '<div class="no-results"><h2>Error Rendering Results</h2><p>' + escapeHTML(e.message) + '</p></div>';
                     }
                 } else {
                     // Fallback: render simplified version
@@ -736,7 +743,7 @@
                             try { if (areasRaw) areas = JSON.parse(areasRaw); } catch (e) {}
                             try { if (painsRaw) painsParsed = JSON.parse(painsRaw); } catch (e) {}
                             const parts = [];
-                            if (areas.length) parts.push('<strong>Areas:</strong> ' + areas.join(', '));
+                            if (areas.length) parts.push('<strong>Areas:</strong> ' + escapeHTML(areas.join(', ')));
                             if (painsParsed) {
                                 let areaToPills = {};
                                 if (painsParsed && typeof painsParsed === 'object' && !Array.isArray(painsParsed)) {
@@ -751,10 +758,10 @@
                                     });
                                 }
                                 const areaOrder = ['Love', 'Money', 'Health', 'Career', 'Identity', 'Purpose', 'Lifestyle', 'How I feel about myself'];
-                                const painParts = areaOrder.filter(a => areaToPills[a] && areaToPills[a].length).map(a => '<strong style="color:#ca0013;">' + a + ':</strong> ' + areaToPills[a].join(', '));
+                                const painParts = areaOrder.filter(a => areaToPills[a] && areaToPills[a].length).map(a => '<strong style="color:#ca0013;">' + escapeHTML(a) + ':</strong> ' + escapeHTML(areaToPills[a].join(', ')));
                                 if (painParts.length) parts.push(painParts.join('<br>'));
                             }
-                            if (extra) parts.push('<strong>Anything else:</strong> ' + extra.replace(/\n/g, '<br>'));
+                            if (extra) parts.push('<strong>Anything else:</strong> ' + escapeHTML(extra).replace(/\n/g, '<br>'));
                             const answerDiv = document.createElement('div');
                             answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
                             answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + (parts.length ? parts.join('<br>') : 'No selections yet') + '</p>';
@@ -768,7 +775,7 @@
                         if (journalUI && answer) {
                             const answerDiv = document.createElement('div');
                             answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 0.75rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
-                            answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + answer.replace(/\n/g, '<br>') + '</p>';
+                            answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + escapeHTML(answer).replace(/\n/g, '<br>') + '</p>';
                             journalUI.replaceWith(answerDiv);
                         } else if (journalUI) {
                             journalUI.remove();
@@ -1181,7 +1188,7 @@
         }
 
         function refreshPainsDisplay() {
-            if (!painsContainer || !painsPills || typeof window.getCombinedPainsByArea !== 'function') return;
+            if (!painsContainer || !painsPills || !painsLabel || typeof window.getCombinedPainsByArea !== 'function') return;
             var selectedAreas = [];
             if (areasEl) {
                 areasEl.querySelectorAll('.workbook-pill.selected').forEach(function(p) {
@@ -1326,6 +1333,11 @@
                     if (sourceContainer.style.display === 'none') {
                         sourceContainer.style.display = 'block';
                     }
+                    const restoreSourceStyles = () => {
+                        sourceContainer.style.visibility = originalVisibility;
+                        sourceContainer.style.opacity = originalOpacity;
+                        sourceContainer.style.display = originalDisplay;
+                    };
                 
                     // Create a deep clone of the entire content
                     const contentClone = sourceContainer.cloneNode(true);
@@ -1405,7 +1417,7 @@
                             try { if (areasRaw) areas = JSON.parse(areasRaw); } catch (e) {}
                             try { if (painsRaw) painsParsed = JSON.parse(painsRaw); } catch (e) {}
                             const parts = [];
-                            if (areas.length) parts.push('<strong>Areas:</strong> ' + areas.join(', '));
+                            if (areas.length) parts.push('<strong>Areas:</strong> ' + escapeHTML(areas.join(', ')));
                             if (painsParsed) {
                                 let areaToPills = {};
                                 if (painsParsed && typeof painsParsed === 'object' && !Array.isArray(painsParsed)) {
@@ -1420,10 +1432,10 @@
                                     });
                                 }
                                 const areaOrder = ['Love', 'Money', 'Health', 'Career', 'Identity', 'Purpose', 'Lifestyle', 'How I feel about myself'];
-                                const painParts = areaOrder.filter(a => areaToPills[a] && areaToPills[a].length).map(a => '<strong style="color:#ca0013;">' + a + ':</strong> ' + areaToPills[a].join(', '));
+                                const painParts = areaOrder.filter(a => areaToPills[a] && areaToPills[a].length).map(a => '<strong style="color:#ca0013;">' + escapeHTML(a) + ':</strong> ' + escapeHTML(areaToPills[a].join(', ')));
                                 if (painParts.length) parts.push(painParts.join('<br>'));
                             }
-                            if (extra) parts.push('<strong>Anything else:</strong> ' + extra.replace(/\n/g, '<br>'));
+                            if (extra) parts.push('<strong>Anything else:</strong> ' + escapeHTML(extra).replace(/\n/g, '<br>'));
                             const answerDiv = document.createElement('div');
                             answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
                             answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + (parts.length ? parts.join('<br>') : 'No selections yet') + '</p>';
@@ -1437,7 +1449,7 @@
                         if (journalUI && answer) {
                             const answerDiv = document.createElement('div');
                             answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 0.75rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
-                            answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + answer.replace(/\n/g, '<br>') + '</p>';
+                            answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + escapeHTML(answer).replace(/\n/g, '<br>') + '</p>';
                             journalUI.replaceWith(answerDiv);
                         } else if (journalUI) {
                             journalUI.remove();
@@ -1863,6 +1875,7 @@
                     
                     // Wait longer for content to settle, fonts to load, and images to render
                     setTimeout(() => {
+                        try {
                         // Validate container still has content
                         if (pdfContainer.children.length === 0 || !pdfContainer.querySelector('.results-modal-content')) {
                             throw new Error('PDF container lost content during preparation.');
@@ -1986,7 +1999,7 @@
                                 
                                 console.log('PDF downloaded successfully');
                                 
-                                // Restore scroll position
+                                restoreSourceStyles();
                                 window.scrollTo(0, originalScrollY);
                                 
                                 // Clean up PDF container and styles
@@ -2005,7 +2018,7 @@
                                 console.error('Error generating PDF:', error);
                                 console.error('Error stack:', error.stack);
                                 
-                                // Restore scroll position on error
+                                restoreSourceStyles();
                                 window.scrollTo(0, originalScrollY);
                                 
                                 alert('Error generating PDF: ' + (error.message || 'Unknown error') + '. Please check the console for details.');
@@ -2021,6 +2034,15 @@
                                     downloadBtn.disabled = false;
                                 }
                             });
+                        } catch (innerError) {
+                            console.error('Error during PDF generation:', innerError);
+                            restoreSourceStyles();
+                            window.scrollTo(0, originalScrollY);
+                            alert('Error generating PDF: ' + (innerError.message || 'Unknown error'));
+                            if (document.body.contains(pdfContainer)) document.body.removeChild(pdfContainer);
+                            if (document.head.contains(style)) document.head.removeChild(style);
+                            if (downloadBtn) { downloadBtn.innerHTML = originalText; downloadBtn.disabled = false; }
+                        }
                     }, 1000); // Wait longer for content to settle, fonts to load, and images to render
                     
                 } catch (error) {

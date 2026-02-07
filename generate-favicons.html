@@ -95,10 +95,13 @@
                     ctx.drawImage(img, 0, 0, size, size);
                     
                     canvas.toBlob(function(blob) {
+                        if (!blob) return;
                         const link = document.createElement('a');
                         link.download = name;
-                        link.href = URL.createObjectURL(blob);
+                        const pngUrl = URL.createObjectURL(blob);
+                        link.href = pngUrl;
                         link.click();
+                        setTimeout(function() { URL.revokeObjectURL(pngUrl); }, 0);
                         
                         // Add preview
                         const previewItem = document.createElement('div');

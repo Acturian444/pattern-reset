@@ -2,21 +2,26 @@
 
 ## 📊 Quiz Structure Overview
 
-### Total Questions: 32
-- **30 Scored Questions** (psychology-based)
+### Total Questions: 49
+- **47 Scored Questions** (psychology-based)
 - **1 Birth Date Question** (optional, for astrological insights)
 - **1 Relationship Status Question** (optional, for context)
 
 ### Question Distribution by Domain:
-1. **Love & Connection** (4 questions) - Questions 1-4
-2. **Money & Finances** (4 questions) - Questions 5-8
-3. **Health & Habits** (4 questions) - Questions 9-12
-4. **Identity & Self** (4 questions) - Questions 13-16
-5. **Childhood & Origin** (6 questions) - Questions 17-22
-6. **Relationship Patterns** (6 questions) - Questions 23-28
-7. **Reflection** (2 questions) - Questions 29-30
-8. **Birth Date** (1 question) - Question 31
-9. **Relationship Status** (1 question) - Question 32
+1. **Love & Connection** (4 questions) - Questions 0-3
+2. **Money & Finances** (4 questions) - Questions 4-7
+3. **Health & Habits** (6 questions) - Questions 8-13
+4. **Lifestyle & Daily Habits** (4 questions) - Questions 14-17
+5. **Physical Health & Body** (2 questions) - Questions 18-19
+6. **Productivity & Time** (3 questions) - Questions 20-22
+7. **Purpose & Flow** (3 questions) - Questions 23-25
+8. **Identity & Self** (4 questions) - Questions 26-29
+9. **Childhood & Origin** (6 questions) - Questions 30-35
+10. **Trauma & Adversity** (3 questions) - Questions 36-38
+11. **Relationship Patterns** (6 questions) - Questions 39-44
+12. **Reflection** (2 questions) - Questions 45-46
+13. **Birth Date** (1 question) - Question 47
+14. **Relationship Status** (1 question) - Question 48
 
 ---
 
@@ -24,7 +29,7 @@
 
 ### How It Works:
 - **Each answer = 3 points** (all questions weighted equally)
-- **Maximum Score = 90 points** (30 questions × 3 points)
+- **Maximum Score = 141 points** (47 questions × 3 points)
 - **4 Emotional Drivers** tracked:
   1. **Control** (The Anchor archetype)
   2. **Validation** (The Catalyst archetype)

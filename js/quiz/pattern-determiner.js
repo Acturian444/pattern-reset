@@ -140,15 +140,15 @@
         
         // Check Identity domain for planning (Perfectionist) vs action (Fixer)
         const identityQuestions = getQuestionsInDomain(quizData, 'IDENTITY', answers);
-        identityQuestions.forEach(({ option, index }) => {
+        identityQuestions.forEach(({ option }) => {
             if (option.driver === 'control') {
                 const text = option.text.toLowerCase();
                 // Perfectionist: planning/deep thinking
                 if (text.includes('plan deeply') || text.includes('control outcomes')) {
                     perfectionistScore += option.score;
                 }
-                // Fixer: action-oriented (index 15 = "Take charge and handle it fast")
-                if (index === 15 && text.includes('take charge')) {
+                // Fixer: action-oriented (keyword-driven, not index-dependent)
+                if (text.includes('take charge') || text.includes('handle it fast') || text.includes('set the pace')) {
                     fixerScore += option.score;
                 }
             }

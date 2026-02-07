@@ -25,6 +25,9 @@
                     
                     const option = question.options[answerIndex];
                     if (option && option.driver && option.score !== undefined) {
+                        if (driverScores[option.driver] === undefined) {
+                            driverScores[option.driver] = 0;
+                        }
                         driverScores[option.driver] += option.score;
                         totalScore += option.score;
                     }

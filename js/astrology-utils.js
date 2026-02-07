@@ -11,8 +11,9 @@
     function getSunSign(dateStr) {
         if (!dateStr) return null;
         const d = new Date(dateStr);
-        const month = d.getMonth() + 1;
-        const day = d.getDate();
+        if (isNaN(d.getTime())) return null;
+        const month = d.getUTCMonth() + 1;
+        const day = d.getUTCDate();
         if (month === 1 && day >= 20) return 'aquarius';
         if (month === 1) return 'capricorn';
         if (month === 2 && day >= 19) return 'pisces';
@@ -43,10 +44,11 @@
     function getMoonSign(dateStr) {
         if (!dateStr) return null;
         const birth = new Date(dateStr);
-        const epoch = new Date(2000, 0, 1);
+        if (isNaN(birth.getTime())) return null;
+        const epoch = new Date(Date.UTC(2000, 0, 1));
         const daysSinceEpoch = Math.floor((birth - epoch) / (24 * 60 * 60 * 1000));
         const signIndex = ((Math.floor(daysSinceEpoch / 2.5) % 12) + 12) % 12;
-        return SIGN_NAMES[signIndex];
+        return SIGN_NAMES[signIndex] || null;
     }
 
     // One short sentence per sign for Moon (emotional need/fear) - used in Love, Health, Lifestyle, Money
