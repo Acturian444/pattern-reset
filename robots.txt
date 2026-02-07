@@ -3,12 +3,7 @@ Allow: /
 
 # Allow all public pages
 Allow: /index.html
-Allow: /letitout.html
-Allow: /info.html
-Allow: /theheartroom.html
-Allow: /shop/
-Allow: /product/
-Allow: /course/
+Allow: /legal.html
 
 # Allow CSS and JavaScript files for proper rendering
 Allow: /style.css
@@ -47,11 +42,13 @@ Disallow: /api/
 Disallow: /data/
 Disallow: /logs/
 
+# Block hidden pages
+Disallow: /product/breakup-course.html
+Disallow: /course/breakup-course.html
+Disallow: /letitout.html
+
 # Allow sitemap
 Allow: /sitemap.xml
 
 # Sitemap location
 Sitemap: https://mypatternreset.com/sitemap.xml
-
-# Crawl delay (optional - helps with server load)
-Crawl-delay: 1 

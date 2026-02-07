@@ -1,7 +1,7 @@
 {
-  "name": "heart-matters-site",
+  "name": "pattern-reset",
   "version": "1.0.0",
-  "description": "Heart Matters Site with Stripe Integration",
+  "description": "Pattern Reset - 22-day pattern breaking program",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

@@ -1,7 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || 'sk_test_YOUR_STRIPE_SECRET_KEY');
 const app = express();
+
+// Serve static files from the root directory
+app.use(express.static(path.join(__dirname)));
 
 // Middleware to parse JSON bodies
 app.use(express.json());
@@ -99,3 +103,12 @@ app.get('/api/verify-checkout', async (req, res) => {
 
 // Export the Express app for Vercel serverless deployment
 module.exports = app;
+
+// Start server locally if not being required as a module
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log(`Server running at http://localhost:${PORT}`);
+        console.log(`Preview your site at http://localhost:${PORT}`);
+    });
+}
