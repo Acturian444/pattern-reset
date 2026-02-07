@@ -330,7 +330,7 @@
                         <p class="cta-description">You've drawn the line. Save your workbook so you can return anytime. When your pattern shows up, use your interrupt and choose differently—every practice builds new habits.</p>
                     </div>
                     
-                    <div class="workbook-downloads-container">
+                    <div class="workbook-downloads-container" style="display: none;">
                         <p class="workbook-downloads-label">Download Your Tools</p>
                         <div class="workbook-downloads-grid">
                             <button type="button" class="workbook-download-btn" data-download-type="full-report">
