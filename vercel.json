@@ -29,7 +29,7 @@
           "value": "resetmypattern.com"
         }
       ],
-      "destination": "https://mypatternreset.com/:path*",
+      "destination": "https://mypatternreset.com/$1",
       "permanent": true
     },
     {
