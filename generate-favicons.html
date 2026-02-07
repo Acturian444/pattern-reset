@@ -81,6 +81,7 @@
         function generateFavicons() {
             const preview = document.getElementById('preview');
             preview.innerHTML = '<p>Generating...</p>';
+            let cleared = false;
             
             sizes.forEach(({ name, size }) => {
                 const img = new Image();
@@ -96,6 +97,10 @@
                     
                     canvas.toBlob(function(blob) {
                         if (!blob) return;
+                        if (!cleared) {
+                            preview.innerHTML = '';
+                            cleared = true;
+                        }
                         const link = document.createElement('a');
                         link.download = name;
                         const pngUrl = URL.createObjectURL(blob);

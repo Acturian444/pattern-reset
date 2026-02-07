@@ -1,7 +1,7 @@
 # Example: Full Personalized Email Report
 
 ## 📧 Email Subject Line
-**"Your Pattern Reset Results: You're The Anchor"**
+### "Your Pattern Reset Results: You're The Anchor"
 
 ---
 
@@ -16,7 +16,7 @@ Thank you for taking the Pattern Reset Quiz! Here's your complete personalized b
 ## 🎯 Your Pattern Results
 
 ### **THE ANCHOR: THE FIXER**
-**Pattern Strength: 78% (Strong)**
+#### Pattern Strength: 78% (Strong)
 
 You have a **strong** pattern dominance, meaning this pattern significantly influences your behaviors across all areas of your life.
 
@@ -52,12 +52,12 @@ You have a **strong** pattern dominance, meaning this pattern significantly infl
 This unconscious belief drives your pattern. You believe that taking charge and fixing problems will keep you safe and in control of your life.
 
 ### **Your Strength:**
-**Responsible & Capable**
+#### Responsible & Capable
 
 You're the person people turn to when things go wrong. You're reliable, action-oriented, and you get things done. This is a genuine strength that serves you well.
 
 ### **Your Shadow:**
-**Overfunctioning → Burnout**
+#### Overfunctioning → Burnout
 
 Your pattern's shadow side shows up when you take responsibility for things that aren't yours to fix. You overfunction for others, leading to exhaustion, resentment, and burnout.
 
@@ -143,7 +143,7 @@ This means you sometimes seek validation through achievement and recognition. Yo
 
 ## 📈 Pattern Strength Analysis
 
-**78% Strength = Strong Pattern Dominance**
+#### 78% Strength = Strong Pattern Dominance
 
 This means:
 - Your pattern is **very active** in your life

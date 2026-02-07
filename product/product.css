@@ -1195,7 +1195,9 @@
 /* Light text on dark hero for accessibility */
 .breakup-course-page .product-preheader,
 .breakup-course-page .product-hero-text h1,
-.breakup-course-page .product-subtitle {
+.breakup-course-page .product-subtitle,
+.breakup-course-page .price,
+.breakup-course-page .price-note {
   color: #fffcf1;
 }
 
@@ -1240,7 +1242,9 @@
   }
   .breakup-course-page .product-preheader,
   .breakup-course-page .product-hero-text h1,
-  .breakup-course-page .product-subtitle {
+  .breakup-course-page .product-subtitle,
+  .breakup-course-page .price,
+  .breakup-course-page .price-note {
     color: #fffcf1;
   }
   

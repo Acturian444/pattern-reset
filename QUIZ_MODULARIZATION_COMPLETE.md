@@ -36,7 +36,15 @@ I created separate module files but didn't integrate them because:
    - Exposes `window.QuizScoring`
    - Score calculation functions
 
-4. **`index.html`** ✅
+4. **`js/quiz/pattern-determiner.js`** ✅
+   - Pattern determination logic (Fixer vs Perfectionist, etc.)
+   - Exposes pattern-determining functions via window
+
+5. **`js/quiz/quiz-data.js`** ✅
+   - Quiz question and option data
+   - Exposes `window.quizData` for questions and answers
+
+6. **`index.html`** ✅
    - Added module script tags (before quiz code)
    - Updated to use `window.QUIZ_CONFIG`
    - Added fallback if module doesn't load
@@ -48,8 +56,10 @@ I created separate module files but didn't integrate them because:
 ```html
 <!-- Quiz Modules - Load before quiz code -->
 <script src="js/quiz/quiz-config.js"></script>
+<script src="js/quiz/quiz-data.js"></script>
 <script src="js/quiz/quiz-utils.js"></script>
 <script src="js/quiz/quiz-scoring.js"></script>
+<script src="js/quiz/pattern-determiner.js"></script>
 ```
 
 **Safe Fallback:**

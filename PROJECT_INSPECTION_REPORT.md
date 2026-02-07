@@ -417,20 +417,20 @@
 ## 📈 **USER EXPERIENCE FLOWS**
 
 ### **Flow 1: Quiz → Pattern Reset**
-```
+```text
 Homepage → Take Quiz → Get Pattern → Submit Email → 
 See Success Modal → Click "Reserve Your Spot" → 
 Pattern Reset Landing → Purchase → Course Access
 ```
 
 ### **Flow 2: Direct Purchase**
-```
+```text
 Homepage → Click "Pattern Reset" → Landing Page → 
 Purchase → Course Access
 ```
 
 ### **Flow 3: Let It Out**
-```
+```text
 Homepage → Click "Let It Out" → Intro Modal → 
 Write Post → Submit → View on Wall → 
 Interact with Posts → Unlock Replies (if needed)

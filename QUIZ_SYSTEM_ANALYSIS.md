@@ -184,11 +184,11 @@ Uses **domain-specific question analysis** to distinguish between the 2 patterns
    - Single, In a relationship, Married, Divorced, Prefer not to say
 
 ### Quiz Results:
-1. **Total Score** (out of 90)
+1. **Total Score** (out of 141)
 2. **Pattern Name** (Tier 1 + Tier 2: e.g., "The Anchor: The Fixer")
 3. **Pattern Dominance** (percentage)
 4. **Driver Scores** (JSON object with all 4 driver scores)
-5. **All 30 Answers** (stored in localStorage)
+5. **All 47 Answers** (stored in localStorage)
 
 ### Analytics Data:
 - Driver breakdown percentages
@@ -240,8 +240,8 @@ Uses **domain-specific question analysis** to distinguish between the 2 patterns
 ### What Makes This Quiz Valuable?
 
 #### 1. **Comprehensive Coverage (360° View)**
-- **30 scored questions** across 7 life domains
-- Covers: Love, Money, Health, Identity, Childhood, Relationships, Reflection
+- **47 scored questions** across 12 life domains
+- Covers: Love, Money, Health, Lifestyle, Physical Health, Productivity, Purpose, Identity, Childhood, Trauma & Adversity, Relationship Patterns, Reflection
 - Not just surface-level - digs into origin and patterns
 
 #### 2. **Two-Tier System Creates Mystery + Specificity**
@@ -444,7 +444,7 @@ For each pattern, users receive:
 
 ### What's Working Well:
 
-1. **Comprehensive Question Set** (30 scored questions)
+1. **Comprehensive Question Set** (47 scored questions)
 2. **Multi-Domain Coverage** (7 life areas)
 3. **Two-Tier System** (mystery + specificity)
 4. **Actionable Reset Focus** (not just diagnosis)
@@ -478,7 +478,7 @@ For each pattern, users receive:
 ## 📝 Summary
 
 **The quiz offers significant value through:**
-- Comprehensive 30-question assessment across 7 life domains
+- Comprehensive 47-question assessment across 12 life domains
 - Two-tier archetype system (mystery + specificity)
 - 4 emotional drivers framework
 - 8 distinct patterns with actionable insights

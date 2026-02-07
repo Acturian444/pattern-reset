@@ -252,7 +252,7 @@
 **Problem:** Foundation is long (10 principles). Users might feel overwhelmed.
 
 **Solution:** Add "Quick Start" box at top:
-```
+```text
 ┌─────────────────────────────────────┐
 │ 🚀 QUICK START                       │
 │ If you're overwhelmed, start here:   │
