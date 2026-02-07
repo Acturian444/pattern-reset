@@ -729,13 +729,31 @@
                     workbookClone.querySelectorAll('[data-journal-id]').forEach(el => {
                         if (el.classList && el.classList.contains('workbook-pill-group')) {
                             const areasRaw = journalData['p1-life-pattern-merged-areas'];
+                            const painsRaw = journalData['p1-life-pattern-merged-pains'];
                             const extra = journalData['p1-life-pattern-merged-extra'] || '';
                             let areas = [];
-                            try {
-                                if (areasRaw) areas = JSON.parse(areasRaw);
-                            } catch (e) {}
+                            let painsParsed = null;
+                            try { if (areasRaw) areas = JSON.parse(areasRaw); } catch (e) {}
+                            try { if (painsRaw) painsParsed = JSON.parse(painsRaw); } catch (e) {}
                             const parts = [];
                             if (areas.length) parts.push('<strong>Areas:</strong> ' + areas.join(', '));
+                            if (painsParsed) {
+                                let areaToPills = {};
+                                if (painsParsed && typeof painsParsed === 'object' && !Array.isArray(painsParsed)) {
+                                    areaToPills = painsParsed;
+                                } else if (Array.isArray(painsParsed) && painsParsed.length && typeof window.getCombinedPainsByArea === 'function') {
+                                    areas.forEach(a => { areaToPills[a] = []; });
+                                    painsParsed.forEach(p => {
+                                        for (let i = 0; i < areas.length; i++) {
+                                            const combined = window.getCombinedPainsByArea(areas[i], pattern.name);
+                                            if ((combined || []).indexOf(p) >= 0) { areaToPills[areas[i]].push(p); return; }
+                                        }
+                                    });
+                                }
+                                const areaOrder = ['Love', 'Money', 'Health', 'Career', 'Identity', 'Purpose', 'Lifestyle', 'How I feel about myself'];
+                                const painParts = areaOrder.filter(a => areaToPills[a] && areaToPills[a].length).map(a => '<strong style="color:#ca0013;">' + a + ':</strong> ' + areaToPills[a].join(', '));
+                                if (painParts.length) parts.push(painParts.join('<br>'));
+                            }
                             if (extra) parts.push('<strong>Anything else:</strong> ' + extra.replace(/\n/g, '<br>'));
                             const answerDiv = document.createElement('div');
                             answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
@@ -1116,36 +1134,92 @@
         if (!group) return;
 
         var areasKey = 'p1-life-pattern-merged-areas';
+        var painsKey = 'p1-life-pattern-merged-pains';
         var areasEl = group.querySelector('.workbook-pills[data-pill-group="areas"]');
         var painsContainer = group.querySelector('.workbook-pains-display-container');
         var painsLabel = painsContainer ? painsContainer.querySelector('.workbook-pains-area-names') : null;
         var painsPills = painsContainer ? painsContainer.querySelector('.workbook-pains-display-pills') : null;
+        var painsSummary = painsContainer ? painsContainer.querySelector('.workbook-pains-summary') : null;
+
+        function getPainsByArea() {
+            try {
+                var raw = data[painsKey];
+                if (!raw) return {};
+                var parsed = JSON.parse(raw);
+                if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return parsed;
+                return {};
+            } catch (e) { return {}; }
+        }
+
+        function setPainsForArea(area, pills) {
+            var byArea = getPainsByArea();
+            if (pills.length) byArea[area] = pills;
+            else delete byArea[area];
+            data[painsKey] = Object.keys(byArea).length ? JSON.stringify(byArea) : null;
+            saveData();
+        }
+
+        function updatePainsSummary() {
+            if (!painsSummary) return;
+            var byArea = getPainsByArea();
+            var areaOrder = ['Love', 'Money', 'Health', 'Career', 'Identity', 'Purpose', 'Lifestyle', 'How I feel about myself'];
+            var html = areaOrder.filter(function(a) { return byArea[a] && byArea[a].length; }).map(function(area) {
+                return '<span class="workbook-pains-summary-item"><strong>' + area + ':</strong> ' + byArea[area].join(', ') + '</span>';
+            }).join('');
+            painsSummary.innerHTML = html || '';
+            painsSummary.style.display = html ? 'block' : 'none';
+        }
+
+        function saveCurrentAreaPains() {
+            var currentArea = areasEl ? (areasEl.querySelector('.workbook-pill.selected') || {}).getAttribute && areasEl.querySelector('.workbook-pill.selected').getAttribute('data-value') : null;
+            if (!currentArea || !painsPills) return;
+            var vals = [];
+            painsPills.querySelectorAll('.workbook-pill.selected').forEach(function(p) {
+                vals.push(p.getAttribute('data-value'));
+            });
+            setPainsForArea(currentArea, vals);
+        }
 
         function refreshPainsDisplay() {
             if (!painsContainer || !painsPills || typeof window.getCombinedPainsByArea !== 'function') return;
-            var selected = [];
+            var selectedAreas = [];
             if (areasEl) {
                 areasEl.querySelectorAll('.workbook-pill.selected').forEach(function(p) {
-                    selected.push(p.getAttribute('data-value'));
+                    selectedAreas.push(p.getAttribute('data-value'));
                 });
             }
-            if (selected.length === 0) {
+            if (selectedAreas.length === 0) {
                 painsContainer.style.display = 'none';
                 return;
             }
-            var seen = {};
-            var pills = [];
-            selected.forEach(function(area) {
-                var combined = window.getCombinedPainsByArea(area, pattern.name);
-                (combined || []).forEach(function(p) {
-                    if (!seen[p]) { seen[p] = true; pills.push(p); }
-                });
-            });
-            painsLabel.textContent = selected.join(', ');
-            painsPills.innerHTML = pills.map(function(p) {
-                return '<span class="workbook-pill workbook-pill-display">' + p + '</span>';
+            var currentArea = selectedAreas[0];
+            var combined = window.getCombinedPainsByArea(currentArea, pattern.name) || [];
+            var pillToArea = {};
+            combined.forEach(function(p) { pillToArea[p] = currentArea; });
+            painsContainer._pillToArea = pillToArea;
+            painsLabel.textContent = currentArea;
+            var selectedPains = getPainsByArea()[currentArea] || [];
+            painsPills.innerHTML = combined.map(function(p) {
+                var escaped = (p || '').replace(/"/g, '&quot;');
+                var sel = selectedPains.indexOf(p) >= 0 ? ' selected' : '';
+                return '<button type="button" class="workbook-pill' + sel + '" data-value="' + escaped + '">' + p + '</button>';
             }).join('');
             painsContainer.style.display = 'block';
+            updatePainsSummary();
+        }
+
+        function onPainsPillClick(e) {
+            var pill = e.target.closest('.workbook-pill');
+            if (!pill || !painsPills || !painsPills.contains(pill)) return;
+            pill.classList.toggle('selected');
+            var currentArea = areasEl ? (areasEl.querySelector('.workbook-pill.selected') || {}).getAttribute && areasEl.querySelector('.workbook-pill.selected').getAttribute('data-value') : null;
+            if (!currentArea) return;
+            var vals = [];
+            painsPills.querySelectorAll('.workbook-pill.selected').forEach(function(p) {
+                vals.push(p.getAttribute('data-value'));
+            });
+            setPainsForArea(currentArea, vals);
+            updatePainsSummary();
         }
 
         function loadAndRestore() {
@@ -1153,27 +1227,48 @@
             try {
                 if (data[areasKey]) areas = JSON.parse(data[areasKey]);
             } catch (e) {}
+            var singleArea = Array.isArray(areas) && areas.length ? areas[0] : null;
             if (areasEl) {
                 areasEl.querySelectorAll('.workbook-pill').forEach(function(pill) {
                     var v = pill.getAttribute('data-value');
-                    if (areas.indexOf(v) >= 0) pill.classList.add('selected');
-                    else pill.classList.remove('selected');
+                    pill.classList.toggle('selected', v === singleArea);
                 });
+            }
+            if (singleArea && Array.isArray(areas) && areas.length > 1) {
+                data[areasKey] = JSON.stringify([singleArea]);
+                saveData();
+            }
+            var raw = data[painsKey];
+            if (raw) {
+                try {
+                    var parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed) && parsed.length && singleArea) {
+                        data[painsKey] = JSON.stringify({ [singleArea]: parsed });
+                        saveData();
+                    }
+                } catch (e) {}
             }
             refreshPainsDisplay();
         }
         loadAndRestore();
 
+        if (painsContainer) {
+            painsContainer.addEventListener('click', onPainsPillClick);
+        }
+
         function onPillClick(container, key) {
             if (!container) return;
             container.querySelectorAll('.workbook-pill').forEach(function(pill) {
                 pill.addEventListener('click', function() {
-                    pill.classList.toggle('selected');
+                    if (key === areasKey) saveCurrentAreaPains();
+                    var wasSelected = pill.classList.contains('selected');
+                    container.querySelectorAll('.workbook-pill').forEach(function(p) { p.classList.remove('selected'); });
+                    if (!wasSelected) pill.classList.add('selected');
                     var vals = [];
                     container.querySelectorAll('.workbook-pill.selected').forEach(function(p) {
                         vals.push(p.getAttribute('data-value'));
                     });
-                    data[key] = JSON.stringify(vals);
+                    data[key] = vals.length ? JSON.stringify(vals) : null;
                     saveData();
                     if (key === areasKey) refreshPainsDisplay();
                 });
@@ -1303,13 +1398,31 @@
                     contentClone.querySelectorAll('[data-journal-id]').forEach(el => {
                         if (el.classList && el.classList.contains('workbook-pill-group')) {
                             const areasRaw = journalData['p1-life-pattern-merged-areas'];
+                            const painsRaw = journalData['p1-life-pattern-merged-pains'];
                             const extra = journalData['p1-life-pattern-merged-extra'] || '';
                             let areas = [];
-                            try {
-                                if (areasRaw) areas = JSON.parse(areasRaw);
-                            } catch (e) {}
+                            let painsParsed = null;
+                            try { if (areasRaw) areas = JSON.parse(areasRaw); } catch (e) {}
+                            try { if (painsRaw) painsParsed = JSON.parse(painsRaw); } catch (e) {}
                             const parts = [];
                             if (areas.length) parts.push('<strong>Areas:</strong> ' + areas.join(', '));
+                            if (painsParsed) {
+                                let areaToPills = {};
+                                if (painsParsed && typeof painsParsed === 'object' && !Array.isArray(painsParsed)) {
+                                    areaToPills = painsParsed;
+                                } else if (Array.isArray(painsParsed) && painsParsed.length && typeof window.getCombinedPainsByArea === 'function') {
+                                    areas.forEach(a => { areaToPills[a] = []; });
+                                    painsParsed.forEach(p => {
+                                        for (let i = 0; i < areas.length; i++) {
+                                            const combined = window.getCombinedPainsByArea(areas[i], pattern.name);
+                                            if ((combined || []).indexOf(p) >= 0) { areaToPills[areas[i]].push(p); return; }
+                                        }
+                                    });
+                                }
+                                const areaOrder = ['Love', 'Money', 'Health', 'Career', 'Identity', 'Purpose', 'Lifestyle', 'How I feel about myself'];
+                                const painParts = areaOrder.filter(a => areaToPills[a] && areaToPills[a].length).map(a => '<strong style="color:#ca0013;">' + a + ':</strong> ' + areaToPills[a].join(', '));
+                                if (painParts.length) parts.push(painParts.join('<br>'));
+                            }
                             if (extra) parts.push('<strong>Anything else:</strong> ' + extra.replace(/\n/g, '<br>'));
                             const answerDiv = document.createElement('div');
                             answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
@@ -1381,19 +1494,18 @@
                     });
                     
                     // Create a container for PDF generation
-                    // CRITICAL: html2canvas can only capture elements that are in the viewport
-                    // Position it on-screen (top-left) but make it visually hidden to user
-                    // Container width = 8.5in (816px at 96dpi) - this matches the PDF page width
-                    // PDF margins will be applied by html2pdf, so content should fill container
+                    // Letter: 8.5" x 11". With 0.4" margins = 7.7" x 10.2" content area = 739px x 979px
+                    // Tighter margins = use page 1, more content per page, less wasted space
+                    const pdfContentWidth = 739;  // 7.7" at 96dpi (0.4" side margins)
                     const pdfContainer = document.createElement('div');
                     pdfContainer.id = 'pdf-temp-container';
                     pdfContainer.style.cssText = `
                         position: absolute;
                         top: 0;
                         left: 0;
-                        width: 816px;
+                        width: ${pdfContentWidth}px;
                         min-height: 1056px;
-                        max-width: 816px;
+                        max-width: ${pdfContentWidth}px;
                         padding: 0;
                         margin: 0;
                         background: #ffffff;
@@ -1412,18 +1524,32 @@
                     // Add optimized PDF styles - modern, clean, centered, no borders/shadows
                     const style = document.createElement('style');
                     style.textContent = `
+                        /* Force white background — no tan/cream from modal design */
+                        #pdf-temp-container,
+                        #pdf-temp-container .results-modal-content,
+                        #pdf-temp-container .workbook-v2,
+                        #pdf-temp-container .workbook-outer-box,
+                        #pdf-temp-container .workbook-outer-content,
+                        #pdf-temp-container .workbook-intro,
+                        #pdf-temp-container .workbook-part-content,
+                        #pdf-temp-container .workbook-conclusion,
+                        #pdf-temp-container .pattern-intro-section,
+                        #pdf-temp-container .pattern-display-prominent,
+                        #pdf-temp-container .results-hero-section,
+                        #pdf-temp-container .results-accordion,
+                        #pdf-temp-container .cta-section {
+                            background-color: #ffffff !important;
+                        }
                         #pdf-temp-container {
                             visibility: visible !important;
                             opacity: 1 !important;
-                            background: #ffffff !important;
                         }
                         #pdf-temp-container * {
                             visibility: visible !important;
                             opacity: 1 !important;
                         }
                         #pdf-temp-container .results-modal-content {
-                            background: #ffffff !important;
-                            padding: 0 !important;
+                            padding: 0 0.5rem !important;
                             max-width: 100% !important;
                             margin: 0 auto !important;
                             width: 100% !important;
@@ -1432,32 +1558,30 @@
                             box-shadow: none !important;
                             outline: none !important;
                             text-align: left !important;
-                            /* Match modal: 1000px max-width with 2rem padding = 936px content */
-                            /* PDF: 816px total, scaled proportionally for professional layout */
                         }
                         #pdf-temp-container .results-header {
                             margin-top: 0 !important;
-                            margin-bottom: 1.5rem !important;
+                            margin-bottom: 0.5rem !important;
                             padding-top: 0 !important;
-                            padding-bottom: 1rem !important;
+                            padding-bottom: 0.4rem !important;
                             border-bottom: 1px solid #e5e5e5 !important;
                             text-align: center !important;
                             width: 100% !important;
                         }
                         #pdf-temp-container .results-title {
-                            font-size: 2.2rem !important;
-                            margin-bottom: 0.75rem !important;
+                            font-size: 1.2rem !important;
+                            margin-bottom: 0.5rem !important;
                             line-height: 1.2 !important;
                         }
                         #pdf-temp-container .results-subtitle {
-                            font-size: 1.1rem !important;
+                            font-size: 0.68rem !important;
                             margin-bottom: 0 !important;
-                            line-height: 1.6 !important;
+                            line-height: 1.5 !important;
                         }
                         #pdf-temp-container .pattern-intro-section {
                             margin-top: 0 !important;
-                            margin-bottom: 1.5rem !important;
-                            padding: 1rem 0 !important;
+                            margin-bottom: 0.5rem !important;
+                            padding: 0.4rem 0 !important;
                             border: none !important;
                             box-shadow: none !important;
                             outline: none !important;
@@ -1466,8 +1590,8 @@
                         }
                         #pdf-temp-container .pattern-display-prominent {
                             margin-top: 0 !important;
-                            margin-bottom: 1.25rem !important;
-                            padding: 1rem 0 !important;
+                            margin-bottom: 0.5rem !important;
+                            padding: 0.4rem 0 !important;
                             width: 100% !important;
                             max-width: 100% !important;
                         }
@@ -1475,8 +1599,8 @@
                             background: #ffffff !important;
                             border: none !important;
                             border-radius: 0 !important;
-                            padding: 1.25rem 0 !important;
-                            margin-bottom: 1.5rem !important;
+                            padding: 0.4rem 0 !important;
+                            margin-bottom: 0.5rem !important;
                             margin-left: 0 !important;
                             margin-right: 0 !important;
                             box-shadow: none !important;
@@ -1487,16 +1611,16 @@
                             box-sizing: border-box !important;
                         }
                         #pdf-temp-container .results-section-title {
-                            font-size: 1.5rem !important;
-                            margin-bottom: 1rem !important;
-                            padding-bottom: 0.75rem !important;
+                            font-size: 0.9rem !important;
+                            margin-bottom: 0.4rem !important;
+                            padding-bottom: 0.35rem !important;
                             border-bottom: 1px solid #e5e5e5 !important;
                         }
                         #pdf-temp-container .accordion-item {
                             background: #ffffff !important;
                             border: none !important;
                             border-radius: 0 !important;
-                            margin-bottom: 1.25rem !important;
+                            margin-bottom: 0.5rem !important;
                             margin-left: 0 !important;
                             margin-right: 0 !important;
                             overflow: visible !important;
@@ -1517,20 +1641,20 @@
                             visibility: visible !important;
                             opacity: 1 !important;
                             overflow: visible !important;
-                            padding: 1rem 0 !important;
+                            padding: 0.4rem 0 !important;
                             border: none !important;
                             box-shadow: none !important;
                             outline: none !important;
                         }
                         #pdf-temp-container .accordion-content h3 {
-                            font-size: 1.3rem !important;
+                            font-size: 0.79rem !important;
                             margin-top: 0 !important;
-                            margin-bottom: 0.75rem !important;
+                            margin-bottom: 0.5rem !important;
                         }
                         #pdf-temp-container .accordion-content h4 {
-                            font-size: 1.1rem !important;
-                            margin-top: 1rem !important;
-                            margin-bottom: 0.5rem !important;
+                            font-size: 0.71rem !important;
+                            margin-top: 0.75rem !important;
+                            margin-bottom: 0.35rem !important;
                         }
                         #pdf-temp-container .life-area-accordion-content {
                             max-height: none !important;
@@ -1560,8 +1684,8 @@
                             box-sizing: border-box !important;
                         }
                         #pdf-temp-container .cta-section {
-                            margin-top: 2rem !important;
-                            padding-top: 1.5rem !important;
+                            margin-top: 0.75rem !important;
+                            padding-top: 0.5rem !important;
                             border-top: 1px solid #e5e5e5 !important;
                             border: none !important;
                             border-top: 1px solid #e5e5e5 !important;
@@ -1579,50 +1703,79 @@
                             color: #000000 !important;
                             font-weight: 600 !important;
                             page-break-after: avoid !important;
+                            font-size: 0.71rem !important;
                         }
+                        #pdf-temp-container h1 { font-size: 0.83rem !important; }
+                        #pdf-temp-container h2 { font-size: 0.79rem !important; }
+                        #pdf-temp-container h3 { font-size: 0.75rem !important; }
+                        #pdf-temp-container h4 { font-size: 0.71rem !important; }
                         #pdf-temp-container .content-text {
                             color: #333 !important;
-                            line-height: 1.6 !important;
-                            font-size: 0.95rem !important;
-                            margin-bottom: 0.75rem !important;
+                            line-height: 1.5 !important;
+                            font-size: 0.6rem !important;
+                            margin-bottom: 0.5rem !important;
                         }
                         #pdf-temp-container .content-text p {
-                            margin-bottom: 0.75rem !important;
+                            margin-bottom: 0.5rem !important;
+                            font-size: 0.6rem !important;
                         }
                         #pdf-temp-container .content-list {
-                            margin: 0.75rem 0 !important;
-                            padding-left: 1.5rem !important;
+                            margin: 0.35rem 0 !important;
+                            padding-left: 1rem !important;
                         }
                         #pdf-temp-container .content-list li {
-                            margin-bottom: 0.5rem !important;
-                            line-height: 1.6 !important;
+                            margin-bottom: 0.35rem !important;
+                            line-height: 1.5 !important;
+                            font-size: 0.6rem !important;
                         }
                         #pdf-temp-container .pattern-identity-card {
-                            margin-bottom: 1.5rem !important;
-                            padding: 1.25rem !important;
+                            margin-bottom: 0.5rem !important;
+                            padding: 0.5rem !important;
                             border: none !important;
                             box-shadow: none !important;
                             outline: none !important;
                         }
                         #pdf-temp-container .driver-breakdown {
-                            margin-top: 1rem !important;
+                            margin-top: 0.5rem !important;
                         }
                         #pdf-temp-container .driver-item {
-                            margin-bottom: 0.75rem !important;
-                            padding: 0.75rem !important;
+                            margin-bottom: 0.4rem !important;
+                            padding: 0.4rem !important;
                         }
+                        /* Workbook & pattern: 25% smaller fonts for PDF */
+                        #pdf-temp-container .workbook-outer-title { font-size: 0.83rem !important; }
+                        #pdf-temp-container .pattern-name-main { font-size: 1.13rem !important; }
+                        #pdf-temp-container .pattern-percentage-badge { font-size: 0.83rem !important; }
+                        #pdf-temp-container .pattern-archetype-subtitle { font-size: 0.64rem !important; }
+                        #pdf-temp-container .workbook-primary-shift-title,
+                        #pdf-temp-container .workbook-primary-shift-focus { font-size: 0.75rem !important; }
+                        #pdf-temp-container .workbook-primary-shift-belief,
+                        #pdf-temp-container .workbook-primary-shift-why { font-size: 0.6rem !important; }
+                        #pdf-temp-container .how-developed-title { font-size: 0.68rem !important; }
+                        #pdf-temp-container .workbook-part-title { font-size: 0.75rem !important; }
+                        #pdf-temp-container .workbook-part-subtitle { font-size: 0.64rem !important; }
+                        #pdf-temp-container .workbook-why-line { font-size: 0.6rem !important; }
+                        #pdf-temp-container .workbook-conclusion-title { font-size: 0.75rem !important; }
+                        #pdf-temp-container .workbook-conclusion-lead { font-size: 0.68rem !important; }
+                        #pdf-temp-container .workbook-conclusion-copy { font-size: 0.6rem !important; }
+                        #pdf-temp-container .workbook-conclusion-close { font-size: 0.6rem !important; }
+                        #pdf-temp-container .driver-name { font-size: 0.68rem !important; }
+                        #pdf-temp-container .driver-percentage { font-size: 0.83rem !important; }
+                        #pdf-temp-container .driver-description { font-size: 0.6rem !important; }
+                        /* Workbook: tighter spacing for PDF */
+                        #pdf-temp-container .workbook-outer-box { padding: 0.5rem !important; margin-bottom: 0.5rem !important; }
+                        #pdf-temp-container .workbook-outer-content { padding: 0 0.75rem 0.75rem !important; }
+                        #pdf-temp-container .workbook-part-divider { margin: 0.75rem 0 !important; }
+                        #pdf-temp-container .workbook-intro { margin-bottom: 0.75rem !important; }
+                        #pdf-temp-container .workbook-primary-shift { margin: 0.5rem 0 !important; padding: 0.5rem !important; }
                     `;
                     document.head.appendChild(style);
                     
                     // Ensure cloned content has proper base styles optimized for PDF
-                    // Content should fill the container width exactly (816px = 8.5in)
-                    // PDF margins will be handled by html2pdf options
-                    // Match modal design: 1000px max-width with 2rem (32px) padding = 936px content
-                    // PDF: 816px total, 0.75in (72px) margins each side = 672px content area
-                    // Scale proportionally to maintain visual consistency
+                    // Content width = 672px (7" at 96dpi) - matches printable area with 0.75" margins
                     contentClone.style.cssText = `
-                        width: 816px;
-                        max-width: 816px;
+                        width: ${pdfContentWidth}px;
+                        max-width: ${pdfContentWidth}px;
                         background: #ffffff;
                         padding: 0;
                         margin: 0;
@@ -1735,10 +1888,9 @@
                             scrollHeight: pdfContainer.scrollHeight
                         });
                         
-                        // Configure PDF options with optimized margins for letter size
-                        // Equal margins for proper centering - content will be centered automatically
+                        // Configure PDF: 0.4" margins = content starts page 1, more usable area
                         const options = {
-                            margin: [0.5, 0.75, 0.5, 0.75], // Top, Right, Bottom, Left (in inches) - equal side margins for centering
+                            margin: [0.4, 0.4, 0.4, 0.4], // Top, Right, Bottom, Left (inches) - tighter margins, use page 1
                             filename: `${pattern.name}-Pattern-Report-${new Date().toISOString().split('T')[0]}.pdf`,
                             image: { 
                                 type: 'jpeg', 
@@ -1749,9 +1901,9 @@
                                 useCORS: true,
                                 logging: false,
                                 backgroundColor: '#ffffff',
-                                width: 816,
+                                width: 739,
                                 height: Math.max(pdfContainer.scrollHeight || 1056, pdfContainer.offsetHeight || 1056),
-                                windowWidth: 816,
+                                windowWidth: 739,
                                 windowHeight: Math.max(pdfContainer.scrollHeight || 1056, pdfContainer.offsetHeight || 1056),
                                 allowTaint: true,
                                 letterRendering: true,
@@ -1765,12 +1917,8 @@
                                     return false;
                                 },
                                 onclone: function(clonedDoc) {
-                                    console.log('html2canvas onclone called');
-                                    // Ensure all content is visible in cloned document
                                     const clonedContainer = clonedDoc.getElementById('pdf-temp-container');
                                     if (clonedContainer) {
-                                        console.log('Found cloned container with', clonedContainer.children.length, 'children');
-                                        // Force all styles to be visible
                                         clonedContainer.style.cssText += 'opacity: 1 !important; visibility: visible !important; display: block !important;';
                                         const allElements = clonedContainer.querySelectorAll('*');
                                         allElements.forEach(el => {
@@ -1778,10 +1926,19 @@
                                                 if (el.style.display === 'none') el.style.display = 'block';
                                                 if (el.style.visibility === 'hidden') el.style.visibility = 'visible';
                                                 if (el.style.opacity === '0') el.style.opacity = '1';
+                                                // Force white background on tan/cream elements
+                                                const bg = (el.style.backgroundColor || el.style.background || '').toLowerCase();
+                                                if (bg.includes('fffcf1') || bg.includes('rgb(255, 252, 241)')) {
+                                                    el.style.backgroundColor = '#ffffff';
+                                                    el.style.background = '#ffffff';
+                                                }
                                             }
                                         });
-                                    } else {
-                                        console.warn('Cloned container not found in onclone');
+                                        // Force white on body/html in clone
+                                        const body = clonedDoc.body;
+                                        const html = clonedDoc.documentElement;
+                                        if (body) { body.style.backgroundColor = '#ffffff'; }
+                                        if (html) { html.style.backgroundColor = '#ffffff'; }
                                     }
                                 }
                             },
@@ -1792,10 +1949,10 @@
                                 compress: true
                             },
                             pagebreak: { 
-                                mode: ['avoid-all', 'css', 'legacy'],
-                                before: '.results-hero-section',
-                                after: ['.accordion-item', '.results-section', '.cta-section'],
-                                avoid: ['.results-header', '.pattern-intro-section', '.accordion-content']
+                                mode: ['css', 'legacy'],
+                                before: '',
+                                after: [],
+                                avoid: ['.results-header', '.pattern-intro-section', '.accordion-content', '.accordion-item']
                             }
                         };
                     

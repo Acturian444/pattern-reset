@@ -1045,6 +1045,17 @@ footer {
     }
 }
 
+/* Mobile: smaller placeholder text for input boxes */
+@media (max-width: 600px) {
+    .form-group input::placeholder,
+    .modal-content input[type="email"]::placeholder,
+    .modal-content input[type="tel"]::placeholder,
+    .modal-content input[type="text"]::placeholder,
+    .results-modal-content .journal-entry textarea.journal-textarea::placeholder {
+        font-size: 0.85rem;
+    }
+}
+
 /* Utility Classes */
 .active {
     color: var(--primary-color) !important;
@@ -4466,6 +4477,15 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     cursor: default;
     pointer-events: none;
 }
+
+/* The Shift That Breaks Your Pattern pills - minimal ghost style */
+.results-modal-content .workbook-primary-shift-pills .workbook-pill-display {
+    background: transparent;
+    border: 1px solid #ca0013;
+    border-radius: 8px;
+    color: #333;
+}
+
 .results-modal-content .workbook-primary-shift .workbook-primary-shift-pills {
     margin-top: 0.5rem;
 }
@@ -4477,6 +4497,31 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 }
 .results-modal-content .workbook-pill-extra {
     margin-top: 0;
+}
+
+/* Pains summary: Area: selections in brand red */
+.results-modal-content .workbook-pains-summary {
+    margin-top: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(202, 0, 19, 0.04);
+    border-radius: 8px;
+    border-left: 4px solid #ca0013;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.results-modal-content .workbook-pains-summary-item {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #000;
+    display: block;
+}
+.results-modal-content .workbook-pains-summary-item + .workbook-pains-summary-item {
+    margin-top: 0.5rem;
+}
+.results-modal-content .workbook-pains-summary-item strong {
+    color: #ca0013;
+    font-weight: 700;
 }
 
 .results-modal-content .btn-results-cta {
@@ -5871,8 +5916,8 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 }
 .workbook-v2 .workbook-conclusion-title {
     font-family: 'DM Sans', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 1.2rem;
+    font-weight: 800 !important;
     color: #ca0013;
     margin: 0 0 0.75rem 0;
     letter-spacing: 0.02em;

@@ -194,12 +194,12 @@
                     <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 400; line-height: 1.7;">Most people only change when life forces them to change through trauma, loss, breakdown, or hitting rock bottom. We carry patterns that drive our lives and keep us stuck in loops of trauma we haven't processed, problems that repeat, unhappiness that feels unshakeable, and lack of progress in all areas of life. Until we see it, the pattern runs on autopilot. We can't change what we can't see.</p>
                     <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 400; line-height: 1.7;"><strong>You don't have to wait for a breakdown to have a breakthrough.</strong> Instead of letting your pattern run your life, you can choose to interrupt it consciously. This reset is where that happens. You choose the life you want and how you want to live it.</p>
                     <p style="margin: 0 0 0.5rem 0; font-weight: 700; color: #000; font-size: 0.95rem;"><span style="background: rgba(202, 0, 19, 0.06); padding: 0.5rem 1rem; border-radius: 8px; display: inline-block;">Your Before / After</span></p>
-                    <p class="content-text" style="margin-bottom: 2rem; color: #000; font-weight: 400; line-height: 1.7;">Moving from before to after requires an identity shift. Get clear on who you want to become, then commit to aligning with that version every day. That's when you reprogram yourself and break free from the loop. The workbook below is where you make it real.</p>
+                    <p class="content-text" style="margin-bottom: 2rem; color: #000; font-weight: 400; line-height: 1.7;">Moving from before to after requires an identity shift. Get clear on who you want to become, then commit to aligning with that version every day. That's when you reprogram yourself and break free from the loop. The workbook below is your blueprint for reprogramming yourself.</p>
                     
                     <h4 class="how-developed-title" style="color: #ca0013; font-weight: 700; margin-bottom: 0.75rem;">Pattern Interruption</h4>
-                    <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">Your pattern formed in childhood as a survival strategy and became deeply encoded. It runs on autopilot long after it stopped serving you. One decision can truly change your life. Here's how it formed—and how pattern interruption breaks the cycle:</p>
+                    <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">Your pattern formed in childhood as a survival strategy and became deeply encoded. It runs on autopilot long after it stopped serving you. One decision can truly change your life.</p>
                     <div class="pattern-interrupt-diagram" style="margin-bottom: 1.5rem;">
-                        <p style="margin: 0 0 0.75rem 0; font-weight: 700; font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">How Your Pattern Formed</p>
+                        <p style="margin: 0 0 0.75rem 0; font-weight: 700; font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">From Childhood to Autopilot</p>
                         <div style="display: flex; flex-direction: column; gap: 0;">
                             <div style="padding: 1rem 1.25rem; background: #fff; border-radius: 8px 8px 0 0; border: 1px solid rgba(0,0,0,0.06); border-bottom: none; display: flex; align-items: flex-start; gap: 1rem;">
                                 <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">1</span>
@@ -220,7 +220,7 @@
                             <p style="margin: 0; font-weight: 700; font-size: 1rem; color: #ca0013;">⟳ Pattern Interruption</p>
                             <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: #555; line-height: 1.5;">Hits the pause button on autopilot. Creates a moment of awareness—conscious choice where there was only automatic reaction.</p>
                         </div>
-                        <p style="margin: 0 0 0.75rem 0; font-weight: 700; font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">How to Interrupt It</p>
+                        <p style="margin: 0 0 0.75rem 0; font-weight: 700; font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">From Awareness to New Default</p>
                         <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                             <div style="padding: 1rem 1.25rem; background: #fff; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 1rem;">
                                 <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">1</span>
@@ -236,7 +236,6 @@
                             </div>
                         </div>
                     </div>
-                    <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7; font-style: italic; color: #666;">That pattern served you then. It may not serve you now. The same brain that wired it in can rewire it. But it doesn't change on its own. It changes when you choose.</p>
                     <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;"><strong>There is a moment when everything shifts:</strong> when you see the pattern clearly and decide to interrupt it. That moment—that mental shift—is when transformation begins. Not when life breaks you. Not when you've hit rock bottom. When you choose. Clarity plus decision. That's when you draw the line between who you've been and who you're becoming.</p>
                     <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;"><strong>One decision starts it.</strong> Choosing every day makes it stick. Each time you interrupt the old pattern and choose differently, you strengthen the new pathway. Over time, those choices compound. They stop feeling like effort and start feeling like who you are. That's the <strong>identity shift</strong>: the accumulation of daily choices that rewires what's been running on autopilot—until the new way becomes who you are without trying.</p>
                     <p class="content-text" style="margin-bottom: 2rem; color: #000; font-weight: 600; line-height: 1.7;">You've seen your pattern. That's the clarity. The decision is yours. The workbook supports that choice.</p>
@@ -248,8 +247,9 @@
                         <li style="margin-bottom: 0.75rem;"><strong>Self-compassion beats self-criticism.</strong> Criticism fuels shame and keeps you stuck. Compassion builds resilience and supports transformation.</li>
                         <li style="margin-bottom: 0.75rem;"><strong>Own who you are. You're already enough.</strong> Stop waiting to be perfect. Worth isn't earned through perfection—it's inherent. When you own who you are now, things become easier.</li>
                         <li style="margin-bottom: 0.75rem;"><strong>Step back from the inner critic.</strong> See yourself as a kind observer would: from a distance, with kindness. Radical self-acceptance, not judgment.</li>
-                        <li style="margin-bottom: 0.75rem;"><strong>Choose to change from self-love.</strong> Keep your word to yourself. Make decisions from who you're becoming.</li>
-                        <li style="margin-bottom: 0.75rem;"><strong>This workbook isn't about fixing you.</strong> It's about becoming who you already are: complete, whole, and free from the patterns that keep you stuck.</li>
+                        <li style="margin-bottom: 0.75rem;"><strong>Choose to change from self-love.</strong> Make decisions from who you're becoming.</li>
+                        <li style="margin-bottom: 0.75rem;"><strong>Keep your word to yourself.</strong> Follow through on what you commit to. Integrity builds self-trust.</li>
+                        <li style="margin-bottom: 0.75rem;"><strong>This workbook isn't about fixing you.</strong> It's about becoming who you already are at your core: complete and whole, not defined by the patterns that keep you stuck.</li>
                         <li style="margin-bottom: 0;"><strong>Progress over perfection.</strong> Aligned action is what matters. Change takes time; your brain needs it. You can't rush lasting change. Patience is what makes it stick.</li>
                     </ul>
                     
@@ -264,15 +264,15 @@
                             <div class="principles-list">
                                 <details class="principle-card">
                                     <summary><span>Your Brain Doesn't Know What's Real—It Believes What You Repeat</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Your brain doesn't know what's real. It believes what you repeat. If you keep saying "I'm broke" or "There are no good men out there," your brain goes, I got it—and life keeps proving you right. Understanding this principle helps you notice what you've been repeating so you can choose new patterns.</div>
+                                    <div class="principle-copy">If you keep saying "I'm broke" or "There are no good men out there," your brain goes, I got it—and life keeps proving you right. Understanding this principle helps you notice what you've been repeating so you can choose new patterns.</div>
                                 </details>
                                 <details class="principle-card">
                                     <summary><span>Feelings Matter More Than Thoughts</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Your body is the signal, and emotions are the confirmation. You don't manifest what you want—you manifest what feels normal to you. If you feel that love is unsafe, you might keep attracting emotionally unavailable people. This is why feeling the cost of your pattern creates the emotional charge needed for real change.</div>
+                                    <div class="principle-copy">You don't manifest what you want—you manifest what feels normal to you. If you feel that love is unsafe, you might keep attracting emotionally unavailable people. This is why feeling the cost of your pattern creates the emotional charge needed for real change.</div>
                                 </details>
                                 <details class="principle-card">
                                     <summary><span>Your Subconscious Runs 95% of Your Life</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Your subconscious runs 95% of your life. If it's programmed for lack or struggle, logic won't fix it. But repetition plus emotion can rewire it. For example, if you grew up watching financial struggle and your subconscious learned that was normal, you may keep recreating it until you stop that loop and reprogram it. Understanding this principle helps you work with your subconscious, not just logic.</div>
+                                    <div class="principle-copy">If it's programmed for lack or struggle, logic won't fix it. But repetition plus emotion can rewire it. For example, if you grew up watching financial struggle and your subconscious learned that was normal, you may keep recreating it until you stop that loop and reprogram it. Understanding this principle helps you work with your subconscious, not just logic.</div>
                                 </details>
                                 <details class="principle-card">
                                     <summary><span>Your Nervous System Decides What You Attract</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
@@ -280,11 +280,11 @@
                                 </details>
                                 <details class="principle-card">
                                     <summary><span>Identity Is the True Magnet</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Manifestation isn't about getting—it's about becoming. Ask yourself: Who would you be if you already had all that you wanted? Who would you be if it had already worked out? If you keep seeing yourself as someone who doesn't get love, that's what you'll manifest more of. Understanding this principle helps you shift your identity first, then act from that place.</div>
+                                    <div class="principle-copy">Ask yourself: Who would you be if you already had all that you wanted? Who would you be if it had already worked out? If you keep seeing yourself as someone who doesn't get love, that's what you'll manifest more of. Understanding this principle helps you shift your identity first, then act from that place.</div>
                                 </details>
                                 <details class="principle-card">
                                     <summary><span>Your Brain Learns Through Imagination</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">This is why visualization works—or if you can't visualize, you can use another sense. Your mind rehearses your future. If you keep imagining failure, your brain prepares you for that exactly. If you vividly imagine who you're becoming, your brain prepares for that instead. Understanding this principle helps you see why rehearsing your future matters.</div>
+                                    <div class="principle-copy">Your mind rehearses your future. If you keep imagining failure, your brain prepares you for that exactly. If you vividly imagine who you're becoming, your brain prepares for that instead. Understanding this principle helps you see why rehearsing your future matters.</div>
                                 </details>
                                 <details class="principle-card">
                                     <summary><span>Consistency Beats Intensity</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
@@ -292,7 +292,7 @@
                                 </details>
                                 <details class="principle-card">
                                     <summary><span>Doubt Doesn't Stop Transformation. Fear Does.</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">You can doubt and still move forward. Doubt is normal—you can doubt and still come back to your vision. But fear keeps you stuck. If you're scared of being abandoned, you might unconsciously keep pushing people away. Fear activates survival mode, reinforcing the old pattern. Understanding this principle helps you name your fear and choose awareness anyway.</div>
+                                    <div class="principle-copy">Fear keeps you stuck. If you're scared of being abandoned, you might unconsciously keep pushing people away. Fear activates survival mode, reinforcing the old pattern. Understanding this principle helps you name your fear and choose awareness anyway.</div>
                                 </details>
                                 <details class="principle-card">
                                     <summary><span>Actions Matter, But Aligned Action</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
@@ -300,7 +300,7 @@
                                 </details>
                                 <details class="principle-card">
                                     <summary><span>Your Environment Reinforces Your Beliefs</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
-                                    <div class="principle-copy">Your phone, your room, your routines—they all reprogram you. That's why you need to redesign what you have around you. If your surroundings reflect chaos and lack, your nervous system stays there. If your environment reflects who you're becoming, it reinforces your new identity. Understanding this principle helps you see why your surroundings constantly influence you.</div>
+                                    <div class="principle-copy">If your surroundings reflect chaos and lack, your nervous system stays there. If your environment reflects who you're becoming, it reinforces your new identity. Understanding this principle helps you see why your surroundings constantly influence you.</div>
                                 </details>
                             </div>
                             <p class="principles-footer">Neuroscience shows 21–66 days of consistent practice rewires neural pathways. These principles are for awareness and education. The workbook gives you a structure to apply them.</p>
@@ -327,7 +327,7 @@
             <div class="cta-section">
                     <div class="cta-header">
                         <h4 class="cta-title">Continue Your Transformation</h4>
-                        <p class="cta-description">Work through your workbook at your own pace. When your pattern shows up, use your interrupt and choose differently. Every practice session builds new neural pathways.</p>
+                        <p class="cta-description">You've drawn the line. Save your workbook so you can return anytime. When your pattern shows up, use your interrupt and choose differently—every practice builds new habits.</p>
                     </div>
                     
                     <div class="workbook-downloads-container">
@@ -5324,7 +5324,7 @@
                 'Perfectionist': ['Worth tied to being flawless', 'Can\'t take risks', 'Can\'t be human', 'Fear of making mistakes', 'Identity as "the one who gets it right"'],
                 'Pleaser': ['Worth tied to pleasing', 'Can\'t know who I am outside serving', 'Identity as helper', 'Losing myself in others', 'Can\'t put myself first'],
                 'Performer': ['Worth tied to achievement', 'Can\'t be authentic', 'Can\'t be vulnerable', 'Identity as success', 'Empty when not performing'],
-                'Escaper': ['Worth tied to staying mobile', 'Can\'t build deep connections', 'Identity as "free"', 'Avoiding stability', 'Can\'t sit with who I am'],
+                'Escaper': ['Worth tied to staying mobile', 'Can\'t build deep connections', 'Avoiding commitment = avoiding knowing myself', 'Avoiding stability', 'Can\'t sit with who I am'],
                 'Overthinker': ['Worth tied to thinking', 'Can\'t trust instincts', 'Can\'t take action', 'Identity as "the thoughtful one"', 'Stuck in my head'],
                 'Withdrawer': ['Worth tied to staying safe', 'Can\'t experience intimacy', 'Identity as independent', 'Lonely from protecting', 'Can\'t open up'],
                 'Overgiver': ['Worth tied to giving', 'Can\'t receive', 'Can\'t know worth outside giving', 'Identity as needed', 'Resentful from overgiving']
@@ -5443,7 +5443,7 @@
                 <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(202, 0, 19, 0.05); border-radius: 8px; border-left: 4px solid #ca0013;">
                     <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 500; line-height: 1.7;">Your life will change completely the minute you understand: <strong>there's nothing wrong with you.</strong> You're not broken, and you don't need to heal yourself in order to experience abundance, wealth, freedom, richness, and love.</p>
                     <p class="content-text" style="margin-bottom: 1rem; color: #000; line-height: 1.7;">The paradox? It's the opposite: when you own and accept who you are, and learn to love yourself—not perfect, but complete—things become easy. You become magnetic. <strong>So stop fixing yourself. Allow yourself to naturally love and appreciate who you are, as you are, regardless of what you have or don't have.</strong></p>
-                    <p class="content-text" style="margin-bottom: 0; color: #000; line-height: 1.7; font-style: italic;">This workbook isn't about fixing you. It's about becoming who you already are—complete, whole, and free from the patterns that keep you stuck.</p>
+                    <p class="content-text" style="margin-bottom: 0; color: #000; line-height: 1.7; font-style: italic;">This workbook isn't about fixing you. It's about becoming who you already are at your core: complete and whole, not defined by the patterns that keep you stuck.</p>
                 </div>
 
                 <div style="margin-bottom: 2rem;">
@@ -5637,7 +5637,7 @@
                 <p class="workbook-primary-shift-focus">${resetFocus}</p>
                 ${pattern.coreBelief ? '<p class="workbook-primary-shift-belief">"' + pattern.coreBelief + '"</p>' : ''}
                 <p class="workbook-primary-shift-why">${challengesLine}</p>
-                <p class="workbook-pill-label" style="margin: 1rem 0 0.5rem 0;">Ways your ${pattern.name} pattern reinforces the struggle</p>
+                <p class="workbook-pill-label" style="margin: 1rem 0 0.5rem 0;">How your ${pattern.name} pattern keeps you stuck</p>
                 <div class="workbook-pills workbook-primary-shift-pills">
                     ${getPatternPainOptions(pattern.name).map(function(p){ return '<span class="workbook-pill workbook-pill-display">' + p + '</span>'; }).join('')}
                 </div>
@@ -5666,7 +5666,7 @@
 
                 <div style="margin-bottom: 2rem;">
                     <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.75rem;">2. What you're not happy with</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">What areas are you unhappy with? (Love, money, health, career, identity, purpose, lifestyle, how you feel about yourself.) Click the areas that apply. Write it down. You can't change what you won't face.</p>
+                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">What areas are you unhappy with? Click the areas that apply.</p>
                     <div class="workbook-pill-group" data-journal-id="p1-life-pattern-merged">
                         <p class="workbook-pill-label">Where is it not working?</p>
                         <div class="workbook-pills" data-pill-group="areas">
@@ -5675,8 +5675,9 @@
                         <div class="workbook-pains-display-container" data-pattern-name="${pattern.name}" style="display: none; margin-top: 1.25rem;">
                             <p class="workbook-pill-label workbook-pains-display-label">Challenges in <span class="workbook-pains-area-names"></span></p>
                             <div class="workbook-pills workbook-pains-display-pills"></div>
+                            <div class="workbook-pains-summary" aria-live="polite"></div>
                         </div>
-                        <div data-journal-id="p1-life-pattern-merged-extra" class="workbook-pill-extra" style="margin-top: 1rem;"><p class="workbook-pill-extra-label">Go deeper (optional): In one area you selected, what specifically hurts? One sentence.</p>${getJournalUI('e.g., In Love: the loneliness when I\'m with someone. In Money: the constant worry even when there\'s enough.')}</div>
+                        <div data-journal-id="p1-life-pattern-merged-extra" class="workbook-pill-extra" style="margin-top: 1rem;"><p class="workbook-pill-extra-label">Go deeper (optional): In one area you selected, what specifically hurts? One sentence.</p>${getJournalUI('e.g., In Love: I keep choosing people who can\'t choose me. In Money: I\'m always one emergency away from collapse.')}</div>
                     </div>
                 </div>
 
@@ -5693,7 +5694,7 @@
                 <summary class="workbook-part-summary">
                     <span class="workbook-part-number part-2">2</span>
                     <div class="workbook-part-summary-text">
-                        <span class="workbook-part-label">Part 2 — The Line</span>
+                        <span class="workbook-part-label">Part 2 — Draw The Line</span>
                         <h4 class="workbook-part-title">Pattern Interruption</h4>
                         <p class="workbook-part-subtitle">Gain clarity. Choose what you want. Radical honesty about what's keeping you stuck.</p>
                     </div>
@@ -5702,38 +5703,36 @@
                 <div class="workbook-part-content">
                 <p class="workbook-why-line">This is the moment. You've assessed your Before. Now: radical honesty, burning desire, the decision, and your pattern interrupt. Write your answers; it makes a difference.</p>
                 <div style="margin-bottom: 1.5rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">1. Radical honesty — What is keeping you stuck</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">Using what you named in Part 1, name the belief or pattern that keeps you stuck. Not circumstances. Not other people. Start with: "${jump.enemyHint}"</p>
-                    <div data-journal-id="p2-stuck" style="margin-bottom: 0;">${getJournalUI('e.g., I need to ___ to feel safe. I\'m protecting myself by...')}</div>
+                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">1. Radical honesty — What identity do you need to address?</p>
+                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">If someone filmed your life and watched all your actions, habits, decisions, and reactions—who would they say you turn into when you're stressed or scared?</p>
+                    <div data-journal-id="p2-stuck" style="margin-bottom: 0;">${getJournalUI('e.g., Someone who escapes and numbs out when things get hard. Someone who needs to please everyone to feel safe. Someone who withdraws and shuts down.')}</div>
                     </div>
                 <div style="margin-bottom: 1.5rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">2. Your burning desire &amp; new identity</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">What life do you want? What are you building toward? Now name who becomes: "I am the type of person who ______." Clarity creates the charge; transformation is becoming, not just getting.</p>
-                    <div data-journal-id="p2-desire-identity" style="margin-bottom: 0;">${getJournalUI('e.g., I want a life where I show up fully and feel connected. I am the type of person who faces discomfort instead of fleeing.')}</div>
+                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">2. Anti-vision — What you refuse to let your life become</p>
+                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">Write a single sentence that captures what you refuse to let your life become. It should make you feel something when you read it.</p>
+                    <div data-journal-id="p2-anti-vision" style="margin-bottom: 0;">${getJournalUI('e.g., I refuse to let my life become another decade of escaping when things get hard—numbing out, staying busy, never really showing up.')}</div>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">3. Actions to timeblock tomorrow</p>
+                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">What are 2–3 actions you can timeblock tomorrow that the person you're becoming would simply do?</p>
+                    <div data-journal-id="p2-actions-timeblock" style="margin-bottom: 0;">${getJournalUI('e.g., 9am: 10 min walk—no phone. 2pm: One difficult conversation I\'ve been avoiding. 7pm: Read my interrupt question and choose one aligned action.')}</div>
+                </div>
+                <div style="margin-bottom: 1.5rem; padding: 1rem 1.25rem; background: rgba(0, 0, 0, 0.03); border-radius: 6px; border-left: 4px solid #000;">
+                    <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">This is how you consciously force a pattern break daily</p>
+                    <p class="content-text" style="margin: 0 0 1rem 0; color: #555; font-size: 0.95rem;">When your ${pattern.name} pattern shows up, pause and ask: <strong>"${jump.interrupt}"</strong></p>
+                    <p class="content-text" style="margin: 0 0 0.75rem 0; color: #555; font-size: 0.9rem;">You need to consciously create pattern breaks. Take a few minutes now: create 2–3 reminders or calendar events in your phone. Include your interrupt question in each one. Schedule them at random times during the day—the more unexpected, the better. Best times: when you're commuting, walking, or have a free moment.</p>
+                    <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #333; font-size: 0.9rem;">Optional questions to add (or use anytime):</p>
+                    <ul class="content-list" style="margin: 0; padding-left: 1rem; line-height: 1.8; font-size: 0.9rem;">
+                        <li style="margin-bottom: 0.5rem;"><strong style="color: #ca0013;">Where in my life am I trading aliveness for safety?</strong></li>
+                        <li style="margin-bottom: 0.5rem;"><strong style="color: #ca0013;">What would change if I stopped needing people to see me as the identity I'm trying to leave behind?</strong></li>
+                        <li style="margin-bottom: 0;"><strong style="color: #ca0013;">What's the smallest version of the person I want to become that I could be tomorrow?</strong></li>
+                    </ul>
                 </div>
                 <div style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; background: rgba(202, 0, 19, 0.06); border-radius: 8px; border: 2px solid #ca0013;">
-                    <p class="content-text" style="margin: 0 0 0.75rem 0; font-weight: 700; color: #ca0013; font-size: 1rem;">3. Your Definite Chief Aim</p>
+                    <p class="content-text" style="margin: 0 0 0.75rem 0; font-weight: 700; color: #000; font-size: 1rem;">Your Definite Chief Aim</p>
                     <p class="content-text" style="margin: 0 0 1rem 0; color: #555; font-size: 0.9rem; line-height: 1.6;">Write one clear statement. Be specific. Vague plans lead to vague results. Include: (1) <strong>What</strong> you want—the identity you're becoming / the ${pName} pattern you're breaking. (2) <strong>When</strong>—a specific date by which you'll have made the shift. (3) <strong>What you'll give in return</strong>—the daily practice, service, or commitment (e.g., using your interrupt, aligning with your new identity). Read aloud twice daily—morning and night—with emotion and faith until it saturates your subconscious.</p>
                     <p class="content-text" style="margin: 0 0 0.5rem 0; color: #666; font-size: 0.85rem; font-style: italic;">Example structure: &ldquo;By [date], I will have broken my ${pName} pattern and become someone who ${resetFocus.toLowerCase()}. In return, I will [your commitment—e.g., use my interrupt daily, choose one aligned action, read this statement twice daily].&rdquo;</p>
                     <div data-journal-id="p1-definite-aim" style="margin-top: 1rem;">${getJournalUI('e.g., By Dec 31, 2025, I will have broken my Escaper pattern and become someone who faces emotions instead of fleeing. In return, I will use my interrupt daily, choose one aligned action, and read this statement morning and night.')}</div>
-                    </div>
-                <div style="margin-bottom: 1.5rem; padding: 1rem 1.25rem; background: rgba(0, 0, 0, 0.03); border-radius: 6px; border-left: 4px solid #000;">
-                    <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">Your pattern interrupt</p>
-                    <p class="content-text" style="margin: 0; color: #555; font-size: 0.95rem;">When your ${pattern.name} pattern shows up, pause and ask: <strong>"${jump.interrupt}"</strong></p>
-                </div>
-                <div style="margin-bottom: 1.5rem; padding: 1rem 1.25rem; background: rgba(202, 0, 19, 0.04); border-radius: 6px; border-left: 4px solid #ca0013;">
-                    <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">Your 3 robotic affirmations — recite daily (first thing morning + before bed)</p>
-                    <p class="content-text" style="margin: 0 0 1rem 0; color: #555; font-size: 0.9rem;">Science-backed subconscious rewiring. Speak with intention and feeling, twice daily. Your brain accepts what you repeat.</p>
-                    <ol class="content-list" style="margin: 0; padding-left: 1.25rem; line-height: 2; font-size: 0.95rem; list-style: decimal;">
-                        <li style="margin-bottom: 0.75rem;"><strong style="color: #ca0013; font-weight: 700;">${jump.visionMVP}</strong></li>
-                        <li style="margin-bottom: 0.75rem;"><strong style="color: #ca0013; font-weight: 700;">My subconscious accepts what I repeat with feeling. I choose ${resetFocus.toLowerCase()} today.</strong></li>
-                        <li style="margin-bottom: 0;"><strong style="color: #ca0013; font-weight: 700;">I act from the identity I'm building—one aligned choice at a time.</strong></li>
-                    </ol>
-                    </div>
-                <div style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">5. One thing you'll do today</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">One small action that acts from your new identity. Concrete and doable today.</p>
-                    <div data-journal-id="p2-one-thing-today" style="margin-bottom: 0;">${getJournalUI('e.g., When I feel the urge to flee, I pause and ask my interrupt—just once today.')}</div>
                 </div>
                     <p class="content-text" style="margin: 0 0 0.75rem 0; color: #666; font-size: 0.9rem;">Slip-ups are part of the process. The goal is practice, not perfection.</p>
                     <p class="content-text" style="margin: 0; font-weight: 600; color: #000;">I'm drawing the line. I'm choosing to change.</p>
@@ -5752,7 +5751,7 @@
                     <span class="workbook-part-chevron" aria-hidden="true">▶</span>
                 </summary>
                 <div class="workbook-part-content">
-                <p class="workbook-why-line">Neuroscience shows neurons that fire together wire together. Identity-based habits prove behavior follows who you believe you are. This section rewires your ${pattern.name} pattern into the identity you're choosing—through visualization, repetition, and aligned action.</p>
+                <p class="workbook-why-line">Using what you wrote in Part 2, this section helps you define who you're becoming and the habits that make it real. Neuroscience shows neurons that fire together wire together. Identity-based habits prove behavior follows who you believe you are. This section rewires your ${pattern.name} pattern into the identity you're choosing—through visualization, repetition, and aligned action.</p>
 
                 <div style="margin-bottom: 1.25rem; padding: 1rem 1.25rem; background: rgba(0, 0, 0, 0.03); border-radius: 6px; border-left: 4px solid #000;">
                     <p class="content-text" style="margin: 0; font-weight: 600; color: #000; font-size: 0.95rem;">No overthinking. No second-guessing. No comparing. No judging. No self-sabotage. Hyper-focus on the identity you are rehearsing. Feel it, speak it, act from it.</p>
@@ -5760,25 +5759,31 @@
 
                 <div style="margin-bottom: 1.5rem;">
                     <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">1. Identity blueprint — Life areas reimagined</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">Describe the you who has already broken the ${pattern.name} pattern in each area: love &amp; connection, money &amp; work, health &amp; habits, relationships, self-worth. What do you believe? How do you feel? What do others notice? Add sensory detail so your brain treats it as real (visualization primes the reticular activating system).</p>
-                    <div data-journal-id="p3-identity-areas" style="margin-bottom: 0;">${getJournalUI('e.g., In Love: I believe I can be close and stay. I feel calm. Others notice I show up. In Money: I trust the process. I feel grounded.')}</div>
+                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">Describe the you who has already broken the ${pattern.name} pattern. Pick one or two areas that matter most (love &amp; connection, money &amp; work, health &amp; habits, relationships, self-worth). What do you believe? How do you feel? What would someone close to you notice? Add sensory detail—it helps your brain treat it as real. If this feels hard, start with one area.</p>
+                    <div data-journal-id="p3-identity-areas" style="margin-bottom: 0;">${getJournalUI('e.g., In Love: I believe I can be close and stay. I feel calm. Someone close would notice I show up. In Money: I trust the process. I feel grounded.')}</div>
                     </div>
 
                 <div style="margin-bottom: 1.5rem;">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">2. Desired outcomes + habit stack</p>
-                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">List 2–3 outcomes per area and the habit stack that makes them inevitable. Tie each goal to one cue or anchor in your day. Example: “After I finish my morning coffee, I review my ${pattern.name} interrupt and choose one aligned action.” Specificity + repetition rewires faster.</p>
-                    <div data-journal-id="p3-goals-habits" style="margin-bottom: 0;">${getJournalUI('e.g., Love: deeper connection. After morning coffee, I check in with one person. Money: peace. After I sit down, I review my interrupt.')}</div>
+                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">2. One-year proof — What would have to be true?</p>
+                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">What will your life look like in one year when the old pattern is broken? What would have to be true—behaviors, relationships, decisions—for you to know the shift happened?</p>
+                    <div data-journal-id="p3-one-year-proof" style="margin-bottom: 0;">${getJournalUI('e.g., I stay in hard conversations instead of fleeing. I choose one aligned action daily. Someone close tells me I seem calmer. I no longer reach for escape when stressed.')}</div>
+                    </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.5rem;">3. Desired outcomes + habit stack</p>
+                    <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">Pick one outcome and one habit that moves you toward it. Tie it to a cue in your day: <em>When [cue], I will [action].</em> Example: “When I finish my morning coffee, I review my ${pattern.name} interrupt and choose one aligned action.” Start small—specificity and repetition wire the new habit faster.</p>
+                    <div data-journal-id="p3-goals-habits" style="margin-bottom: 0;">${getJournalUI('e.g., Outcome: deeper connection. When I finish morning coffee, I check in with one person. Or: Outcome: peace. When I sit down, I review my interrupt.')}</div>
                     </div>
 
                 <div style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; background: linear-gradient(135deg, rgba(202, 0, 19, 0.03) 0%, rgba(202, 0, 19, 0.08) 100%); border-radius: 8px; border: 2px solid rgba(202, 0, 19, 0.25);">
-                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.25rem; color: #ca0013; font-weight: 700;">3. Your vision board — Dream big list</p>
+                    <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.25rem; color: #000; font-weight: 700;">Your vision board list</p>
                     <p class="content-text" style="margin: 0 0 0.75rem 0; color: #ca0013; font-size: 0.9rem; font-weight: 600;">Dream big. Your brain can't tell the difference between a vividly imagined experience and a real one.</p>
                     <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">From the identity you've defined, list the things, experiences, and qualities you want. Write as if you're already living them—add sensory detail: what do you see, feel, experience? Elevated emotion (gratitude, joy, inspiration) primes your nervous system into a new future. Mental rehearsal wires your brain toward what you focus on.</p>
                     <div data-journal-id="p3-vision-list" style="margin-bottom: 0;">${getJournalUI('e.g., A morning routine where I feel calm and present. A relationship where I\'m seen and safe. Financial freedom that lets me create without worry. A body I feel at home in. Experiences that fill me with awe.')}</div>
                     </div>
 
                 <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: rgba(202, 0, 19, 0.06); border-radius: 6px; border-left: 4px solid #ca0013;">
-                    <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">4. Life-area affirmations — recite daily (morning + night)</p>
+                    <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">Life-area affirmations — recite daily (morning + night)</p>
                     <p class="content-text" style="margin: 0 0 0.75rem 0; color: #555; font-size: 0.95rem;">Science-backed subconscious rewiring by life area. Speak with intention and feeling. Repetition with emotion rewires the brain.</p>
                     ${getLifeAreaAffirmationsHTML(pattern)}
                     <p class="content-text" style="margin: 0 0 0.5rem 0; color: #666; font-size: 0.85rem; font-style: italic;">Add your own affirmations below, using the desires you wrote in Part 2:</p>
@@ -5792,7 +5797,7 @@
             <div class="workbook-part-divider"></div>
 
             <div class="workbook-conclusion">
-                <h4 class="workbook-conclusion-title">After Day 1: Live With Intention</h4>
+                <h4 class="workbook-conclusion-title" style="font-weight: 800; font-size: 1.2rem;">After Day 1: Live With Intention</h4>
                 <p class="workbook-conclusion-lead">You've drawn the line. The rest is what you do with it.</p>
                 <p class="workbook-conclusion-copy">Recommendation: treat today as day one of a new loop. Each morning, reconnect with your Definite Chief Aim and your interrupt. When your ${pattern.name} pattern shows up, pause—ask your question, choose differently. One decision started this; daily alignment makes it stick. Neuroscience is clear: repeated choice rewires the brain. You don't need more time; you need to make the time you have count.</p>
                 <p class="workbook-conclusion-copy">Your potential isn't locked in the past. It's in every moment you choose who you're becoming over who you've been. Live with intention. Seek daily alignment. Use the remaining time you have to reinforce the identity you're building—not the pattern that was running you. You've seen it. You've named it. Now you get to choose it, again and again.</p>
