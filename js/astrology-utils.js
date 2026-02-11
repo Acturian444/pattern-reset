@@ -40,15 +40,46 @@
         return 'sagittarius';
     }
 
-    // Approximate Moon sign from date only (Moon ~2.5 days per sign; epoch Jan 1 2000)
+    // Moon sign from date: ephemeris reference + mean motion (synodic 29.530588 d → 12.190749°/day).
+    // Use ref for Jan 1 of birth year so we integrate over ≤1 year (reduces drift). Base: Jan 1 2000 00:00 UT — Moon 7°17' Scorpio = 217.28° (ephemeris).
     function getMoonSign(dateStr) {
         if (!dateStr) return null;
-        const birth = new Date(dateStr);
-        if (isNaN(birth.getTime())) return null;
-        const epoch = new Date(Date.UTC(2000, 0, 1));
-        const daysSinceEpoch = Math.floor((birth - epoch) / (24 * 60 * 60 * 1000));
-        const signIndex = ((Math.floor(daysSinceEpoch / 2.5) % 12) + 12) % 12;
+        var birth = parseDateToUTCNoon(dateStr);
+        if (!birth || isNaN(birth.getTime())) return null;
+        var y = birth.getUTCFullYear();
+        var refUTC = Date.UTC(y, 0, 1, 0, 0, 0);  // Jan 1 of birth year
+        var baseUTC = Date.UTC(2000, 0, 1, 0, 0, 0);
+        var msPerDay = 24 * 60 * 60 * 1000;
+        var daysFromBaseToRef = (refUTC - baseUTC) / msPerDay;
+        var degreesPerDay = 360 / 29.530588;
+        var refLongitude = 217.28 + daysFromBaseToRef * degreesPerDay;  // Moon long at Jan 1 of birth year
+        refLongitude = ((refLongitude % 360) + 360) % 360;
+        var daysSinceRef = (birth.getTime() - refUTC) / msPerDay;
+        var longitude = refLongitude + daysSinceRef * degreesPerDay;
+        longitude = ((longitude % 360) + 360) % 360;
+        var signIndex = (Math.floor(longitude / 30) + 3) % 12;
         return SIGN_NAMES[signIndex] || null;
+    }
+
+    function parseDateToUTCNoon(dateStr) {
+        if (!dateStr || typeof dateStr !== 'string') return null;
+        dateStr = dateStr.trim();
+        var year, month, day;
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+            var parts = dateStr.split('-');
+            year = parseInt(parts[0], 10);
+            month = parseInt(parts[1], 10) - 1;
+            day = parseInt(parts[2], 10);
+        } else {
+            var parts = dateStr.split('/');
+            if (parts.length !== 3) return null;
+            month = parseInt(parts[0], 10) - 1;
+            day = parseInt(parts[1], 10);
+            year = parseInt(parts[2], 10);
+        }
+        if (isNaN(year) || isNaN(month) || isNaN(day)) return null;
+        if (month < 0 || month > 11 || day < 1 || day > 31) return null;
+        return new Date(Date.UTC(year, month, day, 12, 0, 0));
     }
 
     // One short sentence per sign for Moon (emotional need/fear) - used in Love, Health, Lifestyle, Money

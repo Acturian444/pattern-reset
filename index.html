@@ -2874,7 +2874,6 @@
                                     <input type="text" id="quiz-name-input" name="entry.582121306" placeholder="Your name" required>
                                     <input type="email" id="quiz-email-input" name="entry.1024132954" placeholder="Your email" required>
                                     <input type="tel" id="quiz-phone-input" name="entry.479336729" placeholder="Your phone number" required>
-                                    <input type="hidden" id="quiz-score-hidden" name="entry.1342524707">
                                     <input type="hidden" id="quiz-pattern-hidden" name="entry.1636500525">
                                     <button type="submit" class="btn btn-mission btn-mission-primary">UNLOCK MY PERSONALIZED REPORT</button>
                                 </form>
@@ -4585,7 +4584,6 @@
                 addHidden('entry.582121306', name);
                 addHidden('entry.1024132954', email);
                 addHidden('entry.479336729', phone);
-                addHidden('entry.1342524707', `${totalScore}/${QUIZ_CONFIG_REF.MAX_SCORE}`);
                 addHidden('entry.1669029656', pattern.archetypeCategory || archetypeCategories[sortedDrivers[0][0]]?.name || '');
                 addHidden('entry.1636500525', pattern.name);
                 addHidden('entry.2023467530', patternDominance);
@@ -4593,8 +4591,6 @@
                 addHidden('entry.2142135160', pattern.complex?.secondary || '');
                 addHidden('entry.1276258241', birthDate || '');
                 addHidden('entry.170864257', exactAge != null ? String(exactAge) : '');
-                addHidden('entry.920838437', parsedDate ? getSunSign(parsedDate.month, parsedDate.day) : '');
-                addHidden('entry.792522519', birthDate && window.AstrologyUtils && typeof window.AstrologyUtils.getMoonSign === 'function' ? window.AstrologyUtils.getMoonSign(birthDate) : '');
                 addHidden('entry.1863926933', parsedDate ? getElement(getSunSign(parsedDate.month, parsedDate.day)) : '');
                 addHidden('entry.231449018', relationshipStatus || '');
                 addHidden('entry.1799985826', JSON.stringify(driverScores));
@@ -4991,11 +4987,7 @@
         }
         
         // Set hidden form fields
-        const scoreHidden = document.getElementById('quiz-score-hidden');
         const patternHidden = document.getElementById('quiz-pattern-hidden');
-        if (scoreHidden) {
-            scoreHidden.value = `${totalScore}/${QUIZ_CONFIG_REF.MAX_SCORE}`;
-        }
         if (patternHidden && pattern && pattern.name) {
             // Store both Tier 1 and Tier 2 for email report
             patternHidden.value = `${pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name}: ${pattern.name}`;
@@ -5115,11 +5107,7 @@
         window.quizSecondaryDriverPercentage = secondaryDriverPercentage;
         
         // Set hidden form fields
-        const scoreHidden = document.getElementById('quiz-score-hidden');
         const patternHidden = document.getElementById('quiz-pattern-hidden');
-        if (scoreHidden) {
-            scoreHidden.value = `${totalScore}/${QUIZ_CONFIG_REF.MAX_SCORE}`;
-        }
         if (patternHidden && pattern && pattern.name) {
             // Store both Tier 1 and Tier 2 for email report
             patternHidden.value = `${pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name}: ${pattern.name}`;
