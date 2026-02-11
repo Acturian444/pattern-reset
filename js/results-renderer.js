@@ -1526,26 +1526,30 @@
         const shadowBehavior = shadowParts[0] ? shadowParts[0].toLowerCase() : 'your pattern behavior';
         const coreBelief = pattern.coreBelief || 'your core belief';
         
-        // Get answer-specific actions
+        // Get answer-specific actions (use QUESTION_DOMAINS for correct indices)
         const quizData = window.quizData || [];
+        const config = window.QUIZ_CONFIG || {};
+        const domains = config.QUESTION_DOMAINS || {};
         let answerSpecificActions = [];
         
-        // Based on health answers (Q11-14)
-        if (answers && answers.length > 10 && quizData[11]) {
-            const healthAnswer = answers[11];
-            if (healthAnswer !== undefined && quizData[11].options[healthAnswer]) {
-                const option = quizData[11].options[healthAnswer];
+        // Based on health answers - physical health struggle question (3rd in HEALTH domain, index start+2)
+        const healthPhysicalIdx = domains.HEALTH ? domains.HEALTH.start + 2 : 10;
+        if (answers && answers.length > healthPhysicalIdx && quizData[healthPhysicalIdx]) {
+            const healthAnswer = answers[healthPhysicalIdx];
+            if (healthAnswer !== undefined && quizData[healthPhysicalIdx].options && quizData[healthPhysicalIdx].options[healthAnswer]) {
+                const option = quizData[healthPhysicalIdx].options[healthAnswer];
                 if (option.driver) {
                     answerSpecificActions.push(`Based on your health challenge answer, start by addressing ${option.text.toLowerCase()}—this is where your pattern shows up most.`);
                 }
             }
         }
         
-        // Based on lifestyle answers (Q15-18)
-        if (answers && answers.length > 14 && quizData[15]) {
-            const lifestyleAnswer = answers[15];
-            if (lifestyleAnswer !== undefined && quizData[15].options[lifestyleAnswer]) {
-                const option = quizData[15].options[lifestyleAnswer];
+        // Based on lifestyle answers - food question (LIFESTYLE domain, single question)
+        const lifestyleFoodIdx = domains.LIFESTYLE ? domains.LIFESTYLE.start : 12;
+        if (answers && answers.length > lifestyleFoodIdx && quizData[lifestyleFoodIdx]) {
+            const lifestyleAnswer = answers[lifestyleFoodIdx];
+            if (lifestyleAnswer !== undefined && quizData[lifestyleFoodIdx].options && quizData[lifestyleFoodIdx].options[lifestyleAnswer]) {
+                const option = quizData[lifestyleFoodIdx].options[lifestyleAnswer];
                 if (option.driver) {
                     answerSpecificActions.push(`Your relationship with food (${option.text.substring(0, 50)}...) shows you need to practice mindful eating and break the emotional eating cycle.`);
                 }
@@ -1783,15 +1787,16 @@
         const domains = config.QUESTION_DOMAINS || {
             LOVE: { start: 0, end: 3 },
             MONEY: { start: 4, end: 7 },
-            HEALTH: { start: 8, end: 13 },
-            LIFESTYLE: { start: 14, end: 17 },
-            PHYSICAL: { start: 18, end: 19 },
-            PRODUCTIVITY: { start: 20, end: 22 },
-            PURPOSE: { start: 23, end: 25 },
-            IDENTITY: { start: 26, end: 29 },
-            CHILDHOOD: { start: 30, end: 35 },
-            RELATIONSHIPS: { start: 36, end: 41 },
-            REFLECTION: { start: 42, end: 43 }
+            HEALTH: { start: 8, end: 11 },
+            LIFESTYLE: { start: 12, end: 12 },
+            PHYSICAL: { start: 13, end: 13 },
+            PRODUCTIVITY: { start: 14, end: 15 },
+            PURPOSE: { start: 16, end: 17 },
+            IDENTITY: { start: 18, end: 21 },
+            CHILDHOOD: { start: 22, end: 25 },
+            TRAUMA: { start: 26, end: 26 },
+            RELATIONSHIPS: { start: 27, end: 31 },
+            REFLECTION: { start: 32, end: 33 }
         };
         
         // Analyze answers by domain to build story (using config ranges)
@@ -1849,7 +1854,7 @@
         const hasQuizData = quizData && quizData.length > 0;
         
         // Get childhood domain range from config (safe fallback if config not available)
-        const childhoodDomain = (window.QUIZ_CONFIG && window.QUIZ_CONFIG.QUESTION_DOMAINS && window.QUIZ_CONFIG.QUESTION_DOMAINS.CHILDHOOD) || { start: 30, end: 34 };
+        const childhoodDomain = (window.QUIZ_CONFIG && window.QUIZ_CONFIG.QUESTION_DOMAINS && window.QUIZ_CONFIG.QUESTION_DOMAINS.CHILDHOOD) || { start: 22, end: 25 };
         const childhoodStart = childhoodDomain.start;
         const childhoodEnd = childhoodDomain.end;
         const childhoodLength = childhoodEnd - childhoodStart + 1;
@@ -4589,8 +4594,8 @@
 
         // Get childhood and trauma answers if available
         const domains = (window.QUIZ_CONFIG && window.QUIZ_CONFIG.QUESTION_DOMAINS) || {};
-        const childhoodDomain = domains.CHILDHOOD || { start: 30, end: 35 };
-        const traumaDomain = domains.TRAUMA || { start: 36, end: 38 };
+        const childhoodDomain = domains.CHILDHOOD || { start: 22, end: 25 };
+        const traumaDomain = domains.TRAUMA || { start: 26, end: 26 };
         const childhoodAnswers = answers && domains.CHILDHOOD ? 
             answers.slice(childhoodDomain.start, childhoodDomain.end + 1).filter(a => a !== undefined) : [];
         const traumaAnswers = answers && domains.TRAUMA ? 
@@ -4932,8 +4937,8 @@
             }
         }
         
-        // Check stress/health answers (HEALTH domain - look for stress-related question)
-        const stressQuestionIndex = domains.HEALTH ? domains.HEALTH.start + 5 : 13; // Question about stress response
+        // Check stress/health answers (HEALTH domain - first question is "overwhelmed" / stress response)
+        const stressQuestionIndex = domains.HEALTH ? domains.HEALTH.start : 8;
         if (answers[stressQuestionIndex] !== undefined && quizData[stressQuestionIndex]) {
             const answer = answers[stressQuestionIndex];
             const question = quizData[stressQuestionIndex];
@@ -6229,15 +6234,16 @@
         const domains = config.QUESTION_DOMAINS || {
             LOVE: { start: 0, end: 3 },
             MONEY: { start: 4, end: 7 },
-            HEALTH: { start: 8, end: 13 },
-            LIFESTYLE: { start: 14, end: 17 },
-            PHYSICAL: { start: 18, end: 19 },
-            PRODUCTIVITY: { start: 20, end: 22 },
-            PURPOSE: { start: 23, end: 25 },
-            IDENTITY: { start: 26, end: 29 },
-            CHILDHOOD: { start: 30, end: 35 },
-            RELATIONSHIPS: { start: 36, end: 41 },
-            REFLECTION: { start: 42, end: 43 }
+            HEALTH: { start: 8, end: 11 },
+            LIFESTYLE: { start: 12, end: 12 },
+            PHYSICAL: { start: 13, end: 13 },
+            PRODUCTIVITY: { start: 14, end: 15 },
+            PURPOSE: { start: 16, end: 17 },
+            IDENTITY: { start: 18, end: 21 },
+            CHILDHOOD: { start: 22, end: 25 },
+            TRAUMA: { start: 26, end: 26 },
+            RELATIONSHIPS: { start: 27, end: 31 },
+            REFLECTION: { start: 32, end: 33 }
         };
         
         // Get answer-specific examples for each domain

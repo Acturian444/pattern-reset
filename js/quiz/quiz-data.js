@@ -130,10 +130,8 @@ window.personalityPatterns = {
     }
 };
 
-// Quiz Questions Data
-// Questions organized by life areas: Love (4), Money (4), Health (4), Identity (4), 
-// Childhood & Origin (6), Relationship Patterns (6), Reflection (2), Birth Date (1), Relationship Status (1)
-// Total: 30 scored questions + 1 birth date + 1 relationship status = 32 questions
+// Quiz Questions Data - 36 questions total (34 scored + 2 optional)
+// Love (4), Money (4), Health (4), Lifestyle (1), Physical (1), Productivity (2), Purpose (2), Identity (4), Childhood (4), Trauma (1), Relationships (5), Reflection (2), Birth Date (1), Relationship Status (1)
 window.quizData = [
     // Love & Connection (Questions 1-4)
     {
@@ -239,26 +237,90 @@ window.quizData = [
         ]
     },
     {
-        question: "My biggest health challenge is:",
+        question: "When it comes to your physical health, what's your biggest struggle?",
         domain: 'HEALTH',
         options: [
-            { text: "Overworking and doing too much.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Avoiding discomfort or boredom.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Needing outside motivation to start.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Quitting when I feel unseen or alone.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: "Struggling to lose weight despite strict dieting and over-exercising.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "Lack of energy, feeling sluggish, or dealing with chronic fatigue.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "Inconsistent motivation - I start strong but lose momentum when results don't come fast.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "Body image issues and feeling disconnected from my body.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
         ]
     },
     {
-        question: "When my routine breaks, I:",
+        question: "When I try to build a new habit, I usually:",
         domain: 'HEALTH',
         options: [
-            { text: "Get strict and push myself harder.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Say I will restart later, then delay.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Feel guilty and look for approval again.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Isolate and stop talking about it.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: "Create a detailed system and stick to it rigidly, even if it's unsustainable.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "Start strong but lose momentum when it gets difficult or boring.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "Need external accountability, support, or recognition to stay consistent.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "Quit early because I feel like I'm already failing or not good enough.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
         ]
     },
-    // Identity & Purpose (Questions 13-16)
+    // Lifestyle & Daily Habits (Question 13)
+    {
+        question: "My relationship with food is:",
+        domain: 'LIFESTYLE',
+        options: [
+            { text: "Rigid and controlled - I follow strict rules and feel guilty when I break them.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "Emotional and chaotic - I eat to numb feelings, then feel shame about it.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "Tied to my self-worth - I feel good about myself when I eat 'right' and bad when I don't.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "Disconnected - I often forget to eat or eat mindlessly, feeling disconnected from my body.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+        ]
+    },
+    // Physical Health & Body (Question 14)
+    {
+        question: "My relationship with my body is:",
+        domain: 'PHYSICAL',
+        options: [
+            { text: "Critical and controlling - I'm constantly trying to fix or improve it.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "Disconnected - I avoid thinking about it or looking at it closely.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "Tied to my worth - I feel good about myself when my body looks 'right' to others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "Shameful - I feel like my body isn't good enough and hide it from others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+        ]
+    },
+    // Productivity & Time (Questions 15-16)
+    {
+        question: "My relationship with time is:",
+        domain: 'PRODUCTIVITY',
+        options: [
+            { text: "Rigid and scheduled - I plan every hour and feel stressed when things don't go as planned.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "Chaotic and avoidant - I lose track of time or procrastinate on important tasks.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "Driven by others' needs - I fill my time helping others and neglect my own priorities.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "Isolated and minimal - I keep my schedule empty to avoid depending on others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+        ]
+    },
+    {
+        question: "When I procrastinate, it's usually because:",
+        domain: 'PRODUCTIVITY',
+        options: [
+            { text: "I'm overthinking and trying to plan everything perfectly before starting.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "The task feels overwhelming or boring, so I avoid it and distract myself.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "I'm waiting for motivation or someone to hold me accountable.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "I fear I'll fail or be judged, so I delay starting.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+        ]
+    },
+    // Purpose & Flow (Questions 17-18)
+    {
+        question: "I feel most alive and in flow when I'm:",
+        domain: 'PURPOSE',
+        options: [
+            { text: "Leading a project or creating a structured system that works perfectly.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "Completely free and spontaneous, with no pressure or expectations.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "Being recognized or appreciated for my work and contributions.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "Alone and fully immersed in something that makes me feel safe.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+        ]
+    },
+    {
+        question: "My relationship with my goals and purpose is:",
+        domain: 'PURPOSE',
+        options: [
+            { text: "Rigid and planned - I have detailed goals and feel off-track if I deviate.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "Unclear and avoidant - I keep my options open and avoid committing to one path.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "Tied to others' approval - I pursue goals that will make others proud of me.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "Fearful and hidden - I have dreams but don't pursue them for fear of rejection.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+        ]
+    },
+    // Identity & Self (Questions 19-22)
     {
         question: "When I think about my direction in life, I:",
         domain: 'IDENTITY',
@@ -290,16 +352,16 @@ window.quizData = [
         ]
     },
     {
-        question: "Under pressure, I tend to:",
+        question: "When I think about changing who I am, I feel:",
         domain: 'IDENTITY',
         options: [
-            { text: "Take charge and handle it fast.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Avoid it or procrastinate.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Push harder to prove myself.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Shut down emotionally to stay safe.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: "Anxious about losing control of my identity and what I've built.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "Resistant - I avoid thinking about it because change feels uncomfortable.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "Worried about what others will think if I change.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "Afraid that changing means I wasn't good enough as I was.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
         ]
     },
-    // Childhood & Origin (Questions 17-22)
+    // Childhood & Origin (Questions 23-26)
     {
         question: "Growing up, when I was upset or emotional, my parents usually:",
         domain: 'CHILDHOOD',
@@ -318,16 +380,6 @@ window.quizData = [
             { text: "I could escape or avoid difficult situations.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
             { text: "I was praised, appreciated, or recognized by others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
             { text: "I was alone or didn't have to depend on anyone.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "In my family growing up, emotions were typically:",
-        domain: 'CHILDHOOD',
-        options: [
-            { text: "Managed and controlled — we kept things structured.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Avoided or ignored — we didn't talk about feelings much.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Validated and celebrated — feelings were acknowledged positively.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Unpredictable or unsafe — I learned to hide my emotions.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
         ]
     },
     {
@@ -350,17 +402,18 @@ window.quizData = [
             { text: "Were unavailable or made me feel like a burden.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
         ]
     },
+    // Trauma & Adversity (Question 27)
     {
-        question: "My earliest memories of relationships with caregivers involve feeling:",
-        domain: 'CHILDHOOD',
+        question: "Growing up, did you experience significant challenges, difficult situations, or adversity that shaped how you learned to cope?",
+        domain: 'TRAUMA',
         options: [
-            { text: "Like I had to be the responsible one or take charge.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Like I needed to escape or avoid getting too close.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Like I needed to earn love through being good or helpful.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Like I couldn't fully trust or depend on others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: "Yes, I had to take care of others or be responsible for things beyond my age.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "Yes, I learned to escape or avoid difficult situations to protect myself.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "Yes, I learned that I had to earn love or approval through achievement or being helpful.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "Yes, I experienced abandonment, rejection, or learned I couldn't depend on others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
         ]
     },
-    // Relationship Patterns (Questions 23-28)
+    // Relationship Patterns (Questions 28-32)
     {
         question: "When someone gets too close or wants deeper intimacy, I usually:",
         domain: 'RELATIONSHIPS',
@@ -392,16 +445,6 @@ window.quizData = [
         ]
     },
     {
-        question: "The hardest part of being in a relationship for me is:",
-        domain: 'RELATIONSHIPS',
-        options: [
-            { text: "Letting go of control and trusting the process.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Having to face difficult emotions or conversations.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Feeling like I'm not enough or will disappoint them.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Opening up and being vulnerable without fear of rejection.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
         question: "I'm typically drawn to partners who:",
         domain: 'RELATIONSHIPS',
         options: [
@@ -421,7 +464,7 @@ window.quizData = [
             { text: "Isolate myself because reaching out feels too risky.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
         ]
     },
-    // Reflection (Questions 29-30)
+    // Reflection (Questions 33-34)
     {
         question: "The hardest thing for me to let go of right now is:",
         domain: 'REFLECTION',
@@ -433,23 +476,23 @@ window.quizData = [
         ]
     },
     {
-        question: "Right now, my sense of self-worth depends most on:",
+        question: "Right now, my sense of self-worth and ability to change depends on:",
         domain: 'REFLECTION',
         options: [
-            { text: "How well I manage and perform.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "How easy and pressure-free life feels.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "How much others value or praise me.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Whether I feel fully accepted.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: "How well I manage, perform, and control my life.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
+            { text: "How easy and pressure-free life feels - I avoid change because it's uncomfortable.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
+            { text: "How much others value, praise, or validate me - I need their approval to believe I can change.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
+            { text: "Whether I feel fully accepted - I fear I'm not good enough to change or transform.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
         ]
     },
-    // Birth Date (Question 31 / Index 30) - Special handling, not scored
+    // Birth Date (Question 35 / Index 34) - Special handling, not scored
     {
         question: "What is your birth date?",
         questionType: 'birthdate',
         domain: 'BIRTHDATE',
         options: [] // Will be handled as text input
     },
-    // Relationship Status (Question 32 / Index 31) - Special handling, not scored, optional
+    // Relationship Status (Question 36 / Index 35) - Special handling, not scored, optional
     {
         question: "What is your current relationship status?",
         questionType: 'relationship-status',
