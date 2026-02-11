@@ -4684,7 +4684,7 @@
         if (!quizData || !Array.isArray(quizData) || quizData.length === 0) return;
         if (currentQuestion < 0 || currentQuestion >= quizData.length) return;
         const question = quizData[currentQuestion];
-        if (!question || typeof question.questionType === 'undefined') return;
+        if (!question) return;
 
         // Update button text
         nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'See Results' : 'Next';
