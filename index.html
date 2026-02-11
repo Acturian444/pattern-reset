@@ -578,6 +578,16 @@
         margin-bottom: 2rem;
     }
 
+    .quiz-load-error {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.125rem;
+        color: #333;
+        margin: 2rem 0;
+        padding: 1rem;
+        background: #f8f0f0;
+        border-radius: 8px;
+    }
+    .quiz-load-error a { color: #c00; text-decoration: underline; }
     .quiz-question {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.75rem;
@@ -4361,6 +4371,14 @@
                     return;
                 }
                 
+                // Ensure quiz data is loaded (re-read in case script loaded after page init)
+                quizData = window.quizData || quizData;
+                if (!quizData || !Array.isArray(quizData) || quizData.length === 0) {
+                    console.error('Quiz data not available:', quizData ? quizData.length : 0);
+                    alert('Quiz failed to load. Please refresh the page and try again.');
+                    return;
+                }
+                
                 // Clear previous state
                 clearQuizState();
                 
@@ -4662,13 +4680,15 @@
 
     function updateNextButtonState() {
         const nextBtn = document.getElementById('quiz-next-btn');
-        const question = quizData[currentQuestion];
-        
         if (!nextBtn) return;
-        
+        if (!quizData || !Array.isArray(quizData) || quizData.length === 0) return;
+        if (currentQuestion < 0 || currentQuestion >= quizData.length) return;
+        const question = quizData[currentQuestion];
+        if (!question || typeof question.questionType === 'undefined') return;
+
         // Update button text
         nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'See Results' : 'Next';
-        
+
         // Birth date and relationship status questions are optional, so button is always active (filled)
         if (question.questionType === 'birthdate' || question.questionType === 'relationship-status') {
             nextBtn.classList.remove('btn-mission');
@@ -4692,10 +4712,32 @@
 
     function renderQuestion() {
         const questionContainer = document.getElementById('quiz-question-container');
-        const question = quizData[currentQuestion];
         const prevBtn = document.getElementById('quiz-prev-btn');
         const nextBtn = document.getElementById('quiz-next-btn');
         const errorMessage = document.getElementById('quiz-error-message');
+
+        // Ensure quiz data is available (re-read in case script loaded after init)
+        if (!quizData || !Array.isArray(quizData) || quizData.length === 0) {
+            quizData = window.quizData;
+        }
+        if (!quizData || !Array.isArray(quizData) || quizData.length === 0) {
+            if (questionContainer) {
+                questionContainer.innerHTML = '<p class="quiz-load-error">Quiz failed to load. Please <a href="" onclick="window.location.reload(); return false;">refresh the page</a> and try again.</p>';
+            }
+            return;
+        }
+
+        // Clamp current question to valid range
+        if (currentQuestion >= quizData.length) currentQuestion = quizData.length - 1;
+        if (currentQuestion < 0) currentQuestion = 0;
+
+        const question = quizData[currentQuestion];
+        if (!question || typeof question.question === 'undefined') {
+            if (questionContainer) {
+                questionContainer.innerHTML = '<p class="quiz-load-error">Question could not be loaded. Please <a href="" onclick="window.location.reload(); return false;">refresh the page</a>.</p>';
+            }
+            return;
+        }
 
         // Hide error message when rendering new question
         if (errorMessage) {
@@ -4804,6 +4846,7 @@
     }
 
     function updateProgress() {
+        if (!quizData || !Array.isArray(quizData) || quizData.length === 0) return;
         const progressBar = document.getElementById('quiz-progress-bar');
         const progressText = document.getElementById('quiz-progress-text');
         const progress = ((currentQuestion + 1) / quizData.length) * 100;
