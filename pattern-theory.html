@@ -56,37 +56,60 @@
         }
         
         .theory-hero {
+            position: relative;
             text-align: center;
-            margin-bottom: 4rem;
-            padding-bottom: 2rem;
-            border-bottom: 2px solid #e0e0e0;
+            margin: 0 -2rem 4rem -2rem;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #252526 0%, #2d1f22 50%, #252526 100%);
+            overflow: hidden;
+            border-radius: 16px;
         }
-        
+        .theory-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(202, 0, 19, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .theory-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(202, 0, 19, 0.3), transparent);
+            pointer-events: none;
+        }
         .theory-hero .label {
+            position: relative;
+            z-index: 1;
             font-family: 'Anton', sans-serif;
             font-size: 0.85rem;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             color: #ca0013;
             margin-bottom: 1rem;
             display: block;
         }
-        
         .theory-hero h1 {
+            position: relative;
+            z-index: 1;
             font-family: 'Anton', sans-serif;
             font-size: 3rem;
-            color: #000;
+            color: #fffcf1;
             margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             line-height: 1.2;
         }
-        
         .theory-hero p {
+            position: relative;
+            z-index: 1;
             font-family: 'DM Sans', sans-serif;
             font-size: 1.25rem;
-            color: #555;
+            color: rgba(255, 252, 241, 0.9);
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.7;
@@ -278,11 +301,14 @@
             .theory-page {
                 padding: 2rem 1rem;
             }
-            
+            .theory-hero {
+                margin-left: -1rem;
+                margin-right: -1rem;
+                padding: 3rem 1.5rem;
+            }
             .theory-hero h1 {
                 font-size: 2rem;
             }
-            
             .theory-hero p {
                 font-size: 1.1rem;
             }
@@ -347,6 +373,7 @@
     <main>
         <div class="theory-page">
             <div class="theory-hero">
+                <a href="index.html" class="back-to-home-link back-to-home-hero" aria-label="Back to homepage">← Back to Home</a>
                 <span class="label">THE SCIENCE BEHIND PATTERNS</span>
                 <h1>Understanding Emotional Patterns & Loops</h1>
                 <p>Patterns are not personality traits—they're learned survival strategies that become automatic responses. This evidence-based framework draws from psychology, neuroscience, attachment theory, and decades of therapeutic practice.</p>

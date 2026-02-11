@@ -75,8 +75,8 @@
       "learningResourceType": "Assessment",
       "teaches": "Pattern recognition, self-awareness, emotional intelligence, relationship patterns, behavioral patterns",
       "assesses": "Emotional patterns, relationship behaviors, life patterns, childhood origins, emotional drivers (Control, Validation, Avoidance, Fear of Rejection)",
-      "timeRequired": "PT15M",
-      "numberOfQuestions": 46,
+      "timeRequired": "PT10M",
+      "numberOfQuestions": 36,
       "typicalAgeRange": "18-",
       "about": {
         "@type": "Thing",
@@ -1969,7 +1969,7 @@
             padding: 0 1.25rem;
         }
         .faq-title {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 1.5rem;
         }
         .faq-container {
@@ -2060,7 +2060,7 @@
         <section id="home-hero" class="hero">
             <div class="hero-content">
                 <div class="hero-text">
-                    <h1 class="hero-headline">What's the Pattern Running Your Life?</h1>
+                    <h1 class="hero-headline">What's the <span class="hero-pattern-accent">Pattern</span> Running Your Life?</h1>
                     <p class="hero-subheading">Take the free quiz to discover the emotional loop keeping you stuck—and get your personalized Pattern Reset Workbook to break free.</p>
                     <a href="#quiz-section" class="hero-cta-btn" onclick="event.preventDefault(); const header = document.querySelector('header'); const headerHeight = header ? header.offsetHeight : 0; const section = document.getElementById('quiz-section'); const sectionTop = section.offsetTop; window.scrollTo({top: sectionTop - headerHeight, behavior: 'smooth'}); return false;">Take the Free Quiz</a>
                 </div>
@@ -2145,6 +2145,10 @@
             
             .hero-headline br {
               display: none;
+            }
+            
+            .hero-pattern-accent {
+              color: #ca0013 !important;
             }
             
             .hero-subheading {
@@ -2556,7 +2560,7 @@
                     }
                     
                     .faq-title {
-                        font-size: 2.5rem;
+                        font-size: 2rem;
                     }
                     
                     .pattern-types-description {
@@ -2808,7 +2812,7 @@
                           <span class="step-number">1</span>
                         </div>
                         <h3>Take our Free Pattern Quiz</h3>
-                        <p>Take our free 15-20 minute quiz to uncover the hidden pattern driving your relationships, choices, and outcomes.</p>
+                        <p>Take our free 8-12 minute quiz to uncover the hidden pattern driving your relationships, choices, and outcomes.</p>
                     </div>
                     <!-- Step 2 -->
                     <div class="start-here-card">
@@ -2836,7 +2840,7 @@
                 <div class="quiz-intro" id="quiz-intro">
                     <h2 class="quiz-title">Uncover the <span class="quiz-title-highlight">Pattern</span> That's Been Keeping You Stuck</h2>
                     <p class="quiz-subtitle">There's a hidden loop behind your stress, your habits, your relationships,<br> and the choices you keep making. Learn how to break the cycle for good.</p>
-                    <p class="quiz-time-indicator">Takes 15-20 minutes • Be honest for accurate results</p>
+                    <p class="quiz-time-indicator">Takes 8-12 minutes • Be honest for accurate results</p>
                     <button type="button" class="btn btn-mission btn-mission-primary" id="start-quiz-btn">Start the Free Quiz</button>
                 </div>
 
@@ -2866,12 +2870,12 @@
                             <div class="quiz-email-capture" id="quiz-email-capture">
                                 <h2 class="quiz-results-title" id="quiz-results-title"></h2>
                                 <p class="quiz-email-subtitle" id="quiz-email-subtitle">Find out what type of <span id="quiz-archetype-dynamic"></span> you are and discover what's keeping you stuck — delivered to your inbox.</p>
-                                <form class="quiz-email-form" id="quiz-email-form" action="https://docs.google.com/forms/d/e/1FAIpQLSdMfNDBBsnuE2Q1_Gn57Y_FJmpWTw0h00bTStNd5Bju07mTKA/formResponse" method="POST" target="quiz-hidden-iframe">
-                                    <input type="text" id="quiz-name-input" name="entry.XXXXX" placeholder="Your name" required>
-                                    <input type="email" id="quiz-email-input" name="entry.649844771" placeholder="Your email" required>
-                                    <input type="tel" id="quiz-phone-input" name="entry.XXXXX" placeholder="Your phone number" required>
-                                    <input type="hidden" id="quiz-score-hidden" name="entry.673635167">
-                                    <input type="hidden" id="quiz-pattern-hidden" name="entry.XXXXX">
+                                <form class="quiz-email-form" id="quiz-email-form" action="https://docs.google.com/forms/d/e/1FAIpQLSfv4rmCtd2JDVeFfjy8a6cDMtQanHzAIwu39H2v-heZVlGYcg/formResponse" method="POST" target="quiz-hidden-iframe">
+                                    <input type="text" id="quiz-name-input" name="entry.582121306" placeholder="Your name" required>
+                                    <input type="email" id="quiz-email-input" name="entry.1024132954" placeholder="Your email" required>
+                                    <input type="tel" id="quiz-phone-input" name="entry.479336729" placeholder="Your phone number" required>
+                                    <input type="hidden" id="quiz-score-hidden" name="entry.1342524707">
+                                    <input type="hidden" id="quiz-pattern-hidden" name="entry.1636500525">
                                     <button type="submit" class="btn btn-mission btn-mission-primary">UNLOCK MY PERSONALIZED REPORT</button>
                                 </form>
                                 <iframe name="quiz-hidden-iframe" style="display:none;"></iframe>
@@ -2965,18 +2969,18 @@
                         <div class="faq-answer">
                             <p><strong>This isn't a game. It's a mirror.</strong></p>
                             <p>The Pattern Reset Quiz is a comprehensive psychological assessment that reveals the emotional code behind your choices. It identifies which unconscious pattern is keeping you stuck — the one shaping every relationship, decision, and outcome.</p>
-                            <p>In <strong>15-20 minutes</strong>, you'll answer <strong>46 questions</strong> (44 scored questions + 2 optional questions) across 11 life domains:</p>
+                            <p>In <strong>8-12 minutes</strong>, you'll answer <strong>36 questions</strong> (34 scored questions + 2 optional questions) across 10 life domains:</p>
                             <ul>
                                 <li><strong>Love & Connection</strong> (4 questions) — How you navigate relationships</li>
                                 <li><strong>Money & Finances</strong> (4 questions) — Your relationship with money and security</li>
-                                <li><strong>Health & Habits</strong> (6 questions) — How you manage stress and self-care</li>
-                                <li><strong>Lifestyle & Daily Habits</strong> (4 questions) — Your daily routines and habits</li>
-                                <li><strong>Physical Health & Body</strong> (2 questions) — Your relationship with your body</li>
-                                <li><strong>Productivity & Time</strong> (3 questions) — How you manage time and productivity</li>
-                                <li><strong>Purpose & Flow</strong> (3 questions) — Your sense of purpose and flow states</li>
+                                <li><strong>Health & Habits</strong> (4 questions) — How you manage stress and self-care</li>
+                                <li><strong>Lifestyle & Daily Habits</strong> (1 question) — Your relationship with food</li>
+                                <li><strong>Physical Health & Body</strong> (1 question) — Your relationship with your body</li>
+                                <li><strong>Productivity & Time</strong> (2 questions) — How you manage time and productivity</li>
+                                <li><strong>Purpose & Flow</strong> (2 questions) — Your sense of purpose and flow states</li>
                                 <li><strong>Identity & Self</strong> (4 questions) — How you see yourself and your worth</li>
-                                <li><strong>Childhood & Origin</strong> (6 questions) — Where your patterns began</li>
-                                <li><strong>Relationship Patterns</strong> (6 questions) — How you connect and protect yourself</li>
+                                <li><strong>Childhood & Origin</strong> (4 questions) — Where your patterns began</li>
+                                <li><strong>Relationship Patterns</strong> (5 questions) — How you connect and protect yourself</li>
                                 <li><strong>Reflection</strong> (2 questions) — Your self-awareness and pattern recognition</li>
                             </ul>
                             <p>Plus 2 optional questions: your birth date (for personalized insights) and relationship status (for context).</p>
@@ -3079,15 +3083,16 @@
             <button class="modal-close" aria-label="Close popup" onclick="closePopup()">&times;</button>
             <h3 class="modal-title">Cut Ties. Break Patterns.<br>Begin Again.</h3>
             <p class="modal-subtext">Join thousands breaking free. Get weekly empowerment in your inbox.</p>
-            <form class="signup-form popup-form" id="popupSignupForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdMfNDBBsnuE2Q1_Gn57Y_FJmpWTw0h00bTStNd5Bju07mTKA/formResponse" method="POST" target="hidden-iframe">
+            <form class="signup-form popup-form" id="popupSignupForm" action="https://docs.google.com/forms/d/e/1FAIpQLSfv4rmCtd2JDVeFfjy8a6cDMtQanHzAIwu39H2v-heZVlGYcg/formResponse" method="POST" target="hidden-iframe">
+                <input type="hidden" name="entry.582121306" value="Newsletter Signup">
                 <div class="form-group">
-                    <input type="email" name="entry.649844771" placeholder="Email" required>
+                    <input type="email" name="entry.1024132954" placeholder="Email" required>
                 </div>
                 <div class="form-group">
                     <label for="popupNewsletterPhone" class="visually-hidden">Phone number (optional)</label>
                     <input id="popupNewsletterPhone"
                            type="tel"
-                           name="entry.673635167"
+                           name="entry.479336729"
                            placeholder="Phone"
                            inputmode="tel"
                                                        pattern="[+]?[0-9]{10,15}">
@@ -3577,28 +3582,28 @@
     if (typeof window.QUIZ_CONFIG === 'undefined') {
         console.error('QUIZ_CONFIG module not loaded! Using fallback.');
         window.QUIZ_CONFIG = {
-            TOTAL_SCORED_QUESTIONS: 47,
-            TOTAL_QUESTIONS: 49,
-            BIRTH_DATE_QUESTION_INDEX: 47,
-            RELATIONSHIP_STATUS_QUESTION_INDEX: 48,
+            TOTAL_SCORED_QUESTIONS: 34,
+            TOTAL_QUESTIONS: 36,
+            BIRTH_DATE_QUESTION_INDEX: 34,
+            RELATIONSHIP_STATUS_QUESTION_INDEX: 35,
             POINTS_PER_ANSWER: 3,
-            MAX_SCORE: 141,
+            MAX_SCORE: 102,
             DOMINANCE_THRESHOLDS: { STRONG: 70, MODERATE: 50, BALANCED: 40, MIXED: 0 },
             SECONDARY_PATTERN_THRESHOLD: 25,
             STORAGE_KEY: 'patternResetQuizState',
             QUESTION_DOMAINS: {
                 LOVE: { start: 0, end: 3 },
                 MONEY: { start: 4, end: 7 },
-                HEALTH: { start: 8, end: 13 },
-                LIFESTYLE: { start: 14, end: 17 },
-                PHYSICAL: { start: 18, end: 19 },
-                PRODUCTIVITY: { start: 20, end: 22 },
-                PURPOSE: { start: 23, end: 25 },
-                IDENTITY: { start: 26, end: 29 },
-                CHILDHOOD: { start: 30, end: 35 },
-                TRAUMA: { start: 36, end: 38 },
-                RELATIONSHIPS: { start: 39, end: 44 },
-                REFLECTION: { start: 45, end: 46 }
+                HEALTH: { start: 8, end: 11 },
+                LIFESTYLE: { start: 12, end: 12 },
+                PHYSICAL: { start: 13, end: 13 },
+                PRODUCTIVITY: { start: 14, end: 15 },
+                PURPOSE: { start: 16, end: 17 },
+                IDENTITY: { start: 18, end: 21 },
+                CHILDHOOD: { start: 22, end: 25 },
+                TRAUMA: { start: 26, end: 26 },
+                RELATIONSHIPS: { start: 27, end: 31 },
+                REFLECTION: { start: 32, end: 33 }
             }
         };
     }
@@ -3611,13 +3616,12 @@
     }
     
     // ========================================
-    // QUIZ DATA
+    // QUIZ DATA - 36 questions (synced with js/quiz/quiz-data.js)
     // ========================================
-    // Quiz Functionality - 47 Question System (+ 1 Birth Date + 1 Relationship Status)
-    // Questions organized by life areas: Love (4), Money (4), Health (6), Lifestyle (4), Physical (2), Productivity (3), Purpose (3), Identity (4), Childhood (6), Trauma (3), Relationships (6), Reflection (2), Birth Date (1), Relationship Status (1)
-    // Total: 47 scored questions + 1 birth date + 1 relationship status = 49 questions
-    const quizData = [
-        // Love & Connection (Questions 1-4)
+    let quizData = window.quizData; // Primary: from quiz-data.js (36 questions)
+    if (!quizData || quizData.length !== 36) {
+        console.warn('Quiz data: expected 36 questions, got', quizData ? quizData.length : 0, '- using inline fallback');
+        quizData = [
         {
             question: "When someone I care about pulls away, my first move is to:",
             domain: 'LOVE',
@@ -3731,16 +3735,6 @@
             ]
         },
         {
-            question: "When I break a health or habit commitment, I typically:",
-            domain: 'HEALTH',
-            options: [
-                { text: "Get stricter and create even more rigid rules to make up for it.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Tell myself I'll restart 'tomorrow' or 'next week' and keep delaying.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Feel guilty and seek someone to hold me accountable or cheer me on.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Give up completely and isolate, feeling like I've failed again.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
-        {
             question: "When I try to build a new habit, I usually:",
             domain: 'HEALTH',
             options: [
@@ -3748,16 +3742,6 @@
                 { text: "Start strong but lose momentum when it gets difficult or boring.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
                 { text: "Need external accountability, support, or recognition to stay consistent.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
                 { text: "Quit early because I feel like I'm already failing or not good enough.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
-        {
-            question: "When I'm stressed or emotional, I tend to:",
-            domain: 'HEALTH',
-            options: [
-                { text: "Take control and create a plan to manage everything systematically.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Eat junk food, overeat, scroll social media, shop, or use substances to numb out.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Seek validation or support from others to feel better and keep going.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Withdraw and isolate myself, feeling like I shouldn't burden others.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
             ]
         },
         // Lifestyle & Daily Habits (Questions 15-18)
@@ -3771,36 +3755,6 @@
                 { text: "Disconnected - I often forget to eat or eat mindlessly, feeling disconnected from my body.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
             ]
         },
-        {
-            question: "My sleep patterns are:",
-            domain: 'LIFESTYLE',
-            options: [
-                { text: "Rigid and scheduled - I stick to a strict bedtime routine, even when stressed.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Inconsistent - I stay up late scrolling or watching TV to avoid quiet thoughts.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Tied to my productivity - I feel guilty if I sleep too much or not enough.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Disrupted by worry - I lie awake worrying about being rejected or abandoned.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
-        {
-            question: "My daily routine is:",
-            domain: 'LIFESTYLE',
-            options: [
-                { text: "Highly structured and planned - I follow a strict schedule and feel off if it's disrupted.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Inconsistent and mood-dependent - I do things when I feel like it, not on a schedule.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Driven by external expectations - I structure my day around what others need or expect.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Minimal and isolated - I keep my routine simple to avoid depending on others.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
-        {
-            question: "When it comes to movement and exercise:",
-            domain: 'LIFESTYLE',
-            options: [
-                { text: "I follow a strict workout plan and feel guilty if I miss a day.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "I start strong but lose momentum when it gets hard or boring.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "I need a workout buddy or class to stay motivated and accountable.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "I avoid it because I feel self-conscious or disconnected from my body.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
         // Physical Health & Body (Questions 19-20)
         {
             question: "My relationship with my body is:",
@@ -3810,16 +3764,6 @@
                 { text: "Disconnected - I avoid thinking about it or looking at it closely.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
                 { text: "Tied to my worth - I feel good about myself when my body looks 'right' to others.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
                 { text: "Shameful - I feel like my body isn't good enough and hide it from others.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
-        {
-            question: "My energy levels throughout the day are:",
-            domain: 'PHYSICAL',
-            options: [
-                { text: "Consistent but drained - I push through even when exhausted.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Unpredictable - I have bursts of energy then crash, often feeling sluggish.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Tied to external validation - I have more energy when others notice or praise me.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Low and depleted - I often feel drained, especially after social interactions.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
             ]
         },
         // Productivity & Time (Questions 21-23)
@@ -3843,16 +3787,6 @@
                 { text: "I fear I'll fail or be judged, so I delay starting.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
             ]
         },
-        {
-            question: "My biggest productivity blocker is:",
-            domain: 'PRODUCTIVITY',
-            options: [
-                { text: "Over-planning and perfectionism - I spend more time planning than doing.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Avoiding difficult or uncomfortable tasks - I distract myself instead.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Needing external validation - I lose momentum when no one notices my progress.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Fear of failure or judgment - I hold back because I don't want to be rejected.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
         // Purpose & Flow (Questions 24-26)
         {
             question: "I feel most alive and in flow when I'm:",
@@ -3872,16 +3806,6 @@
                 { text: "Unclear and avoidant - I keep my options open and avoid committing to one path.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
                 { text: "Tied to others' approval - I pursue goals that will make others proud of me.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
                 { text: "Fearful and hidden - I have dreams but don't pursue them for fear of rejection.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
-        {
-            question: "The hardest part about finding my purpose is:",
-            domain: 'PURPOSE',
-            options: [
-                { text: "Trying to plan and control it perfectly before I start.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Facing the discomfort and uncertainty of committing to one path.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Not knowing if others will validate or recognize my purpose.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Fear that I'm not good enough or that I'll be rejected for pursuing it.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
             ]
         },
         // Identity & Self (Questions 27-30)
@@ -3947,16 +3871,6 @@
             ]
         },
         {
-            question: "In my family growing up, emotions were typically:",
-            domain: 'CHILDHOOD',
-            options: [
-                { text: "Managed and controlled — we kept things structured.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Avoided or ignored — we didn't talk about feelings much.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Validated and celebrated — feelings were acknowledged positively.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Unpredictable or unsafe — I learned to hide my emotions.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
-        {
             question: "As a child, I learned that to feel safe and loved, I needed to:",
             domain: 'CHILDHOOD',
             options: [
@@ -3976,16 +3890,6 @@
                 { text: "Were unavailable or made me feel like a burden.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
             ]
         },
-        {
-            question: "My earliest memories of relationships with caregivers involve feeling:",
-            domain: 'CHILDHOOD',
-            options: [
-                { text: "Like I had to be the responsible one or take charge.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Like I needed to escape or avoid getting too close.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Like I needed to earn love through being good or helpful.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Like I couldn't fully trust or depend on others.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
         // Trauma & Adversity (Questions 37-39) - Understanding what shaped your patterns
         {
             question: "Growing up, did you experience significant challenges, difficult situations, or adversity that shaped how you learned to cope?",
@@ -3995,26 +3899,6 @@
                 { text: "Yes, I learned to escape or avoid difficult situations to protect myself.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
                 { text: "Yes, I learned that I had to earn love or approval through achievement or being helpful.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
                 { text: "Yes, I experienced abandonment, rejection, or learned I couldn't depend on others.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
-        {
-            question: "When you think about what shaped your patterns, what feels most true?",
-            domain: 'TRAUMA',
-            options: [
-                { text: "I had to be in control because things were chaotic or unpredictable.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "I learned to avoid difficult feelings because they were too overwhelming or unsafe.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "I learned that my worth came from what I achieved or how much I helped others.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "I learned that opening up or depending on others led to hurt or abandonment.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
-        {
-            question: "The most significant challenge or adversity you faced growing up was:",
-            domain: 'TRAUMA',
-            options: [
-                { text: "Having to be responsible for others or manage situations beyond my control.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Feeling overwhelmed by emotions or situations I couldn't escape from.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Feeling like I had to prove my worth or earn love through achievement.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Experiencing rejection, abandonment, or learning I couldn't trust others.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
             ]
         },
         // Relationship Patterns (Questions 40-45)
@@ -4046,16 +3930,6 @@
                 { text: "I avoid difficult conversations until it's too late.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
                 { text: "I lose myself trying to please them and they lose interest.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
                 { text: "I push them away before they can reject me.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
-            ]
-        },
-        {
-            question: "The hardest part of being in a relationship for me is:",
-            domain: 'RELATIONSHIPS',
-            options: [
-                { text: "Letting go of control and trusting the process.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'control' },
-                { text: "Having to face difficult emotions or conversations.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'avoidance' },
-                { text: "Feeling like I'm not enough or will disappoint them.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'validation' },
-                { text: "Opening up and being vulnerable without fear of rejection.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
             ]
         },
         {
@@ -4099,13 +3973,13 @@
                 { text: "Whether I feel fully accepted - I fear I'm not good enough to change or transform.", score: QUIZ_CONFIG_REF.POINTS_PER_ANSWER || 3, driver: 'fear-of-rejection' }
             ]
         },
-        // Birth Date (Question 48 / Index 47) - Special handling, not scored
+        // Birth Date (Question 35 / Index 34) - Special handling, not scored
         {
             question: "What is your birth date?",
             questionType: 'birthdate',
             options: [] // Will be handled as text input
         },
-        // Relationship Status (Question 49 / Index 48) - Special handling, not scored, optional
+        // Relationship Status (Question 36 / Index 35) - Special handling, not scored, optional
         {
             question: "What is your current relationship status?",
             questionType: 'relationship-status',
@@ -4119,6 +3993,7 @@
             ]
         }
     ];
+    }
 
     // Expose quiz data to window for modal access
     window.personalityPatterns = personalityPatterns;
@@ -4690,111 +4565,41 @@
                         window.quizPersonalizedRelationshipSection = null;
                     }
 
-                // Submit to Google Forms
+                // Submit to Google Forms (Pattern Quiz Submissions form)
+                const parsedDate = birthDate ? parseBirthDate(birthDate) : null;
                 const tempForm = document.createElement('form');
-                tempForm.action = 'https://docs.google.com/forms/d/e/1FAIpQLSdMfNDBBsnuE2Q1_Gn57Y_FJmpWTw0h00bTStNd5Bju07mTKA/formResponse';
+                tempForm.action = 'https://docs.google.com/forms/d/e/1FAIpQLSfv4rmCtd2JDVeFfjy8a6cDMtQanHzAIwu39H2v-heZVlGYcg/formResponse';
                 tempForm.method = 'POST';
                 tempForm.target = 'quiz-hidden-iframe';
                 tempForm.style.display = 'none';
 
-                // Name field (update with actual Google Form entry ID)
-                const inputName = document.createElement('input');
-                inputName.type = 'hidden';
-                inputName.name = 'entry.XXXXX'; // Update with actual entry ID for name
-                inputName.value = name;
-                tempForm.appendChild(inputName);
+                const addHidden = (name, value) => {
+                    if (value === undefined || value === null) return;
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    input.value = String(value);
+                    tempForm.appendChild(input);
+                };
 
-                // Email field
-                const inputEmail = document.createElement('input');
-                inputEmail.type = 'hidden';
-                inputEmail.name = 'entry.649844771';
-                inputEmail.value = email;
-                tempForm.appendChild(inputEmail);
-
-                // Phone field (update with actual Google Form entry ID)
-                const inputPhone = document.createElement('input');
-                inputPhone.type = 'hidden';
-                inputPhone.name = 'entry.XXXXX'; // Update with actual entry ID for phone
-                inputPhone.value = phone;
-                tempForm.appendChild(inputPhone);
-
-                // Score field (max is 53 questions × 3 points = 159)
-                const inputScore = document.createElement('input');
-                inputScore.type = 'hidden';
-                inputScore.name = 'entry.673635167';
-                inputScore.value = `${totalScore}/${QUIZ_CONFIG_REF.MAX_SCORE}`;
-                tempForm.appendChild(inputScore);
-
-                // Pattern field (update with actual Google Form entry ID)
-                const inputPattern = document.createElement('input');
-                inputPattern.type = 'hidden';
-                inputPattern.name = 'entry.XXXXX'; // Update with actual entry ID for pattern
-                inputPattern.value = pattern.name;
-                tempForm.appendChild(inputPattern);
-
-                // Birth date field (update with actual Google Form entry ID)
-                if (birthDate) {
-                    const inputBirthDate = document.createElement('input');
-                    inputBirthDate.type = 'hidden';
-                    inputBirthDate.name = 'entry.XXXXX'; // Update with actual entry ID for birth date
-                    inputBirthDate.value = birthDate;
-                    tempForm.appendChild(inputBirthDate);
-                    
-                    // Calculate and submit exact age for personalization
-                    const exactAge = calculateExactAge(birthDate);
-                    if (exactAge) {
-                        const inputExactAge = document.createElement('input');
-                        inputExactAge.type = 'hidden';
-                        inputExactAge.name = 'entry.XXXXX'; // Update with actual entry ID for exact age
-                        inputExactAge.value = exactAge.toString();
-                        tempForm.appendChild(inputExactAge);
-                    }
-                    
-                    // Calculate and submit astrological data (for analytics only, not used in results)
-                    const parsedDate = parseBirthDate(birthDate);
-                    if (parsedDate) {
-                        const sunSign = getSunSign(parsedDate.month, parsedDate.day);
-                        const element = getElement(sunSign);
-                        const ageRange = getAgeRange(birthDate);
-                        
-                        // Sun sign field
-                        const inputSunSign = document.createElement('input');
-                        inputSunSign.type = 'hidden';
-                        inputSunSign.name = 'entry.XXXXX'; // Update with actual entry ID
-                        inputSunSign.value = sunSign;
-                        tempForm.appendChild(inputSunSign);
-                        
-                        // Element field
-                        const inputElement = document.createElement('input');
-                        inputElement.type = 'hidden';
-                        inputElement.name = 'entry.XXXXX'; // Update with actual entry ID
-                        inputElement.value = element;
-                        tempForm.appendChild(inputElement);
-                        
-                        // Age range field
-                        const inputAgeRange = document.createElement('input');
-                        inputAgeRange.type = 'hidden';
-                        inputAgeRange.name = 'entry.XXXXX'; // Update with actual entry ID
-                        inputAgeRange.value = ageRange;
-                        tempForm.appendChild(inputAgeRange);
-                    }
-                }
-
-                // Relationship status field (update with actual Google Form entry ID)
-                if (relationshipStatus) {
-                    const inputRelationshipStatus = document.createElement('input');
-                    inputRelationshipStatus.type = 'hidden';
-                    inputRelationshipStatus.name = 'entry.XXXXX'; // Update with actual entry ID for relationship status
-                    inputRelationshipStatus.value = relationshipStatus;
-                    tempForm.appendChild(inputRelationshipStatus);
-                }
-                
-                // Driver scores (for analytics)
-                const inputDriverScores = document.createElement('input');
-                inputDriverScores.type = 'hidden';
-                inputDriverScores.name = 'entry.XXXXX'; // Update with actual entry ID
-                inputDriverScores.value = JSON.stringify(driverScores);
-                tempForm.appendChild(inputDriverScores);
+                addHidden('entry.582121306', name);
+                addHidden('entry.1024132954', email);
+                addHidden('entry.479336729', phone);
+                addHidden('entry.1342524707', `${totalScore}/${QUIZ_CONFIG_REF.MAX_SCORE}`);
+                addHidden('entry.1669029656', pattern.archetypeCategory || archetypeCategories[sortedDrivers[0][0]]?.name || '');
+                addHidden('entry.1636500525', pattern.name);
+                addHidden('entry.2023467530', patternDominance);
+                addHidden('entry.592148584', pattern.complex?.primary || '');
+                addHidden('entry.2142135160', pattern.complex?.secondary || '');
+                addHidden('entry.1276258241', birthDate || '');
+                addHidden('entry.170864257', exactAge != null ? String(exactAge) : '');
+                addHidden('entry.920838437', parsedDate ? getSunSign(parsedDate.month, parsedDate.day) : '');
+                addHidden('entry.792522519', birthDate && window.AstrologyUtils && typeof window.AstrologyUtils.getMoonSign === 'function' ? window.AstrologyUtils.getMoonSign(birthDate) : '');
+                addHidden('entry.1863926933', parsedDate ? getElement(getSunSign(parsedDate.month, parsedDate.day)) : '');
+                addHidden('entry.231449018', relationshipStatus || '');
+                addHidden('entry.1799985826', JSON.stringify(driverScores));
+                addHidden('entry.2066312398', window.quizSecondaryPattern || '');
+                addHidden('entry.2064418059', window.quizSecondaryDriverPercentage !== undefined ? String(window.quizSecondaryDriverPercentage) : '');
 
                 document.body.appendChild(tempForm);
                 tempForm.submit();

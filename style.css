@@ -84,8 +84,7 @@ p {
 header {
     background-color: #fffcf1;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 1100;
     width: 100vw;
     left: 0;
@@ -96,7 +95,7 @@ header {
 }
 
 body.has-reset-banner header {
-    top: var(--reset-banner-height, 72px);
+    margin-top: var(--reset-banner-height, 72px);
 }
 
 nav {
@@ -1155,6 +1154,8 @@ footer {
     justify-content: flex-start;
     display: flex;
     align-items: center;
+    gap: 1.25rem;
+    align-items: center;
 }
 
 .nav-right {
@@ -1199,6 +1200,32 @@ footer {
 .nav-cta-button.active {
     background: #ca0013;
     color: #fffcf1;
+}
+
+/* Back to Home link - secondary pages, top of hero section */
+.back-to-home-link {
+    display: block;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+    margin-bottom: 1.5rem;
+}
+.back-to-home-link:hover {
+    color: #ca0013;
+}
+/* Dark hero variant (pattern-theory) */
+.back-to-home-hero {
+    position: relative;
+    z-index: 1;
+    color: rgba(255, 252, 241, 0.9);
+}
+.back-to-home-hero:hover {
+    color: #ca0013;
 }
 
 /* Logo + Brand Text Combo */
@@ -1324,15 +1351,18 @@ footer {
         display: none !important;
     }
     .nav-cta-button {
-        font-size: 0.9rem;
-        padding: 0.6rem 1.2rem;
-        min-height: 44px;
-        letter-spacing: 1px;
-        margin-left: 1.5rem;
+        display: none !important;
     }
 }
 
 @media (max-width: 600px) {
+    .nav-centered {
+        justify-content: center;
+    }
+    .nav-left {
+        flex: none;
+        justify-content: center;
+    }
     .logo-brand-combo {
         gap: 0.6rem;
     }
@@ -1344,10 +1374,7 @@ footer {
         height: 38px;
     }
     .nav-cta-button {
-        font-size: 0.85rem;
-        padding: 0.55rem 1rem;
-        letter-spacing: 1px;
-        margin-left: 1rem;
+        display: none !important;
     }
 }
 

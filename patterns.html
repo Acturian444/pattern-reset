@@ -55,29 +55,54 @@
         }
         
         .patterns-hero {
+            position: relative;
             text-align: center;
-            margin-bottom: 4rem;
+            margin: 0 -2rem 4rem -2rem;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #252526 0%, #2d1f22 50%, #252526 100%);
+            overflow: hidden;
+            border-radius: 16px;
         }
-        
+        .patterns-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(202, 0, 19, 0.12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .patterns-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(202, 0, 19, 0.3), transparent);
+            pointer-events: none;
+        }
         .patterns-hero h1 {
+            position: relative;
+            z-index: 1;
             font-family: 'Anton', sans-serif;
             font-size: 2.5rem;
-            color: #000;
+            color: #fffcf1;
             margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        
         .patterns-hero p {
+            position: relative;
+            z-index: 1;
             font-family: 'DM Sans', sans-serif;
             font-size: 1.1rem;
-            color: #555;
+            color: rgba(255, 252, 241, 0.9);
             max-width: 700px;
             margin: 0 auto 2rem;
             line-height: 1.7;
         }
-        
         .patterns-cta {
+            position: relative;
+            z-index: 1;
             display: inline-block;
             background: #ca0013;
             color: #fffcf1;
@@ -240,21 +265,6 @@
             border-bottom: 2px solid #e0e0e0;
         }
         
-        .archetype-icon {
-            width: 40px;
-            height: 40px;
-            color: #ca0013;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-        
-        .archetype-icon svg {
-            width: 100%;
-            height: 100%;
-        }
-        
         .archetype-header h3 {
             font-family: 'Anton', sans-serif;
             font-size: 1.8rem;
@@ -373,7 +383,11 @@
             .patterns-page {
                 padding: 2rem 1rem;
             }
-            
+            .patterns-hero {
+                margin-left: -1rem;
+                margin-right: -1rem;
+                padding: 3rem 1.5rem;
+            }
             .patterns-hero h1 {
                 font-size: 2rem;
             }
@@ -420,6 +434,7 @@
     <main>
         <div class="patterns-page">
             <div class="patterns-hero">
+                <a href="index.html" class="back-to-home-link back-to-home-hero" aria-label="Back to homepage">← Back to Home</a>
                 <h1>All Pattern Types & Archetypes</h1>
                 <p>Discover the complete Pattern Reset system. Every pattern is powered by an emotional driver and psychological complexes that developed in childhood. Take the quiz to discover which pattern is running your life.</p>
                 <a href="index.html#quiz-section" class="patterns-cta">Take the Free Quiz</a>
@@ -471,15 +486,6 @@
                 <!-- THE ANCHOR -->
                 <div class="archetype-group">
                     <div class="archetype-header">
-                        <span class="archetype-icon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 3C12 3 9 6 9 9C9 11 10.5 12.5 12 12.5C13.5 12.5 15 11 15 9C15 6 12 3 12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12 12.5V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M9 9L7.5 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M15 9L16.5 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="12" cy="21" r="1.5" fill="currentColor"/>
-                            </svg>
-                        </span>
                         <h3>The Anchor</h3>
                         <span class="driver-badge">Control Driver</span>
                     </div>
@@ -510,11 +516,6 @@
                 <!-- THE CATALYST -->
                 <div class="archetype-group">
                     <div class="archetype-header">
-                        <span class="archetype-icon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="currentColor"/>
-                            </svg>
-                        </span>
                         <h3>The Catalyst</h3>
                         <span class="driver-badge">Validation Driver</span>
                     </div>
@@ -545,13 +546,6 @@
                 <!-- THE WANDERER -->
                 <div class="archetype-group">
                     <div class="archetype-header">
-                        <span class="archetype-icon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2 10C2 10 3.5 7 7 7C8.5 7 9.5 7.8 10 8.5C10.5 7.8 11.5 7 13 7C16.5 7 18 10 18 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2 14C2 14 3.5 11 7 11C8.5 11 9.5 11.8 10 12.5C10.5 11.8 11.5 11 13 11C16.5 11 18 14 18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2 18C2 18 3.5 15 7 15C8.5 15 9.5 15.8 10 16.5C10.5 15.8 11.5 15 13 15C16.5 15 18 18 18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
                         <h3>The Wanderer</h3>
                         <span class="driver-badge">Avoidance Driver</span>
                     </div>
@@ -582,13 +576,6 @@
                 <!-- THE GUARDIAN -->
                 <div class="archetype-group">
                     <div class="archetype-header">
-                        <span class="archetype-icon">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2L3 7V12C3 16.5 7.5 20 12 21C16.5 20 21 16.5 21 12V7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12 8V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M12 16H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
                         <h3>The Guardian</h3>
                         <span class="driver-badge">Fear of Rejection Driver</span>
                     </div>
