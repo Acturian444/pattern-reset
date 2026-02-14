@@ -46,7 +46,7 @@
     },
     
     // LocalStorage key (primary - used throughout code)
-    STORAGE_KEY: 'patternResetQuizState', // Updated from heartMattersQuizState
+    STORAGE_KEY: 'patternResetQuizState',
     
     // Additional localStorage keys (for reference)
     STORAGE_KEYS: {

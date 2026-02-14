@@ -1358,13 +1358,21 @@ footer {
 @media (max-width: 600px) {
     .nav-centered {
         justify-content: center;
+        position: relative;
     }
     .nav-left {
         flex: none;
         justify-content: center;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .nav-right {
+        display: none;
     }
     .logo-brand-combo {
         gap: 0.6rem;
+        justify-content: center;
     }
     .logo-brand-combo .logo-text {
         font-size: 1rem;
@@ -5908,12 +5916,36 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     width: 100%;
     margin-bottom: 1.5rem;
     padding: 1rem 0;
+    overflow: hidden;
 }
 
 .pattern-reset-illo-svg {
     width: 100%;
     height: auto;
     display: block;
+    min-height: 120px;
+}
+
+/* Tablet: ensure illustration scales properly */
+@media (max-width: 900px) {
+    .pattern-reset-illo {
+        padding: 0.75rem 0;
+    }
+    .pattern-reset-illo-svg {
+        min-height: 100px;
+    }
+}
+
+/* Mobile: ensure illustration is visible and doesn't collapse */
+@media (max-width: 600px) {
+    .pattern-reset-illo {
+        margin-bottom: 1.25rem;
+        padding: 0.5rem 0;
+    }
+    .pattern-reset-illo-svg {
+        min-height: 90px;
+        max-width: 100%;
+    }
 }
 
 .workbook-v2 .workbook-part-divider {

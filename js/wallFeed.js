@@ -864,7 +864,7 @@ class WallFeed {
         });
 
         const watermark = document.createElement('p');
-        watermark.innerHTML = `Truth #${post.truthNumber || ''} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; LetItOut &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Heart Matters`;
+        watermark.innerHTML = `Truth #${post.truthNumber || ''} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; LetItOut &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Pattern Reset`;
         Object.assign(watermark.style, {
             fontFamily: '"DM Sans", sans-serif',
             fontSize: '24px',
