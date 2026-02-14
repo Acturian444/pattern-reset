@@ -895,7 +895,7 @@ class WallFeed {
 
             if (navigator.share && navigator.canShare) {
                 const blob = await (await fetch(dataUrl)).blob();
-                const file = new File([blob], 'heart-matters-post.png', { type: blob.type });
+                const file = new File([blob], 'pattern-reset-post.png', { type: blob.type });
                 await navigator.share({
                     files: [file],
                     title: 'Someone opened up on Let It Out. Read their journal.',
@@ -940,7 +940,7 @@ class WallFeed {
 
         const downloadLink = document.createElement('a');
         downloadLink.href = dataUrl;
-        downloadLink.download = 'heart-matters-post.png';
+        downloadLink.download = 'pattern-reset-post.png';
         downloadLink.className = 'share-modal-download-button';
         downloadLink.textContent = 'Download Image';
 
