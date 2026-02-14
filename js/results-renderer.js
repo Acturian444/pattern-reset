@@ -3192,6 +3192,106 @@
     function getImpactLookupName(patternName) {
         return (patternName === 'The Guarded One' || patternName === 'Guarded One') ? 'Withdrawer' : patternName;
     }
+
+    // Relationship Pitfalls - module-level for reuse (CodeRabbit: hoist static map)
+    var RELATIONSHIP_PITFALLS = {
+        'Fixer': ['Resentment builds—you feel unappreciated when they don\'t want your help; they feel controlled or micromanaged', 'Relationships become one-sided—you overfunction while they underfunction, or resent your "fixing"', 'Communication breaks down—you solve instead of listen, so they stop sharing what\'s really going on', 'Power struggles—partners who want equality clash with your need to take charge', 'Burnout—you carry the emotional load until you crack'],
+        'Perfectionist': ['Paralysis—you never fully commit because no one meets your standards', 'Partner feels judged—they can\'t measure up to your expectations; they feel constantly criticized', 'Missed opportunities—you wait for the perfect moment, person, or situation that never comes', 'Decision gridlock—shared choices stall because you\'re analyzing every option', 'Distance—your focus on "right" over connection creates emotional walls'],
+        'Pleaser': ['Resentment buildup—you say yes when you mean no, then feel angry when they don\'t notice', 'Losing yourself—you adapt so much you stop knowing what you want or who you are', 'Attracting takers—people who take without giving fit your pattern but drain you', 'Avoiding conflict—you smooth things over instead of addressing problems; issues never get resolved', 'Partner doesn\'t know the real you—they see the version you think they want, not who you are'],
+        'Performer': ['Exhaustion—you\'re always "on," never able to relax and be yourself', 'Surface connection—they love the performance, not you; when the mask slips, they pull away', 'Imposter anxiety—you fear being "found out" as less than impressive', 'Competition replaces partnership—you need to be the best, even with your partner', 'Emotional distance—achievement covers vulnerability; they never see the real you'],
+        'Escaper': ['Partner feels abandoned—you disappear when things get hard; they feel you\'re never fully there', 'Unresolved conflict—you avoid difficult conversations; problems pile up unaddressed', 'Shallow connections—intimacy never deepens because you keep moving before it gets real', 'Self-fulfilling fear—you leave before you can be left; the escape creates the loss you feared', 'Disconnection from self—you numb feelings so much you lose touch with what you want'],
+        'Overthinker': ['Analysis paralysis—you never act; you\'re stuck decoding texts and signs instead of connecting', 'Partner feels interrogated—they sense you\'re always analyzing them, not being with them', 'Anxiety and distance—you\'re in your head instead of your heart; connection suffers', 'Missed moments—you overthink the right thing to say while the moment passes', 'Trust issues—you can\'t believe what they say; you need to "figure it out" yourself'],
+        'Withdrawer': ['Partner feels rejected—they try to get closer; you pull away; they interpret it as not being wanted', 'Communication shutdown—you go silent during conflict; nothing gets worked through', 'Intimacy stalls—emotional closeness feels unsafe; the relationship stays surface-level', 'Misunderstood intentions—you think you\'re protecting yourself; they think you don\'t care', 'Self-fulfilling fear—you keep distance to avoid rejection; the distance creates the disconnection you fear'],
+        'Overgiver': ['Resentment—you give more than you receive; when they don\'t reciprocate, you feel used', 'Attracting takers—your overgiving draws people who take without giving back', 'Losing yourself—you pour everything into them; your needs disappear', 'Partner feels smothered—they want space; your giving feels like pressure', 'Codependency—you need to be needed; the relationship becomes about your giving, not mutual love']
+    };
+
+    function getRelationshipPitfallsHTML(pattern) {
+        const patternName = getImpactLookupName(pattern.name);
+        const items = RELATIONSHIP_PITFALLS[patternName] || RELATIONSHIP_PITFALLS['Fixer'];
+        return `
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(0, 0, 0, 0.08);">
+                <h4 style="font-size: 1rem; font-weight: 700; color: #ca0013; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Common Relationship Pitfalls</h4>
+                <p style="font-size: 0.9rem; color: #555; margin: 0 0 1rem 0; line-height: 1.6;">When your ${pattern.name} pattern runs unchecked, these issues often show up:</p>
+                <ul style="margin: 0; padding-left: 1.25rem; list-style: none;">
+                    ${items.map((item, i) => `
+                        <li style="margin-bottom: 0.75rem; padding-left: 0.5rem; position: relative; font-size: 0.95rem; line-height: 1.6; color: #333;">
+                            <span style="position: absolute; left: -1.25rem; color: #ca0013; font-weight: 700;">•</span>
+                            ${item}
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+        `;
+    }
+
+    // Partner Compatibility - personalized per pattern (brand-styled)
+    function getPartnerCompatibilityHTML(pattern) {
+        const patternName = getImpactLookupName(pattern.name);
+        const compatibility = {
+            'Fixer': {
+                attract: 'Pleasers, Overgivers, and Escapers—people who want help or feel overwhelmed. You feel needed; they feel relieved someone is taking charge.',
+                clash: 'Other Fixers (control battles) and Perfectionists (both want to be right). Avoiders (Escapers, Overthinkers) can feel controlled when you jump in.',
+                stronger: 'Pleasers and Overgivers who appreciate your reliability, and Withdrawers who may open up when they feel you\'re steady—as long as you resist fixing and focus on listening.'
+            },
+            'Perfectionist': {
+                attract: 'Pleasers and Overgivers who work to meet your standards—and may exhaust themselves trying.',
+                clash: 'Other Perfectionists (constant critique), Escapers (they want freedom; you want structure), and Fixers (both want control).',
+                stronger: 'Partners who are secure in themselves and can gently call out your standards—Pleasers who learn to set boundaries, or Performers who value growth over perfection.'
+            },
+            'Pleaser': {
+                attract: 'Fixers and Performers who like to take charge—and may not notice when you need support.',
+                clash: 'Other Pleasers (neither says what they want), Withdrawers (you need closeness; they need space), and Overgivers (competing to give can create confusion).',
+                stronger: 'Partners who ask what you need and respect boundaries—Fixers who learn to listen, or Overthinkers who appreciate your harmony once they feel safe.'
+            },
+            'Performer': {
+                attract: 'Pleasers and Overgivers who admire your achievements—and may love the performance more than the real you.',
+                clash: 'Other Performers (competition over connection), Perfectionists (mutual critique), and Withdrawers (they want depth; you show surface).',
+                stronger: 'Partners who value vulnerability—Overgivers who create safety for you to be real, or Escapers who can call you out when you\'re performing.'
+            },
+            'Escaper': {
+                attract: 'Fixers and Overgivers who try to "save" or stabilize you—and you may pull away when they do.',
+                clash: 'Perfectionists (they want planning; you want freedom), Overgivers (you feel smothered; they feel abandoned), and other Escapers (familiar but unstable).',
+                stronger: 'Partners who respect space—Withdrawers and some Overthinkers—as long as both of you choose to show up instead of avoiding when things get real.'
+            },
+            'Overthinker': {
+                attract: 'Pleasers who go with your flow and Performers who keep things moving—you may overthink them anyway.',
+                clash: 'Other Overthinkers (paralysis together), Escapers (they want action; you want analysis), and Withdrawers (both retreat, little gets said).',
+                stronger: 'Partners who gently ground you—Fixers who can help you act, or Pleasers who create safety for you to feel instead of think.'
+            },
+            'Withdrawer': {
+                attract: 'Overgivers and Pleasers who pursue you—and may burn out when you keep pulling away.',
+                clash: 'Other Withdrawers (both retreat; connection stalls), Overgivers (they need reciprocity; you struggle to receive), and Fixers (they want to help; you want space).',
+                stronger: 'Partners who give you space without abandoning—Overthinkers who understand caution, or Escapers who respect freedom, as long as you both choose to show up.'
+            },
+            'Overgiver': {
+                attract: 'Escapers and Withdrawers who need nurturing—and may take without giving back.',
+                clash: 'Other Overgivers (competing to give), Withdrawers (they need space; your giving feels smothering), and Performers (they want achievement; you want emotional connection).',
+                stronger: 'Partners who receive and reciprocate—Fixers who can step in when you need support, or Pleasers who create harmony and appreciate your care when you set boundaries.'
+            }
+        };
+        const data = compatibility[patternName] || compatibility['Fixer'];
+        return `
+            <div style="margin-top: 2rem; padding: 1.25rem; background: rgba(202, 0, 19, 0.04); border-radius: 8px; border: 1px solid rgba(202, 0, 19, 0.12);">
+                <h4 style="font-size: 1rem; font-weight: 700; color: #ca0013; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Compatibility with Other Patterns</h4>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div>
+                        <p style="font-size: 0.8rem; font-weight: 700; color: #666; margin: 0 0 0.35rem 0; text-transform: uppercase;">You tend to attract</p>
+                        <p style="font-size: 0.95rem; line-height: 1.6; color: #333; margin: 0;">${data.attract}</p>
+                    </div>
+                    <div>
+                        <p style="font-size: 0.8rem; font-weight: 700; color: #666; margin: 0 0 0.35rem 0; text-transform: uppercase;">You often clash with</p>
+                        <p style="font-size: 0.95rem; line-height: 1.6; color: #333; margin: 0;">${data.clash}</p>
+                    </div>
+                    <div>
+                        <p style="font-size: 0.8rem; font-weight: 700; color: #666; margin: 0 0 0.35rem 0; text-transform: uppercase;">Stronger fits</p>
+                        <p style="font-size: 0.95rem; line-height: 1.6; color: #333; margin: 0;">${data.stronger}</p>
+                    </div>
+                </div>
+                <a href="patterns.html" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.25rem; padding: 0.65rem 1.25rem; background: #ca0013; color: #fff; font-size: 0.9rem; font-weight: 600; text-decoration: none; border-radius: 6px; transition: background 0.2s;">Explore All Pattern Types <span style="font-size: 0.8em;">→</span></a>
+            </div>
+        `;
+    }
+
     function getLoveImpactDetailed(pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) {
         const impactSummaries = {
             'Fixer': {
@@ -3285,6 +3385,9 @@
                         <p class="benefit-text">${data.benefit}</p>
                     </div>
                 </div>
+
+                ${getRelationshipPitfallsHTML(pattern)}
+                ${getPartnerCompatibilityHTML(pattern)}
             </div>
         `;
     }
@@ -5545,7 +5648,7 @@
             r: 0.7,
             gap: 0.12,
             pad: 0.6,
-            livedFill: '#999',
+            livedFill: 'rgba(202, 0, 19, 0.35)',
             remainingStroke: '#ddd',
             remainingFill: 'transparent',
             brandRed: '#ca0013',
@@ -5573,7 +5676,7 @@
                 }
             }
         }
-        return '<div class="pattern-reset-illo" aria-hidden="true"><svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" class="pattern-reset-illo-svg">' + circles.join('') + '</svg></div>';
+        return '<div class="pattern-reset-illo" aria-hidden="true"><svg viewBox="0 0 ' + w + ' ' + h + '" xmlns="http://www.w3.org/2000/svg" class="pattern-reset-illo-svg" preserveAspectRatio="xMidYMid meet">' + circles.join('') + '</svg></div>';
     }
 
     // Pattern Reset Workbook: Before/After Transformation System
@@ -6312,7 +6415,9 @@
     function getLoveImpact(pattern, relationshipStatus, exactAge, answers, quizData, domain) {
         const baseContent = getLoveImpactBase(pattern, relationshipStatus, exactAge);
         const answerExample = getAnswerSpecificExample(answers, quizData, domain, 'love');
-        return `${baseContent}${answerExample}`;
+        const pitfallsSection = getRelationshipPitfallsHTML(pattern);
+        const compatibilitySection = getPartnerCompatibilityHTML(pattern);
+        return `${baseContent}${answerExample}${pitfallsSection}${compatibilitySection}`;
     }
     
     function getMoneyImpact(pattern, exactAge, answers, quizData, domain) {

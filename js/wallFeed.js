@@ -864,7 +864,7 @@ class WallFeed {
         });
 
         const watermark = document.createElement('p');
-        watermark.innerHTML = `Truth #${post.truthNumber || ''} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; LetItOut &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Heart Matters`;
+        watermark.innerHTML = `Truth #${post.truthNumber || ''} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; LetItOut &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Pattern Reset`;
         Object.assign(watermark.style, {
             fontFamily: '"DM Sans", sans-serif',
             fontSize: '24px',
@@ -895,7 +895,7 @@ class WallFeed {
 
             if (navigator.share && navigator.canShare) {
                 const blob = await (await fetch(dataUrl)).blob();
-                const file = new File([blob], 'heart-matters-post.png', { type: blob.type });
+                const file = new File([blob], 'pattern-reset-post.png', { type: blob.type });
                 await navigator.share({
                     files: [file],
                     title: 'Someone opened up on Let It Out. Read their journal.',
@@ -940,7 +940,7 @@ class WallFeed {
 
         const downloadLink = document.createElement('a');
         downloadLink.href = dataUrl;
-        downloadLink.download = 'heart-matters-post.png';
+        downloadLink.download = 'pattern-reset-post.png';
         downloadLink.className = 'share-modal-download-button';
         downloadLink.textContent = 'Download Image';
 
