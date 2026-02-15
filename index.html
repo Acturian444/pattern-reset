@@ -3220,13 +3220,16 @@
     window.toggleAccordion = toggleAccordion;
     
     // Toggle Life Area Accordion Item (matching emotional drivers style)
+    // Multiple items can stay open to avoid scroll jump when Love (with Pitfalls + Compatibility) collapses
     function toggleLifeArea(areaId) {
         const item = document.querySelector(`[data-area="${areaId}"]`);
         if (!item) return;
         
         const button = item.querySelector('button');
-        const content = item.querySelector('.life-area-accordion-content');
-        const icon = button.querySelector('.life-area-icon-arrow');
+        const content = item.querySelector('.life-area-accordion-content') || item.querySelector('.life-area-content');
+        if (!content) return;
+        
+        const icon = button ? button.querySelector('.life-area-icon-arrow') : null;
         
         const isExpanded = item.classList.contains('expanded');
         
@@ -3238,23 +3241,8 @@
             content.style.paddingTop = '0';
             content.style.paddingBottom = '0';
         } else {
-            // Close other expanded items (optional - remove if you want multiple open)
-            document.querySelectorAll('.life-area-accordion-item.expanded').forEach(expandedItem => {
-                if (expandedItem !== item) {
-                    expandedItem.classList.remove('expanded');
-                    const expandedContent = expandedItem.querySelector('.life-area-accordion-content');
-                    const expandedButton = expandedItem.querySelector('button');
-                    const expandedIcon = expandedButton ? expandedButton.querySelector('.life-area-icon-arrow') : null;
-                    if (expandedContent) {
-                        expandedContent.classList.remove('expanded');
-                        expandedContent.style.maxHeight = '0';
-                        expandedContent.style.paddingTop = '0';
-                        expandedContent.style.paddingBottom = '0';
-                    }
-                    if (expandedIcon) expandedIcon.style.transform = 'rotate(0deg)';
-                }
-            });
-            
+            // Allow multiple open: do NOT collapse other items. This prevents scroll jump when
+            // Love (with Pitfalls + Compatibility) is open and user opens Money below.
             item.classList.add('expanded');
             content.classList.add('expanded');
             if (icon) icon.style.transform = 'rotate(90deg)';
