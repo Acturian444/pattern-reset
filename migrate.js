@@ -18,6 +18,9 @@ const { execSync } = require('child_process');
 // ============================================
 // CONFIGURATION - UPDATE THESE VALUES
 // ============================================
+// NOTE: This project is now Pattern Reset. OLD_CONFIG below represents
+// the legacy pre-migration setup (no longer in use). GA G-ZEZQRBTLR7
+// is the pattern-reset property @ analytics.google.com.
 
 const OLD_CONFIG = {
     domain: 'joinheartmatters.com',

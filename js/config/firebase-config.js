@@ -6,7 +6,7 @@ const firebaseConfig = {
     storageBucket: "pattern-reset.firebasestorage.app",
     messagingSenderId: "700172951578",
     appId: "1:700172951578:web:a50cd168495c0da04b71a3",
-    measurementId: "G-ZEZQRBTLR7"
+    measurementId: "G-ZEZQRBTLR7"  // pattern-reset property @ analytics.google.com
 };
 
 // Export for use in other modules

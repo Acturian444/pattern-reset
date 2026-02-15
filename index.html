@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#fffcf1">
     
-    <!-- Google tag (gtag.js) -->
+    <!-- Google tag (gtag.js) - pattern-reset property @ analytics.google.com -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEZQRBTLR7"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
@@ -22,14 +22,14 @@
     <meta name="googlebot" content="index, follow">
     <meta name="keywords" content="pattern recognition quiz, relationship patterns, break toxic patterns, emotional patterns, behavioral patterns, life patterns, stuck in patterns, pattern reset, free pattern quiz, discover your pattern">
     <meta name="brand" content="Pattern Reset™">
-    <meta name="trademark" content="Pattern Reset™, Heart Matters™, The Heart Room™, Let It Out™, Still Healing Collection™">
+    <meta name="trademark" content="Pattern Reset™, The Heart Room™, Let It Out™, Still Healing Collection™">
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Free Pattern Reset Quiz: Discover Your Life Pattern | Pattern Reset™">
     <meta property="og:description" content="Take our free pattern recognition quiz to identify the emotional loop driving your relationships, habits, and choices. Get your personalized Pattern Reset Workbook to break toxic patterns and transform your life.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mypatternreset.com/">
-    <meta property="og:image" content="https://mypatternreset.com/images/Let%20It%20Out%20Logo.png">
+    <meta property="og:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://mypatternreset.com/">
@@ -38,7 +38,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Free Pattern Reset Quiz: Discover Your Life Pattern | Pattern Reset™">
     <meta name="twitter:description" content="Take our free pattern recognition quiz to identify the emotional loop driving your relationships, habits, and choices. Get your personalized Pattern Reset Workbook to break toxic patterns and transform your life.">
-    <meta name="twitter:image" content="https://mypatternreset.com/images/Let%20It%20Out%20Logo.png">
+    <meta name="twitter:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
     
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -48,7 +48,7 @@
       "name": "Pattern Reset™",
       "description": "Discover your life pattern through our free pattern recognition quiz. Identify the emotional loop driving your relationships, habits, and choices. Break toxic patterns and transform your life with our free Pattern Reset Workbook.",
       "url": "https://mypatternreset.com/",
-      "logo": "https://mypatternreset.com/images/Let%20It%20Out%20Logo.png",
+      "logo": "https://mypatternreset.com/images/pattern-reset-og.png",
       "sameAs": [
         "https://www.instagram.com/heartmatters__/",
         "https://www.tiktok.com/@heartmatters__"
@@ -578,6 +578,16 @@
         margin-bottom: 2rem;
     }
 
+    .quiz-load-error {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.125rem;
+        color: #333;
+        margin: 2rem 0;
+        padding: 1rem;
+        background: #f8f0f0;
+        border-radius: 8px;
+    }
+    .quiz-load-error a { color: #c00; text-decoration: underline; }
     .quiz-question {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.75rem;
@@ -1933,6 +1943,8 @@
 
     .faq-answer.active {
         max-height: 800px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         padding-top: 0.5rem;
         padding-bottom: 1.1rem;
     }
@@ -1990,7 +2002,9 @@
         .faq-answer.active {
             padding-top: 0.3rem;
             padding-bottom: 0.7rem;
-            max-height: 300px;
+            max-height: min(70vh, 400px);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .faq-answer p,
         .faq-answer li {
@@ -2072,30 +2086,30 @@
             <div class="hero-scrolling-text">
                 <div class="hero-scrolling-track">
                     <span class="hero-scrolling-item">Discover your pattern</span>
-                    <span class="hero-scrolling-item">Know your emotional driver</span>
-                    <span class="hero-scrolling-item">See your pattern in action</span>
                     <span class="hero-scrolling-item">Understand why you repeat cycles</span>
-                    <span class="hero-scrolling-item">Break your dominant pattern</span>
-                    <span class="hero-scrolling-item">Reset your emotional loop</span>
-                    <span class="hero-scrolling-item">Connect patterns to your past</span>
-                    <span class="hero-scrolling-item">See patterns across life areas</span>
-                    <span class="hero-scrolling-item">Get your Pattern Reset Workbook</span>
-                    <span class="hero-scrolling-item">Transform your relationships</span>
-                    <span class="hero-scrolling-item">Understand your archetype</span>
-                    <span class="hero-scrolling-item">Get personalized insights</span>
+                    <span class="hero-scrolling-item">See how it shows up everywhere</span>
+                    <span class="hero-scrolling-item">See your relationship pitfalls</span>
+                    <span class="hero-scrolling-item">Understand yourself deeply</span>
+                    <span class="hero-scrolling-item">Interrupt your pattern</span>
+                    <span class="hero-scrolling-item">Break the cycle</span>
+                    <span class="hero-scrolling-item">Transform your life</span>
+                    <span class="hero-scrolling-item">Get your free workbook</span>
+                    <span class="hero-scrolling-item">Connect pattern to your past</span>
+                    <span class="hero-scrolling-item">Know your emotional drivers</span>
+                    <span class="hero-scrolling-item">Begin your reset</span>
                     <!-- Duplicate for seamless loop -->
                     <span class="hero-scrolling-item">Discover your pattern</span>
-                    <span class="hero-scrolling-item">Know your emotional driver</span>
-                    <span class="hero-scrolling-item">See your pattern in action</span>
                     <span class="hero-scrolling-item">Understand why you repeat cycles</span>
-                    <span class="hero-scrolling-item">Break your dominant pattern</span>
-                    <span class="hero-scrolling-item">Reset your emotional loop</span>
-                    <span class="hero-scrolling-item">Connect patterns to your past</span>
-                    <span class="hero-scrolling-item">See patterns across life areas</span>
-                    <span class="hero-scrolling-item">Get your Pattern Reset Workbook</span>
-                    <span class="hero-scrolling-item">Transform your relationships</span>
-                    <span class="hero-scrolling-item">Understand your archetype</span>
-                    <span class="hero-scrolling-item">Get personalized insights</span>
+                    <span class="hero-scrolling-item">See how it shows up everywhere</span>
+                    <span class="hero-scrolling-item">See your relationship pitfalls</span>
+                    <span class="hero-scrolling-item">Understand yourself deeply</span>
+                    <span class="hero-scrolling-item">Interrupt your pattern</span>
+                    <span class="hero-scrolling-item">Break the cycle</span>
+                    <span class="hero-scrolling-item">Transform your life</span>
+                    <span class="hero-scrolling-item">Get your free workbook</span>
+                    <span class="hero-scrolling-item">Connect pattern to your past</span>
+                    <span class="hero-scrolling-item">Know your emotional drivers</span>
+                    <span class="hero-scrolling-item">Begin your reset</span>
                 </div>
             </div>
             <style>
@@ -2811,24 +2825,24 @@
                         <div class="start-here-icon" aria-hidden="true">
                           <span class="step-number">1</span>
                         </div>
-                        <h3>Take our Free Pattern Quiz</h3>
-                        <p>Take our free 8-12 minute quiz to uncover the hidden pattern driving your relationships, choices, and outcomes.</p>
+                        <h3>Take the Free Pattern Quiz</h3>
+                        <p>Answer 36 questions in 8–12 minutes to uncover the hidden pattern driving your relationships, habits, and choices.</p>
                     </div>
                     <!-- Step 2 -->
                     <div class="start-here-card">
                         <div class="start-here-icon" aria-hidden="true">
                           <span class="step-number">2</span>
                         </div>
-                        <h3>See Your Results</h3>
-                        <p>Get your pattern name and strength immediately. See how dominant it is and what it means for your life.</p>
+                        <h3>Get Your Pattern Identity</h3>
+                        <p>See your archetype, pattern name, and strength immediately—plus how your emotional drivers show up across your life.</p>
                     </div>
                     <!-- Step 3 -->
                     <div class="start-here-card">
                         <div class="start-here-icon" aria-hidden="true">
-                          <span class="step-number">3</span>
+                            <span class="step-number">3</span>
                         </div>
-                        <h3>Unlock Your Full Report</h3>
-                        <p>Learn exactly why you repeat cycles and how to break free—get your complete analysis and free Pattern Reset Workbook.</p>
+                        <h3>Get Your One-Day Reset Workbook</h3>
+                        <p>Your personalized interrupt question plus daily practices to break your cycle. Free, yours to keep.</p>
                     </div>
                 </div>
             </div>
@@ -2968,7 +2982,7 @@
                         <div class="faq-answer">
                             <p><strong>This isn't a game. It's a mirror.</strong></p>
                             <p>The Pattern Reset Quiz is a comprehensive psychological assessment that reveals the emotional code behind your choices. It identifies which unconscious pattern is keeping you stuck — the one shaping every relationship, decision, and outcome.</p>
-                            <p>In <strong>8-12 minutes</strong>, you'll answer <strong>36 questions</strong> (34 scored questions + 2 optional questions) across 10 life domains:</p>
+                            <p>In <strong>8-12 minutes</strong>, you'll answer <strong>36 questions</strong> (34 scored questions + 2 optional questions) across 12 life domains:</p>
                             <ul>
                                 <li><strong>Love & Connection</strong> (4 questions) — How you navigate relationships</li>
                                 <li><strong>Money & Finances</strong> (4 questions) — Your relationship with money and security</li>
@@ -2979,6 +2993,7 @@
                                 <li><strong>Purpose & Flow</strong> (2 questions) — Your sense of purpose and flow states</li>
                                 <li><strong>Identity & Self</strong> (4 questions) — How you see yourself and your worth</li>
                                 <li><strong>Childhood & Origin</strong> (4 questions) — Where your patterns began</li>
+                                <li><strong>Trauma & Adversity</strong> (1 question) — How you respond to difficult experiences</li>
                                 <li><strong>Relationship Patterns</strong> (5 questions) — How you connect and protect yourself</li>
                                 <li><strong>Reflection</strong> (2 questions) — Your self-awareness and pattern recognition</li>
                             </ul>
@@ -3055,8 +3070,8 @@
                         </button>
                         <div class="faq-answer">
                             <p><strong>Yes. 100% free.</strong></p>
-                            <p>The quiz, your personalized results, Pattern Reset Workbook, and PDF downloads are completely free. No credit card required. No hidden fees.</p>
-                            <p>Your results are saved automatically and available anytime — you can view them, download PDFs, and work through your workbook at your own pace, all for free.</p>
+                            <p>The quiz, your personalized results, and Pattern Reset Workbook are completely free. No credit card required. No hidden fees.</p>
+                            <p>Your results are saved automatically and available anytime — you can view them and work through your workbook at your own pace, all for free.</p>
                         </div>
                     </div>
                 </div>
@@ -4361,6 +4376,14 @@
                     return;
                 }
                 
+                // Ensure quiz data is loaded (re-read in case script loaded after page init)
+                quizData = window.quizData || quizData;
+                if (!quizData || !Array.isArray(quizData) || quizData.length === 0) {
+                    console.error('Quiz data not available:', quizData ? quizData.length : 0);
+                    alert('Quiz failed to load. Please refresh the page and try again.');
+                    return;
+                }
+                
                 // Clear previous state
                 clearQuizState();
                 
@@ -4662,13 +4685,15 @@
 
     function updateNextButtonState() {
         const nextBtn = document.getElementById('quiz-next-btn');
-        const question = quizData[currentQuestion];
-        
         if (!nextBtn) return;
-        
+        if (!quizData || !Array.isArray(quizData) || quizData.length === 0) return;
+        if (currentQuestion < 0 || currentQuestion >= quizData.length) return;
+        const question = quizData[currentQuestion];
+        if (!question) return;
+
         // Update button text
         nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'See Results' : 'Next';
-        
+
         // Birth date and relationship status questions are optional, so button is always active (filled)
         if (question.questionType === 'birthdate' || question.questionType === 'relationship-status') {
             nextBtn.classList.remove('btn-mission');
@@ -4692,10 +4717,32 @@
 
     function renderQuestion() {
         const questionContainer = document.getElementById('quiz-question-container');
-        const question = quizData[currentQuestion];
         const prevBtn = document.getElementById('quiz-prev-btn');
         const nextBtn = document.getElementById('quiz-next-btn');
         const errorMessage = document.getElementById('quiz-error-message');
+
+        // Ensure quiz data is available (re-read in case script loaded after init)
+        if (!quizData || !Array.isArray(quizData) || quizData.length === 0) {
+            quizData = window.quizData;
+        }
+        if (!quizData || !Array.isArray(quizData) || quizData.length === 0) {
+            if (questionContainer) {
+                questionContainer.innerHTML = '<p class="quiz-load-error">Quiz failed to load. Please <a href="" onclick="window.location.reload(); return false;">refresh the page</a> and try again.</p>';
+            }
+            return;
+        }
+
+        // Clamp current question to valid range
+        if (currentQuestion >= quizData.length) currentQuestion = quizData.length - 1;
+        if (currentQuestion < 0) currentQuestion = 0;
+
+        const question = quizData[currentQuestion];
+        if (!question || typeof question.question === 'undefined') {
+            if (questionContainer) {
+                questionContainer.innerHTML = '<p class="quiz-load-error">Question could not be loaded. Please <a href="" onclick="window.location.reload(); return false;">refresh the page</a>.</p>';
+            }
+            return;
+        }
 
         // Hide error message when rendering new question
         if (errorMessage) {
@@ -4804,6 +4851,7 @@
     }
 
     function updateProgress() {
+        if (!quizData || !Array.isArray(quizData) || quizData.length === 0) return;
         const progressBar = document.getElementById('quiz-progress-bar');
         const progressText = document.getElementById('quiz-progress-text');
         const progress = ((currentQuestion + 1) / quizData.length) * 100;
