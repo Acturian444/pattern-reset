@@ -259,47 +259,47 @@
                         <details class="principles-outer">
                             <summary class="principles-trigger">
                                 <span>Expand to learn the 10 principles</span>
-                                <span class="principle-chevron" aria-hidden="true">▶</span>
+                                <span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
                             </summary>
                             <div class="principles-list">
                                 <details class="principle-card">
-                                    <summary><span>Your Brain Doesn't Know What's Real—It Believes What You Repeat</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
+                                    <summary><span>Your Brain Doesn't Know What's Real—It Believes What You Repeat</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
                                     <div class="principle-copy">If you keep saying "I'm broke" or "There are no good men out there," your brain goes, I got it—and life keeps proving you right. Understanding this principle helps you notice what you've been repeating so you can choose new patterns.</div>
                                 </details>
                                 <details class="principle-card">
-                                    <summary><span>Feelings Matter More Than Thoughts</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
+                                    <summary><span>Feelings Matter More Than Thoughts</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
                                     <div class="principle-copy">You don't manifest what you want—you manifest what feels normal to you. If you feel that love is unsafe, you might keep attracting emotionally unavailable people. This is why feeling the cost of your pattern creates the emotional charge needed for real change.</div>
                                 </details>
                                 <details class="principle-card">
-                                    <summary><span>Your Subconscious Runs 95% of Your Life</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
+                                    <summary><span>Your Subconscious Runs 95% of Your Life</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
                                     <div class="principle-copy">If it's programmed for lack or struggle, logic won't fix it. But repetition plus emotion can rewire it. For example, if you grew up watching financial struggle and your subconscious learned that was normal, you may keep recreating it until you stop that loop and reprogram it. Understanding this principle helps you work with your subconscious, not just logic.</div>
                                 </details>
                                 <details class="principle-card">
-                                    <summary><span>Your Nervous System Decides What You Attract</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
+                                    <summary><span>Your Nervous System Decides What You Attract</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
                                     <div class="principle-copy">If you're always stressed and in survival mode, you will manifest survival, not abundance. When your nervous system feels calm about what you want, that's when it can draw it in. Understanding this principle helps you see why your pattern interrupt—moving out of survival mode and into choice—matters.</div>
                                 </details>
                                 <details class="principle-card">
-                                    <summary><span>Identity Is the True Magnet</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
+                                    <summary><span>Identity Is the True Magnet</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
                                     <div class="principle-copy">Ask yourself: Who would you be if you already had all that you wanted? Who would you be if it had already worked out? If you keep seeing yourself as someone who doesn't get love, that's what you'll manifest more of. Understanding this principle helps you shift your identity first, then act from that place.</div>
                                 </details>
                                 <details class="principle-card">
-                                    <summary><span>Your Brain Learns Through Imagination</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
+                                    <summary><span>Your Brain Learns Through Imagination</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
                                     <div class="principle-copy">Your mind rehearses your future. If you keep imagining failure, your brain prepares you for that exactly. If you vividly imagine who you're becoming, your brain prepares for that instead. Understanding this principle helps you see why rehearsing your future matters.</div>
                                 </details>
                                 <details class="principle-card">
-                                    <summary><span>Consistency Beats Intensity</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
+                                    <summary><span>Consistency Beats Intensity</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
                                     <div class="principle-copy">One single affirmation won't rewire years of conditioning, but small shifts daily can. If you only focus on change when you're panicking, that stress becomes the pattern in your mind. Understanding this principle helps you see why consistent daily practice—not occasional intensity—rewires neural pathways more effectively.</div>
                                 </details>
                                 <details class="principle-card">
-                                    <summary><span>Doubt Doesn't Stop Transformation. Fear Does.</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
+                                    <summary><span>Doubt Doesn't Stop Transformation. Fear Does.</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
                                     <div class="principle-copy">Fear keeps you stuck. If you're scared of being abandoned, you might unconsciously keep pushing people away. Fear activates survival mode, reinforcing the old pattern. Understanding this principle helps you name your fear and choose awareness anyway.</div>
                                 </details>
                                 <details class="principle-card">
-                                    <summary><span>Actions Matter, But Aligned Action</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
+                                    <summary><span>Actions Matter, But Aligned Action</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
                                     <div class="principle-copy">Never force anything. Inspired action feels natural, obvious, not exhausting. When you take action from the new version of yourself, it becomes much simpler. But if your actions come from desperation, the results will also come from desperation. Understanding this principle helps you identify what the person you're becoming would do—that's aligned action.</div>
                                 </details>
                                 <details class="principle-card">
-                                    <summary><span>Your Environment Reinforces Your Beliefs</span><span class="principle-chevron" aria-hidden="true">▶</span></summary>
+                                    <summary><span>Your Environment Reinforces Your Beliefs</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
                                     <div class="principle-copy">If your surroundings reflect chaos and lack, your nervous system stays there. If your environment reflects who you're becoming, it reinforces your new identity. Understanding this principle helps you see why your surroundings constantly influence you.</div>
                                 </details>
                             </div>
@@ -2146,7 +2146,7 @@
         return `
             <div class="accordion-item ${expandedClass}" data-section="${id}">
                 <button class="accordion-header ${expandedClass}" onclick="toggleAccordion('${id}')">
-                    <span class="accordion-icon" style="transform: ${iconRotation};">▶</span>
+                    <span class="accordion-icon" style="transform: ${iconRotation}; display: inline-flex; align-items: center; justify-content: center;"><i class="fas fa-chevron-right"></i></span>
                     <span class="accordion-title">${title}</span>
                     ${previewText}
                 </button>
@@ -3042,56 +3042,16 @@
         const dominantDriver = sortedDrivers && sortedDrivers[0] ? sortedDrivers[0][0] : 'control';
         const dominantPercent = driverPercentages && driverPercentages[dominantDriver] ? driverPercentages[dominantDriver] : 30;
         
-        // Life areas with icons and detailed impact
+        // Life areas with Font Awesome icons (modern, consistent across devices)
         const lifeAreas = [
-            {
-                id: 'love',
-                icon: '💕',
-                title: 'Love & Relationships',
-                getImpact: () => getLifeAreaImpact('love', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
-            },
-            {
-                id: 'money',
-                icon: '💰',
-                title: 'Money & Finances',
-                getImpact: () => getLifeAreaImpact('money', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
-            },
-            {
-                id: 'health',
-                icon: '🏃',
-                title: 'Health & Habits',
-                getImpact: () => getLifeAreaImpact('health', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
-            },
-            {
-                id: 'career',
-                icon: '💼',
-                title: 'Career & Work',
-                getImpact: () => getLifeAreaImpact('career', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
-            },
-            {
-                id: 'identity',
-                icon: '🎭',
-                title: 'Identity & Self-Worth',
-                getImpact: () => getLifeAreaImpact('identity', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
-            },
-            {
-                id: 'purpose',
-                icon: '🎯',
-                title: 'Purpose & Goals',
-                getImpact: () => getLifeAreaImpact('purpose', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
-            },
-            {
-                id: 'lifestyle',
-                icon: '🌱',
-                title: 'Lifestyle & Daily Habits',
-                getImpact: () => getLifeAreaImpact('lifestyle', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
-            },
-            {
-                id: 'productivity',
-                icon: '⏰',
-                title: 'Productivity & Time',
-                getImpact: () => getLifeAreaImpact('productivity', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate)
-            }
+            { id: 'love', faIcon: 'fas fa-heart', title: 'Love & Relationships', getImpact: () => getLifeAreaImpact('love', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) },
+            { id: 'money', faIcon: 'fas fa-coins', title: 'Money & Finances', getImpact: () => getLifeAreaImpact('money', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) },
+            { id: 'health', faIcon: 'fas fa-heart-pulse', title: 'Health & Habits', getImpact: () => getLifeAreaImpact('health', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) },
+            { id: 'career', faIcon: 'fas fa-briefcase', title: 'Career & Work', getImpact: () => getLifeAreaImpact('career', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) },
+            { id: 'identity', faIcon: 'fas fa-user', title: 'Identity & Self-Worth', getImpact: () => getLifeAreaImpact('identity', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) },
+            { id: 'purpose', faIcon: 'fas fa-bullseye', title: 'Purpose & Goals', getImpact: () => getLifeAreaImpact('purpose', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) },
+            { id: 'lifestyle', faIcon: 'fas fa-leaf', title: 'Lifestyle & Daily Habits', getImpact: () => getLifeAreaImpact('lifestyle', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) },
+            { id: 'productivity', faIcon: 'fas fa-clock', title: 'Productivity & Time', getImpact: () => getLifeAreaImpact('productivity', pattern, archetype, complex, dominantDriver, dominantPercent, exactAge, relationshipStatus, birthDate) }
         ];
         
         // Generate accordion items matching emotional drivers style
@@ -3105,9 +3065,9 @@
                 <div class="life-area-accordion-item ${expandedClass}" data-area="${area.id}" style="margin-bottom: 1.25rem; background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 6px; overflow: hidden;">
                     <button onclick="toggleLifeArea('${area.id}')" style="width: 100%; padding: 1rem 1.25rem; background: #ffffff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; text-align: left; transition: background 0.2s ease;">
                         <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
-                            <span class="life-area-icon-arrow" style="transform: ${iconRotation}; width: 20px; min-width: 20px; max-width: 20px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #666; font-size: 0.75rem; transition: transform 0.3s ease;">▶</span>
+                            <span class="life-area-icon-arrow" style="transform: ${iconRotation}; width: 20px; min-width: 20px; max-width: 20px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #666; font-size: 0.75rem; transition: transform 0.3s ease;"><i class="fas fa-chevron-right"></i></span>
                             <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
-                                <span style="font-size: 1.2rem; line-height: 1;">${area.icon}</span>
+                                <span class="life-area-icon" style="width: 20px; min-width: 20px; display: inline-flex; align-items: center; justify-content: center; color: #ca0013; font-size: 0.9rem;"><i class="${area.faIcon}"></i></span>
                                 <span style="font-size: 1rem; font-weight: 600; color: #000;">
                                     ${area.title}
                                 </span>
@@ -3938,7 +3898,7 @@
                             <div class="accordion-item ${expandedClass}" data-section="${driverId}" style="background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 6px; overflow: hidden;">
                                 <button class="accordion-header ${expandedClass}" onclick="toggleAccordion('${driverId}')" style="width: 100%; padding: 1.25rem; background: ${driver.isDominant ? 'rgba(202, 0, 19, 0.03)' : '#ffffff'}; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; text-align: left; transition: background 0.2s ease;">
                                     <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
-                                        <span class="accordion-icon" style="transform: ${iconRotation}; width: 20px; min-width: 20px; max-width: 20px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #666; font-size: 0.75rem; transition: transform 0.3s ease;">▶</span>
+                                        <span class="accordion-icon" style="transform: ${iconRotation}; width: 20px; min-width: 20px; max-width: 20px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #666; font-size: 0.75rem; transition: transform 0.3s ease;"><i class="fas fa-chevron-right"></i></span>
                                         <div style="display: flex; align-items: baseline; gap: 0.75rem; flex: 1;">
                                             <p style="font-size: 1rem; font-weight: 600; color: #000; margin: 0;">
                                                 ${driver.name}
@@ -4464,7 +4424,7 @@
                 <div class="driver-bar-item ${expandedClass}" data-driver-id="${driverId}" style="margin-bottom: 1.25rem; background: #ffffff; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 6px; overflow: hidden;">
                     <button onclick="toggleDriverDetails('${driverId}')" style="width: 100%; padding: 1rem 1.25rem; background: ${isDominant ? 'rgba(202, 0, 19, 0.03)' : '#ffffff'}; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; text-align: left; transition: background 0.2s ease;">
                         <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
-                            <span class="driver-icon" style="transform: ${iconRotation}; width: 20px; min-width: 20px; max-width: 20px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #666; font-size: 0.75rem; transition: transform 0.3s ease;">▶</span>
+                            <span class="driver-icon" style="transform: ${iconRotation}; width: 20px; min-width: 20px; max-width: 20px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #666; font-size: 0.75rem; transition: transform 0.3s ease;"><i class="fas fa-chevron-right"></i></span>
                             <div style="flex: 1;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                                     <span style="font-size: 1rem; font-weight: ${isDominant ? '600' : '500'}; color: ${isDominant ? '#ca0013' : '#000'};">
@@ -5761,7 +5721,7 @@
                         <h4 class="workbook-part-title">Life Assessment</h4>
                         <p class="workbook-part-subtitle">Your current life—what you love, what you're not happy with, and the cost of staying stuck.</p>
                     </div>
-                    <span class="workbook-part-chevron" aria-hidden="true">▶</span>
+                    <span class="workbook-part-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
                 </summary>
                 <div class="workbook-part-content">
                 <p class="workbook-why-line">Honest assessment of where you are. No judgment—just clarity. What's working. What's not. How your pattern reinforces it.</p>
@@ -5806,7 +5766,7 @@
                         <h4 class="workbook-part-title">Pattern Interruption</h4>
                         <p class="workbook-part-subtitle">Gain clarity. Choose what you want. Radical honesty about what's keeping you stuck.</p>
                     </div>
-                    <span class="workbook-part-chevron" aria-hidden="true">▶</span>
+                    <span class="workbook-part-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
                 </summary>
                 <div class="workbook-part-content">
                 <p class="workbook-why-line">This is the moment. You've assessed your Before. Now: radical honesty, burning desire, the decision, and your pattern interrupt. Write your answers; it makes a difference.</p>
@@ -5856,7 +5816,7 @@
                         <h4 class="workbook-part-title">Identity Shift Protocol</h4>
                         <p class="workbook-part-subtitle">Science-backed identity recoding: life areas, goals, habits, and affirmations aligned with who you're becoming.</p>
                     </div>
-                    <span class="workbook-part-chevron" aria-hidden="true">▶</span>
+                    <span class="workbook-part-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
                 </summary>
                 <div class="workbook-part-content">
                 <p class="workbook-why-line">Using what you wrote in Part 2, this section helps you define who you're becoming and the habits that make it real. Neuroscience shows neurons that fire together wire together. Identity-based habits prove behavior follows who you believe you are. This section rewires your ${pattern.name} pattern into the identity you're choosing—through visualization, repetition, and aligned action.</p>
@@ -6366,17 +6326,17 @@
         }
         
         const lifeAreas = [
-            { id: 'love', icon: '💕', title: 'Love & Relationships', domain: domains.LOVE, content: getLoveImpact(pattern, relationshipStatus, exactAge, answers, quizData, domains.LOVE) },
-            { id: 'money', icon: '💰', title: 'Money & Finances', domain: domains.MONEY, content: getMoneyImpact(pattern, exactAge, answers, quizData, domains.MONEY) },
-            { id: 'health', icon: '🏃', title: 'Health & Habits', domain: domains.HEALTH, content: getHealthImpact(pattern, exactAge, answers, quizData, domains.HEALTH) },
-            { id: 'lifestyle', icon: '🍽️', title: 'Lifestyle & Daily Habits', domain: domains.LIFESTYLE, content: getLifestyleImpact(pattern, answers, quizData, domains.LIFESTYLE) },
-            { id: 'physical', icon: '💪', title: 'Physical Health & Body', domain: domains.PHYSICAL, content: getPhysicalImpact(pattern, answers, quizData, domains.PHYSICAL) },
-            { id: 'productivity', icon: '⏰', title: 'Productivity & Time', domain: domains.PRODUCTIVITY, content: getProductivityImpact(pattern, answers, quizData, domains.PRODUCTIVITY) },
-            { id: 'purpose', icon: '🎯', title: 'Purpose & Flow', domain: domains.PURPOSE, content: getPurposeImpact(pattern, answers, quizData, domains.PURPOSE) },
-            { id: 'identity', icon: '🎭', title: 'Identity & Self', domain: domains.IDENTITY, content: getIdentityImpact(pattern, exactAge, answers, quizData, domains.IDENTITY) },
-            { id: 'childhood', icon: '👶', title: 'Childhood & Origin', domain: domains.CHILDHOOD, content: getChildhoodImpact(pattern, answers, quizData, domains.CHILDHOOD) },
-            { id: 'relationships', icon: '💑', title: 'Relationship Patterns', domain: domains.RELATIONSHIPS, content: getRelationshipPatternsImpact(pattern, relationshipStatus, answers, quizData, domains.RELATIONSHIPS) },
-            { id: 'reflection', icon: '🔍', title: 'Reflection & Self-Awareness', domain: domains.REFLECTION, content: getReflectionImpact(pattern, answers, quizData, domains.REFLECTION) }
+            { id: 'love', faIcon: 'fas fa-heart', title: 'Love & Relationships', domain: domains.LOVE, content: getLoveImpact(pattern, relationshipStatus, exactAge, answers, quizData, domains.LOVE) },
+            { id: 'money', faIcon: 'fas fa-coins', title: 'Money & Finances', domain: domains.MONEY, content: getMoneyImpact(pattern, exactAge, answers, quizData, domains.MONEY) },
+            { id: 'health', faIcon: 'fas fa-heart-pulse', title: 'Health & Habits', domain: domains.HEALTH, content: getHealthImpact(pattern, exactAge, answers, quizData, domains.HEALTH) },
+            { id: 'lifestyle', faIcon: 'fas fa-leaf', title: 'Lifestyle & Daily Habits', domain: domains.LIFESTYLE, content: getLifestyleImpact(pattern, answers, quizData, domains.LIFESTYLE) },
+            { id: 'physical', faIcon: 'fas fa-dumbbell', title: 'Physical Health & Body', domain: domains.PHYSICAL, content: getPhysicalImpact(pattern, answers, quizData, domains.PHYSICAL) },
+            { id: 'productivity', faIcon: 'fas fa-clock', title: 'Productivity & Time', domain: domains.PRODUCTIVITY, content: getProductivityImpact(pattern, answers, quizData, domains.PRODUCTIVITY) },
+            { id: 'purpose', faIcon: 'fas fa-bullseye', title: 'Purpose & Flow', domain: domains.PURPOSE, content: getPurposeImpact(pattern, answers, quizData, domains.PURPOSE) },
+            { id: 'identity', faIcon: 'fas fa-user', title: 'Identity & Self', domain: domains.IDENTITY, content: getIdentityImpact(pattern, exactAge, answers, quizData, domains.IDENTITY) },
+            { id: 'childhood', faIcon: 'fas fa-child', title: 'Childhood & Origin', domain: domains.CHILDHOOD, content: getChildhoodImpact(pattern, answers, quizData, domains.CHILDHOOD) },
+            { id: 'relationships', faIcon: 'fas fa-people-group', title: 'Relationship Patterns', domain: domains.RELATIONSHIPS, content: getRelationshipPatternsImpact(pattern, relationshipStatus, answers, quizData, domains.RELATIONSHIPS) },
+            { id: 'reflection', faIcon: 'fas fa-magnifying-glass', title: 'Reflection & Self-Awareness', domain: domains.REFLECTION, content: getReflectionImpact(pattern, answers, quizData, domains.REFLECTION) }
         ];
         
         const lifeAreaItems = lifeAreas.map(area => {
@@ -6386,9 +6346,9 @@
             return `
                 <div class="life-area-accordion-item" data-area="${area.id}">
                     <button class="life-area-header" onclick="toggleLifeArea('${area.id}')">
-                        <span class="life-area-icon">${area.icon}</span>
+                        <span class="life-area-icon"><i class="${area.faIcon}"></i></span>
                         <span class="life-area-title">${area.title}</span>
-                        <span class="life-area-toggle">▶</span>
+                        <span class="life-area-toggle"><i class="fas fa-chevron-right"></i></span>
                     </button>
                     <div class="life-area-content">
                         ${area.content}
