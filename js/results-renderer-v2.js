@@ -7,7 +7,7 @@
     window.ResultsRenderer = {
         // Load and render full results content
         renderFullResults: function(container, data) {
-            const { pattern, archetype, patternDominance, dominanceLabel, driverPercentages, totalScore, exactAge, relationshipStatus, firstName, birthDate, sortedDrivers, answers, driverScores } = data;
+            const { pattern, archetype, patternDominance, dominanceLabel, driverPercentages, totalScore, exactAge, relationshipStatus, currentPain, biggestFear, currentPainOtherText, biggestFearOtherText, firstName, birthDate, sortedDrivers, answers, driverScores } = data;
             
             // Get driver names and descriptions
             const driverNames = {
@@ -82,6 +82,10 @@
                 totalScore,
                 exactAge,
                 relationshipStatus,
+                currentPain: currentPain || null,
+                biggestFear: biggestFear || null,
+                currentPainOtherText: currentPainOtherText || null,
+                biggestFearOtherText: biggestFearOtherText || null,
                 firstName,
                 birthDate: birthDate || null,
                 sortedDrivers: sortedDriversArray,
@@ -109,7 +113,9 @@
             pattern, archetype, patternDominance, dominanceLabel, 
             driverPercentages, firstName, sortedDrivers, 
             driverNames, driverDescriptions, personalizedIntro, nextResetDate,
-            exactAge, relationshipStatus, answers, driverScores, quizData, birthDate
+            exactAge, relationshipStatus, currentPain, biggestFear,
+            currentPainOtherText, biggestFearOtherText,
+            answers, driverScores, quizData, birthDate
         } = data;
         
         // Safety checks - ensure required data exists
@@ -206,6 +212,9 @@
                 
                 <!-- Dive Deeper - Expandable Hero Content -->
                 ${getComprehensiveHeroContent(archetype, pattern, patternDominance, dominanceLabel, answers, sortedDriversArray, driverPercentagesObj, firstName, exactAge, relationshipStatus, quizData || window.quizData || [], birthDate)}
+            
+                <!-- Questions Users Want Answered - Personalized Q&A by situation + data -->
+                ${getQuestionsUsersWantAnswered(pattern, archetype, currentPain, biggestFear, currentPainOtherText, biggestFearOtherText, relationshipStatus, exactAge, driverPercentagesObj, sortedDriversArray, answers || [], driverScores || {}, quizData || window.quizData || [])}
             
                 <!-- Divider + Section intro (matches border-top pattern used in Emotional Drivers, etc.) -->
                 <div class="results-dark-bg-content" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.15); margin-bottom: 2rem;">
@@ -1429,7 +1438,7 @@
             .replace(/\bmy\b/gi, 'your');
         if (text.length > 80) text = text.substring(0, 77) + '...';
         const phrase = text.charAt(0).toLowerCase() + text.slice(1).replace(/\.$/, '');
-        return `In childhood you felt safest when ${phrase}. Same strategy—now running your relationships, money, and health.`;
+        return `In childhood you felt safest when ${phrase}. Same strategy—now running everything.`;
     }
 
     // Build "What it looks like" — POV mirror moment: day-in-the-life, habits, mindset, cost, stuck loop
@@ -1440,25 +1449,21 @@
         const sec = complex && complex.secondary ? complex.secondary : null;
         const archetypeName = archetype && archetype.name ? archetype.name : '';
 
+        // Condensed: day-in-the-life + cost. Complex amplification removed (covered in How It Developed + Quick Reference).
         const looksLikeByPattern = {
-            'Fixer': 'You wake up scanning for problems to solve—someone\'s upset, a project slipping, a friend struggling. You step in, take over, offer advice before they ask. You see people as needing you, and that feels safe. The cost: you\'re exhausted, relationships feel one-sided, and you\'ve lost track of your own dreams because you\'re managing everyone else\'s. The more you fix, the more they rely on you—and the more you burn out. Success and fulfillment get deferred while you overfunction.',
-            'Perfectionist': 'You wake up with a mental checklist—every task has to be "right" before you start or finish. You edit, revise, second-guess. You see the world as a judge and yourself as never quite good enough. The cost: opportunities pass while you\'re still preparing; you never feel satisfied; you burn out from the internal pressure. The need to be perfect keeps you paralyzed—acting feels risky, so you analyze instead, and life moves on without you.',
-            'Pleaser': 'You wake up attuned to everyone else\'s needs—your partner, your boss, your friend. You shape your day around what they want and say yes when you want to say no. You see people as needing to be kept happy; your own needs feel secondary. The cost: you\'ve lost yourself, resentment builds, relationships feel hollow because they\'re built on a version of you that isn\'t real. The more you please, the more they expect—and the more you resent. Fulfillment gets buried while you perform.',
-            'Performer': 'You wake up needing to prove something—today you\'ll achieve, impress, show your worth. You dress for the part, say the right things, grind. You see the world as an audience and yourself as only as valuable as your last win. The cost: you feel exhausted when the applause stops; relationships feel shallow because they love the performance, not the real you; success never satisfies because there\'s always another bar to clear. You\'re stuck because being "ordinary" feels terrifying, so you keep performing, and authentic happiness stays out of reach.',
-            'Escaper': 'You wake up and reach for distraction—scroll, busywork, anything but the hard conversation or the difficult feeling. When things get real, you "remember" something else you need to do. You see emotions as dangerous; staying busy feels like safety. The cost: you\'re disconnected from yourself and others; relationships stay surface-level; success stalls because you avoid the hard steps. The more you escape, the more the unresolved piles up—and the more overwhelming it feels. Real fulfillment never lands because you\'re never fully present.',
-            'Overthinker': 'You wake up in your head—every decision gets analyzed, every text decoded, every move second-guessed. You see the world as a puzzle to solve and action as risky until you\'ve thought it through. The cost: opportunities pass while you\'re still thinking; relationships suffer from over-analysis; success stalls because you never take the leap. The more you analyze, the more options appear—and the harder it gets to act. You\'re stuck because thinking feels safe and acting feels dangerous, so you stay in your head while life passes you by.',
-            'Withdrawer': 'You wake up protective—when someone gets close, you pull back. You keep a safe distance emotionally; connection feels risky. You see people as potential sources of pain; distance feels like safety. The cost: you\'re alone even when you\'re not; relationships stay shallow; success feels hollow without someone to share it with. The more you protect yourself, the lonelier you become—and the more you believe connection is dangerous. You\'re stuck because vulnerability feels life-threatening, so you keep your distance, and the connection you want stays out of reach.',
-            'Overgiver': 'You wake up ready to give—time, energy, money, attention. You pour it out, hoping they\'ll see your worth and stay. You see love as something you must earn; yourself as only valuable when you\'re needed. The cost: you\'re depleted and resentful; relationships feel unequal; success and happiness get sacrificed for others. The more you give, the more they take—and the more resentful you become. You\'re stuck because stopping feels like abandonment, so you keep giving, and your own life gets smaller.',
-            'The Guarded One': 'You wake up protective—when someone gets close, you pull back. You keep a safe distance emotionally; connection feels risky. You see people as potential sources of pain; distance feels like safety. The cost: you\'re alone even when you\'re not; relationships stay shallow; success feels hollow without someone to share it with. The more you protect yourself, the lonelier you become—and the more you believe connection is dangerous. You\'re stuck because vulnerability feels life-threatening, so you keep your distance, and the connection you want stays out of reach.',
-            'Guarded One': 'You wake up protective—when someone gets close, you pull back. You keep a safe distance emotionally; connection feels risky. You see people as potential sources of pain; distance feels like safety. The cost: you\'re alone even when you\'re not; relationships stay shallow; success feels hollow without someone to share it with. The more you protect yourself, the lonelier you become—and the more you believe connection is dangerous. You\'re stuck because vulnerability feels life-threatening, so you keep your distance, and the connection you want stays out of reach.'
+            'Fixer': 'You wake up scanning for problems to solve—someone\'s upset, a project slipping, a friend struggling. You step in, take over, offer advice before they ask. You see people as needing you, and that feels safe. The cost: you\'re exhausted, relationships feel one-sided, and you\'ve lost track of your own dreams.',
+            'Perfectionist': 'You wake up with a mental checklist—every task has to be "right" before you start or finish. You edit, revise, second-guess. You see the world as a judge and yourself as never quite good enough. The cost: opportunities pass while you\'re still preparing; you never feel satisfied; you burn out from the internal pressure.',
+            'Pleaser': 'You wake up attuned to everyone else\'s needs—your partner, your boss, your friend. You shape your day around what they want and say yes when you want to say no. The cost: you\'ve lost yourself, resentment builds, relationships feel hollow because they\'re built on a version of you that isn\'t real.',
+            'Performer': 'You wake up needing to prove something—today you\'ll achieve, impress, show your worth. You dress for the part, say the right things, grind. The cost: you feel exhausted when the applause stops; relationships feel shallow; success never satisfies because there\'s always another bar to clear.',
+            'Escaper': 'You wake up and reach for distraction—scroll, busywork, anything but the hard conversation or the difficult feeling. When things get real, you "remember" something else you need to do. The cost: you\'re disconnected from yourself and others; relationships stay surface-level; real fulfillment never lands because you\'re never fully present.',
+            'Overthinker': 'You wake up in your head—every decision gets analyzed, every text decoded, every move second-guessed. You see the world as a puzzle to solve and action as risky until you\'ve thought it through. The cost: opportunities pass while you\'re still thinking; relationships suffer from over-analysis; you stay in your head while life passes you by.',
+            'Withdrawer': 'You wake up protective—when someone gets close, you pull back. You keep a safe distance emotionally; connection feels risky. The cost: you\'re alone even when you\'re not; relationships stay shallow; the connection you want stays out of reach.',
+            'Overgiver': 'You wake up ready to give—time, energy, money, attention. You pour it out, hoping they\'ll see your worth and stay. The cost: you\'re depleted and resentful; relationships feel unequal; your own life gets smaller.',
+            'The Guarded One': 'You wake up protective—when someone gets close, you pull back. You keep a safe distance emotionally; connection feels risky. The cost: you\'re alone even when you\'re not; relationships stay shallow; the connection you want stays out of reach.',
+            'Guarded One': 'You wake up protective—when someone gets close, you pull back. You keep a safe distance emotionally; connection feels risky. The cost: you\'re alone even when you\'re not; relationships stay shallow; the connection you want stays out of reach.'
         };
 
-        let text = looksLikeByPattern[pName] || looksLikeByPattern['Fixer'];
-        if (prim) {
-            text += ' Your ' + prim + ' amplifies this—beliefs that drove you then, still driving you now.';
-            if (sec) text += ' Your ' + sec + ' adds another layer, making the pattern feel even more automatic.';
-        }
-        return text;
+        return looksLikeByPattern[pName] || looksLikeByPattern['Fixer'];
     }
 
     // Build "What powers it" text: driver % + short validation/survival line (trimmed for brevity)
@@ -2316,6 +2321,296 @@
         `;
     }
     
+    /**
+     * Questions Users Want Answered - Focused, personalized Q&A.
+     * PRIORITY: relationship status + pain (biggest challenge) + fear (biggest fear) drive selection.
+     * Addresses: ideal partner, compatibility, who they attract (traits/flaws), their behaviors that are the issue.
+     */
+    function getQuestionsUsersWantAnswered(pattern, archetype, currentPain, biggestFear, currentPainOtherText, biggestFearOtherText, relationshipStatus, exactAge, driverPercentages, sortedDrivers, answers, driverScores, quizData) {
+        if (!pattern || !pattern.name) return '';
+        currentPainOtherText = currentPainOtherText || null;
+        biggestFearOtherText = biggestFearOtherText || null;
+        const pName = pattern.name;
+        const patternLookup = (pName === 'The Guarded One' || pName === 'Guarded One') ? 'Withdrawer' : pName.replace(/^The\s+/i, '');
+        const coreBelief = pattern.coreBelief || 'If I protect myself, I\'m safe.';
+        const shadow = pattern.shadow ? pattern.shadow.split(' → ')[0] : 'your pattern';
+        const shadowResult = pattern.shadow ? pattern.shadow.split(' → ')[1] : 'same results';
+        const resetFocus = pattern.resetFocus || 'pattern interruption';
+        const archName = archetype && archetype.name ? archetype.name : '';
+        const dominantDriver = sortedDrivers && sortedDrivers[0] ? sortedDrivers[0][0] : 'control';
+        const driverLabels = { 'control': 'Control', 'avoidance': 'Avoidance', 'validation': 'Validation', 'fear-of-rejection': 'Fear of Rejection' };
+        const topDriver = driverLabels[dominantDriver] || dominantDriver;
+        const topPct = driverPercentages && driverPercentages[dominantDriver] != null ? driverPercentages[dominantDriver] : 0;
+
+        const PAIN_LABELS = { 'same-type':'attracting the same type', 'push-away':'pushing people away when it gets real', 'stay-when-shouldnt':'staying when you know you shouldn\'t', 'lose-interest':'losing interest when someone treats you well', 'sabotage':'sabotaging when it gets serious', 'stuck-disconnected':'feeling stuck or disconnected', 'keep-going-back':'going back to someone who hurt you', 'cheated-betrayed':'betrayal or being cheated on', 'tolerate-less':'tolerating less than you deserve', 'ignore-red-flags':'ignoring red flags', 'emotional-unavailable':'emotional unavailability', 'toxic-patterns':'toxic patterns', 'same-fights':'same fights over and over', 'situationship':'a situationship that won\'t progress', 'tired-single':'being tired of being single', 'dont-know-why':'not knowing why relationships keep failing' };
+        const FEAR_LABELS = { 'cheated-betrayed':'being cheated on or betrayed', 'abandoned':'being abandoned', 'rejected':'being rejected', 'alone-forever':'being alone forever', 'losing-myself':'losing yourself', 'trapped':'being trapped', 'not-good-enough':'not being good enough', 'seen-then-rejected':'being seen and then rejected', 'replaced':'being replaced', 'hurt-again':'being hurt again', 'unwanted':'being unwanted', 'controlled':'being controlled', 'im-the-problem':'being the problem', 'never-find-right':'never finding the right person', 'repeat-parents':'repeating your parents\' relationship', 'emotionally-neglected':'being emotionally neglected', 'taken-for-granted':'being taken for granted', 'vulnerable-hurt':'being vulnerable and getting hurt' };
+        const isOtherPain = !currentPain || (currentPain || '').toLowerCase().replace(/\s+/g, '-') === 'other';
+        const isOtherFear = !biggestFear || (biggestFear || '').toLowerCase().replace(/\s+/g, '-') === 'other';
+        const painLabel = (isOtherPain && currentPainOtherText && String(currentPainOtherText).trim()) ? String(currentPainOtherText).trim() : (PAIN_LABELS[(currentPain || '').toLowerCase().replace(/\s+/g, '-')] || 'your current challenge');
+        const fearLabel = (isOtherFear && biggestFearOtherText && String(biggestFearOtherText).trim()) ? String(biggestFearOtherText).trim() : (FEAR_LABELS[(biggestFear || '').toLowerCase().replace(/\s+/g, '-')] || 'your deepest fear');
+        const usePainFearFraming = (currentPain && !isOtherPain) || (biggestFear && !isOtherFear) || (isOtherPain && currentPainOtherText) || (isOtherFear && biggestFearOtherText);
+
+        const PLAIN_LANG = { 'Fixer':'people who take charge and solve problems', 'Perfectionist':'people who strive for flawlessness', 'Pleaser':'people who prioritize harmony and avoid conflict', 'Performer':'people who achieve and seek recognition', 'Escaper':'people who avoid difficult emotions', 'Overthinker':'people who analyze before acting', 'Withdrawer':'people who protect through distance', 'Overgiver':'people who give more than they receive' };
+        const EARLY_WARNING = { 'Fixer':['You jump in with solutions before they ask', 'You feel restless when they handle something without you', 'You notice their problems before your own needs'], 'Perfectionist':['You start listing flaws or "what ifs"', 'You delay deciding or committing', 'You feel anxious when things aren\'t "right"'], 'Pleaser':['You say yes when you mean no', 'You adapt your plans to theirs without being asked', 'You feel a knot in your stomach before speaking up'], 'Performer':['You dress or prepare to impress', 'You steer conversation to your wins', 'You hide a struggle or vulnerability'], 'Escaper':['You reach for your phone or "something to do"', 'You change the subject when it gets emotional', 'You feel the urge to leave or end the conversation'], 'Overthinker':['You replay the conversation in your head', 'You analyze their tone or word choice', 'You delay responding to "get it right"'], 'Withdrawer':['You feel the walls go up', 'You give short answers or go silent', 'You create physical or emotional distance'], 'Overgiver':['You offer help before they ask', 'You put their needs ahead of yours automatically', 'You feel uneasy when they don\'t need you'] };
+        const SCRIPT_EXAMPLE = { 'Fixer':{ trigger:'When they share a problem', usual:'you jump in with solutions', try:'"Do you want my help figuring this out, or do you just need me to listen?"', partnerSay:'"I\'m stressed about work"', realEx:'When your partner says "I\'m stressed about work," you usually jump in with solutions. Instead, try: "Do you want my help figuring this out, or do you just need me to listen?"' }, 'Pleaser':{ trigger:'When they suggest plans you don\'t want', usual:'you say yes anyway', try:'"Let me check—I\'ll get back to you." Then honestly decide.', partnerSay:'"Let\'s do dinner with my friends Saturday"', realEx:'When your partner says "Let\'s do dinner with my friends Saturday," you usually say yes even when you\'re exhausted. Instead, try: "Let me check my energy—I\'ll get back to you."' }, 'Performer':{ trigger:'When they ask how you\'re really doing', usual:'you give the highlight reel', try:'"Honestly? I\'ve been struggling with ___. I didn\'t want to burden you."', partnerSay:'"How are you really doing?"', realEx:'When your partner says "How are you really doing?," you usually give the highlight reel. Instead, try: "Honestly? I\'ve been struggling with ___. I didn\'t want to burden you."' }, 'Escaper':{ trigger:'When conflict or emotion arises', usual:'you deflect or leave', try:'"I need a moment. This matters—I\'ll be back in 10."', partnerSay:'"We need to talk about us"', realEx:'When your partner says "We need to talk about us," you usually deflect or leave. Instead, try: "I need a moment. This matters—I\'ll be back in 10."' }, 'Overthinker':{ trigger:'When you\'re stuck analyzing', usual:'you keep thinking', try:'"What would I do if I already knew?" Then do that.', partnerSay:'"What do you think?"', realEx:'When your partner says "What do you think?," you usually overanalyze until the moment passes. Instead, try: "What would I do if I already knew?" Then do that.' }, 'Withdrawer':{ trigger:'When they get close', usual:'you pull away', try:'"I\'m scared of ___. I\'m working on staying."', partnerSay:'"I want to be closer"', realEx:'When your partner says "I want to be closer," you usually pull away. Instead, try: "I\'m scared of ___. I\'m working on staying."' }, 'Overgiver':{ trigger:'When they offer to help', usual:'you deflect or repay immediately', try:'"Yes, thank you." Don\'t repay. Receive.', partnerSay:'"Let me get that for you"', realEx:'When your partner says "Let me get that for you," you usually deflect or repay immediately. Instead, try: "Yes, thank you."' }, 'Perfectionist':{ trigger:'When you\'re stuck on a decision', usual:'you keep analyzing', try:'"Good enough is enough. I\'m choosing ___."', partnerSay:'"Where should we go?"', realEx:'When your partner says "Where should we go?," you usually overthink until the moment passes. Instead, try: "Good enough is enough. I\'m choosing ___."' } };
+        const HEALTHY_VISION = { 'Fixer':'Both of you solve your own problems; you listen without fixing; support flows both ways.', 'Perfectionist':'You choose "good enough" over perfect; you accept them as they are; connection matters more than being right.', 'Pleaser':'You say no without guilt; they know the real you; you both speak up when something\'s wrong.', 'Performer':'You show the real you; they love you beyond your achievements; you can rest without performing.', 'Escaper':'You stay when it gets hard; you face emotions together; intimacy deepens instead of stalling.', 'Overthinker':'You act before you\'re sure; you trust their words; you\'re present instead of in your head.', 'Withdrawer':'You open up when it\'s safe; they give you space without abandoning; you feel seen without being consumed.', 'Overgiver':'You receive as much as you give; they contribute; your needs matter as much as theirs.' };
+        const COMPAT_CHECKLIST = { 'Fixer':['Do they let you help sometimes without feeling controlled?','Can they handle their own problems?','Do you feel you can step back without the relationship collapsing?'], 'Pleaser':['Do they ask what you want?','Can you say no without them withdrawing?','Do they notice when you\'re not okay?'], 'Performer':['Do they value you beyond your achievements?','Can you be vulnerable without performing?','Do they see the real you?'], 'Escaper':['Do they respect your need for space?','Will they show up when things get hard?','Can you both face conflict?'], 'Overthinker':['Do they give you clarity when you ask?','Can you act without perfect certainty?','Do they tolerate your need to process?'], 'Withdrawer':['Do they give you space without abandoning?','Can they handle when you need distance?','Do they pursue without smothering?'], 'Overgiver':['Do they receive your care without taking?','Do they give back?','Can you say when you need something?'], 'Perfectionist':['Can they handle your standards without exhausting themselves?','Do they call out your critique gently?','Can you choose "good enough" with them?'] };
+        const RED_FLAGS_PARTNER = { 'Fixer':['They constantly need rescuing and never solve their own problems','They resent or resist when you try to help','They take your help but don\'t reciprocate when you need support'], 'Perfectionist':['They can\'t handle feedback or being "wrong"','They shut down when you point out flaws','They never meet your standards—or exhaust themselves trying'], 'Pleaser':['They never ask what you want','They take your yes for granted','They withdraw or punish when you say no'], 'Performer':['They love your achievements more than the real you','They compete instead of connect','They leave or lose interest when the mask slips'], 'Escaper':['They take without giving back','They pursue hard then disappear when you get close','They avoid difficult conversations or commitment'], 'Overthinker':['They feel interrogated by your questions','They can\'t tolerate your need to process','They push for quick decisions you\'re not ready for'], 'Withdrawer':['They smother or pursue too hard','They can\'t give you space without abandoning','They take your distance as rejection and give up'], 'Overgiver':['They take your care without reciprocating','They feel smothered by your giving','They leave when you finally need something'] };
+
+        const compat = (function() {
+            const c = { 'Fixer':{attract:'Pleasers, Overgivers, and Escapers—people who want help or feel overwhelmed', attractPlain:'people who want support or feel overwhelmed, who prioritize harmony, or who avoid commitment', attractFlaws:'may take your help without reciprocating, feel controlled when you step in, or pull away when they feel "fixed"', stronger:'Partners who prioritize harmony or give a lot, who appreciate your reliability—as long as you listen instead of fix', clash:'other people who take charge (control battles), or people who strive for flawlessness (both want to be right)' },
+                'Perfectionist':{attract:'Pleasers and Overgivers who work to meet your standards', attractPlain:'people who strive to please or give a lot, who may exhaust themselves trying to measure up', attractFlaws:'may exhaust themselves trying, feel judged, or never measure up in your eyes', stronger:'Partners secure in themselves who can gently call out your standards', clash:'other people who strive for flawlessness, or people who avoid difficult emotions (they want freedom; you want structure)' },
+                'Pleaser':{attract:'Fixers and Performers who like to take charge', attractPlain:'people who take charge and solve problems, or who achieve and seek recognition—they may not notice when you need support', attractFlaws:'may not notice when you need support, take your yes for granted, or love the version you perform', stronger:'Partners who ask what you need and respect boundaries', clash:'other people who prioritize harmony (neither says what they want), or people who protect through distance' },
+                'Performer':{attract:'Pleasers and Overgivers who admire your achievements', attractPlain:'people who prioritize harmony or give a lot—they may love your achievements more than the real you', attractFlaws:'may love the performance more than the real you, leave when the mask slips, or compete instead of connect', stronger:'Partners who value vulnerability and the real you', clash:'other people who achieve and seek recognition (competition), or people who protect through distance' },
+                'Escaper':{attract:'Fixers and Overgivers who try to save or stabilize you', attractPlain:'people who take charge or give a lot—they try to "save" you, and you may pull away when they do', attractFlaws:'may take without giving back, feel abandoned when you pull away, or burn out pursuing you', stronger:'Partners who respect space and choose to show up when it gets real', clash:'people who strive for flawlessness, or people who give more than they receive (you feel smothered)' },
+                'Overthinker':{attract:'Pleasers and Performers who go with your flow', attractPlain:'people who go with the flow or keep things moving—you may overthink them anyway', attractFlaws:'may feel interrogated, exhausted by your analysis, or never feel fully "known"', stronger:'Partners who gently ground you and create safety to feel instead of think', clash:'other people who analyze before acting, or people who avoid difficult emotions' },
+                'Withdrawer':{attract:'Overgivers and Pleasers who pursue you', attractPlain:'people who give a lot or prioritize harmony—they pursue you, and may burn out when you keep pulling away', attractFlaws:'may burn out when you keep pulling away, feel rejected, or take your distance as not caring', stronger:'Partners who give you space without abandoning', clash:'other people who protect through distance, or people who give more than they receive' },
+                'Overgiver':{attract:'Escapers and Withdrawers who need nurturing', attractPlain:'people who avoid commitment or protect through distance—they need nurturing, and may take without giving back', attractFlaws:'may take without giving back, feel smothered by your giving, or leave when you need something', stronger:'Partners who receive and reciprocate', clash:'other people who give more than they receive, or people who protect through distance' } };
+            return c[patternLookup] || c['Fixer'];
+        })();
+        const pitfalls = (RELATIONSHIP_PITFALLS && RELATIONSHIP_PITFALLS[patternLookup]) ? RELATIONSHIP_PITFALLS[patternLookup] : [];
+
+        const OPEN_VARIED = ['Here\'s the insight: ', 'The key: ', 'What matters: ', 'What you need to know: ', 'The bottom line: ', 'For you: ', 'In your case: ', 'Practically: '];
+        function getOpening(idx) {
+            if (idx >= 2) return OPEN_VARIED[Math.min(idx - 2, OPEN_VARIED.length - 1)];
+            if (!usePainFearFraming) return 'Based on your pattern and situation, ';
+            const parts = [];
+            if ((currentPain && !isOtherPain) || (isOtherPain && currentPainOtherText)) parts.push(`your biggest challenge is ${painLabel}`);
+            if ((biggestFear && !isOtherFear) || (isOtherFear && biggestFearOtherText)) parts.push(`your biggest fear is ${fearLabel}`);
+            if (parts.length) return `Given that ${parts.join(' and ')}, here's what's really going on: `;
+            return 'Based on your pattern, ';
+        }
+
+        const qaDb = [
+            { rel: ['single','dating','in a relationship','married','divorced'], q: 'Who do I attract and why—and what are their likely flaws?', a: (p, idx) => {
+                return `${getOpening(idx)}As a ${pName} (${PLAIN_LANG[patternLookup] || 'people who fit your dynamic'}), you attract ${compat.attractPlain}. Their likely flaws: ${compat.attractFlaws}. Your core belief "${coreBelief}" creates a magnetic pull—you feel safe with people who fit this dynamic, even when it hurts. Stronger fits: ${compat.stronger}. The insight: you attract what you are and what you tolerate. To attract different, become someone for whom healthy feels normal.`; } },
+            { rel: ['single','dating','in a relationship','married','divorced'], q: 'What are MY behaviors and habits that are becoming the issue?', a: (p, idx) => {
+                const myBehaviors = pitfalls.length >= 2 ? pitfalls.slice(0, 3).map(x => x.split('—')[0].toLowerCase()).join('; ') : (shadow ? shadow.toLowerCase() : 'your default pattern behavior');
+                return `${getOpening(idx)}Your ${pName} pattern shows up in specific behaviors: ${myBehaviors}. Your ${archName} archetype (${topDriver} at ${topPct}%) drives these—you're not broken, you're running a survival strategy that stopped serving you. The beliefs behind it: "${coreBelief}" The fix: ${resetFocus.toLowerCase()}. Notice when you're doing it; pause; choose differently. That's the pattern interrupt.`; } },
+            { rel: ['single','dating'], q: 'What\'s my ideal partner and compatibility?', a: (p, idx) => {
+                return `${getOpening(idx)}Your ideal partner isn't about a "type"—it's about someone who fits your growth. As a ${pName}, stronger compatibility: ${compat.stronger}. You often clash with: ${compat.clash}. The key: look for someone who can receive your ${topDriver} driver without being drained—and who calls you out gently when you slip into ${shadow.toLowerCase()}.`; } },
+            { pain: ['same-type'], fear: ['rejected','alone-forever','never-find-right'], q: 'Why do I keep attracting the same type of person?', a: (p, idx) => {
+                return `${getOpening(idx)}Your nervous system is wired to feel "normal" with certain dynamics. Your ${pName} pattern means you attract ${compat.attractPlain}—and they often have these traits: ${compat.attractFlaws}. Your core belief "${coreBelief}" drives you toward people who trigger that loop. Different will feel wrong at first; that's your brain resisting change. When you feel the pull toward someone who fits the old pattern, pause. Ask: "Is this familiar or is this healthy?" That pause is the pattern interrupt.`; } },
+            { pain: ['push-away','sabotage'], fear: ['trapped','controlled','losing-myself'], q: 'Why do I push people away when it gets real?', a: (p, idx) => {
+                return `${getOpening(idx)}Your ${pName} pattern protects you through ${shadow.toLowerCase()}. Closeness triggers your nervous system—intimacy feels like losing control. Your ${archName} archetype drives you to ${dominantDriver === 'avoidance' ? 'stay free' : dominantDriver === 'fear-of-rejection' ? 'protect yourself' : 'maintain control'}. When commitment looms, your subconscious runs the exit strategy. The cost: you never get fully seen or loved. Your behaviors that feed this: ${pitfalls.length ? pitfalls[0].toLowerCase() : 'pushing away when they get close'}. The shift: small doses of vulnerability. Share one truth per week. Your brain needs evidence that closeness doesn't always lead to hurt.`; } },
+            { pain: ['stay-when-shouldnt','tolerate-less','ignore-red-flags'], fear: ['abandoned','alone-forever','hurt-again'], q: 'Why do I stay when I know I shouldn\'t?', a: (p, idx) => {
+                return `${getOpening(idx)}Your worth is tied to the relationship. Leaving feels like admitting you're not enough—or that you'll be alone forever. Your core belief "${coreBelief}" keeps you trying to fix, please, or control the outcome. Your behaviors: ${pitfalls.length ? pitfalls.slice(0,2).map(x=>x.split('—')[0]).join('; ').toLowerCase() : 'overfunctioning to avoid being left'}. The first step: name it. "I'm staying because I'm scared of ___." Once you see it, you can choose differently. Reset focus: ${resetFocus.toLowerCase()}.`; } },
+            { pain: ['lose-interest'], fear: ['trapped','controlled'], q: 'Why do I lose interest when someone treats me well?', a: (p, idx) => {
+                return `${getOpening(idx)}Your nervous system is calibrated for intensity. Stability feels wrong—"boring" might mean "safe" but your brain reads it as "wrong." Your ${pName} pattern associates "good" with unsafe. Your ${archName} archetype may seek the chase—validation feels like love when it's earned. The fix: reframe. "Boring" might mean "secure." Give it 90 days. Notice when you're deactivating—pulling away from someone good because it doesn't feel "right."`; } },
+            { pain: ['cheated-betrayed','keep-going-back'], fear: ['cheated-betrayed','hurt-again','replaced'], q: 'How do I trust again after being cheated on or betrayed?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern may have kept you in situations that reinforced "I'm not safe." Trust isn't about them—it's about your nervous system. After betrayal, your brain goes into hypervigilance. Rebuilding trust starts with yourself: "Can I trust my own judgment? Can I set boundaries and hold them?" The workbook's pattern interrupt gives you a pause—a moment to choose instead of react. Your ${archName} archetype (${topDriver}) means you may over-give to avoid abandonment or over-control to prevent betrayal—both backfire. Trust grows when you prove to yourself you can protect yourself without closing off.`; } },
+            { pain: ['stuck-disconnected','same-fights'], fear: ['emotionally-neglected','taken-for-granted'], q: 'Why do I feel stuck or disconnected in my relationship?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern shows up in how you connect—or don't. ${shadow} creates distance even when you want closeness. Same fights repeat because you're both protecting yourselves instead of being vulnerable. The loop: your pattern triggers theirs; theirs triggers yours. Neither of you is addressing the underlying need. The shift: one person has to go first. Share one thing you've been holding back. "I feel ___ when ___." Not blame—vulnerability. Your pattern keeps you safe but alone. The workbook helps you interrupt the default and choose connection. Your ${archName} archetype means you may need to ${dominantDriver === 'control' ? 'let go of fixing' : dominantDriver === 'validation' ? 'stop performing for approval' : dominantDriver === 'avoidance' ? 'stay present instead of checking out' : 'open up instead of protecting'}.`; } },
+            { pain: ['tired-single','dont-know-why'], fear: ['alone-forever','never-find-right'], q: 'Why do relationships keep failing for me?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern runs the show—and you may not see it yet. Relationships fail when both people operate from unconscious patterns. Yours: "${coreBelief}" Your ${archName} archetype (${topDriver} at ${topPct}%) drives how you show up—and how you attract. The good news: once you see it, you can change it. The workbook gives you the interrupt—the moment between trigger and reaction where you choose differently. You're not broken; you're running old software. The pattern formed in childhood: you learned a strategy to survive. It worked then. It doesn't work now. Update it.`; } },
+            { pain: ['situationship'], fear: ['trapped','rejected'], q: 'Why won\'t my situationship progress?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern may be keeping you in limbo—close enough to feel connection, far enough to feel safe. Situationships protect you from the vulnerability of commitment. The question: do you want it to progress, or does part of you prefer the safety of "not quite"? If you want more, you have to risk the conversation. Your ${archName} archetype means you may ${dominantDriver === 'avoidance' ? 'avoid the clarity conversation' : dominantDriver === 'fear-of-rejection' ? 'fear that asking will push them away' : 'hope they\'ll change without you having to ask'}. The workbook's pattern interrupt helps you choose clarity over comfort.`; } },
+            { pain: ['emotional-unavailable'], fear: ['vulnerable-hurt','seen-then-rejected'], q: 'Why am I (or they) emotionally unavailable?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern developed as protection. Emotional unavailability keeps you safe from rejection—if you don't fully show up, you can't fully get hurt. The cost: you never get fully seen or loved. Your ${archName} archetype (${topDriver}) means you may ${dominantDriver === 'avoidance' ? 'check out when things get intense' : dominantDriver === 'fear-of-rejection' ? 'hold back to avoid being rejected' : 'perform instead of connect'}. The shift: small disclosures. Share one feeling per week. "I felt ___ when ___." Your brain needs evidence that vulnerability doesn't always lead to hurt. The workbook's reset focus—${resetFocus.toLowerCase()}—directly addresses this.`; } },
+            { pain: ['sabotage'], fear: ['trapped','seen-then-rejected'], q: 'Why do I sabotage when it gets serious?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern protects you by creating distance before you can get hurt. When things get real, your nervous system screams "danger"—commitment feels like losing control or being fully seen and rejected. Sabotage is your brain's exit strategy. Your ${archName} archetype drives this: ${dominantDriver === 'avoidance' ? 'freedom feels safer than commitment' : dominantDriver === 'fear-of-rejection' ? 'reject first before you get rejected' : 'control the outcome by ending it yourself'}. The fix: name it. "I'm pulling away because I'm scared of ___." The workbook's pattern interrupt creates the pause between that fear and the sabotage. Choose connection once. See what happens.`; } },
+            { pain: ['tolerate-less','ignore-red-flags'], fear: ['alone-forever','rejected'], q: 'Why do I tolerate less than I deserve?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern ties your worth to having someone—anyone. "${coreBelief}" So you accept crumbs to avoid being alone. The cost: you teach people you'll accept less. Your ${archName} archetype (${topDriver}) may drive you to ${dominantDriver === 'validation' ? 'earn love by accepting whatever you get' : dominantDriver === 'fear-of-rejection' ? 'avoid rejection by not asking for more' : 'stay in control by not rocking the boat'}. The shift: raise your bar before the next person. Write down what you will and won't accept. When someone crosses it, you'll have a line to hold. The workbook helps you see when you're lowering your standards out of fear.`; } },
+            { pain: ['toxic-patterns'], fear: ['hurt-again','im-the-problem'], q: 'How do I break free from toxic patterns?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern isn't the problem—it's the strategy you developed to survive. Toxic dynamics feel familiar because they match what you learned early. Breaking free requires: (1) seeing the pattern clearly, (2) interrupting the automatic response, (3) choosing differently. The workbook gives you the structure. Neuroscience shows 21–66 days of consistent practice rewires neural pathways. Your ${archName} archetype means your default (${topDriver}) may pull you back into the familiar—awareness is the first step. You can't think your way out; you have to act your way out.`; } },
+            { pain: ['same-fights'], fear: ['emotionally-neglected','taken-for-granted'], q: 'Why do we have the same fights over and over?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern and theirs are in a loop. You both trigger each other's core fears. Same fight, different day—because neither of you is addressing the underlying need. The surface fight (money, chores, tone) masks the real one: "Do you see me? Am I enough?" Your ${archName} archetype means you may ${dominantDriver === 'control' ? 'fight to be right' : dominantDriver === 'validation' ? 'fight for acknowledgment' : dominantDriver === 'avoidance' ? 'withdraw instead of engage' : 'fight to avoid being abandoned'}. The shift: one of you names the real issue. "When we fight about X, I think I'm really scared of ___." Vulnerability breaks the loop.`; } },
+            { pain: ['keep-going-back'], fear: ['abandoned','alone-forever'], q: 'Why do I keep going back to someone who hurt me?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern associates that person with "home"—even when home hurts. Familiar feels safer than unknown. Your brain prefers the devil it knows. Your ${archName} archetype (${topDriver}) may drive this: ${dominantDriver === 'validation' ? 'their attention feels like proof you\'re worthy' : dominantDriver === 'fear-of-rejection' ? 'leaving feels like admitting you\'re unlovable' : dominantDriver === 'avoidance' ? 'going back avoids the vulnerability of starting over' : 'fixing them feels like fixing yourself'}. The fix: see the cost. Write down what going back costs you—peace, self-respect, progress. Each time you choose to stay away, you weaken the pull. The workbook's identity shift helps you choose the new story over the old one.`; } },
+            { fear: ['not-good-enough','im-the-problem'], q: 'Am I the problem?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}you're not the problem—your pattern is. Your ${pName} pattern developed to protect you. It's not a flaw; it's a survival strategy that stopped serving you. The belief "I'm the problem" is often the pattern talking—shame keeps you stuck. Your ${archName} archetype (${topDriver}) may amplify this: you may over-analyze, over-perform, or over-protect to prove you're enough—and when it fails, you blame yourself. The shift: self-compassion. "I developed this to survive. Now I'm choosing something different." The workbook helps you interrupt the shame spiral and act from who you're becoming.`; } },
+            { fear: ['repeat-parents'], q: 'Will I repeat my parents\' relationship?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern likely formed in response to what you witnessed. We internalize what we see—but awareness breaks the cycle. You're not doomed to repeat. The pattern interrupt creates a gap: between what you learned and what you choose. Each time you respond differently, you weaken the old pathway. Your ${archName} archetype may mirror or rebel against what you saw—either way, the unconscious drives the show until you see it. The workbook gives you the blueprint. You're already one step ahead—you see it.`; } },
+            { fear: ['unwanted','replaced'], q: 'Why do I feel unwanted or easily replaced?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern may have you ${shadow.toLowerCase()}—which can make partners feel they can't fully reach you, or that you're replaceable because you don't fully show up. Your core belief "${coreBelief}" may keep you from claiming your worth. Your ${archName} archetype (${topDriver}) means you may ${dominantDriver === 'validation' ? 'seek external proof you\'re wanted—which never feels enough' : dominantDriver === 'fear-of-rejection' ? 'anticipate rejection and act in ways that create it' : 'over-give to earn your place—which attracts takers'}. The shift: your worth isn't determined by how wanted you feel. The workbook's identity shift helps you anchor in who you are, not how others respond.`; } },
+            { fear: ['controlled','trapped'], q: 'Why do I feel controlled or trapped in relationships?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern may create or attract dynamics where control feels necessary. If you ${shadow.toLowerCase()}, your partner may tighten their grip. Or you may feel trapped because your ${archName} archetype (${topDriver}) drives you to ${dominantDriver === 'avoidance' ? 'need freedom—any commitment feels like a cage' : dominantDriver === 'control' ? 'need to be in charge—someone else leading feels like loss of self' : 'need validation—depending on someone feels like losing yourself'}. The insight: the trap is often internal. The workbook helps you distinguish between healthy boundaries and the pattern's need for escape or control.`; } },
+            { rel: ['single','dating'], q: 'How do I attract a healthy relationship?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern attracts what feels familiar. To attract healthy, you have to become someone for whom healthy feels normal. That means: (1) heal the pattern so you're not operating from fear, (2) get clear on what you want, (3) act from that clarity. Your ${archName} archetype (${topDriver} at ${topPct}%) drives how you show up—and how you attract. The workbook's identity shift—who are you becoming?—is the magnet. You attract what you are, not what you want.`; } },
+            { rel: ['married','in a relationship'], q: 'How do I improve my relationship without changing them?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern shows up in the dynamic. You can't change them—you can only change you. When you interrupt your default (${shadow.toLowerCase()}), the whole system shifts. One person changing creates new feedback loops. Your ${archName} archetype means your ${topDriver} driver may be running the show—${dominantDriver === 'control' ? 'letting go of fixing will change the dance' : dominantDriver === 'validation' ? 'stopping the performance will invite real connection' : dominantDriver === 'avoidance' ? 'staying present will open space for intimacy' : 'opening up will invite them in'}. The workbook's reset focus—${resetFocus.toLowerCase()}—is your leverage. Focus there first.`; } },
+            { rel: ['divorced'], q: 'How do I heal and not repeat my past?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern ran the show in your last relationship. Healing means seeing it clearly and choosing differently. The workbook gives you the interrupt—the moment between trigger and reaction. Post-divorce, you have a rare chance: you know the cost of the old pattern. Your ${archName} archetype (${topDriver}) drove how you showed up—and how you attracted. Use that clarity. The identity shift isn't about fixing the past; it's about becoming who you want to be next.`; } },
+            { q: 'Is my pattern fixable?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}yes. Your ${pName} pattern is learned—and what's learned can be unlearned. Neuroscience shows neural pathways change through repetition. The workbook's pattern interrupt creates the gap: awareness before reaction. Each time you choose differently, you strengthen the new pathway. Your ${archName} archetype and ${topDriver} driver aren't fixed—they're habits. It's not willpower; it's practice. Progress over perfection.`; } },
+            { q: 'Why does this keep happening to me?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern runs on autopilot. "${coreBelief}"—that belief drives your choices without you realizing it. Same input, same output. Your ${archName} archetype (${topDriver}) reinforces it: you keep using the same strategy because it once worked. The workbook helps you see the loop: trigger → pattern → result. Once you see it, you can interrupt it. You're not cursed; you're programmed. Reprogram.`; } },
+            { q: 'What\'s the first step to change?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}awareness. Notice when your ${pName} pattern shows up. That pause—between trigger and reaction—is where change happens. Your ${archName} archetype means your default (${topDriver}) will kick in automatically. The workbook gives you the structure: see the pattern, name it, choose differently. Start with one situation this week. One interrupt. That's the first step.`; } },
+            { pattern: ['Fixer','Overgiver'], q: 'Why do I attract people who need fixing?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern creates a magnetic pull toward people who need help. You feel valuable when you're fixing—your ${archName} archetype (${topDriver}) drives you to take charge and solve. The problem: you attract takers, not partners. They get the fix; you get exhausted. The insight: you're not broken for wanting to help—but when helping becomes your identity, you attract people who need fixing, not people who want to grow with you. The shift: let others solve their own problems. Your worth isn't tied to being needed.`; } },
+            { pattern: ['Pleaser','Overgiver'], q: 'Why do I give so much and get so little back?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern teaches people you'll accept imbalance. You give to earn love, approval, or safety—"If I give enough, they'll stay." Your ${archName} archetype (${topDriver}) means you may ${dominantDriver === 'validation' ? 'perform for approval' : dominantDriver === 'fear-of-rejection' ? 'over-give to avoid abandonment' : 'take care of others to feel in control'}. The cost: you attract people who take. The fix: give from overflow, not from lack. Fill your own cup first. The workbook helps you notice when you're giving from fear instead of love.`; } },
+            { pattern: ['Overthinker','Perfectionist'], q: 'How do I stop overthinking?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern uses analysis as protection—if you think it through enough, you'll be safe. Your brain believes more thinking = more control. The paradox: overthinking keeps you stuck. Your ${archName} archetype (${topDriver}) reinforces this—you seek certainty before acting. The shift: action before clarity. Do one small thing before you're "ready." Your brain learns that imperfect action is safer than endless analysis. The workbook's pattern interrupt creates the pause where you choose action over rumination.`; } },
+            { pattern: ['Escaper','Guarded One'], q: 'Why do I avoid conflict or difficult conversations?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern protects you by avoiding—conflict feels dangerous. Your ${archName} archetype (${topDriver}) means you may ${dominantDriver === 'avoidance' ? 'check out when things get tense' : dominantDriver === 'fear-of-rejection' ? 'avoid saying what you need to avoid rejection' : 'keep the peace to maintain control'}. The cost: resentment builds. Unsaid needs become invisible. The shift: one small truth. "I need to talk about something that's hard for me." Start there. The workbook helps you tolerate the discomfort of conflict instead of fleeing.`; } },
+            { pattern: ['Performer','Pleaser'], q: 'Why do I feel like I\'m never enough?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern ties your worth to external proof—achievement, approval, being needed. Your ${archName} archetype (${topDriver}) drives you to perform for validation. The trap: the bar keeps moving. You achieve, you get a moment of relief, then the voice returns—"not enough." The insight: enoughness can't be earned. It's a choice. The workbook's identity shift helps you anchor in who you are, not what you do. You were enough before you achieved anything.`; } },
+            { q: 'How do I set boundaries without feeling guilty?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern may equate boundaries with selfishness or rejection. Your core belief "${coreBelief}" means you've learned that saying no = danger. Guilt is the pattern's way of pulling you back into overgiving. The shift: boundaries aren't walls—they're clarity. "This is what I need." Your ${archName} archetype (${topDriver}) may make this hard—${dominantDriver === 'validation' ? 'you fear they\'ll reject you' : dominantDriver === 'control' ? 'you fear losing control of the outcome' : 'you fear being seen as difficult'}. The workbook helps you tolerate the guilt while choosing yourself.`; } },
+            { q: 'Why do I feel responsible for everyone\'s happiness?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}your ${pName} pattern learned early that your worth came from making others okay. If they're unhappy, you've failed. Your ${archName} archetype (${topDriver}) drives this—you take charge, perform, or protect to create safety. The insight: you can't control their happiness. Trying to creates codependency and burnout. The shift: "Their feelings are their responsibility. I can be kind without fixing." The workbook's reset focus—${resetFocus.toLowerCase()}—helps you step back from overfunctioning.`; } },
+            { rel: ['single'], q: 'How do I know if I\'m ready for a relationship?', a: (p, idx) => {
+                const ageNuance = exactAge != null ? (exactAge < 30 ? 'In your 20s, patterns are still forming—catching them now sets you up for decades.' : exactAge < 40 ? 'In your 30s, you have enough history to see the pattern clearly—use it.' : exactAge < 50 ? 'In your 40s, your pattern is visible and the cost of repeating is clear.' : 'At 50+, you have clarity many daters don\'t—your pattern is visible. Use that.') + ' ' : '';
+                const dot = getOpening(idx);
+                return `${dot}${ageNuance}Readiness isn't about being "fixed"—it's about awareness. You're ready when you can see your ${pName} pattern, name it when it shows up, and choose differently. Your ${archName} archetype (${topDriver}) will still run—but you'll have a pause. The workbook gives you that. You don't need to be perfect; you need to be willing. If you're asking, you're closer than you think.`; } },
+            { rel: ['married','in a relationship'], q: 'Can my relationship be saved?', a: (p, idx) => {
+                const dot = getOpening(idx);
+                return `${dot}relationships can shift when one person changes. Your ${pName} pattern is your leverage—when you interrupt ${shadow.toLowerCase()}, the whole dynamic can shift. Your ${archName} archetype means your ${topDriver} driver has been running the show. Change your part; see what happens. The workbook gives you the structure. You can't control their response—but you can control yours. Start there.`; } },
+            { rel: ['single','dating','in a relationship','married','divorced'], q: 'What are the early warning signs I\'m falling into my pattern?', a: (p, idx) => {
+                const signs = (EARLY_WARNING[patternLookup] || EARLY_WARNING['Fixer']).slice(0, 3);
+                return `${getOpening(idx)}Watch for these: (1) ${signs[0]}. (2) ${signs[1]}. (3) ${signs[2]}. When you notice one, pause. That moment—before you act—is the pattern interrupt. Say to yourself: "I'm in my pattern. I can choose differently." The earlier you catch it, the easier it is to shift.`; } },
+            { rel: ['single','dating','in a relationship','married','divorced'], q: 'What red flags in partners or situations should I watch for?', a: (p, idx) => {
+                const flags = (RED_FLAGS_PARTNER[patternLookup] || RED_FLAGS_PARTNER['Fixer']);
+                return `${getOpening(idx)}As a ${pName} (${PLAIN_LANG[patternLookup] || 'people who fit your dynamic'}), you attract ${compat.attractPlain}. Red flags to watch for: (1) ${flags[0]}. (2) ${flags[1]}. (3) ${flags[2]}. These aren't about judging—they're about noticing when a dynamic fits your old pattern. If you see several, pause. Ask: "Is this healthy or just familiar?"`; } },
+            { rel: ['married','in a relationship','single','dating'], q: 'How do I tell if my current or potential partner fits?', a: (p, idx) => {
+                const checklist = (COMPAT_CHECKLIST[patternLookup] || COMPAT_CHECKLIST['Fixer']);
+                return `${getOpening(idx)}Use this compatibility checklist. Ask yourself: (1) ${checklist[0]} (2) ${checklist[1]} (3) ${checklist[2]} If you answer no to most, the issue may be compatibility—not just your pattern. If you answer yes to most, your pattern is likely the main lever. You attract ${compat.attractPlain}. A good fit can receive your ${topDriver} driver without being drained.`; } },
+            { rel: ['single','dating','in a relationship','married','divorced'], q: 'What does a healthy relationship look like for me?', a: (p, idx) => {
+                const vision = HEALTHY_VISION[patternLookup] || HEALTHY_VISION['Fixer'];
+                return `${getOpening(idx)}For someone with your ${pName} pattern, healthy looks like: ${vision} That's what you're working toward. It won't feel natural at first—your nervous system is wired for the old dynamic. But each time you choose the new way (${resetFocus.toLowerCase()}), you get closer.`; } },
+            { rel: ['married','in a relationship'], q: 'Why have we grown apart—and how do I reconnect after years of distance?', a: (p, idx) => {
+                const ageNote = exactAge >= 50 ? 'After decades together, patterns calcify—you both default to what feels safe. Reconnection is still possible.' : exactAge >= 40 ? 'After years together, patterns calcify—you both default to what feels safe.' : '';
+                return `${getOpening(idx)}Your ${pName} pattern creates distance: ${shadow.toLowerCase()}. Over time, you both stop showing up fully. ${ageNote} To reconnect: one person goes first. Share one thing you've been holding back. Script: "I've been feeling ___ lately. I want us to be closer." Not blame—vulnerability. Your ${archName} archetype means you may ${dominantDriver === 'control' ? 'need to listen instead of fix' : dominantDriver === 'avoidance' ? 'need to stay present instead of checking out' : dominantDriver === 'validation' ? 'need to stop performing and be real' : 'need to open up instead of protecting'}.`; } },
+            { rel: ['divorced'], q: 'When is it safe to date again after divorce?', a: (p, idx) => {
+                const ageNote = exactAge >= 50 ? 'At your stage, you have clarity many daters don\'t—use it. Your pattern is visible; your cost is known.' : exactAge >= 40 ? 'At your stage, you have clarity younger daters don\'t—use it.' : '';
+                return `${getOpening(idx)}Safe to date when you can name your pattern when it shows up and choose differently. ${ageNote} Before you date: (1) Know your early warning signs (see above). (2) Use the compatibility checklist. (3) Watch who you're attracted to—familiar will feel "right." Pause. Ask: "Is this healthy or just familiar?"`; } },
+            { rel: ['divorced'], q: 'How do I avoid repeating my last relationship?', a: (p, idx) => {
+                const ageNote = exactAge >= 50 ? 'At your stage, you have clarity—and you know the cost of repeating. Use both.' : exactAge >= 40 ? 'At your stage, you have clarity—use it.' : '';
+                return `${getOpening(idx)}Your ${pName} pattern ran your last relationship. See it; interrupt it; you won't repeat it. ${ageNote} Before dating: know your early warning signs, use the compatibility checklist, and when someone feels "right," ask: "Is this healthy or just familiar?" Your pattern will pull you toward the same dynamic. Awareness is the interrupt.`; } },
+            { q: 'Am I the one who needs to change—or is the relationship the problem?', a: (p, idx) => {
+                return `${getOpening(idx)}Both can be true. Your pattern is always your leverage—you can only change you. But: if you're with someone who doesn't ask what you need, doesn't reciprocate, or consistently crosses your boundaries, the relationship may be the problem. Use the compatibility checklist (see "How do I know if my current partner is right for me?"). If they fail most checks, it's not just you. If they pass and you're still stuck, your pattern is the main lever. Start with your part; if nothing shifts, you have your answer.`; } },
+            { rel: ['married','in a relationship'], q: 'How do I talk to my partner about my pattern without sounding accusatory?', a: (p, idx) => {
+                const ex = SCRIPT_EXAMPLE[patternLookup] || SCRIPT_EXAMPLE['Fixer'];
+                return `${getOpening(idx)}Frame it as your work, not their fault. Script: "I've been looking at my relationship patterns. When ${ex.trigger.toLowerCase()}, I usually ${ex.usual.toLowerCase()}. I'm working on changing that—I'd love your patience when I slip." Keep it about you. If they ask how they can help: "When you notice me doing it, a gentle 'Hey, you doing okay?' helps." Not "You need to change." You're inviting them in, not accusing.`; } },
+            { rel: ['single','dating','in a relationship','married','divorced'], q: 'What\'s a concrete script I can use when my pattern kicks in?', a: (p, idx) => {
+                const ex = SCRIPT_EXAMPLE[patternLookup] || SCRIPT_EXAMPLE['Fixer'];
+                const realEx = ex.realEx || `When ${ex.trigger}, you usually ${ex.usual}. Instead, try: ${ex.try}`;
+                return `${getOpening(idx)}${realEx} That one line creates the pause. Use it this week.`; } },
+            { rel: ['single','dating','in a relationship','married','divorced'], q: 'How does my pattern show up with friends and family—not just romance?', a: (p, idx) => {
+                const friendEx = { 'Fixer':'you jump in to solve their problems', 'Pleaser':'you say yes to plans you don\'t want', 'Performer':'you perform instead of being real', 'Escaper':'you avoid hard conversations', 'Overthinker':'you overanalyze their texts or tone', 'Withdrawer':'you pull away when they get close', 'Overgiver':'you give more than you receive', 'Perfectionist':'you judge or hold them to high standards' }[patternLookup] || 'you repeat the same dynamic';
+                return `${getOpening(idx)}Your ${pName} pattern isn't just romantic. With friends and family: you ${friendEx}. Same pattern, different context. The fix is the same: notice when you're doing it; pause; choose differently. ${resetFocus.toLowerCase()}. The workbook applies to all relationships—the pattern shows up everywhere.`; } },
+            { rel: ['single','dating','in a relationship','married','divorced'], q: 'How did my childhood create this pattern?', a: (p, idx) => {
+                const originShort = { 'Fixer':'You likely learned that taking charge and solving problems kept you safe—maybe you were the "responsible one."', 'Pleaser':'You likely learned that pleasing others kept you safe—saying no led to conflict or rejection.', 'Performer':'You likely learned that achievement earned love—being "ordinary" felt dangerous.', 'Escaper':'You likely learned that feeling deeply was dangerous—staying mobile protected you.', 'Overthinker':'You likely learned that understanding would protect you—not knowing felt unsafe.', 'Withdrawer':'You likely learned that closeness led to hurt—distance felt safer.', 'Overgiver':'You likely learned that giving earned love—your needs didn\'t matter as much.', 'Perfectionist':'You likely learned that doing it right earned love—mistakes led to criticism.' }[patternLookup] || 'Your early experiences shaped how you learned to feel safe.';
+                return `${getOpening(idx)}${originShort} This ${pattern.name.toLowerCase()} pattern developed as a survival strategy—and it worked. But now it's limiting you. See the <strong>How It Developed</strong> section above for the full story. Awareness breaks the cycle: you're not doomed to repeat what you learned.`; } },
+            { pain: ['other'], fear: [], rel: ['single','dating','in a relationship','married','divorced'], q: 'I chose "Other" for my challenge—how does my pattern still apply?', a: (p, idx) => {
+                const customCtx = (currentPainOtherText && String(currentPainOtherText).trim()) ? `You shared: "${String(currentPainOtherText).trim()}"—` : '';
+                return `${getOpening(idx)}${customCtx}Your ${pName} pattern still runs the show. You attract ${compat.attractPlain}. Your core belief "${coreBelief}" drives how you respond. Your early warning signs: ${(EARLY_WARNING[patternLookup] || EARLY_WARNING['Fixer']).slice(0,2).join('; ')}. The fix is the same: ${resetFocus.toLowerCase()}. Notice when you're in the pattern; pause; choose differently. Your pattern shows up in your specific situation—even if it doesn't match a preset option.`; } },
+            { pain: [], fear: ['other'], rel: ['single','dating','in a relationship','married','divorced'], q: 'I chose "Other" for my fear—how does my pattern still apply?', a: (p, idx) => {
+                const customCtx = (biggestFearOtherText && String(biggestFearOtherText).trim()) ? `You shared: "${String(biggestFearOtherText).trim()}"—` : '';
+                return `${getOpening(idx)}${customCtx}Your ${pName} pattern still protects you from it. Your core belief "${coreBelief}" drives how you respond when you feel unsafe. Your ${archName} archetype (${topDriver}) means you ${dominantDriver === 'avoidance' ? 'avoid or escape' : dominantDriver === 'fear-of-rejection' ? 'protect through distance' : dominantDriver === 'validation' ? 'seek approval or perform' : 'take charge'}. The pattern developed to keep you safe from what you fear. Awareness lets you choose: is this protection still serving me? The workbook helps you interrupt the default.`; } },
+            { rel: ['single','dating','in a relationship','married','divorced'], q: 'Compatibility checklist: How do I assess a current or potential partner?', a: (p, idx) => {
+                const checklist = (COMPAT_CHECKLIST[patternLookup] || COMPAT_CHECKLIST['Fixer']);
+                return `${getOpening(idx)}Ask yourself: (1) ${checklist[0]} (2) ${checklist[1]} (3) ${checklist[2]} If most are yes, they're a stronger fit. If most are no, you may be repeating a familiar-but-unhealthy dynamic. Use this before committing—or to assess your current relationship.`; } }
+        ];
+
+        const painVal = (currentPain || '').toLowerCase().replace(/\s+/g, '-');
+        const fearVal = (biggestFear || '').toLowerCase().replace(/\s+/g, '-');
+        const relVal = (relationshipStatus || '').toLowerCase();
+        const relNorm = relVal.replace(/\s+/g, '-');
+        const patternBase = (pName || '').replace(/^The\s+/i, '').trim();
+
+        const scored = qaDb.map(item => {
+            let score = 0;
+            if (item.core) score += 10;
+            if (item.rel && item.rel.some(r => { const rn = (r || '').toLowerCase().replace(/\s+/g, '-'); return relNorm.includes(rn) || rn.includes(relNorm); })) score += 4;
+            if (item.pain && (item.pain.includes(painVal) || item.pain.some(p => painVal.includes(p)))) score += 3;
+            if (item.fear && (item.fear.includes(fearVal) || item.fear.some(f => fearVal.includes(f)))) score += 3;
+            if (item.pattern && item.pattern.some(pat => patternBase.toLowerCase() === (pat || '').toLowerCase())) score += 2;
+            if (!item.pain && !item.fear && !item.rel && !item.pattern && !item.core) score = 1;
+            return { ...item, score };
+        }).filter(x => x.score > 0).sort((a, b) => b.score - a.score);
+
+        const coreSelected = [];
+        ['What are the early warning signs','What red flags in partners','What does a healthy relationship look like','Compatibility checklist','How do I tell if my current','What\'s a concrete script','Am I the one who needs to change','How did my childhood create','How does my pattern show up with friends'].forEach(prefix => {
+            const found = scored.find(x => (x.q || '').startsWith(prefix));
+            if (found && !coreSelected.includes(found)) coreSelected.push(found);
+        });
+        if (relNorm.includes('married') || relNorm.includes('relationship')) {
+            ['Why have we grown apart','How do I talk to my partner','How do I improve my relationship'].forEach(prefix => {
+                const found = scored.find(x => (x.q || '').startsWith(prefix));
+                if (found && !coreSelected.includes(found)) coreSelected.push(found);
+            });
+        }
+        if (relNorm.includes('divorced')) {
+            ['When is it safe to date again','How do I avoid repeating my last','How do I heal and not repeat'].forEach(prefix => {
+                const found = scored.find(x => (x.q || '').startsWith(prefix));
+                if (found && !coreSelected.includes(found)) coreSelected.push(found);
+            });
+        }
+        if (isOtherPain || isOtherFear) {
+            ['I chose "Other" for my challenge','I chose "Other" for my fear'].forEach(prefix => {
+                const found = scored.find(x => (x.q || '').startsWith(prefix));
+                if (found && !coreSelected.includes(found)) coreSelected.push(found);
+            });
+        }
+        const rest = scored.filter(x => !coreSelected.includes(x));
+        let selected = [...coreSelected, ...rest.slice(0, Math.max(0, 12 - coreSelected.length))];
+        if (selected.length < 8) selected = [...selected, ...scored.filter(x => !selected.includes(x))].slice(0, 12);
+        selected = selected.slice(0, 12);
+
+        const cards = selected.map((item, i) => `
+            <details class="principle-card qa-card">
+                <summary><span>${item.q}</span><span class="principle-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span></summary>
+                <div class="principle-copy qa-answer">${typeof item.a === 'function' ? item.a(pattern, i) : item.a}</div>
+            </details>
+        `).join('');
+
+        const relLabels = { 'single': 'Single', 'dating': 'Dating', 'in a relationship': 'In a relationship', 'married': 'Married', 'divorced': 'Divorced', 'separated': 'Separated', 'prefer-not-to-say': 'Prefer not to say' };
+        const relKey = (relationshipStatus || '').toLowerCase().trim();
+        const relLabel = relationshipStatus ? (relLabels[relKey] || relLabels[relKey.replace(/\s+/g, ' ')] || String(relationshipStatus).replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())) : null;
+        const patternWithArchetype = (archName && pName) ? `${archName}: ${pName}` : (pName || archName);
+        const profileParts = [
+            exactAge != null ? exactAge + ' years' : null,
+            relLabel,
+            patternWithArchetype
+        ].filter(Boolean);
+        const profileLine = profileParts.length > 0
+            ? `<p class="qa-profile-line"><span class="qa-profile-brand">${profileParts.join(' • ')}</span></p>`
+            : '';
+
+        const painFearLine = (currentPain || biggestFear) && usePainFearFraming ? `<p class="content-text qa-section-context" style="font-size: 0.95rem; color: #555; margin-top: 0.5rem;">Based on your challenge (${painLabel}) and fear (${fearLabel}).</p>` : (isOtherPain && isOtherFear && (currentPain || biggestFear) ? `<p class="content-text qa-section-context" style="font-size: 0.95rem; color: #555; margin-top: 0.5rem;">Personalized to your pattern and situation.</p>` : '');
+        return `
+            <div class="results-qa-section results-section">
+                <h2 class="results-section-title">Questions You Want Answered</h2>
+                ${profileLine}
+                ${painFearLine}
+                <p class="content-text qa-section-intro">Personalized to your pattern, relationship status, and what you shared. Tap any question for expert clarity.</p>
+                <div class="qa-cards-wrapper">
+                    ${cards}
+                </div>
+            </div>
+        `;
+    }
+
     function getQuickSummary(archetype, pattern, patternDominance, dominanceLabel, firstName, exactAge, relationshipStatus, answers, quizData, sortedDrivers, driverPercentages) {
         // Safety checks
         if (!archetype || !archetype.name) {
@@ -4670,14 +4965,13 @@
         `;
     }
     
-    // Build comprehensive "How It Developed" section with deep psychological insights
+    // Build comprehensive "How It Developed" section — condensed, no repetition with About Your Pattern
     function buildComprehensiveHowItDeveloped(pattern, complex, sortedDrivers, driverPercentages, answers, quizData, firstName, exactAge, patternDominance) {
         if (!pattern || !complex) {
             return '<p class="content-text" style="margin-bottom: 0; line-height: 1.7;">Your pattern developed as a survival strategy early in life.</p>';
         }
 
         const dominantDriver = sortedDrivers && sortedDrivers.length > 0 ? sortedDrivers[0][0] : 'control';
-        const dominantPercent = driverPercentages && driverPercentages[dominantDriver] ? driverPercentages[dominantDriver] : 0;
         const secondaryDriver = sortedDrivers && sortedDrivers.length > 1 ? sortedDrivers[1][0] : null;
         const secondaryPercent = secondaryDriver && driverPercentages ? driverPercentages[secondaryDriver] : 0;
 
@@ -4688,30 +4982,21 @@
             'fear-of-rejection': 'Fear of Rejection'
         };
 
-        // Get childhood and trauma answers if available
         const domains = (window.QUIZ_CONFIG && window.QUIZ_CONFIG.QUESTION_DOMAINS) || {};
-        const childhoodDomain = domains.CHILDHOOD || { start: 22, end: 25 };
         const traumaDomain = domains.TRAUMA || { start: 26, end: 26 };
-        const childhoodAnswers = answers && domains.CHILDHOOD ? 
-            answers.slice(childhoodDomain.start, childhoodDomain.end + 1).filter(a => a !== undefined) : [];
-        const traumaAnswers = answers && domains.TRAUMA ? 
-            answers.slice(traumaDomain.start, traumaDomain.end + 1).filter(a => a !== undefined) : [];
+        const traumaAnswers = answers && domains.TRAUMA ? answers.slice(traumaDomain.start, traumaDomain.end + 1).filter(a => a !== undefined) : [];
         const hasTraumaData = traumaAnswers && traumaAnswers.length > 0;
 
-        let developmentStory = '';
+        let story = '';
 
-        // Opening: Personalized based on complex and pattern
-        developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7; font-weight: 500;">${firstName ? firstName + ', ' : ''}Your <strong>${complex.primary}</strong>—which drives your ${pattern.name.toLowerCase()} pattern—didn't develop by accident. It formed as a <strong>protective mechanism</strong> during critical developmental periods when you needed to feel safe.</p>`;
-
-        // Section 1: The Emotional Driver Foundation (no percentages—see Behind it in About Your Pattern)
-        developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">Your <strong>${driverNames[dominantDriver]}</strong> driver—which drives your ${pattern.name.toLowerCase()} pattern—developed as a learned response when you needed to navigate uncertainty, threat, or emotional overwhelm.`;
+        // 1. Origin: Complex + driver (merged)
+        story += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">${firstName ? firstName + ', ' : ''}Your <strong>${complex.primary}</strong>—which drives your ${pattern.name.toLowerCase()} pattern—formed as a protective mechanism when you needed to feel safe. Your <strong>${driverNames[dominantDriver]}</strong> driver developed as a learned response to uncertainty, threat, or overwhelm.`;
         if (secondaryDriver && secondaryPercent >= 20) {
-            developmentStory += ` Your <strong>${driverNames[secondaryDriver]}</strong> driver also influences you, adding another layer to how this shows up.`;
+            story += ` Your <strong>${driverNames[secondaryDriver]}</strong> driver adds another layer.`;
         }
-        developmentStory += `</p>`;
+        story += `</p>`;
 
-        // Section 2: How the Complex Developed (personalized based on driver and trauma)
-        // Get trauma-specific insights if available
+        // 2. How it wired in (trauma insight + reinforcement, condensed)
         let traumaContext = '';
         if (hasTraumaData && quizData && traumaAnswers.length > 0) {
             const traumaQuestionIndex = traumaDomain.start;
@@ -4719,60 +5004,37 @@
             if (quizData[traumaQuestionIndex] && quizData[traumaQuestionIndex].options && quizData[traumaQuestionIndex].options[firstTraumaAnswer]) {
                 const traumaOption = quizData[traumaQuestionIndex].options[firstTraumaAnswer];
                 const traumaDriver = traumaOption.driver || dominantDriver;
-                
                 const traumaInsights = {
-                    'control': `Based on your answers, you experienced significant challenges that required you to take care of others or be responsible beyond your years. This shaped your ${complex.primary.toLowerCase()}—you learned that being in control and solving problems was how you survived and felt safe.`,
-                    'avoidance': `Based on your answers, you experienced significant challenges that taught you to escape or avoid difficult situations to protect yourself. This shaped your ${complex.primary.toLowerCase()}—you learned that staying free and avoiding pain was how you survived and felt safe.`,
-                    'validation': `Based on your answers, you experienced significant challenges that taught you to earn love or approval through achievement or being helpful. This shaped your ${complex.primary.toLowerCase()}—you learned that proving your worth was how you survived and felt safe.`,
-                    'fear-of-rejection': `Based on your answers, you experienced significant challenges involving abandonment, rejection, or learning you couldn't depend on others. This shaped your ${complex.primary.toLowerCase()}—you learned that protecting yourself from being hurt was how you survived and felt safe.`
+                    'control': `Based on your answers, you learned that being in control and solving problems was how you survived.`,
+                    'avoidance': `Based on your answers, you learned that staying free and avoiding pain was how you survived.`,
+                    'validation': `Based on your answers, you learned that proving your worth was how you survived.`,
+                    'fear-of-rejection': `Based on your answers, you learned that protecting yourself from being hurt was how you survived.`
                 };
                 traumaContext = traumaInsights[traumaDriver] || traumaInsights[dominantDriver];
             }
         }
-        
-        const driverDevelopmentInsights = {
-            'control': {
-                insight: traumaContext || `Your need for control likely developed when you learned that <strong>taking charge and solving problems</strong> was the safest way to navigate your world. Perhaps you were the "responsible one" who learned that fixing things earned you love, approval, or prevented conflict. Or maybe you learned that being in control meant you couldn't be hurt or disappointed.`,
-                mechanism: `Every time you took control and it "worked" (you solved a problem, prevented conflict, or earned approval), your brain reinforced this pathway. Over time, your ${complex.primary.toLowerCase()} became wired as your default response—not because you chose it, but because it kept you safe when you needed it most.`
-            },
-            'avoidance': {
-                insight: traumaContext || `Your tendency toward avoidance likely developed when you learned that <strong>staying free and flexible</strong> protected you from pain, disappointment, or being trapped. Perhaps you learned that feeling deeply was dangerous, or that staying mobile prevented you from getting hurt. You may have learned that avoiding difficult emotions or situations was safer than facing them.`,
-                mechanism: `Every time you avoided something difficult and it "worked" (you didn't get hurt, you stayed free, or you prevented emotional overwhelm), your brain reinforced this pathway. Over time, your ${complex.primary.toLowerCase()} became wired as your default response—not because you're weak, but because avoidance kept you safe when you needed it most.`
-            },
-            'validation': {
-                insight: traumaContext || `Your need for validation likely developed when you learned that <strong>achievement and recognition</strong> were the safest ways to feel worthy and secure. Perhaps you learned that your worth was tied to what you accomplished, how you performed, or how others saw you. You may have learned that being "good enough" required constant proof.`,
-                mechanism: `Every time you achieved or received validation and it "worked" (you felt worthy, you earned approval, or you felt secure), your brain reinforced this pathway. Over time, your ${complex.primary.toLowerCase()} became wired as your default response—not because you're shallow, but because validation kept you safe when you needed it most.`
-            },
-            'fear-of-rejection': {
-                insight: traumaContext || `Your fear of rejection likely developed when you learned that <strong>keeping distance and being perfect</strong> protected you from being hurt or abandoned. Perhaps you learned that being vulnerable was dangerous, or that perfection was the only way to be loved. You may have learned that staying small or perfect meant you couldn't be rejected.`,
-                mechanism: `Every time you protected yourself from rejection and it "worked" (you didn't get hurt, you stayed safe, or you avoided abandonment), your brain reinforced this pathway. Over time, your ${complex.primary.toLowerCase()} became wired as your default response—not because you're unlovable, but because protection kept you safe when you needed it most.`
-            }
+        const mechanismByDriver = {
+            'control': 'Every time taking control "worked," your brain reinforced it.',
+            'avoidance': 'Every time avoiding "worked," your brain reinforced it.',
+            'validation': 'Every time achieving or earning approval "worked," your brain reinforced it.',
+            'fear-of-rejection': 'Every time protecting yourself "worked," your brain reinforced it.'
         };
+        const mechanism = mechanismByDriver[dominantDriver] || mechanismByDriver['control'];
+        story += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">${traumaContext || 'Early experiences taught you a strategy that felt safe.'} ${mechanism} Over time, your ${complex.primary.toLowerCase()} became wired as your default—not because you chose it, but because it kept you safe when you needed it most.</p>`;
 
-        const driverInsight = driverDevelopmentInsights[dominantDriver] || driverDevelopmentInsights['control'];
-        developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">${driverInsight.insight}</p>`;
-        developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">${driverInsight.mechanism}</p>`;
-
-        // Section 3: The Pattern Connection
+        // 3. Pattern connection (core belief → behavior)
         const shadowBehaviorPhrase = getShadowBehaviorVerb(pattern.shadow);
-        developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">This is how your <strong>${complex.primary}</strong> connects to your ${pattern.name.toLowerCase()} pattern: Your complex created a <strong>core belief</strong>—"${pattern.coreBelief || 'If I do this, I\'m safe'}"—and your pattern became the <strong>behavioral expression</strong> of that belief. Every time you ${shadowBehaviorPhrase}, you're unconsciously trying to satisfy that core belief and feel safe.</p>`;
-
-        // Section 4: Secondary complex (when user has multiple complexes)
+        story += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">Your complex created a core belief—"${pattern.coreBelief || 'If I do this, I\'m safe'}"—and your pattern became the behavioral expression of that belief. Every time you ${shadowBehaviorPhrase}, you're unconsciously trying to satisfy it and feel safe.`;
         if (complex.secondary) {
-            developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">You also carry the <strong>${complex.secondary}</strong>—another belief layer that developed from your early experiences. Together, ${complex.primary} and ${complex.secondary} reinforce each other, which is why your ${pattern.name} pattern can feel so automatic and hard to interrupt.</p>`;
+            story += ` Your <strong>${complex.secondary}</strong> reinforces this, which is why the pattern can feel so automatic.`;
         }
+        story += `</p>`;
 
-        // Section 5: Why It Persists (neuroscience + psychology)
-        if (exactAge) {
-            developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">At ${exactAge}, this pattern has been running for ${exactAge >= 30 ? 'decades' : 'years'}. Research in neuroscience shows that <strong>repetition literally rewires your brain</strong>—the more you repeat a behavior, the stronger the neural pathway becomes. Your ${complex.primary.toLowerCase()} isn't just a habit; it's a <strong>deeply wired survival strategy</strong> that operates on autopilot.</p>`;
-        } else {
-            developmentStory += `<p class="content-text" style="margin-bottom: 1rem; line-height: 1.7;">Research in neuroscience shows that <strong>repetition literally rewires your brain</strong>—the more you repeat a behavior, the stronger the neural pathway becomes. Your ${complex.primary.toLowerCase()} isn't just a habit; it's a <strong>deeply wired survival strategy</strong> that operates on autopilot.</p>`;
-        }
+        // 4. Persistence + hope (merged)
+        const ageLine = exactAge ? `At ${exactAge}, this has been running for ${exactAge >= 30 ? 'decades' : 'years'}. ` : '';
+        story += `<p class="content-text" style="margin-bottom: 0; line-height: 1.7; color: #333;">${ageLine}Repetition rewired your brain—the pathway is strong. <strong style="color: #ca0013;">Because it was learned, it can be unlearned.</strong> New experiences and consistent practice can create new patterns that serve you better.</p>`;
 
-        // Section 5: The Hope (because it was learned, it can change)
-        developmentStory += `<p class="content-text" style="margin-bottom: 0; line-height: 1.7; color: #333;">Here's what matters most: <strong style="color: #ca0013;">Because this pattern was learned, it can be unlearned.</strong> Your brain can rewire itself through new experiences and consistent practice. Repetition and reinforcement created this pattern; the same mechanism can create new patterns that serve you better.</p>`;
-
-        return developmentStory;
+        return story;
     }
     
     // Get neuroscience explanation for complex

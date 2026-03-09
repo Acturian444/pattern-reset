@@ -26,6 +26,12 @@ service cloud.firestore {
       allow read, write: if request.auth != null;
     }
     
+    // Common Ground applications - authenticated create only (anonymous auth)
+    match /commonGroundApplications/{docId} {
+      allow create: if request.auth != null;
+      allow read, update, delete: if false;
+    }
+    
     // Counters collection for Truth numbering
     match /counters/{counterId} {
       allow read: if true;

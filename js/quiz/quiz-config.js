@@ -9,9 +9,11 @@
     window.QUIZ_CONFIG = {
     // Question counts
     TOTAL_SCORED_QUESTIONS: 34,
-    TOTAL_QUESTIONS: 36, // 34 scored + 1 birth date + 1 relationship status
+    TOTAL_QUESTIONS: 38, // 34 scored + 1 birth date + 1 relationship status + 1 current pain + 1 biggest fear
     BIRTH_DATE_QUESTION_INDEX: 34,
     RELATIONSHIP_STATUS_QUESTION_INDEX: 35,
+    CURRENT_PAIN_QUESTION_INDEX: 36,
+    BIGGEST_FEAR_QUESTION_INDEX: 37,
     
     // Scoring
     POINTS_PER_ANSWER: 3,

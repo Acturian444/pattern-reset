@@ -492,18 +492,73 @@ window.quizData = [
         domain: 'BIRTHDATE',
         options: [] // Will be handled as text input
     },
-    // Relationship Status (Question 36 / Index 35) - Special handling, not scored, optional
+    // Relationship Status (Question 36 / Index 35) - Special handling, not scored, REQUIRED
     {
         question: "What is your current relationship status?",
         questionType: 'relationship-status',
         domain: 'RELATIONSHIP_STATUS',
+        required: true,
         options: [
             { text: "Single", value: "single" },
             { text: "Dating / Casually seeing someone", value: "dating" },
-            { text: "In a committed relationship", value: "committed" },
+            { text: "In a committed relationship", value: "in a relationship" },
             { text: "Married", value: "married" },
             { text: "Divorced / Separated", value: "divorced" },
             { text: "Prefer not to say", value: "prefer-not-to-say" }
+        ]
+    },
+    // Current Pain (Question 37 / Index 36) - Personalization only, REQUIRED
+    {
+        question: "What's the biggest challenge you're facing in love or relationships right now?",
+        questionType: 'current-pain',
+        domain: 'CURRENT_PAIN',
+        required: true,
+        options: [
+            { text: "I keep attracting the same type", value: "same-type" },
+            { text: "I stay when I know I shouldn't", value: "stay-when-shouldnt" },
+            { text: "I push people away when it gets real", value: "push-away" },
+            { text: "I lose interest when someone treats me well", value: "lose-interest" },
+            { text: "I sabotage when it gets serious", value: "sabotage" },
+            { text: "I feel stuck or disconnected in my relationship", value: "stuck-disconnected" },
+            { text: "I'm recovering but keep going back", value: "keep-going-back" },
+            { text: "I was cheated on or betrayed", value: "cheated-betrayed" },
+            { text: "I tolerate less than I deserve", value: "tolerate-less" },
+            { text: "I ignore red flags or make excuses", value: "ignore-red-flags" },
+            { text: "Emotional unavailability (theirs or mine)", value: "emotional-unavailable" },
+            { text: "Toxic or abusive patterns", value: "toxic-patterns" },
+            { text: "Same fights over and over", value: "same-fights" },
+            { text: "Situationship that won't progress", value: "situationship" },
+            { text: "I'm tired of being single", value: "tired-single" },
+            { text: "I don't know why relationships keep failing", value: "dont-know-why" },
+            { text: "Other", value: "other" }
+        ]
+    },
+    // Biggest Fear (Question 38 / Index 37) - Personalization only, REQUIRED
+    {
+        question: "What's your biggest fear when it comes to love or relationships?",
+        questionType: 'biggest-fear',
+        domain: 'BIGGEST_FEAR',
+        required: true,
+        options: [
+            { text: "Being cheated on or betrayed", value: "cheated-betrayed" },
+            { text: "Being abandoned or left", value: "abandoned" },
+            { text: "Being rejected or not chosen", value: "rejected" },
+            { text: "Being alone forever", value: "alone-forever" },
+            { text: "Losing myself in the relationship", value: "losing-myself" },
+            { text: "Being trapped or suffocated", value: "trapped" },
+            { text: "Not being good enough", value: "not-good-enough" },
+            { text: "Being seen and then rejected", value: "seen-then-rejected" },
+            { text: "Being replaced by someone else", value: "replaced" },
+            { text: "Being hurt again (after past pain)", value: "hurt-again" },
+            { text: "Being unwanted or invisible", value: "unwanted" },
+            { text: "Being controlled or losing my freedom", value: "controlled" },
+            { text: "That I'm the problem", value: "im-the-problem" },
+            { text: "That I'll never find the right person", value: "never-find-right" },
+            { text: "That I'll repeat my parents' relationship", value: "repeat-parents" },
+            { text: "Being emotionally neglected", value: "emotionally-neglected" },
+            { text: "Being taken for granted", value: "taken-for-granted" },
+            { text: "Being vulnerable and getting hurt", value: "vulnerable-hurt" },
+            { text: "Other", value: "other" }
         ]
     }
 ];

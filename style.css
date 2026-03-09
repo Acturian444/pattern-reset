@@ -91,7 +91,20 @@ header {
     right: 0;
     transition: box-shadow 0.2s, top 0.25s ease;
     margin: 0;
-    padding: 0 1rem;
+    padding: 0;
+}
+
+/* Shared header container - consistent across all pages */
+header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+}
+@media (min-width: 900px) {
+    header .container {
+        padding: 0 2.5rem;
+    }
 }
 
 body.has-reset-banner header {
@@ -119,7 +132,7 @@ nav {
 .logo-text {
     font-family: 'Anton', 'Anton-Local', sans-serif;
     font-size: 1.3rem;
-    color: #ca0013;
+    color: #000000;
     font-weight: bold;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -213,7 +226,7 @@ nav {
 .nav-links a.active,
 .menu-overlay a:hover,
 .menu-overlay a.active {
-    color: #ca13;
+    color: #ca0013;
 }
 
 /* Exclude quiz link from default nav link hover */
@@ -223,7 +236,7 @@ nav {
 
 .nav-dropdown-menu a:hover {
     background: #fffcf1;
-    color: #ca13;
+    color: #ca0013;
 }
 /* ===== END UNIFIED NAVIGATION STYLES ===== */
 
@@ -1143,8 +1156,9 @@ footer {
 
 .nav-links {
     display: flex;
+    align-items: center;
     list-style: none;
-    gap: 2rem;
+    gap: 1.5rem;
     padding: 0;
     margin: 0;
 }
@@ -1177,6 +1191,8 @@ footer {
     letter-spacing: 1px;
     font-size: 0.95rem;
     min-height: 44px;
+    width: 175px;
+    min-width: 175px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1237,6 +1253,16 @@ footer {
     color: inherit;
 }
 
+.logo-brand-combo .center-logo,
+.logo-brand-combo .nav-logo {
+    color: #ca0013;
+}
+
+.logo-brand-combo:hover .center-logo,
+.logo-brand-combo:hover .nav-logo {
+    color: #a00012;
+}
+
 .logo-brand-combo .logo-text {
     font-family: 'Anton', 'Anton-Local', sans-serif;
     font-size: 1.3rem;
@@ -1255,7 +1281,6 @@ footer {
 
 .logo-brand-combo:hover .center-logo {
     transform: rotate(360deg);
-    color: #a00012;
 }
 
 .center-logo {
@@ -1328,14 +1353,42 @@ footer {
         align-items: center;
         min-height: 70px;
         position: relative;
-        padding: 0.75rem 1rem;
+        padding: 0.75rem 0;
     }
     .nav-left {
         position: relative;
         left: auto;
         transform: none;
         justify-content: flex-start;
+        flex: 1 1 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+    }
+    .nav-hamburger {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
         flex: 0 0 auto;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        padding: 0.5rem;
+        min-width: 44px;
+        min-height: 44px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    .nav-left .logo-brand-combo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        flex: 0 0 auto;
+        z-index: 1;
     }
     .center-logo {
         flex: 0 0 auto;
@@ -1347,7 +1400,7 @@ footer {
     .logo-brand-combo .logo-text {
         font-size: 1.1rem;
     }
-    .hamburger {
+    .nav-right {
         display: none !important;
     }
     .nav-cta-button {
@@ -1357,16 +1410,16 @@ footer {
 
 @media (max-width: 600px) {
     .nav-centered {
-        justify-content: center;
+        justify-content: space-between;
         position: relative;
         min-height: 70px;
     }
     .nav-left {
-        flex: none;
-        justify-content: center;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+        flex: 1;
+        justify-content: flex-start;
+        position: relative;
+        left: auto;
+        transform: none;
     }
     .nav-right {
         display: none;
@@ -1674,6 +1727,10 @@ footer {
     border: none;
     cursor: pointer;
     padding: 0.5rem;
+}
+
+/* Nav hamburger - in nav-left, shown on mobile only, positioned left */
+.nav-hamburger {
     display: none;
 }
 
@@ -1693,9 +1750,6 @@ footer {
 }
 
 @media (max-width: 900px) {
-    .hamburger {
-        display: none !important;
-    }
     .nav-links, .nav-right {
         display: flex;
         align-items: center;
@@ -1727,13 +1781,27 @@ footer {
     }
 }
 
-.menu-overlay {
-    display: none !important; /* Mobile menu removed - quiz button now visible in header */
+@media (min-width: 901px) {
+    .menu-overlay {
+        display: none !important;
+    }
 }
-
-.menu-overlay.open {
-    opacity: 1;
-    visibility: visible;
+@media (max-width: 900px) {
+    /* When closed: display none so overlay cannot block hamburger touches (pointer-events: none is unreliable on mobile) */
+    .menu-overlay {
+        display: none !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1200;
+        background: rgba(0, 0, 0, 0.4);
+        transition: opacity 0.3s;
+    }
+    .menu-overlay.open {
+        display: block !important;
+    }
 }
 
 .menu-overlay nav {
@@ -1761,7 +1829,7 @@ footer {
 .menu-overlay .close-btn {
     position: absolute;
     top: 1rem;
-    left: 1rem;
+    left: 1.5rem;
     font-size: 2.5rem;
     color: #000000;
     background: none;
@@ -1771,13 +1839,13 @@ footer {
     z-index: 1202;
 }
 
-/* Ensure hamburger positioning works in menu overlay */
+/* Ensure hamburger/close button matches header position on mobile */
 .menu-overlay .close-btn.hamburger {
     position: absolute;
-    left: 1.2rem;
+    left: 1.5rem;
     top: 1rem;
     z-index: 1202;
-    padding: 0.75rem;
+    padding: 0.5rem;
 }
 
 /* Hide the old, stray close button from the header */
@@ -3283,7 +3351,7 @@ header, nav, .nav-links a, .nav-dropdown-menu a, h1, h2, h3, h4, h5, h6 {
     visibility: visible;
 }
 
-/* Modal Container */
+/* Modal Container - Light mode default */
 .results-modal-container {
     position: relative;
     width: 100%;
@@ -3305,7 +3373,7 @@ header, nav, .nav-links a, .nav-dropdown-menu a, h1, h2, h3, h4, h5, h6 {
     transform: translateY(0);
 }
 
-/* Scroll Wrapper */
+/* Scroll Wrapper - Light mode default */
 .results-modal-scroll-wrapper {
     overflow-y: auto;
     overflow-x: hidden;
@@ -3315,9 +3383,10 @@ header, nav, .nav-links a, .nav-dropdown-menu a, h1, h2, h3, h4, h5, h6 {
     max-height: 100vh;
     max-height: 100dvh;
     padding-bottom: 2rem;
+    background: #fffcf1;
 }
 
-/* Modal Content */
+/* Modal Content - Light mode default */
 .results-modal-content {
     padding: 0;
     background: #fffcf1;
@@ -3355,21 +3424,188 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     clip-path: inset(50%) !important;
 }
 
-/* Close Button */
-.results-modal-close {
+/* Feedback Modal */
+.feedback-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 11000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+.feedback-modal-overlay.feedback-modal-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+.feedback-modal-container {
+    position: relative;
+    background: #fffcf1;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 480px;
+    width: 90%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+.feedback-modal-close {
     position: absolute;
     top: 1rem;
     right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #666;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.25rem;
+}
+.feedback-modal-close:hover {
+    color: #000;
+}
+.feedback-modal-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem;
+}
+.feedback-modal-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: #555;
+    margin: 0 0 1.5rem;
+    line-height: 1.5;
+}
+.feedback-form textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 120px;
+    box-sizing: border-box;
+}
+.feedback-form textarea:focus {
+    outline: none;
+    border-color: #ca0013;
+    box-shadow: 0 0 0 2px rgba(202, 0, 19, 0.15);
+}
+.feedback-char-count {
+    display: block;
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 0.35rem;
+}
+.feedback-submit-btn {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1rem 1.5rem;
+    background: #ca0013;
+    color: #fff !important;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+.feedback-submit-btn:hover {
+    background: #b80011;
+    transform: translateY(-1px);
+}
+.feedback-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Feedback success state */
+.feedback-success-view {
+    text-align: center;
+    padding: 1rem 0;
+}
+.feedback-success-icon {
+    font-size: 3rem;
+    color: #ca0013;
+    margin-bottom: 1rem;
+}
+.feedback-success-icon i {
+    display: block;
+}
+.feedback-success-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.5rem;
+    color: #1a1a1a;
+    margin: 0 0 0.5rem;
+}
+.feedback-success-message {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: #555;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Results Modal Header Actions (close + dark mode toggle) */
+.results-modal-actions {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 10001;
+}
+
+/* Dark Mode Toggle */
+.results-dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.85rem;
+    background: rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.results-dark-mode-toggle:hover {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: rgba(202, 0, 19, 0.3);
+}
+
+.results-dark-mode-toggle i {
+    font-size: 0.9rem;
+}
+
+/* Close Button */
+.results-modal-close {
     width: 44px;
     height: 44px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 2px solid rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid rgba(0, 0, 0, 0.08);
     border-radius: 50%;
     font-size: 1.8rem;
     line-height: 1;
-    color: #000;
+    color: #0a0a0a;
     cursor: pointer;
-    z-index: 10001;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3387,6 +3623,852 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 
 .results-modal-close:active {
     transform: scale(0.95);
+}
+
+/* ============================================
+   RESULTS MODAL - DARK MODE
+   ============================================ */
+.results-modal-overlay.dark-mode .results-modal-container {
+    background: #0a0a0a;
+}
+.results-modal-overlay.dark-mode .results-modal-scroll-wrapper {
+    background: #0a0a0a;
+}
+.results-modal-overlay.dark-mode .results-modal-content {
+    background: #0a0a0a;
+}
+
+/* Dark mode: Toggle & Close button */
+.results-modal-overlay.dark-mode .results-dark-mode-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.95);
+}
+.results-modal-overlay.dark-mode .results-dark-mode-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(202, 0, 19, 0.5);
+}
+.results-modal-overlay.dark-mode .results-modal-close {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+.results-modal-overlay.dark-mode .results-modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ca0013;
+    color: #ca0013;
+}
+
+/* Dark mode: Hero section */
+.results-modal-overlay.dark-mode .results-hero-section {
+    background: #0a0a0a;
+}
+.results-modal-overlay.dark-mode .results-hero-section::after {
+    background: linear-gradient(90deg, transparent 0%, rgba(202, 0, 19, 0.35) 20%, rgba(202, 0, 19, 0.35) 80%, transparent 100%);
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-header,
+.results-modal-overlay.dark-mode .results-modal-content .results-title,
+.results-modal-overlay.dark-mode .results-modal-content .results-subtitle {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-subtitle {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-hero-lead,
+.results-modal-overlay.dark-mode .results-modal-content .results-hero-body,
+.results-modal-overlay.dark-mode .results-modal-content .results-hero-list,
+.results-modal-overlay.dark-mode .results-modal-content .results-hero-list li {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-hero-standout {
+    color: #ffffff !important;
+    background: rgba(202, 0, 19, 0.2);
+    border-left-color: #ca0013;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-hero-cta {
+    color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-hero-subtitle {
+    color: #ffffff !important;
+}
+
+/* Dark mode: Content section */
+.results-modal-overlay.dark-mode .results-content-section {
+    background: #0a0a0a;
+}
+
+/* Dark mode: White boxes → dark cards */
+.results-modal-overlay.dark-mode .results-modal-content .results-section,
+.results-modal-overlay.dark-mode .results-modal-content .science-section,
+.results-modal-overlay.dark-mode .results-modal-content .life-areas-section,
+.results-modal-overlay.dark-mode .results-modal-content .uniqueness-section,
+.results-modal-overlay.dark-mode .results-modal-content .costs-section,
+.results-modal-overlay.dark-mode .results-modal-content .neuroscience-section,
+.results-modal-overlay.dark-mode .results-modal-content .reset-focus-section,
+.results-modal-overlay.dark-mode .results-modal-content .solution-section {
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+.results-modal-overlay.dark-mode .results-content-section .results-section {
+    background: #1a1a1a;
+}
+
+/* Dark mode: Pattern identity card */
+.results-modal-overlay.dark-mode .results-modal-content .pattern-identity-card {
+    background: #1a1a1a;
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Dark mode: Section titles in dark cards */
+.results-modal-overlay.dark-mode .results-modal-content .results-section .results-section-title,
+.results-modal-overlay.dark-mode .results-modal-content .science-section .results-section-title,
+.results-modal-overlay.dark-mode .results-modal-content .life-areas-section .results-section-title,
+.results-modal-overlay.dark-mode .results-modal-content .solution-section .results-section-title {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-section .subsection-title,
+.results-modal-overlay.dark-mode .results-modal-content .science-section .subsection-title,
+.results-modal-overlay.dark-mode .results-modal-content .life-areas-section .subsection-title {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-section .life-area-title,
+.results-modal-overlay.dark-mode .results-modal-content .life-areas-section .life-area-title {
+    color: #ffffff !important;
+}
+
+/* Dark mode: Text in dark cards */
+.results-modal-overlay.dark-mode .results-modal-content .results-section .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .workbook-outer-box .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .pattern-identity-card .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .cta-section .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .solution-section .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .results-white-box .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .science-section .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .life-areas-section .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .uniqueness-section .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .costs-section .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .neuroscience-section .content-text,
+.results-modal-overlay.dark-mode .results-modal-content .reset-focus-section .content-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-section .content-text strong,
+.results-modal-overlay.dark-mode .results-modal-content .workbook-outer-box .content-text strong,
+.results-modal-overlay.dark-mode .results-modal-content .pattern-identity-card .content-text strong,
+.results-modal-overlay.dark-mode .results-modal-content .cta-section .content-text strong,
+.results-modal-overlay.dark-mode .results-modal-content .results-white-box .content-text strong,
+.results-modal-overlay.dark-mode .results-modal-content .science-section .content-text strong,
+.results-modal-overlay.dark-mode .results-modal-content .life-areas-section .content-text strong,
+.results-modal-overlay.dark-mode .results-modal-content .solution-section .content-text strong {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-section .content-list li,
+.results-modal-overlay.dark-mode .results-modal-content .workbook-outer-box .content-list li,
+.results-modal-overlay.dark-mode .results-modal-content .science-section .content-list li,
+.results-modal-overlay.dark-mode .results-modal-content .life-areas-section .content-list li,
+.results-modal-overlay.dark-mode .results-modal-content .solution-section .content-list li {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-white-box .quick-reference-label {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-white-box .quick-reference-item-title {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-section .quick-reference-label {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-section .quick-reference-item-title {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .results-section .about-pattern-title,
+.results-modal-overlay.dark-mode .results-modal-content .workbook-outer-box .about-pattern-title,
+.results-modal-overlay.dark-mode .results-modal-content .science-section .about-pattern-title,
+.results-modal-overlay.dark-mode .results-modal-content .life-areas-section .about-pattern-title {
+    color: #ffffff !important;
+}
+
+/* Dark mode: results-dark-bg-content (inline styles already light text) */
+.results-modal-overlay.dark-mode .results-dark-bg-content {
+    border-top-color: rgba(255, 255, 255, 0.15) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .hero-section-title {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .hero-section-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .content-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .content-text strong {
+    color: #ffffff !important;
+}
+
+/* Dark mode: Pattern display */
+.results-modal-overlay.dark-mode .results-modal-content .pattern-archetype-label {
+    color: #ca0013;
+}
+.results-modal-overlay.dark-mode .results-modal-content .pattern-name-main,
+.results-modal-overlay.dark-mode .results-modal-content .pattern-archetype-subtitle {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .pattern-core-belief-preview {
+    background: rgba(255, 255, 255, 0.95) !important;
+    color: #1a1a1a !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .driver-grid-item {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .driver-grid-item:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .driver-grid-item.dominant {
+    background: rgba(202, 0, 19, 0.2) !important;
+    border-color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .driver-grid-name,
+.results-modal-overlay.dark-mode .results-modal-content .driver-grid-percentage {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .driver-grid-item.dominant .driver-grid-name {
+    color: #ffffff !important;
+}
+
+/* Dark mode: Subsection borders */
+.results-modal-overlay.dark-mode .results-modal-content .science-subsection,
+.results-modal-overlay.dark-mode .results-modal-content .neuroscience-subsection {
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .life-area-item {
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Dark mode: Workbook, CTA, Accordion */
+.results-modal-overlay.dark-mode .workbook-outer-box {
+    background: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.results-modal-overlay.dark-mode .workbook-outer-title {
+    color: #ffffff !important;
+    border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .workbook-main-title,
+.results-modal-overlay.dark-mode .workbook-section-title,
+.results-modal-overlay.dark-mode .workbook-subsection-title,
+.results-modal-overlay.dark-mode .workbook-step-title,
+.results-modal-overlay.dark-mode .workbook-focus-title {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .workbook-primary-shift-title {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .workbook-primary-shift-belief,
+.results-modal-overlay.dark-mode .workbook-primary-shift-why,
+.results-modal-overlay.dark-mode .workbook-primary-shift-insight {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .workbook-primary-shift {
+    background: rgba(202, 0, 19, 0.15) !important;
+}
+.results-modal-overlay.dark-mode .workbook-pill-display {
+    border-color: #ca0013 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-intro .content-text,
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-intro .workbook-intro-lead {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-intro .workbook-intro-lead {
+    color: #e63950 !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-intro p[style*="color: #000"] {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .pattern-reset-illo .illo-remaining {
+    fill: rgba(255, 255, 255, 0.2);
+}
+
+/* Dark mode: Workbook parts & details (match light-mode specificity: .workbook-v2 .workbook-part-details) */
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-details {
+    background: #141414 !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-details .workbook-part-summary {
+    background: #141414 !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-details .workbook-part-summary:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-details[open] .workbook-part-summary {
+    background: rgba(202, 0, 19, 0.15) !important;
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-details .workbook-part-content {
+    background: #141414 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-details .workbook-part-label {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-details .workbook-part-title {
+    color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-details .workbook-part-subtitle {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-details .workbook-part-number {
+    background: #ca0013 !important;
+    color: #fff !important;
+}
+.results-modal-overlay.dark-mode .workbook-part-content .content-text,
+.results-modal-overlay.dark-mode .workbook-part-content .how-developed-title,
+.results-modal-overlay.dark-mode .workbook-part-content .workbook-why-line,
+.results-modal-overlay.dark-mode .workbook-part-content .workbook-pill-label,
+.results-modal-overlay.dark-mode .workbook-part-content .workbook-pill-extra-label {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .workbook-part-content .content-text[style*="color: #555"],
+.results-modal-overlay.dark-mode .workbook-part-content .content-text[style*="color: #666"],
+.results-modal-overlay.dark-mode .workbook-part-content .content-text[style*="color: #333"],
+.results-modal-overlay.dark-mode .workbook-part-content .content-text[style*="color: #000"] {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .workbook-part-content .content-list li {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .workbook-part-subtitle,
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-subtitle {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-conclusion-lead,
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-conclusion-copy,
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-conclusion-close {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-why-line,
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-go-deeper-label {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-win {
+    background: rgba(202, 0, 19, 0.15) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-win-text {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-block {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-interrupt-block {
+    background: rgba(33, 150, 243, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-interrupt-block .workbook-interrupt-text {
+    color: #64b5f6 !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-part-divider {
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-go-deeper {
+    border-top-color: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-section-divider {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+.results-modal-overlay.dark-mode .workbook-v2 .workbook-conclusion {
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+.results-modal-overlay.dark-mode .workbook-part-chevron {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+.results-modal-overlay.dark-mode .workbook-part-number {
+    background: #ca0013 !important;
+    color: #fff !important;
+}
+.results-modal-overlay.dark-mode .workbook-part-label {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.results-modal-overlay.dark-mode .workbook-part-title {
+    color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode [style*="background: rgba(0, 0, 0, 0.03)"],
+.results-modal-overlay.dark-mode [style*="background:rgba(0,0,0,0.03)"] {
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+.results-modal-overlay.dark-mode .solution-text {
+    background: rgba(202, 0, 19, 0.12) !important;
+    border-left-color: #d4a84b !important;
+}
+.results-modal-overlay.dark-mode .solution-text strong {
+    color: #ffffff !important;
+}
+
+.results-modal-overlay.dark-mode .results-modal-content .explanation-section {
+    background: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .explanation-title,
+.results-modal-overlay.dark-mode .results-modal-content .explanation-text,
+.results-modal-overlay.dark-mode .results-modal-content .explanation-why {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .driver-item {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-left-color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .driver-name,
+.results-modal-overlay.dark-mode .results-modal-content .driver-percentage,
+.results-modal-overlay.dark-mode .results-modal-content .driver-description {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .cta-section {
+    background: transparent;
+}
+.results-modal-overlay.dark-mode .cta-section .cta-title,
+.results-modal-overlay.dark-mode .cta-section .cta-description {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .accordion-item {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .accordion-item:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+.results-modal-overlay.dark-mode .accordion-header {
+    background: #1a1a1a !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .accordion-header:hover,
+.results-modal-overlay.dark-mode .accordion-header.expanded {
+    background: #1a1a1a !important;
+    color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .accordion-preview {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.results-modal-overlay.dark-mode .accordion-content {
+    background: #1a1a1a !important;
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+.results-modal-overlay.dark-mode .accordion-content.expanded {
+    background: #1a1a1a !important;
+}
+.results-modal-overlay.dark-mode .results-white-box {
+    background: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Dark mode: Life area accordion */
+.results-modal-overlay.dark-mode .life-area-accordion-item {
+    background: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .life-area-accordion-item:hover {
+    border-color: rgba(202, 0, 19, 0.4) !important;
+}
+.results-modal-overlay.dark-mode .life-area-accordion-item.expanded {
+    border-color: rgba(202, 0, 19, 0.5) !important;
+}
+.results-modal-overlay.dark-mode .life-area-accordion-item button {
+    background: #1a1a1a !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .life-area-accordion-item button:hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+.results-modal-overlay.dark-mode .life-area-accordion-content,
+.results-modal-overlay.dark-mode .life-area-accordion-item.expanded .life-area-accordion-content {
+    background: #141414 !important;
+}
+.results-modal-overlay.dark-mode .life-area-header {
+    background: #1a1a1a !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .life-area-header:hover {
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .life-area-accordion-item.expanded .life-area-content {
+    background: #141414 !important;
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
+}
+.results-modal-overlay.dark-mode .answer-insight,
+.results-modal-overlay.dark-mode .answer-example,
+.results-modal-overlay.dark-mode .summary-text,
+.results-modal-overlay.dark-mode .life-area-detail,
+.results-modal-overlay.dark-mode .life-area-detail-condensed {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .life-area-icon-arrow {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Dark mode: Quick summary */
+.results-modal-overlay.dark-mode .quick-summary-box {
+    background: transparent;
+}
+.results-modal-overlay.dark-mode .quick-summary-box .content-text,
+.results-modal-overlay.dark-mode .quick-summary-box p,
+.results-modal-overlay.dark-mode .quick-summary-box ul li {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .quick-summary-box ul li::before {
+    color: #ca0013;
+}
+
+/* Strengths, Triggers, Costs - Light mode base */
+.strengths-triggers-costs-section .section-box-title,
+.how-impacts-life-section .section-box-title,
+.emotional-drivers-section .section-box-title {
+    color: #1a1a1a;
+}
+.strengths-triggers-costs-section .section-box-intro,
+.how-impacts-life-section .section-box-intro,
+.emotional-drivers-section .section-box-intro {
+    color: #555;
+}
+.section-box-item {
+    background: #ffffff;
+}
+.section-box-item p {
+    color: #333;
+}
+.emotional-driver-item .accordion-driver-name {
+    color: #1a1a1a;
+}
+.emotional-driver-item .accordion-driver-percent {
+    color: #666;
+}
+.emotional-driver-item.expanded .accordion-driver-percent {
+    color: #ca0013;
+}
+.accordion-content-text {
+    color: #555;
+}
+.life-area-title-text {
+    color: #1a1a1a;
+}
+.comprehensive-hero-content {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Simplified Drivers Visual (Your Emotional Drivers) - Light mode */
+.simplified-drivers-visual {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.simplified-drivers-title {
+    color: #1a1a1a;
+}
+.simplified-drivers-intro {
+    color: #555;
+}
+.driver-bar-item {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+.driver-bar-item-btn {
+    background: #ffffff;
+}
+.driver-bar-item-btn.driver-dominant {
+    background: rgba(202, 0, 19, 0.03);
+}
+.driver-bar-name {
+    color: #1a1a1a;
+}
+.driver-bar-name.driver-dominant {
+    color: #ca0013;
+}
+.driver-bar-percent {
+    color: #666;
+}
+.driver-bar-percent.driver-dominant {
+    color: #ca0013;
+}
+.driver-icon {
+    color: #666;
+}
+.driver-bar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+.driver-details-meaning,
+.driver-details-context {
+    color: #555;
+}
+.driver-details-context {
+    color: #333;
+}
+.driver-bar-fill.driver-fill-dominant {
+    background: #ca0013;
+}
+.driver-bar-fill.driver-fill-secondary {
+    background: #666;
+}
+
+/* Dark mode: Strengths, Triggers, Costs, How Impacts Life, Emotional Drivers */
+.results-modal-overlay.dark-mode .strengths-triggers-costs-section .section-box-title,
+.results-modal-overlay.dark-mode .how-impacts-life-section .section-box-title,
+.results-modal-overlay.dark-mode .emotional-drivers-section .section-box-title {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .strengths-triggers-costs-section .section-box-intro,
+.results-modal-overlay.dark-mode .how-impacts-life-section .section-box-intro,
+.results-modal-overlay.dark-mode .emotional-drivers-section .section-box-intro {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+.results-modal-overlay.dark-mode .section-box-item {
+    background: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+.results-modal-overlay.dark-mode .section-box-item.section-box-strength {
+    border-left-color: #4caf50 !important;
+}
+.results-modal-overlay.dark-mode .section-box-item.section-box-trigger {
+    border-left-color: #ffc107 !important;
+}
+.results-modal-overlay.dark-mode .section-box-item.section-box-cost {
+    border-left-color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .section-box-item p {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .accordion-driver-name {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .emotional-driver-item.expanded .accordion-driver-percent {
+    color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .emotional-driver-item:not(.expanded) .accordion-driver-percent {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.results-modal-overlay.dark-mode .accordion-content-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .life-area-title-text {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .emotional-driver-item {
+    background: #1a1a1a !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .emotional-driver-item .accordion-header {
+    background: #1a1a1a !important;
+}
+.results-modal-overlay.dark-mode .emotional-driver-item.expanded .accordion-header {
+    background: rgba(202, 0, 19, 0.15) !important;
+}
+.results-modal-overlay.dark-mode .comprehensive-hero-content {
+    border-top-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Dark mode: Simplified Drivers Visual (Your Emotional Drivers) */
+.results-modal-overlay.dark-mode .simplified-drivers-visual {
+    border-top-color: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .simplified-drivers-title {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .simplified-drivers-intro {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+.results-modal-overlay.dark-mode .driver-bar-item {
+    background: #1a1a1a !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .driver-bar-item-btn {
+    background: #1a1a1a !important;
+}
+.results-modal-overlay.dark-mode .driver-bar-item-btn.driver-dominant {
+    background: rgba(202, 0, 19, 0.15) !important;
+}
+.results-modal-overlay.dark-mode .driver-bar-name {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .driver-bar-name.driver-dominant {
+    color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .driver-bar-percent {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.results-modal-overlay.dark-mode .driver-bar-percent.driver-dominant {
+    color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .driver-icon {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+.results-modal-overlay.dark-mode .driver-bar-track {
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+.results-modal-overlay.dark-mode .driver-bar-fill.driver-fill-dominant {
+    background: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .driver-bar-fill.driver-fill-secondary {
+    background: rgba(255, 255, 255, 0.5) !important;
+}
+.results-modal-overlay.dark-mode .driver-details-content {
+    background: #1a1a1a !important;
+}
+.results-modal-overlay.dark-mode .driver-details-meaning,
+.results-modal-overlay.dark-mode .driver-details-context {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .driver-details-context strong {
+    color: #ffffff !important;
+}
+
+.results-modal-overlay.dark-mode .challenge-box {
+    background: rgba(202, 0, 19, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    border-left-color: #ca0013 !important;
+}
+.results-modal-overlay.dark-mode .benefit-box {
+    background: rgba(76, 175, 80, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    border-left-color: #4caf50 !important;
+}
+.results-modal-overlay.dark-mode .challenge-text,
+.results-modal-overlay.dark-mode .benefit-text {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Dark mode: Pattern intro, archetype explanation */
+.results-modal-overlay.dark-mode .results-modal-content .pattern-intro-main,
+.results-modal-overlay.dark-mode .results-modal-content .pattern-intro-strength,
+.results-modal-overlay.dark-mode .results-modal-content .pattern-intro-age,
+.results-modal-overlay.dark-mode .results-modal-content .pattern-intro-value {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .archetype-pattern-explanation {
+    border-top-color: rgba(202, 0, 19, 0.3) !important;
+}
+
+/* Dark mode: Simplified strength shadow, journal */
+.results-modal-overlay.dark-mode .simplified-strength-shadow .strength-card,
+.results-modal-overlay.dark-mode .simplified-strength-shadow .shadow-card {
+    background: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.results-modal-overlay.dark-mode .simplified-strength-shadow .strength-card *,
+.results-modal-overlay.dark-mode .simplified-strength-shadow .shadow-card * {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .journal-entry textarea.journal-textarea {
+    background: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .journal-entry textarea.journal-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .journal-saved-indicator {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Dark mode: Reset focus, science highlight */
+.results-modal-overlay.dark-mode .results-modal-content .reset-focus-box {
+    background: rgba(202, 0, 19, 0.15) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .science-highlight,
+.results-modal-overlay.dark-mode .results-modal-content .neuroscience-highlight {
+    background: rgba(202, 0, 19, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .life-areas-summary {
+    border-top-color: rgba(202, 0, 19, 0.25) !important;
+}
+
+/* Dark mode: Principles, CTA invite */
+.results-modal-overlay.dark-mode .principles-outer {
+    background: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+.results-modal-overlay.dark-mode .principles-trigger {
+    background: #1a1a1a !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .principle-card {
+    background: #141414 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+.results-modal-overlay.dark-mode .results-qa-section {
+    border-top-color: rgba(255, 255, 255, 0.12);
+}
+.results-modal-overlay.dark-mode .results-qa-section .qa-profile-brand {
+    color: #e63950 !important;
+}
+.results-modal-overlay.dark-mode .results-qa-section .qa-section-intro {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+.results-modal-overlay.dark-mode .principle-card summary {
+    background: rgba(255, 255, 255, 0.03) !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .principle-card[open] summary {
+    background: rgba(255, 255, 255, 0.06) !important;
+}
+.results-modal-overlay.dark-mode .principle-copy,
+.results-modal-overlay.dark-mode .principles-footer {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+.results-modal-overlay.dark-mode .cta-invite-card {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .cta-invite-card:hover {
+    border-color: rgba(202, 0, 19, 0.4) !important;
+}
+.results-modal-overlay.dark-mode .cta-feedback-card {
+    background: rgba(202, 0, 19, 0.12) !important;
+    border-color: rgba(202, 0, 19, 0.3) !important;
+}
+.results-modal-overlay.dark-mode .cta-feedback-title {
+    color: #ffffff !important;
+}
+.results-modal-overlay.dark-mode .cta-feedback-subtitle {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+.results-modal-overlay.dark-mode .cta-invite-title,
+.results-modal-overlay.dark-mode .cta-invite-subtitle {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .workbook-note {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .workbook-download-btn:not([data-download-type="full-report"]) {
+    background: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .workbook-download-btn:not([data-download-type="full-report"]) .btn-title {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .workbook-download-btn:not([data-download-type="full-report"]) .btn-subtitle {
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+.results-modal-overlay.dark-mode .results-modal-content .workbook-downloads-label {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Dark mode: Pattern interrupt diagram (override inline white boxes) */
+.results-modal-overlay.dark-mode .pattern-interrupt-diagram [style*="background: #fff"],
+.results-modal-overlay.dark-mode .pattern-interrupt-diagram [style*="background:#fff"] {
+    background: #1a1a1a !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+.results-modal-overlay.dark-mode .pattern-interrupt-diagram [style*="background: #fff"] p,
+.results-modal-overlay.dark-mode .pattern-interrupt-diagram [style*="background:#fff"] p {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+.results-modal-overlay.dark-mode .pattern-interrupt-diagram [style*="color: #555"],
+.results-modal-overlay.dark-mode .pattern-interrupt-diagram [style*="color:#555"] {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+.results-modal-overlay.dark-mode .pattern-interrupt-diagram [style*="color: #999"],
+.results-modal-overlay.dark-mode .pattern-interrupt-diagram [style*="color:#999"] {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+.results-modal-overlay.dark-mode .pattern-interrupt-diagram [style*="background: #eee"],
+.results-modal-overlay.dark-mode .pattern-interrupt-diagram [style*="background:#eee"] {
+    background: rgba(255, 255, 255, 0.08) !important;
 }
 
 /* PDF Download Button */
@@ -3442,17 +4524,18 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     }
 }
 
-/* Results Content Styles (reused from results.html) */
+/* Results Content Styles (reused from results.html) - Light mode default */
 .results-modal-content .results-header {
     text-align: center;
     margin-bottom: 3.5rem;
     padding-top: 0.5rem;
+    color: #1a1a1a;
 }
 
 .results-modal-content .results-title {
     font-family: 'Anton', sans-serif;
     font-size: 3.2rem;
-    color: #000000;
+    color: #1a1a1a;
     margin-bottom: 1.25rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -3482,6 +4565,72 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     letter-spacing: -0.2px;
 }
 
+/* Results hero intro - new copy block */
+.results-modal-content .results-hero-intro {
+    max-width: 680px;
+    margin: 0 auto 2.5rem auto;
+    text-align: left;
+}
+.results-modal-content .results-hero-lead {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.2rem;
+    color: #444;
+    line-height: 1.7;
+    margin: 0 0 1.25rem 0;
+}
+.results-modal-content .results-hero-standout {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.5;
+    margin: 0 0 1.25rem 0;
+    padding: 1.25rem 1.5rem;
+    background: rgba(202, 0, 19, 0.06);
+    border-left: 4px solid #ca0013;
+    border-radius: 0 8px 8px 0;
+}
+.results-modal-content .results-hero-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    color: #444;
+    line-height: 1.7;
+    margin: 0 0 1rem 0;
+}
+.results-modal-content .results-hero-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #ca0013;
+    margin: 0 0 2rem 0;
+}
+.results-modal-content .results-hero-subsection {
+    margin-bottom: 2rem;
+}
+.results-modal-content .results-hero-subsection:last-child {
+    margin-bottom: 0;
+}
+.results-modal-content .results-hero-subtitle {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 0.75rem 0;
+}
+.results-modal-content .results-hero-list {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    color: #444;
+    line-height: 1.8;
+    margin: 0.5rem 0 1rem 1.5rem;
+    padding-left: 1.25rem;
+}
+.results-modal-content .results-hero-list li {
+    margin-bottom: 0.35rem;
+}
+
 .results-modal-content .results-section {
     background: #ffffff;
     border-radius: 12px;
@@ -3493,13 +4642,19 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 .results-modal-content .results-section-title {
     font-family: 'Anton', sans-serif;
     font-size: 2rem;
-    color: #000000;
+    color: #1a1a1a;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     display: flex;
     align-items: center;
     gap: 0.75rem;
+}
+.results-modal-content .results-section .results-section-title,
+.results-modal-content .science-section .results-section-title,
+.results-modal-content .life-areas-section .results-section-title,
+.results-modal-content .solution-section .results-section-title {
+    color: #000000;
 }
 
 .results-modal-content .results-section-title .icon {
@@ -3524,8 +4679,8 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     width: 100%;
     max-width: 800px;
     padding: 2.5rem 3rem;
-    background: linear-gradient(135deg, rgba(202, 0, 19, 0.03) 0%, rgba(202, 0, 19, 0.08) 100%);
-    border: 1px solid rgba(202, 0, 19, 0.2);
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 12px;
     margin: 0 auto;
     text-align: center;
@@ -3616,7 +4771,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 .results-modal-content .pattern-drivers-grid {
     margin-top: 1.75rem;
     padding-top: 1.75rem;
-    border-top: 1px solid rgba(202, 0, 19, 0.15);
+    border-top: 1px solid rgba(202, 0, 19, 0.25);
 }
 
 .results-modal-content .drivers-grid-container {
@@ -3681,7 +4836,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     gap: 0.75rem;
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid rgba(202, 0, 19, 0.15);
+    border-top: 1px solid rgba(202, 0, 19, 0.25);
     flex-wrap: wrap;
 }
 
@@ -3723,7 +4878,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 .results-modal-content .explanation-section {
     margin-bottom: 2rem;
     padding: 1.5rem;
-    background: #f9f9f9;
+    background: #ffffff;
     border-radius: 8px;
     border-left: 4px solid #ca0013;
 }
@@ -3820,20 +4975,47 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 .results-modal-content .content-text {
     font-family: 'DM Sans', sans-serif;
     font-size: 1.1rem;
-    color: #333;
+    color: #444;
     line-height: 1.8;
     margin-bottom: 1.5rem;
 }
+/* White boxes: keep dark text */
+.results-modal-content .results-section .content-text,
+.results-modal-content .workbook-outer-box .content-text,
+.results-modal-content .pattern-identity-card .content-text,
+.results-modal-content .cta-section .content-text,
+.results-modal-content .solution-section .content-text,
+.results-modal-content .results-white-box .content-text,
+.results-modal-content .science-section .content-text,
+.results-modal-content .life-areas-section .content-text,
+.results-modal-content .uniqueness-section .content-text,
+.results-modal-content .costs-section .content-text,
+.results-modal-content .neuroscience-section .content-text,
+.results-modal-content .reset-focus-section .content-text {
+    color: #333 !important;
+}
+.results-modal-content .results-white-box .quick-reference-label {
+    color: #555;
+}
+.results-modal-content .results-white-box .quick-reference-item-title {
+    color: #000;
+}
 
-/* About Your Pattern Section - Consistent Typography */
-.about-pattern-title {
+/* About Your Pattern Section - Dark mode: light text on dark bg */
+.results-modal-content .about-pattern-title {
     font-family: 'Anton', sans-serif;
     font-size: 1.5rem;
     font-weight: 600;
-    color: #000;
+    color: #ffffff;
     margin: 0 0 1.5rem 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+.results-modal-content .results-section .about-pattern-title,
+.results-modal-content .workbook-outer-box .about-pattern-title,
+.results-modal-content .science-section .about-pattern-title,
+.results-modal-content .life-areas-section .about-pattern-title {
+    color: #000;
 }
 
 .how-developed-title {
@@ -3850,22 +5032,28 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     color: #ca0013 !important;
 }
 
-.quick-reference-label {
+.results-modal-content .quick-reference-label {
     font-family: 'DM Sans', sans-serif;
     font-size: 1rem;
     font-weight: 600;
-    color: #555;
+    color: rgba(255, 255, 255, 0.8);
     margin: 0 0 0.5rem 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
+.results-modal-content .results-section .quick-reference-label {
+    color: #555;
+}
 
-.quick-reference-item-title {
+.results-modal-content .quick-reference-item-title {
     font-family: 'DM Sans', sans-serif;
     font-size: 1rem;
     font-weight: 600;
-    color: #000;
+    color: #ffffff;
     margin: 0 0 0.5rem 0;
+}
+.results-modal-content .results-section .quick-reference-item-title {
+    color: #000;
 }
 
 /* Pattern Reset Workbook - Consistent Typography */
@@ -3939,8 +5127,18 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 }
 
 .results-modal-content .content-text strong {
-    color: #000000;
+    color: #1a1a1a;
     font-weight: 600;
+}
+.results-modal-content .results-section .content-text strong,
+.results-modal-content .workbook-outer-box .content-text strong,
+.results-modal-content .pattern-identity-card .content-text strong,
+.results-modal-content .cta-section .content-text strong,
+.results-modal-content .results-white-box .content-text strong,
+.results-modal-content .science-section .content-text strong,
+.results-modal-content .life-areas-section .content-text strong,
+.results-modal-content .solution-section .content-text strong {
+    color: #000000;
 }
 
 .results-modal-content .content-list {
@@ -3952,11 +5150,18 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 .results-modal-content .content-list li {
     font-family: 'DM Sans', sans-serif;
     font-size: 1.05rem;
-    color: #333;
+    color: rgba(255, 255, 255, 0.9);
     line-height: 1.8;
     padding: 0.75rem 0;
     padding-left: 1.5rem;
     position: relative;
+}
+.results-modal-content .results-section .content-list li,
+.results-modal-content .workbook-outer-box .content-list li,
+.results-modal-content .science-section .content-list li,
+.results-modal-content .life-areas-section .content-list li,
+.results-modal-content .solution-section .content-list li {
+    color: #333;
 }
 
 .results-modal-content .content-list li:before {
@@ -4315,6 +5520,99 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     font-size: 0.8rem;
 }
 
+/* Feedback CTA card - below Invite Someone */
+.results-modal-content .cta-feedback-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1rem;
+    background: rgba(202, 0, 19, 0.06);
+    border: 1px solid rgba(202, 0, 19, 0.2);
+    border-radius: 12px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.results-modal-content .cta-feedback-card:hover {
+    border-color: rgba(202, 0, 19, 0.35);
+    box-shadow: 0 2px 12px rgba(202, 0, 19, 0.08);
+}
+.results-modal-content .cta-feedback-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(202, 0, 19, 0.12);
+    color: #ca0013;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+.results-modal-content .cta-feedback-content {
+    flex: 1;
+    min-width: 0;
+}
+.results-modal-content .cta-feedback-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 0.25rem;
+}
+.results-modal-content .cta-feedback-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+    line-height: 1.4;
+}
+.results-modal-content .cta-feedback-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: #ca0013;
+    color: #fff !important;
+    border: 1px solid #ca0013;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+.results-modal-content .cta-feedback-btn:hover {
+    background: #b80011;
+    border-color: #b80011;
+    transform: translateY(-1px);
+}
+
+/* Floating feedback button - bottom-right of results modal */
+.feedback-float-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: #ca0013;
+    color: #fff;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(202, 0, 19, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 100;
+}
+.feedback-float-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(202, 0, 19, 0.5);
+}
+.feedback-float-btn:active {
+    transform: scale(0.98);
+}
+
 .results-modal-content .cta-invite-toast {
     position: absolute;
     bottom: 100%;
@@ -4411,6 +5709,15 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 
     .results-modal-content .cta-invite-btn {
         width: 100%;
+    }
+    .results-modal-content .cta-feedback-card {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    .results-modal-content .cta-feedback-btn {
+        width: 100%;
+        justify-content: center;
     }
 }
 
@@ -4642,6 +5949,23 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
         max-width: 100%;
     }
     
+    .results-modal-content .results-hero-intro {
+        margin-bottom: 2rem;
+    }
+    .results-modal-content .results-hero-lead {
+        font-size: 1.1rem;
+    }
+    .results-modal-content .results-hero-standout {
+        font-size: 1.2rem;
+        padding: 1rem 1.25rem;
+    }
+    .results-modal-content .results-hero-body {
+        font-size: 1.05rem;
+    }
+    .results-modal-content .results-hero-subtitle {
+        font-size: 1.15rem;
+    }
+    
     .results-modal-content .results-section {
         padding: 1.5rem;
     }
@@ -4810,6 +6134,30 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     .results-modal-content .results-header {
         margin-bottom: 2.5rem;
         padding-top: 0.25rem;
+    }
+    
+    .results-modal-content .results-hero-intro {
+        margin-bottom: 1.75rem;
+    }
+    .results-modal-content .results-hero-lead {
+        font-size: 1rem;
+    }
+    .results-modal-content .results-hero-standout {
+        font-size: 1.1rem;
+        padding: 0.9rem 1rem;
+    }
+    .results-modal-content .results-hero-body {
+        font-size: 1rem;
+    }
+    .results-modal-content .results-hero-cta {
+        font-size: 1.05rem;
+    }
+    .results-modal-content .results-hero-subtitle {
+        font-size: 1.05rem;
+    }
+    .results-modal-content .results-hero-list {
+        font-size: 0.95rem;
+        margin-left: 1rem;
     }
     
     .results-modal-content .results-section {
@@ -5041,14 +6389,56 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 }
 
 .results-content-section .results-section {
-    background: transparent;
+    background: #ffffff;
+}
+
+/* Questions You Want Answered - Q&A section */
+.results-qa-section {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+.results-qa-section .results-section-title {
+    margin-bottom: 0.5rem;
+}
+.results-qa-section .qa-profile-line {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+.results-qa-section .qa-profile-brand {
+    color: #ca0013;
+    font-family: 'Anton', 'Anton-Local', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+}
+.results-qa-section .qa-section-intro {
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+}
+.results-qa-section .qa-cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.results-qa-section .qa-card.principle-card {
+    margin: 0 0 0.5rem 0;
+}
+.results-qa-section .qa-card.principle-card:last-child {
+    margin-bottom: 0;
+}
+.results-qa-section .qa-answer {
+    line-height: 1.65;
 }
 
 .results-modal-content .science-subsection,
 .results-modal-content .neuroscience-subsection {
     margin-bottom: 2rem;
     padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .results-modal-content .science-subsection:last-child,
@@ -5061,10 +6451,15 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 .results-modal-content .subsection-title {
     font-family: 'Anton', sans-serif;
     font-size: 1.2rem;
-    color: #000;
+    color: #1a1a1a;
     margin-bottom: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+.results-modal-content .results-section .subsection-title,
+.results-modal-content .science-section .subsection-title,
+.results-modal-content .life-areas-section .subsection-title {
+    color: #000;
 }
 
 .results-modal-content .science-highlight,
@@ -5081,6 +6476,9 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     padding-bottom: 2rem;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
+.results-modal-content .results-section .life-area-item {
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+}
 
 .results-modal-content .life-area-item:last-child {
     border-bottom: none;
@@ -5091,10 +6489,14 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 .results-modal-content .life-area-title {
     font-family: 'Anton', sans-serif;
     font-size: 1.3rem;
-    color: #000;
+    color: #1a1a1a;
     margin-bottom: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+}
+.results-modal-content .results-section .life-area-title,
+.results-modal-content .life-areas-section .life-area-title {
+    color: #000;
 }
 
 .results-modal-content .life-areas-summary {
@@ -5448,9 +6850,9 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
    RESULTS ACCORDION SYSTEM
    ============================================ */
 
-/* Hero Section - Always Visible - Simplified */
+/* Hero Section - Always Visible - Light mode default */
 .results-hero-section {
-    background: #f5f5f5;
+    background: linear-gradient(180deg, #fffcf1 0%, #fff9e6 50%, #fffcf1 100%);
     padding: 3rem 2rem;
     margin-bottom: 0;
     border-radius: 0;
@@ -5486,20 +6888,55 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     background: transparent;
 }
 
-/* Hero Section Titles - Simplified */
-.hero-section-title {
+/* Light mode: Override inline styles in results-dark-bg-content (content on cream bg) */
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content .content-text,
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content p {
+    color: #444 !important;
+}
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content .about-pattern-title {
+    color: #1a1a1a !important;
+}
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content .how-developed-title {
+    color: #ca0013 !important;
+}
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content ul li {
+    color: #444 !important;
+}
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content .principles-trigger,
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content .principle-card summary,
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content .principle-copy,
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content .principles-footer {
+    color: #444 !important;
+}
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content {
+    border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content span[style*="color: #fffcf1"],
+.results-modal-overlay:not(.dark-mode) .results-dark-bg-content span[style*="color:#fffcf1"] {
+    color: #1a1a1a !important;
+    background: rgba(202, 0, 19, 0.12) !important;
+}
+
+/* Hero Section Titles - Simplified (Light mode default) */
+.results-modal-content .hero-section-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #000;
+    color: #1a1a1a;
     margin-bottom: 0.75rem;
     margin-top: 0;
 }
+.results-modal-content .results-section .hero-section-title {
+    color: #000;
+}
 
-.hero-section-text {
+.results-modal-content .hero-section-text {
     font-size: 1rem;
     line-height: 1.7;
-    color: #333;
+    color: #444;
     margin-bottom: 0.75rem;
+}
+.results-modal-content .results-section .hero-section-text {
+    color: #333;
 }
 
 /* Simplified Hero Sections - Clean, Minimal */
@@ -5927,6 +7364,11 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     margin-bottom: 1.5rem;
     padding: 1rem 0;
     overflow: hidden;
+}
+
+/* Remaining weeks: filled circles (light mode) */
+.pattern-reset-illo .illo-remaining {
+    fill: #e0e0e0;
 }
 
 .pattern-reset-illo-svg {

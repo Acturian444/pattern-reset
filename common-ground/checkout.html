@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Complete Your Purchase | Common Ground Social Club</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="../style.css?v=4">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+    :root { --cg-accent: #ca0013; --cg-accent-hover: #a00012; --cg-text: #000000; --cg-bg: #fffcf1; --cg-border: #e0dcd4; }
+    body { background: var(--cg-bg); font-family: 'DM Sans', sans-serif; color: var(--cg-text); padding: 2rem; max-width: 480px; margin: 0 auto; min-height: 100vh; }
+    h1 { font-family: 'Anton', sans-serif; font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .event-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .event-meta { font-size: 0.9rem; color: #5a5a5a; margin-bottom: 1.5rem; }
+    .price { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; }
+    .terms-box { background: white; border: 1px solid var(--cg-border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1.5rem; }
+    .terms-box label { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; }
+    .terms-box a { color: var(--cg-accent); }
+    .cg-btn { display: block; width: 100%; padding: 1rem; background: var(--cg-accent); color: white; border: none; border-radius: 4px; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; }
+    .cg-btn:hover { background: var(--cg-accent-hover); }
+    .cg-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .back { display: inline-block; margin-bottom: 1.5rem; font-weight: 600; color: var(--cg-accent); }
+    .error { color: #c00; font-size: 0.9rem; margin-top: 0.5rem; }
+    </style>
+</head>
+<body>
+    <a href="../common-ground.html" class="back">← Back to Common Ground</a>
+
+    <div id="checkout-content">
+        <h1>Complete Your Purchase</h1>
+        <p class="event-name" id="checkout-event-name">Saturday Social Walk</p>
+        <p class="event-meta" id="checkout-event-meta">Bay Area · Date TBD</p>
+        <p class="price" id="checkout-price">$25</p>
+
+        <div class="terms-box">
+            <label>
+                <input type="checkbox" id="terms-checkbox" required>
+                <span>I have read and agree to the <a href="event-terms.html" target="_blank">Event Terms and Release of Liability</a> *</span>
+            </label>
+        </div>
+
+        <button class="cg-btn" id="purchase-btn" disabled>Purchase Ticket</button>
+        <p class="error" id="checkout-error" style="display: none;"></p>
+    </div>
+
+    <script>
+    (function() {
+        const params = new URLSearchParams(window.location.search);
+        const eventId = params.get('event') || 'saturday-walk-1';
+        const email = params.get('email') || '';
+        const priceId = params.get('priceId') || ''; // Stripe Price ID - set when you create product
+
+        const events = {
+            'saturday-walk-1': { name: 'Saturday Social Walk', meta: 'Bay Area · Date TBD', price: '$25', priceId: 'price_XXXXX' },
+            'dinner-club-1': { name: 'Common Ground Dinner', meta: 'Bay Area · Coming soon', price: '$35', priceId: 'price_XXXXX' },
+        };
+
+        const event = events[eventId] || events['saturday-walk-1'];
+        const stripePriceId = priceId || event.priceId;
+
+        document.getElementById('checkout-event-name').textContent = event.name;
+        document.getElementById('checkout-event-meta').textContent = event.meta;
+        document.getElementById('checkout-price').textContent = event.price;
+
+        const checkbox = document.getElementById('terms-checkbox');
+        const btn = document.getElementById('purchase-btn');
+        const errEl = document.getElementById('checkout-error');
+
+        checkbox.addEventListener('change', () => { btn.disabled = !checkbox.checked; });
+
+        btn.addEventListener('click', async function() {
+            if (!checkbox.checked) {
+                errEl.textContent = 'Please agree to the Event Terms.';
+                errEl.style.display = 'block';
+                return;
+            }
+            if (!stripePriceId || stripePriceId === 'price_XXXXX') {
+                errEl.textContent = 'Checkout not configured. Please contact support@mypatternreset.com.';
+                errEl.style.display = 'block';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+            errEl.style.display = 'none';
+
+            try {
+                const baseUrl = window.location.origin;
+                const res = await fetch(baseUrl + '/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'event_ticket',
+                        priceId: stripePriceId,
+                        eventId,
+                        email,
+                        successUrl: baseUrl + '/common-ground/thank-you.html?session_id={CHECKOUT_SESSION_ID}',
+                        cancelUrl: window.location.href,
+                    }),
+                });
+                const data = await res.json();
+                if (data.error) throw new Error(data.error);
+                if (data.id && typeof Stripe !== 'undefined') {
+                    const stripe = Stripe('pk_live_51RaP4MLWOdcyyqSfMIlvbkoTQ0cVvm1KrSOExbJQeO6UBJoq4IbWpcuhAhlGbNSZbudJUAzh4B3L4jXYU9p109y000XIJvvIld');
+                    stripe.redirectToCheckout({ sessionId: data.id });
+                } else {
+                    throw new Error('Invalid response');
+                }
+            } catch (e) {
+                errEl.textContent = e.message || 'Something went wrong. Please try again.';
+                errEl.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Purchase Ticket';
+            }
+        });
+    })();
+    </script>
+</body>
+</html>

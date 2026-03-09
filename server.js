@@ -55,6 +55,16 @@ app.post('/create-checkout-session', async (req, res) => {
                 quantity: 1,
             }];
             sessionConfig.metadata = { postId: postId };
+        } else if (type === 'event_ticket' && priceId) {
+            // Common Ground Social Club – Event ticket
+            sessionConfig.line_items = [{
+                price: priceId,
+                quantity: 1,
+            }];
+            sessionConfig.metadata = {
+                eventId: req.body.eventId || '',
+                email: req.body.email || '',
+            };
         } else {
             // Fallback: legacy custom price (should not be used anymore)
             res.status(400).json({ error: 'Invalid purchase type or missing priceId.' });

@@ -76,7 +76,7 @@
       "teaches": "Pattern recognition, self-awareness, emotional intelligence, relationship patterns, behavioral patterns",
       "assesses": "Emotional patterns, relationship behaviors, life patterns, childhood origins, emotional drivers (Control, Validation, Avoidance, Fear of Rejection)",
       "timeRequired": "PT10M",
-      "numberOfQuestions": 36,
+      "numberOfQuestions": 38,
       "typicalAgeRange": "18-",
       "about": {
         "@type": "Thing",
@@ -389,8 +389,8 @@
         width: 100vw;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        align-items: stretch;
+        justify-content: flex-start;
         position: relative;
         overflow: hidden;
         scroll-margin-top: 100px;
@@ -422,7 +422,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        position: relative;
         min-height: 700px;
     }
 
@@ -468,12 +467,17 @@
     .quiz-title-highlight {
         color: #ca0013;
     }
+    
+    .quiz-subtitle-highlight {
+        color: #ca0013;
+        font-weight: 600;
+    }
 
     .quiz-subtitle {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.25rem;
         font-weight: 500;
-        color: #333;
+        color: #000;
         text-align: center;
         margin-bottom: 1.5rem;
         line-height: 1.8;
@@ -640,6 +644,53 @@
         font-weight: 500;
         color: #333;
         line-height: 1.6;
+    }
+
+    /* Pill layout for current-pain and biggest-fear (condensed, rounded squares) */
+    .quiz-options-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 3rem;
+        justify-content: flex-start;
+    }
+    .quiz-option-pill {
+        background: transparent;
+        border: 1.5px solid rgba(0, 0, 0, 0.12);
+        border-radius: 12px;
+        padding: 0.6rem 1rem;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #333;
+        line-height: 1.35;
+        flex-shrink: 0;
+    }
+    .quiz-option-pill:hover {
+        background: rgba(202, 0, 19, 0.05);
+        border-color: rgba(202, 0, 19, 0.4);
+    }
+    .quiz-option-pill.selected {
+        background: rgba(202, 0, 19, 0.1);
+        border-color: #ca0013;
+        border-width: 2px;
+        color: #ca0013;
+        font-weight: 600;
+    }
+    .quiz-other-text-wrap {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .quiz-other-text-input {
+        width: 100%;
+        max-width: 400px;
+        padding: 0.75rem 1rem;
+        border: 1.5px solid rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        font-size: 1rem;
+        font-family: inherit;
     }
 
     .quiz-birthdate-input {
@@ -1526,7 +1577,7 @@
         }
         .quiz-intro {
             margin: 0 auto;
-            padding: 2.5rem 1.5rem;
+            padding: 2.5rem 1.5rem 3rem;
             max-width: 100%;
             min-height: 600px;
         }
@@ -1596,6 +1647,14 @@
         }
         .quiz-option-text {
             font-size: 0.95rem !important;
+        }
+        .quiz-options-pills {
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .quiz-option-pill {
+            font-size: 0.85rem;
+            padding: 0.5rem 0.85rem;
         }
         .quiz-navigation {
             gap: 0.8rem;
@@ -2016,6 +2075,11 @@
     </style>
 </head>
 <body>
+    <script>
+    window.openMenu=function(){var e=document.getElementById("menuOverlay");e&&(e.classList.add("open"),document.body.style.overflow="hidden")};
+    window.closeMenu=function(){var e=document.getElementById("menuOverlay");e&&(e.classList.remove("open"),document.body.style.overflow="")};
+    document.addEventListener("DOMContentLoaded",function(){var e=document.getElementById("menuOverlay");if(e){e.addEventListener("click",function(t){t.target===e&&closeMenu()});e.querySelectorAll("nav a").forEach(function(a){a.addEventListener("click",closeMenu)})}});
+    </script>
     <!-- Banner hidden - Pattern Reset page is not yet public -->
     <div class="global-reset-banner" style="display: none;">
         <span class="banner-label">Next Reset Starts In:</span>
@@ -2029,9 +2093,12 @@
         <div class="container">
             <nav class="nav-centered">
                 <div class="nav-left">
+                    <button class="hamburger nav-hamburger" aria-label="Open menu" onclick="openMenu()">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
+                    </button>
                     <a href="index.html" class="logo-brand-combo" aria-label="Pattern Reset Home">
                         <span class="center-logo nav-logo">
-                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
                                 <!-- Outer spiral ring -->
                                 <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" 
                                       stroke="currentColor" 
@@ -2057,204 +2124,267 @@
                                 <circle cx="50" cy="50" r="3.5" fill="currentColor"/>
                             </svg>
                         </span>
-                        <span class="logo-text">My Pattern Quiz</span>
                     </a>
                 </div>
                 <div class="nav-right">
-                    <ul class="nav-links" style="display: none;">
+                    <ul class="nav-links">
+                        <li><a href="index.html" class="active">Pattern Quiz</a></li>
+                        <li><a href="common-ground.html">Common Ground</a></li>
                         <li id="myCourseLink" style="display: none;"><a href="course/breakup-course.html" id="desktopContinueBreakupResetLink">Continue Pattern Reset</a></li>
                     </ul>
                     <a href="#quiz-section" class="nav-cta-button" onclick="event.preventDefault(); const header = document.querySelector('header'); const headerHeight = header ? header.offsetHeight : 0; const section = document.getElementById('quiz-section'); const sectionTop = section.offsetTop; window.scrollTo({top: sectionTop - headerHeight, behavior: 'smooth'}); return false;">Start the Quiz</a>
                 </div>
             </nav>
         </div>
+        <div class="menu-overlay" id="menuOverlay">
+            <button class="close-btn hamburger" onclick="closeMenu()" aria-label="Close menu">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
+            </button>
+            <nav>
+                <a href="index.html" class="active">Pattern Quiz</a>
+                <a href="common-ground.html">Common Ground</a>
+                <a href="mailto:support@mypatternreset.com">Contact</a>
+                <a id="mobileCourseLink" href="course/breakup-course.html" style="display: none;">Continue Pattern Reset</a>
+            </nav>
+        </div>
     </header>
 
     <main>
-        <section id="home-hero" class="hero">
+        <section id="home-hero" class="hero" data-hero-variant="">
             <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-headline">What's the <span class="hero-pattern-accent">Pattern</span> Running Your Life?</h1>
-                    <p class="hero-subheading">Take the free quiz to discover the emotional loop keeping you stuck—and get your personalized Pattern Reset Workbook to break free.</p>
-                    <a href="#quiz-section" class="hero-cta-btn" onclick="event.preventDefault(); const header = document.querySelector('header'); const headerHeight = header ? header.offsetHeight : 0; const section = document.getElementById('quiz-section'); const sectionTop = section.offsetTop; window.scrollTo({top: sectionTop - headerHeight, behavior: 'smooth'}); return false;">Take the Free Quiz</a>
+                <div class="hero-text" id="hero-text-container">
+                    <!-- Hero content injected by A/B test script -->
+                    <noscript>
+                        <p class="hero-subtitle">Why do you keep ending up here?</p>
+                        <h1 class="hero-headline">The same cycle. Different person. <span class="hero-headline-nowrap">Same pattern.</span></h1>
+                        <p class="hero-subhead">Whether you're single, dating, married, or healing—one quiz reveals your pattern. 10 minutes. Free.</p>
+                        <ul class="hero-bullets">
+                            <li>Single and tired of the same dating cycle.</li>
+                            <li>In a relationship or married, but feel stuck, disconnected, or repeating the same fights.</li>
+                            <li>Trying to move on, but you keep going back.</li>
+                            <li>You push away when it gets real or cling when you're afraid.</li>
+                        </ul>
+                        <p class="hero-lead">A pattern shapes who you choose and what you tolerate—but <span class="hero-highlight">you can't change what you can't see.</span> Every day you don't see the pattern, you repeat it. See it. Then you can finally break it.</p>
+                        <a href="#quiz-section" class="hero-cta-btn">Discover My Pattern · Free</a>
+                        <p class="hero-credibility">Attachment theory. Psychology. Neuroscience.</p>
+                    </noscript>
                 </div>
                 <div class="hero-image">
                     <!-- Image background set via CSS -->
                 </div>
             </div>
-            <!-- Scrolling Text Loop -->
-            <div class="hero-scrolling-text">
-                <div class="hero-scrolling-track">
-                    <span class="hero-scrolling-item">Discover your pattern</span>
-                    <span class="hero-scrolling-item">Understand why you repeat cycles</span>
-                    <span class="hero-scrolling-item">See how it shows up everywhere</span>
-                    <span class="hero-scrolling-item">See your relationship pitfalls</span>
-                    <span class="hero-scrolling-item">Understand yourself deeply</span>
-                    <span class="hero-scrolling-item">Interrupt your pattern</span>
-                    <span class="hero-scrolling-item">Break the cycle</span>
-                    <span class="hero-scrolling-item">Transform your life</span>
-                    <span class="hero-scrolling-item">Get your free workbook</span>
-                    <span class="hero-scrolling-item">Connect pattern to your past</span>
-                    <span class="hero-scrolling-item">Know your emotional drivers</span>
-                    <span class="hero-scrolling-item">Begin your reset</span>
-                    <!-- Duplicate for seamless loop -->
-                    <span class="hero-scrolling-item">Discover your pattern</span>
-                    <span class="hero-scrolling-item">Understand why you repeat cycles</span>
-                    <span class="hero-scrolling-item">See how it shows up everywhere</span>
-                    <span class="hero-scrolling-item">See your relationship pitfalls</span>
-                    <span class="hero-scrolling-item">Understand yourself deeply</span>
-                    <span class="hero-scrolling-item">Interrupt your pattern</span>
-                    <span class="hero-scrolling-item">Break the cycle</span>
-                    <span class="hero-scrolling-item">Transform your life</span>
-                    <span class="hero-scrolling-item">Get your free workbook</span>
-                    <span class="hero-scrolling-item">Connect pattern to your past</span>
-                    <span class="hero-scrolling-item">Know your emotional drivers</span>
-                    <span class="hero-scrolling-item">Begin your reset</span>
-                </div>
-            </div>
             <style>
-            /* Hero section background color */
+            /* Hero section - matches All Pattern Types design (gradient + red glow) */
             #home-hero.hero {
-                background-color: #252526;
+                background: linear-gradient(135deg, #252526 0%, #2d1f22 50%, #252526 100%);
                 position: relative;
-                min-height: 90vh;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                padding: 6rem 2rem 6rem;
+                width: 100%;
+                box-sizing: border-box;
+                overflow: hidden;
+            }
+            #home-hero.hero::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(202, 0, 19, 0.12) 0%, transparent 60%);
+                pointer-events: none;
+            }
+            #home-hero.hero::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, rgba(202, 0, 19, 0.3), transparent);
+                pointer-events: none;
             }
             
-            /* Hero content styling */
             #home-hero .hero-content {
               position: relative;
               z-index: 3;
               width: 100%;
+              max-width: 900px;
+              margin: 0 auto;
+              padding: 0;
               display: flex;
+              flex-direction: column;
               align-items: center;
               justify-content: center;
-              padding: 6rem 0;
+              box-sizing: border-box;
             }
             
             #home-hero .hero-text {
               text-align: center;
-              max-width: 900px;
-              padding: 0 2rem;
+              width: 100%;
+              max-width: 100%;
+              padding: 0;
+              box-sizing: border-box;
+              flex: none;
             }
             
-            /* Hero headline - using high specificity to override external stylesheet */
+            /* Hero subtitle - small red text above headline */
+            .hero-subtitle {
+              color: #ca0013 !important;
+              font-family: 'DM Sans', sans-serif !important;
+              font-size: clamp(0.85rem, 2.5vw, 1rem) !important;
+              font-weight: 600 !important;
+              text-align: center !important;
+              margin: 0 0 0.75rem 0 !important;
+              letter-spacing: 0.05em !important;
+              text-transform: uppercase !important;
+            }
+            
+            .hero-headline-nowrap {
+              white-space: nowrap;
+            }
+            
+            /* Hero headline - clear hierarchy, one line on desktop/tablet, centered */
             #home-hero .hero-headline,
             #home-hero .hero-text .hero-headline,
             .hero-headline {
-              color: #ffffff !important;
+              color: rgba(255, 255, 255, 0.98) !important;
               font-family: 'Anton', sans-serif;
-              font-size: 3rem !important;
+              font-size: clamp(1.75rem, 5vw, 3rem) !important;
               font-weight: 700 !important;
               text-align: center !important;
-              margin-bottom: 1.75rem !important;
-              margin-top: 0 !important;
-              letter-spacing: 0.2px !important;
+              margin: 0 0 1rem 0 !important;
+              display: block !important;
+              width: 100% !important;
+              box-sizing: border-box !important;
+              letter-spacing: 0.02em !important;
               line-height: 1.2 !important;
               text-transform: uppercase !important;
-              white-space: nowrap !important;
+              white-space: normal !important;
             }
             
-            .hero-headline br {
-              display: none;
-            }
-            
-            .hero-pattern-accent {
-              color: #ca0013 !important;
-            }
-            
-            .hero-subheading {
-              color: #ffffff;
+            /* Hero subhead - below headline, matches lead/payoff for cohesive copy block */
+            .hero-subhead {
+              color: rgba(255, 255, 255, 0.95);
               font-family: 'DM Sans', sans-serif;
-              font-size: 1.35rem;
+              font-size: 1.2rem;
               font-weight: 500;
               text-align: center;
-              margin-top: 0 !important;
-              margin-bottom: 3rem;
-              line-height: 1.7;
-              max-width: 750px;
+              margin: 0 auto 2rem;
+              line-height: 1.6;
+              max-width: 700px;
+            }
+            
+            /* Hero bullets - subtle card container, blends with dark theme */
+            .hero-bullets {
+              list-style: none;
+              padding: 1.5rem 1.75rem;
+              margin: 0 auto 2.5rem;
+              max-width: 700px;
               margin-left: auto;
               margin-right: auto;
+              text-align: left;
+              background: rgba(255, 255, 255, 0.05);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              border-radius: 12px;
+              border-left: 3px solid #ca0013;
+            }
+            
+            .hero-bullets li {
+              color: rgba(255, 255, 255, 0.92);
+              font-family: 'DM Sans', sans-serif;
+              font-size: 1rem;
+              font-weight: 500;
+              line-height: 1.55;
+              padding: 0.4rem 0;
+              padding-left: 0;
+              display: flex;
+              align-items: flex-start;
+              gap: 0.6rem;
+              white-space: normal;
+              text-align: left;
+              overflow-wrap: break-word;
+              word-wrap: break-word;
+            }
+            
+            .hero-bullets li::before {
+              content: '\f024';
+              font-family: 'Font Awesome 6 Free';
+              font-weight: 900;
+              font-size: 0.7rem;
+              color: #ca0013;
+              flex-shrink: 0;
+              line-height: 1.55;
+              margin-top: 0.22em;
+            }
+            
+            .hero-lead {
+              color: rgba(255, 255, 255, 0.95);
+              font-family: 'DM Sans', sans-serif;
+              font-size: 1.2rem;
+              font-weight: 500;
+              text-align: center;
+              margin: 0 auto 2rem;
+              line-height: 1.7;
+              max-width: 700px;
+              letter-spacing: 0.01em;
+              overflow-wrap: break-word;
+              word-wrap: break-word;
+            }
+            
+            .hero-highlight {
+              color: #ca0013;
+              font-weight: 600;
+            }
+            
+            .hero-payoff {
+              color: rgba(255, 255, 255, 0.95);
+              font-family: 'DM Sans', sans-serif;
+              font-size: 1.2rem;
+              font-weight: 500;
+              text-align: center;
+              margin: 0 auto 2.5rem;
+              line-height: 1.7;
+              max-width: 700px;
+              letter-spacing: 0.01em;
+              overflow-wrap: break-word;
+              word-wrap: break-word;
             }
             
             .hero-cta-btn {
               display: inline-block;
               color: #fffcf1;
               background: #ca0013;
-              border: 2px solid #ca0013;
-              border-radius: 4px;
+              border: none;
+              border-radius: 8px;
               font-family: 'DM Sans', sans-serif;
-              font-size: 1.1rem;
-              font-weight: 700;
-              padding: 1.1rem 2.5rem;
+              font-size: 1rem;
+              font-weight: 600;
+              padding: 1rem 2.5rem;
               text-decoration: none;
               text-align: center;
               text-transform: uppercase;
-              letter-spacing: 1px;
-              transition: background 0.3s, color 0.3s, border-color 0.3s;
-              box-shadow: none;
+              letter-spacing: 0.08em;
+              transition: background 0.2s ease, transform 0.2s ease;
+              box-shadow: 0 2px 12px rgba(202, 0, 19, 0.3);
               cursor: pointer;
             }
             
             .hero-cta-btn:hover, .hero-cta-btn:focus {
               background: #b80011;
               color: #fffcf1 !important;
-              border-color: #b80011;
               outline: none;
+              transform: translateY(-1px);
+              box-shadow: 0 4px 16px rgba(202, 0, 19, 0.4);
             }
             
-            /* Scrolling Text Loop - Wispr Flow Style */
-            .hero-scrolling-text {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 60px;
-                overflow: hidden;
-                z-index: 2;
-                background: transparent;
-                pointer-events: none;
-                mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-                -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-            }
-            
-            .hero-scrolling-track {
-                display: inline-flex;
-                align-items: center;
-                white-space: nowrap;
-                height: 100%;
-                animation: hero-scroll 40s linear infinite;
-                will-change: transform;
-                width: max-content;
-            }
-            
-            .hero-scrolling-item {
-                display: inline-flex;
-                align-items: center;
-                font-family: 'DM Sans', sans-serif;
-                font-size: 0.9rem;
-                font-weight: 400;
-                color: rgba(255, 255, 255, 0.5);
-                margin: 0 3rem;
-                white-space: nowrap;
-                padding: 0;
-                background: transparent;
-                border: none;
-                transition: color 0.3s ease;
-                flex-shrink: 0;
-            }
-            
-            /* All items same greyish color - minimal Wispr Flow style */
-            
-            @keyframes hero-scroll {
-                from {
-                    transform: translateX(0);
-                }
-                to {
-                    transform: translateX(-50%);
-                }
+            .hero-credibility {
+              color: rgba(255, 255, 255, 0.6);
+              font-family: 'DM Sans', sans-serif;
+              font-size: 0.8rem;
+              font-weight: 500;
+              text-align: center;
+              margin: 1rem auto 0;
+              letter-spacing: 0.03em;
             }
             
             /* Smooth scroll behavior */
@@ -2263,175 +2393,276 @@
             }
             
             /* Tablet styles */
-            @media (max-width: 900px) {
+            @media (max-width: 768px) {
               #home-hero.hero {
-                min-height: 85vh;
-              }
-              
-              #home-hero .hero-content {
-                padding: 5rem 0;
-              }
-              
-              #home-hero .hero-headline,
-              #home-hero .hero-text .hero-headline,
-              .hero-headline {
-                font-size: 2.5rem !important;
-                margin-bottom: 1.75rem !important;
-                line-height: 1.2 !important;
-                letter-spacing: 0.2px !important;
-                text-transform: uppercase !important;
-                white-space: normal !important;
-                color: #ffffff !important;
-              }
-              
-              .hero-subheading {
-                font-size: 1.2rem;
-                margin-bottom: 2.5rem;
-                padding: 0 1rem;
-                line-height: 1.7;
-                color: #ffffff;
-              }
-              
-              .hero-cta-btn {
-                font-size: 1rem;
-                padding: 1rem 2rem;
+                padding: 5rem 1.5rem 6rem;
               }
               
               #home-hero .hero-text {
                 padding: 0 1.5rem;
               }
               
-              /* Tablet scrolling text adjustments */
-              .hero-scrolling-text {
-                height: 50px;
+              .hero-headline {
+                margin-bottom: 0.85rem !important;
               }
               
-              .hero-scrolling-item {
-                font-size: 0.85rem;
-                padding: 0;
-                margin: 0 2.5rem;
-                color: rgba(255, 255, 255, 0.5);
+              .hero-bullets {
+                margin-bottom: 2rem;
+                max-width: 100%;
+                padding: 1.25rem 1.5rem;
               }
               
-              .hero-scrolling-track {
-                animation: hero-scroll 35s linear infinite;
+              .hero-bullets li {
+                font-size: 1rem;
+              }
+              
+              .hero-subhead {
+                font-size: 1.1rem;
+                margin-bottom: 1.75rem;
+              }
+              
+              .hero-lead,
+              .hero-payoff {
+                max-width: 100%;
+              }
+              
+              .hero-lead {
+                font-size: 1.1rem;
+                margin-bottom: 1.75rem;
+              }
+              
+              .hero-payoff {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+              }
+              
+              .hero-cta-btn {
+                font-size: 0.95rem;
+                padding: 1rem 2rem;
+              }
+              
+              .hero-credibility {
+                font-size: 0.75rem;
+                margin-top: 0.85rem;
               }
             }
             
-            /* Mobile styles */
+            /* Mobile - allow headline to wrap, ensure all text fits */
             @media (max-width: 600px) {
               #home-hero.hero {
-                min-height: 80vh;
+                padding: 4rem 1.25rem 6rem;
               }
-              
-              #home-hero .hero-content {
-                padding: 4rem 0 3rem 0;
+              .hero-subtitle {
+                font-size: 0.8rem !important;
+                margin-bottom: 0.5rem !important;
               }
-              
-              #home-hero .hero-headline,
-              #home-hero .hero-text .hero-headline,
-              .hero-headline {
-                font-size: 2rem !important;
-                margin-bottom: 1.75rem !important;
-                line-height: 1.2 !important;
-                letter-spacing: 0.5px !important;
-                text-transform: uppercase !important;
-                white-space: normal !important;
-                color: #ffffff !important;
-              }
-              
-              .hero-subheading {
-                font-size: 1.1rem;
-                margin-bottom: 2.5rem;
-                padding: 0;
-                line-height: 1.7;
-                color: #ffffff;
-              }
-              
-              .hero-cta-btn {
-                font-size: 1rem;
-                padding: 1rem 2rem;
-                width: auto;
-                min-width: 220px;
-                margin-top: 0;
-              }
-              
-              #home-hero .hero-text {
-                padding: 0 1.5rem;
-              }
-              
-              /* Mobile scrolling text adjustments */
-              .hero-scrolling-text {
-                height: 45px;
-              }
-              
-              .hero-scrolling-item {
-                font-size: 0.75rem;
-                padding: 0;
-                margin: 0 2rem;
-                color: rgba(255, 255, 255, 0.5);
-              }
-              
-              .hero-scrolling-track {
-                animation: hero-scroll 30s linear infinite;
-              }
-            }
-            
-            /* Small mobile styles */
-            @media (max-width: 480px) {
-              #home-hero .hero-content {
-                padding-top: 1.25rem;
-                padding-bottom: 0.75rem;
-              }
-              
-              #home-hero .hero-headline,
-              #home-hero .hero-text .hero-headline,
-              .hero-headline {
-                font-size: 2rem !important;
-                margin-bottom: 1.25rem !important;
-                letter-spacing: 0.3px !important;
-                text-transform: uppercase !important;
-                white-space: normal !important;
-                color: #ffffff !important;
-                line-height: 1.2 !important;
-              }
-              
-              .hero-subheading {
-                font-size: 1.05rem;
-                margin-bottom: 1.5rem;
-                padding: 0;
-                line-height: 1.6;
-                color: #ffffff;
-              }
-              
-              .hero-cta-btn {
-                font-size: 0.9rem;
-                padding: 0.8rem 1.5rem;
-                min-width: 200px;
-                margin-top: 0;
+              #home-hero.hero {
+                padding: 4rem 1.25rem 5rem;
               }
               
               #home-hero .hero-text {
                 padding: 0 1.25rem;
               }
               
-              /* Small mobile scrolling text adjustments */
-              .hero-scrolling-text {
-                height: 40px;
+              .hero-headline {
+                margin-bottom: 0.75rem !important;
               }
               
-              .hero-scrolling-item {
+              .hero-headline-nowrap {
+                white-space: normal;
+              }
+              
+              .hero-bullets {
+                margin-bottom: 1.75rem;
+                max-width: 100%;
+                padding: 1.25rem 1.25rem;
+              }
+              
+              .hero-bullets li {
+                font-size: 0.95rem;
+                gap: 0.5rem;
+              }
+              
+              .hero-subhead {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+              }
+              
+              .hero-lead,
+              .hero-payoff {
+                max-width: 100%;
+              }
+              
+              .hero-bullets li::before {
+                font-size: 0.65rem;
+                margin-top: 0.18em;
+              }
+              
+              .hero-lead {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+              }
+              
+              .hero-payoff {
+                font-size: 1rem;
+                margin-bottom: 1.75rem;
+              }
+              
+              .hero-cta-btn {
+                font-size: 0.9rem;
+                padding: 1rem 2rem;
+                min-width: 200px;
+              }
+              
+              .hero-credibility {
                 font-size: 0.7rem;
-                padding: 0;
-                margin: 0 1.5rem;
-                color: rgba(255, 255, 255, 0.5);
+                margin-top: 0.75rem;
+              }
+            }
+            
+            /* Small mobile styles */
+            @media (max-width: 480px) {
+              #home-hero.hero {
+                padding: 3rem 1rem 5rem;
               }
               
-              .hero-scrolling-track {
-                animation: hero-scroll 25s linear infinite;
+              #home-hero .hero-text {
+                padding: 0 1rem;
+              }
+              
+              .hero-subtitle {
+                font-size: 0.75rem !important;
+                margin-bottom: 0.5rem !important;
+              }
+              
+              .hero-headline {
+                margin-bottom: 0.65rem !important;
+                font-size: 1.5rem !important;
+              }
+              
+              .hero-headline-nowrap {
+                white-space: normal;
+              }
+              
+              .hero-subhead {
+                font-size: 0.95rem;
+                margin-bottom: 1.25rem;
+              }
+              
+              .hero-bullets {
+                max-width: 100%;
+                padding: 1rem 1rem;
+              }
+              
+              .hero-bullets li {
+                font-size: 0.9rem;
+                gap: 0.45rem;
+              }
+              
+              .hero-bullets li::before {
+                font-size: 0.6rem;
+                margin-top: 0.2em;
+              }
+              
+              .hero-lead {
+                font-size: 0.95rem;
+                margin-bottom: 1.25rem;
+              }
+              
+              .hero-payoff {
+                font-size: 0.95rem;
+                margin-bottom: 1.5rem;
+              }
+              
+              .hero-cta-btn {
+                font-size: 0.85rem;
+                padding: 0.9rem 1.5rem;
+                min-width: 180px;
               }
             }
             </style>
+            <script>
+            (function() {
+                var HERO_AB_KEY = 'hero_ab_variant';
+                var variants = {
+                    A: {
+                        subtitle: 'Why do you keep ending up here?',
+                        headline: 'The same cycle. Different person. <span class="hero-headline-nowrap">Same pattern.</span>',
+                        subhead: 'Whether you\'re single, dating, married, or healing—one quiz reveals your pattern. 10 minutes. Free.',
+                        bullets: [
+                            'Single and tired of the same dating cycle.',
+                            'In a relationship or married, but feel stuck, disconnected, or repeating the same fights.',
+                            'Trying to move on, but you keep going back.',
+                            'You push away when it gets real or cling when you\'re afraid.'
+                        ],
+                        lead: 'A pattern shapes who you choose and what you tolerate—but <span class="hero-highlight">you can\'t change what you can\'t see.</span> Every day you don\'t see the pattern, you repeat it. See it. Then you can finally break it.'
+                    },
+                    B: {
+                        subtitle: 'Why do you keep ending up here?',
+                        headline: 'The same cycle. Different person. <span class="hero-headline-nowrap">Same pattern.</span>',
+                        subhead: 'Whether you\'re single, dating, married, or healing—one quiz reveals your pattern. 10 minutes. Free.',
+                        bullets: [
+                            'Single and tired of the same dating cycle.',
+                            'In a relationship or married, but feel stuck, disconnected, or repeating the same fights.',
+                            'Trying to move on, but you keep going back.',
+                            'You push away when it gets real or cling when you\'re afraid.'
+                        ],
+                        lead: 'A pattern shapes who you choose and what you tolerate—but <span class="hero-highlight">you can\'t change what you can\'t see.</span> Every day you don\'t see the pattern, you repeat it. See it. Then you can finally break it.'
+                    }
+                };
+                function getVariant() {
+                    var params = new URLSearchParams(window.location.search);
+                    var urlVariant = params.get('hero_variant');
+                    if (urlVariant === 'A' || urlVariant === 'B') return urlVariant;
+                    try {
+                        var stored = sessionStorage.getItem(HERO_AB_KEY);
+                        if (stored === 'A' || stored === 'B') return stored;
+                    } catch (e) {}
+                    return Math.random() < 0.5 ? 'A' : 'B';
+                }
+                function renderHero(variant) {
+                    var v = variants[variant];
+                    if (!v) return;
+                    var container = document.getElementById('hero-text-container');
+                    if (!container) return;
+                    var bulletsHtml = v.bullets.map(function(b) { return '<li>' + b + '</li>'; }).join('');
+                    container.innerHTML = '<p class="hero-subtitle">' + v.subtitle + '</p>' +
+                        '<h1 class="hero-headline">' + v.headline + '</h1>' +
+                        '<p class="hero-subhead">' + v.subhead + '</p>' +
+                        '<ul class="hero-bullets">' + bulletsHtml + '</ul>' +
+                        '<p class="hero-lead">' + v.lead + '</p>' +
+                        '<a href="#quiz-section" class="hero-cta-btn" id="hero-cta-btn">Discover My Pattern · Free</a>' +
+                        '<p class="hero-credibility">Attachment theory. Psychology. Neuroscience.</p>';
+                    var section = document.getElementById('home-hero');
+                    if (section) section.setAttribute('data-hero-variant', variant);
+                    try { sessionStorage.setItem(HERO_AB_KEY, variant); } catch (e) {}
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'hero_ab_view', { hero_variant: variant, event_category: 'ab_test' });
+                    }
+                    var btn = document.getElementById('hero-cta-btn');
+                    if (btn) {
+                        btn.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            var header = document.querySelector('header');
+                            var headerHeight = header ? header.offsetHeight : 0;
+                            var section = document.getElementById('quiz-section');
+                            if (section) {
+                                window.scrollTo({ top: section.offsetTop - headerHeight, behavior: 'smooth' });
+                            }
+                            if (typeof gtag === 'function') {
+                                gtag('event', 'hero_ab_click', { hero_variant: variant, event_category: 'ab_test' });
+                            }
+                            return false;
+                        });
+                    }
+                }
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', function() { renderHero(getVariant()); });
+                } else {
+                    renderHero(getVariant());
+                }
+            })();
+            </script>
 
         </section>
 
@@ -2440,12 +2671,17 @@
             <div class="pattern-types-container">
                 <div class="pattern-types-content">
                     <div class="pattern-types-text">
-                        <span class="pattern-types-label">PATTERN TYPES</span>
-                        <h2 class="pattern-types-heading">Understand Your Pattern</h2>
-                        <p class="pattern-types-description">In our free pattern descriptions, you'll discover how emotional drivers shape behavior and how patterns show up across relationships, work, and life. This knowledge helps you recognize patterns in yourself and others—building deeper understanding and more meaningful connections.</p>
+                        <span class="pattern-types-label">YOUR PATTERN</span>
+                        <h2 class="pattern-types-heading">One Pattern. Everywhere It Shows.</h2>
+                        <p class="pattern-types-description">Your pattern drives how you respond when threatened, react to closeness, handle distance, and protect yourself when things feel uncertain. The same wiring shapes friendships, family, work, and boundaries — romantic relationships expose it fastest.</p>
+                        <p class="pattern-types-payoff">Discover yours. Get your pattern name, archetype, and a personalized workbook.</p>
                         <div class="pattern-types-cta">
-                            <a href="patterns.html" class="pattern-types-btn">Pattern Types</a>
-                            <a href="pattern-theory.html" class="pattern-types-link">How Patterns Work →</a>
+                            <a href="#quiz-section" class="pattern-types-btn" onclick="event.preventDefault(); const h = document.querySelector('header'); const headerHeight = h ? h.offsetHeight : 0; const s = document.getElementById('quiz-section'); if(s) window.scrollTo({top: s.offsetTop - headerHeight, behavior: 'smooth'}); return false;">Take the Free Quiz</a>
+                            <span class="pattern-types-links">
+                                <a href="patterns.html" class="pattern-types-link">Pattern Types</a>
+                                <span class="pattern-types-sep">·</span>
+                                <a href="pattern-theory.html" class="pattern-types-link">How Patterns Work</a>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -2508,16 +2744,37 @@
                     font-size: 1.15rem;
                     line-height: 1.8;
                     color: #333;
-                    margin-bottom: 3rem;
+                    margin-bottom: 1.25rem;
+                }
+                
+                .pattern-types-payoff {
+                    font-family: 'DM Sans', sans-serif;
+                    font-size: 1.05rem;
+                    font-weight: 600;
+                    color: #000;
+                    margin-bottom: 2rem;
+                    line-height: 1.6;
                 }
                 
                 .pattern-types-cta {
                     display: flex;
+                    flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    gap: 2rem;
-                    flex-wrap: wrap;
-                    margin-top: 1rem;
+                    gap: 1rem;
+                    margin-top: 0;
+                }
+                
+                .pattern-types-links {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    font-size: 0.95rem;
+                }
+                
+                .pattern-types-sep {
+                    color: #999;
+                    font-weight: 400;
                 }
                 
                 .pattern-types-btn {
@@ -2542,14 +2799,11 @@
                 
                 .pattern-types-link {
                     font-family: 'DM Sans', sans-serif;
-                    font-size: 1.05rem;
-                    font-weight: 600;
+                    font-size: 0.95rem;
+                    font-weight: 500;
                     color: #ca0013;
                     text-decoration: none;
                     transition: color 0.3s ease;
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0.5rem;
                 }
                 
                 .pattern-types-link:hover {
@@ -2609,14 +2863,18 @@
                     .pattern-types-description {
                         font-size: 1rem;
                         line-height: 1.7;
-                        margin-bottom: 2.5rem;
+                        margin-bottom: 1rem;
+                    }
+                    
+                    .pattern-types-payoff {
+                        font-size: 1rem;
+                        margin-bottom: 1.5rem;
                     }
                     
                     .pattern-types-cta {
                         flex-direction: column;
                         align-items: center;
-                        gap: 1.25rem;
-                        margin-top: 0.5rem;
+                        gap: 1rem;
                     }
                     
                     .pattern-types-btn {
@@ -2627,8 +2885,8 @@
                         font-size: 1rem;
                     }
                     
-                    .pattern-types-link {
-                        text-align: center;
+                    .pattern-types-links {
+                        flex-wrap: wrap;
                         justify-content: center;
                     }
                 }
@@ -2646,8 +2904,9 @@
         <!-- Start Here Section -->
         <section class="start-here-section">
             <div class="start-here-content">
-                <h2 class="start-here-title" style="color: #000000; margin-bottom: 1rem;">How It Works</h2>
-                <p class="start-here-subtitle" style="color: #000000; font-family: 'DM Sans', sans-serif; font-size: 1.25rem; font-weight: 500; text-align: center; margin-bottom: 3rem; line-height: 1.6;">Find your pattern, and see what's keeping you stuck.</p>
+                <h2 class="start-here-title" style="color: #000000; margin-bottom: 1rem;">HOW IT WORKS</h2>
+                <p class="start-here-subtitle" style="color: #000000; font-family: 'DM Sans', sans-serif; font-size: 1.25rem; font-weight: 500; text-align: center; margin-bottom: 0.5rem; line-height: 1.6;">Identify it. Understand it. Break it.</p>
+                <p class="start-here-meta" style="color: #666; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; text-align: center; margin-bottom: 3rem; line-height: 1.5;">Free • Immediate results</p>
                 <style>
                   .mobile-break { display: none; }
                   @media (max-width: 600px) { .mobile-break { display: inline; } }
@@ -2658,12 +2917,15 @@
                     padding: 3rem 0 4rem 0;
                   }
                   
-                  /* Grid layout for 3 boxes */
+                  /* Grid layout for 3 boxes - wider on desktop/tablet */
+                  .start-here-content {
+                    max-width: 1400px;
+                  }
                   .start-here-card-grid {
                     display: grid;
                     grid-template-columns: repeat(3, 1fr);
                     gap: 2.5rem;
-                    max-width: 1200px;
+                    max-width: 1400px;
                     margin: 0 auto;
                     padding: 0 2rem;
                     align-items: stretch;
@@ -2680,6 +2942,7 @@
                     flex-direction: column;
                     height: 100%;
                     min-height: 400px;
+                    max-width: none;
                     box-sizing: border-box;
                     justify-content: flex-start;
                   }
@@ -2747,6 +3010,10 @@
                     }
                     .start-here-subtitle {
                       font-size: 1.15rem !important;
+                      margin-bottom: 0.5rem !important;
+                    }
+                    .start-here-meta {
+                      font-size: 0.95rem !important;
                       margin-bottom: 3rem !important;
                     }
                     .start-here-card-grid {
@@ -2781,9 +3048,13 @@
                     }
                     .start-here-subtitle {
                       font-size: 1.1rem !important;
-                      margin-bottom: 2.5rem !important;
+                      margin-bottom: 0.5rem !important;
                       padding-left: 0 !important;
                       padding-right: 0 !important;
+                    }
+                    .start-here-meta {
+                      font-size: 0.9rem !important;
+                      margin-bottom: 2.5rem !important;
                     }
                     .start-here-card-grid {
                       grid-template-columns: 1fr;
@@ -2826,23 +3097,23 @@
                           <span class="step-number">1</span>
                         </div>
                         <h3>Take the Free Pattern Quiz</h3>
-                        <p>Answer 36 questions in 8–12 minutes to uncover the hidden pattern driving your relationships, habits, and choices.</p>
+                        <p>38 questions across love, relationships, money, health, identity, and more. Based on attachment theory, psychology, and neuroscience. Your dominant pattern in 10 min.</p>
                     </div>
                     <!-- Step 2 -->
                     <div class="start-here-card">
                         <div class="start-here-icon" aria-hidden="true">
                           <span class="step-number">2</span>
                         </div>
-                        <h3>Get Your Pattern Identity</h3>
-                        <p>See your archetype, pattern name, and strength immediately—plus how your emotional drivers show up across your life.</p>
+                        <h3>See Your Pattern Clearly</h3>
+                        <p>Your dominant pattern (e.g., The Fixer, The Pleaser), archetype, pattern strength, and all 4 emotional drivers. How it developed—and how it shows up in love, money, health, and identity.</p>
                     </div>
                     <!-- Step 3 -->
                     <div class="start-here-card">
                         <div class="start-here-icon" aria-hidden="true">
                             <span class="step-number">3</span>
                         </div>
-                        <h3>Get Your One-Day Reset Workbook</h3>
-                        <p>Your personalized interrupt question plus daily practices to break your cycle. Free, yours to keep.</p>
+                        <h3>Interrupt the Pattern</h3>
+                        <p>Your personalized Pattern Reset Workbook. Your first step to break the cycle.</p>
                     </div>
                 </div>
             </div>
@@ -2852,9 +3123,9 @@
         <section id="quiz-section" class="quiz-section">
             <div class="quiz-container">
                 <div class="quiz-intro" id="quiz-intro">
-                    <h2 class="quiz-title">Uncover the <span class="quiz-title-highlight">Pattern</span> That's Been Keeping You Stuck</h2>
-                    <p class="quiz-subtitle">There's a hidden loop behind your stress, your habits, your relationships,<br> and the choices you keep making. Learn how to break the cycle for good.</p>
-                    <p class="quiz-time-indicator">Takes 8-12 minutes • Be honest for accurate results</p>
+                    <h2 class="quiz-title">You Keep Repeating the Same <span class="quiz-title-highlight">Relationship Pattern</span>—And You're Not Sure Why?</h2>
+                    <p class="quiz-subtitle">There's a reason. This quiz shows you your pattern.</p>
+                    <p class="quiz-time-indicator">Be honest for accurate results</p>
                     <button type="button" class="btn btn-mission btn-mission-primary" id="start-quiz-btn">Start the Free Quiz</button>
                 </div>
 
@@ -2907,6 +3178,9 @@
                             <!-- View Full Results Button -->
                             <button onclick="try { if(typeof window.showResultsModal === 'function') { window.showResultsModal(); } else { console.error('showResultsModal not available on window'); alert('Loading full results... Please refresh the page if this doesn\'t work.'); } } catch(e) { console.error('Error opening results modal:', e); alert('Error opening results: ' + e.message); }" class="btn btn-mission btn-mission-primary" style="display: block; margin-top: 1.5rem; margin-bottom: 1rem; margin-left: auto; margin-right: auto; width: auto;">
                                 View Full Detailed Report
+                            </button>
+                            <button type="button" onclick="if(typeof window.showFeedbackModal === 'function') window.showFeedbackModal();" class="btn btn-mission" style="display: block; margin-top: 0.5rem; margin-bottom: 1rem; margin-left: auto; margin-right: auto; width: auto; font-size: 0.9rem;">
+                                Questions or Feedback?
                             </button>
                             <!-- CTA button hidden - Pattern Reset page is not yet public -->
                             <a href="#" class="btn btn-mission btn-mission-primary quiz-success-cta" id="quiz-success-cta-btn" style="display: none;">
@@ -2981,8 +3255,8 @@
                         </button>
                         <div class="faq-answer">
                             <p><strong>This isn't a game. It's a mirror.</strong></p>
-                            <p>The Pattern Reset Quiz is a comprehensive psychological assessment that reveals the emotional code behind your choices. It identifies which unconscious pattern is keeping you stuck — the one shaping every relationship, decision, and outcome.</p>
-                            <p>In <strong>8-12 minutes</strong>, you'll answer <strong>36 questions</strong> (34 scored questions + 2 optional questions) across 12 life domains:</p>
+                            <p>The Pattern Reset Quiz is a comprehensive psychological assessment that reveals the emotional code behind your choices. It's based on attachment theory, psychology, and neuroscience. It identifies which unconscious pattern is keeping you stuck — the one shaping every relationship, decision, and outcome.</p>
+                            <p>In <strong>about 10 minutes</strong>, you'll answer <strong>38 questions</strong> (34 scored + birth date + relationship status + current challenge + biggest fear) across 12 life domains:</p>
                             <ul>
                                 <li><strong>Love & Connection</strong> (4 questions) — How you navigate relationships</li>
                                 <li><strong>Money & Finances</strong> (4 questions) — Your relationship with money and security</li>
@@ -2997,7 +3271,7 @@
                                 <li><strong>Relationship Patterns</strong> (5 questions) — How you connect and protect yourself</li>
                                 <li><strong>Reflection</strong> (2 questions) — Your self-awareness and pattern recognition</li>
                             </ul>
-                            <p>Plus 2 optional questions: your birth date (for personalized insights) and relationship status (for context).</p>
+                            <p>Plus: birth date (optional), relationship status, your current challenge in love, and your biggest fear in relationships — all to personalize your results.</p>
                             <p>You'll discover your dominant emotional pattern, how it shows up across all areas of your life, and what you need to reset to break free.</p>
                             <p><a href="patterns.html" style="color: #ca0013; font-weight: 600; text-decoration: none;">See all 4 archetypes and 8 patterns →</a></p>
                         </div>
@@ -3034,8 +3308,7 @@
                                 <li><strong>How It Developed</strong> — Deep psychological insights linking your pattern to childhood experiences</li>
                                 <li><strong>Your Pattern Reset Workbook</strong> — A free, self-paced blueprint with daily practices to break your pattern</li>
                             </ul>
-                            <p>You can also download your results as PDFs: a Full Report, your Workbook with your answers, and an Affirmation Card to carry your purpose.</p>
-                            <p><strong>All results are saved automatically</strong> — return anytime to view or download them again.</p>
+                            <p><strong>All results are saved automatically</strong> — return anytime to view them again.</p>
                         </div>
                     </div>
 
@@ -3129,7 +3402,6 @@
     <script src="js/firebase.js?v=2"></script>
     <script src="js/components/post-card.js?v=2"></script>
     <script src="js/services/post-service.js?v=2"></script>
-    <script src="js/menu.js"></script>
     
     <!-- Quiz Modules - Load before quiz code -->
     <script src="js/quiz/quiz-config.js"></script>
@@ -3137,8 +3409,9 @@
     <script src="js/quiz/quiz-scoring.js"></script>
     <script src="js/quiz/quiz-data.js"></script>
     <script src="js/astrology-utils.js"></script>
-    <script src="js/results-renderer.js"></script>
+    <script src="js/results-renderer-v2.js"></script>
     <script src="js/results-modal.js"></script>
+    <script src="js/feedback-modal.js"></script>
     
     <!-- FAQ Accordion Functionality - Must be available globally before HTML loads -->
     <script>
@@ -3277,8 +3550,10 @@
         }
     });
 
-    // Popup form submission
-    document.getElementById('popupSignupForm').addEventListener('submit', function(e) {
+    // Popup form submission (guarded so errors here don't block openMenu/closeMenu)
+    var popupForm = document.getElementById('popupSignupForm');
+    if (popupForm) {
+        popupForm.addEventListener('submit', function(e) {
         var form = this;
         var submitButton = form.querySelector('button[type="submit"]');
         submitButton.disabled = true;
@@ -3293,7 +3568,8 @@
                 closePopup();
             }, 2500);
         }, 1200);
-    });
+        });
+    }
 
     // Existing footer form logic
     const signupForm = document.getElementById('signupForm');
@@ -3316,16 +3592,6 @@
                 }
             }, 1200);
         });
-    }
-
-    function openMenu() {
-        document.getElementById('menuOverlay').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeMenu() {
-        document.getElementById('menuOverlay').classList.remove('open');
-        document.body.style.overflow = '';
     }
 
     // Update navigation to show course links when unlocked
@@ -3585,9 +3851,11 @@
         console.error('QUIZ_CONFIG module not loaded! Using fallback.');
         window.QUIZ_CONFIG = {
             TOTAL_SCORED_QUESTIONS: 34,
-            TOTAL_QUESTIONS: 36,
+            TOTAL_QUESTIONS: 38,
             BIRTH_DATE_QUESTION_INDEX: 34,
             RELATIONSHIP_STATUS_QUESTION_INDEX: 35,
+            CURRENT_PAIN_QUESTION_INDEX: 36,
+            BIGGEST_FEAR_QUESTION_INDEX: 37,
             POINTS_PER_ANSWER: 3,
             MAX_SCORE: 102,
             DOMINANCE_THRESHOLDS: { STRONG: 70, MODERATE: 50, BALANCED: 40, MIXED: 0 },
@@ -3613,6 +3881,11 @@
     // Use QUIZ_CONFIG from window (loaded from module)
     // Create a safe reference to avoid redeclaration errors
     const QUIZ_CONFIG_REF = window.QUIZ_CONFIG || {};
+    // Google Form entry IDs for current pain & biggest fear (from pre-filled URL)
+    const FORM_ENTRY_CURRENT_PAIN = 'entry.1745092026';  // What's the biggest challenge you're facing in love or relationships right now?
+    const FORM_ENTRY_BIGGEST_FEAR = 'entry.1602083511'; // What's your biggest fear when it comes to love or relationships?
+    // Web App proxy for quiz submissions (bypasses CORS/400 from direct Google Form POST) - same URL as feedback
+    const QUIZ_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxj1FjfKq97xh6pBdMGKxizfYavB2M5U-EclIX6ri_vdnBdrJrmQj0eqUM-R28XI-7R/exec';
     if (!window.QUIZ_CONFIG) {
         console.error('QUIZ_CONFIG not available!');
     }
@@ -3621,8 +3894,8 @@
     // QUIZ DATA - 36 questions (synced with js/quiz/quiz-data.js)
     // ========================================
     let quizData = window.quizData; // Primary: from quiz-data.js (36 questions)
-    if (!quizData || quizData.length !== 36) {
-        console.warn('Quiz data: expected 36 questions, got', quizData ? quizData.length : 0, '- using inline fallback');
+    if (!quizData || quizData.length !== 38) {
+        console.warn('Quiz data: expected 38 questions, got', quizData ? quizData.length : 0, '- using inline fallback');
         quizData = [
         {
             question: "When someone I care about pulls away, my first move is to:",
@@ -3981,17 +4254,67 @@
             questionType: 'birthdate',
             options: [] // Will be handled as text input
         },
-        // Relationship Status (Question 36 / Index 35) - Special handling, not scored, optional
+        // Relationship Status (Question 36 / Index 35) - Special handling, not scored, REQUIRED
         {
             question: "What is your current relationship status?",
             questionType: 'relationship-status',
             options: [
                 { text: "Single", value: "single" },
                 { text: "Dating / Casually seeing someone", value: "dating" },
-                { text: "In a committed relationship", value: "committed" },
+                { text: "In a committed relationship", value: "in a relationship" },
                 { text: "Married", value: "married" },
                 { text: "Divorced / Separated", value: "divorced" },
                 { text: "Prefer not to say", value: "prefer-not-to-say" }
+            ]
+        },
+        // Current Pain (Question 37 / Index 36) - Personalization only, REQUIRED
+        {
+            question: "What's the biggest challenge you're facing in love or relationships right now?",
+            questionType: 'current-pain',
+            options: [
+                { text: "I keep attracting the same type", value: "same-type" },
+                { text: "I stay when I know I shouldn't", value: "stay-when-shouldnt" },
+                { text: "I push people away when it gets real", value: "push-away" },
+                { text: "I lose interest when someone treats me well", value: "lose-interest" },
+                { text: "I sabotage when it gets serious", value: "sabotage" },
+                { text: "I feel stuck or disconnected in my relationship", value: "stuck-disconnected" },
+                { text: "I'm recovering but keep going back", value: "keep-going-back" },
+                { text: "I was cheated on or betrayed", value: "cheated-betrayed" },
+                { text: "I tolerate less than I deserve", value: "tolerate-less" },
+                { text: "I ignore red flags or make excuses", value: "ignore-red-flags" },
+                { text: "Emotional unavailability (theirs or mine)", value: "emotional-unavailable" },
+                { text: "Toxic or abusive patterns", value: "toxic-patterns" },
+                { text: "Same fights over and over", value: "same-fights" },
+                { text: "Situationship that won't progress", value: "situationship" },
+                { text: "I'm tired of being single", value: "tired-single" },
+                { text: "I don't know why relationships keep failing", value: "dont-know-why" },
+                { text: "Other", value: "other" }
+            ]
+        },
+        // Biggest Fear (Question 38 / Index 37) - Personalization only, REQUIRED
+        {
+            question: "What's your biggest fear when it comes to love or relationships?",
+            questionType: 'biggest-fear',
+            options: [
+                { text: "Being cheated on or betrayed", value: "cheated-betrayed" },
+                { text: "Being abandoned or left", value: "abandoned" },
+                { text: "Being rejected or not chosen", value: "rejected" },
+                { text: "Being alone forever", value: "alone-forever" },
+                { text: "Losing myself in the relationship", value: "losing-myself" },
+                { text: "Being trapped or suffocated", value: "trapped" },
+                { text: "Not being good enough", value: "not-good-enough" },
+                { text: "Being seen and then rejected", value: "seen-then-rejected" },
+                { text: "Being replaced by someone else", value: "replaced" },
+                { text: "Being hurt again (after past pain)", value: "hurt-again" },
+                { text: "Being unwanted or invisible", value: "unwanted" },
+                { text: "Being controlled or losing my freedom", value: "controlled" },
+                { text: "That I'm the problem", value: "im-the-problem" },
+                { text: "That I'll never find the right person", value: "never-find-right" },
+                { text: "That I'll repeat my parents' relationship", value: "repeat-parents" },
+                { text: "Being emotionally neglected", value: "emotionally-neglected" },
+                { text: "Being taken for granted", value: "taken-for-granted" },
+                { text: "Being vulnerable and getting hurt", value: "vulnerable-hurt" },
+                { text: "Other", value: "other" }
             ]
         }
     ];
@@ -4009,6 +4332,8 @@
     let formSubmitted = false;
     let birthDate = null; // Store birth date for personalization
     let relationshipStatus = null; // Store relationship status for personalization
+    let currentPain = null; // From question 36 - current challenge in love/relationships
+    let biggestFear = null; // From question 37 - biggest fear in love/relationships
     let driverScores = {
         'control': 0,
         'avoidance': 0,
@@ -4026,9 +4351,15 @@
             formSubmitted: formSubmitted,
             birthDate: birthDate,
             relationshipStatus: relationshipStatus,
+            currentPain: currentPain,
+            biggestFear: biggestFear,
+            currentPainOtherText: currentPainOtherText || null,
+            biggestFearOtherText: biggestFearOtherText || null,
             driverScores: driverScores,
-            patternKey: window.quizPatternKey || null, // Store pattern key for results page
-            userName: window.quizUserName || null // Store user name for results page
+            patternKey: window.quizPatternKey || null,
+            userName: window.quizUserName || null,
+            userEmail: window.quizUserEmail || null,
+            userPhone: window.quizUserPhone || null
         };
         localStorage.setItem(QUIZ_CONFIG_REF.STORAGE_KEY, JSON.stringify(quizState));
     }
@@ -4046,6 +4377,10 @@
                 formSubmitted = state.formSubmitted || false;
                 birthDate = state.birthDate || null;
                 relationshipStatus = state.relationshipStatus || null;
+                currentPain = state.currentPain || null;
+                biggestFear = state.biggestFear || null;
+                currentPainOtherText = state.currentPainOtherText || null;
+                biggestFearOtherText = state.biggestFearOtherText || null;
                 driverScores = state.driverScores || {
                     'control': 0,
                     'avoidance': 0,
@@ -4056,7 +4391,13 @@
                     window.quizPatternKey = state.patternKey; // Restore pattern key
                 }
                 if (state.userName) {
-                    window.quizUserName = state.userName; // Restore user name
+                    window.quizUserName = state.userName;
+                }
+                if (state.userEmail) {
+                    window.quizUserEmail = state.userEmail;
+                }
+                if (state.userPhone) {
+                    window.quizUserPhone = state.userPhone;
                 }
                 return true;
             } catch (e) {
@@ -4077,6 +4418,10 @@
         formSubmitted = false;
         birthDate = null;
         relationshipStatus = null;
+        currentPain = null;
+        biggestFear = null;
+        currentPainOtherText = null;
+        biggestFearOtherText = null;
         driverScores = {
             'control': 0,
             'avoidance': 0,
@@ -4168,6 +4513,12 @@
             dateString: dateString
         };
     }
+
+    // Expose for feedback modal
+    window.parseBirthDate = parseBirthDate;
+    window.getSunSign = getSunSign;
+    window.getElement = getElement;
+    window.calculateExactAge = calculateExactAge;
     
     // ========================================
     // PERSONALIZATION FUNCTIONS
@@ -4244,6 +4595,13 @@
             'committed': {
                 focus: 'deepening your relationship and building lasting connection',
                 intro: 'In your committed relationship',
+                context: 'your pattern shows up in how you communicate and connect with your partner',
+                advice: 'understand how your pattern affects your relationship dynamics and work together to grow',
+                examples: 'serious relationships, building partnership, deepening connection'
+            },
+            'in a relationship': {
+                focus: 'deepening your relationship and building lasting connection',
+                intro: 'In your relationship',
                 context: 'your pattern shows up in how you communicate and connect with your partner',
                 advice: 'understand how your pattern affects your relationship dynamics and work together to grow',
                 examples: 'serious relationships, building partnership, deepening connection'
@@ -4415,8 +4773,11 @@
                 const errorMessage = document.getElementById('quiz-error-message');
                 const question = quizData[currentQuestion];
                 
-                // Birth date and relationship status questions are optional, skip validation
-                if (question.questionType !== 'birthdate' && question.questionType !== 'relationship-status' && answers[currentQuestion] === undefined) {
+                // Birth date is optional; relationship-status, current-pain, biggest-fear are required
+                const isOptionalQuestion = question.questionType === 'birthdate';
+                const isRequiredButUnanswered = (question.questionType === 'relationship-status' && !relationshipStatus) ||
+                    (question.questionType !== 'birthdate' && question.questionType !== 'relationship-status' && answers[currentQuestion] === undefined);
+                if (isRequiredButUnanswered) {
                     // Show inline error message
                     if (errorMessage) {
                         errorMessage.style.display = 'block';
@@ -4429,6 +4790,14 @@
                 // Hide error message if answer is selected or birth date question
                 if (errorMessage) {
                     errorMessage.style.display = 'none';
+                }
+
+                // Capture "Other" free-text before navigating (in case user didn't blur)
+                const otherInput = document.getElementById('quiz-other-text-input');
+                if (otherInput && (question.questionType === 'current-pain' || question.questionType === 'biggest-fear')) {
+                    const val = otherInput.value.trim();
+                    if (question.questionType === 'current-pain') currentPainOtherText = val || null;
+                    else biggestFearOtherText = val || null;
                 }
 
                 if (currentQuestion < quizData.length - 1) {
@@ -4489,9 +4858,11 @@
                     return;
                 }
                 
-                // Store user name for results page
+                // Store user name, email, phone for results page and feedback
                 window.quizUserName = name;
-                saveQuizState(); // Save name to localStorage
+                window.quizUserEmail = email;
+                window.quizUserPhone = phone;
+                saveQuizState();
                 
                 if (!phone) {
                     alert('Please enter your phone number.');
@@ -4578,7 +4949,7 @@
                 // Submit to Google Forms (Pattern Quiz Submissions form)
                 const parsedDate = birthDate ? parseBirthDate(birthDate) : null;
                 const tempForm = document.createElement('form');
-                tempForm.action = 'https://docs.google.com/forms/d/e/1FAIpQLSfv4rmCtd2JDVeFfjy8a6cDMtQanHzAIwu39H2v-heZVlGYcg/formResponse';
+                tempForm.action = QUIZ_WEB_APP_URL;
                 tempForm.method = 'POST';
                 tempForm.target = 'quiz-hidden-iframe';
                 tempForm.style.display = 'none';
@@ -4607,6 +4978,8 @@
                 addHidden('entry.1799985826', JSON.stringify(driverScores));
                 addHidden('entry.2066312398', window.quizSecondaryPattern || '');
                 addHidden('entry.2064418059', window.quizSecondaryDriverPercentage !== undefined ? String(window.quizSecondaryDriverPercentage) : '');
+                if (currentPain) addHidden(FORM_ENTRY_CURRENT_PAIN, currentPain);
+                if (biggestFear) addHidden(FORM_ENTRY_BIGGEST_FEAR, biggestFear);
 
                 document.body.appendChild(tempForm);
                 tempForm.submit();
@@ -4682,8 +5055,12 @@
         // Update button text
         nextBtn.textContent = currentQuestion === quizData.length - 1 ? 'See Results' : 'Next';
 
-        // Birth date and relationship status questions are optional, so button is always active (filled)
-        if (question.questionType === 'birthdate' || question.questionType === 'relationship-status') {
+        // Birth date is optional (button always active); relationship-status, current-pain, biggest-fear are required
+        const isOptional = question.questionType === 'birthdate';
+        const hasRequiredAnswer = question.questionType === 'relationship-status' ? !!relationshipStatus :
+            (question.questionType === 'current-pain' || question.questionType === 'biggest-fear') ? answers[currentQuestion] !== undefined :
+            answers[currentQuestion] !== undefined;
+        if (isOptional || hasRequiredAnswer) {
             nextBtn.classList.remove('btn-mission');
             nextBtn.classList.add('btn-mission-primary');
             return;
@@ -4782,7 +5159,7 @@
                     <div class="quiz-question">${question.question}</div>
                     <div class="quiz-relationship-status-input">
                         <select id="quiz-relationship-status-select" class="quiz-select">
-                            <option value="">Select an option (optional)</option>
+                            <option value="">Select an option (required)</option>
                             ${question.options.map(option => `
                                 <option value="${option.value}" ${relationshipStatus === option.value ? 'selected' : ''}>${option.text}</option>
                             `).join('')}
@@ -4797,6 +5174,56 @@
                         relationshipStatus = e.target.value || null;
                         saveQuizState();
                         updateNextButtonState();
+                    });
+                }
+            } else if (question.questionType === 'current-pain' || question.questionType === 'biggest-fear') {
+                const otherIdx = question.options.findIndex(o => (o.value || '').toLowerCase() === 'other');
+                const isOtherSelected = otherIdx >= 0 && answers[currentQuestion] === otherIdx;
+                const otherPlaceholder = question.questionType === 'current-pain'
+                    ? "In a few words, what's your biggest challenge?"
+                    : "In a few words, what's your biggest fear?";
+                const otherText = question.questionType === 'current-pain' ? (currentPainOtherText || '') : (biggestFearOtherText || '');
+                // Pill layout for current-pain and biggest-fear (condensed, rounded squares)
+                questionContainer.innerHTML = `
+                    <div class="quiz-question">${question.question}</div>
+                    <div class="quiz-options-pills">
+                        ${question.options.map((option, index) => `
+                            <div class="quiz-option-pill ${answers[currentQuestion] === index ? 'selected' : ''}" data-index="${index}">${option.text}</div>
+                        `).join('')}
+                    </div>
+                    <div class="quiz-other-text-wrap" id="quiz-other-text-wrap" style="display: ${isOtherSelected ? 'block' : 'none'};">
+                        <input type="text" class="quiz-other-text-input" id="quiz-other-text-input" placeholder="${otherPlaceholder}" value="${(otherText || '').replace(/"/g, '&quot;')}" maxlength="200" />
+                    </div>
+                `;
+
+                const optionElements = questionContainer.querySelectorAll('.quiz-option-pill');
+                const otherWrap = document.getElementById('quiz-other-text-wrap');
+                const otherInput = document.getElementById('quiz-other-text-input');
+                optionElements.forEach((optionEl, index) => {
+                    optionEl.addEventListener('click', () => {
+                        optionElements.forEach(el => el.classList.remove('selected'));
+                        optionEl.classList.add('selected');
+                        answers[currentQuestion] = index;
+                        if (otherWrap) otherWrap.style.display = (index === otherIdx) ? 'block' : 'none';
+                        if (otherInput && index === otherIdx) { otherInput.value = (question.questionType === 'current-pain' ? currentPainOtherText : biggestFearOtherText) || ''; otherInput.focus(); }
+                        saveQuizState();
+                        updateNextButtonState();
+                        const errorMessage = document.getElementById('quiz-error-message');
+                        if (errorMessage) errorMessage.style.display = 'none';
+                    });
+                });
+                if (otherInput) {
+                    otherInput.addEventListener('input', () => {
+                        const val = otherInput.value.trim();
+                        if (question.questionType === 'current-pain') currentPainOtherText = val || null;
+                        else biggestFearOtherText = val || null;
+                        saveQuizState();
+                    });
+                    otherInput.addEventListener('blur', () => {
+                        const val = otherInput.value.trim();
+                        if (question.questionType === 'current-pain') currentPainOtherText = val || null;
+                        else biggestFearOtherText = val || null;
+                        saveQuizState();
                     });
                 }
             } else {
@@ -4961,6 +5388,16 @@
                     secondaryPatternName = secondaryPattern ? secondaryPattern.name : null;
                 }
             }
+        }
+
+        // Derive currentPain and biggestFear from answers for personalization
+        const painIdx = QUIZ_CONFIG_REF.CURRENT_PAIN_QUESTION_INDEX || 36;
+        const fearIdx = QUIZ_CONFIG_REF.BIGGEST_FEAR_QUESTION_INDEX || 37;
+        if (answers[painIdx] !== undefined && quizData[painIdx]?.options?.[answers[painIdx]]?.value) {
+            currentPain = quizData[painIdx].options[answers[painIdx]].value;
+        }
+        if (answers[fearIdx] !== undefined && quizData[fearIdx]?.options?.[answers[fearIdx]]?.value) {
+            biggestFear = quizData[fearIdx].options[answers[fearIdx]].value;
         }
 
         // Mark quiz as completed

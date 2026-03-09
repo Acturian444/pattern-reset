@@ -152,12 +152,41 @@
         // Hide toggle again after overlay is created
         hideThemeToggle();
         
-        // Create close button
+        // Create header actions container (toggle + close)
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'results-modal-actions';
+        
+        // Dark mode toggle
+        const DARK_MODE_STORAGE_KEY = 'patternResetResultsDarkMode';
+        const savedDarkMode = localStorage.getItem(DARK_MODE_STORAGE_KEY) === 'true';
+        if (savedDarkMode) {
+            overlay.classList.add('dark-mode');
+        }
+        
+        const darkModeToggle = document.createElement('button');
+        darkModeToggle.className = 'results-dark-mode-toggle';
+        darkModeToggle.setAttribute('aria-label', 'Toggle dark mode');
+        darkModeToggle.setAttribute('type', 'button');
+        darkModeToggle.innerHTML = savedDarkMode 
+            ? '<i class="fas fa-sun" aria-hidden="true"></i><span>Light</span>' 
+            : '<i class="fas fa-moon" aria-hidden="true"></i><span>Dark</span>';
+        darkModeToggle.onclick = function() {
+            const isDark = overlay.classList.toggle('dark-mode');
+            localStorage.setItem(DARK_MODE_STORAGE_KEY, isDark ? 'true' : 'false');
+            darkModeToggle.innerHTML = isDark 
+                ? '<i class="fas fa-sun" aria-hidden="true"></i><span>Light</span>' 
+                : '<i class="fas fa-moon" aria-hidden="true"></i><span>Dark</span>';
+        };
+        
+        // Close button
         const closeBtn = document.createElement('button');
         closeBtn.className = 'results-modal-close';
         closeBtn.innerHTML = '&times;';
         closeBtn.setAttribute('aria-label', 'Close results');
         closeBtn.onclick = closeResultsModal;
+        
+        actionsDiv.appendChild(darkModeToggle);
+        actionsDiv.appendChild(closeBtn);
         
         // Create scrollable content wrapper
         const scrollWrapper = document.createElement('div');
@@ -170,7 +199,7 @@
         
         // Assemble modal
         scrollWrapper.appendChild(content);
-        modal.appendChild(closeBtn);
+        modal.appendChild(actionsDiv);
         modal.appendChild(scrollWrapper);
         overlay.appendChild(modal);
         document.body.appendChild(overlay);
@@ -190,6 +219,27 @@
         
         // Load and render results
         loadAndRenderResults(content);
+        
+        // Floating feedback button (bottom-right, brand red)
+        const feedbackFloatBtn = document.createElement('button');
+        feedbackFloatBtn.type = 'button';
+        feedbackFloatBtn.className = 'feedback-float-btn';
+        feedbackFloatBtn.setAttribute('aria-label', 'Questions or Feedback?');
+        feedbackFloatBtn.innerHTML = '<i class="fas fa-question"></i>';
+        feedbackFloatBtn.onclick = function() {
+            if (typeof window.showFeedbackModal === 'function') window.showFeedbackModal();
+        };
+        modal.appendChild(feedbackFloatBtn);
+        
+        // Bind feedback CTA button (in CTA section)
+        setTimeout(function() {
+            const ctaFeedbackBtn = content.querySelector('#cta-feedback-btn');
+            if (ctaFeedbackBtn) {
+                ctaFeedbackBtn.onclick = function() {
+                    if (typeof window.showFeedbackModal === 'function') window.showFeedbackModal();
+                };
+            }
+        }, 100);
         
         // Hide toggle again after content loads
         setTimeout(hideThemeToggle, 50);
@@ -456,6 +506,10 @@
                 // Get personalization data
                 const birthDate = state.birthDate || null;
                 const relationshipStatus = state.relationshipStatus || null;
+                const currentPain = state.currentPain || null;
+                const biggestFear = state.biggestFear || null;
+                const currentPainOtherText = state.currentPainOtherText || null;
+                const biggestFearOtherText = state.biggestFearOtherText || null;
                 
                 function calculateExactAge(birthDate) {
                     if (!birthDate) return null;
@@ -496,6 +550,10 @@
                             totalScore: totalScore,
                             exactAge: exactAge,
                             relationshipStatus: relationshipStatus,
+                            currentPain: currentPain,
+                            biggestFear: biggestFear,
+                            currentPainOtherText: currentPainOtherText,
+                            biggestFearOtherText: biggestFearOtherText,
                             firstName: firstName,
                             birthDate: birthDate,
                             sortedDrivers: sortedDriversWithPercentages,

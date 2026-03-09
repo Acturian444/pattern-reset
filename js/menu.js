@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const hamburger = document.querySelector('.hamburger');
+    // Use .nav-hamburger to target the open button specifically (avoids matching close btn)
+    const hamburger = document.querySelector('.nav-hamburger') || document.querySelector('.hamburger:not(.menu-overlay .hamburger)');
     const menuOverlay = document.getElementById('menuOverlay');
     const closeBtn = document.querySelector('.menu-overlay .close-btn');
 
@@ -17,7 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    const toggleMenu = () => {
+    // Expose globally for inline onclick handlers
+    window.openMenu = openMenu;
+    window.closeMenu = closeMenu;
+
+    const toggleMenu = (e) => {
+        if (e) e.preventDefault();
         if (menuOverlay && menuOverlay.classList.contains('open')) {
             closeMenu();
         } else {
@@ -42,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Optional: Close menu when clicking on a menu link
+    // Close menu when clicking on a menu link
     const menuLinks = document.querySelectorAll('.menu-overlay nav a');
     menuLinks.forEach(link => {
         link.addEventListener('click', closeMenu);

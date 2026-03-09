@@ -1,0 +1,8 @@
+# CodeRabbit config: enable PR reviews for this repo.
+# See https://docs.coderabbit.ai/getting-started/yaml-configuration
+language: "en-US"
+reviews:
+  profile: "chill"
+  auto_review:
+    enabled: true
+  high_level_summary: true

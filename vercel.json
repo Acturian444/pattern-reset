@@ -26,6 +26,28 @@
       "has": [
         {
           "type": "host",
+          "value": "commongroundsocialclub.com"
+        }
+      ],
+      "destination": "https://mypatternreset.com/common-ground.html",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.commongroundsocialclub.com"
+        }
+      ],
+      "destination": "https://mypatternreset.com/common-ground.html",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
           "value": "resetmypattern.com"
         }
       ],
