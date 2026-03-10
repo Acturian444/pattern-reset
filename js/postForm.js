@@ -56,68 +56,77 @@ class PostForm {
         formContent.className = 'letitout-form-content';
 
         // --- PROMPT TITLE, SHUFFLE, RESET ---
-        // Create a wrapper for the prompt title and button row
-        const promptBar = document.createElement('div');
-        promptBar.className = 'letitout-prompt-bar';
-        promptBar.style.display = 'flex';
-        promptBar.style.flexDirection = 'column';
-        promptBar.style.alignItems = 'center';
-        promptBar.style.marginBottom = '1.2rem';
+        // MVP: Hide prompts and Unlock More Prompts when HIDE_PROMPTS_FOR_MVP is true
+        const hidePrompts = window.MVP_CONFIG && window.MVP_CONFIG.HIDE_PROMPTS_FOR_MVP;
+        if (!hidePrompts) {
+            const promptBar = document.createElement('div');
+            promptBar.className = 'letitout-prompt-bar';
+            promptBar.style.display = 'flex';
+            promptBar.style.flexDirection = 'column';
+            promptBar.style.alignItems = 'center';
+            promptBar.style.marginBottom = '1.2rem';
 
-        // --- NEW PROMPT CONTROLS ---
-        const promptControls = document.createElement('div');
-        promptControls.className = 'prompt-controls';
+            // --- NEW PROMPT CONTROLS ---
+            const promptControls = document.createElement('div');
+            promptControls.className = 'prompt-controls';
 
-        // Back button
-        this.backBtn = document.createElement('button');
-        this.backBtn.type = 'button';
-        this.backBtn.className = 'prompt-nav-btn back-btn';
-        this.backBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
-        this.backBtn.onclick = () => this.handleBackClick();
+            // Back button
+            this.backBtn = document.createElement('button');
+            this.backBtn.type = 'button';
+            this.backBtn.className = 'prompt-nav-btn back-btn';
+            this.backBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+            this.backBtn.onclick = () => this.handleBackClick();
 
-        // Main prompt title
-        this.promptTitle = document.createElement('div');
-        this.promptTitle.className = 'letitout-subtitle';
-        
-        // Next button
-        this.nextBtn = document.createElement('button');
-        this.nextBtn.type = 'button';
-        this.nextBtn.className = 'prompt-nav-btn next-btn';
-        this.nextBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-        this.nextBtn.onclick = () => this.handleNextClick();
+            // Main prompt title
+            this.promptTitle = document.createElement('div');
+            this.promptTitle.className = 'letitout-subtitle';
+            
+            // Next button
+            this.nextBtn = document.createElement('button');
+            this.nextBtn.type = 'button';
+            this.nextBtn.className = 'prompt-nav-btn next-btn';
+            this.nextBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+            this.nextBtn.onclick = () => this.handleNextClick();
 
-        promptControls.appendChild(this.backBtn);
-        promptControls.appendChild(this.promptTitle);
-        promptControls.appendChild(this.nextBtn);
+            promptControls.appendChild(this.backBtn);
+            promptControls.appendChild(this.promptTitle);
+            promptControls.appendChild(this.nextBtn);
 
-        // --- PACK SELECTOR DROPDOWN ---
-        if (this.premiumPacks) {
-            this.createPackSelector(promptBar);
-        }
+            // --- PACK SELECTOR DROPDOWN ---
+            if (this.premiumPacks) {
+                this.createPackSelector(promptBar);
+            }
 
-        promptBar.appendChild(promptControls);
+            promptBar.appendChild(promptControls);
 
-        // --- PREMIUM PACKS CTA BUTTON ---
-        this.premiumCtaBtn = document.createElement('button');
-        this.premiumCtaBtn.type = 'button';
-        this.premiumCtaBtn.className = 'premium-packs-cta';
-        // MVP Mode: Update button text based on MVP configuration
-        if (window.MVP_CONFIG && window.MVP_CONFIG.MANUAL_UNLOCK_MODE) {
-            this.premiumCtaBtn.textContent = 'Unlock More Prompts';
+            // --- PREMIUM PACKS CTA BUTTON ---
+            this.premiumCtaBtn = document.createElement('button');
+            this.premiumCtaBtn.type = 'button';
+            this.premiumCtaBtn.className = 'premium-packs-cta';
+            // MVP Mode: Update button text based on MVP configuration
+            if (window.MVP_CONFIG && window.MVP_CONFIG.MANUAL_UNLOCK_MODE) {
+                this.premiumCtaBtn.textContent = 'Unlock More Prompts';
+            } else {
+            this.premiumCtaBtn.textContent = this.premiumPacks ? (this.premiumPacks.hasUnlockedPacks() ? 'Explore More Prompts' : 'Unlock Healing Prompts') : 'Unlock Healing Prompts';
+            }
+            this.premiumCtaBtn.onclick = () => this.openPremiumPacksModal();
+            promptBar.appendChild(this.premiumCtaBtn);
+
+            formContent.appendChild(promptBar);
         } else {
-        this.premiumCtaBtn.textContent = this.premiumPacks ? (this.premiumPacks.hasUnlockedPacks() ? 'Explore More Prompts' : 'Unlock Healing Prompts') : 'Unlock Healing Prompts';
+            // MVP: Single static prompt when prompts are hidden
+            const mvpPrompt = document.createElement('div');
+            mvpPrompt.className = 'letitout-mvp-prompt';
+            mvpPrompt.textContent = "What's happening in your relationship that you need to let out?";
+            formContent.appendChild(mvpPrompt);
         }
-        this.premiumCtaBtn.onclick = () => this.openPremiumPacksModal();
-        promptBar.appendChild(this.premiumCtaBtn);
-
-        formContent.appendChild(promptBar);
 
         // Create wrapper for textarea and counter
         const textareaWrapper = document.createElement('div');
         textareaWrapper.className = 'textarea-wrapper';
         
         const textarea = document.createElement('textarea');
-        textarea.placeholder = 'Let it out anonymously…';
+        textarea.placeholder = "Example: I've been dating someone for 6 months but he still won't commit…";
         textarea.maxLength = 500;
         textarea.required = true;
         
@@ -142,45 +151,27 @@ class PostForm {
         // Emotion categories and sub-emotions
         this.emotionCategories = [
             {
-                name: 'Pain & Pressure',
+                name: 'Pain & Relationship Conflict',
                 emotions: [
-                    'Abandonment', 'Alone', 'Anger', 'Anxiety', 'Bitterness', 'Confusion', 'Depression', 'Embarrassment', 'Emptiness', 'Envy', 'Exhausted', 'Fear', 'Frustration', 'Grief', 'Guilt', 'Heartbreak', 'Hopelessness', 'Insecurity', 'Jealousy', 'Loneliness', 'Overwhelm', 'Panic', 'Powerlessness', 'Rejection', 'Regret', 'Resentment', 'Sadness', 'Self-hate', 'Shame', 'Stuck'
+                    'Heartbreak', 'Confusion', 'Rejection', 'Loneliness', 'Jealousy', 'Betrayal', 'Abandonment', 'Resentment', 'Regret', 'Shame'
                 ]
             },
             {
-                name: 'Unspoken & Unsaid',
+                name: 'Stress & Emotional Overload',
                 emotions: [
-                    'What I can\'t forgive', 'What I can\'t tell anyone', 'What I carry in silence', 'What I hide behind my smile', 'What I miss', 'What I needed to hear', 'What I never believed I deserved', 'What I never got to say', 'What I still don\'t understand', 'What I want to scream', 'What I wish I could take back', 'What I\'m afraid to admit', 'What I\'ve never said', 'What\'s been eating me alive'
+                    'Anxiety', 'Fear', 'Overwhelmed', 'Exhausted', 'Hopeless', 'Powerless'
                 ]
             },
             {
-                name: 'Hope & Healing',
+                name: 'Love & Desire',
                 emotions: [
-                    'Acceptance', 'Clarity', 'Closure', 'Compassion', 'Courage', 'Faith', 'Forgiveness', 'Gratitude', 'Healing', 'Joy', 'Letting go', 'Lightness', 'Peace', 'Presence', 'Relief', 'Stillness', 'Surrender', 'Trust'
+                    'Longing', 'Missing Someone', 'Still in Love', 'Wanting Connection', 'Wanting to Feel Chosen'
                 ]
             },
             {
-                name: 'Longing & Love',
+                name: 'Growth & Healing',
                 emotions: [
-                    'Desire', 'I don\'t feel lovable', 'I loved them more than they knew', 'I miss someone', 'I need connection', 'I never said I loved them', 'I still love them', 'I want to feel loved', 'I\'m falling for someone', 'I\'m scared to love again', 'I feel unloved', 'Missed Connection'
-                ]
-            },
-            {
-                name: 'Identity & Self',
-                emotions: [
-                    'I crave touch', 'I don\'t know who I am', 'I feel invisible', 'I feel like not enough', 'I feel misunderstood', 'I feel too much', 'I hate who I used to be', 'I want to be authentic', 'I want to be seen', 'I want to feel chosen', 'I want to love myself', 'I want to start over', 'I\'m ashamed of who I am', 'I\'m learning to love myself', 'I\'m learning who I am', 'I\'m not okay', 'I\'m tired of pretending', 'I\'m trying to change'
-                ]
-            },
-            {
-                name: 'Transformation & Release',
-                emotions: [
-                    'I forgive myself', 'I made it through', 'I want to begin again', 'I want to heal', 'I\'m becoming someone new', 'I\'m finally saying it', 'I\'m letting it out', 'I\'m not who I was', 'I\'m ready to grow', 'I\'m ready to move on', 'I\'m still here', 'I\'ve been carrying this but I\'m ready to be free', 'I\'ve been holding this too long', 'It\'s time to let go', 'This is my turning point'
-                ]
-            },
-            {
-                name: 'Light & Alive',
-                emotions: [
-                    'Adventurous', 'Becoming me', 'Breakthrough', 'Celebration', 'Energized', 'Excitement', 'Freedom', 'Hope returned', 'I made it through', 'Peaceful inside', 'Pride', 'Safe now', 'Self-love'
+                    'Healing', 'Letting Go', 'Forgiveness', 'Clarity'
                 ]
             }
         ];
@@ -286,8 +277,10 @@ class PostForm {
             this.myPostsBtn.onclick = () => this.openMyPostsModal();
         }
 
-        // Initialize the prompt system
-        this.initializePrompts();
+        // Initialize the prompt system (skip when prompts hidden for MVP)
+        if (!hidePrompts) {
+            this.initializePrompts();
+        }
     }
 
     initializePrompts() {
@@ -298,6 +291,7 @@ class PostForm {
     }
 
     updatePromptUI() {
+        if (!this.promptTitle) return; // MVP: prompts hidden
         if (!this.premiumPacks) {
             // Fallback to original logic
             if (this.currentHistoryIndex === -1) {
@@ -456,7 +450,7 @@ class PostForm {
             this.updateSelectedCity();
             this.clearDraft(); // Clear draft on successful post
             if (submitButton) {
-                submitButton.textContent = 'Let It Out';
+                submitButton.textContent = 'Share Anonymously';
                 submitButton.disabled = false;
             }
 
@@ -466,7 +460,7 @@ class PostForm {
             window.LetItOutUtils.showError('Error posting. Please try again.');
             if (submitButton) {
                 submitButton.disabled = false;
-                submitButton.textContent = 'Let It Out';
+                submitButton.textContent = 'Share Anonymously';
             }
         }
     }
@@ -487,7 +481,7 @@ class PostForm {
         overlay.className = 'letitout-confirmation-overlay';
         
         // Create the confirmation message with Truth number if available
-        const truthLine = truthNumber ? `Truth #${truthNumber} is on the wall.` : 'Your truth is on the wall.';
+        const truthLine = truthNumber ? `Story #${truthNumber} is on the wall.` : 'Your story is on the wall.';
         
         overlay.innerHTML = `
           <div class="letitout-confirmation-modal">
@@ -539,7 +533,7 @@ class PostForm {
             const submitButton = document.createElement('button');
             submitButton.type = 'button';
             submitButton.className = 'letitout-submit-btn';
-            submitButton.textContent = 'Let It Out';
+            submitButton.textContent = 'Share Anonymously';
             submitButton.onclick = (e) => {
                 e.preventDefault();
                 this.form.requestSubmit();
@@ -587,7 +581,7 @@ class PostForm {
             <button class="letitout-my-posts-close">&times;</button>
             <div class="letitout-my-posts-title">${localId}</div>
             <div class="letitout-my-posts-tabs">
-              <button class="my-posts-tab active">My Journals <span class="my-posts-notification-dot" style="display:none;"></span></button>
+              <button class="my-posts-tab active">My Stories <span class="my-posts-notification-dot" style="display:none;"></span></button>
             </div>
             <div class="letitout-my-posts-content"></div>
           </div>
@@ -638,7 +632,7 @@ class PostForm {
                 // Handle format like "Aug 2, 2025, 10:15 AM" -> get "Aug 2, 2025"
                 const parts = formattedDate.split(',');
                 const dateOnly = parts.length >= 2 ? `${parts[0]},${parts[1]}` : formattedDate;
-                timestamp = `${dateOnly} · Truth #${post.truthNumber}`;
+                timestamp = `${dateOnly} · Story #${post.truthNumber}`;
             } else {
                 timestamp = formattedDate;
             }
@@ -866,7 +860,7 @@ class PostForm {
             }
 
             modalContent.innerHTML = `
-                <button class="back-to-posts-btn">← My Journals</button>
+                <button class="back-to-posts-btn">← My Stories</button>
                 <div class="letitout-my-posts-title">Replies</div>
                 <div class="letitout-my-posts-content">
                     <div class="original-post-card">
@@ -1750,14 +1744,15 @@ class PostForm {
     }
 
     renderMyPostsButton() {
-        // Ensure the button exists and has the event handler
+        const openInbox = () => this.openMyPostsModal();
+        // Desktop: header Inbox button (hidden on mobile via CSS)
         if (!this.myPostsBtn) {
             this.myPostsBtn = document.getElementById('my-posts-btn');
             if (this.myPostsBtn) {
-                this.myPostsBtn.onclick = () => this.openMyPostsModal();
+                this.myPostsBtn.onclick = openInbox;
             }
         }
-        
+        // Mobile Inbox button is handled by inline handler in letitout.html (works when on Wall tab too)
         // Update unread badge
         if (window.LetItOutUtils && window.LetItOutUtils.updateUnreadBadge) {
             window.LetItOutUtils.updateUnreadBadge();

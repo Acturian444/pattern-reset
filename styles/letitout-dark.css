@@ -14,7 +14,7 @@ LET IT OUT - DARK MODE STYLES
 .dark-mode header,
 .dark-mode footer {
     background-color: #252526;
-    border-color: #333333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .dark-mode .center-logo,
@@ -59,31 +59,34 @@ LET IT OUT - DARK MODE STYLES
     color: #ca0013 !important;
 }
 
-.dark-mode .letitout-my-posts-btn-global .my-posts-icon svg {
-    stroke: #D4D4D4;
-}
-
 .dark-mode .hamburger i {
     color: #D4D4D4;
 }
 
-/* --- Mobile Menu Drawer --- */
+/* --- Mobile Menu Drawer (match Common Ground styling) --- */
 .dark-mode .menu-overlay nav {
     background: #252526;
-    box-shadow: 4px 0px 15px rgba(0,0,0,0.4);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.4);
 }
 
-.dark-mode .menu-overlay a {
+.dark-mode .menu-overlay .menu-nav-title {
     color: #D4D4D4;
 }
 
-.dark-mode .menu-overlay a.active {
-    color: #ca0013; /* Keep brand red for active link */
+.dark-mode .menu-overlay .menu-nav-subtitle {
+    color: #888;
 }
 
-.dark-mode .menu-overlay a:hover,
-.dark-mode .menu-overlay a:focus {
-    background-color: #333333;
+.dark-mode .menu-overlay .menu-nav-link:hover .menu-nav-title,
+.dark-mode .menu-overlay .menu-nav-link:focus .menu-nav-title,
+.dark-mode .menu-overlay .menu-nav-link.active .menu-nav-title {
+    color: #ca0013;
+}
+
+.dark-mode .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
+.dark-mode .menu-overlay .menu-nav-link:focus .menu-nav-subtitle,
+.dark-mode .menu-overlay .menu-nav-link.active .menu-nav-subtitle {
+    color: #b03030;
 }
 
 .dark-mode .menu-overlay .close-btn {
@@ -307,6 +310,11 @@ DARK MODE - FIXES & ADDITIONS
     color: #D4D4D4;
 }
 
+.dark-mode .letitout-form .char-counter {
+    color: #888;
+}
+
+
 .dark-mode .char-counter-inside {
     background-color: rgba(30, 30, 30, 0.85);
     color: #888;
@@ -314,6 +322,10 @@ DARK MODE - FIXES & ADDITIONS
 
 .dark-mode .letitout-prompt-bar .letitout-subtitle {
     color: #ffffff !important;
+}
+
+.dark-mode .letitout-mvp-prompt {
+    color: #e8e8e8;
 }
 
 .dark-mode .letitout-shuffle-btn {
@@ -380,6 +392,18 @@ DARK MODE - FIXES & ADDITIONS
 }
 .dark-mode .letitout-submit {
     background-color: #ca0013;
+}
+
+.dark-mode .letitout-submit-btn {
+    background-color: #ca0013;
+    color: #fff;
+}
+.dark-mode .letitout-submit-btn:hover:not(:disabled) {
+    background-color: #7a0010;
+}
+.dark-mode .letitout-submit-btn:disabled {
+    background-color: #4a4a4a;
+    color: #888;
 }
 
 /* --- Context Menu --- */
@@ -503,6 +527,12 @@ DARK MODE - FIXES & ADDITIONS
     background-color: #ca0013;
     color: #fff;
     border-color: #ca0013;
+}
+.dark-mode .emotion-subtag .emotion-subtag-count {
+    opacity: 0.85;
+}
+.dark-mode .emotion-subtag.selected .emotion-subtag-count {
+    opacity: 0.95;
 }
 
 .dark-mode .letitout-emotion-modal-footer,
@@ -838,6 +868,9 @@ DARK MODE - FIXES & ADDITIONS
 }
 .dark-mode .reply-modal .reply-modal-title {
     color: #ffffff;
+}
+.dark-mode .reply-modal .reply-modal-microcopy {
+    color: #b0b0b0;
 }
 .dark-mode .reply-modal .reply-textarea {
     background-color: #1E1E1E;
@@ -1302,4 +1335,11 @@ DARK MODE - FIXES & ADDITIONS
 .dark-mode .reply-success-message:hover,
 .dark-mode .sent-message-modal:hover {
     background: #3a3a3a !important;
+}
+
+/* Mobile Inbox Button - dark mode (header top right) */
+@media (max-width: 600px) {
+    .dark-mode .letitout-mobile-inbox-btn i {
+        color: #D4D4D4;
+    }
 } 

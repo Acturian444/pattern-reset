@@ -3,6 +3,9 @@ const MVP_CONFIG = {
     // MVP Mode: All LET IT OUT premium features free
     MVP_MODE: true,
     
+    // Hide prompts and Unlock More Prompts for MVP (restore later)
+    HIDE_PROMPTS_FOR_MVP: true,
+    
     // Premium Packs: Manual unlock mode for engagement
     FREE_PREMIUM_PACKS: false,
     MANUAL_UNLOCK_MODE: true,

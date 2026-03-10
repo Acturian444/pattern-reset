@@ -9,8 +9,9 @@ service cloud.firestore {
         && request.resource.data.content.size() > 0
         && request.resource.data.content.size() <= 500
         && (request.resource.data.truthNumber is number || request.resource.data.truthNumber == null);
-      allow update: if request.auth != null 
-        && request.auth.uid == resource.data.userId;
+      // Allow post author to update (e.g. mark replies read), and any authenticated user
+      // to update for adding replies, felt count, etc.
+      allow update: if request.auth != null;
     }
     
     // User posts - same rules

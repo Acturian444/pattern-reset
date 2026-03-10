@@ -1,3 +1,24 @@
+/* ===== Header: match Pattern Quiz & Common Ground height, size and background ===== */
+header {
+    background-color: #fffcf1 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 70px !important;
+}
+header .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+}
+@media (min-width: 900px) {
+    header .container {
+        padding: 0 2.5rem;
+    }
+}
+.nav-centered {
+    min-height: 70px;
+}
+
 /* Let It Out Main Styles */
 #letitout-main {
     padding: var(--letitout-spacing-lg);
@@ -9,7 +30,6 @@
 /* Post Form Styles */
 .letitout-form {
     position: relative;
-    padding-top: 3.5rem;
     background: white;
     padding: 1.5rem;
     border-radius: 12px;
@@ -20,10 +40,37 @@
     margin: 0 auto;
 }
 
+/* Extra top padding when MVP prompt is shown for better spacing */
+.letitout-form:has(.letitout-mvp-prompt) {
+    padding-top: 2rem;
+}
+
 .letitout-form-content {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+}
+
+/* MVP: Static prompt title when prompts are hidden */
+.letitout-mvp-prompt {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #222;
+    text-align: center;
+    line-height: 1.5;
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
+    padding: 0 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .letitout-mvp-prompt {
+        font-size: 1.15rem;
+        margin-top: 0.25rem;
+        margin-bottom: 1rem;
+        padding: 0 0.25rem;
+    }
 }
 
 .letitout-form-content .textarea-wrapper {
@@ -676,6 +723,15 @@
     border-color: #ca0013;
 }
 
+.emotion-subtag-count {
+    opacity: 0.85;
+    font-size: 0.9em;
+    font-weight: 400;
+}
+.emotion-subtag.selected .emotion-subtag-count {
+    opacity: 0.95;
+}
+
 .letitout-emotion-modal-footer {
     display: flex;
     justify-content: space-between;
@@ -1228,47 +1284,41 @@
   }
 }
 
-/* My Posts Button (Global Top Right) */
-.letitout-my-posts-container {
-    position: absolute;
-    top: 3.5rem; /* Lowered to match theme toggle */
-    right: 2rem; /* Adjusted for symmetry with theme toggle */
-    z-index: 1000;
-}
-
-.letitout-my-posts-btn-global {
-    background: transparent;
-    color: #ca0013;
-    border: none;
-    border-radius: 0;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 600;
-    padding: 0.2rem;
-    cursor: pointer;
-    display: flex;
+/* Inbox CTA in header - exact match to Start the Quiz / Apply to Join (design, size, height) */
+.letitout-inbox-cta {
+    display: flex !important;
     align-items: center;
     justify-content: center;
-    box-shadow: none;
-    transition: background 0.2s, color 0.2s, border 0.2s, transform 0.2s;
-    width: auto;
-    height: auto;
-    position: relative;
+    gap: 0.5rem;
+    position: relative; /* for unread badge positioning */
+    /* Match nav-cta-button dimensions */
+    min-height: 44px !important;
+    padding: 0.65rem 1.4rem !important;
+    width: 175px !important;
+    min-width: 175px !important;
+    box-sizing: border-box !important;
+    /* Match nav-cta-button visual design */
+    background: #ca0013 !important;
+    color: #fffcf1 !important;
+    border: 2px solid #ca0013 !important;
+    border-radius: 4px !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
 }
-.letitout-my-posts-btn-global .my-posts-icon svg {
-    stroke: #000;
-    transition: stroke 0.2s;
+.letitout-inbox-cta:hover,
+.letitout-inbox-cta:focus {
+    background: #b80011 !important;
+    border-color: #b80011 !important;
+    color: #fffcf1 !important;
 }
-.letitout-my-posts-btn-global:hover {
-    background: transparent;
-    border: none;
-    transform: scale(1.05);
-}
-.letitout-my-posts-btn-global:active {
-    transform: scale(0.95);
+.letitout-inbox-cta i {
+    font-size: 1rem;
 }
 
-/* Unread Badge for My Posts Button */
+/* Unread Badge for Inbox CTA (in header) */
 .letitout-my-posts-btn-global .unread-badge {
     position: absolute;
     top: -8px;
@@ -1307,18 +1357,11 @@
     }
 }
 
-@media (max-width: 600px) {
-    .letitout-my-posts-container {
-        top: 1.2rem;
-        right: 0.8rem;
-    }
-    
-    .letitout-my-posts-btn-global {
-        font-size: 0.98rem;
-        padding: 0.5rem;
-        width: 2.5rem;
-        height: 2.5rem;
-    }
+/* Mobile menu Inbox link */
+.letitout-mobile-inbox-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 /* My Posts Modal Overlay */
@@ -1639,7 +1682,15 @@
     font-size: 1.2rem;
     font-weight: 600;
     color: #222;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+}
+
+.reply-modal-microcopy {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 400;
     line-height: 1.4;
 }
 

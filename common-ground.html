@@ -1228,7 +1228,7 @@
     }
     
     /* Common Ground nav overrides - match base .nav-links */
-    .cg-nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
+    .cg-nav-links { display: flex; align-items: center; gap: 2.25rem; list-style: none; margin: 0; padding: 0; }
     .cg-nav-links a { color: var(--cg-text); text-decoration: none; font-family: 'Anton', sans-serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 1.5px; text-transform: uppercase; }
     .cg-nav-links a.active { color: var(--cg-accent); }
     .cg-nav-cta { background: var(--cg-accent) !important; color: white !important; }
@@ -1255,7 +1255,7 @@
     .cg-menu-overlay nav {
         position: fixed;
         top: 0; left: 0;
-        width: 280px;
+        width: 320px;
         height: 100%;
         background: #fffcf1;
         display: flex;
@@ -1263,7 +1263,7 @@
         align-items: flex-start;
         justify-content: center;
         padding: 4rem 2rem;
-        gap: 1rem;
+        gap: 2rem;
         box-shadow: 4px 0 20px rgba(0,0,0,0.1);
         transform: translateX(-100%);
         transition: transform 0.3s;
@@ -1280,17 +1280,41 @@
         cursor: pointer;
         padding: 0.5rem;
     }
-    .cg-menu-overlay a {
+    .cg-menu-overlay .menu-nav-link {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+        text-decoration: none;
+        padding: 0.25rem 0;
+    }
+    .cg-menu-overlay .menu-nav-title {
         font-family: 'Anton', sans-serif;
         font-weight: 400;
         font-size: 1.1rem;
         letter-spacing: 1.5px;
         text-transform: uppercase;
         color: var(--cg-text);
-        text-decoration: none;
     }
-    .cg-menu-overlay a:hover,
-    .cg-menu-overlay a.active { color: var(--cg-accent); }
+    .cg-menu-overlay .menu-nav-subtitle {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 400;
+        color: #666;
+        letter-spacing: 0.01em;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+    .cg-menu-overlay .menu-nav-link:hover .menu-nav-title,
+    .cg-menu-overlay .menu-nav-link:focus .menu-nav-title,
+    .cg-menu-overlay .menu-nav-link.active .menu-nav-title {
+        color: var(--cg-accent);
+    }
+    .cg-menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
+    .cg-menu-overlay .menu-nav-link:focus .menu-nav-subtitle,
+    .cg-menu-overlay .menu-nav-link.active .menu-nav-subtitle {
+        color: #8a0010;
+    }
 
     </style>
 </head>
@@ -1317,6 +1341,7 @@
                     <ul class="nav-links cg-nav-links">
                         <li><a href="index.html">Pattern Quiz</a></li>
                         <li><a href="common-ground.html" class="active">Common Ground</a></li>
+                        <li><a href="letitout.html" class="letitout-link">Let It Out</a></li>
                     </ul>
                     <a href="#apply" class="nav-cta-button cg-nav-cta">Apply to Join</a>
                 </div>
@@ -1327,9 +1352,10 @@
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
             </button>
             <nav>
-                <a href="index.html">Pattern Quiz</a>
-                <a href="common-ground.html" class="active">Common Ground</a>
-                <a href="mailto:support@mypatternreset.com">Contact</a>
+                <a href="index.html" class="menu-nav-link"><span class="menu-nav-title">Pattern Quiz</span><span class="menu-nav-subtitle">Discover your relationship pattern</span></a>
+                <a href="letitout.html" class="menu-nav-link letitout-link"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your situation anonymously</span></a>
+                <a href="common-ground.html" class="menu-nav-link active"><span class="menu-nav-title">Common Ground</span><span class="menu-nav-subtitle">Meet people in real life</span></a>
+                <a href="mailto:support@mypatternreset.com" class="menu-nav-link"><span class="menu-nav-title">Contact</span><span class="menu-nav-subtitle">Get in touch</span></a>
             </nav>
         </div>
     </header>

@@ -143,7 +143,10 @@ const Utils = {
             }
 
             const unreadCount = await window.PostService.getUnreadReplyCount();
-            const myPostsBtn = document.querySelector('.letitout-my-posts-btn-global');
+            // Prefer mobile button when on mobile viewport (badge on visible button)
+            const mobileBtn = document.getElementById('mobile-inbox-btn');
+            const desktopBtn = document.getElementById('my-posts-btn');
+            const myPostsBtn = (window.innerWidth <= 600 && mobileBtn) ? mobileBtn : (desktopBtn || document.querySelector('.letitout-my-posts-btn-global'));
             
             if (myPostsBtn) {
                 // Remove existing badge if any

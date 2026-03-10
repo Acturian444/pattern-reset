@@ -80,7 +80,7 @@ p {
     outline: none;
 }
 
-/* Header and Navigation */
+/* Header and Navigation - consistent height across Pattern Quiz, Common Ground, Let It Out */
 header {
     background-color: #fffcf1;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -92,6 +92,7 @@ header {
     transition: box-shadow 0.2s, top 0.25s ease;
     margin: 0;
     padding: 0;
+    min-height: 70px;
 }
 
 /* Shared header container - consistent across all pages */
@@ -237,6 +238,14 @@ nav {
 .nav-dropdown-menu a:hover {
     background: #fffcf1;
     color: #ca0013;
+}
+
+/* Let It Out nav link - match Pattern Quiz & Common Ground (size, weight, font) */
+.letitout-link {
+    font-family: 'Anton', 'Anton-Local', sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
 }
 /* ===== END UNIFIED NAVIGATION STYLES ===== */
 
@@ -1158,7 +1167,7 @@ footer {
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 1.5rem;
+    gap: 2.25rem; /* 36px nav spacing */
     padding: 0;
     margin: 0;
 }
@@ -1201,7 +1210,14 @@ footer {
     white-space: nowrap;
     cursor: pointer;
     box-sizing: border-box;
-    margin-left: 2rem;
+    margin-left: 4rem; /* 64px gap before CTA */
+}
+
+/* Button element reset - Inbox CTA uses <button>, must match <a> styling */
+button.nav-cta-button {
+    -webkit-appearance: none;
+    appearance: none;
+    font: inherit;
 }
 
 .nav-cta-button:hover,
@@ -1807,19 +1823,59 @@ footer {
 .menu-overlay nav {
     position: fixed;
     top: 0;
-    left: -280px; /* Start off-screen */
-    width: 280px;
+    left: -320px; /* Start off-screen */
+    width: 320px; /* Wider menu background */
     height: 100%;
     background: #fffcf1;
     z-index: 1201;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Center items vertically */
-    gap: 1rem; /* Space between links */
-    padding: 2rem 0; /* Vertical padding for top/bottom */
+    align-items: flex-start; /* Match Common Ground: left-aligned links */
+    justify-content: center;
+    gap: 2rem; /* Increased vertical spacing between nav items */
+    padding: 4rem 2rem;
     transition: left 0.3s ease;
-    box-shadow: 4px 0px 15px rgba(0,0,0,0.1);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+}
+
+/* Mobile menu nav links with subtitles */
+.menu-overlay .menu-nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    text-decoration: none;
+    padding: 0.25rem 0;
+}
+.menu-overlay .menu-nav-title {
+    font-family: 'Anton', 'Anton-Local', sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #000000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: color 0.3s;
+}
+.menu-overlay .menu-nav-subtitle {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: #666;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+.menu-overlay .menu-nav-link:hover .menu-nav-title,
+.menu-overlay .menu-nav-link:focus .menu-nav-title,
+.menu-overlay .menu-nav-link.active .menu-nav-title {
+    color: #ca0013;
+}
+.menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
+.menu-overlay .menu-nav-link:focus .menu-nav-subtitle,
+.menu-overlay .menu-nav-link.active .menu-nav-subtitle {
+    color: #8a0010;
 }
 
 .menu-overlay.open nav {
@@ -2046,13 +2102,15 @@ body.has-reset-banner {
     line-height: 1;
 }
 
+/* Mobile menu nav links - match Common Ground (Anton, uppercase, letter-spacing) */
 .menu-overlay a {
-    font-family: 'Anton', sans-serif !important;
+    font-family: 'Anton', 'Anton-Local', sans-serif !important;
     font-weight: 400 !important;
     font-size: 1.1rem;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: var(--accent-text);
+    color: #000000;
+    text-decoration: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-smooth: always;
@@ -2060,13 +2118,9 @@ body.has-reset-banner {
 }
 
 .menu-overlay a:hover,
-.menu-overlay a:focus {
-    background-color: #f0ebe0;
-}
-
+.menu-overlay a:focus,
 .menu-overlay a.active {
     color: #ca0013;
-    font-weight: 400;
 }
 
 .menu-overlay .nav-cta-button {
@@ -2090,11 +2144,13 @@ body.has-reset-banner {
 
 @media (max-width: 600px) {
     .menu-overlay nav {
-        padding-left: 1.2rem;
+        width: 320px;
+        left: -320px;
+        padding: 4rem 1.5rem;
     }
     .menu-overlay a {
         font-size: 1.1rem;
-        margin-bottom: 1.2rem;
+        letter-spacing: 1.5px;
     }
 }
 

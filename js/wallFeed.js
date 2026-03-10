@@ -464,11 +464,35 @@ class WallFeed {
         }
     }
 
+    getPostCountForCity(city) {
+        let posts = this.posts;
+        if (this.currentFilter) {
+            posts = posts.filter(post => {
+                if (!post.emotion) return false;
+                const postEmotions = post.emotion.split(',').map(e => e.trim());
+                return postEmotions.includes(this.currentFilter);
+            });
+        }
+        if (city === 'Global') {
+            return posts.length;
+        }
+        return posts.filter(p => p.city === city).length;
+    }
+
     openLocationModal() {
         // Create and show location modal with proper overlay structure
         const modalOverlay = document.createElement('div');
         modalOverlay.className = 'wall-location-modal-overlay visible';
         
+        const getCityChipHTML = (city) => {
+            const count = this.getPostCountForCity(city);
+            const showCount = count >= 3;
+            const countSuffix = showCount ? ` — ${count} post${count === 1 ? '' : 's'}` : '';
+            const label = city === 'Global' ? 'Global' : city;
+            const icon = (city === 'Global' && this.currentCity === 'Global') || (city !== 'Global' && this.currentCity === city) ? '<i class="fas fa-map-marker-alt"></i> ' : '';
+            return `<button class="wall-city-chip ${this.currentCity === city ? 'selected' : ''}" data-city="${city}">${icon}${label}${countSuffix}</button>`;
+        };
+
         const modal = document.createElement('div');
         modal.className = 'wall-location-modal';
         modal.innerHTML = `
@@ -481,14 +505,8 @@ class WallFeed {
                     <input type="text" placeholder="Search cities..." class="wall-location-search-input">
                 </div>
                 <div class="wall-city-chip-list">
-                    <button class="wall-city-chip ${this.currentCity === 'Global' ? 'selected' : ''}" data-city="Global">
-                        ${this.currentCity === 'Global' ? '<i class="fas fa-map-marker-alt"></i> ' : ''}Global
-                    </button>
-                    ${this.getCityList().map(city => `
-                        <button class="wall-city-chip ${this.currentCity === city ? 'selected' : ''}" data-city="${city}">
-                            ${this.currentCity === city ? '<i class="fas fa-map-marker-alt"></i> ' : ''}${city}
-                        </button>
-                    `).join('')}
+                    ${getCityChipHTML('Global')}
+                    ${this.getCityList().map(city => getCityChipHTML(city)).join('')}
                 </div>
             </div>
         `;
@@ -567,6 +585,19 @@ class WallFeed {
         categoriesContainer.className = 'emotion-categories-container';
         content.appendChild(categoriesContainer);
 
+        // Helper: count posts (respecting city filter) that have this emotion
+        const getPostCountForEmotion = (emotion) => {
+            let posts = this.posts;
+            if (this.currentCity !== 'Global') {
+                posts = posts.filter(p => p.city === this.currentCity);
+            }
+            return posts.filter(post => {
+                if (!post.emotion) return false;
+                const postEmotions = post.emotion.split(',').map(e => e.trim());
+                return postEmotions.includes(emotion);
+            }).length;
+        };
+
         // Helper to render categories and emotions
         const renderEmotions = (filter = '') => {
             categoriesContainer.innerHTML = '';
@@ -591,7 +622,8 @@ class WallFeed {
                 filteredEmotions.forEach(emotion => {
                     const subTag = document.createElement('button');
                     subTag.className = 'emotion-subtag';
-                    subTag.textContent = emotion;
+                    const count = getPostCountForEmotion(emotion);
+                    subTag.innerHTML = `<span class="emotion-subtag-label">${emotion}</span> <span class="emotion-subtag-count">— ${count} post${count === 1 ? '' : 's'}</span>`;
                     if (this.currentFilter === emotion) {
                         subTag.classList.add('selected');
                     }
@@ -864,7 +896,7 @@ class WallFeed {
         });
 
         const watermark = document.createElement('p');
-        watermark.innerHTML = `Truth #${post.truthNumber || ''} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; LetItOut &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Pattern Reset`;
+        watermark.innerHTML = `Story #${post.truthNumber || ''} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; LetItOut`;
         Object.assign(watermark.style, {
             fontFamily: '"DM Sans", sans-serif',
             fontSize: '24px',
@@ -982,38 +1014,26 @@ class WallFeed {
 
     getEmotionCategories() {
         return [
-            'Pain & Pressure',
-            'Unspoken & Unsaid',
-            'Hope & Healing',
-            'Longing & Love',
-            'Identity & Self',
-            'Transformation & Release',
-            'Light & Alive'
+            'Pain & Relationship Conflict',
+            'Stress & Emotional Overload',
+            'Love & Desire',
+            'Growth & Healing'
         ];
     }
 
     getSubEmotions(category) {
         const emotions = {
-            'Pain & Pressure': [
-                'Abandonment', 'Alone', 'Anger', 'Anxiety', 'Bitterness', 'Confusion', 'Depression', 'Embarrassment', 'Emptiness', 'Envy', 'Exhausted', 'Fear', 'Frustration', 'Grief', 'Guilt', 'Heartbreak', 'Hopelessness', 'Insecurity', 'Jealousy', 'Loneliness', 'Overwhelm', 'Panic', 'Powerlessness', 'Rejection', 'Regret', 'Resentment', 'Sadness', 'Self-hate', 'Shame', 'Stuck'
+            'Pain & Relationship Conflict': [
+                'Heartbreak', 'Confusion', 'Rejection', 'Loneliness', 'Jealousy', 'Betrayal', 'Abandonment', 'Resentment', 'Regret', 'Shame'
             ],
-            'Unspoken & Unsaid': [
-                "What I can't forgive", "What I can't tell anyone", "What I carry in silence", "What I hide behind my smile", "What I miss", "What I needed to hear", "What I never believed I deserved", "What I never got to say", "What I still don't understand", "What I want to scream", "What I wish I could take back", "What I'm afraid to admit", "What I've never said", "What's been eating me alive"
+            'Stress & Emotional Overload': [
+                'Anxiety', 'Fear', 'Overwhelmed', 'Exhausted', 'Hopeless', 'Powerless'
             ],
-            'Hope & Healing': [
-                'Acceptance', 'Clarity', 'Closure', 'Compassion', 'Courage', 'Faith', 'Forgiveness', 'Gratitude', 'Healing', 'Joy', 'Letting go', 'Lightness', 'Peace', 'Presence', 'Relief', 'Stillness', 'Surrender', 'Trust'
+            'Love & Desire': [
+                'Longing', 'Missing Someone', 'Still in Love', 'Wanting Connection', 'Wanting to Feel Chosen'
             ],
-            'Longing & Love': [
-                'Desire', 'I don\'t feel lovable', 'I loved them more than they knew', 'I miss someone', 'I need connection', 'I never said I loved them', 'I still love them', 'I want to feel loved', 'I\'m falling for someone', 'I\'m scared to love again', 'I feel unloved', 'Missed Connection'
-            ],
-            'Identity & Self': [
-                'I crave touch', 'I don\'t know who I am', 'I feel invisible', 'I feel like not enough', 'I feel misunderstood', 'I feel too much', 'I hate who I used to be', 'I want to be authentic', 'I want to be seen', 'I want to feel chosen', 'I want to love myself', 'I want to start over', 'I\'m ashamed of who I am', 'I\'m learning to love myself', 'I\'m learning who I am', 'I\'m not okay', 'I\'m tired of pretending', 'I\'m trying to change'
-            ],
-            'Transformation & Release': [
-                'I forgive myself', 'I made it through', 'I want to begin again', 'I want to heal', 'I\'m becoming someone new', 'I\'m finally saying it', 'I\'m letting it out', 'I\'m not who I was', 'I\'m ready to grow', 'I\'m ready to move on', 'I\'m still here', 'I\'ve been carrying this but I\'m ready to be free', 'I\'ve been holding this too long', 'It\'s time to let go', 'This is my turning point'
-            ],
-            'Light & Alive': [
-                'Adventurous', 'Becoming me', 'Breakthrough', 'Celebration', 'Energized', 'Excitement', 'Freedom', 'Hope returned', 'I made it through', 'Peaceful inside', 'Pride', 'Safe now', 'Self-love'
+            'Growth & Healing': [
+                'Healing', 'Letting Go', 'Forgiveness', 'Clarity'
             ]
         };
         return emotions[category] || [];

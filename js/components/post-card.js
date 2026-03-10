@@ -103,17 +103,17 @@ class PostCard {
             contentArea.appendChild(readMoreLink);
         }
 
-        // City line with timestamp (Truth #147 · Miami, FL · 22h ago)
+        // City line with timestamp (Story #147 · Miami, FL · 22h ago)
         const cityLine = document.createElement('div');
         cityLine.className = 'post-city-line';
         const timeString = window.LetItOutUtils.formatDate(post.timestamp);
         
-        // NEW LOGIC: Show Truth number if available, fallback to old format
+        // NEW LOGIC: Show Anonymous Story number if available, fallback to old format
         if (post.truthNumber) {
             if (post.city) {
-                cityLine.textContent = `Truth #${post.truthNumber} · ${post.city} · ${timeString}`;
+                cityLine.textContent = `Story #${post.truthNumber} · ${post.city} · ${timeString}`;
             } else {
-                cityLine.textContent = `Truth #${post.truthNumber} · ${timeString}`;
+                cityLine.textContent = `Story #${post.truthNumber} · ${timeString}`;
             }
         } else {
             // Fallback for existing posts without truthNumber
@@ -140,7 +140,7 @@ class PostCard {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
-                <span class="felt-it-text">Felt It</span>
+                <span class="felt-it-text">I Feel This Too</span>
                 ${post.feltCount >= 2 ? `<span class="felt-it-count">${post.feltCount}</span>` : ''}
             `;
 
@@ -398,13 +398,14 @@ class PostCard {
         modal.className = 'reply-modal';
         modal.innerHTML = `
             <div class="reply-modal-header">
-                <div class="reply-modal-title">Send a message of support</div>
+                <div class="reply-modal-title">Send them some support</div>
+                <div class="reply-modal-microcopy">Your message will be anonymous.</div>
             </div>
-            <textarea class="reply-textarea" placeholder="Write a message to remind them they're not alone..." maxlength="250"></textarea>
+            <textarea class="reply-textarea" placeholder="Example: I went through something similar. You're not alone." maxlength="250"></textarea>
             <div class="char-counter">0/250</div>
             <div class="reply-actions">
                 <button class="cancel-btn">Cancel</button>
-                <button class="send-btn" disabled>Send Love</button>
+                <button class="send-btn" disabled>Send Support</button>
             </div>
         `;
 
