@@ -1,250 +1,100 @@
-// Pattern Determination Module
-// Data-driven pattern determination (replaces hardcoded indices)
+// Pattern Determination Module - Relationship Dynamic Quiz v2.1
+// Determines primary relationship pattern, her response pattern, and situationship modifier
 
 (function() {
     'use strict';
     
-    // Pattern determination rules (data-driven, not hardcoded)
-    const PATTERN_RULES = {
-        'control': {
-            patterns: ['fixer', 'perfectionist'],
-            // Fixer indicators: action-oriented responses in Love domain
-            fixerIndicators: {
-                domains: ['LOVE'],
-                // Questions that indicate Fixer pattern (action-oriented)
-                questionIndicators: {
-                    // "Step in and try to fix" - action-oriented
-                    actionKeywords: ['fix', 'resolve', 'take charge', 'set the pace'],
-                    // "Plan deeply" - perfectionist indicator
-                    perfectionistKeywords: ['plan deeply', 'do it right', 'perfect']
-                }
-            }
-        },
-        'avoidance': {
-            patterns: ['escaper', 'overthinker'],
-            // Escaper: numbing/avoiding in Health domain
-            // Overthinker: analyzing in Identity domain
-            escaperIndicators: {
-                domains: ['HEALTH'],
-                keywords: ['numb', 'distract', 'avoid', 'delay']
-            },
-            overthinkerIndicators: {
-                domains: ['IDENTITY'],
-                keywords: ['analyze', 'plan', 'understand']
-            }
-        },
-        'validation': {
-            patterns: ['pleaser', 'performer'],
-            // Pleaser: harmony-focused in Love domain
-            // Performer: achievement-focused in Money domain
-            pleaserIndicators: {
-                domains: ['LOVE'],
-                keywords: ['apologize', 'smooth', 'please', 'happy']
-            },
-            performerIndicators: {
-                domains: ['MONEY'],
-                keywords: ['value', 'success', 'respected', 'recognized']
-            }
-        },
-        'fear-of-rejection': {
-            patterns: ['guarded-one', 'overgiver'],
-            // Guarded: withdraws in Love domain
-            // Overgiver: gives more in Reflection domain
-            guardedIndicators: {
-                domains: ['LOVE'],
-                keywords: ['withdraw', 'pull back', 'distance', 'protect']
-            },
-            overgiverIndicators: {
-                domains: ['REFLECTION'],
-                keywords: ['give', 'worth', 'accepted']
-            }
-        }
+    const RELATIONSHIP_PATTERN_QUESTION_INDEX = 8; // Q9 - "Which description feels closest"
+    const HER_RESPONSE_QUESTIONS = [9, 10, 11]; // Q10-Q12 indices (0-based) - 3 questions
+    const DURATION_QUESTION_INDEX = 13; // Q14 - "How long has this dynamic been going on?"
+    
+    const SUBDIMENSION_TO_PATTERN = {
+        'hot-cold-cycle': 'hot-cold-cycle',
+        'breadcrumb-dynamic': 'breadcrumb-dynamic',
+        'commitment-avoidance': 'commitment-avoidance',
+        'emotional-distance': 'emotional-distance',
+        'mixed-signals-loop': 'mixed-signals-loop',
+        'one-sided-investment': 'one-sided-investment',
+        'hot-cold': 'hot-cold-cycle',
+        'breadcrumb': 'breadcrumb-dynamic',
+        'avoidant': 'emotional-distance',
+        'one-sided': 'one-sided-investment'
     };
     
-    // Helper: Check if answer text contains keywords
-    function answerMatchesKeywords(optionText, keywords) {
-        const lowerText = optionText.toLowerCase();
-        return keywords.some(keyword => lowerText.includes(keyword.toLowerCase()));
-    }
+    const SUBDIMENSION_TO_HER_RESPONSE = {
+        'reassurance-seeker': 'reassurance-seeker',
+        'space-giver': 'space-giver',
+        'direct-communicator': 'direct-communicator',
+        'protector': 'protector',
+        'balanced': 'balanced'
+    };
     
-    // Helper: Get questions in domain
-    function getQuestionsInDomain(quizData, domain, answers) {
-        const domainQuestions = [];
-        quizData.forEach((question, index) => {
-            if (question.domain === domain && answers[index] !== undefined) {
-                const option = question.options[answers[index]];
-                if (option) {
-                    domainQuestions.push({
-                        index,
-                        option,
-                        question
-                    });
-                }
-            }
-        });
-        return domainQuestions;
-    }
-    
-    // Determine pattern based on driver and domain-specific responses
     window.PatternDeterminer = {
         determinePattern: function(driverScores, answers, quizData, personalityPatterns, archetypeCategories) {
-            // Find dominant driver
-            const sortedDrivers = Object.entries(driverScores)
-                .sort((a, b) => b[1] - a[1]);
-            
-            const dominantDriver = sortedDrivers[0][0];
-            const rules = PATTERN_RULES[dominantDriver];
-            
-            if (!rules) {
-                console.error('Unknown driver:', dominantDriver);
-                return 'fixer'; // Fallback
+            // Primary: Use Q9 (dynamic question) if available - strongest signal
+            const dynamicQuestion = quizData && quizData[RELATIONSHIP_PATTERN_QUESTION_INDEX];
+            if (dynamicQuestion && dynamicQuestion.options && answers[RELATIONSHIP_PATTERN_QUESTION_INDEX] !== undefined) {
+                const ansIdx = answers[RELATIONSHIP_PATTERN_QUESTION_INDEX];
+                const option = dynamicQuestion.options[ansIdx];
+                if (option && option.subDimension && SUBDIMENSION_TO_PATTERN[option.subDimension]) {
+                    return SUBDIMENSION_TO_PATTERN[option.subDimension];
+                }
             }
             
-            // If only one pattern for this driver, return it
-            if (rules.patterns.length === 1) {
-                return rules.patterns[0];
-            }
+            // Fallback: Use dimension scores from driverScores (which now holds subDimension scores)
+            const patternKeys = ['hot-cold-cycle', 'breadcrumb-dynamic', 'commitment-avoidance', 'emotional-distance', 'mixed-signals-loop', 'one-sided-investment'];
+            let bestKey = 'hot-cold-cycle';
+            let bestScore = 0;
             
-            // Determine between two patterns using domain-specific analysis
-            if (dominantDriver === 'control') {
-                return determineControlPattern(answers, quizData, rules);
-            } else if (dominantDriver === 'avoidance') {
-                return determineAvoidancePattern(answers, quizData, rules);
-            } else if (dominantDriver === 'validation') {
-                return determineValidationPattern(answers, quizData, rules);
-            } else if (dominantDriver === 'fear-of-rejection') {
-                return determineFearOfRejectionPattern(answers, quizData, rules);
-            }
+            patternKeys.forEach(key => {
+                const score = driverScores[key] || 0;
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestKey = key;
+                }
+            });
             
-            // Fallback
-            return rules.patterns[0];
+            return bestKey;
+        },
+        
+        determineHerResponsePattern: function(answers, quizData) {
+            const scores = { 'reassurance-seeker': 0, 'space-giver': 0, 'direct-communicator': 0, 'protector': 0 };
+            
+            HER_RESPONSE_QUESTIONS.forEach(qIdx => {
+                if (!quizData || !quizData[qIdx] || !quizData[qIdx].options) return;
+                const ansIdx = answers[qIdx];
+                if (ansIdx === undefined) return;
+                const option = quizData[qIdx].options[ansIdx];
+                if (!option || !option.subDimension) return;
+                const key = SUBDIMENSION_TO_HER_RESPONSE[option.subDimension];
+                if (key && key !== 'balanced' && scores[key] !== undefined) {
+                    scores[key] += option.score || 0;
+                }
+            });
+            
+            const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+            const topScore = sorted[0][1];
+            return topScore > 0 ? sorted[0][0] : 'balanced';
+        },
+        
+        getRepetitionInsight: function(answers, quizData) {
+            const repetitionIdx = 12; // Q13
+            if (!quizData || !quizData[repetitionIdx] || !quizData[repetitionIdx].options) return null;
+            const ansIdx = answers[repetitionIdx];
+            if (ansIdx === undefined) return null;
+            const option = quizData[repetitionIdx].options[ansIdx];
+            return option && option.value ? option.value : null;
+        },
+        
+        // Situationship modifier: applies when undefined relationship + months without clarity
+        hasSituationshipModifier: function(answers, quizData, relationshipStatus) {
+            if (!relationshipStatus || relationshipStatus !== 'situationship') return false;
+            if (!quizData || !quizData[DURATION_QUESTION_INDEX] || !quizData[DURATION_QUESTION_INDEX].options) return false;
+            const ansIdx = answers[DURATION_QUESTION_INDEX];
+            if (ansIdx === undefined) return false;
+            const option = quizData[DURATION_QUESTION_INDEX].options[ansIdx];
+            if (!option || !option.subDimension) return false;
+            return option.subDimension === 'long' || option.subDimension === 'very-long';
         }
     };
-    
-    // Control driver: Fixer vs Perfectionist
-    function determineControlPattern(answers, quizData, rules) {
-        let fixerScore = 0;
-        let perfectionistScore = 0;
-        
-        // Check Love domain for action-oriented (Fixer) vs planning (Perfectionist)
-        const loveQuestions = getQuestionsInDomain(quizData, 'LOVE', answers);
-        loveQuestions.forEach(({ option }) => {
-            if (option.driver === 'control') {
-                const text = option.text.toLowerCase();
-                // Fixer: action-oriented
-                if (text.includes('fix') || text.includes('resolve') || text.includes('take charge') || text.includes('set the pace')) {
-                    fixerScore += option.score;
-                }
-            }
-        });
-        
-        // Check Identity domain for planning (Perfectionist) vs action (Fixer)
-        const identityQuestions = getQuestionsInDomain(quizData, 'IDENTITY', answers);
-        identityQuestions.forEach(({ option }) => {
-            if (option.driver === 'control') {
-                const text = option.text.toLowerCase();
-                // Perfectionist: planning/deep thinking
-                if (text.includes('plan deeply') || text.includes('control outcomes')) {
-                    perfectionistScore += option.score;
-                }
-                // Fixer: action-oriented (keyword-driven, not index-dependent)
-                if (text.includes('take charge') || text.includes('handle it fast') || text.includes('set the pace')) {
-                    fixerScore += option.score;
-                }
-            }
-        });
-        
-        return fixerScore >= perfectionistScore ? 'fixer' : 'perfectionist';
-    }
-    
-    // Avoidance driver: Escaper vs Overthinker
-    function determineAvoidancePattern(answers, quizData, rules) {
-        let escaperScore = 0;
-        let overthinkerScore = 0;
-        
-        // Check Health domain for numbing/avoiding (Escaper)
-        const healthQuestions = getQuestionsInDomain(quizData, 'HEALTH', answers);
-        healthQuestions.forEach(({ option }) => {
-            if (option.driver === 'avoidance') {
-                const text = option.text.toLowerCase();
-                if (text.includes('numb') || text.includes('distract') || text.includes('avoid') || text.includes('delay')) {
-                    escaperScore += option.score;
-                }
-            }
-        });
-        
-        // Check Identity domain for analyzing (Overthinker)
-        const identityQuestions = getQuestionsInDomain(quizData, 'IDENTITY', answers);
-        identityQuestions.forEach(({ option }) => {
-            if (option.driver === 'avoidance') {
-                const text = option.text.toLowerCase();
-                if (text.includes('analyze') || text.includes('plan') || text.includes('understand')) {
-                    overthinkerScore += option.score;
-                }
-            }
-        });
-        
-        return escaperScore >= overthinkerScore ? 'escaper' : 'overthinker';
-    }
-    
-    // Validation driver: Pleaser vs Performer
-    function determineValidationPattern(answers, quizData, rules) {
-        let pleaserScore = 0;
-        let performerScore = 0;
-        
-        // Check Love domain for harmony (Pleaser)
-        const loveQuestions = getQuestionsInDomain(quizData, 'LOVE', answers);
-        loveQuestions.forEach(({ option }) => {
-            if (option.driver === 'validation') {
-                const text = option.text.toLowerCase();
-                if (text.includes('apologize') || text.includes('smooth') || text.includes('please')) {
-                    pleaserScore += option.score;
-                }
-            }
-        });
-        
-        // Check Money domain for achievement (Performer)
-        const moneyQuestions = getQuestionsInDomain(quizData, 'MONEY', answers);
-        moneyQuestions.forEach(({ option }) => {
-            if (option.driver === 'validation') {
-                const text = option.text.toLowerCase();
-                if (text.includes('value') || text.includes('success') || text.includes('respected') || text.includes('recognized')) {
-                    performerScore += option.score;
-                }
-            }
-        });
-        
-        return pleaserScore >= performerScore ? 'pleaser' : 'performer';
-    }
-    
-    // Fear of Rejection driver: Guarded One vs Overgiver
-    function determineFearOfRejectionPattern(answers, quizData, rules) {
-        let guardedScore = 0;
-        let overgiverScore = 0;
-        
-        // Check Love domain for withdrawal (Guarded)
-        const loveQuestions = getQuestionsInDomain(quizData, 'LOVE', answers);
-        loveQuestions.forEach(({ option }) => {
-            if (option.driver === 'fear-of-rejection') {
-                const text = option.text.toLowerCase();
-                if (text.includes('withdraw') || text.includes('pull back') || text.includes('distance') || text.includes('protect')) {
-                    guardedScore += option.score;
-                }
-            }
-        });
-        
-        // Check Reflection domain for giving (Overgiver)
-        const reflectionQuestions = getQuestionsInDomain(quizData, 'REFLECTION', answers);
-        reflectionQuestions.forEach(({ option }) => {
-            if (option.driver === 'fear-of-rejection') {
-                const text = option.text.toLowerCase();
-                if (text.includes('worth') || text.includes('accepted')) {
-                    overgiverScore += option.score;
-                }
-            }
-        });
-        
-        return guardedScore >= overgiverScore ? 'guarded-one' : 'overgiver';
-    }
 })();
-

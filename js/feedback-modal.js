@@ -28,16 +28,16 @@
             const totalScore = state.totalScore || 0;
             let patternKey = state.patternKey;
 
+            const sortedDrivers = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
             if (!patternKey) {
-                const sorted = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
-                const map = { control: 'fixer', validation: 'performer', avoidance: 'avoider', 'fear-of-rejection': 'withdrawer' };
-                patternKey = map[sorted[0][0]] || 'fixer';
+                const relKeys = ['hot-cold-cycle', 'breadcrumb-dynamic', 'commitment-avoidance', 'emotional-distance', 'mixed-signals-loop', 'one-sided-investment'];
+                const isRel = sortedDrivers[0] && relKeys.includes(sortedDrivers[0][0]);
+                patternKey = isRel ? sortedDrivers[0][0] : ({ control: 'fixer', validation: 'performer', avoidance: 'escaper', 'fear-of-rejection': 'guarded-one' }[sortedDrivers[0][0]] || 'fixer');
             }
 
             const keyMap = { 'guarded-one': 'withdrawer', 'pleaser': 'people-pleaser', 'escaper': 'avoider', 'overgiver': 'perfectionist' };
-            const pattern = (window.personalityPatterns || {})[keyMap[patternKey]] || (window.personalityPatterns || {})[patternKey];
-            const sortedDrivers = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
-            const archetype = (window.archetypeCategories || {})[sortedDrivers[0][0]];
+            const pattern = (window.relationshipPatterns && window.relationshipPatterns[patternKey]) || (window.personalityPatterns || {})[keyMap[patternKey]] || (window.personalityPatterns || {})[patternKey];
+            const archetype = (window.archetypeCategories || {})[sortedDrivers[0][0]] || (pattern && { name: pattern.name });
             const patternDominance = totalScore > 0 ? Math.round((sortedDrivers[0][1] / totalScore) * 100) : 0;
 
             let exactAge = '';
@@ -121,7 +121,7 @@
                 <button type="button" class="feedback-modal-close" aria-label="Close">&times;</button>
                 <div id="feedback-form-view">
                     <h3 class="feedback-modal-title">Questions or Feedback?</h3>
-                    <p class="feedback-modal-subtitle">We'd love to hear from you. Your feedback helps us improve the Pattern Reset experience.</p>
+                    <p class="feedback-modal-subtitle">We'd love to hear from you. Your feedback helps us improve the pattern quiz experience.</p>
                     <form id="feedback-form" class="feedback-form">
                         <textarea id="feedback-message" name="feedback" placeholder="Your message, questions, or suggestions..." rows="5" required maxlength="2000"></textarea>
                         <span class="feedback-char-count"><span id="feedback-char-num">0</span>/2000</span>

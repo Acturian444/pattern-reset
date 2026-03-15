@@ -18,6 +18,10 @@
     {
       "source": "/api/verify-checkout",
       "destination": "/server.js"
+    },
+    {
+      "source": "/api/common-ground-google-form",
+      "destination": "/server.js"
     }
   ],
   "redirects": [

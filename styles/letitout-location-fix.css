@@ -47,9 +47,9 @@ that appears when clicking the location filter button in the wall controls.
 }
 
 .dark-mode .wall-location-modal .wall-city-chip.selected {
-    background-color: #ca0013 !important;
+    background-color: #f10000 !important;
     color: white !important;
-    border-color: #ca0013 !important;
+    border-color: #f10000 !important;
 }
 
 /* --- My Posts Modal Tab Fix --- */

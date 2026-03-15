@@ -13,8 +13,11 @@ LET IT OUT - DARK MODE STYLES
 /* --- Header & Footer --- */
 .dark-mode header,
 .dark-mode footer {
-    background-color: #252526;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    background-color: #252526 !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+.dark-mode header {
+    min-height: 70px !important;
 }
 
 .dark-mode .center-logo,
@@ -28,7 +31,7 @@ LET IT OUT - DARK MODE STYLES
 
 .dark-mode .copyright a:hover,
 .dark-mode .copyright a:focus {
-    color: #ca0013 !important;
+    color: #f10000 !important;
 }
 
 .dark-mode .copyright a:visited {
@@ -40,7 +43,7 @@ LET IT OUT - DARK MODE STYLES
 }
 
 .dark-mode .center-logo {
-    color: #ca0013; /* Brand red */
+    color: #f10000; /* Brand red */
 }
 
 /* --- Navigation Dropdown Menu - Dark Mode Fix --- */
@@ -56,7 +59,7 @@ LET IT OUT - DARK MODE STYLES
 
 .dark-mode .nav-dropdown-menu a:hover {
     background: #333333 !important;
-    color: #ca0013 !important;
+    color: #f10000 !important;
 }
 
 .dark-mode .hamburger i {
@@ -80,7 +83,7 @@ LET IT OUT - DARK MODE STYLES
 .dark-mode .menu-overlay .menu-nav-link:hover .menu-nav-title,
 .dark-mode .menu-overlay .menu-nav-link:focus .menu-nav-title,
 .dark-mode .menu-overlay .menu-nav-link.active .menu-nav-title {
-    color: #ca0013;
+    color: #f10000;
 }
 
 .dark-mode .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
@@ -108,7 +111,7 @@ LET IT OUT - DARK MODE STYLES
 }
 
 .dark-mode .segment-btn.active {
-    background: #ca0013; /* Keep brand red */
+    background: #f10000; /* Keep brand red */
     color: #fff !important;
 }
 
@@ -123,7 +126,7 @@ LET IT OUT - DARK MODE STYLES
 }
 
 .dark-mode .letitout-post-card-header .new-question-btn {
-    color: #ca0013; /* Keep brand red */
+    color: #f10000; /* Keep brand red */
 }
 
 .dark-mode .letitout-post-card-body textarea {
@@ -147,7 +150,7 @@ LET IT OUT - DARK MODE STYLES
 }
 
 .dark-mode .letitout-post-card-submit .submit-btn {
-    background-color: #ca0013; /* Keep brand red */
+    background-color: #f10000; /* Keep brand red */
     color: #fff;
 }
 
@@ -161,7 +164,19 @@ LET IT OUT - DARK MODE STYLES
 }
 
 .dark-mode .letitout-info-text {
-    color: #D4D4D4;
+    color: #b0b0b0;
+}
+
+.dark-mode .letitout-quiz-funnel-text {
+    color: #b0b0b0;
+}
+
+.dark-mode .letitout-quiz-funnel-cta {
+    color: #f10000;
+}
+
+.dark-mode .letitout-quiz-funnel-cta:hover {
+    color: #e02020;
 }
 
 /* --- Main Content: Post Cards (Wall tab) --- */
@@ -175,7 +190,7 @@ LET IT OUT - DARK MODE STYLES
     color: #D4D4D4;
 }
 .dark-mode .post-card .post-content-area .emotion-tag.emotion-tag-small {
-    background-color: #ca0013 !important;
+    background-color: #f10000 !important;
     color: #ffffff !important;
     border-color: transparent !important;
 }
@@ -207,7 +222,7 @@ LET IT OUT - DARK MODE STYLES
 }
 
 .dark-mode .post-card-footer .post-actions .action-icon.felt {
-    color: #ca0013; /* Keep brand red */
+    color: #f10000; /* Keep brand red */
 }
 
 /* --- Modals --- */
@@ -235,12 +250,12 @@ LET IT OUT - DARK MODE STYLES
 }
 
 .dark-mode .report-reasons-container .reason-btn.selected {
-    background-color: #ca0013;
+    background-color: #f10000;
     color: #fff;
 }
 
 .dark-mode .letitout-emotion-modal-btn.done {
-    background-color: #ca0013;
+    background-color: #f10000;
 }
 
 .dark-mode .letitout-emotion-modal-btn.done:disabled {
@@ -249,7 +264,7 @@ LET IT OUT - DARK MODE STYLES
 }
 
 .dark-mode .filter-actions .btn-primary {
-    background-color: #ca0013;
+    background-color: #f10000;
 }
 
 .dark-mode .filter-actions .btn-secondary {
@@ -324,12 +339,16 @@ DARK MODE - FIXES & ADDITIONS
     color: #ffffff !important;
 }
 
-.dark-mode .letitout-mvp-prompt {
+.dark-mode .letitout-mvp-title {
     color: #e8e8e8;
 }
 
+.dark-mode .letitout-mvp-subtitle {
+    color: #a0a0a0;
+}
+
 .dark-mode .letitout-shuffle-btn {
-    color: #ca0013;
+    color: #f10000;
 }
 .dark-mode .letitout-reset-btn {
     color: #D4D4D4;
@@ -341,19 +360,19 @@ DARK MODE - FIXES & ADDITIONS
 .dark-mode .city-tag {
     background-color: #3a3a3a;
     border-color: #555;
-    color: #ca0013;
+    color: #f10000;
 }
 .dark-mode .emotion-tag.selected {
-    background: #ca0013;
+    background: #f10000;
     color: #fff;
-    border-color: #ca0013;
+    border-color: #f10000;
 }
 
 .dark-mode .letitout-selected-tags .emotion-tag,
 .dark-mode .letitout-selected-city .city-tag {
-    background-color: #ca0013;
+    background-color: #f10000;
     color: #fff;
-    border-color: #ca0013;
+    border-color: #f10000;
 }
 
 .dark-mode .letitout-selected-tags .emotion-tag .remove-tag,
@@ -378,8 +397,8 @@ DARK MODE - FIXES & ADDITIONS
     border-color: #666;
 }
 .dark-mode .felt-it-btn.felt {
-    background-color: #ca0013;
-    border-color: #ca0013;
+    background-color: #f10000;
+    border-color: #f10000;
     color: #fff;
 }
 .dark-mode .share-love-btn {
@@ -391,11 +410,11 @@ DARK MODE - FIXES & ADDITIONS
     background-color: #4a4a4a;
 }
 .dark-mode .letitout-submit {
-    background-color: #ca0013;
+    background-color: #f10000;
 }
 
 .dark-mode .letitout-submit-btn {
-    background-color: #ca0013;
+    background-color: #f10000;
     color: #fff;
 }
 .dark-mode .letitout-submit-btn:hover:not(:disabled) {
@@ -459,10 +478,45 @@ DARK MODE - FIXES & ADDITIONS
     background: #3a3a3a;
 }
 .dark-mode .wall-sort-option.selected {
-    color: #ca0013;
+    color: #f10000;
     background: #2f2f2f;
 }
 
+/* View Toggle - Dark Mode */
+.dark-mode .wall-view-toggle {
+    background: #252526;
+}
+
+.dark-mode .wall-view-btn {
+    color: #a0a0a0;
+}
+
+.dark-mode .wall-view-btn:hover {
+    background: #3a3a3a;
+    color: #e0e0e0;
+}
+
+.dark-mode .wall-view-btn.active {
+    background: #2f2f2f;
+    color: #f10000;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Single-Card Nav - Dark Mode */
+.dark-mode .wall-single-nav-btn {
+    background: transparent;
+    border: none;
+    color: #888;
+}
+
+.dark-mode .wall-single-nav-btn:hover:not(:disabled) {
+    color: #f10000;
+    background: rgba(241, 0, 0, 0.12);
+}
+
+.dark-mode .wall-single-card-progress {
+    color: #a0a0a0;
+}
 
 /* --- General Modals (Feeling, City, Location, Report) --- */
 .dark-mode .letitout-emotion-modal,
@@ -524,9 +578,9 @@ DARK MODE - FIXES & ADDITIONS
 .dark-mode .emotion-subtag:hover,
 .dark-mode .city-suggestion-btn.selected,
 .dark-mode .city-suggestion-btn:hover {
-    background-color: #ca0013;
+    background-color: #f10000;
     color: #fff;
-    border-color: #ca0013;
+    border-color: #f10000;
 }
 .dark-mode .emotion-subtag .emotion-subtag-count {
     opacity: 0.85;
@@ -605,16 +659,16 @@ DARK MODE - FIXES & ADDITIONS
     color: #D4D4D4;
 }
 .dark-mode .my-post-card .emotion-tag {
-    background-color: #ca0013;
+    background-color: #f10000;
     color: #fff;
-    border-color: #ca0013;
+    border-color: #f10000;
 }
 .dark-mode .my-post-reply-line {
     background-color: #3a3a3a;
     color: #D4D4D4;
 }
 .dark-mode .my-post-reply-line button {
-    color: #ca0013;
+    color: #f10000;
 }
 .dark-mode .my-post-reply-line.unread {
     background-color: #5a1e26;
@@ -679,7 +733,7 @@ DARK MODE - FIXES & ADDITIONS
     background-color: #3a3a3a;
 }
 .dark-mode .location-filter-modal .location-option.selected {
-    background-color: #ca0013;
+    background-color: #f10000;
     color: #ffffff;
 }
 
@@ -759,9 +813,9 @@ DARK MODE - FIXES & ADDITIONS
     background-color: #4a4a4a !important;
 }
 .dark-mode .wall-location-modal .location-option.selected {
-    background-color: #ca0013 !important;
+    background-color: #f10000 !important;
     color: #ffffff !important;
-    border-color: #ca0013 !important;
+    border-color: #f10000 !important;
 }
 
 /* --- Report Post Modal --- */
@@ -794,7 +848,7 @@ DARK MODE - FIXES & ADDITIONS
     background-color: #3a3a3a;
 }
 .dark-mode #report-modal .report-reasons-container .report-reason.selected {
-    border-color: #ca0013;
+    border-color: #f10000;
     background-color: #3a1a20;
 }
 .dark-mode #report-modal .report-reason-title {
@@ -829,18 +883,18 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .post-card .felt-it-btn.felt svg {
-    stroke: #ca0013;
-    fill: #ca0013;
+    stroke: #f10000;
+    fill: #f10000;
 }
 
 .dark-mode .post-card .share-love-btn {
-    background-color: #ca0013;
+    background-color: #f10000;
     color: #ffffff;
-    border: 1px solid #ca0013;
+    border: 1px solid #f10000;
 }
 .dark-mode .post-card .share-love-btn:hover {
-    background-color: #a00012;
-    border-color: #a00012;
+    background-color: #cc0000;
+    border-color: #cc0000;
 }
 .dark-mode .post-card .share-love-btn.sent {
     background-color: #252526 !important;
@@ -893,9 +947,9 @@ DARK MODE - FIXES & ADDITIONS
     border: 1px solid #555;
 }
 .dark-mode .reply-modal .send-btn {
-    background-color: #ca0013;
+    background-color: #f10000;
     color: #ffffff;
-    border: 1px solid #ca0013;
+    border: 1px solid #f10000;
 }
 .dark-mode .reply-modal .send-btn:disabled {
     background-color: #5a1e26;
@@ -1050,6 +1104,10 @@ DARK MODE - FIXES & ADDITIONS
     color: #b0b0b0;
 }
 
+.dark-mode .support-modal-footer {
+    color: #e0e0e0;
+}
+
 .dark-mode .support-modal-close {
     color: #888;
 }
@@ -1112,7 +1170,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .pack-dropdown-item.selected {
-    background: #ca0013;
+    background: #f10000;
     color: white;
 }
 
@@ -1165,7 +1223,7 @@ DARK MODE - FIXES & ADDITIONS
 
 .dark-mode .premium-pack-loading .spinner {
     border-color: #333;
-    border-top-color: #ca0013;
+    border-top-color: #f10000;
 }
 
 .dark-mode .premium-pack-error {
@@ -1175,7 +1233,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .letitout-confirmation-modal {
-  background: #ca0013; /* brand red background */
+  background: #f10000; /* brand red background */
   color: #fffcf1; /* cream text color */
   box-shadow: 0 8px 32px 0 rgba(202,0,19,0.3), 0 2px 12px rgba(202,0,19,0.2); /* red-tinted shadow */
   border: 1px solid #b30010; /* darker red border */
@@ -1184,7 +1242,7 @@ DARK MODE - FIXES & ADDITIONS
   color: #fffcf1; /* cream text color */
 }
 .dark-mode .letitout-confirmation-heart svg {
-  filter: drop-shadow(0 2px 8px #ca001380);
+  filter: drop-shadow(0 2px 8px #f1000080);
 }
 .dark-mode .letitout-confirmation-note {
   color: #aaa;
@@ -1274,7 +1332,7 @@ DARK MODE - FIXES & ADDITIONS
 
 .dark-mode .wall-sort-option.selected {
     font-weight: 700 !important;
-    color: #ca0013 !important;
+    color: #f10000 !important;
     background: #2f2f2f !important;
 }
 
@@ -1305,7 +1363,7 @@ DARK MODE - FIXES & ADDITIONS
     }
     
     .dark-mode .wall-sort-option.selected {
-        color: #ca0013 !important;
+        color: #f10000 !important;
         background: #2f2f2f !important;
     }
     

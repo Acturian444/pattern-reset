@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#fffcf1">
+    <meta name="theme-color" content="#0a0a0a">
     
     <!-- Google tag (gtag.js) - pattern-reset property @ analytics.google.com -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEZQRBTLR7"></script>
@@ -14,8 +14,8 @@
 
     gtag('config', 'G-ZEZQRBTLR7');
     </script>
-    <title>Free Pattern Reset Quiz: Discover Your Life Pattern | Pattern Reset™</title>
-    <meta name="description" content="Take our free pattern recognition quiz to identify the emotional loop driving your relationships, habits, and choices. Get your personalized Pattern Reset Workbook to break toxic patterns and transform your life.">
+    <title>Free Relationship Pattern Quiz: Why Does He Act Like This? | Pattern Reset™</title>
+    <meta name="description" content="Take our free relationship pattern quiz to understand why he acts the way he does. Discover the dynamic between you and him—and what his behavior really means. Get clarity in 5 minutes.">
     <meta name="author" content="Pattern Reset™">
     <meta name="copyright" content="© 2026 Pattern Reset™. All rights reserved.">
     <meta name="robots" content="index, follow">
@@ -25,8 +25,8 @@
     <meta name="trademark" content="Pattern Reset™, The Heart Room™, Let It Out™, Still Healing Collection™">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Free Pattern Reset Quiz: Discover Your Life Pattern | Pattern Reset™">
-    <meta property="og:description" content="Take our free pattern recognition quiz to identify the emotional loop driving your relationships, habits, and choices. Get your personalized Pattern Reset Workbook to break toxic patterns and transform your life.">
+    <meta property="og:title" content="Free Relationship Pattern Quiz: Why Does He Act Like This? | Pattern Reset™">
+    <meta property="og:description" content="Take our free relationship pattern quiz to understand why he acts the way he does. Discover the dynamic between you and him—and what his behavior really means. Get clarity in 5 minutes.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mypatternreset.com/">
     <meta property="og:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
@@ -36,8 +36,8 @@
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Free Pattern Reset Quiz: Discover Your Life Pattern | Pattern Reset™">
-    <meta name="twitter:description" content="Take our free pattern recognition quiz to identify the emotional loop driving your relationships, habits, and choices. Get your personalized Pattern Reset Workbook to break toxic patterns and transform your life.">
+    <meta name="twitter:title" content="Free Relationship Pattern Quiz: Why Does He Act Like This? | Pattern Reset™">
+    <meta name="twitter:description" content="Take our free relationship pattern quiz to understand why he acts the way he does. Discover the dynamic between you and him—and what his behavior really means. Get clarity in 5 minutes.">
     <meta name="twitter:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
     
     <!-- Structured Data (JSON-LD) -->
@@ -46,7 +46,7 @@
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "Pattern Reset™",
-      "description": "Discover your life pattern through our free pattern recognition quiz. Identify the emotional loop driving your relationships, habits, and choices. Break toxic patterns and transform your life with our free Pattern Reset Workbook.",
+      "description": "Discover your relationship pattern through our free quiz. Understand why he acts the way he does and what his behavior really means. Get clarity in 5 minutes.",
       "url": "https://mypatternreset.com/",
       "logo": "https://mypatternreset.com/images/pattern-reset-og.png",
       "sameAs": [
@@ -69,18 +69,18 @@
       "@context": "https://schema.org",
       "@type": "Quiz",
       "name": "Pattern Reset Quiz",
-      "description": "Free pattern recognition quiz to identify the emotional loop driving your relationships, habits, confidence, and choices. Discover your dominant pattern, emotional drivers, and get your personalized Pattern Reset Workbook.",
+      "description": "Free relationship pattern quiz to understand why he acts the way he does. Discover the dynamic between you and him—and what his behavior really means. Get clarity in 5 minutes.",
       "url": "https://mypatternreset.com/",
       "educationalLevel": "General Audience",
       "learningResourceType": "Assessment",
-      "teaches": "Pattern recognition, self-awareness, emotional intelligence, relationship patterns, behavioral patterns",
-      "assesses": "Emotional patterns, relationship behaviors, life patterns, childhood origins, emotional drivers (Control, Validation, Avoidance, Fear of Rejection)",
-      "timeRequired": "PT10M",
-      "numberOfQuestions": 38,
+      "teaches": "Pattern recognition, self-awareness, emotional intelligence, relationship patterns, behavioral dynamics",
+      "assesses": "Emotional patterns, relationship dynamics, his behavior, your response pattern",
+      "timeRequired": "PT5M",
+      "numberOfQuestions": 16,
       "typicalAgeRange": "18-",
       "about": {
         "@type": "Thing",
-        "name": "Life Patterns, Relationship Patterns, Emotional Patterns, Behavioral Patterns"
+        "name": "Relationship Patterns, Relationship Dynamics, His Behavior, Your Response Pattern"
       },
       "provider": {
         "@type": "Organization",
@@ -104,10 +104,15 @@
         <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=block" rel="stylesheet">
     </noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
     <!-- html2pdf.js for PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+    /* Homepage dark theme - eliminate light bars between sections */
+    body { background: #0a0a0a !important; }
+    #home-hero, .pain-clarity-section, #quiz-section, .faq-section { margin-bottom: 0 !important; }
+    .faq-section { margin-top: 0 !important; }
+    
     .letitout-link {
         font-family: 'Anton', sans-serif !important;
         font-weight: 400 !important;
@@ -115,314 +120,73 @@
         letter-spacing: 1.5px;
     }
     
-    /* Start Here Section Styles */
-    .start-here-section {
-        background: #fffcf1;
-        padding: 4rem 0 4rem 0;
-        width: 100vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .start-here-content {
-        max-width: 1200px;
-        width: 100%;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .start-here-title {
-        font-family: 'Anton', sans-serif;
-        font-size: 3rem;
-        color: #000;
-        margin-bottom: 1rem;
-        text-align: center;
-        letter-spacing: -0.5px;
-        font-weight: 700;
-        text-transform: uppercase;
-    }
-    .start-here-subtext {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 1.35rem;
-        font-weight: 700;
-        color: #ca0013;
-        text-align: center;
-        margin-bottom: 1.5rem;
-        line-height: 1.7;
-    }
-    .mobile-break {
-        display: none;
-    }
-    .start-here-card-grid {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-        width: 100%;
-        justify-content: center;
-        align-items: stretch;
-        flex-wrap: wrap;
-    }
-    .start-here-card {
-        background: transparent;
-        border: 2px solid #ca0013;
-        border-radius: 12px;
-        box-shadow: none;
-        padding: 2.5rem 2rem;
-        min-width: 240px;
-        max-width: 300px;
-        flex: 1 1 260px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        margin-bottom: 0;
-        height: 100%;
-        min-height: 320px;
-        max-height: 320px;
-        position: relative;
-    }
-    .start-here-card.card-red {
-        background: transparent;
-        color: #000000;
-        border: 2px solid #ca0013;
-    }
-    .start-here-card.card-red h3,
-    .start-here-card.card-red p {
-        color: #000000;
-    }
-    .start-here-card h3 {
-        color: #000000;
-        margin-bottom: 1rem;
-        font-family: 'Anton', sans-serif;
-        font-size: 1.6rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    .start-here-card p {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 1rem;
-        font-weight: 500;
-        color: #000000;
-        margin-bottom: 0;
-        line-height: 1.6;
-    }
-    .start-here-card.card-red p {
-        color: #000000 !important;
-    }
-    
-    .start-here-icon {
-        margin-bottom: 1.5rem;
-        padding: 1rem;
-        border-radius: 50%;
-        background: #ca0013;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-    }
-    
-    .start-here-card .btn {
-        margin-top: auto;
-        width: 80%;
-        font-size: 0.92rem;
-        font-family: 'DM Sans', sans-serif;
-        font-weight: 700;
-        border-radius: 4px;
-        padding: 0.7rem 1.2rem;
-        letter-spacing: 0.7px;
-        box-shadow: none;
-        max-width: 70%;
-    }
-    
-    /* New CTA button styling for "This Is Where Healing Begins" cards */
-    .start-here-cta {
-        background: transparent !important;
-        border: 1px solid rgba(255, 252, 241, 0.3) !important;
-        color: #fffcf1 !important;
-        font-size: 0.85rem !important;
-        padding: 0.6rem 1rem !important;
-        transition: all 0.3s ease !important;
-        backdrop-filter: blur(5px) !important;
-    }
-    
-    .start-here-cta:hover {
-        background: rgba(255, 252, 241, 0.1) !important;
-        border-color: rgba(255, 252, 241, 0.5) !important;
-        transform: translateY(-1px) !important;
-        box-shadow: 0 2px 8px rgba(255, 252, 241, 0.2) !important;
-    }
-    
-    /* Clickable card styling */
-    .start-here-clickable {
-        text-decoration: none !important;
-        color: inherit !important;
-        cursor: pointer !important;
-        transition: all 0.3s ease !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        padding: 2.5rem 2rem !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .start-here-clickable:hover {
-        transform: translateY(-4px) !important;
-        box-shadow: 0 8px 25px rgba(202, 0, 19, 0.15) !important;
-        text-decoration: none !important;
-        color: inherit !important;
-        border-color: #ca0013 !important;
-    }
-    
-    .start-here-clickable:focus {
-        outline: 2px solid rgba(255, 252, 241, 0.5) !important;
-        outline-offset: 2px !important;
-    }
-    .start-here-card.card-red .btn {
-        background: #ca0013;
-        color: #fff;
-        border: none;
-        font-weight: bold;
-    }
-    .start-here-card.card-red .btn[style*="pointer-events: none"] {
-        background: #ca0013;
-        color: #fff;
-        opacity: 0.5;
-    }
-
-    @media (max-width: 1100px) {
-        .start-here-content {
-            max-width: 960px;
-        }
-        .start-here-card-grid {
-            gap: 0.8rem;
-        }
-        .start-here-card {
-            max-width: 250px;
-            padding: 1.8rem 1rem 1.5rem 1rem;
-            min-height: 300px;
-        }
-    }
-    @media (min-width: 601px) and (max-width: 900px) {
-        .start-here-title {
-            font-size: 2.5rem;
-            margin-bottom: 1.3rem;
-        }
-        .start-here-subtext {
-            font-size: 1.1rem;
-        }
-        .start-here-card-grid {
-            gap: 1rem;
-        }
-    }
-    @media (max-width: 600px) {
-        .start-here-section {
-            padding: 2rem 0 3rem 0;
-        }
-        .start-here-title {
-            font-size: 2rem !important;
-            margin-bottom: 0.8rem !important;
-        }
-        .start-here-title .mobile-break {
-            display: block;
-        }
-        .start-here-subtext {
-            font-size: 1.125rem !important;
-            font-weight: 700 !important;
-            line-height: 1.8 !important;
-            margin-bottom: 1.2rem;
-        }
-        .start-here-card-grid {
-            flex-direction: column;
-            gap: 1rem;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-        .start-here-card {
-            max-width: 100%;
-            width: 100%;
-            min-width: 0;
-            margin-bottom: 0;
-            padding: 2rem 1.5rem !important;
-            min-height: 300px;
-        }
-        .start-here-card h3 {
-            color: #000000 !important;
-            margin-bottom: 0.8rem !important;
-            font-size: 1.3rem !important;
-        }
-        .start-here-card p {
-            font-size: 0.95rem !important;
-            font-weight: 500 !important;
-            line-height: 1.5 !important;
-            color: #000000 !important;
-        }
-        .start-here-card .btn {
-            margin-top: 0;
-            width: 75%;
-            max-width: 65%;
-        }
-        .start-here-card p:last-of-type {
-            margin-bottom: 1.5rem !important;
-        }
-    }
-    @media (max-width: 600px) {
-        .card-spacer {
-            height: 1.5rem;
-            width: 100%;
-            display: block;
-        }
-    }
-
-    /* Quiz Section Styles */
+    /* Quiz Section Styles - 2025 redesign (continues from Pain, flows into FAQ) */
     .quiz-section {
-        background: #f5f5f5;
-        padding: 4rem 0;
-        width: 100vw;
+        background: linear-gradient(180deg, #161616 0%, #1a1a1a 100%);
+        padding: clamp(4rem, 10vw, 6rem) clamp(1.5rem, 4vw, 2.5rem);
+        padding-bottom: clamp(2rem, 4vw, 3rem);
+        width: 100%;
+        box-sizing: border-box;
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: stretch;
-        justify-content: flex-start;
-        position: relative;
+        justify-content: center;
         overflow: hidden;
         scroll-margin-top: 100px;
         min-height: 100vh;
     }
-
     .quiz-container {
-        max-width: 1200px;
+        max-width: 900px;
         width: 100%;
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         position: relative;
-        min-height: 100%;
+        z-index: 2;
+        min-height: 0;
         flex: 1;
     }
 
     .quiz-intro {
         text-align: center;
         margin: 0 auto;
-        max-width: 900px;
+        max-width: 720px;
         width: 100%;
-        background: transparent;
-        padding: 4rem 2rem;
+        padding: clamp(3rem, 8vw, 5rem) 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-height: 700px;
+        min-height: auto;
+    }
+
+    .quiz-intro-label {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #f10000;
+        margin: 0 0 1rem 0;
+    }
+
+    .quiz-intro-note {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.8125rem;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 0.5rem;
+        font-style: italic;
+    }
+    .quiz-intro-meta {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.8);
+        margin: 0 0 2rem 0;
     }
 
     .quiz-heart-icon {
@@ -454,51 +218,31 @@
 
     .quiz-title {
         font-family: 'Anton', sans-serif;
-        font-size: 3rem;
-        color: #000;
-        margin-bottom: 1.5rem;
+        font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.98);
+        margin: 0 0 1rem 0;
         text-align: center;
-        letter-spacing: -0.5px;
-        font-weight: 700;
-        text-transform: uppercase;
+        letter-spacing: -0.02em;
         line-height: 1.2;
-    }
-    
-    .quiz-title-highlight {
-        color: #ca0013;
-    }
-    
-    .quiz-subtitle-highlight {
-        color: #ca0013;
-        font-weight: 600;
+        text-transform: uppercase;
     }
 
     .quiz-subtitle {
         font-family: 'DM Sans', sans-serif;
-        font-size: 1.25rem;
+        font-size: clamp(1rem, 2vw, 1.15rem);
         font-weight: 500;
-        color: #000;
+        color: rgba(255, 255, 255, 0.85);
         text-align: center;
-        margin-bottom: 1.5rem;
-        line-height: 1.8;
-        max-width: 700px;
-    }
-
-    .quiz-time-indicator {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 1rem;
-        font-weight: 500;
-        color: #666;
-        text-align: center;
-        margin: 0 auto 2rem;
-        line-height: 1.5;
+        margin: 0 auto 1rem;
+        line-height: 1.6;
     }
     
     .quiz-honesty-instruction {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.95rem;
         font-weight: 400;
-        color: #666;
+        color: rgba(255, 255, 255, 0.8);
         text-align: center;
         margin: 0 auto 2rem;
         line-height: 1.5;
@@ -507,14 +251,21 @@
 
     .quiz-intro .btn-mission-primary,
     #start-quiz-btn.btn-mission-primary {
-        background: #ca0013 !important;
-        color: #ffffff !important;
-        border: 2px solid #ca0013 !important;
+        background: #f10000 !important;
+        color: #fffcf1 !important;
+        border: none !important;
         padding: 1.1rem 2.5rem;
-        font-size: 1.1rem;
+        font-size: 0.9rem;
+        font-weight: 700;
         min-height: 56px;
+        min-width: 180px;
+        white-space: nowrap;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.25s ease;
+        border-radius: 8px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        box-shadow: 0 4px 24px rgba(241, 0, 0, 0.4);
     }
 
     .quiz-intro .btn-mission-primary:hover,
@@ -523,11 +274,12 @@
     #start-quiz-btn.btn-mission-primary:hover,
     #start-quiz-btn.btn-mission-primary:focus,
     #start-quiz-btn.btn-mission-primary:active {
-        background: #b80011 !important;
-        color: #ffffff !important;
-        border: 2px solid #b80011 !important;
+        background: #d40000 !important;
+        color: #fffcf1 !important;
+        border: none !important;
         outline: none;
-        transform: translateY(-1px);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 32px rgba(241, 0, 0, 0.5);
     }
 
     .quiz-content {
@@ -541,7 +293,7 @@
         justify-content: center;
         position: relative;
         margin: 0 auto;
-        min-height: 700px;
+        min-height: auto;
     }
 
     .quiz-progress {
@@ -553,9 +305,9 @@
     }
 
     .quiz-progress-bar {
-        height: 6px;
-        background: rgba(0, 0, 0, 0.06);
-        border-radius: 3px;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
         flex-grow: 1;
         position: relative;
         overflow: hidden;
@@ -563,8 +315,8 @@
 
     .quiz-progress-bar-fill {
         height: 100%;
-        background: #ca0013;
-        border-radius: 3px;
+        background: linear-gradient(90deg, #f10000, #e02030);
+        border-radius: 4px;
         transition: width 0.4s ease-out;
     }
 
@@ -572,7 +324,7 @@
         font-family: 'DM Sans', sans-serif;
         font-size: 1.1rem;
         font-weight: 700;
-        color: #333;
+        color: rgba(255, 255, 255, 0.95);
         white-space: nowrap;
         letter-spacing: 0.3px;
     }
@@ -585,10 +337,11 @@
     .quiz-load-error {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.125rem;
-        color: #333;
+        color: rgba(255, 255, 255, 0.95);
         margin: 2rem 0;
         padding: 1rem;
-        background: #f8f0f0;
+        background: rgba(241, 0, 0, 0.15);
+        border: 1px solid rgba(241, 0, 0, 0.3);
         border-radius: 8px;
     }
     .quiz-load-error a { color: #c00; text-decoration: underline; }
@@ -596,7 +349,7 @@
         font-family: 'DM Sans', sans-serif;
         font-size: 1.75rem;
         font-weight: 600;
-        color: #000;
+        color: rgba(255, 255, 255, 0.98);
         margin-bottom: 2.5rem;
         line-height: 1.7;
         letter-spacing: -0.2px;
@@ -610,31 +363,34 @@
     }
 
     .quiz-option {
-        background: transparent;
-        border: 1.5px solid rgba(0, 0, 0, 0.1);
-        border-radius: 6px;
-        padding: 1.25rem 1.75rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1.5px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.25s ease;
         display: flex;
         align-items: center;
         gap: 1rem;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     }
 
     .quiz-option:hover {
-        background: rgba(202, 0, 19, 0.03);
-        border-color: rgba(202, 0, 19, 0.3);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(241, 0, 0, 0.35);
         transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(241, 0, 0, 0.08);
     }
 
     .quiz-option.selected {
-        background: rgba(202, 0, 19, 0.08);
-        border-color: #ca0013;
+        background: rgba(241, 0, 0, 0.12);
+        border-color: #f10000;
         border-width: 2px;
+        box-shadow: 0 4px 16px rgba(241, 0, 0, 0.2);
     }
 
     .quiz-option.selected .quiz-option-text {
-        color: #ca0013;
+        color: #f10000;
         font-weight: 600;
     }
 
@@ -642,7 +398,7 @@
         font-family: 'DM Sans', sans-serif;
         font-size: 1rem;
         font-weight: 500;
-        color: #333;
+        color: rgba(255, 255, 255, 0.92);
         line-height: 1.6;
     }
 
@@ -655,29 +411,32 @@
         justify-content: flex-start;
     }
     .quiz-option-pill {
-        background: transparent;
-        border: 1.5px solid rgba(0, 0, 0, 0.12);
-        border-radius: 12px;
-        padding: 0.6rem 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1.5px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        padding: 0.7rem 1.1rem;
         cursor: pointer;
         transition: all 0.25s ease;
         font-family: 'DM Sans', sans-serif;
         font-size: 0.9rem;
         font-weight: 500;
-        color: #333;
-        line-height: 1.35;
+        color: rgba(255, 255, 255, 0.92);
+        line-height: 1.4;
         flex-shrink: 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
     .quiz-option-pill:hover {
-        background: rgba(202, 0, 19, 0.05);
-        border-color: rgba(202, 0, 19, 0.4);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(241, 0, 0, 0.35);
+        box-shadow: 0 2px 8px rgba(241, 0, 0, 0.08);
     }
     .quiz-option-pill.selected {
-        background: rgba(202, 0, 19, 0.1);
-        border-color: #ca0013;
+        background: rgba(241, 0, 0, 0.12);
+        border-color: #f10000;
         border-width: 2px;
-        color: #ca0013;
+        color: #f10000;
         font-weight: 600;
+        box-shadow: 0 2px 10px rgba(241, 0, 0, 0.2);
     }
     .quiz-other-text-wrap {
         margin-top: 1rem;
@@ -687,10 +446,15 @@
         width: 100%;
         max-width: 400px;
         padding: 0.75rem 1rem;
-        border: 1.5px solid rgba(0, 0, 0, 0.15);
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
         border-radius: 10px;
         font-size: 1rem;
         font-family: inherit;
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.95);
+    }
+    .quiz-other-text-input::placeholder {
+        color: rgba(255, 255, 255, 0.5);
     }
 
     .quiz-birthdate-input {
@@ -702,14 +466,14 @@
     }
 
     #quiz-birthdate-input {
-        background: #f9f9f9;
-        border: 2px solid #e0e0e0;
+        background: rgba(255, 255, 255, 0.06);
+        border: 2px solid rgba(255, 255, 255, 0.2);
         border-radius: 8px;
         padding: 1rem 1.5rem;
         font-family: 'DM Sans', sans-serif;
         font-size: 1rem;
         font-weight: 500;
-        color: #333;
+        color: rgba(255, 255, 255, 0.95);
         width: 100%;
         box-sizing: border-box;
         transition: all 0.3s ease;
@@ -717,20 +481,20 @@
     }
 
     #quiz-birthdate-input:hover {
-        background: #f0f0f0;
-        border-color: #ca0013;
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(241, 0, 0, 0.4);
     }
 
     #quiz-birthdate-input:focus {
-        background: #fff;
-        border-color: #ca0013;
-        box-shadow: 0 0 0 3px rgba(202, 0, 19, 0.1);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: #f10000;
+        box-shadow: 0 0 0 3px rgba(241, 0, 0, 0.2);
     }
 
     .quiz-birthdate-hint {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.875rem;
-        color: #666;
+        color: rgba(255, 255, 255, 0.7);
         font-style: italic;
         margin-top: 0.25rem;
     }
@@ -744,20 +508,20 @@
     }
 
     .quiz-select {
-        background: #f9f9f9;
-        border: 2px solid #e0e0e0;
+        background: rgba(255, 255, 255, 0.06);
+        border: 2px solid rgba(255, 255, 255, 0.2);
         border-radius: 8px;
         padding: 1rem 1.5rem;
         font-family: 'DM Sans', sans-serif;
         font-size: 1rem;
         font-weight: 500;
-        color: #333;
+        color: rgba(255, 255, 255, 0.95);
         width: 100%;
         box-sizing: border-box;
         transition: all 0.3s ease;
         outline: none;
         appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
         background-position: right 1.5rem center;
         background-size: 12px;
@@ -766,19 +530,20 @@
     }
 
     .quiz-select:hover {
-        background-color: #f0f0f0;
-        border-color: #ca0013;
+        background-color: rgba(255, 255, 255, 0.08);
+        border-color: rgba(241, 0, 0, 0.4);
     }
 
     .quiz-select:focus {
-        background-color: #fff;
-        border-color: #ca0013;
-        box-shadow: 0 0 0 3px rgba(202, 0, 19, 0.1);
+        background-color: rgba(255, 255, 255, 0.08);
+        border-color: #f10000;
+        box-shadow: 0 0 0 3px rgba(241, 0, 0, 0.2);
     }
 
     .quiz-select option {
         padding: 0.5rem;
-        background-color: #fff;
+        background-color: #1a1a1a;
+        color: #fff;
     }
 
     .quiz-navigation {
@@ -811,8 +576,8 @@
     #quiz-next-btn.btn-mission:hover {
         opacity: 1;
         background: transparent;
-        color: #ca0013;
-        border-color: #ca0013;
+        color: #f10000;
+        border-color: #f10000;
     }
 
     /* Active Next button state (answer selected) */
@@ -823,36 +588,36 @@
 
     #quiz-next-btn.btn-mission-primary:hover,
     #quiz-next-btn.btn-mission-primary:focus {
-        background: #000 !important;
-        color: #fff !important;
-        border-color: #000 !important;
+        background: #fff !important;
+        color: #f10000 !important;
+        border-color: #fff !important;
     }
 
-    /* Previous button - grey inactive style */
+    /* Previous button - grey inactive style (dark theme) */
     #quiz-prev-btn.btn-mission {
         background: transparent !important;
-        color: #666 !important;
-        border: 2px solid #999 !important;
+        color: rgba(255, 255, 255, 0.7) !important;
+        border: 2px solid rgba(255, 255, 255, 0.4) !important;
         opacity: 1;
     }
 
     #quiz-prev-btn.btn-mission:hover,
     #quiz-prev-btn.btn-mission:focus {
-        background: #666 !important;
+        background: rgba(255, 255, 255, 0.15) !important;
         color: #fff !important;
-        border-color: #666 !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
         opacity: 1;
     }
 
     .quiz-error-message {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.95rem;
-        color: #ca0013;
+        color: #f10000;
         text-align: center;
         margin: 0.75rem auto 0;
         padding: 0.75rem 1.25rem;
-        background: rgba(202, 0, 19, 0.08);
-        border: 1px solid rgba(202, 0, 19, 0.2);
+        background: rgba(241, 0, 0, 0.08);
+        border: 1px solid rgba(241, 0, 0, 0.2);
         border-radius: 8px;
         width: auto;
         min-width: fit-content;
@@ -877,19 +642,22 @@
         margin: 0 auto;
         min-height: 700px;
     }
+    .quiz-results.quiz-results-success {
+        min-height: auto;
+    }
 
     .quiz-score-display {
         font-family: 'DM Sans', sans-serif;
         font-size: 3rem;
         font-weight: 700;
-        color: #ca0013;
+        color: #f10000;
         margin-bottom: 1.5rem;
     }
 
     .quiz-results-title {
         font-family: 'Anton', sans-serif;
         font-size: 2.7rem;
-        color: #000000;
+        color: rgba(255, 255, 255, 0.98);
         margin-bottom: 1.5rem;
         text-align: center;
         letter-spacing: 0.5px;
@@ -910,14 +678,14 @@
         font-size: 1.2rem;
         font-weight: 500;
         text-transform: none;
-        color: #666;
+        color: rgba(255, 255, 255, 0.8);
         letter-spacing: 0;
     }
 
     .pattern-name-display {
         font-family: 'Anton', sans-serif;
         font-size: 2.5rem;
-        color: #ca0013;
+        color: #f10000;
         text-align: center;
         margin-bottom: 1.5rem;
         text-transform: uppercase;
@@ -932,7 +700,7 @@
     .archetype-subtitle {
         font-family: 'DM Sans', sans-serif;
         font-size: 1rem;
-        color: #666;
+        color: rgba(255, 255, 255, 0.8);
         text-align: center;
         margin-top: 0.75rem;
         margin-bottom: 0;
@@ -944,7 +712,7 @@
     .pattern-strength-display {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.3rem;
-        color: #333;
+        color: rgba(255, 255, 255, 0.95);
         text-align: center;
         margin-bottom: 1rem;
         font-weight: 600;
@@ -953,14 +721,14 @@
     .strength-label {
         font-size: 1rem;
         font-weight: 500;
-        color: #666;
+        color: rgba(255, 255, 255, 0.8);
         text-transform: none;
     }
 
     .pattern-strength-explanation {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.95rem;
-        color: #666;
+        color: rgba(255, 255, 255, 0.8);
         text-align: center;
         margin-bottom: 1.5rem;
         padding: 0 1rem;
@@ -979,7 +747,7 @@
         font-family: 'DM Sans', sans-serif;
         font-size: 0.9rem;
         font-weight: 500;
-        color: #666;
+        color: rgba(255, 255, 255, 0.8);
         margin-bottom: 1.25rem;
         text-align: center;
         text-transform: uppercase;
@@ -996,7 +764,7 @@
     .gatekeep-message {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.8rem;
-        color: #999;
+        color: rgba(255, 255, 255, 0.6);
         text-align: center;
         font-weight: 400;
         font-style: italic;
@@ -1037,21 +805,21 @@
     .driver-name {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.9rem;
-        color: #666;
+        color: rgba(255, 255, 255, 0.8);
         font-weight: 500;
     }
 
     .driver-percentage {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.9rem;
-        color: #ca0013;
+        color: #f10000;
         font-weight: 600;
     }
 
     .driver-progress-bar {
         width: 100%;
         height: 6px;
-        background: #f5f5f5;
+        background: rgba(255, 255, 255, 0.15);
         border-radius: 3px;
         overflow: hidden;
         position: relative;
@@ -1059,7 +827,7 @@
 
     .driver-progress-fill {
         height: 100%;
-        background: #ca0013;
+        background: #f10000;
         border-radius: 3px;
         transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
@@ -1071,7 +839,7 @@
         font-family: 'DM Sans', sans-serif;
         font-size: 1.25rem;
         font-weight: 500;
-        color: #333;
+        color: rgba(255, 255, 255, 0.9);
         margin-bottom: 3rem;
         line-height: 1.8;
         max-width: 600px;
@@ -1088,14 +856,14 @@
         margin-bottom: 2.5rem;
         padding: 0;
         background: transparent;
-        border-left: 3px solid rgba(202, 0, 19, 0.2);
+        border-left: 3px solid rgba(241, 0, 0, 0.2);
         padding-left: 1.5rem;
     }
 
     .quiz-pattern-label {
         font-family: 'Anton', sans-serif;
         font-size: 1.2rem;
-        color: #000;
+        color: rgba(255, 255, 255, 0.98);
         margin-bottom: 0.75rem;
         letter-spacing: 0.5px;
         font-weight: 700;
@@ -1105,15 +873,15 @@
     .quiz-pattern-text {
         font-family: 'DM Sans', sans-serif;
         font-size: 1rem;
-        color: #333;
+        color: rgba(255, 255, 255, 0.85);
         line-height: 1.7;
         margin: 0;
     }
 
     .quiz-pattern-cta-section {
         background: transparent;
-        border: 2px solid rgba(202, 0, 19, 0.2);
-        border-left: 3px solid #ca0013;
+        border: 2px solid rgba(241, 0, 0, 0.2);
+        border-left: 3px solid #f10000;
         border-radius: 6px;
     }
 
@@ -1121,7 +889,7 @@
         font-family: 'DM Sans', sans-serif;
         font-size: 1.1rem;
         font-weight: 600;
-        color: #ca0013;
+        color: #f10000;
         line-height: 1.7;
         margin: 0;
     }
@@ -1135,7 +903,7 @@
     .quiz-email-title {
         font-family: 'Anton', sans-serif;
         font-size: 1.8rem;
-        color: #000000;
+        color: rgba(255, 255, 255, 0.98);
         margin-bottom: 1.5rem;
         margin-top: 0;
         text-align: center;
@@ -1144,10 +912,21 @@
         text-transform: none;
     }
 
+    .quiz-email-teaser {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.125rem;
+        color: rgba(255, 255, 255, 0.9);
+        text-align: center;
+        margin-bottom: 0.75rem;
+    }
+    #quiz-email-capture .quiz-results-title {
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
     .quiz-email-subtitle {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.125rem;
-        color: #333;
+        color: rgba(255, 255, 255, 0.9);
         text-align: center;
         margin-bottom: 2.5rem;
         line-height: 1.7;
@@ -1155,7 +934,7 @@
     
     #quiz-archetype-dynamic {
         font-weight: 700;
-        color: #ca0013;
+        color: #f10000;
         font-style: italic;
     }
 
@@ -1180,43 +959,51 @@
     /* Button styling for quiz results form */
     .quiz-results .btn-mission-primary,
     .quiz-email-form .btn-mission-primary {
-        background: #ca0013;
+        background: #f10000;
         color: #fff !important;
-        border: 2px solid #ca0013;
+        border: 2px solid #f10000;
         text-transform: uppercase;
         transition: all 0.3s ease;
     }
 
     .quiz-results .btn-mission-primary:hover,
     .quiz-results .btn-mission-primary:focus {
-        background: #b80011;
+        background: #d40000;
         color: #fff;
-        border-color: #b80011;
+        border-color: #d40000;
         transform: translateY(-1px);
     }
 
     #quiz-name-input,
     #quiz-email-input,
-    #quiz-phone-input {
+    #quiz-phone-input,
+    #quiz-city-input {
         padding: 1rem 1.25rem;
-        border: 1.5px solid rgba(0, 0, 0, 0.12);
+        border: 1.5px solid rgba(255, 255, 255, 0.2);
         border-radius: 6px;
         font-size: 1rem;
         font-family: 'DM Sans', sans-serif;
-        color: #000;
-        background: #fff;
+        color: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.06);
         width: 100%;
         box-sizing: border-box;
         transition: all 0.3s ease;
     }
+    #quiz-name-input::placeholder,
+    #quiz-email-input::placeholder,
+    #quiz-phone-input::placeholder,
+    #quiz-city-input::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
 
     #quiz-name-input:focus,
     #quiz-email-input:focus,
-    #quiz-phone-input:focus {
+    #quiz-phone-input:focus,
+    #quiz-city-input:focus {
         outline: none;
-        border-color: #ca0013;
-        background: #fff;
-        box-shadow: 0 0 0 3px rgba(202, 0, 19, 0.08);
+        border-color: #f10000;
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 0 3px rgba(241, 0, 0, 0.2);
     }
 
     .quiz-success-message {
@@ -1230,14 +1017,14 @@
         justify-content: center;
         margin: 0 auto;
         position: relative;
-        min-height: 500px;
+        min-height: auto;
     }
 
     .quiz-success-title {
         font-family: 'Anton', sans-serif;
         font-size: 2.2rem;
-        color: #000000;
-        margin-bottom: 1.5rem;
+        color: rgba(255, 255, 255, 0.98);
+        margin-bottom: 1.25rem;
         margin-top: 0;
         text-align: center;
         letter-spacing: 0.5px;
@@ -1249,7 +1036,7 @@
     .quiz-success-subtitle {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.125rem;
-        color: #333;
+        color: rgba(255, 255, 255, 0.9);
         text-align: center;
         margin-bottom: 2rem;
         line-height: 1.7;
@@ -1259,7 +1046,7 @@
         text-align: center;
         margin-bottom: 2rem;
         margin-top: 0;
-        border: 2px solid #ca0013;
+        border: 2px solid #f10000;
         border-radius: 8px;
         padding: 1.5rem 2rem;
         display: block;
@@ -1267,14 +1054,110 @@
         max-width: 600px;
         margin-left: auto;
         margin-right: auto;
-        background: rgba(202, 0, 19, 0.08);
-        box-shadow: 0 2px 8px rgba(202, 0, 19, 0.1);
+        background: rgba(241, 0, 0, 0.08);
+        box-shadow: 0 2px 8px rgba(241, 0, 0, 0.1);
+    }
+    
+    .quiz-success-pattern-display {
+        font-family: 'Anton', sans-serif;
+        font-size: 1.75rem;
+        color: #f10000;
+        letter-spacing: 0.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: 1.2;
+        text-align: center;
+        margin: 1rem auto 1.25rem;
+        border: 2px solid #f10000;
+        border-radius: 8px;
+        padding: 1.5rem 2rem;
+        display: block;
+        width: 100%;
+        max-width: 600px;
+        background: rgba(241, 0, 0, 0.08);
+        box-shadow: 0 2px 8px rgba(241, 0, 0, 0.1);
+    }
+    .quiz-success-pattern-display.quiz-success-pattern-cta {
+        cursor: pointer;
+        transition: background 0.2s, box-shadow 0.2s;
+    }
+    @media (min-width: 601px) {
+        .quiz-success-pattern-display.quiz-success-pattern-cta {
+            white-space: nowrap;
+            width: fit-content;
+            min-width: min-content;
+            max-width: 720px;
+        }
+    }
+    .quiz-success-pattern-display.quiz-success-pattern-cta:hover {
+        background: rgba(241, 0, 0, 0.12);
+        box-shadow: 0 4px 12px rgba(241, 0, 0, 0.15);
+    }
+    
+    .quiz-success-subtext {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.9);
+        text-align: center;
+        line-height: 1.7;
+        max-width: 560px;
+        margin: 0 auto 1.25rem;
+        padding: 0 1rem;
+    }
+    
+    .quiz-success-reveals-block {
+        max-width: 400px;
+        margin: 0 auto 0;
+        padding: 1.25rem 1.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 8px;
+        text-align: center;
+    }
+    
+    .quiz-success-reveals-label {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.95);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin: 0 0 0.75rem;
+    }
+    
+    .quiz-success-reveals-list {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.85);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: inline-block;
+        text-align: left;
+    }
+    
+    .quiz-success-reveals-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.3rem 0;
+        line-height: 1.4;
+    }
+    
+    .quiz-success-reveals-list li::before {
+        content: '';
+        width: 4px;
+        height: 4px;
+        min-width: 4px;
+        background: #f10000;
+        border-radius: 50%;
+        flex-shrink: 0;
     }
     
     .pattern-name-text {
         font-family: 'Anton', sans-serif;
         font-size: 2rem;
-        color: #ca0013;
+        color: #f10000;
         letter-spacing: 0.5px;
         font-weight: 700;
         text-transform: uppercase;
@@ -1286,7 +1169,7 @@
     .pattern-strength-text {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.9rem;
-        color: #666;
+        color: rgba(255, 255, 255, 0.8);
         font-weight: 500;
         text-transform: none;
         letter-spacing: 0.3px;
@@ -1297,14 +1180,14 @@
     .pattern-drivers-preview {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.85rem;
-        color: #333;
+        color: rgba(255, 255, 255, 0.85);
         font-weight: 400;
         text-transform: none;
         letter-spacing: 0.2px;
         display: block;
         margin-top: 0.5rem;
         padding-top: 0.5rem;
-        border-top: 1px solid rgba(202, 0, 19, 0.2);
+        border-top: 1px solid rgba(241, 0, 0, 0.2);
         line-height: 1.6;
         min-height: 1.5rem;
     }
@@ -1319,12 +1202,12 @@
     }
     
     .pattern-drivers-preview .driver-label {
-        color: #333;
+        color: rgba(255, 255, 255, 0.85);
         font-weight: 500;
     }
     
     .pattern-drivers-preview .driver-value {
-        color: #ca0013;
+        color: #f10000;
         font-weight: 600;
         margin-left: 0.25rem;
     }
@@ -1332,7 +1215,7 @@
     .quiz-success-value-copy {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.1rem;
-        color: #333;
+        color: rgba(255, 255, 255, 0.9);
         text-align: center;
         margin-top: 1.5rem;
         margin-bottom: 0;
@@ -1347,7 +1230,7 @@
     .quiz-success-inbox-note {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.15rem;
-        color: #555;
+        color: rgba(255, 255, 255, 0.85);
         text-align: center;
         margin-top: 0;
         margin-bottom: 2rem;
@@ -1356,7 +1239,7 @@
         font-weight: 400;
         padding: 0.75rem 1.25rem;
         background: transparent;
-        border-left: 2px solid rgba(202, 0, 19, 0.3);
+        border-left: 2px solid rgba(241, 0, 0, 0.3);
         border-radius: 0;
         max-width: 600px;
         margin-left: auto;
@@ -1370,7 +1253,7 @@
     }
     
     .quiz-success-inbox-note strong {
-        color: #ca0013;
+        color: #f10000;
         font-weight: 600;
         font-size: 1.1rem;
     }
@@ -1379,7 +1262,7 @@
         font-family: 'DM Sans', sans-serif;
         font-size: 1.25rem;
         font-weight: 600;
-        color: #000;
+        color: rgba(255, 255, 255, 0.95);
         text-align: center;
         margin-bottom: 0.75rem;
         line-height: 1.5;
@@ -1388,7 +1271,7 @@
     .quiz-success-description {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.125rem;
-        color: #333;
+        color: rgba(255, 255, 255, 0.9);
         text-align: center;
         margin-bottom: 2.5rem;
         line-height: 1.7;
@@ -1416,7 +1299,7 @@
     .quiz-cta-text {
         font-family: 'DM Sans', sans-serif;
         font-size: 1.125rem;
-        color: #333;
+        color: rgba(255, 255, 255, 0.9);
         margin-bottom: 1rem;
         line-height: 1.6;
     }
@@ -1427,26 +1310,24 @@
 
     @media (min-width: 601px) and (max-width: 900px) {
         .quiz-section {
-            padding: 4rem 0;
+            padding: 4rem 0 2rem;
             scroll-margin-top: 110px;
             min-height: 100vh;
         }
         .quiz-title {
-            font-size: 2.5rem;
-            margin-bottom: 1.3rem;
+            font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+            margin-bottom: 0.9rem;
         }
         .quiz-subtitle {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            margin-bottom: 0.9rem;
         }
-        .quiz-time-indicator {
-            font-size: 0.95rem;
-        }
-        .quiz-honesty-instruction {
-            font-size: 0.9rem;
+        .quiz-intro-meta {
+            margin-bottom: 1.75rem;
         }
         .quiz-results-title {
             font-size: 2.2rem;
-            color: #000000;
+            color: rgba(255, 255, 255, 0.98);
             text-transform: uppercase !important;
         }
         .dominance-label {
@@ -1458,7 +1339,7 @@
         }
         .quiz-success-title {
             font-size: 2rem;
-            color: #000000;
+            color: rgba(255, 255, 255, 0.98);
             margin-bottom: 0.9rem;
         }
         .quiz-success-subtitle {
@@ -1469,16 +1350,16 @@
             font-size: 1.1rem;
             margin-top: 0;
             margin-bottom: 1.75rem;
-            color: #555;
+            color: rgba(255, 255, 255, 0.85);
             line-height: 1.7;
             padding: 0.75rem 1.25rem;
             background: transparent;
-            border-left: 2px solid rgba(202, 0, 19, 0.3);
+            border-left: 2px solid rgba(241, 0, 0, 0.3);
             border-radius: 0;
         }
         
         .quiz-success-inbox-note strong {
-            color: #ca0013;
+            color: #f10000;
             font-weight: 600;
             font-size: 1.1rem;
         }
@@ -1488,7 +1369,7 @@
         }
         .quiz-success-pattern-name {
             margin-bottom: 1.75rem;
-            border: 2px solid #ca0013;
+            border: 2px solid #f10000;
             border-radius: 8px;
             padding: 1.35rem 1.85rem;
             display: block;
@@ -1496,33 +1377,33 @@
             max-width: 550px;
             margin-left: auto;
             margin-right: auto;
-            background: rgba(202, 0, 19, 0.08);
-            box-shadow: 0 2px 8px rgba(202, 0, 19, 0.1);
+            background: rgba(241, 0, 0, 0.08);
+            box-shadow: 0 2px 8px rgba(241, 0, 0, 0.1);
         }
         .pattern-name-text {
             font-size: 1.75rem;
-            color: #ca0013;
+            color: #f10000;
             display: block;
             margin-bottom: 0;
         }
         .pattern-strength-text {
             font-size: 0.85rem;
-            color: #666;
+            color: rgba(255, 255, 255, 0.8);
             display: block;
             margin-top: 0.2rem;
         }
         .pattern-drivers-preview {
             font-size: 0.8rem;
-            color: #333;
+            color: rgba(255, 255, 255, 0.85);
             margin-top: 0.5rem;
             padding-top: 0.5rem;
-            border-top: 1px solid rgba(202, 0, 19, 0.2);
+            border-top: 1px solid rgba(241, 0, 0, 0.2);
         }
         .pattern-drivers-preview .driver-label {
-            color: #333;
+            color: rgba(255, 255, 255, 0.85);
         }
         .pattern-drivers-preview .driver-value {
-            color: #ca0013;
+            color: #f10000;
         }
         .quiz-success-value-copy {
             font-size: 1.05rem;
@@ -1532,20 +1413,25 @@
         }
         .quiz-success-ready {
             font-size: 1.15rem;
-            color: #000;
+            color: rgba(255, 255, 255, 0.95);
         }
         .quiz-success-description {
             margin-bottom: 2.25rem;
-            color: #333;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .quiz-results {
+            min-height: 700px;
         }
         .quiz-intro,
         .quiz-content,
-        .quiz-results,
         .quiz-success-message {
-            min-height: 700px;
+            min-height: auto;
         }
         .quiz-success-message {
             padding: 4rem 2rem;
+        }
+        .quiz-results.quiz-results-success {
+            min-height: auto;
         }
         .quiz-success-description .desktop-break,
         .quiz-subtitle .desktop-break {
@@ -1555,74 +1441,53 @@
             padding: 1rem 2rem;
             font-size: 1rem;
             min-height: 52px;
-            background: #fff;
-            color: #000000;
-        }
-        .quiz-intro .btn-mission-primary:hover,
-        .quiz-intro .btn-mission-primary:focus,
-        .quiz-intro .btn-mission-primary:active {
-            background: transparent;
-            color: #fffcf1;
         }
     }
 
     @media (max-width: 600px) {
         .quiz-section {
-            padding: 3rem 0;
+            padding: 3rem 1.25rem 2rem;
             scroll-margin-top: 120px;
             min-height: 100vh;
         }
-        .quiz-container {
-            padding: 0 1rem;
-        }
         .quiz-intro {
-            margin: 0 auto;
-            padding: 2.5rem 1.5rem 3rem;
-            max-width: 100%;
-            min-height: 600px;
+            padding: 2.5rem 0 3rem;
+            min-height: auto;
         }
-        .quiz-heart-icon {
-            margin-bottom: 2rem;
-            margin-top: -0.5rem;
-        }
-        .quiz-heart-icon svg {
-            width: 40px;
-            height: 40px;
+        .quiz-intro-label {
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
         }
         .quiz-title {
-            font-size: 2rem !important;
-            margin-bottom: 1rem !important;
+            font-size: clamp(1.75rem, 4.5vw, 2.75rem) !important;
+            margin-bottom: 0.75rem !important;
+            line-height: 1.35 !important;
         }
         .quiz-subtitle {
-            font-size: 1.1rem !important;
-            line-height: 1.7 !important;
-            margin-bottom: 1.5rem;
-            padding: 0 0.5rem;
-        }
-        .quiz-time-indicator {
             font-size: 0.95rem !important;
+            line-height: 1.55 !important;
+            margin-bottom: 0.9rem;
+        }
+        .quiz-intro-note {
+            font-size: 0.75rem;
+            margin-bottom: 0.4rem;
+        }
+        .quiz-intro-meta {
+            font-size: 0.8rem;
             margin-bottom: 1.5rem;
         }
         .quiz-intro .btn-mission-primary {
             padding: 1rem 2rem;
-            font-size: 1rem;
+            font-size: 0.9rem;
             min-height: 50px;
-            width: 100%;
-            max-width: 300px;
-            background: #fff;
-            color: #000000;
-        }
-        .quiz-intro .btn-mission-primary:hover,
-        .quiz-intro .btn-mission-primary:focus,
-        .quiz-intro .btn-mission-primary:active {
-            background: transparent;
-            color: #fffcf1;
+            width: auto;
+            min-width: 160px;
         }
         .quiz-content {
-            padding: 2.5rem 1.5rem;
+            padding: 2.5rem 1.25rem;
             margin: 0 auto;
             max-width: 100%;
-            min-height: 600px;
+            min-height: auto;
         }
         .quiz-progress {
             margin-bottom: 1.5rem;
@@ -1684,6 +1549,7 @@
         #quiz-name-input::placeholder,
         #quiz-email-input::placeholder,
         #quiz-phone-input::placeholder,
+        #quiz-city-input::placeholder,
         #quiz-birthdate-input::placeholder {
             font-size: 0.85rem;
         }
@@ -1708,7 +1574,7 @@
         .quiz-results-title {
             font-size: 1.8rem !important;
             margin-bottom: 0.8rem !important;
-            color: #000000 !important;
+            color: rgba(255, 255, 255, 0.98) !important;
             text-transform: uppercase !important;
         }
         .pattern-name-display {
@@ -1792,15 +1658,16 @@
             margin-top: 0;
         }
         .quiz-email-title {
-            font-size: 1.5rem !important;
+            font-size: 1.15rem !important;
             margin-bottom: 1.5rem !important;
             margin-top: 0 !important;
-            color: #000000 !important;
+            color: rgba(255, 255, 255, 0.98) !important;
+            line-height: 1.3;
         }
         .quiz-email-subtitle {
             font-size: 1rem !important;
             margin-bottom: 1rem !important;
-            color: #333 !important;
+            color: rgba(255, 255, 255, 0.9) !important;
         }
         .quiz-email-form button[type="submit"] {
             padding: 0.9rem 1rem;
@@ -1819,12 +1686,12 @@
         }
         .quiz-success-message {
             padding: 2rem 1.5rem !important;
-            min-height: 400px !important;
+            min-height: auto !important;
         }
         .quiz-success-title {
             font-size: 1.8rem !important;
             margin-bottom: 0.75rem !important;
-            color: #000000 !important;
+            color: rgba(255, 255, 255, 0.98) !important;
         }
         .quiz-success-subtitle {
             font-size: 1rem !important;
@@ -1835,16 +1702,16 @@
             font-size: 1.05rem !important;
             margin-top: 0 !important;
             margin-bottom: 1.5rem !important;
-            color: #555 !important;
+            color: rgba(255, 255, 255, 0.85) !important;
             line-height: 1.7 !important;
             padding: 0.75rem 1rem !important;
             background: transparent !important;
-            border-left: 2px solid rgba(202, 0, 19, 0.3) !important;
+            border-left: 2px solid rgba(241, 0, 0, 0.3) !important;
             border-radius: 0 !important;
         }
         
         .quiz-success-inbox-note strong {
-            color: #ca0013 !important;
+            color: #f10000 !important;
             font-weight: 600 !important;
             font-size: 1.05rem !important;
         }
@@ -1855,39 +1722,59 @@
         .quiz-success-pattern-name {
             margin-bottom: 1.5rem !important;
             margin-top: 0 !important;
-            border: 2px solid #ca0013 !important;
+            border: 2px solid #f10000 !important;
             border-radius: 8px !important;
             padding: 1.25rem 1.5rem !important;
             display: block !important;
             width: 100% !important;
             max-width: 100% !important;
-            background: rgba(202, 0, 19, 0.08) !important;
-            box-shadow: 0 2px 6px rgba(202, 0, 19, 0.1) !important;
+            background: rgba(241, 0, 0, 0.08) !important;
+            box-shadow: 0 2px 6px rgba(241, 0, 0, 0.1) !important;
+        }
+        .quiz-success-pattern-display {
+            font-size: 1.35rem !important;
+            margin: 0.75rem auto 1.25rem !important;
+            padding: 1.25rem 1.5rem !important;
+            border: 2px solid #f10000 !important;
+            border-radius: 8px !important;
+        }
+        .quiz-success-subtext {
+            font-size: 1.15rem !important;
+            margin-bottom: 1.25rem !important;
+        }
+        .quiz-success-reveals-block {
+            padding: 1rem 1.25rem !important;
+        }
+        .quiz-success-reveals-list {
+            font-size: 1.05rem !important;
+        }
+        .quiz-success-reveals-label {
+            font-size: 0.85rem !important;
         }
         .pattern-name-text {
             font-size: 1.5rem !important;
-            color: #ca0013 !important;
+            color: #f10000 !important;
             display: block !important;
             margin-bottom: 0 !important;
         }
         .pattern-strength-text {
             font-size: 0.8rem !important;
-            color: #666 !important;
+            color: rgba(255, 255, 255, 0.8) !important;
             display: block !important;
             margin-top: 0.15rem !important;
         }
         .pattern-drivers-preview {
             font-size: 0.8rem !important;
-            color: #333 !important;
+            color: rgba(255, 255, 255, 0.85) !important;
             margin-top: 0.5rem !important;
             padding-top: 0.5rem !important;
-            border-top: 1px solid rgba(202, 0, 19, 0.2) !important;
+            border-top: 1px solid rgba(241, 0, 0, 0.2) !important;
         }
         .pattern-drivers-preview .driver-label {
-            color: #333 !important;
+            color: rgba(255, 255, 255, 0.85) !important;
         }
         .pattern-drivers-preview .driver-value {
-            color: #ca0013 !important;
+            color: #f10000 !important;
         }
         .quiz-success-value-copy {
             font-size: 1rem !important;
@@ -1898,12 +1785,12 @@
         .quiz-success-ready {
             font-size: 1.125rem !important;
             margin-bottom: 0.5rem !important;
-            color: #000 !important;
+            color: rgba(255, 255, 255, 0.95) !important;
         }
         .quiz-success-description {
             font-size: 1rem !important;
             margin-bottom: 2rem !important;
-            color: #333 !important;
+            color: rgba(255, 255, 255, 0.9) !important;
         }
         .quiz-success-description .desktop-break,
         .quiz-subtitle .desktop-break {
@@ -1920,43 +1807,80 @@
         }
     }
 
-    /* FAQ Section Styles - Matching Course Outline Design */
-    .faq-section {
-        background: #fffcf1;
-        padding: 5rem 0 0 0;
+    @media (max-width: 380px) {
+        .quiz-section {
+            padding: 2.5rem 1rem 2rem;
+        }
+        .quiz-title {
+            font-size: 1.75rem !important;
+        }
+        .quiz-email-title {
+            font-size: 1rem !important;
+        }
     }
 
+    /* FAQ Section Styles - 2025 redesign (lighter dark, matches pain-clarity-payoff) */
+    .faq-section {
+        background: #1a1a1a;
+        padding: clamp(2rem, 4vw, 3rem) 0 clamp(5rem, 12vw, 8rem);
+        position: relative;
+    }
+    .faq-section::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+        pointer-events: none;
+    }
+    .faq-section::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+        pointer-events: none;
+    }
     .faq-section .container {
-        max-width: 1200px;
+        max-width: 720px;
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 0 clamp(1.5rem, 4vw, 2.5rem);
+        position: relative;
+        z-index: 1;
     }
 
     .faq-title {
         font-family: 'Anton', sans-serif;
-        color: #000;
-        font-size: 3rem;
+        color: rgba(255, 255, 255, 0.98);
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
         font-weight: 700;
         text-transform: uppercase;
         text-align: center;
-        letter-spacing: -0.5px;
-        margin-bottom: 2.5rem;
+        letter-spacing: -0.03em;
+        margin-bottom: 2rem;
         line-height: 1.2;
     }
 
     .faq-container {
-        max-width: 820px;
+        max-width: 680px;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
-        gap: 1.2rem;
+        gap: 0.75rem;
     }
 
     .faq-item {
-        border: 1px solid #ca0013;
-        border-radius: 16px;
-        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
         overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .faq-item:hover {
+        border-color: rgba(241, 0, 0, 0.3);
     }
 
     .faq-question {
@@ -1967,50 +1891,58 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-family: 'Anton', sans-serif;
-        color: #ca0013;
-        font-size: 1.1rem;
-        padding: 1.1rem 1.3rem;
+        font-family: 'DM Sans', sans-serif;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 1rem;
+        padding: 1.15rem 1.25rem;
         cursor: pointer;
-        transition: background 0.2s;
+        transition: background 0.2s, color 0.2s;
         text-align: left;
     }
 
+    .faq-question:hover {
+        color: #f10000;
+    }
+
     .faq-question.active {
-        background: #fffcf1;
+        background: rgba(241, 0, 0, 0.1);
+        color: #f10000;
     }
 
     .faq-question i {
-        font-size: 1.3rem;
-        color: #ca0013;
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.6);
         margin-left: 1rem;
-        transition: transform 0.3s;
+        transition: transform 0.3s, color 0.2s;
         display: inline-block;
+        flex-shrink: 0;
     }
 
     .faq-question.active i {
         transform: rotate(180deg);
+        color: #f10000;
     }
 
     .faq-answer {
         max-height: 0;
         overflow: hidden;
         background: transparent;
-        transition: max-height 0.3s cubic-bezier(0.4,0,0.2,1);
-        padding: 0 1.3rem;
+        transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+        padding: 0 1.25rem;
     }
 
     .faq-answer.active {
         max-height: 800px;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        padding-top: 0.5rem;
-        padding-bottom: 1.1rem;
+        padding-top: 0.25rem;
+        padding-bottom: 1.25rem;
     }
 
     .faq-answer p {
         font-family: 'DM Sans', sans-serif;
-        color: #222;
+        color: rgba(255, 255, 255, 0.85);
         font-size: 1rem;
         padding: 0.35rem 0;
         margin: 0;
@@ -2024,7 +1956,7 @@
 
     .faq-answer li {
         font-family: 'DM Sans', sans-serif;
-        color: #222;
+        color: rgba(255, 255, 255, 0.85);
         font-size: 1rem;
         padding: 0.2rem 0;
         margin: 0;
@@ -2034,7 +1966,7 @@
     /* Mobile FAQ Styles */
     @media (max-width: 600px) {
         .faq-section {
-            padding: 3rem 0;
+            padding: 2rem 0 3rem;
         }
         .faq-section .container {
             padding: 0 1.25rem;
@@ -2072,9 +2004,106 @@
         }
     }
 
+    /* Dark header & footer - Option A: all dark for consistent experience */
+    body.page-home header {
+        background: #0a0a0a !important;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+    body.page-home .nav-links a,
+    body.page-home .nav-links a.nav-dropdown-trigger {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+    body.page-home .nav-links a:hover,
+    body.page-home .nav-links a.active {
+        color: #f10000 !important;
+    }
+    body.page-home .logo-brand-combo,
+    body.page-home .nav-logo,
+    body.page-home .center-logo {
+        color: #f10000 !important;
+    }
+    body.page-home .logo-brand-combo:hover .nav-logo,
+    body.page-home .logo-brand-combo:hover .center-logo {
+        color: #cc0000 !important;
+    }
+    body.page-home .nav-hamburger,
+    body.page-home button.hamburger.nav-hamburger {
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+    body.page-home .nav-hamburger svg,
+    body.page-home button.hamburger.nav-hamburger svg {
+        fill: currentColor;
+    }
+    body.page-home .nav-hamburger svg rect,
+    body.page-home button.hamburger.nav-hamburger svg rect {
+        fill: rgba(255, 255, 255, 0.95) !important;
+    }
+    body.page-home .nav-cta-button {
+        background: #f10000 !important;
+        color: #fffcf1 !important;
+    }
+    body.page-home .nav-cta-button:hover,
+    body.page-home .nav-cta-button:focus {
+        background: #d40000 !important;
+        color: #fffcf1 !important;
+    }
+    /* Mobile menu overlay - dark */
+    body.page-home .menu-overlay nav {
+        background: #0a0a0a !important;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
+    }
+    body.page-home .menu-overlay .menu-nav-title {
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+    body.page-home .menu-overlay .menu-nav-subtitle {
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+    body.page-home .menu-overlay .menu-nav-link:hover .menu-nav-title,
+    body.page-home .menu-overlay .menu-nav-link.active .menu-nav-title {
+        color: #f10000 !important;
+    }
+    body.page-home .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
+    body.page-home .menu-overlay .menu-nav-link.active .menu-nav-subtitle {
+        color: rgba(241, 0, 0, 0.9) !important;
+    }
+    body.page-home .menu-overlay .close-btn,
+    body.page-home .menu-overlay .close-btn.hamburger {
+        color: rgba(255, 255, 255, 0.95) !important;
+    }
+    body.page-home .menu-overlay .close-btn svg,
+    body.page-home .menu-overlay .close-btn.hamburger svg {
+        fill: currentColor;
+    }
+    body.page-home .menu-overlay .close-btn svg rect,
+    body.page-home .menu-overlay .close-btn.hamburger svg rect {
+        fill: rgba(255, 255, 255, 0.95) !important;
+    }
+    /* Dark footer */
+    body.page-home footer {
+        background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+    body.page-home .copyright {
+        border-top-color: rgba(255, 255, 255, 0.1) !important;
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+    body.page-home .copyright p {
+        color: rgba(255, 255, 255, 0.8) !important;
+    }
+    body.page-home .copyright a {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+    body.page-home .copyright a:hover,
+    body.page-home .copyright a:focus {
+        color: #f10000 !important;
+    }
+    body.page-home .copyright a:visited {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
     </style>
 </head>
-<body>
+<body class="page-home">
     <script>
     window.openMenu=function(){var e=document.getElementById("menuOverlay");e&&(e.classList.add("open"),document.body.style.overflow="hidden")};
     window.closeMenu=function(){var e=document.getElementById("menuOverlay");e&&(e.classList.remove("open"),document.body.style.overflow="")};
@@ -2129,8 +2158,8 @@
                 <div class="nav-right">
                     <ul class="nav-links">
                         <li><a href="index.html" class="active">Pattern Quiz</a></li>
-                        <li><a href="common-ground.html">Common Ground</a></li>
                         <li><a href="letitout.html" class="letitout-link">Let It Out</a></li>
+                        <li><a href="common-ground.html">Common Ground</a></li>
                         <li id="myCourseLink" style="display: none;"><a href="course/breakup-course.html" id="desktopContinueBreakupResetLink">Continue Pattern Reset</a></li>
                     </ul>
                     <a href="#quiz-section" class="nav-cta-button" onclick="event.preventDefault(); const header = document.querySelector('header'); const headerHeight = header ? header.offsetHeight : 0; const section = document.getElementById('quiz-section'); const sectionTop = section.offsetTop; window.scrollTo({top: sectionTop - headerHeight, behavior: 'smooth'}); return false;">Start the Quiz</a>
@@ -2152,241 +2181,174 @@
     </header>
 
     <main>
-        <section id="home-hero" class="hero" data-hero-variant="">
+        <section id="home-hero" class="hero hero-v2">
             <div class="hero-content">
                 <div class="hero-text" id="hero-text-container">
-                    <!-- Hero content injected by A/B test script -->
-                    <noscript>
-                        <p class="hero-subtitle">Why do you keep ending up here?</p>
-                        <h1 class="hero-headline">The same cycle. Different person. <span class="hero-headline-nowrap">Same pattern.</span></h1>
-                        <p class="hero-subhead">Whether you're single, dating, married, or healing—one quiz reveals your pattern. 10 minutes. Free.</p>
-                        <ul class="hero-bullets">
-                            <li>Single and tired of the same dating cycle.</li>
-                            <li>In a relationship or married, but feel stuck, disconnected, or repeating the same fights.</li>
-                            <li>Trying to move on, but you keep going back.</li>
-                            <li>You push away when it gets real or cling when you're afraid.</li>
-                        </ul>
-                        <p class="hero-lead">A pattern shapes who you choose and what you tolerate—but <span class="hero-highlight">you can't change what you can't see.</span> Every day you don't see the pattern, you repeat it. See it. Then you can finally break it.</p>
-                        <a href="#quiz-section" class="hero-cta-btn">Discover My Pattern · Free</a>
-                        <p class="hero-credibility">Attachment theory. Psychology. Neuroscience.</p>
-                    </noscript>
-                </div>
-                <div class="hero-image">
-                    <!-- Image background set via CSS -->
+                    <p class="hero-subtitle">You're not crazy.</p>
+                    <h1 class="hero-headline">Why Does He Act Like This?</h1>
+                    <p class="hero-subhead">Mixed signals. Hot and cold. He won't put a label on it. Red flags you can't explain.</p>
+                    <p class="hero-lead">Finally understand what's going on—and what to do.</p>
+                    <a href="#quiz-section" class="hero-cta-btn" onclick="event.preventDefault(); const h = document.querySelector('header'); const headerHeight = h ? h.offsetHeight : 0; const s = document.getElementById('quiz-section'); if(s) window.scrollTo({top: s.offsetTop - headerHeight, behavior: 'smooth'}); return false;">Get Clarity — Free Quiz</a>
+                    <p class="hero-letitout"><a href="letitout.html">Something you need to say first? Let It Out</a></p>
                 </div>
             </div>
             <style>
-            /* Hero section - matches All Pattern Types design (gradient + red glow) */
-            #home-hero.hero {
-                background: linear-gradient(135deg, #252526 0%, #2d1f22 50%, #252526 100%);
+            /* Hero V2.0 - Minimal, centered */
+            #home-hero.hero.hero-v2 {
+                background: #050505;
                 position: relative;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 6rem 2rem 6rem;
+                padding: clamp(5rem, 12vw, 8rem) clamp(1.5rem, 5vw, 3rem);
                 width: 100%;
+                min-height: 90vh;
                 box-sizing: border-box;
                 overflow: hidden;
             }
-            #home-hero.hero::before {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(202, 0, 19, 0.12) 0%, transparent 60%);
-                pointer-events: none;
-            }
-            #home-hero.hero::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                height: 1px;
-                background: linear-gradient(90deg, transparent, rgba(202, 0, 19, 0.3), transparent);
-                pointer-events: none;
-            }
-            
-            #home-hero .hero-content {
+            #home-hero.hero-v2 .hero-content {
               position: relative;
               z-index: 3;
               width: 100%;
-              max-width: 900px;
+                max-width: 560px;
               margin: 0 auto;
-              padding: 0;
               display: flex;
               flex-direction: column;
               align-items: center;
               justify-content: center;
-              box-sizing: border-box;
+                flex: 0 1 auto;
             }
             
-            #home-hero .hero-text {
+            #home-hero.hero-v2 .hero-text {
               text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
               width: 100%;
               max-width: 100%;
-              padding: 0;
-              box-sizing: border-box;
-              flex: none;
             }
             
-            /* Hero subtitle - small red text above headline */
-            .hero-subtitle {
-              color: #ca0013 !important;
+            #home-hero.hero-v2 .hero-subtitle {
+              color: #f10000 !important;
               font-family: 'DM Sans', sans-serif !important;
-              font-size: clamp(0.85rem, 2.5vw, 1rem) !important;
-              font-weight: 600 !important;
-              text-align: center !important;
-              margin: 0 0 0.75rem 0 !important;
-              letter-spacing: 0.05em !important;
+                font-size: 0.9rem !important;
+                font-weight: 700 !important;
+                letter-spacing: 0.2em !important;
               text-transform: uppercase !important;
+                margin: 0 0 1rem 0 !important;
             }
             
-            .hero-headline-nowrap {
-              white-space: nowrap;
-            }
-            
-            /* Hero headline - clear hierarchy, one line on desktop/tablet, centered */
-            #home-hero .hero-headline,
-            #home-hero .hero-text .hero-headline,
-            .hero-headline {
-              color: rgba(255, 255, 255, 0.98) !important;
-              font-family: 'Anton', sans-serif;
-              font-size: clamp(1.75rem, 5vw, 3rem) !important;
-              font-weight: 700 !important;
-              text-align: center !important;
-              margin: 0 0 1rem 0 !important;
-              display: block !important;
-              width: 100% !important;
-              box-sizing: border-box !important;
-              letter-spacing: 0.02em !important;
-              line-height: 1.2 !important;
+            #home-hero.hero-v2 .hero-headline {
+                color: #fff !important;
+                font-family: 'Anton', sans-serif !important;
+                font-size: clamp(1.35rem, 4.8vw, 3.5rem) !important;
+                font-weight: 400 !important;
+                line-height: 1.1 !important;
+                letter-spacing: 0.01em !important;
               text-transform: uppercase !important;
-              white-space: normal !important;
+                margin: 0 0 1.5rem 0 !important;
+                text-align: center !important;
+                white-space: nowrap !important;
             }
             
-            /* Hero subhead - below headline, matches lead/payoff for cohesive copy block */
-            .hero-subhead {
-              color: rgba(255, 255, 255, 0.95);
+            #home-hero.hero-v2 .hero-subhead {
+                color: rgba(255, 255, 255, 0.75);
               font-family: 'DM Sans', sans-serif;
-              font-size: 1.2rem;
+                font-size: clamp(0.95rem, 1.5vw, 1.1rem);
               font-weight: 500;
+                line-height: 1.7;
+                margin: 0 0 1.5rem 0;
               text-align: center;
-              margin: 0 auto 2rem;
-              line-height: 1.6;
-              max-width: 700px;
             }
             
-            /* Hero bullets - subtle card container, blends with dark theme */
-            .hero-bullets {
-              list-style: none;
-              padding: 1.5rem 1.75rem;
-              margin: 0 auto 2.5rem;
-              max-width: 700px;
-              margin-left: auto;
-              margin-right: auto;
-              text-align: left;
-              background: rgba(255, 255, 255, 0.05);
-              border: 1px solid rgba(255, 255, 255, 0.1);
-              border-radius: 12px;
-              border-left: 3px solid #ca0013;
-            }
-            
-            .hero-bullets li {
-              color: rgba(255, 255, 255, 0.92);
+            #home-hero.hero-v2 .hero-lead {
+                color: #fff;
               font-family: 'DM Sans', sans-serif;
               font-size: 1rem;
-              font-weight: 500;
-              line-height: 1.55;
-              padding: 0.4rem 0;
-              padding-left: 0;
-              display: flex;
-              align-items: flex-start;
-              gap: 0.6rem;
-              white-space: normal;
-              text-align: left;
-              overflow-wrap: break-word;
-              word-wrap: break-word;
-            }
-            
-            .hero-bullets li::before {
-              content: '\f024';
-              font-family: 'Font Awesome 6 Free';
-              font-weight: 900;
-              font-size: 0.7rem;
-              color: #ca0013;
-              flex-shrink: 0;
-              line-height: 1.55;
-              margin-top: 0.22em;
-            }
-            
-            .hero-lead {
-              color: rgba(255, 255, 255, 0.95);
-              font-family: 'DM Sans', sans-serif;
-              font-size: 1.2rem;
-              font-weight: 500;
-              text-align: center;
-              margin: 0 auto 2rem;
-              line-height: 1.7;
-              max-width: 700px;
-              letter-spacing: 0.01em;
-              overflow-wrap: break-word;
-              word-wrap: break-word;
-            }
-            
-            .hero-highlight {
-              color: #ca0013;
               font-weight: 600;
-            }
-            
-            .hero-payoff {
-              color: rgba(255, 255, 255, 0.95);
-              font-family: 'DM Sans', sans-serif;
-              font-size: 1.2rem;
-              font-weight: 500;
+                line-height: 1.6;
+                margin: 0 0 2rem 0;
               text-align: center;
-              margin: 0 auto 2.5rem;
-              line-height: 1.7;
-              max-width: 700px;
-              letter-spacing: 0.01em;
-              overflow-wrap: break-word;
-              word-wrap: break-word;
+                padding: 0;
+                background: none;
+                border: none;
+                border-radius: 0;
+                max-width: none;
             }
             
-            .hero-cta-btn {
-              display: inline-block;
+            #home-hero.hero-v2 .hero-cta-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 56px;
+                padding: 1.1rem 2.5rem;
               color: #fffcf1;
-              background: #ca0013;
+              background: #f10000;
               border: none;
               border-radius: 8px;
               font-family: 'DM Sans', sans-serif;
-              font-size: 1rem;
-              font-weight: 600;
-              padding: 1rem 2.5rem;
+                font-size: 0.9rem;
+                font-weight: 700;
               text-decoration: none;
-              text-align: center;
               text-transform: uppercase;
-              letter-spacing: 0.08em;
-              transition: background 0.2s ease, transform 0.2s ease;
-              box-shadow: 0 2px 12px rgba(202, 0, 19, 0.3);
+                letter-spacing: 0.12em;
+                transition: all 0.25s ease;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
               cursor: pointer;
             }
-            
-            .hero-cta-btn:hover, .hero-cta-btn:focus {
-              background: #b80011;
-              color: #fffcf1 !important;
-              outline: none;
-              transform: translateY(-1px);
-              box-shadow: 0 4px 16px rgba(202, 0, 19, 0.4);
+            #home-hero.hero-v2 .hero-cta-btn:hover,
+            #home-hero.hero-v2 .hero-cta-btn:focus {
+              background: #d40000;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+            }
+            #home-hero.hero-v2 .hero-letitout {
+                margin-top: 1rem;
+                margin-bottom: 0;
+                font-family: 'DM Sans', sans-serif;
+                font-size: 0.8125rem;
+                color: rgba(255, 255, 255, 0.5);
+            }
+            #home-hero.hero-v2 .hero-letitout a {
+                color: rgba(255, 255, 255, 0.6);
+                text-decoration: none;
+                transition: color 0.2s ease;
+            }
+            #home-hero.hero-v2 .hero-letitout a:hover {
+                color: rgba(241, 0, 0, 0.85);
             }
             
-            .hero-credibility {
-              color: rgba(255, 255, 255, 0.6);
-              font-family: 'DM Sans', sans-serif;
-              font-size: 0.8rem;
-              font-weight: 500;
+            /* Hero V2 mobile: center */
+            @media (max-width: 900px) {
+                #home-hero.hero-v2 .hero-content {
+                    align-items: center;
+                    max-width: 100%;
+                }
+                #home-hero.hero-v2 .hero-text {
               text-align: center;
-              margin: 1rem auto 0;
-              letter-spacing: 0.03em;
+                    align-items: center;
+                    max-width: 100%;
+                }
+                #home-hero.hero-v2 .hero-subtitle,
+                #home-hero.hero-v2 .hero-headline,
+                #home-hero.hero-v2 .hero-subhead,
+                #home-hero.hero-v2 .hero-lead {
+                    text-align: center !important;
+                }
+            }
+            @media (max-width: 600px) {
+                #home-hero.hero.hero-v2 {
+                    padding: 3rem 1.25rem 4rem;
+                }
+                #home-hero.hero-v2 .hero-headline {
+                    font-size: clamp(1.1rem, 5.5vw, 1.75rem) !important;
+                }
+            }
+            @media (max-width: 380px) {
+                #home-hero.hero-v2 .hero-headline {
+                    font-size: 1rem !important;
+                    white-space: normal !important;
+                }
             }
             
             /* Smooth scroll behavior */
@@ -2502,7 +2464,8 @@
               
               .hero-lead {
                 font-size: 1rem;
-                margin-bottom: 1.5rem;
+                margin-bottom: 1.75rem;
+                padding: 1rem 1.25rem;
               }
               
               .hero-payoff {
@@ -2568,7 +2531,8 @@
               
               .hero-lead {
                 font-size: 0.95rem;
-                margin-bottom: 1.25rem;
+                margin-bottom: 1.5rem;
+                padding: 1rem 1.15rem;
               }
               
               .hero-payoff {
@@ -2583,551 +2547,235 @@
               }
             }
             </style>
-            <script>
-            (function() {
-                var HERO_AB_KEY = 'hero_ab_variant';
-                var variants = {
-                    A: {
-                        subtitle: 'Why do you keep ending up here?',
-                        headline: 'The same cycle. Different person. <span class="hero-headline-nowrap">Same pattern.</span>',
-                        subhead: 'Whether you\'re single, dating, married, or healing—one quiz reveals your pattern. 10 minutes. Free.',
-                        bullets: [
-                            'Single and tired of the same dating cycle.',
-                            'In a relationship or married, but feel stuck, disconnected, or repeating the same fights.',
-                            'Trying to move on, but you keep going back.',
-                            'You push away when it gets real or cling when you\'re afraid.'
-                        ],
-                        lead: 'A pattern shapes who you choose and what you tolerate—but <span class="hero-highlight">you can\'t change what you can\'t see.</span> Every day you don\'t see the pattern, you repeat it. See it. Then you can finally break it.'
-                    },
-                    B: {
-                        subtitle: 'Why do you keep ending up here?',
-                        headline: 'The same cycle. Different person. <span class="hero-headline-nowrap">Same pattern.</span>',
-                        subhead: 'Whether you\'re single, dating, married, or healing—one quiz reveals your pattern. 10 minutes. Free.',
-                        bullets: [
-                            'Single and tired of the same dating cycle.',
-                            'In a relationship or married, but feel stuck, disconnected, or repeating the same fights.',
-                            'Trying to move on, but you keep going back.',
-                            'You push away when it gets real or cling when you\'re afraid.'
-                        ],
-                        lead: 'A pattern shapes who you choose and what you tolerate—but <span class="hero-highlight">you can\'t change what you can\'t see.</span> Every day you don\'t see the pattern, you repeat it. See it. Then you can finally break it.'
-                    }
-                };
-                function getVariant() {
-                    var params = new URLSearchParams(window.location.search);
-                    var urlVariant = params.get('hero_variant');
-                    if (urlVariant === 'A' || urlVariant === 'B') return urlVariant;
-                    try {
-                        var stored = sessionStorage.getItem(HERO_AB_KEY);
-                        if (stored === 'A' || stored === 'B') return stored;
-                    } catch (e) {}
-                    return Math.random() < 0.5 ? 'A' : 'B';
-                }
-                function renderHero(variant) {
-                    var v = variants[variant];
-                    if (!v) return;
-                    var container = document.getElementById('hero-text-container');
-                    if (!container) return;
-                    var bulletsHtml = v.bullets.map(function(b) { return '<li>' + b + '</li>'; }).join('');
-                    container.innerHTML = '<p class="hero-subtitle">' + v.subtitle + '</p>' +
-                        '<h1 class="hero-headline">' + v.headline + '</h1>' +
-                        '<p class="hero-subhead">' + v.subhead + '</p>' +
-                        '<ul class="hero-bullets">' + bulletsHtml + '</ul>' +
-                        '<p class="hero-lead">' + v.lead + '</p>' +
-                        '<a href="#quiz-section" class="hero-cta-btn" id="hero-cta-btn">Discover My Pattern · Free</a>' +
-                        '<p class="hero-credibility">Attachment theory. Psychology. Neuroscience.</p>';
-                    var section = document.getElementById('home-hero');
-                    if (section) section.setAttribute('data-hero-variant', variant);
-                    try { sessionStorage.setItem(HERO_AB_KEY, variant); } catch (e) {}
-                    if (typeof gtag === 'function') {
-                        gtag('event', 'hero_ab_view', { hero_variant: variant, event_category: 'ab_test' });
-                    }
-                    var btn = document.getElementById('hero-cta-btn');
-                    if (btn) {
-                        btn.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            var header = document.querySelector('header');
-                            var headerHeight = header ? header.offsetHeight : 0;
-                            var section = document.getElementById('quiz-section');
-                            if (section) {
-                                window.scrollTo({ top: section.offsetTop - headerHeight, behavior: 'smooth' });
-                            }
-                            if (typeof gtag === 'function') {
-                                gtag('event', 'hero_ab_click', { hero_variant: variant, event_category: 'ab_test' });
-                            }
-                            return false;
-                        });
-                    }
-                }
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', function() { renderHero(getVariant()); });
-                } else {
-                    renderHero(getVariant());
-                }
-            })();
-            </script>
 
         </section>
 
-        <!-- Pattern Types Section -->
-        <section class="pattern-types-section">
-            <div class="pattern-types-container">
-                <div class="pattern-types-content">
-                    <div class="pattern-types-text">
-                        <span class="pattern-types-label">YOUR PATTERN</span>
-                        <h2 class="pattern-types-heading">One Pattern. Everywhere It Shows.</h2>
-                        <p class="pattern-types-description">Your pattern drives how you respond when threatened, react to closeness, handle distance, and protect yourself when things feel uncertain. The same wiring shapes friendships, family, work, and boundaries — romantic relationships expose it fastest.</p>
-                        <p class="pattern-types-payoff">Discover yours. Get your pattern name, archetype, and a personalized workbook.</p>
-                        <div class="pattern-types-cta">
-                            <a href="#quiz-section" class="pattern-types-btn" onclick="event.preventDefault(); const h = document.querySelector('header'); const headerHeight = h ? h.offsetHeight : 0; const s = document.getElementById('quiz-section'); if(s) window.scrollTo({top: s.offsetTop - headerHeight, behavior: 'smooth'}); return false;">Take the Free Quiz</a>
-                            <span class="pattern-types-links">
-                                <a href="patterns.html" class="pattern-types-link">Pattern Types</a>
-                                <span class="pattern-types-sep">·</span>
-                                <a href="pattern-theory.html" class="pattern-types-link">How Patterns Work</a>
-                            </span>
+        <!-- Pain & Clarity Section - SEO-aligned, audience resonance -->
+        <section class="pain-clarity-section" id="pain-clarity-section">
+            <div class="pain-clarity-inner">
+                <span class="pain-clarity-label">Sound familiar?</span>
+                <h2 class="pain-clarity-headline">The Questions That Keep You Up</h2>
+                <p class="pain-clarity-subhead">Is he serious? Am I overthinking? Should I leave? You deserve a real answer.</p>
+                
+                <div class="pain-clarity-grid">
+                    <div class="pain-clarity-item">
+                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
+                        <span class="pain-clarity-text">Why does he keep coming back if he doesn't want a relationship?</span>
                         </div>
+                    <div class="pain-clarity-item">
+                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
+                        <span class="pain-clarity-text">Is he serious? Does he actually like me?</span>
                     </div>
+                    <div class="pain-clarity-item">
+                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
+                        <span class="pain-clarity-text">Why is he hot and cold? What does he want?</span>
+                    </div>
+                    <div class="pain-clarity-item">
+                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
+                        <span class="pain-clarity-text">Mixed signals. Breadcrumbing. What does it mean?</span>
+                    </div>
+                    <div class="pain-clarity-item">
+                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
+                        <span class="pain-clarity-text">Am I in a toxic relationship—or am I overthinking?</span>
+                    </div>
+                    <div class="pain-clarity-item">
+                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
+                        <span class="pain-clarity-text">Why do I keep attracting emotionally unavailable men?</span>
+                    </div>
+                    <div class="pain-clarity-item">
+                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
+                        <span class="pain-clarity-text">Should I leave? How do I know when it's over?</span>
+                    </div>
+                    <div class="pain-clarity-item">
+                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
+                        <span class="pain-clarity-text">Am I needy—or is he emotionally unavailable?</span>
+                    </div>
+                </div>
+
+                <div class="pain-clarity-payoff">
+                    <p class="pain-clarity-payoff-lead">Generic advice won't cut it.</p>
+                    <p class="pain-clarity-payoff-body">You need to see your pattern—and what his behavior actually means for your situation. This quiz shows you both.</p>
+                    <a href="#quiz-section" class="pain-clarity-cta" onclick="event.preventDefault(); const h = document.querySelector('header'); const headerHeight = h ? h.offsetHeight : 0; const s = document.getElementById('quiz-section'); if(s) window.scrollTo({top: s.offsetTop - headerHeight, behavior: 'smooth'}); return false;">Get Clarity — Free Quiz</a>
+                    <p class="pain-clarity-letitout"><a href="letitout.html">Something you need to say first? Let It Out</a></p>
                 </div>
             </div>
             <style>
-                .pattern-types-section {
-                    background: #fffcf1;
-                    padding: 6rem 0 3rem 0;
-                    width: 100vw;
+            .pain-clarity-section {
+                background: linear-gradient(180deg, #050505 0%, #161616 100%);
+                padding: clamp(4rem, 10vw, 6rem) clamp(1.5rem, 4vw, 2.5rem);
+                    width: 100%;
                     position: relative;
                     overflow: hidden;
                 }
-                
-                .pattern-types-container {
-                    max-width: 900px;
-                    margin: 0 auto;
-                    padding: 0 2rem;
+            .pain-clarity-inner {
                     position: relative;
                     z-index: 2;
-                }
-                
-                .pattern-types-content {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-                
-                .pattern-types-text {
-                    display: flex;
-                    flex-direction: column;
-                    text-align: center;
-                    max-width: 700px;
+                max-width: 900px;
                     margin: 0 auto;
                 }
-                
-                .pattern-types-label {
-                    font-family: 'Anton', sans-serif;
-                    font-size: 0.75rem;
+            .pain-clarity-label {
+                display: block;
+                font-family: 'DM Sans', sans-serif;
+                font-size: 0.9rem;
                     font-weight: 700;
-                    letter-spacing: 3px;
+                letter-spacing: 0.2em;
                     text-transform: uppercase;
-                    color: #ca0013;
-                    margin-bottom: 1.5rem;
-                    display: block;
+                color: rgba(241, 0, 0, 0.9);
+                margin-bottom: 1rem;
                 }
-                
-                .pattern-types-heading {
+            .pain-clarity-headline {
                     font-family: 'Anton', sans-serif;
-                    font-size: 3rem;
+                font-size: clamp(1.75rem, 4.5vw, 2.75rem);
                     font-weight: 700;
-                    color: #000;
-                    margin-bottom: 2rem;
-                    line-height: 1.2;
+                color: rgba(255, 255, 255, 0.98);
+                line-height: 1.15;
+                letter-spacing: -0.02em;
                     text-transform: uppercase;
-                    letter-spacing: -0.5px;
+                margin-bottom: 1rem;
                 }
-                
-                .pattern-types-description {
+            .pain-clarity-subhead {
                     font-family: 'DM Sans', sans-serif;
-                    font-size: 1.15rem;
-                    line-height: 1.8;
-                    color: #333;
-                    margin-bottom: 1.25rem;
-                }
-                
-                .pattern-types-payoff {
-                    font-family: 'DM Sans', sans-serif;
-                    font-size: 1.05rem;
-                    font-weight: 600;
-                    color: #000;
-                    margin-bottom: 2rem;
+                font-size: clamp(1rem, 2vw, 1.15rem);
+                color: rgba(255, 255, 255, 0.8);
                     line-height: 1.6;
-                }
-                
-                .pattern-types-cta {
+                margin-bottom: 2.5rem;
+            }
+            .pain-clarity-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem 1.5rem;
+                margin-bottom: 2.5rem;
+            }
+            .pain-clarity-item {
                     display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 1rem;
-                    margin-top: 0;
-                }
-                
-                .pattern-types-links {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.5rem;
-                    font-size: 0.95rem;
-                }
-                
-                .pattern-types-sep {
-                    color: #999;
-                    font-weight: 400;
-                }
-                
-                .pattern-types-btn {
-                    background: #ca0013;
-                    color: #fffcf1;
-                    padding: 1rem 2.5rem;
-                    border-radius: 6px;
+                align-items: flex-start;
+                gap: 0.75rem;
+                padding: 1rem 1.25rem;
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.06);
+                border-radius: 10px;
+                transition: background 0.25s ease, border-color 0.25s ease;
+            }
+            .pain-clarity-item:hover {
+                background: rgba(255, 255, 255, 0.05);
+                border-color: rgba(241, 0, 0, 0.25);
+            }
+            .pain-clarity-icon {
+                flex-shrink: 0;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(241, 0, 0, 0.2);
+                color: #f10000;
                     font-family: 'DM Sans', sans-serif;
-                    font-size: 1rem;
+                font-size: 0.85rem;
                     font-weight: 700;
-                    text-decoration: none;
-                    text-transform: uppercase;
-                    letter-spacing: 1px;
-                    transition: all 0.3s ease;
-                    display: inline-block;
-                }
-                
-                .pattern-types-btn:hover {
-                    background: #b80011;
-                    transform: translateY(-2px);
-                }
-                
-                .pattern-types-link {
+                border-radius: 6px;
+            }
+            .pain-clarity-text {
                     font-family: 'DM Sans', sans-serif;
-                    font-size: 0.95rem;
+                font-size: clamp(0.9rem, 1.8vw, 1.05rem);
                     font-weight: 500;
-                    color: #ca0013;
-                    text-decoration: none;
-                    transition: color 0.3s ease;
-                }
-                
-                .pattern-types-link:hover {
-                    color: #b80011;
-                }
-                
-                @media (max-width: 900px) {
-                    .pattern-types-section {
-                        padding: 5rem 0;
-                    }
-                    
-                    .pattern-types-heading {
-                        font-size: 2.5rem;
-                    }
-                    
-                    .start-here-title {
-                        font-size: 2.5rem;
-                    }
-                    
-                    .quiz-title {
-                        font-size: 2.5rem;
-                    }
-                    
-                    .faq-title {
-                        font-size: 2rem;
-                    }
-                    
-                    .pattern-types-description {
-                        font-size: 1.1rem;
-                    }
-                    
-                    .pattern-types-cta {
-                        gap: 1.5rem;
-                    }
-                }
-                
-                @media (max-width: 600px) {
-                    .pattern-types-section {
-                        padding: 4rem 0 2rem 0;
-                    }
-                    
-                    .pattern-types-container {
-                        padding: 0 1.5rem;
-                    }
-                    
-                    .pattern-types-label {
-                        font-size: 0.7rem;
-                        letter-spacing: 2px;
-                        margin-bottom: 1rem;
-                    }
-                    
-                    .pattern-types-heading {
-                        font-size: 2rem;
+                color: rgba(255, 255, 255, 0.92);
+                line-height: 1.5;
+            }
+            .pain-clarity-payoff {
+                text-align: center;
+                padding: 2rem 1.5rem;
+                background: rgba(255, 255, 255, 0.03);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 14px;
+                border-left: 4px solid #f10000;
+            }
+            .pain-clarity-payoff-lead {
+                font-family: 'Anton', sans-serif;
+                font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+                color: rgba(255, 255, 255, 0.98);
+                text-transform: uppercase;
+                letter-spacing: 0.02em;
+                margin-bottom: 0.75rem;
+            }
+            .pain-clarity-payoff-body {
+                font-family: 'DM Sans', sans-serif;
+                font-size: 1.05rem;
+                color: rgba(255, 255, 255, 0.85);
+                line-height: 1.65;
                         margin-bottom: 1.5rem;
-                    }
-                    
-                    .pattern-types-description {
-                        font-size: 1rem;
-                        line-height: 1.7;
-                        margin-bottom: 1rem;
-                    }
-                    
-                    .pattern-types-payoff {
-                        font-size: 1rem;
-                        margin-bottom: 1.5rem;
-                    }
-                    
-                    .pattern-types-cta {
-                        flex-direction: column;
+                max-width: 560px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .pain-clarity-payoff-body strong {
+                color: #f10000;
+            }
+            .pain-clarity-cta {
+                display: inline-flex;
                         align-items: center;
-                        gap: 1rem;
-                    }
-                    
-                    .pattern-types-btn {
-                        width: auto;
-                        min-width: 220px;
-                        text-align: center;
-                        padding: 1rem 2rem;
-                        font-size: 1rem;
-                    }
-                    
-                    .pattern-types-links {
-                        flex-wrap: wrap;
                         justify-content: center;
-                    }
-                }
-                
-                @media (max-width: 480px) {
-                    .pattern-types-btn {
-                        font-size: 0.9rem;
-                        padding: 0.8rem 1.5rem;
-                        min-width: 200px;
-                    }
-                }
-            </style>
-        </section>
-
-        <!-- Start Here Section -->
-        <section class="start-here-section">
-            <div class="start-here-content">
-                <h2 class="start-here-title" style="color: #000000; margin-bottom: 1rem;">HOW IT WORKS</h2>
-                <p class="start-here-subtitle" style="color: #000000; font-family: 'DM Sans', sans-serif; font-size: 1.25rem; font-weight: 500; text-align: center; margin-bottom: 0.5rem; line-height: 1.6;">Identify it. Understand it. Break it.</p>
-                <p class="start-here-meta" style="color: #666; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500; text-align: center; margin-bottom: 3rem; line-height: 1.5;">Free • Immediate results</p>
-                <style>
-                  .mobile-break { display: none; }
-                  @media (max-width: 600px) { .mobile-break { display: inline; } }
-                  
-                  /* Section spacing */
-                  .start-here-section {
-                    margin-top: 0;
-                    padding: 3rem 0 4rem 0;
-                  }
-                  
-                  /* Grid layout for 3 boxes - wider on desktop/tablet */
-                  .start-here-content {
-                    max-width: 1400px;
-                  }
-                  .start-here-card-grid {
-                    display: grid;
-                    grid-template-columns: repeat(3, 1fr);
-                    gap: 2.5rem;
-                    max-width: 1400px;
-                    margin: 0 auto;
-                    padding: 0 2rem;
-                    align-items: stretch;
-                  }
-                  
-                  .start-here-card {
-                    background: transparent;
-                    border: 1px solid #ca0013;
-                    border-radius: 16px;
-                    padding: 2.5rem 2rem;
-                    text-align: center;
-                    transition: transform 0.3s ease, background 0.3s ease;
-                    display: flex;
-                    flex-direction: column;
-                    height: 100%;
-                    min-height: 400px;
-                    max-width: none;
-                    box-sizing: border-box;
-                    justify-content: flex-start;
-                  }
-                  
-                  .start-here-card:hover {
-                    transform: translateY(-4px);
-                    background: rgba(202, 0, 19, 0.05);
-                  }
-                  
-                  .step-number {
-                    font-family: 'Anton', sans-serif;
-                    font-size: 2.2rem;
-                    font-weight: 700;
+                min-height: 48px;
+                padding: 0.9rem 2rem;
+                    background: #f10000;
                     color: #fffcf1;
-                    line-height: 1;
-                  }
-                  
-                  .start-here-icon {
-                    width: 60px;
-                    height: 60px;
-                    background: #ca0013;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin: 0 auto 1.75rem;
-                    flex-shrink: 0;
-                  }
-                  
-                  .start-here-card h3 {
-                    font-family: 'Anton', sans-serif;
-                    font-size: 1.5rem;
-                    font-weight: 700;
-                    letter-spacing: 0.5px;
-                    text-transform: uppercase;
-                    margin-bottom: 1.25rem;
-                    text-align: center;
-                    color: #000000;
-                    line-height: 1.3;
-                    min-height: 3.5rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                  }
-                  
-                  .start-here-card p {
                     font-family: 'DM Sans', sans-serif;
-                    font-size: 1.125rem;
-                    color: #000000;
-                    line-height: 1.7;
-                    text-align: center;
-                    margin: 0 auto;
-                    flex-grow: 1;
-                    max-width: 100%;
-                  }
-                  
-                  /* Tablet styling */
-                  @media (max-width: 900px) {
-                    .start-here-section {
-                      margin-top: 0.5rem;
-                      padding: 4rem 0;
-                    }
-                    .start-here-title {
-                      margin-bottom: 1rem !important;
-                    }
-                    .start-here-subtitle {
-                      font-size: 1.15rem !important;
-                      margin-bottom: 0.5rem !important;
-                    }
-                    .start-here-meta {
-                      font-size: 0.95rem !important;
-                      margin-bottom: 3rem !important;
-                    }
-                    .start-here-card-grid {
-                      grid-template-columns: repeat(3, 1fr);
-                      gap: 1.75rem;
-                      padding: 0 1.5rem;
-                    }
-                    .start-here-card {
-                      padding: 2rem 1.5rem;
-                      min-height: 360px;
-                    }
-                    .start-here-icon {
-                      margin: 0 auto 1.5rem;
-                    }
-                    .start-here-card h3 {
-                      font-size: 1.3rem;
-                      margin-bottom: 1rem;
-                    }
-                    .start-here-card p {
-                      font-size: 1rem;
-                    }
-                  }
-                  
-                  /* Mobile card styling */
-                  @media (max-width: 600px) {
-                    .start-here-section {
-                      margin-top: 0;
-                      padding: 2rem 0 3rem 0;
-                    }
-                    .start-here-title {
-                      margin-bottom: 1rem !important;
-                    }
-                    .start-here-subtitle {
-                      font-size: 1.1rem !important;
-                      margin-bottom: 0.5rem !important;
-                      padding-left: 0 !important;
-                      padding-right: 0 !important;
-                    }
-                    .start-here-meta {
-                      font-size: 0.9rem !important;
-                      margin-bottom: 2.5rem !important;
-                    }
-                    .start-here-card-grid {
+                font-size: 0.95rem;
+                font-weight: 600;
+                text-decoration: none;
+                border-radius: 10px;
+                transition: all 0.25s ease;
+            }
+            .pain-clarity-cta:hover {
+                background: #d40000;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(241, 0, 0, 0.4);
+            }
+            .pain-clarity-letitout {
+                margin-top: 1.25rem;
+                margin-bottom: 0;
+                font-family: 'DM Sans', sans-serif;
+                font-size: 0.875rem;
+                color: rgba(255, 255, 255, 0.6);
+            }
+            .pain-clarity-letitout a {
+                color: rgba(255, 255, 255, 0.7);
+                text-decoration: none;
+                transition: color 0.2s ease;
+            }
+            .pain-clarity-letitout a:hover {
+                color: rgba(241, 0, 0, 0.9);
+            }
+            @media (max-width: 700px) {
+                .pain-clarity-grid {
                       grid-template-columns: 1fr;
-                      gap: 1.5rem;
-                      padding: 0 1.25rem;
-                      max-width: 520px;
-                      width: 100%;
-                    }
-                    .start-here-card {
-                      padding: 2rem 1.5rem;
-                      max-width: 100%;
-                      width: 100%;
-                      min-height: auto;
-                    }
-                    
-                    .start-here-icon {
-                      width: 60px;
-                      height: 60px;
-                      margin: 0 auto 1.5rem;
-                    }
-                    
-                    .start-here-card h3 {
-                      font-size: 1.4rem !important;
-                      margin-bottom: 1rem;
-                    }
-                    
-                    .start-here-card p {
-                      font-size: 1.125rem !important;
-                    }
-                    
-                    .step-number {
-                      font-size: 2.2rem;
+                    gap: 0.75rem;
+                    margin-bottom: 2rem;
+                }
+                .pain-clarity-item {
+                    padding: 0.9rem 1rem;
+                }
+                .pain-clarity-payoff {
+                    padding: 1.5rem 1.25rem;
+                }
+            }
+            @media (max-width: 480px) {
+                .pain-clarity-section {
+                    padding: 3rem 1.25rem 4rem;
+                }
+                .pain-clarity-subhead {
+                    margin-bottom: 2rem;
                     }
                   }
                 </style>
-                <div class="start-here-card-grid">
-                    <!-- Step 1 -->
-                    <div class="start-here-card">
-                        <div class="start-here-icon" aria-hidden="true">
-                          <span class="step-number">1</span>
-                        </div>
-                        <h3>Take the Free Pattern Quiz</h3>
-                        <p>38 questions across love, relationships, money, health, identity, and more. Based on attachment theory, psychology, and neuroscience. Your dominant pattern in 10 min.</p>
-                    </div>
-                    <!-- Step 2 -->
-                    <div class="start-here-card">
-                        <div class="start-here-icon" aria-hidden="true">
-                          <span class="step-number">2</span>
-                        </div>
-                        <h3>See Your Pattern Clearly</h3>
-                        <p>Your dominant pattern (e.g., The Fixer, The Pleaser), archetype, pattern strength, and all 4 emotional drivers. How it developed—and how it shows up in love, money, health, and identity.</p>
-                    </div>
-                    <!-- Step 3 -->
-                    <div class="start-here-card">
-                        <div class="start-here-icon" aria-hidden="true">
-                            <span class="step-number">3</span>
-                        </div>
-                        <h3>Interrupt the Pattern</h3>
-                        <p>Your personalized Pattern Reset Workbook. Your first step to break the cycle.</p>
-                    </div>
-                </div>
-            </div>
         </section>
 
         <!-- Quiz Section -->
         <section id="quiz-section" class="quiz-section">
             <div class="quiz-container">
                 <div class="quiz-intro" id="quiz-intro">
-                    <h2 class="quiz-title">You Keep Repeating the Same <span class="quiz-title-highlight">Relationship Pattern</span>—And You're Not Sure Why?</h2>
-                    <p class="quiz-subtitle">There's a reason. This quiz shows you your pattern.</p>
-                    <p class="quiz-time-indicator">Be honest for accurate results</p>
+                    <p class="quiz-intro-label">Get relationship clarity in 5 min</p>
+                    <h2 class="quiz-title">See what's actually happening in your relationship.</h2>
+                    <p class="quiz-intro-meta">16 questions · Instant results · Free</p>
                     <button type="button" class="btn btn-mission btn-mission-primary" id="start-quiz-btn">Start the Free Quiz</button>
                 </div>
 
@@ -3153,37 +2801,34 @@
                 <div class="quiz-results" id="quiz-results" style="display: none;">
                     <div class="quiz-results-content">
                         <div id="quiz-results-main">
-                            <h3 class="quiz-email-title">Get Your Full Personalized Report</h3>
+                            <h3 class="quiz-email-title">You Unlocked Part of Your Relationship Pattern</h3>
                             <div class="quiz-email-capture" id="quiz-email-capture">
                                 <h2 class="quiz-results-title" id="quiz-results-title"></h2>
-                                <p class="quiz-email-subtitle" id="quiz-email-subtitle">Find out what type of <span id="quiz-archetype-dynamic"></span> you are and discover what's keeping you stuck — delivered to your inbox.</p>
+                                <p class="quiz-email-subtitle" id="quiz-email-subtitle">But that's only <strong>half the story</strong>.<br>Your quiz also detected the relationship dynamic between you and him — <strong>revealing what his behavior really means</strong>.</p>
                                 <form class="quiz-email-form" id="quiz-email-form" action="https://docs.google.com/forms/d/e/1FAIpQLSfv4rmCtd2JDVeFfjy8a6cDMtQanHzAIwu39H2v-heZVlGYcg/formResponse" method="POST" target="quiz-hidden-iframe">
                                     <input type="text" id="quiz-name-input" name="entry.582121306" placeholder="Your name" required>
                                     <input type="email" id="quiz-email-input" name="entry.1024132954" placeholder="Your email" required>
-                                    <input type="tel" id="quiz-phone-input" name="entry.479336729" placeholder="Your phone number" required>
+                                    <input type="text" id="quiz-city-input" placeholder="City (optional, for Common Ground & local events)" autocomplete="address-level2">
                                     <input type="hidden" id="quiz-pattern-hidden" name="entry.1636500525">
-                                    <button type="submit" class="btn btn-mission btn-mission-primary">UNLOCK MY PERSONALIZED REPORT</button>
+                                    <button type="submit" class="btn btn-mission btn-mission-primary">Reveal My Full Relationship Pattern</button>
                                 </form>
                                 <iframe name="quiz-hidden-iframe" style="display:none;"></iframe>
                             </div>
                         </div>
 
                         <div class="quiz-success-message" id="quiz-success-message" style="display: none;">
-                            <h2 class="quiz-success-title">You Unlocked Your Pattern</h2>
-                            <p class="quiz-success-pattern-name" id="quiz-success-pattern-name">
-                                <span class="pattern-name-text"></span>
-                                <span class="pattern-drivers-preview" id="pattern-drivers-preview"></span>
-                            </p>
-                            <p class="quiz-success-value-copy">
-                                See your complete analysis — how your pattern developed, where it impacts every area of your life, and get your personalized Pattern Reset Workbook.
-                            </p>
-                            <!-- View Full Results Button -->
-                            <button onclick="try { if(typeof window.showResultsModal === 'function') { window.showResultsModal(); } else { console.error('showResultsModal not available on window'); alert('Loading full results... Please refresh the page if this doesn\'t work.'); } } catch(e) { console.error('Error opening results modal:', e); alert('Error opening results: ' + e.message); }" class="btn btn-mission btn-mission-primary" style="display: block; margin-top: 1.5rem; margin-bottom: 1rem; margin-left: auto; margin-right: auto; width: auto;">
-                                View Full Detailed Report
-                            </button>
-                            <button type="button" onclick="if(typeof window.showFeedbackModal === 'function') window.showFeedbackModal();" class="btn btn-mission" style="display: block; margin-top: 0.5rem; margin-bottom: 1rem; margin-left: auto; margin-right: auto; width: auto; font-size: 0.9rem;">
-                                Questions or Feedback?
-                            </button>
+                            <h2 class="quiz-success-title">Your analysis is ready</h2>
+                            <div class="quiz-success-pattern-display quiz-success-pattern-cta" id="quiz-success-pattern-display" role="button" tabindex="0" onclick="try { if(typeof window.showResultsModal === 'function') { window.showResultsModal(); } else { console.error('showResultsModal not available on window'); alert('Loading full results... Please refresh the page if this doesn\'t work.'); } } catch(e) { console.error('Error opening results modal:', e); alert('Error opening results: ' + e.message); }" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); this.click(); }">Reveal My Full Analysis</div>
+                            <p class="quiz-success-subtext">See what the quiz revealed about you and him—and what to do next.</p>
+                            <div class="quiz-success-reveals-block">
+                                <p class="quiz-success-reveals-label">Inside:</p>
+                                <ul class="quiz-success-reveals-list">
+                                    <li>what his behavior really means</li>
+                                    <li>why this dynamic keeps happening</li>
+                                    <li>where this relationship is likely heading</li>
+                                    <li>whether you're wasting your time</li>
+                                </ul>
+                            </div>
                             <!-- CTA button hidden - Pattern Reset page is not yet public -->
                             <a href="#" class="btn btn-mission btn-mission-primary quiz-success-cta" id="quiz-success-cta-btn" style="display: none;">
                                 <span id="cta-text">Reserve Your Spot</span>
@@ -3202,151 +2847,85 @@
                 <div class="faq-container">
                     <div class="faq-item">
                         <button class="faq-question" onclick="toggleFAQ(this)">
-                            What's a Pattern — and why does it matter?
+                            What will this quiz tell me?
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p><strong>Your pattern is the invisible cycle that runs your life until you reset it.</strong></p>
-                            <p>The Pattern is the subconscious loop that drives how you love, think, act, and repeat outcomes. It's the emotional program learned in childhood through reward, rejection, and survival. The automatic response that repeats until it's made conscious.</p>
-                            <p>In simple terms: <strong>Your pattern is the invisible habit behind your emotions, relationships, health, and success.</strong></p>
-                            <p>It's the root cause behind cycles of self-sabotage, avoidance, overgiving, fear, and control. Until you see it, you can't change it. And until you change it, you'll keep repeating the same outcomes.</p>
+                            <p>This quiz helps you identify the relationship pattern influencing your current or past relationships. It analyzes the dynamics you tend to experience—like mixed signals, emotional distance, or repeating cycles—and reveals the underlying pattern behind them.</p>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" onclick="toggleFAQ(this)">
-                            How does my pattern affect my life?
+                            Is this quiz about me or about my partner?
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Your pattern shows up in <strong>every area of your life</strong> — and it's running the same unconscious script across all of them:</p>
-                            <ul>
-                                <li><strong>Love</strong> – who you attract, how you connect, when you pull away</li>
-                                <li><strong>Self-worth</strong> – the internal voice that dictates what you think you deserve</li>
-                                <li><strong>Habits</strong> – what you repeat when stressed or afraid</li>
-                                <li><strong>Money</strong> – how you earn, spend, and self-limit based on safety</li>
-                                <li><strong>Health</strong> – how you cope, regulate, and seek comfort</li>
-                            </ul>
-                            <p>The same pattern that keeps you stuck in relationships is the same one limiting your confidence, sabotaging your goals, and holding you back from the life you want.</p>
-                            <p><strong>Breaking it means everything changes together.</strong></p>
+                            <p><strong>Both.</strong></p>
+                            <p>Your answers help uncover the relationship dynamic between you and the people you date. The goal isn't to label anyone—it's to understand the pattern shaping the relationship.</p>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" onclick="toggleFAQ(this)">
-                            How did I get this pattern?
+                            Do I need to currently be in a relationship to take it?
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Your pattern formed through early attachment and emotional conditioning. It's the way your nervous system learned to stay safe, even when it keeps you stuck.</p>
-                            <p>It was created through:</p>
-                            <ul>
-                                <li>Repetition of reward or rejection patterns in childhood</li>
-                                <li>Nervous-system wiring tied to safety and identity</li>
-                                <li>Emotional conditioning that became automatic</li>
-                            </ul>
-                            <p>And it's reinforced daily through thought loops, emotional avoidance, and unprocessed memory. Every time you react the same way, you're strengthening the pattern.</p>
-                            <p><strong>You're not broken. You're repeating a pattern. And it's time to break it.</strong></p>
+                            <p><strong>No.</strong></p>
+                            <p>You can answer based on your current situation, someone you're dating, or your most recent relationship. The quiz is designed to identify patterns that repeat over time.</p>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" onclick="toggleFAQ(this)">
-                            What is this quiz and what will I learn?
+                            How long does the quiz take?
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p><strong>This isn't a game. It's a mirror.</strong></p>
-                            <p>The Pattern Reset Quiz is a comprehensive psychological assessment that reveals the emotional code behind your choices. It's based on attachment theory, psychology, and neuroscience. It identifies which unconscious pattern is keeping you stuck — the one shaping every relationship, decision, and outcome.</p>
-                            <p>In <strong>about 10 minutes</strong>, you'll answer <strong>38 questions</strong> (34 scored + birth date + relationship status + current challenge + biggest fear) across 12 life domains:</p>
-                            <ul>
-                                <li><strong>Love & Connection</strong> (4 questions) — How you navigate relationships</li>
-                                <li><strong>Money & Finances</strong> (4 questions) — Your relationship with money and security</li>
-                                <li><strong>Health & Habits</strong> (4 questions) — How you manage stress and self-care</li>
-                                <li><strong>Lifestyle & Daily Habits</strong> (1 question) — Your relationship with food</li>
-                                <li><strong>Physical Health & Body</strong> (1 question) — Your relationship with your body</li>
-                                <li><strong>Productivity & Time</strong> (2 questions) — How you manage time and productivity</li>
-                                <li><strong>Purpose & Flow</strong> (2 questions) — Your sense of purpose and flow states</li>
-                                <li><strong>Identity & Self</strong> (4 questions) — How you see yourself and your worth</li>
-                                <li><strong>Childhood & Origin</strong> (4 questions) — Where your patterns began</li>
-                                <li><strong>Trauma & Adversity</strong> (1 question) — How you respond to difficult experiences</li>
-                                <li><strong>Relationship Patterns</strong> (5 questions) — How you connect and protect yourself</li>
-                                <li><strong>Reflection</strong> (2 questions) — Your self-awareness and pattern recognition</li>
-                            </ul>
-                            <p>Plus: birth date (optional), relationship status, your current challenge in love, and your biggest fear in relationships — all to personalize your results.</p>
-                            <p>You'll discover your dominant emotional pattern, how it shows up across all areas of your life, and what you need to reset to break free.</p>
-                            <p><a href="patterns.html" style="color: #ca0013; font-weight: 600; text-decoration: none;">See all 4 archetypes and 8 patterns →</a></p>
+                            <p><strong>About 5 minutes.</strong></p>
+                            <p>There are 16 questions, and most people finish quickly.</p>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" onclick="toggleFAQ(this)">
-                            What are all the pattern types?
+                            How accurate are the results?
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>The Pattern Reset system includes <strong>4 archetypes</strong> and <strong>8 specific patterns</strong>:</p>
-                            <p><strong>The Anchor</strong> (Control Driver): The Fixer, The Perfectionist</p>
-                            <p><strong>The Catalyst</strong> (Validation Driver): The Pleaser, The Performer</p>
-                            <p><strong>The Wanderer</strong> (Avoidance Driver): The Escaper, The Overthinker</p>
-                            <p><strong>The Guardian</strong> (Fear of Rejection Driver): The Guarded One, The Overgiver</p>
-                            <p><a href="patterns.html" style="color: #ca0013; font-weight: 600; text-decoration: none;">Explore all patterns with descriptions →</a></p>
+                            <p>The quiz is designed to identify common relationship patterns and behavioral dynamics based on the answers you provide. While no quiz can capture every detail of a relationship, many people find the results surprisingly accurate.</p>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" onclick="toggleFAQ(this)">
-                            What do I get after completing the quiz?
+                            What happens after I get my results?
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>You'll receive <strong>immediate, personalized results</strong> — completely free. No email wait time.</p>
-                            <p>Your results include:</p>
-                            <ul>
-                                <li><strong>Your Pattern Identity</strong> — Your archetype (The Anchor, Catalyst, Wanderer, or Guardian) and specific pattern name (e.g., The Fixer, The Pleaser)</li>
-                                <li><strong>Pattern Strength</strong> — How dominant your pattern is (percentage) and what it means</li>
-                                <li><strong>Emotional Drivers Breakdown</strong> — All 4 emotional drivers (Control, Validation, Avoidance, Fear of Rejection) and how they operate in your life</li>
-                                <li><strong>How Everything Connects</strong> — How your pattern shows up across love, money, health, identity, and relationships</li>
-                                <li><strong>How It Developed</strong> — Deep psychological insights linking your pattern to childhood experiences</li>
-                                <li><strong>Your Pattern Reset Workbook</strong> — A free, self-paced blueprint with daily practices to break your pattern</li>
-                            </ul>
-                            <p><strong>All results are saved automatically</strong> — return anytime to view them again.</p>
+                            <p>You'll see your relationship pattern and an explanation of the dynamic behind it. If you want deeper clarity, you'll also have the option to request a personalized relationship analysis.</p>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" onclick="toggleFAQ(this)">
-                            How do I actually break my pattern?
+                            Is my information private?
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Breaking your pattern requires three steps:</p>
-                            <ul>
-                                <li><strong>Awareness</strong> – Naming and recognizing your pattern (this quiz gives you that)</li>
-                                <li><strong>Interruption</strong> – Creating new actions when your pattern shows up</li>
-                                <li><strong>Reset</strong> – Sustaining new identity through daily practice</li>
-                            </ul>
-                            <p>Your <strong>free Pattern Reset Workbook</strong> (included in your results) provides a self-paced blueprint to break your pattern. It includes:</p>
-                            <ul>
-                                <li>Pattern-specific interrupt tools to use when your pattern shows up</li>
-                                <li>Daily practices based on neuroscience and manifestation principles</li>
-                                <li>Identity shifts to create lasting change</li>
-                                <li>Journaling prompts to deepen your awareness</li>
-                            </ul>
-                            <p>You've drawn the line. Save your workbook so you can return anytime. When your pattern shows up, use your interrupt and choose differently—every practice builds new habits.</p>
-                            <p><strong>When you change the pattern, you change everything — love, confidence, health, and purpose.</strong></p>
+                            <p><strong>Yes.</strong></p>
+                            <p>Your responses are private and are only used to generate your quiz results.</p>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" onclick="toggleFAQ(this)">
-                            Is the quiz really free?
+                            What if my situation is more complicated?
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p><strong>Yes. 100% free.</strong></p>
-                            <p>The quiz, your personalized results, and Pattern Reset Workbook are completely free. No credit card required. No hidden fees.</p>
-                            <p>Your results are saved automatically and available anytime — you can view them and work through your workbook at your own pace, all for free.</p>
+                            <p>Relationships are complex. The quiz identifies the pattern behind your experience, but if you want more specific insight into your situation, you can request a personalized analysis after viewing your results.</p>
                         </div>
                     </div>
                 </div>
@@ -3410,7 +2989,15 @@
     <script src="js/quiz/quiz-utils.js"></script>
     <script src="js/quiz/quiz-scoring.js"></script>
     <script src="js/quiz/quiz-data.js"></script>
+    <script src="js/quiz/pattern-determiner.js"></script>
     <script src="js/astrology-utils.js"></script>
+    <!-- CTA URLs for paid offerings (update when booking/analysis pages are live) -->
+    <script>
+    window.PATTERN_RESET_CTA_URLS = window.PATTERN_RESET_CTA_URLS || {
+        voiceBreakdown: '#',  // e.g. '/relationship-analysis' or full URL
+        liveSession: '#'     // e.g. '/book' or Calendly/booking link
+    };
+    </script>
     <script src="js/results-renderer-v2.js"></script>
     <script src="js/results-modal.js"></script>
     <script src="js/feedback-modal.js"></script>
@@ -3852,14 +3439,14 @@
     if (typeof window.QUIZ_CONFIG === 'undefined') {
         console.error('QUIZ_CONFIG module not loaded! Using fallback.');
         window.QUIZ_CONFIG = {
-            TOTAL_SCORED_QUESTIONS: 34,
-            TOTAL_QUESTIONS: 38,
-            BIRTH_DATE_QUESTION_INDEX: 34,
-            RELATIONSHIP_STATUS_QUESTION_INDEX: 35,
-            CURRENT_PAIN_QUESTION_INDEX: 36,
-            BIGGEST_FEAR_QUESTION_INDEX: 37,
+            TOTAL_SCORED_QUESTIONS: 16,
+            TOTAL_QUESTIONS: 20,
+            BIRTH_DATE_QUESTION_INDEX: 16,
+            RELATIONSHIP_STATUS_QUESTION_INDEX: 17,
+            CURRENT_PAIN_QUESTION_INDEX: 18,
+            BIGGEST_FEAR_QUESTION_INDEX: 19,
             POINTS_PER_ANSWER: 3,
-            MAX_SCORE: 102,
+            MAX_SCORE: 96,
             DOMINANCE_THRESHOLDS: { STRONG: 70, MODERATE: 50, BALANCED: 40, MIXED: 0 },
             SECONDARY_PATTERN_THRESHOLD: 25,
             STORAGE_KEY: 'patternResetQuizState',
@@ -3886,6 +3473,7 @@
     // Google Form entry IDs for current pain & biggest fear (from pre-filled URL)
     const FORM_ENTRY_CURRENT_PAIN = 'entry.1745092026';  // What's the biggest challenge you're facing in love or relationships right now?
     const FORM_ENTRY_BIGGEST_FEAR = 'entry.1602083511'; // What's your biggest fear when it comes to love or relationships?
+    const FORM_ENTRY_CITY = 'entry.CITY'; // City (optional) - Add City question to Google Form, get entry ID, replace 'entry.CITY' with e.g. 'entry.1234567890'
     // Web App proxy for quiz submissions (bypasses CORS/400 from direct Google Form POST) - same URL as feedback
     const QUIZ_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxj1FjfKq97xh6pBdMGKxizfYavB2M5U-EclIX6ri_vdnBdrJrmQj0eqUM-R28XI-7R/exec';
     if (!window.QUIZ_CONFIG) {
@@ -3893,11 +3481,12 @@
     }
     
     // ========================================
-    // QUIZ DATA - 36 questions (synced with js/quiz/quiz-data.js)
+    // QUIZ DATA - from js/quiz/quiz-data.js (19 questions for Relationship Dynamic Quiz v2.0 - High-Accuracy)
     // ========================================
-    let quizData = window.quizData; // Primary: from quiz-data.js (36 questions)
-    if (!quizData || quizData.length !== 38) {
-        console.warn('Quiz data: expected 38 questions, got', quizData ? quizData.length : 0, '- using inline fallback');
+    let quizData = window.quizData;
+    const isRelationshipDynamicQuiz = quizData && quizData.length === 20;
+    if (!quizData || (!isRelationshipDynamicQuiz && quizData.length !== 38)) {
+        console.warn('Quiz data: expected 20 or 38 questions, got', quizData ? quizData.length : 0, '- using inline fallback');
         quizData = [
         {
             question: "When someone I care about pulls away, my first move is to:",
@@ -4322,10 +3911,12 @@
     ];
     }
 
-    // Expose quiz data to window for modal access
+    // Expose quiz data to window - quiz-data.js sets personalityPatterns/archetypeCategories for Relationship Dynamic Quiz
+    if (!isRelationshipDynamicQuiz) {
     window.personalityPatterns = personalityPatterns;
     window.archetypeCategories = archetypeCategories;
-    window.quizData = quizData; // Expose quiz data for results story
+    }
+    window.quizData = quizData;
 
     let currentQuestion = 0;
     let answers = [];
@@ -4361,7 +3952,8 @@
             patternKey: window.quizPatternKey || null,
             userName: window.quizUserName || null,
             userEmail: window.quizUserEmail || null,
-            userPhone: window.quizUserPhone || null
+            userPhone: window.quizUserPhone || null,
+            userCity: window.quizUserCity || null
         };
         localStorage.setItem(QUIZ_CONFIG_REF.STORAGE_KEY, JSON.stringify(quizState));
     }
@@ -4400,6 +3992,9 @@
                 }
                 if (state.userPhone) {
                     window.quizUserPhone = state.userPhone;
+                }
+                if (state.userCity) {
+                    window.quizUserCity = state.userCity;
                 }
                 return true;
             } catch (e) {
@@ -4681,7 +4276,10 @@
                 // Form was submitted, show success message
                 if (quizIntro) quizIntro.style.display = 'none';
                 if (quizContent) quizContent.style.display = 'none';
-                if (quizResults) quizResults.style.display = 'flex';
+                if (quizResults) {
+                    quizResults.style.display = 'flex';
+                    quizResults.classList.add('quiz-results-success');
+                }
                 if (quizResultsMain) quizResultsMain.style.display = 'none';
                 quizSuccessMessage.style.display = 'block';
                 restoreSuccessMessage();
@@ -4691,6 +4289,7 @@
                 if (quizIntro) quizIntro.style.display = 'none';
                 if (quizContent) quizContent.style.display = 'none';
                 quizResults.style.display = 'flex';
+                quizResults.classList.remove('quiz-results-success');
                 if (quizResultsMain) quizResultsMain.style.display = 'block';
                 if (quizSuccessMessage) quizSuccessMessage.style.display = 'none';
                 restoreResults();
@@ -4834,9 +4433,9 @@
                 try {
                 const nameInput = document.getElementById('quiz-name-input');
                 const emailInput = document.getElementById('quiz-email-input');
-                const phoneInput = document.getElementById('quiz-phone-input');
+                const cityInput = document.getElementById('quiz-city-input');
                     
-                    if (!nameInput || !emailInput || !phoneInput) {
+                    if (!nameInput || !emailInput) {
                         console.error('Form inputs not found');
                         alert('An error occurred. Please refresh the page and try again.');
                         return;
@@ -4844,7 +4443,6 @@
                 
                 const name = nameInput.value.trim();
                 const email = emailInput.value.trim();
-                const phone = phoneInput.value.trim();
                 
                 // Validation
                 if (!name) {
@@ -4860,17 +4458,14 @@
                     return;
                 }
                 
-                // Store user name, email, phone for results page and feedback
+                const city = cityInput ? cityInput.value.trim() : '';
+                
+                // Store user name, email, city for results page and feedback
                 window.quizUserName = name;
                 window.quizUserEmail = email;
-                window.quizUserPhone = phone;
+                window.quizUserPhone = null;
+                window.quizUserCity = city || null;
                 saveQuizState();
-                
-                if (!phone) {
-                    alert('Please enter your phone number.');
-                        phoneInput.focus();
-                    return;
-                }
 
                     // Ensure driverScores and totalScore are calculated (in case quiz state was restored)
                     if (!driverScores || Object.keys(driverScores).length === 0 || totalScore === 0) {
@@ -4895,9 +4490,8 @@
                         });
                     }
                     
-                    // Get pattern data using driverScores
                     const patternKey = determinePattern(driverScores, answers);
-                const pattern = personalityPatterns[patternKey];
+                    const pattern = (window.relationshipPatterns && window.relationshipPatterns[patternKey]) || (window.personalityPatterns && window.personalityPatterns[patternKey]) || personalityPatterns[patternKey];
                     
                     if (!pattern || !pattern.name) {
                         console.error('Pattern not found:', patternKey, pattern, 'driverScores:', driverScores);
@@ -4905,13 +4499,11 @@
                         return;
                     }
                     
-                    // Calculate pattern dominance for success modal
                     const sortedDrivers = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
-                    const dominantScore = sortedDrivers[0][1];
+                    const dominantScore = sortedDrivers[0] ? sortedDrivers[0][1] : 0;
                     const validTotalScore = totalScore || 1;
                     const patternDominance = Math.round((dominantScore / validTotalScore) * 100);
                     
-                    // Get context label
                     function getDominanceLabel(dominance) {
                         if (dominance >= 70) return 'Strong';
                         if (dominance >= 50) return 'Moderate';
@@ -4920,18 +4512,15 @@
                     }
                     const dominanceLabel = getDominanceLabel(patternDominance);
                     
-                    // Calculate driver percentages for display in success modal
-                    const driverPercentages = {
-                        'control': Math.round((driverScores['control'] / validTotalScore) * 100),
-                        'avoidance': Math.round((driverScores['avoidance'] / validTotalScore) * 100),
-                        'validation': Math.round((driverScores['validation'] / validTotalScore) * 100),
-                        'fear-of-rejection': Math.round((driverScores['fear-of-rejection'] / validTotalScore) * 100)
-                    };
+                    let driverPercentages = {};
+                    Object.keys(driverScores).forEach(k => {
+                        driverPercentages[k] = Math.round(((driverScores[k] || 0) / validTotalScore) * 100);
+                    });
                     
                     window.quizPatternDominance = patternDominance;
                     window.quizDominanceLabel = dominanceLabel;
                     window.quizDriverPercentages = driverPercentages;
-                    window.quizArchetypeCategory = pattern.archetypeCategory || archetypeCategories[sortedDrivers[0][0]]?.name;
+                    window.quizArchetypeCategory = pattern.archetypeCategory || (window.archetypeCategories && window.archetypeCategories[patternKey]?.name) || (sortedDrivers[0] && archetypeCategories[sortedDrivers[0][0]]?.name);
                     window.quizPatternName = pattern.name;
                     
                     // Store personalization data for email report
@@ -4967,7 +4556,7 @@
 
                 addHidden('entry.582121306', name);
                 addHidden('entry.1024132954', email);
-                addHidden('entry.479336729', phone);
+                if (city && FORM_ENTRY_CITY !== 'entry.CITY') addHidden(FORM_ENTRY_CITY, city);
                 addHidden('entry.1669029656', pattern.archetypeCategory || archetypeCategories[sortedDrivers[0][0]]?.name || '');
                 addHidden('entry.1636500525', pattern.name);
                 addHidden('entry.2023467530', patternDominance);
@@ -4990,51 +4579,18 @@
                 formSubmitted = true;
                 saveQuizState();
 
-                    // Show success message with pattern name and dominance
+                    // Show success message with pattern name and subtext
                 setTimeout(() => {
                         const resultsMain = document.getElementById('quiz-results-main');
                         const successMessage = document.getElementById('quiz-success-message');
-                    const patternNameElement = document.getElementById('quiz-success-pattern-name');
-                        const patternNameText = patternNameElement ? patternNameElement.querySelector('.pattern-name-text') : null;
-                        const driversPreview = document.getElementById('pattern-drivers-preview');
-                        
+                        const resultsEl = document.getElementById('quiz-results');
                         if (resultsMain) resultsMain.style.display = 'none';
-                        if (patternNameText && pattern) {
-                            // Show Tier 1 + Tier 2 in success modal (full pattern identity)
-                            const archetypeCategory = window.quizArchetypeCategory || pattern.archetypeCategory || 'The Pattern';
-                            const patternName = window.quizPatternName || pattern.name;
-                            patternNameText.textContent = `${archetypeCategory}: ${patternName}`;
-                        }
-                        if (driversPreview) {
-                            // Show top 2 emotional drivers (simple, minimal design)
-                            if (window.quizDriverPercentages && Object.keys(window.quizDriverPercentages).length > 0) {
-                                const driverLabels = {
-                                    'control': 'Control',
-                                    'avoidance': 'Avoidance',
-                                    'validation': 'Validation',
-                                    'fear-of-rejection': 'Fear of Rejection'
-                                };
-                                const sortedDrivers = Object.entries(window.quizDriverPercentages)
-                                    .sort((a, b) => b[1] - a[1])
-                                    .slice(0, 2);
-                                
-                                if (sortedDrivers.length > 0) {
-                                    const driversHTML = sortedDrivers.map(([driver, percentage]) => {
-                                        return `<span class="driver-item"><span class="driver-label">${driverLabels[driver]}:</span> <span class="driver-value">${percentage}%</span></span>`;
-                                    }).join(' • ');
-                                    driversPreview.innerHTML = driversHTML;
-                                    driversPreview.style.display = 'block';
-                                } else {
-                                    driversPreview.style.display = 'none';
-                                }
-                            } else {
-                                driversPreview.style.display = 'none';
-                            }
-                        }
+                        populateSuccessMessage(pattern);
                         if (successMessage) {
                             successMessage.style.display = 'block';
                             updateResetDate();
                         }
+                        if (resultsEl) resultsEl.classList.add('quiz-results-success');
                 }, 500);
                 } catch (error) {
                     console.error('Error submitting form:', error);
@@ -5314,48 +4870,48 @@
     }
 
     function calculateResults() {
-        // Reset driver scores
-        driverScores = {
-            'control': 0,
-            'avoidance': 0,
-            'validation': 0,
-            'fear-of-rejection': 0
-        };
+        const RELATIONSHIP_PATTERN_KEYS = ['hot-cold-cycle', 'breadcrumb-dynamic', 'commitment-avoidance', 'emotional-distance', 'mixed-signals-loop', 'one-sided-investment'];
+        const SUBDIMENSION_TO_PATTERN = { 'hot-cold': 'hot-cold-cycle', 'breadcrumb': 'breadcrumb-dynamic', 'avoidant': 'emotional-distance', 'one-sided': 'one-sided-investment', 'mixed-signals': 'mixed-signals-loop' };
+        
+        if (isRelationshipDynamicQuiz) {
+            driverScores = {};
+            RELATIONSHIP_PATTERN_KEYS.forEach(k => { driverScores[k] = 0; });
+        } else {
+            driverScores = { 'control': 0, 'avoidance': 0, 'validation': 0, 'fear-of-rejection': 0 };
+        }
         
         totalScore = 0;
         
-        // Calculate driver scores and total score (skip birth date and relationship status questions)
         answers.forEach((answerIndex, questionIndex) => {
-            if (questionIndex < QUIZ_CONFIG_REF.TOTAL_SCORED_QUESTIONS && answerIndex !== undefined) { // Skip birth date and relationship status questions
+            if (questionIndex < QUIZ_CONFIG_REF.TOTAL_SCORED_QUESTIONS && answerIndex !== undefined) {
                 const option = quizData[questionIndex].options[answerIndex];
-                if (option && option.driver && option.score !== undefined) {
-                    driverScores[option.driver] += option.score;
+                if (!option || option.score === undefined) return;
                     totalScore += option.score;
+                if (isRelationshipDynamicQuiz && option.subDimension) {
+                    const patternKey = RELATIONSHIP_PATTERN_KEYS.includes(option.subDimension) ? option.subDimension : SUBDIMENSION_TO_PATTERN[option.subDimension];
+                    if (patternKey) driverScores[patternKey] = (driverScores[patternKey] || 0) + option.score;
+                } else if (!isRelationshipDynamicQuiz && option.driver) {
+                    driverScores[option.driver] = (driverScores[option.driver] || 0) + option.score;
                 }
             }
         });
 
-        // Determine personality pattern using driver scores
         const patternKey = determinePattern(driverScores, answers);
-        window.quizPatternKey = patternKey; // Store for results page
-        const pattern = personalityPatterns[patternKey];
+        window.quizPatternKey = patternKey;
+        const pattern = (window.relationshipPatterns && window.relationshipPatterns[patternKey]) || (window.personalityPatterns && window.personalityPatterns[patternKey]) || personalityPatterns[patternKey];
 
-        // Calculate pattern dominance (dominant driver score / total score)
         const sortedDrivers = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
-        const dominantDriver = sortedDrivers[0][0];
-        const dominantScore = sortedDrivers[0][1];
+        const dominantDriver = sortedDrivers[0] ? sortedDrivers[0][0] : 'control';
+        const dominantScore = sortedDrivers[0] ? sortedDrivers[0][1] : 0;
         const secondaryDriver = sortedDrivers[1] ? sortedDrivers[1][0] : null;
         const secondaryScore = sortedDrivers[1] ? sortedDrivers[1][1] : 0;
-        const validTotalScore = totalScore || 1; // Avoid division by zero
+        const validTotalScore = totalScore || 1;
         const patternDominance = Math.round((dominantScore / validTotalScore) * 100);
         
-        // Calculate driver percentages for breakdown
-        const driverPercentages = {
-            'control': Math.round((driverScores['control'] / validTotalScore) * 100),
-            'avoidance': Math.round((driverScores['avoidance'] / validTotalScore) * 100),
-            'validation': Math.round((driverScores['validation'] / validTotalScore) * 100),
-            'fear-of-rejection': Math.round((driverScores['fear-of-rejection'] / validTotalScore) * 100)
-        };
+        let driverPercentages = {};
+        Object.keys(driverScores).forEach(k => {
+            driverPercentages[k] = Math.round(((driverScores[k] || 0) / validTotalScore) * 100);
+        });
         
         // Get context label based on dominance level
         function getDominanceLabel(dominance) {
@@ -5366,19 +4922,25 @@
         }
         const dominanceLabel = getDominanceLabel(patternDominance);
 
-        // Calculate secondary pattern if secondary driver is significant (≥25%)
+        // Calculate her response pattern for Relationship Dynamic Quiz (for results title and email gate modal)
+        let herResponsePatternKey = null;
+        let herResponsePatternName = null;
+        if (isRelationshipDynamicQuiz && window.PatternDeterminer && typeof window.PatternDeterminer.determineHerResponsePattern === 'function' && window.herResponsePatterns) {
+            herResponsePatternKey = window.PatternDeterminer.determineHerResponsePattern(answers, quizData);
+            herResponsePatternName = window.herResponsePatterns[herResponsePatternKey]?.name || herResponsePatternKey;
+            window.quizHerResponsePattern = herResponsePatternKey;
+            window.quizHerResponsePatternName = herResponsePatternName;
+        }
+
+        // Calculate secondary pattern if secondary driver is significant (≥25%) - skip for Relationship Dynamic Quiz
         let secondaryPattern = null;
         let secondaryPatternName = null;
-        if (secondaryDriver && secondaryScore > 0) {
+        if (!isRelationshipDynamicQuiz && secondaryDriver && secondaryScore > 0) {
             const secondaryDriverPercentage = Math.round((secondaryScore / validTotalScore) * 100);
             if (secondaryDriverPercentage >= 25) {
-                // Determine secondary pattern archetype
-                const tempDriverScores = { ...driverScores };
-                // Temporarily swap to find secondary pattern
-                const tempSorted = Object.entries(tempDriverScores).sort((a, b) => b[1] - a[1]);
+                const tempSorted = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
                 if (tempSorted[1] && tempSorted[1][1] > 0) {
                     const secondaryDriverKey = tempSorted[1][0];
-                    // Create a modified driver scores object with secondary as dominant
                     const modifiedScores = {
                         'control': secondaryDriverKey === 'control' ? secondaryScore : 0,
                         'avoidance': secondaryDriverKey === 'avoidance' ? secondaryScore : 0,
@@ -5393,8 +4955,8 @@
         }
 
         // Derive currentPain and biggestFear from answers for personalization
-        const painIdx = QUIZ_CONFIG_REF.CURRENT_PAIN_QUESTION_INDEX || 36;
-        const fearIdx = QUIZ_CONFIG_REF.BIGGEST_FEAR_QUESTION_INDEX || 37;
+        const painIdx = QUIZ_CONFIG_REF.CURRENT_PAIN_QUESTION_INDEX || 17;
+        const fearIdx = QUIZ_CONFIG_REF.BIGGEST_FEAR_QUESTION_INDEX || 18;
         if (answers[painIdx] !== undefined && quizData[painIdx]?.options?.[answers[painIdx]]?.value) {
             currentPain = quizData[painIdx].options[answers[painIdx]].value;
         }
@@ -5411,39 +4973,35 @@
         document.getElementById('quiz-results').style.display = 'flex';
         document.getElementById('quiz-results-main').style.display = 'block';
         
-        // Update results display - show only Tier 1 archetype (mysterious, creates maximum curiosity)
+        // Update results display - show her response pattern (Relationship Dynamic) or archetype (legacy)
         const resultsTitle = document.getElementById('quiz-results-title');
         if (resultsTitle) {
-            // Get Tier 1 archetype category (mysterious, creates curiosity)
-            const archetypeCategory = pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name || 'The Pattern';
-            
-            // Show only Tier 1 archetype before email submission (maximum curiosity - no description to gatekeep)
-            let resultsHTML = `<div class="pattern-name-display">You're <strong>${archetypeCategory}</strong></div>`;
-            
-            // NO subtitle - gatekeep description for email report to maximize conversion
-            // Description will be revealed in the personalized email report
-            
+            let displayName;
+            if (isRelationshipDynamicQuiz && herResponsePatternName) {
+                displayName = herResponsePatternName;
+            } else {
+                displayName = pattern.archetypeCategory || (window.archetypeCategories && window.archetypeCategories[patternKey]?.name) || archetypeCategories[dominantDriver]?.name || 'The Pattern';
+            }
+            let resultsHTML = `<div class="pattern-name-display">You're <strong>${displayName}</strong></div>`;
             resultsTitle.innerHTML = resultsHTML;
             resultsTitle.style.display = 'block';
         }
         
-        // Update email subtitle dynamically with archetype name for maximum conversion
+        // Update email subtitle dynamically
         const emailSubtitle = document.getElementById('quiz-email-subtitle');
         const archetypeDynamic = document.getElementById('quiz-archetype-dynamic');
         if (emailSubtitle && archetypeDynamic) {
-            const archetypeCategory = pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name || 'Pattern';
-            // Remove "The " prefix for natural reading
-            const archetypeName = archetypeCategory.replace(/^The /, '');
-            archetypeDynamic.textContent = archetypeName;
+            const subName = isRelationshipDynamicQuiz && herResponsePatternName ? herResponsePatternName : (pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name || 'Pattern');
+            archetypeDynamic.textContent = subName.replace(/^The /, '');
         }
         
-        // Store pattern data for success modal (Tier 1 + Tier 2)
+        // Store pattern data for success modal
         window.quizPatternDominance = patternDominance;
         window.quizDominanceLabel = dominanceLabel;
         window.quizDriverPercentages = driverPercentages;
         window.quizSecondaryPattern = secondaryPatternName;
-        window.quizArchetypeCategory = pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name;
-        window.quizPatternName = pattern.name; // Tier 2 pattern name
+        window.quizArchetypeCategory = pattern.archetypeCategory || (window.archetypeCategories && window.archetypeCategories[patternKey]?.name) || archetypeCategories[dominantDriver]?.name;
+        window.quizPatternName = pattern.name;
         const secondaryDriverPercentage = secondaryDriver && secondaryScore > 0 ? Math.round((secondaryScore / validTotalScore) * 100) : 0;
         window.quizSecondaryDriverPercentage = secondaryDriverPercentage;
         
@@ -5472,20 +5030,31 @@
         document.getElementById('quiz-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Restore results display when quiz was previously completed
+    // Restore results display when quiz was previously completed (before form submit)
     function restoreResults() {
-        // Ensure driverScores and totalScore are calculated (in case quiz state was restored)
+        const RELATIONSHIP_PATTERN_KEYS = ['hot-cold-cycle', 'breadcrumb-dynamic', 'commitment-avoidance', 'emotional-distance', 'mixed-signals-loop', 'one-sided-investment'];
+        const SUBDIMENSION_TO_PATTERN = { 'hot-cold': 'hot-cold-cycle', 'breadcrumb': 'breadcrumb-dynamic', 'avoidant': 'emotional-distance', 'one-sided': 'one-sided-investment', 'mixed-signals': 'mixed-signals-loop' };
+        
         if (!driverScores || Object.keys(driverScores).length === 0 || totalScore === 0) {
-            driverScores = {
-                'control': 0,
-                'avoidance': 0,
-                'validation': 0,
-                'fear-of-rejection': 0
-            };
-            
+            if (isRelationshipDynamicQuiz) {
+                driverScores = {};
+                RELATIONSHIP_PATTERN_KEYS.forEach(k => { driverScores[k] = 0; });
             totalScore = 0;
-            
-            // Calculate driver scores and total score from answers
+                answers.forEach((answerIndex, questionIndex) => {
+                    if (questionIndex < QUIZ_CONFIG_REF.TOTAL_SCORED_QUESTIONS && answerIndex !== undefined) {
+                        const option = quizData[questionIndex].options[answerIndex];
+                        if (option && option.score !== undefined) {
+                            totalScore += option.score;
+                            if (option.subDimension) {
+                                const patternKey = RELATIONSHIP_PATTERN_KEYS.includes(option.subDimension) ? option.subDimension : SUBDIMENSION_TO_PATTERN[option.subDimension];
+                                if (patternKey) driverScores[patternKey] = (driverScores[patternKey] || 0) + option.score;
+                            }
+                        }
+                    }
+                });
+            } else {
+                driverScores = { 'control': 0, 'avoidance': 0, 'validation': 0, 'fear-of-rejection': 0 };
+                totalScore = 0;
             answers.forEach((answerIndex, questionIndex) => {
                 if (questionIndex < QUIZ_CONFIG_REF.TOTAL_SCORED_QUESTIONS && answerIndex !== undefined) {
                     const option = quizData[questionIndex].options[answerIndex];
@@ -5495,10 +5064,11 @@
                     }
                 }
             });
+            }
         }
         
         const patternKey = determinePattern(driverScores, answers);
-        const pattern = personalityPatterns[patternKey];
+        const pattern = (window.relationshipPatterns && window.relationshipPatterns[patternKey]) || (window.personalityPatterns && window.personalityPatterns[patternKey]) || personalityPatterns[patternKey];
         
         // Calculate pattern dominance (dominant driver score / total score)
         const sortedDrivers = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
@@ -5506,18 +5076,23 @@
         const dominantScore = sortedDrivers[0][1];
         const secondaryDriver = sortedDrivers[1] ? sortedDrivers[1][0] : null;
         const secondaryScore = sortedDrivers[1] ? sortedDrivers[1][1] : 0;
-        const validTotalScore = totalScore || 1; // Avoid division by zero
+        const validTotalScore = totalScore || 1;
         const patternDominance = Math.round((dominantScore / validTotalScore) * 100);
         
-        // Calculate driver percentages for breakdown
-        const driverPercentages = {
+        let driverPercentages = {};
+        if (isRelationshipDynamicQuiz) {
+            Object.keys(driverScores).forEach(k => {
+                driverPercentages[k] = Math.round(((driverScores[k] || 0) / validTotalScore) * 100);
+            });
+        } else {
+            driverPercentages = {
             'control': Math.round((driverScores['control'] / validTotalScore) * 100),
             'avoidance': Math.round((driverScores['avoidance'] / validTotalScore) * 100),
             'validation': Math.round((driverScores['validation'] / validTotalScore) * 100),
             'fear-of-rejection': Math.round((driverScores['fear-of-rejection'] / validTotalScore) * 100)
         };
+        }
         
-        // Get context label based on dominance level
         function getDominanceLabel(dominance) {
             if (dominance >= 70) return 'Strong';
             if (dominance >= 50) return 'Moderate';
@@ -5526,13 +5101,18 @@
         }
         const dominanceLabel = getDominanceLabel(patternDominance);
 
-        // Calculate secondary pattern if secondary driver is significant (≥25%)
+        let herResponsePatternKey = null;
+        let herResponsePatternName = null;
+        if (isRelationshipDynamicQuiz && window.PatternDeterminer && typeof window.PatternDeterminer.determineHerResponsePattern === 'function' && window.herResponsePatterns) {
+            herResponsePatternKey = window.PatternDeterminer.determineHerResponsePattern(answers, quizData);
+            herResponsePatternName = window.herResponsePatterns[herResponsePatternKey]?.name || herResponsePatternKey;
+        }
+
         let secondaryPattern = null;
         let secondaryPatternName = null;
-        if (secondaryDriver && secondaryScore > 0) {
+        if (!isRelationshipDynamicQuiz && secondaryDriver && secondaryScore > 0) {
             const secondaryDriverPercentage = Math.round((secondaryScore / validTotalScore) * 100);
             if (secondaryDriverPercentage >= 25) {
-                // Determine secondary pattern archetype
                 const modifiedScores = {
                     'control': secondaryDriver === 'control' ? secondaryScore : 0,
                     'avoidance': secondaryDriver === 'avoidance' ? secondaryScore : 0,
@@ -5545,47 +5125,39 @@
             }
         }
         
-        // Update results display - show only Tier 1 archetype (mysterious, creates maximum curiosity)
+        // Update results display - show her response pattern (Relationship Dynamic) or archetype (legacy)
         const resultsTitle = document.getElementById('quiz-results-title');
         if (resultsTitle) {
-            // Get Tier 1 archetype category (mysterious, creates curiosity)
-            const archetypeCategory = pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name || 'The Pattern';
-            
-            // Show only Tier 1 archetype before email submission (maximum curiosity - no description to gatekeep)
-            let resultsHTML = `<div class="pattern-name-display">You're <strong>${archetypeCategory}</strong></div>`;
-            
-            // NO subtitle - gatekeep description for email report to maximize conversion
-            // Description will be revealed in the personalized email report
-            
+            let displayName;
+            if (isRelationshipDynamicQuiz && herResponsePatternName) {
+                displayName = herResponsePatternName;
+            } else {
+                displayName = pattern.archetypeCategory || (window.archetypeCategories && window.archetypeCategories[patternKey]?.name) || archetypeCategories[dominantDriver]?.name || 'The Pattern';
+            }
+            let resultsHTML = `<div class="pattern-name-display">You're <strong>${displayName}</strong></div>`;
             resultsTitle.innerHTML = resultsHTML;
             resultsTitle.style.display = 'block';
         }
         
-        // Update email subtitle dynamically with archetype name for maximum conversion
         const emailSubtitle = document.getElementById('quiz-email-subtitle');
         const archetypeDynamic = document.getElementById('quiz-archetype-dynamic');
         if (emailSubtitle && archetypeDynamic) {
-            const archetypeCategory = pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name || 'Pattern';
-            // Remove "The " prefix for natural reading
-            const archetypeName = archetypeCategory.replace(/^The /, '');
-            archetypeDynamic.textContent = archetypeName;
+            const subName = isRelationshipDynamicQuiz && herResponsePatternName ? herResponsePatternName : (pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name || 'Pattern');
+            archetypeDynamic.textContent = subName.replace(/^The /, '');
         }
         
-        // Store pattern data for success modal (Tier 1 + Tier 2)
         window.quizPatternDominance = patternDominance;
         window.quizDominanceLabel = dominanceLabel;
         window.quizDriverPercentages = driverPercentages;
         window.quizSecondaryPattern = secondaryPatternName;
-        window.quizArchetypeCategory = pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name;
-        window.quizPatternName = pattern.name; // Tier 2 pattern name
+        window.quizArchetypeCategory = pattern.archetypeCategory || (window.archetypeCategories && window.archetypeCategories[patternKey]?.name) || archetypeCategories[dominantDriver]?.name;
+        window.quizPatternName = pattern.name;
         const secondaryDriverPercentage = secondaryDriver && secondaryScore > 0 ? Math.round((secondaryScore / validTotalScore) * 100) : 0;
         window.quizSecondaryDriverPercentage = secondaryDriverPercentage;
         
-        // Set hidden form fields
         const patternHidden = document.getElementById('quiz-pattern-hidden');
         if (patternHidden && pattern && pattern.name) {
-            // Store both Tier 1 and Tier 2 for email report
-            patternHidden.value = `${pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name}: ${pattern.name}`;
+            patternHidden.value = `${pattern.archetypeCategory || (window.archetypeCategories && window.archetypeCategories[patternKey]?.name) || archetypeCategories[dominantDriver]?.name}: ${pattern.name}`;
         }
     }
 
@@ -5668,17 +5240,30 @@
         }
     }
     
+    function populateSuccessMessage(pattern) {
+        // Pattern display shows "Click to Reveal My Full Relationship Analysis" (static CTA)
+        // Title and subtext are static: "Your analysis is ready" / "See what the quiz revealed..."
+        if (!pattern) return;
+    }
+    
     function restoreSuccessMessage() {
+        const RELATIONSHIP_PATTERN_KEYS = ['hot-cold-cycle', 'breadcrumb-dynamic', 'commitment-avoidance', 'emotional-distance', 'mixed-signals-loop', 'one-sided-investment'];
+        
         // Ensure driverScores is calculated (in case quiz state was restored)
         if (!driverScores || Object.keys(driverScores).length === 0) {
-            driverScores = {
-                'control': 0,
-                'avoidance': 0,
-                'validation': 0,
-                'fear-of-rejection': 0
-            };
-            
-            // Calculate driver scores from answers
+            if (isRelationshipDynamicQuiz) {
+                driverScores = {};
+                RELATIONSHIP_PATTERN_KEYS.forEach(k => { driverScores[k] = 0; });
+                answers.forEach((answerIndex, questionIndex) => {
+                    if (questionIndex < QUIZ_CONFIG_REF.TOTAL_SCORED_QUESTIONS && answerIndex !== undefined) {
+                        const option = quizData[questionIndex].options[answerIndex];
+                        if (option && option.subDimension && RELATIONSHIP_PATTERN_KEYS.includes(option.subDimension)) {
+                            driverScores[option.subDimension] = (driverScores[option.subDimension] || 0) + (option.score || 0);
+                        }
+                    }
+                });
+            } else {
+                driverScores = { 'control': 0, 'avoidance': 0, 'validation': 0, 'fear-of-rejection': 0 };
             answers.forEach((answerIndex, questionIndex) => {
                 if (questionIndex < QUIZ_CONFIG_REF.TOTAL_SCORED_QUESTIONS && answerIndex !== undefined) {
                     const option = quizData[questionIndex].options[answerIndex];
@@ -5687,10 +5272,11 @@
                     }
                 }
             });
+            }
         }
         
         const patternKey = determinePattern(driverScores, answers);
-        const pattern = personalityPatterns[patternKey];
+        const pattern = (window.relationshipPatterns && window.relationshipPatterns[patternKey]) || (window.personalityPatterns && window.personalityPatterns[patternKey]) || personalityPatterns[patternKey];
         
         // Ensure totalScore is calculated if missing
         if (totalScore === 0 && driverScores) {
@@ -5699,20 +5285,26 @@
         
         // Calculate pattern dominance
         const sortedDrivers = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
-        const dominantDriver = sortedDrivers[0][0];
-        const dominantScore = sortedDrivers[0][1];
+        const dominantDriver = sortedDrivers[0] ? sortedDrivers[0][0] : 'control';
+        const dominantScore = sortedDrivers[0] ? sortedDrivers[0][1] : 0;
         const validTotalScore = totalScore || 1;
         const patternDominance = Math.round((dominantScore / validTotalScore) * 100);
         
         // Calculate driver percentages for display
-        const driverPercentages = {
+        let driverPercentages = {};
+        if (isRelationshipDynamicQuiz) {
+            Object.keys(driverScores).forEach(k => {
+                driverPercentages[k] = Math.round(((driverScores[k] || 0) / validTotalScore) * 100);
+            });
+        } else {
+            driverPercentages = {
             'control': Math.round((driverScores['control'] / validTotalScore) * 100),
             'avoidance': Math.round((driverScores['avoidance'] / validTotalScore) * 100),
             'validation': Math.round((driverScores['validation'] / validTotalScore) * 100),
             'fear-of-rejection': Math.round((driverScores['fear-of-rejection'] / validTotalScore) * 100)
         };
+        }
         
-        // Get context label
         function getDominanceLabel(dominance) {
             if (dominance >= 70) return 'Strong';
             if (dominance >= 50) return 'Moderate';
@@ -5721,52 +5313,24 @@
         }
         const dominanceLabel = getDominanceLabel(patternDominance);
         
-        // Store in window variables for consistency
         window.quizPatternDominance = patternDominance;
         window.quizDominanceLabel = dominanceLabel;
         window.quizDriverPercentages = driverPercentages;
-        window.quizArchetypeCategory = pattern.archetypeCategory || archetypeCategories[dominantDriver]?.name;
-        window.quizPatternName = pattern.name;
+        window.quizArchetypeCategory = pattern?.archetypeCategory || (window.archetypeCategories && window.archetypeCategories[patternKey]?.name) || archetypeCategories[dominantDriver]?.name;
+        window.quizPatternName = pattern?.name;
         
-        // Update success message with pattern name
-        const patternNameElement = document.getElementById('quiz-success-pattern-name');
-        const patternNameText = patternNameElement ? patternNameElement.querySelector('.pattern-name-text') : null;
-        const driversPreview = document.getElementById('pattern-drivers-preview');
-        
-        if (patternNameText && pattern) {
-            // Show Tier 1 + Tier 2 in success modal (full pattern identity)
-            const archetypeCategory = window.quizArchetypeCategory || pattern.archetypeCategory || 'The Pattern';
-            const patternName = window.quizPatternName || pattern.name;
-            patternNameText.textContent = `${archetypeCategory}: ${patternName}`;
-        }
-        if (driversPreview) {
-            // Show top 2 emotional drivers (simple, minimal design)
-            if (driverPercentages && Object.keys(driverPercentages).length > 0) {
-                const driverLabels = {
-                    'control': 'Control',
-                    'avoidance': 'Avoidance',
-                    'validation': 'Validation',
-                    'fear-of-rejection': 'Fear of Rejection'
-                };
-                const sortedDrivers = Object.entries(driverPercentages)
-                    .sort((a, b) => b[1] - a[1])
-                    .slice(0, 2);
-                
-                if (sortedDrivers.length > 0) {
-                    const driversHTML = sortedDrivers.map(([driver, percentage]) => {
-                        return `<span class="driver-item"><span class="driver-label">${driverLabels[driver]}:</span> <span class="driver-value">${percentage}%</span></span>`;
-                    }).join(' • ');
-                    driversPreview.innerHTML = driversHTML;
-                    driversPreview.style.display = 'block';
-                } else {
-                    driversPreview.style.display = 'none';
-                }
-            } else {
-                driversPreview.style.display = 'none';
-            }
+        // Calculate her response pattern for success message (Relationship Dynamic Quiz only)
+        let herResponsePatternName = null;
+        if (isRelationshipDynamicQuiz && window.PatternDeterminer && typeof window.PatternDeterminer.determineHerResponsePattern === 'function' && window.herResponsePatterns) {
+            const herResponsePatternKey = window.PatternDeterminer.determineHerResponsePattern(answers, quizData);
+            herResponsePatternName = window.herResponsePatterns[herResponsePatternKey]?.name || herResponsePatternKey;
+            window.quizHerResponsePattern = herResponsePatternKey;
+            window.quizHerResponsePatternName = herResponsePatternName;
         }
         
-        // Update reset date
+        // Update success message with pattern display and subtext
+        populateSuccessMessage(pattern);
+        
         updateResetDate();
     }
 

@@ -40,8 +40,8 @@
     .cg-page {
         --cg-bg: #fffcf1;
         --cg-cream: #fffcf1;
-        --cg-accent: #ca0013;
-        --cg-accent-hover: #a00012;
+        --cg-accent: #f10000;
+        --cg-accent-hover: #cc0000;
         --cg-text: #000000;
         --cg-text-muted: #333333;
         --cg-border: #e0dcd4;
@@ -59,8 +59,8 @@
     
     .cg-page .logo-brand-combo .logo-text { color: #000000 !important; }
     .cg-page .logo-brand-combo .nav-logo,
-    .cg-page .logo-brand-combo .nav-logo svg { color: #ca0013 !important; }
-    .cg-page .logo-brand-combo:hover .nav-logo { color: #a00012 !important; }
+    .cg-page .logo-brand-combo .nav-logo svg { color: #f10000 !important; }
+    .cg-page .logo-brand-combo:hover .nav-logo { color: #cc0000 !important; }
     
     /* ===== HERO — Modern, professional, refined ===== */
     .cg-hero {
@@ -119,7 +119,7 @@
         content: '';
         position: absolute;
         inset: 0;
-        background: radial-gradient(ellipse 120% 100% at 50% 0%, rgba(202, 0, 19, 0.04) 0%, transparent 55%);
+        background: radial-gradient(ellipse 120% 100% at 50% 0%, rgba(241, 0, 0, 0.04) 0%, transparent 55%);
         pointer-events: none;
     }
     .cg-hero::after {
@@ -129,7 +129,7 @@
         left: 0;
         right: 0;
         height: 1px;
-        background: linear-gradient(90deg, transparent 0%, rgba(202, 0, 19, 0.12) 50%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, rgba(241, 0, 0, 0.12) 50%, transparent 100%);
         pointer-events: none;
     }
     /* Black top banner — above hero */
@@ -167,7 +167,7 @@
         color: var(--cg-accent);
         margin-bottom: 2rem;
         padding: 0.35rem 0.9rem;
-        border: 1.5px solid rgba(202, 0, 19, 0.35);
+        border: 1.5px solid rgba(241, 0, 0, 0.35);
         border-radius: 100px;
     }
     .cg-hero-logo {
@@ -340,16 +340,16 @@
         border: 2px solid var(--cg-accent);
         cursor: pointer;
         transition: background 0.25s, border-color 0.25s, transform 0.2s, box-shadow 0.2s;
-        box-shadow: 0 2px 8px rgba(202, 0, 19, 0.2);
+        box-shadow: 0 2px 8px rgba(241, 0, 0, 0.2);
         font-size: 0.95rem;
         text-transform: uppercase;
         letter-spacing: 1.5px;
     }
     .cg-btn:hover {
-        background: var(--cg-accent-hover, #a00012);
-        border-color: var(--cg-accent-hover, #a00012);
+        background: var(--cg-accent-hover, #cc0000);
+        border-color: var(--cg-accent-hover, #cc0000);
         transform: translateY(-2px);
-        box-shadow: 0 4px 16px rgba(202, 0, 19, 0.3);
+        box-shadow: 0 4px 16px rgba(241, 0, 0, 0.3);
     }
     .cg-btn-secondary {
         background: transparent;
@@ -360,11 +360,11 @@
         .cg-btn-secondary { margin-top: 0; }
     }
     .cg-btn-secondary:hover {
-        background: rgba(202, 0, 19, 0.06);
-        border-color: var(--cg-accent-hover, #a00012);
-        color: var(--cg-accent-hover, #a00012);
+        background: rgba(241, 0, 0, 0.06);
+        border-color: var(--cg-accent-hover, #cc0000);
+        color: var(--cg-accent-hover, #cc0000);
         transform: translateY(-2px);
-        box-shadow: 0 2px 12px rgba(202, 0, 19, 0.12);
+        box-shadow: 0 2px 12px rgba(241, 0, 0, 0.12);
     }
     
     .cg-section {
@@ -417,10 +417,50 @@
         margin-top: 0.5rem;
     }
     .cg-about-content p {
-        margin-bottom: 1rem;
+        margin-bottom: 1.25rem;
+        line-height: 1.8;
     }
     .cg-about-content p:last-child {
         margin-bottom: 0;
+    }
+    .cg-about-lead {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--cg-text);
+        margin-bottom: 1.25rem;
+    }
+    .cg-about-punch {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--cg-accent);
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .cg-about-mission {
+        margin-top: 2rem;
+        padding: 1.5rem 1.75rem;
+        background: rgba(241, 0, 0, 0.04);
+        border-left: 4px solid var(--cg-accent);
+        border-radius: 0 8px 8px 0;
+    }
+    .cg-about-mission p {
+        margin-bottom: 0.5rem;
+    }
+    .cg-about-mission p:last-child {
+        margin-bottom: 0;
+    }
+    .cg-about-mission-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--cg-accent);
+        margin-bottom: 0.5rem;
+    }
+    .cg-about-mission-note {
+        font-size: 0.95rem;
+        color: var(--cg-text-muted);
+        margin-top: 0.75rem;
     }
     
     .cg-founder-story {
@@ -431,6 +471,7 @@
         margin: 2rem 0;
         position: relative;
         overflow: visible;
+        max-width: 100%;
     }
     .cg-founder-photo-wrap {
         position: absolute;
@@ -465,26 +506,21 @@
         border-radius: 4px 0 0 4px;
     }
     .cg-founder-story p {
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.5rem;
         line-height: 1.8;
+        font-size: 1.05rem;
     }
     .cg-founder-story p:last-child {
         margin-bottom: 0;
+        margin-top: 0.5rem;
     }
     .cg-founder-story .cg-story-lead {
-        font-size: 1.15rem;
-        color: var(--cg-text);
-    }
-    .cg-founder-story .cg-story-punch {
         font-size: 1.1rem;
-        font-weight: 600;
         color: var(--cg-text);
+        margin-bottom: 1.5rem;
     }
-    .cg-founder-story .cg-story-close {
-        font-size: 1.15rem;
-        font-weight: 600;
-        color: var(--cg-accent);
-        margin-top: 1.5rem;
+    .cg-founder-story .cg-story-lead:first-of-type {
+        margin-top: 0;
     }
     .cg-founder-story strong {
         color: var(--cg-text);
@@ -564,8 +600,18 @@
         .cg-section {
             padding: 3rem 1.5rem;
         }
+        .cg-about-mission {
+            padding: 1.25rem 1.5rem;
+        }
         .cg-founder-story {
             padding: 2.5rem 1.5rem 2rem 1.75rem;
+        }
+        .cg-founder-story p {
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .cg-founder-story .cg-story-lead {
+            font-size: 1.1rem;
         }
         .cg-founder-photo-wrap {
             top: -16px;
@@ -580,8 +626,18 @@
         .cg-section {
             padding: 2.5rem 1.25rem;
         }
+        .cg-about-lead {
+            font-size: 1.1rem;
+        }
+        .cg-about-mission {
+            padding: 1rem 1.25rem;
+        }
         .cg-founder-story {
             padding: 2rem 1.25rem 1.5rem 1.5rem;
+        }
+        .cg-founder-story p {
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
         }
         .cg-founder-photo-wrap {
             top: -12px;
@@ -760,7 +816,7 @@
     }
     .cg-event-card:hover,
     .cg-club-card:hover {
-        box-shadow: 0 8px 32px rgba(202, 0, 19, 0.15);
+        box-shadow: 0 8px 32px rgba(241, 0, 0, 0.15);
         transform: translateY(-2px);
     }
     .cg-club-card h3 {
@@ -805,7 +861,7 @@
         letter-spacing: 0.5px;
         text-transform: uppercase;
         color: var(--cg-accent);
-        background: rgba(202, 0, 19, 0.08);
+        background: rgba(241, 0, 0, 0.08);
         padding: 0.35rem 0.65rem;
         border-radius: 6px;
         margin-bottom: 1rem;
@@ -1118,13 +1174,13 @@
         cursor: pointer;
         transition: border-color 0.2s, background 0.2s;
     }
-    .cg-form-club-option:hover { border-color: rgba(202, 0, 19, 0.4); }
-    .cg-form-club-option:has(input:checked) { border-color: var(--cg-accent); background: rgba(202, 0, 19, 0.04); }
+    .cg-form-club-option:hover { border-color: rgba(241, 0, 0, 0.4); }
+    .cg-form-club-option:has(input:checked) { border-color: var(--cg-accent); background: rgba(241, 0, 0, 0.04); }
     .cg-form-club-option { flex-direction: row; align-items: flex-start; }
     .cg-form-club-option input { margin-right: 0.75rem; margin-top: 0.2rem; flex-shrink: 0; }
-    .cg-form-club-option > span { display: block; }
-    .cg-form-club-name { font-weight: 600; font-size: 1rem; }
-    .cg-form-club-desc { font-size: 0.9rem; color: var(--cg-text-muted); margin-top: 0.2rem; }
+    .cg-form-club-text { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+    .cg-form-club-name { font-weight: 600; font-size: 1rem; line-height: 1.3; }
+    .cg-form-club-desc { font-size: 0.9rem; color: var(--cg-text-muted); line-height: 1.4; }
     .cg-form-personality {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1141,9 +1197,9 @@
         font-weight: 500;
         transition: border-color 0.2s, background 0.2s;
     }
-    .cg-form-personality-option:hover { border-color: rgba(202, 0, 19, 0.4); }
+    .cg-form-personality-option:hover { border-color: rgba(241, 0, 0, 0.4); }
     .cg-form-personality-option input { display: none; }
-    .cg-form-personality-option:has(input:checked) { border-color: var(--cg-accent); background: rgba(202, 0, 19, 0.06); }
+    .cg-form-personality-option:has(input:checked) { border-color: var(--cg-accent); background: rgba(241, 0, 0, 0.06); }
     .cg-form-step-buttons {
         display: flex;
         gap: 1rem;
@@ -1340,8 +1396,8 @@
                 <div class="nav-right">
                     <ul class="nav-links cg-nav-links">
                         <li><a href="index.html">Pattern Quiz</a></li>
-                        <li><a href="common-ground.html" class="active">Common Ground</a></li>
                         <li><a href="letitout.html" class="letitout-link">Let It Out</a></li>
+                        <li><a href="common-ground.html" class="active">Common Ground</a></li>
                     </ul>
                     <a href="#apply" class="nav-cta-button cg-nav-cta">Apply to Join</a>
                 </div>
@@ -1367,11 +1423,11 @@
     <main>
         <section class="cg-hero">
             <div class="cg-hero-inner">
-                <div class="cg-hero-logo" aria-label="Meet New People. Build a Real Social Circle — Common Ground Social Club">
-                    <span class="cg-hero-logo-main">Meet New People & Build a Real<br>Social Circle.</span>
+                <div class="cg-hero-logo" aria-label="Find Your People. Build a Real Social Circle — Common Ground Social Club">
+                    <span class="cg-hero-logo-main">Find Your People. Build a Real<br>Social Circle.</span>
                     <span class="cg-hero-logo-sub">Common Ground Social Club</span>
                 </div>
-                <p class="cg-body">Small groups meet weekly around the Bay Area — for adults building new circles.</p>
+                <p class="cg-body">Small curated groups meet weekly across the Bay Area.</p>
                 <div class="cg-hero-pills">
                     <span class="cg-hero-pill">Walks</span>
                     <span class="cg-hero-pill">Coffee</span>
@@ -1443,12 +1499,18 @@
             <p class="cg-section-label">About Us</p>
             <h2>What is Common Ground?</h2>
             <div class="cg-about-content">
-                <p>There's more that connects us than we think. Shared interests, shared questions, shared hopes — but we live so isolated. Different schedules, different screens, different routines. We pass each other by.</p>
-                <p>Common Ground is a social club built on that idea. We bring people together around what they love — clubs and experiences where that common ground becomes real. Not online. In person. With people who get it.</p>
-                <p><strong>Connection first, activity second.</strong> The activity is simply the excuse.</p>
-                <p>We curate who's in the room. Small groups. Weekly clubs so you see the same faces. No apps, no networking — just the structure for connection. You show up. The rest follows.</p>
-                <p>Because the best parts of life — friendship, laughter, shared experiences — were never meant to happen alone.</p>
-                <p><strong>Our mission:</strong> To make meeting new people in real life normal again. Launching in the Bay Area — more cities coming soon.</p>
+                <p class="cg-about-lead">It shouldn't be this hard to meet new people.</p>
+                <p>We live in the same cities, pass the same streets, share the same interests — yet most of us are more isolated than ever. Different schedules, different routines, different screens. Real connection has quietly become harder to find.</p>
+                <p class="cg-about-punch">Common Ground exists to change that.</p>
+                <p>We're a social club designed to bring people together in real life — through small group experiences built around shared interests. Walks, dinners, music, conversations. The activity gets people in the room. The real purpose is connection.</p>
+                <p>Groups are intentionally small. Clubs meet weekly so you start to recognize faces. Conversations get easier. What begins as strangers slowly becomes community.</p>
+                <p>No networking events. No endless apps. Just a simple structure that makes meeting people feel natural again.</p>
+                <p><strong>You show up. The rest follows.</strong> Because the best parts of life — friendship, laughter, shared experiences — were never meant to happen alone.</p>
+                <div class="cg-about-mission">
+                    <p class="cg-about-mission-label">Our mission</p>
+                    <p>To make meeting new people in real life normal again.</p>
+                    <p class="cg-about-mission-note">Launching in the Bay Area. More cities coming soon.</p>
+                </div>
             </div>
         </section>
 
@@ -1460,19 +1522,13 @@
                     <img src="images/founder.png" alt="Liam, founder of Common Ground" class="cg-founder-photo">
                 </div>
                 <p class="cg-founder-intro"><strong>Hi, I'm Liam.</strong></p>
-                <p class="cg-story-lead">For most of my life, meeting people and building friendships came naturally to me. I've always loved connecting with others, hearing people's stories, and bringing people together.</p>
-                <p>But a few years ago my life changed in ways I didn't expect. First the pandemic disrupted everything. Then I had a serious accident that forced me into a long recovery. I spent months mostly indoors, disconnected from the routines and social life I once had.</p>
-                <p>Without realizing it, my world got smaller and my circle of friends slowly faded. For the first time in my life, I experienced something a lot of adults quietly struggle with: loneliness and isolation.</p>
-                <p>My confidence dropped. Even simple social situations started to feel intimidating. I found myself avoiding life more than living it.</p>
-                <p class="cg-story-punch">The only way out was connection. The thing I'd been avoiding—and the thing I craved most.</p>
-                <p>So I started small. I began getting out of the house again. Going on walks. Doing things alone in public. Starting small conversations with strangers. At first it felt uncomfortable — almost like exposure therapy. But slowly something shifted. I started meeting people again. My confidence came back. Life started to open up again. And I realized how many adults are quietly going through the same thing.</p>
-                <p>People want connection. They want friendships. They want people to explore life with. But once you're out of school and settled into routines, it can be surprisingly hard to meet new people and build meaningful relationships.</p>
-                <p class="cg-story-punch">That realization is what led me to create Common Ground.</p>
-                <p>A social club where strangers meet through shared experiences and build real friendships.</p>
-                <p class="cg-story-punch">Because rebuilding your social life shouldn't feel impossible.</p>
-                <p>And if you're trying to expand your circle again, you're not the only one.</p>
-                <p class="cg-story-close">I'm doing it too.</p>
-                <p class="cg-story-close">Common Ground simply gives us a place to start.</p>
+                <p class="cg-story-lead">For most of my life, I've been the person who brings people together — the one introducing strangers at a party, starting conversations in rooms where no one is talking, organizing dinners and outings where people who had never met end up becoming friends. I've always loved hearing people's stories and creating spaces where connections happen naturally.</p>
+                <p>But a few years ago, my life changed in ways I didn't expect. First the pandemic disrupted everything. Then I had an accident that forced me into a long recovery. I spent months mostly indoors, disconnected from the routines, activities, and social energy that once filled my life. Without realizing it, my world started to shrink. My circle of friends slowly faded. And for the first time in my life, I experienced something many adults quietly struggle with: loneliness and isolation.</p>
+                <p>My confidence dropped. Even simple social situations started to feel intimidating. I found myself avoiding life more than living it. Eventually I realized something important: the only way out was through the very thing I had been missing — <strong>connection</strong>.</p>
+                <p>So I started small. I began leaving the house again. Going on walks. Doing things alone in public. Starting simple conversations with strangers. At first it felt uncomfortable — almost like relearning. But slowly something shifted. I started meeting people again. Conversations turned into connections. My confidence came back. Life began opening up again.</p>
+                <p>And that's when I realized something bigger. This wasn't just happening to me. So many adults want connection. They want friendships. They want people to explore life with. But once you're out of school and settled into adult routines, meeting new people and building meaningful friendships becomes surprisingly difficult.</p>
+                <p>That realization is what led me to create <strong>Common Ground</strong>. I realized connection works like a muscle — it strengthens with regular use. That's why clubs meet weekly. Same faces, same time. Common Ground is a social club built around curated experiences where strangers meet, share moments, and build real friendships. My role isn't just organizing events — it's hosting, creating the atmosphere, and bringing together the right mix of people so connections can happen naturally.</p>
+                <p>Because rebuilding your social life shouldn't feel awkward or impossible. And if you're trying to expand your circle again, you're not the only one. <strong>I'm doing it too.</strong> Common Ground simply gives us a place to start.</p>
             </div>
         </section>
 
@@ -1659,18 +1715,24 @@
                         <div class="cg-form-club-options">
                             <label class="cg-form-club-option">
                                 <input type="checkbox" name="clubs" value="friday-flow">
-                                <span class="cg-form-club-name">Friday Flow</span>
-                                <span class="cg-form-club-desc">Music · Movement · Every Friday 7pm</span>
+                                <div class="cg-form-club-text">
+                                    <span class="cg-form-club-name">Friday Flow</span>
+                                    <span class="cg-form-club-desc">Music · Social · Every Friday 7pm</span>
+                                </div>
                             </label>
                             <label class="cg-form-club-option">
                                 <input type="checkbox" name="clubs" value="saturday-social-walk">
-                                <span class="cg-form-club-name">Saturday Social Walk</span>
-                                <span class="cg-form-club-desc">Walk · Coffee · Every Saturday 9am</span>
+                                <div class="cg-form-club-text">
+                                    <span class="cg-form-club-name">Saturday Social Walk</span>
+                                    <span class="cg-form-club-desc">Walk · Coffee · Every Saturday 9am</span>
+                                </div>
                             </label>
                             <label class="cg-form-club-option">
                                 <input type="checkbox" name="clubs" value="sunday-dinner">
-                                <span class="cg-form-club-name">Sunday Supper</span>
-                                <span class="cg-form-club-desc">Dinner · Stories · Every Sunday 6pm</span>
+                                <div class="cg-form-club-text">
+                                    <span class="cg-form-club-name">Sunday Supper</span>
+                                    <span class="cg-form-club-desc">Dinner · Stories · Every Sunday 6pm</span>
+                                </div>
                             </label>
                         </div>
                         <div class="cg-form-group" style="margin-top: 1.5rem;">
@@ -1694,6 +1756,19 @@
                                 <label class="cg-checkbox-option"><input type="checkbox" name="availability" value="flexible"> Flexible</label>
                                 <label class="cg-checkbox-option"><input type="checkbox" name="availability" value="mornings"> Mornings</label>
                             </div>
+                        </div>
+                        <div class="cg-form-group">
+                            <label for="cg-relationshipStatus">Relationship status (optional)</label>
+                            <select id="cg-relationshipStatus" name="relationshipStatus">
+                                <option value="">Select</option>
+                                <option value="single">Single</option>
+                                <option value="dating">Dating</option>
+                                <option value="relationship">In a relationship</option>
+                                <option value="married">Married</option>
+                                <option value="divorced">Divorced</option>
+                                <option value="widowed">Widowed</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
                         </div>
                         <div class="cg-form-step-buttons">
                             <button type="button" class="cg-btn cg-btn-secondary cg-form-prev" data-prev="1">Back</button>

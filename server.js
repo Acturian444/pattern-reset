@@ -4,10 +4,7 @@ const path = require('path');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || 'sk_test_YOUR_STRIPE_SECRET_KEY');
 const app = express();
 
-// Serve static files from the root directory
-app.use(express.static(path.join(__dirname)));
-
-// Middleware to parse JSON bodies
+// Parse JSON bodies (must be before routes that need it)
 app.use(express.json());
 
 // Add CORS headers for Vercel
@@ -80,6 +77,77 @@ app.post('/create-checkout-session', async (req, res) => {
     }
 });
 
+// Common Ground — Proxy Google Form submission (bypasses CORS)
+const GOOGLE_FORM_ID = '1FAIpQLSeh3-Du0MCwiR_2LFEei7B0Zb4j1awjVZmcv53Mcvh8-HU8tA';
+
+// Health check so client can verify proxy is reachable (GET returns 200)
+app.get('/api/common-ground-google-form', (req, res) => {
+    res.status(200).json({ ok: true, message: 'Common Ground proxy is running' });
+});
+const GOOGLE_FORM_ENTRIES = {
+    firstName: 'entry.504887360',
+    lastName: 'entry.921056307',
+    email: 'entry.1621528979',
+    phone: 'entry.1679131526',
+    city: 'entry.1280727653',
+    ageRange: 'entry.1396150302',
+    instagram: 'entry.2145352710',
+    clubs: 'entry.80467545',
+    lifeStage: 'entry.411252689',
+    availability: 'entry.531603476',
+    relationshipStatus: 'entry.739447362',
+    whyJoin: 'entry.1657656904',
+    eventInterest: 'entry.788276730',
+    attendPreference: 'entry.468543992',
+    guidelinesAgreed: 'entry.159152994',
+    contactShareConsent: 'entry.314471581',
+};
+
+app.post('/api/common-ground-google-form', async (req, res) => {
+    try {
+        const data = req.body;
+        const params = new URLSearchParams();
+        const add = (key, val) => { if (key) params.append(key, val == null ? '' : String(val)); };
+        add(GOOGLE_FORM_ENTRIES.firstName, data.firstName);
+        add(GOOGLE_FORM_ENTRIES.lastName, data.lastName);
+        add(GOOGLE_FORM_ENTRIES.email, data.email);
+        add(GOOGLE_FORM_ENTRIES.phone, data.phone);
+        add(GOOGLE_FORM_ENTRIES.city, data.city);
+        add(GOOGLE_FORM_ENTRIES.ageRange, data.ageRange);
+        add(GOOGLE_FORM_ENTRIES.instagram, data.instagram);
+        add(GOOGLE_FORM_ENTRIES.clubs, Array.isArray(data.clubs) ? data.clubs.join(', ') : data.clubs);
+        add(GOOGLE_FORM_ENTRIES.lifeStage, data.lifeStageStr || (Array.isArray(data.lifeStage) ? data.lifeStage.join(', ') : ''));
+        add(GOOGLE_FORM_ENTRIES.availability, data.availabilityStr || (Array.isArray(data.availability) ? data.availability.join(', ') : ''));
+        add(GOOGLE_FORM_ENTRIES.relationshipStatus, data.relationshipStatus);
+        add(GOOGLE_FORM_ENTRIES.whyJoin, data.whyJoin);
+        add(GOOGLE_FORM_ENTRIES.eventInterest, data.eventInterest);
+        add(GOOGLE_FORM_ENTRIES.attendPreference, data.attendPreference);
+        add(GOOGLE_FORM_ENTRIES.guidelinesAgreed, data.guidelinesAgreed ? 'Yes' : 'No');
+        add(GOOGLE_FORM_ENTRIES.contactShareConsent, data.contactShareConsent ? 'Yes' : 'No');
+
+        const formUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/formResponse`;
+        const proxyRes = await fetch(formUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Origin': 'https://docs.google.com',
+                'Referer': `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform`,
+            },
+            body: params.toString(),
+        });
+        if (!proxyRes.ok) {
+            const errText = await proxyRes.text();
+            console.error('Common Ground: Google Form rejected', proxyRes.status, 'params:', params.toString().slice(0, 300), 'response:', errText.slice(0, 300));
+            return res.status(502).json({ error: 'Google Form rejected submission', status: proxyRes.status });
+        }
+        res.status(200).json({ ok: true });
+    } catch (err) {
+        console.error('Common Ground Google Form proxy error:', err);
+        res.status(500).json({ error: 'Failed to submit to Google Form' });
+    }
+});
+
 // Verify checkout session endpoint (SECURE)
 app.get('/api/verify-checkout', async (req, res) => {
     try {
@@ -110,6 +178,9 @@ app.get('/api/verify-checkout', async (req, res) => {
         res.status(500).json({ error: 'Failed to verify payment' });
     }
 });
+
+// Serve static files AFTER API routes (so /api/* is handled first)
+app.use(express.static(path.join(__dirname)));
 
 // Export the Express app for Vercel serverless deployment
 module.exports = app;

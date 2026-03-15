@@ -20,7 +20,7 @@
     font-size: 1.6rem;
     display: flex;
     align-items: center;
-    background: #ca0013;
+    background: #f10000;
     color: #fffcf1;
     overflow: hidden;
     width: 100vw;
@@ -101,7 +101,7 @@
 }
 
 .thumbnail.active {
-    border-color: #ca0013;
+    border-color: #f10000;
     opacity: 1;
 }
 
@@ -157,7 +157,7 @@
 }
 
 .indicator.active {
-    background: #ca0013;
+    background: #f10000;
     transform: scale(1.2);
 }
 
@@ -204,7 +204,7 @@
 .price {
     font-family: 'Anton', sans-serif;
     font-size: 2.5rem;
-    color: #ca0013;
+    color: #f10000;
     font-weight: 900;
     display: block;
 }
@@ -294,7 +294,7 @@
 
 .details-list li:before {
     content: "•";
-    color: #ca0013;
+    color: #f10000;
     font-weight: bold;
     position: absolute;
     left: 0;
@@ -322,7 +322,7 @@
     text-transform: uppercase;
     letter-spacing: 0.7px;
     text-decoration: none;
-    background: #ca0013;
+    background: #f10000;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -471,7 +471,7 @@
 .feature-icon {
     width: 60px;
     height: 60px;
-    background: #ca0013;
+    background: #f10000;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -576,7 +576,7 @@
 }
 
 .story-subheadline {
-    color: #ca0013;
+    color: #f10000;
     font-family: 'DM Sans', sans-serif;
     font-size: 1.3rem;
     font-weight: 600;
@@ -608,7 +608,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.7px;
-    background: #ca0013;
+    background: #f10000;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -617,9 +617,9 @@
 }
 
 .story-cta .btn:hover, .story-cta .btn:focus {
-    background: #ca0013;
+    background: #f10000;
     color: #fff;
-    box-shadow: 0 4px 16px rgba(202,0,19,0.15);
+    box-shadow: 0 4px 16px rgba(241,0,0,0.15);
     outline: none;
 }
 
@@ -668,7 +668,7 @@
     background: #fffcf1;
     padding: 2rem;
     border-radius: 12px;
-    border-left: 4px solid #ca0013;
+    border-left: 4px solid #f10000;
     transition: transform 0.3s ease;
 }
 
@@ -679,7 +679,7 @@
 .module-number {
     font-family: 'Anton', sans-serif;
     font-size: 2rem;
-    color: #ca0013;
+    color: #f10000;
     font-weight: 900;
     margin-bottom: 1rem;
 }
@@ -703,7 +703,7 @@
 /* Testimonial */
 .testimonial-section {
     padding: 5rem 0;
-    background: #ca0013;
+    background: #f10000;
     color: #fffcf1;
 }
 
@@ -1148,14 +1148,14 @@
 .product-hero-text h1:focus,
 .product-subtitle:focus,
 .price:focus {
-    outline: 2px solid #ca0013;
+    outline: 2px solid #f10000;
     outline-offset: 2px;
 }
 
 .feature-item:focus-within,
 .module-card:focus-within,
 .feature-detail:focus-within {
-    outline: 2px solid #ca0013;
+    outline: 2px solid #f10000;
     outline-offset: 2px;
 }
 
@@ -1225,7 +1225,7 @@
 }
 .breakup-course-page .feature-item {
   background: transparent;
-  border: 1px solid #ca0013;
+  border: 1px solid #f10000;
   border-radius: 16px;
   box-shadow: none;
 }
@@ -1305,7 +1305,7 @@
   gap: 1.2rem;
 }
 .accordion-item {
-  border: 1px solid #ca0013;
+  border: 1px solid #f10000;
   border-radius: 16px;
   background: transparent;
   overflow: hidden;
@@ -1319,7 +1319,7 @@
   align-items: center;
   justify-content: space-between;
   font-family: 'Anton', sans-serif;
-  color: #ca0013;
+  color: #f10000;
   font-size: 1.1rem;
   padding: 1.1rem 1.3rem;
   cursor: pointer;
@@ -1337,7 +1337,7 @@
 }
 .chevron {
   font-size: 1.3rem;
-  color: #ca0013;
+  color: #f10000;
   margin-left: 1rem;
   transition: transform 0.3s;
   display: inline-block;
@@ -1410,7 +1410,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.7px;
-    background: #ca0013;
+    background: #f10000;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -1418,9 +1418,9 @@
     box-shadow: none;
 }
 .section-cta .btn:hover, .section-cta .btn:focus {
-    background: #ca0013;
+    background: #f10000;
     color: #fff;
-    box-shadow: 0 4px 16px rgba(202,0,19,0.15);
+    box-shadow: 0 4px 16px rgba(241,0,0,0.15);
     outline: none;
 }
 
@@ -1444,7 +1444,7 @@
   border-radius: 16px;
   overflow: hidden;
   background: transparent;
-  border: 1px solid #ca0013;
+  border: 1px solid #f10000;
   box-shadow: none;
 }
 .transformation-header {
@@ -1452,10 +1452,10 @@
   background: transparent;
   font-family: 'Anton', sans-serif;
   font-size: 1.15rem;
-  color: #ca0013;
+  color: #f10000;
   font-weight: 700;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid #ca0013;
+  border-bottom: 1px solid #f10000;
 }
 .transformation-col {
   flex: 1 1 0;
@@ -1477,7 +1477,7 @@
 }
 .transformation-col i {
   font-size: 1.1rem;
-  color: #ca0013;
+  color: #f10000;
   min-width: 1.2rem;
   text-align: center;
 }
@@ -1493,7 +1493,7 @@
 .transformation-arrow, .transformation-arrow-header {
   font-family: 'Anton', sans-serif !important;
   font-size: 1.5rem;
-  color: #ca0013;
+  color: #f10000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1508,17 +1508,17 @@
 }
 .transformation-row {
   display: flex;
-  border-bottom: 1px solid #ca0013;
+  border-bottom: 1px solid #f10000;
   background: transparent;
 }
 .transformation-row:nth-child(even) {
-  background: rgba(202, 0, 19, 0.05);
+  background: rgba(241, 0, 0, 0.05);
 }
 .transformation-row:last-child {
   border-bottom: none;
 }
 .transformation-row .transformation-col {
-  border-right: 1px solid #ca0013;
+  border-right: 1px solid #f10000;
   background: none;
 }
 .transformation-row .transformation-col.after {
@@ -1531,13 +1531,13 @@
     border-bottom: none;
   }
   .transformation-header .transformation-col {
-    border-bottom: 1px solid #ca0013;
+    border-bottom: 1px solid #f10000;
     font-size: 0.95rem;
     padding: 0.9rem 1rem;
-    border-right: 1px solid #ca0013;
+    border-right: 1px solid #f10000;
   }
   .transformation-header .transformation-col.after {
-    border-right: 1px solid #ca0013;
+    border-right: 1px solid #f10000;
   }
   .transformation-arrow, .transformation-arrow-header {
     min-width: 2rem;
@@ -1554,14 +1554,14 @@
     border-radius: 0;
     overflow: visible;
     box-shadow: none;
-    border-bottom: 1px solid #ca0013;
+    border-bottom: 1px solid #f10000;
     background: transparent;
   }
   .transformation-row .transformation-col {
     padding: 1.1rem 1.1rem;
     font-size: 0.98rem;
     border-bottom: none;
-    border-right: 1px solid #ca0013;
+    border-right: 1px solid #f10000;
     background: none;
     gap: 0.6rem;
   }
@@ -1573,7 +1573,7 @@
     border-right: none;
   }
   .transformation-header .transformation-arrow-header {
-    border-bottom: 1px solid #ca0013 !important;
+    border-bottom: 1px solid #f10000 !important;
     background: transparent !important;
     margin-right: 0;
     min-width: 2.2rem;
@@ -1605,7 +1605,7 @@
 .transformation-arrow-header {
   font-family: 'Anton', sans-serif !important;
   font-size: 1.5rem;
-  color: #ca0013;
+  color: #f10000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1672,8 +1672,8 @@
     gap: 1rem;
     margin-bottom: 1.5rem;
     padding: 1rem;
-    background: rgba(202, 0, 19, 0.05);
-    border: 1px solid rgba(202, 0, 19, 0.1);
+    background: rgba(241, 0, 0, 0.05);
+    border: 1px solid rgba(241, 0, 0, 0.1);
     border-radius: 8px;
     transition: none;
     text-align: left;
@@ -1694,7 +1694,7 @@
 .checkmark-circle {
     width: 24px;
     height: 24px;
-    background: #ca0013;
+    background: #f10000;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1910,9 +1910,9 @@ body.breakup-course-page main {
 }
 .lightbox-arrow:hover, .lightbox-close:hover,
 .lightbox-arrow:focus, .lightbox-close:focus {
-  background: #ca0013;
+  background: #f10000;
   color: #fff;
-  box-shadow: 0 4px 16px rgba(202,0,19,0.15);
+  box-shadow: 0 4px 16px rgba(241,0,0,0.15);
 }
 .lightbox-close {
   font-size: 2.2rem;
@@ -2045,7 +2045,7 @@ main {
   .description-subtitle {
     font-family: 'DM Sans', sans-serif;
     font-size: 1.2rem;
-    color: #ca0013;
+    color: #f10000;
     text-align: center;
     margin: -1rem 0 3rem 0;
     font-weight: 600;

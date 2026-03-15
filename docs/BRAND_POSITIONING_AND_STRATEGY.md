@@ -222,11 +222,12 @@ That question applies to single, dating, married, and divorcing. Everyone asks i
 
 **Your relationships are not random. There's a pattern behind them. This quiz reveals it.**
 
-### What the Quiz Must Feel Like
+### What the Quiz Must Feel Like (Liam Says Brainstorm)
 
-- **Not** a test
-- **A diagnosis of her love life**
-- When she sees the result: *"That explains everything."*
+- **Relationship clarity test**, not personality quiz
+- User believes they're discovering: what's happening with partner, whether played/manipulated, stay or leave, are they the problem
+- Result should feel: *"This explains what's happening."*
+- Then naturally: *"Want me to look at your specific situation?"* — that's the monetization moment
 
 ### The Real Job of the Quiz
 
@@ -348,25 +349,27 @@ Quiz identifies her pattern. But she's thinking: *"Okay… but what about the gu
 
 **That's where the purchase happens.**
 
-### Ideal First Offers
+### Primary Offer (Liam Says Brainstorm — See LIAM_SAYS_PRODUCT_BRAINSTORM.md)
 
-1. **"Am I Wasting My Time?" Relationship Clarity Tool** — $19–49  
-   - Signs he's serious vs wasting time
-   - Male commitment signals
-   - Behaviors that mean emotionally unavailable
-   - How men act when they truly want a relationship
+**Relationship Clarity Analysis / Relationship Situation Breakdown**
 
-2. **Men Behavior Decoder** — $29–79  
-   - The emotionally unavailable man
-   - The situationship man
-   - The love bomber
-   - The slow-burn committed man
-   - Women want to quickly identify: "Which type of man am I dealing with?"
+- **NOT:** Red flag checklists, PDFs, ebooks, generic courses (low perceived value)
+- **YES:** Situational clarity — "Here's what's actually happening"
+- **Format:** Voice note ($59) or video breakdown ($129) — they submit story, you analyze
+- **Position:** Relationship analyst, behavioral interpreter, pattern decoder — NOT coach
+- **Monetization moment:** Result says "This explains what's happening" → "Want me to look at your specific situation?"
 
-3. **"The Man You're Dating Decoder"** — The product that could explode  
-   - What his behavior means
-   - What stage the relationship is in
-   - Whether he's serious or not
+### Ideal First Offers (From Earlier Strategy)
+
+1. **Relationship Clarity Analysis** — $59 (voice)  
+   - Submit story → personalized voice breakdown
+   - They already DM for this — productize it
+
+2. **Deep Relationship Breakdown** — $129 (video)  
+   - Submit story → 8–12 min video analysis
+   - Their pattern, his behavior, the dynamic, what to watch for
+
+3. **Later:** Men Behavior Decoder, Pattern Reset Cohort, Magnetic Presence
 
 ### What Makes Them Buy
 
@@ -471,3 +474,12 @@ The quiz is the entry mirror into your entire brand. It introduces the concept o
 ## 14. One-Line Summary
 
 > **I am the man who explains the patterns behind men's behavior so women stop wasting years in the wrong relationships.**
+
+---
+
+## 15. Related Documents
+
+| Document | Purpose |
+|----------|---------|
+| **LIAM_SAYS_PRODUCT_BRAINSTORM.md** | Full product/funnel brainstorm — Relationship Clarity Analysis, offer structure, pricing, capacity, funnel flow, bio variants, A/B testing checklist |
+| **EXPERT_ROUNDTABLE_50.md** | 50 expert advisors for funnel, quiz, conversion, monetization |

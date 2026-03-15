@@ -33,6 +33,14 @@ When you add new questions to the Google Form (e.g. Current Pain, Biggest Fear),
 | Secondary Driver % | entry.2064418059 | index.html              |
 | **Current Pain** | entry.1745092026 | index.html (FORM_ENTRY_CURRENT_PAIN) |
 | **Biggest Fear** | entry.1602083511 | index.html (FORM_ENTRY_BIGGEST_FEAR) |
+| **City** (optional) | _Add to form first_ | index.html (FORM_ENTRY_CITY) — for Common Ground & local event targeting |
+
+## Adding the City Field
+
+1. Add a **Short answer** question "City" to your Pattern Quiz Submissions form (optional).
+2. Get the entry ID from the pre-filled link.
+3. In `index.html`, update: `const FORM_ENTRY_CITY = 'entry.YOUR_ENTRY_ID';`
+4. Update your Apps Script Web App to forward the city field to the form.
 
 ## If Your Form Has Different IDs
 

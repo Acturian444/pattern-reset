@@ -20,9 +20,9 @@
             venue: 'Shoreline Park',
             venueLocation: '3070 N. Shoreline Blvd, Mountain View',
             venueDetail: 'Main entrance · Near kite-flying area',
-            description: 'The easiest way in. A walk, coffee, rotating conversations. Same time every week so faces become familiar.',
+            description: 'A relaxed walk through the city, coffee after, and small group conversations that rotate so everyone meets. Low-pressure and easy.',
             capacity: 14,
-            badge: 'Best for first-time members',
+            badge: '⭐ Best for First Time',
         },
         {
             id: 'sunday-dinner',
@@ -35,14 +35,14 @@
             venue: 'Il Fornaio',
             venueAddress: 'Mountain View',
             venueDetail: 'Sala del Vino private room · Rotating restaurant',
-            description: 'Shared table, great food, real stories. Small groups where strangers become people you know.',
+            description: 'A shared table, great food, and small group conversations that unfold naturally. An easy, low-pressure way to meet new people without awkward small talk.',
             capacity: 10,
-            badge: 'Premium experience',
+            badge: '🍽 Intimate Dinner',
         },
         {
             id: 'music-movement',
             name: 'Friday Flow',
-            subtitle: 'Music · Movement',
+            subtitle: 'Music · Social',
             image: 'https://images.unsplash.com/photo-1714972383523-7c636d2f0e9b?w=200&h=200&fit=crop',
             imageAlt: 'Friday Flow',
             city: 'Mountain View',
@@ -50,36 +50,11 @@
             venue: 'Pacific Ballet Academy',
             venueLocation: 'Mountain View',
             venueDetail: 'Dance studio · Marley floor · Sound',
-            description: 'Music, movement, no judgment. No choreography — just a playlist and people who want to connect.',
+            description: 'Music, movement, and a room full of people open to connecting. No choreography, no pressure — just a playlist, good energy, and strangers slowly becoming familiar faces.',
             capacity: 14,
-            badge: 'Most fun',
+            badge: '🎶 Social Energy',
         },
     ];
-
-    // Google Form — REPLACE with your form ID and entry IDs after creating the form
-    const GOOGLE_FORM = {
-        formId: 'YOUR_FORM_ID', // e.g. 1FAIpQLSe...
-        entries: {
-            firstName: 'entry.XXXXX',
-            lastName: 'entry.XXXXX',
-            email: 'entry.XXXXX',
-            phone: 'entry.XXXXX',
-            city: 'entry.XXXXX',
-            ageRange: 'entry.XXXXX',
-            instagram: 'entry.XXXXX',
-            interests: 'entry.XXXXX',
-            clubs: 'entry.XXXXX',
-            lifeStage: 'entry.XXXXX',
-            availability: 'entry.XXXXX',
-            peopleEnergize: 'entry.XXXXX',
-            whyJoin: 'entry.XXXXX',
-            eventInterest: 'entry.XXXXX',
-            attendPreference: 'entry.XXXXX',
-            musicMovementVariant: 'entry.XXXXX',
-            guidelinesAgreed: 'entry.XXXXX',
-            contactShareConsent: 'entry.XXXXX',
-        },
-    };
 
     function renderClubs() {
         const container = document.getElementById('cg-clubs-container');
@@ -140,6 +115,7 @@
             whyJoin: form.querySelector('#cg-whyJoin')?.value?.trim() || '',
             eventInterest: form.querySelector('#cg-eventInterest')?.value || '',
             attendPreference: form.querySelector('input[name="attendPreference"]:checked')?.value || '',
+            relationshipStatus: form.querySelector('#cg-relationshipStatus')?.value || '',
             guidelinesAgreed: form.querySelector('#cg-guidelines')?.checked || false,
             contactShareConsent: form.querySelector('#cg-contactShare')?.checked || false,
         };
@@ -177,38 +153,6 @@
         return ref.id;
     }
 
-    function submitToGoogleForm(data) {
-        if (!GOOGLE_FORM.formId || GOOGLE_FORM.formId === 'YOUR_FORM_ID') {
-            return Promise.resolve(); // Skip if not configured
-        }
-        const baseUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM.formId}/formResponse`;
-        const params = new URLSearchParams();
-        const entries = GOOGLE_FORM.entries;
-        if (entries.firstName) params.append(entries.firstName, data.firstName);
-        if (entries.lastName) params.append(entries.lastName, data.lastName);
-        if (entries.email) params.append(entries.email, data.email);
-        if (entries.phone) params.append(entries.phone, data.phone);
-        if (entries.city) params.append(entries.city, data.city);
-        if (entries.ageRange) params.append(entries.ageRange, data.ageRange);
-        if (entries.instagram) params.append(entries.instagram, data.instagram);
-        if (entries.interests) params.append(entries.interests, data.interests);
-        if (entries.clubs) params.append(entries.clubs, data.clubs ? data.clubs.join(', ') : '');
-        if (entries.lifeStage) params.append(entries.lifeStage, data.lifeStageStr || '');
-        if (entries.availability) params.append(entries.availability, data.availabilityStr || '');
-        if (entries.peopleEnergize) params.append(entries.peopleEnergize, data.peopleEnergize || '');
-        if (entries.whyJoin) params.append(entries.whyJoin, data.whyJoin);
-        if (entries.eventInterest) params.append(entries.eventInterest, data.eventInterest);
-        if (entries.attendPreference) params.append(entries.attendPreference, data.attendPreference);
-        if (entries.guidelinesAgreed) params.append(entries.guidelinesAgreed, data.guidelinesAgreed ? 'Yes' : 'No');
-        if (entries.contactShareConsent) params.append(entries.contactShareConsent, data.contactShareConsent ? 'Yes' : 'No');
-
-        const url = `${baseUrl}?${params.toString()}`;
-        return fetch(url, {
-            method: 'GET',
-            mode: 'no-cors',
-        }).catch(() => {}); // Fire-and-forget, don't block
-    }
-
     async function handleSubmit(e) {
         e.preventDefault();
         const data = getFormData();
@@ -228,8 +172,6 @@
 
         try {
             await saveToFirestore(data);
-            await submitToGoogleForm(data);
-
             document.getElementById('cg-apply-form').classList.add('hidden');
             document.getElementById('cg-success').classList.add('show');
         } catch (err) {
@@ -276,6 +218,31 @@
         });
     }
 
+    function validateStep(stepNum) {
+        const form = document.getElementById('cg-apply-form');
+        if (!form) return null;
+        if (stepNum === 1) {
+            const firstName = form.querySelector('#cg-firstName')?.value?.trim();
+            const lastName = form.querySelector('#cg-lastName')?.value?.trim();
+            const email = form.querySelector('#cg-email')?.value?.trim();
+            const city = form.querySelector('#cg-city')?.value?.trim();
+            const ageRange = form.querySelector('#cg-ageRange')?.value;
+            if (!firstName) return 'Please enter your first name.';
+            if (!lastName) return 'Please enter your last name.';
+            if (!email) return 'Please enter your email.';
+            if (!city) return 'Please enter your city.';
+            if (!ageRange) return 'Please select your age range.';
+        } else if (stepNum === 2) {
+            const clubs = form.querySelectorAll('input[name="clubs"]:checked');
+            const lifeStage = form.querySelectorAll('input[name="lifeStage"]:checked');
+            const availability = form.querySelectorAll('input[name="availability"]:checked');
+            if (clubs.length === 0) return 'Please select at least one club.';
+            if (lifeStage.length === 0) return 'Please select at least one option for "Which best describes you right now."';
+            if (availability.length === 0) return 'Please select when you\'re typically free.';
+        }
+        return null;
+    }
+
     function init() {
         renderClubs();
         runExperiencesAbTest();
@@ -286,22 +253,11 @@
             form.querySelectorAll('.cg-form-next').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const next = parseInt(this.dataset.next);
-                    if (next === 3) {
-                        const clubs = form.querySelectorAll('input[name="clubs"]:checked');
-                        const lifeStage = form.querySelectorAll('input[name="lifeStage"]:checked');
-                        const availability = form.querySelectorAll('input[name="availability"]:checked');
-                        if (clubs.length === 0) {
-                            alert('Please select at least one club.');
-                            return;
-                        }
-                        if (lifeStage.length === 0) {
-                            alert('Please select at least one option for "Which best describes you right now."');
-                            return;
-                        }
-                        if (availability.length === 0) {
-                            alert('Please select when you\'re typically free.');
-                            return;
-                        }
+                    const currentStep = next === 2 ? 1 : 2;
+                    const err = validateStep(currentStep);
+                    if (err) {
+                        alert(err);
+                        return;
                     }
                     goToStep(next);
                 });

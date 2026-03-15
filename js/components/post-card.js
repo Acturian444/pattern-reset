@@ -239,7 +239,7 @@ class PostCard {
                 .love-received-pill {
                     display: inline-block;
                     background: #ffe5e9;
-                    color: #ca0013;
+                    color: #f10000;
                     border-radius: 1.2em;
                     padding: 0.32em 1.1em 0.32em 0.9em;
                     font-size: 1.01em;
@@ -247,7 +247,7 @@ class PostCard {
                     letter-spacing: 0.01em;
                     margin-bottom: 0.5em;
                     margin-right: 0.2em;
-                    box-shadow: 0 1px 4px rgba(193,0,22,0.04);
+                    box-shadow: 0 1px 4px rgba(241,0,0,0.04);
                     border: none;
                 }
             `;

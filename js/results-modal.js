@@ -414,6 +414,51 @@
                 };
                 
                 const totalScore = state.totalScore || 0;
+                const answers = state.answers || [];
+                const quizData = window.quizData || [];
+                
+                // Get pattern key
+                let patternKey = state.patternKey || null;
+                
+                // Relationship Dynamic Quiz: patternKey is relationship pattern (hot-cold-cycle, etc.)
+                // Legacy: patternKey is personality pattern (fixer, pleaser, etc.)
+                let pattern = null;
+                let archetype = null;
+                let herResponsePattern = null;
+                let repetitionInsight = null;
+                
+                let situationshipModifier = false;
+                if (window.relationshipPatterns && patternKey && window.relationshipPatterns[patternKey]) {
+                    pattern = window.relationshipPatterns[patternKey];
+                    archetype = { name: pattern.name };
+                    if (window.PatternDeterminer) {
+                        herResponsePattern = window.PatternDeterminer.determineHerResponsePattern(answers, quizData);
+                        repetitionInsight = window.PatternDeterminer.getRepetitionInsight(answers, quizData);
+                        situationshipModifier = window.PatternDeterminer.hasSituationshipModifier(answers, quizData, state.relationshipStatus || null);
+                    }
+                } else {
+                    if (!patternKey) {
+                        const sortedDrivers = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
+                        const dominantDriver = sortedDrivers[0][0];
+                        const driverPatternMap = {
+                            'control': 'fixer',
+                            'validation': 'performer',
+                            'avoidance': 'escaper',
+                            'fear-of-rejection': 'guarded-one'
+                        };
+                        patternKey = driverPatternMap[dominantDriver] || 'fixer';
+                    }
+                    const patternKeyMap = {
+                        'guarded-one': 'withdrawer',
+                        'pleaser': 'people-pleaser',
+                        'escaper': 'avoider',
+                        'overgiver': 'perfectionist'
+                    };
+                    pattern = window.personalityPatterns && (window.personalityPatterns[patternKeyMap[patternKey]] || window.personalityPatterns[patternKey]);
+                    const sortedDrivers = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
+                    const dominantDriver = sortedDrivers[0][0];
+                    archetype = window.archetypeCategories && window.archetypeCategories[dominantDriver];
+                }
                 
                 // Calculate driver percentages
                 const driverPercentages = {};
@@ -421,46 +466,13 @@
                     driverPercentages[driver] = totalScore > 0 ? Math.round((driverScores[driver] / totalScore) * 100) : 0;
                 });
                 
-                // Get pattern key
-                let patternKey = state.patternKey || null;
-                
-                if (!patternKey) {
-                    const sortedDrivers = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
-                    const dominantDriver = sortedDrivers[0][0];
-                    const driverPatternMap = {
-                        'control': 'fixer',
-                        'validation': 'performer',
-                        'avoidance': 'avoider',
-                        'fear-of-rejection': 'withdrawer'
-                    };
-                    patternKey = driverPatternMap[dominantDriver] || 'fixer';
-                }
-                
                 const sortedDrivers = Object.entries(driverScores).sort((a, b) => b[1] - a[1]);
-                const dominantDriver = sortedDrivers[0][0];
+                const dominantDriver = sortedDrivers[0] ? sortedDrivers[0][0] : 'control';
                 
-                // Load pattern and archetype data
-                // Check if quiz data is available globally
-                if (typeof window.personalityPatterns === 'undefined' || typeof window.archetypeCategories === 'undefined') {
-                    container.innerHTML = '<div class="no-results"><h2>Error Loading Results</h2><p>Quiz data not loaded. Please refresh the page.</p></div>';
-                    return;
-                }
-                
-                // Map pattern keys from index.html to results.html structure if needed
-                const patternKeyMap = {
-                    'guarded-one': 'withdrawer',
-                    'pleaser': 'people-pleaser',
-                    'escaper': 'avoider',
-                    'overgiver': 'perfectionist' // Fallback, may need adjustment
-                };
-                
-                // Try to get pattern with mapped key first, then original key
-                let pattern = window.personalityPatterns[patternKeyMap[patternKey]] || window.personalityPatterns[patternKey];
-                const archetype = window.archetypeCategories[dominantDriver];
-                
-                if (!pattern || !archetype) {
-                    console.error('Pattern not found:', patternKey, 'Available patterns:', Object.keys(window.personalityPatterns));
-                    container.innerHTML = '<div class="no-results"><h2>Error Loading Results</h2><p>Pattern data not found. Pattern key: ' + escapeHTML(patternKey) + '</p><p>Available: ' + escapeHTML(Object.keys(window.personalityPatterns).join(', ')) + '</p></div>';
+                if (!pattern) {
+                    const avail = (window.relationshipPatterns && Object.keys(window.relationshipPatterns)) || (window.personalityPatterns && Object.keys(window.personalityPatterns)) || [];
+                    console.error('Pattern not found:', patternKey, 'Available:', avail);
+                    container.innerHTML = '<div class="no-results"><h2>Error Loading Results</h2><p>Pattern data not found. Please refresh and try again.</p></div>';
                     return;
                 }
                 
@@ -525,7 +537,8 @@
                 
                 const exactAge = calculateExactAge(birthDate);
                 const fullName = state.userName || '';
-                const firstName = fullName.split(' ')[0] || 'there';
+                const rawFirst = fullName.split(' ')[0] || 'there';
+                const firstName = (rawFirst || '').trim().replace(/[,.\s]+$/, '') || 'there';
                 
                 // Debug logging
                 console.log('Pattern data:', pattern);
@@ -543,7 +556,7 @@
                     try {
                         window.ResultsRenderer.renderFullResults(container, {
                             pattern: pattern,
-                            archetype: archetype,
+                            archetype: archetype || { name: pattern.name },
                             patternDominance: patternDominance,
                             dominanceLabel: dominanceLabel,
                             driverPercentages: driverPercentages,
@@ -557,9 +570,12 @@
                             firstName: firstName,
                             birthDate: birthDate,
                             sortedDrivers: sortedDriversWithPercentages,
-                            answers: state.answers || [], // Pass answers for personalized story
+                            answers: state.answers || [],
                             driverScores: driverScores,
-                            quizData: window.quizData || [], // Pass quiz data for daily examples
+                            herResponsePattern: herResponsePattern,
+                            repetitionInsight: repetitionInsight,
+                            situationshipModifier: situationshipModifier,
+                            quizData: window.quizData || [],
                             driverNames: {
                                 'control': 'Control',
                                 'avoidance': 'Avoidance',
@@ -574,12 +590,13 @@
                             }
                         });
                         
-                        // Initialize workbook downloads, invite button, journaling, and pill selector after results are rendered
+                        // Initialize workbook downloads, invite button, journaling, pill selector, and sticky CTA after results are rendered
                         setTimeout(() => {
                             initWorkbookDownloads(container, pattern, firstName);
                             initInviteQuizButton(container);
                             initJournaling(container, pattern);
                             initWorkbookPills(container, pattern);
+                            initStickyCtaBar(container);
                         }, 500);
                     } catch (e) {
                         console.error('Error rendering results:', e);
@@ -674,6 +691,34 @@
                 fallbackCopyQuizLink(quizUrl, container, btn);
             }
         };
+    }
+
+    // Initialize sticky CTA bar - show on scroll for relationship dynamic results
+    function initStickyCtaBar(container) {
+        const stickyBar = container.querySelector('#results-sticky-cta-bar');
+        if (!stickyBar) return;
+        const scrollWrapper = container.closest('.results-modal-scroll-wrapper');
+        if (!scrollWrapper) return;
+        const paidSection = container.querySelector('#results-cta-paid-section');
+        const stickyBtn = container.querySelector('#results-sticky-cta-btn');
+        const SCROLL_THRESHOLD = 250;
+        function updateStickyBar() {
+            if (scrollWrapper.scrollTop > SCROLL_THRESHOLD) {
+                stickyBar.classList.add('is-visible');
+                stickyBar.setAttribute('aria-hidden', 'false');
+            } else {
+                stickyBar.classList.remove('is-visible');
+                stickyBar.setAttribute('aria-hidden', 'true');
+            }
+        }
+        scrollWrapper.addEventListener('scroll', updateStickyBar, { passive: true });
+        updateStickyBar(); // Initial check
+        // Click: scroll to paid offers section (personalized upsell)
+        if (stickyBtn && paidSection) {
+            stickyBtn.addEventListener('click', function () {
+                paidSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
     }
 
     function fallbackCopyQuizLink(url, container, btn) {
@@ -816,13 +861,13 @@
                                     });
                                 }
                                 const areaOrder = ['Love', 'Money', 'Health', 'Career', 'Identity', 'Purpose', 'Lifestyle', 'How I feel about myself'];
-                                const painParts = areaOrder.filter(a => areaToPills[a] && areaToPills[a].length).map(a => '<strong style="color:#ca0013;">' + escapeHTML(a) + ':</strong> ' + escapeHTML(areaToPills[a].join(', ')));
+                                const painParts = areaOrder.filter(a => areaToPills[a] && areaToPills[a].length).map(a => '<strong style="color:#f10000;">' + escapeHTML(a) + ':</strong> ' + escapeHTML(areaToPills[a].join(', ')));
                                 if (painParts.length) parts.push(painParts.join('<br>'));
                             }
                             if (extra) parts.push('<strong>Anything else:</strong> ' + escapeHTML(extra).replace(/\n/g, '<br>'));
                             const answerDiv = document.createElement('div');
-                            answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
-                            answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + (parts.length ? parts.join('<br>') : 'No selections yet') + '</p>';
+                            answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: rgba(241,0,0,0.05); border-radius: 6px; border-left: 3px solid #f10000;';
+                            answerDiv.innerHTML = '<strong style="color: #f10000; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + (parts.length ? parts.join('<br>') : 'No selections yet') + '</p>';
                             el.replaceWith(answerDiv);
                             return;
                         }
@@ -832,8 +877,8 @@
                         const journalUI = el.querySelector('.journal-ui');
                         if (journalUI && answer) {
                             const answerDiv = document.createElement('div');
-                            answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 0.75rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
-                            answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + escapeHTML(answer).replace(/\n/g, '<br>') + '</p>';
+                            answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 0.75rem; background: rgba(241,0,0,0.05); border-radius: 6px; border-left: 3px solid #f10000;';
+                            answerDiv.innerHTML = '<strong style="color: #f10000; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + escapeHTML(answer).replace(/\n/g, '<br>') + '</p>';
                             journalUI.replaceWith(answerDiv);
                         } else if (journalUI) {
                             journalUI.remove();
@@ -866,9 +911,9 @@
                     
                     // Add header
                     const header = document.createElement('div');
-                    header.style.cssText = 'margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid #ca0013;';
+                    header.style.cssText = 'margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid #f10000;';
                     header.innerHTML = `
-                        <h1 style="font-size: 2rem; font-weight: 700; color: #ca0013; margin: 0 0 0.5rem;">Pattern Reset Workbook</h1>
+                        <h1 style="font-size: 2rem; font-weight: 700; color: #f10000; margin: 0 0 0.5rem;">Pattern Reset Workbook</h1>
                         <p style="font-size: 1.1rem; color: #666; margin: 0 0 0.25rem;"><strong>Pattern:</strong> ${pattern.name}</p>
                         <p style="font-size: 1rem; color: #666; margin: 0;"><strong>Primary Shift:</strong> ${pattern.resetFocus || 'Breaking your pattern'}</p>
                     `;
@@ -999,16 +1044,16 @@
                 
                 // Create card HTML (wallet-sized, printable)
                 const cardHTML = `
-                    <div style="width: 3.375in; height: 2.125in; padding: 0.5in; background: #ffffff; border: 2px solid #ca0013; border-radius: 8px; font-family: 'DM Sans', sans-serif; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
-                        <div style="border-bottom: 1px solid #ca0013; padding-bottom: 0.25rem; margin-bottom: 0.5rem;">
-                            <h2 style="font-size: 0.9rem; font-weight: 700; color: #ca0013; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">My Definite Purpose</h2>
+                    <div style="width: 3.375in; height: 2.125in; padding: 0.5in; background: #ffffff; border: 2px solid #f10000; border-radius: 8px; font-family: 'DM Sans', sans-serif; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div style="border-bottom: 1px solid #f10000; padding-bottom: 0.25rem; margin-bottom: 0.5rem;">
+                            <h2 style="font-size: 0.9rem; font-weight: 700; color: #f10000; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">My Definite Purpose</h2>
                         </div>
                         <div style="flex: 1; display: flex; flex-direction: column; justify-content: space-between;">
                             <p style="font-size: 0.65rem; line-height: 1.4; color: #000; margin: 0 0 0.4rem; font-weight: 600;">${definitePurpose}</p>
                             <div style="margin-top: auto;">
                                 <p style="font-size: 0.55rem; color: #666; margin: 0.25rem 0; line-height: 1.3;"><strong>Why:</strong> ${why.length > 80 ? why.substring(0, 80) + '...' : why}</p>
                                 <p style="font-size: 0.55rem; color: #666; margin: 0.25rem 0; line-height: 1.3;"><strong>Identity:</strong> ${identity.length > 60 ? identity.substring(0, 60) + '...' : identity}</p>
-                                <p style="font-size: 0.5rem; color: #ca0013; margin: 0.5rem 0 0; font-weight: 600; text-align: center;">${pattern.name} Pattern Reset</p>
+                                <p style="font-size: 0.5rem; color: #f10000; margin: 0.5rem 0 0; font-weight: 600; text-align: center;">${pattern.name} Pattern Reset</p>
                             </div>
                         </div>
                     </div>
@@ -1490,13 +1535,13 @@
                                     });
                                 }
                                 const areaOrder = ['Love', 'Money', 'Health', 'Career', 'Identity', 'Purpose', 'Lifestyle', 'How I feel about myself'];
-                                const painParts = areaOrder.filter(a => areaToPills[a] && areaToPills[a].length).map(a => '<strong style="color:#ca0013;">' + escapeHTML(a) + ':</strong> ' + escapeHTML(areaToPills[a].join(', ')));
+                                const painParts = areaOrder.filter(a => areaToPills[a] && areaToPills[a].length).map(a => '<strong style="color:#f10000;">' + escapeHTML(a) + ':</strong> ' + escapeHTML(areaToPills[a].join(', ')));
                                 if (painParts.length) parts.push(painParts.join('<br>'));
                             }
                             if (extra) parts.push('<strong>Anything else:</strong> ' + escapeHTML(extra).replace(/\n/g, '<br>'));
                             const answerDiv = document.createElement('div');
-                            answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
-                            answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + (parts.length ? parts.join('<br>') : 'No selections yet') + '</p>';
+                            answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 1rem; background: rgba(241,0,0,0.05); border-radius: 6px; border-left: 3px solid #f10000;';
+                            answerDiv.innerHTML = '<strong style="color: #f10000; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + (parts.length ? parts.join('<br>') : 'No selections yet') + '</p>';
                             el.replaceWith(answerDiv);
                             return;
                         }
@@ -1506,8 +1551,8 @@
                         const journalUI = el.querySelector('.journal-ui');
                         if (journalUI && answer) {
                             const answerDiv = document.createElement('div');
-                            answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 0.75rem; background: rgba(202,0,19,0.05); border-radius: 6px; border-left: 3px solid #ca0013;';
-                            answerDiv.innerHTML = '<strong style="color: #ca0013; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + escapeHTML(answer).replace(/\n/g, '<br>') + '</p>';
+                            answerDiv.style.cssText = 'margin-top: 0.5rem; padding: 0.75rem; background: rgba(241,0,0,0.05); border-radius: 6px; border-left: 3px solid #f10000;';
+                            answerDiv.innerHTML = '<strong style="color: #f10000; font-size: 0.9rem;">Your Answer:</strong><p style="margin: 0.5rem 0 0; color: #333; line-height: 1.6;">' + escapeHTML(answer).replace(/\n/g, '<br>') + '</p>';
                             journalUI.replaceWith(answerDiv);
                         } else if (journalUI) {
                             journalUI.remove();
@@ -1536,7 +1581,7 @@
                         const text = link.textContent;
                         const span = document.createElement('span');
                         span.textContent = text;
-                        span.style.cssText = 'color: #ca0013; font-weight: 600;';
+                        span.style.cssText = 'color: #f10000; font-weight: 600;';
                         link.parentNode.replaceChild(span, link);
                     });
                     

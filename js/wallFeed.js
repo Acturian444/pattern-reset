@@ -9,6 +9,10 @@ class WallFeed {
         this.currentFilter = null;
         this.currentSearch = '';
         this.posts = [];
+        this.filteredPosts = [];
+        this.viewMode = localStorage.getItem('wallViewMode') || 'list';
+        this.currentIndex = 0;
+        this.container = null;
         this.initializeEventListeners();
     }
 
@@ -226,6 +230,7 @@ class WallFeed {
     }
 
     render(container) {
+        this.container = container;
         // Create controls section
         const controls = document.createElement('div');
         controls.className = 'wall-controls';
@@ -251,17 +256,133 @@ class WallFeed {
         // Add controls to container
         container.appendChild(controls);
 
-        // Sort dropdown (left-aligned, with label)
+        // Sort + View toggle row
+        const sortViewRow = document.createElement('div');
+        sortViewRow.className = 'wall-sort-view-row';
         const sortDropdown = this.createSortDropdown();
-        // Remove centering margin if present
         sortDropdown.style.margin = '';
-        container.appendChild(sortDropdown);
+        sortViewRow.appendChild(sortDropdown);
+        const viewToggle = this.createViewToggle();
+        sortViewRow.appendChild(viewToggle);
+        container.appendChild(sortViewRow);
         
         // Add feed
         container.appendChild(this.feed);
         
         // Subscribe to posts
         this.subscribeToPosts();
+
+        if (this.viewMode === 'single') {
+            this.setupSingleCardKeyboard();
+        }
+    }
+
+    createViewToggle() {
+        const toggle = document.createElement('div');
+        toggle.className = 'wall-view-toggle';
+        toggle.setAttribute('role', 'group');
+        toggle.setAttribute('aria-label', 'View mode');
+        const listBtn = document.createElement('button');
+        listBtn.className = `wall-view-btn ${this.viewMode === 'list' ? 'active' : ''}`;
+        listBtn.type = 'button';
+        listBtn.setAttribute('aria-label', 'List view');
+        listBtn.setAttribute('aria-pressed', this.viewMode === 'list');
+        listBtn.innerHTML = '<i class="fas fa-list"></i>';
+        listBtn.onclick = () => this.setViewMode('list');
+        const singleBtn = document.createElement('button');
+        singleBtn.className = `wall-view-btn ${this.viewMode === 'single' ? 'active' : ''}`;
+        singleBtn.type = 'button';
+        singleBtn.setAttribute('aria-label', 'Single card view');
+        singleBtn.setAttribute('aria-pressed', this.viewMode === 'single');
+        singleBtn.innerHTML = '<i class="fas fa-id-card"></i>';
+        singleBtn.onclick = () => this.setViewMode('single');
+        toggle.appendChild(listBtn);
+        toggle.appendChild(singleBtn);
+        return toggle;
+    }
+
+    setViewMode(mode) {
+        if (mode === this.viewMode) return;
+        if (mode === 'single' && this.viewMode === 'list') {
+            this.captureViewportCardIndex();
+        }
+        this.viewMode = mode;
+        localStorage.setItem('wallViewMode', mode);
+        this.updateViewToggleUI();
+        this.updateFeed();
+        if (mode === 'single') {
+            this.setupSingleCardKeyboard();
+        } else {
+            this.removeSingleCardKeyboard();
+        }
+    }
+
+    captureViewportCardIndex() {
+        const cards = this.feed.querySelectorAll('.post-card');
+        if (cards.length === 0) return;
+        const feed = this.feed;
+        const scrollTop = feed.scrollTop;
+        const viewportCenter = scrollTop + feed.clientHeight / 2;
+        let bestIndex = 0;
+        let bestDist = Infinity;
+        cards.forEach((card, i) => {
+            const cardCenter = card.offsetTop + card.offsetHeight / 2;
+            const dist = Math.abs(cardCenter - viewportCenter);
+            if (dist < bestDist) { bestDist = dist; bestIndex = i; }
+        });
+        this.currentIndex = Math.min(bestIndex, this.filteredPosts.length - 1);
+    }
+
+    updateViewToggleUI() {
+        const row = this.container?.querySelector('.wall-sort-view-row');
+        if (!row) return;
+        const toggle = row.querySelector('.wall-view-toggle');
+        if (!toggle) return;
+        const listBtn = toggle.querySelector('.wall-view-btn:first-child');
+        const singleBtn = toggle.querySelector('.wall-view-btn:last-child');
+        if (listBtn) {
+            listBtn.classList.toggle('active', this.viewMode === 'list');
+            listBtn.setAttribute('aria-pressed', this.viewMode === 'list');
+        }
+        if (singleBtn) {
+            singleBtn.classList.toggle('active', this.viewMode === 'single');
+            singleBtn.setAttribute('aria-pressed', this.viewMode === 'single');
+        }
+    }
+
+    setupSingleCardKeyboard() {
+        this._singleCardKeyHandler = (e) => {
+            if (this.viewMode !== 'single') return;
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                this.goToPrevCard();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                this.goToNextCard();
+            }
+        };
+        document.addEventListener('keydown', this._singleCardKeyHandler);
+    }
+
+    removeSingleCardKeyboard() {
+        if (this._singleCardKeyHandler) {
+            document.removeEventListener('keydown', this._singleCardKeyHandler);
+            this._singleCardKeyHandler = null;
+        }
+    }
+
+    goToPrevCard() {
+        if (this.currentIndex > 0) {
+            this.currentIndex--;
+            this.renderSingleCardView();
+        }
+    }
+
+    goToNextCard() {
+        if (this.currentIndex < this.filteredPosts.length - 1) {
+            this.currentIndex++;
+            this.renderSingleCardView();
+        }
     }
 
     createLocationFilter() {
@@ -731,6 +852,7 @@ class WallFeed {
                 filteredPosts.sort((a, b) => b.timestamp - a.timestamp);
         }
         
+        this.filteredPosts = filteredPosts;
         this.renderPosts(filteredPosts);
     }
 
@@ -743,15 +865,71 @@ class WallFeed {
 
     renderPosts(posts) {
         this.feed.innerHTML = '';
-        if (posts.length > 0) {
-            posts.forEach(post => {
-                const card = PostCard.create(post);
-                this.feed.appendChild(card);
-            });
+        this.feed.className = 'wall-feed';
+        if (this.viewMode === 'single') {
+            this.feed.classList.add('wall-feed-single');
+            this.renderSingleCardView();
         } else {
-            this.feed.innerHTML = '<p class="wall-empty-message">No posts found. Try adjusting your filters.</p>';
+            if (posts.length > 0) {
+                posts.forEach(post => {
+                    const card = PostCard.create(post);
+                    this.feed.appendChild(card);
+                });
+            } else {
+                this.feed.innerHTML = '<p class="wall-empty-message">No posts found. Try adjusting your filters.</p>';
+            }
+            this.highlightPostFromUrl();
         }
-        this.highlightPostFromUrl();
+    }
+
+    renderSingleCardView() {
+        this.feed.innerHTML = '';
+        const posts = this.filteredPosts;
+        if (posts.length === 0) {
+            this.feed.innerHTML = '<p class="wall-empty-message">No posts found. Try adjusting your filters.</p>';
+            return;
+        }
+        this.currentIndex = Math.min(this.currentIndex, posts.length - 1);
+        const post = posts[this.currentIndex];
+        const card = PostCard.create(post);
+        card.classList.add('post-card-single');
+
+        const cardWrapper = document.createElement('div');
+        cardWrapper.className = 'wall-single-card-wrapper';
+        const cardContainer = document.createElement('div');
+        cardContainer.className = 'wall-single-card-container';
+        cardContainer.appendChild(card);
+        cardWrapper.appendChild(cardContainer);
+
+        const navRow = document.createElement('div');
+        navRow.className = 'wall-single-card-nav';
+
+        const backBtn = document.createElement('button');
+        backBtn.className = 'wall-single-nav-btn wall-single-nav-back';
+        backBtn.type = 'button';
+        backBtn.setAttribute('aria-label', 'Previous post');
+        backBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        backBtn.onclick = () => this.goToPrevCard();
+        backBtn.disabled = this.currentIndex === 0;
+
+        const progress = document.createElement('div');
+        progress.className = 'wall-single-card-progress';
+        progress.textContent = `${this.currentIndex + 1} of ${posts.length}`;
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'wall-single-nav-btn wall-single-nav-next';
+        nextBtn.type = 'button';
+        nextBtn.setAttribute('aria-label', 'Next post');
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        nextBtn.onclick = () => this.goToNextCard();
+        nextBtn.disabled = this.currentIndex === posts.length - 1;
+
+        navRow.appendChild(backBtn);
+        navRow.appendChild(progress);
+        navRow.appendChild(nextBtn);
+
+        this.feed.appendChild(cardWrapper);
+        this.feed.appendChild(navRow);
     }
 
     highlightPostFromUrl() {
@@ -851,7 +1029,7 @@ class WallFeed {
                 tag.textContent = e;
                 Object.assign(tag.style, {
                     fontFamily: '"Anton", sans-serif', // Anton font
-                    color: '#ca0013', // Brand red for both light and dark modes
+                    color: '#f10000', // Brand red for both light and dark modes
                     fontSize: '42px', // Same size as body text
                     fontWeight: '400', // Normal weight for Anton
                     textTransform: 'uppercase', // Uppercase for Anton
@@ -995,6 +1173,7 @@ class WallFeed {
 
     destroy() {
         this.cleanup();
+        this.removeSingleCardKeyboard();
         // Remove event listeners
         if (this.feed) {
             this.feed.removeEventListener('click', this.handleFeedClick.bind(this));

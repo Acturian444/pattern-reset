@@ -1,4 +1,5 @@
 // Quiz Configuration Constants
+// Relationship Dynamic Quiz - Version 2.0
 // Centralized configuration for easy maintenance and updates
 // IIFE pattern - works without build system
 
@@ -7,17 +8,25 @@
     
     // Make config available globally
     window.QUIZ_CONFIG = {
-    // Question counts
-    TOTAL_SCORED_QUESTIONS: 34,
-    TOTAL_QUESTIONS: 38, // 34 scored + 1 birth date + 1 relationship status + 1 current pain + 1 biggest fear
-    BIRTH_DATE_QUESTION_INDEX: 34,
-    RELATIONSHIP_STATUS_QUESTION_INDEX: 35,
-    CURRENT_PAIN_QUESTION_INDEX: 36,
-    BIGGEST_FEAR_QUESTION_INDEX: 37,
+    // Question counts - 16 scored + 1 birth date + 1 relationship status + 1 current pain + 1 biggest fear (v2.1)
+    TOTAL_SCORED_QUESTIONS: 16,
+    TOTAL_QUESTIONS: 20,
+    BIRTH_DATE_QUESTION_INDEX: 16,
+    RELATIONSHIP_STATUS_QUESTION_INDEX: 17,
+    CURRENT_PAIN_QUESTION_INDEX: 18,
+    BIGGEST_FEAR_QUESTION_INDEX: 19,
     
-    // Scoring
-    POINTS_PER_ANSWER: 3,
-    MAX_SCORE: 102, // 34 questions × 3 points
+    // Scoring - 0/2/4/6 scale for nuanced signals (v2.1)
+    POINTS_PER_ANSWER: 3, // legacy fallback
+    MAX_SCORE: 96, // 16 questions × 6 max
+    
+    // Dimension keys for relationship dynamic quiz
+    DIMENSIONS: {
+        HIS_BEHAVIOR: 'his-behavior',
+        HER_RESPONSE: 'her-response',
+        DYNAMIC: 'dynamic',
+        ATTRACTION: 'attraction'
+    },
     
     // Pattern dominance thresholds
     DOMINANCE_THRESHOLDS: {
@@ -29,23 +38,6 @@
     
     // Secondary pattern threshold
     SECONDARY_PATTERN_THRESHOLD: 25, // Percentage
-    
-    // Question domains (for pattern determination)
-    // Structure: Love (4), Money (4), Health (4), Lifestyle (1), Physical (1), Productivity (2), Purpose (2), Identity (4), Childhood (4), Trauma (1), Relationships (5), Reflection (2)
-    QUESTION_DOMAINS: {
-        LOVE: { start: 0, end: 3, name: 'Love & Connection' },
-        MONEY: { start: 4, end: 7, name: 'Money & Finances' },
-        HEALTH: { start: 8, end: 11, name: 'Health & Habits' },
-        LIFESTYLE: { start: 12, end: 12, name: 'Lifestyle & Daily Habits' },
-        PHYSICAL: { start: 13, end: 13, name: 'Physical Health & Body' },
-        PRODUCTIVITY: { start: 14, end: 15, name: 'Productivity & Time' },
-        PURPOSE: { start: 16, end: 17, name: 'Purpose & Flow' },
-        IDENTITY: { start: 18, end: 21, name: 'Identity & Self' },
-        CHILDHOOD: { start: 22, end: 25, name: 'Childhood & Origin' },
-        TRAUMA: { start: 26, end: 26, name: 'Trauma & Adversity' },
-        RELATIONSHIPS: { start: 27, end: 31, name: 'Relationship Patterns' },
-        REFLECTION: { start: 32, end: 33, name: 'Reflection' }
-    },
     
     // LocalStorage key (primary - used throughout code)
     STORAGE_KEY: 'patternResetQuizState',
@@ -67,4 +59,3 @@
     }
     };
 })();
-

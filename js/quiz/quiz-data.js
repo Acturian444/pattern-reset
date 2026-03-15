@@ -1,565 +1,475 @@
-// Quiz Data - All questions and pattern definitions
-// This file contains all quiz questions and pattern data
+// Quiz Data - Relationship Dynamic Quiz v2.1 (Optimized)
+// Stronger signals, fewer redundant questions, clearer patterns, 0/2/4/6 scoring
 
-// Use global QUIZ_CONFIG (set by quiz-config.js)
-const QUIZ_CONFIG = window.QUIZ_CONFIG || {
-    POINTS_PER_ANSWER: 3
+// Scoring scale: 0 (healthy) / 2 (mild) / 4 (moderate) / 6 (strong signal)
+const SCORE = { NONE: 0, MILD: 2, MODERATE: 4, STRONG: 6 };
+
+// Relationship Patterns (Primary Result) - replaces archetype + personality pattern
+window.relationshipPatterns = {
+    'hot-cold-cycle': {
+        id: 'hot-cold-cycle',
+        name: 'The Hot-and-Cold Cycle',
+        description: 'He\'s close, then distant. You never know where you stand. When he pulls away, you chase. When he comes back, you feel relief—until the cycle repeats.',
+        hisPattern: 'Inconsistent attention. He pulls away when things get real or when you get close, then returns when he wants connection.',
+        herPattern: 'You chase when he\'s distant. You try harder to reconnect, hoping this time will be different.',
+        dynamic: 'A chase-withdraw loop. The more you pursue, the more he retreats. The more he retreats, the more you pursue.',
+        whatItMeans: 'He gives just enough closeness to keep you invested—then withdraws before things deepen. The inconsistency isn\'t accidental. It keeps you available without him having to commit.',
+        whyYouStay: 'The attention comes in cycles. When he\'s warm, it feels real. When he pulls away, you try to understand it. Your brain keeps solving the inconsistency—that keeps you invested longer than you expected.',
+        ifNothingChanges: ['the relationship stays undefined', 'the chase-withdraw cycle repeats', 'emotional investment becomes one-sided', 'clarity rarely appears suddenly'],
+        signsYoureInIt: ['you replay his behavior trying to understand why he pulled away', 'you feel relief when he comes back—then anxiety when he disappears again', 'you never know where you stand from one week to the next', 'you keep hoping "this time" will be different'],
+        strengths: 'You notice when something\'s off. You want clarity instead of pretending everything is fine. That awareness is what allows you to break the pattern.',
+        watchFor: 'Staying in hope instead of reality. Ignoring that the pattern hasn\'t changed. Waiting for him to become someone he hasn\'t shown you he is.',
+        watchForInstead: 'Ask yourself: Has his behavior actually changed? If not, that\'s your answer. His staying or leaving is his choice—your job is to decide what you\'ll accept.',
+        nextStep: 'You know the cycle now—chase, retreat, repeat. The real question: Does this relationship give you what you actually want? If the answer is no, the next step isn\'t waiting for him to change—it\'s deciding what you\'re willing to accept.',
+        coreBelief: 'If I try harder, he\'ll stay.',
+        behaviorDriver: 'chase when he pulls away, or try harder to reconnect',
+        coreBeliefReframe: 'His staying or leaving is his choice. Your job is to decide what you\'ll accept—not to try harder until he chooses.',
+        successSubtext: 'he pulls you close one moment and becomes distant the next — keeping you emotionally hooked but never secure about where you stand',
+        whyHeActsThisWay: 'He pulls away when things get real—closeness triggers his need for space. He returns when he wants connection—on his terms. The inconsistency keeps you available without him having to commit. His behavior follows a pattern: pursue when distant, retreat when close.',
+        doesHeLikeMe: 'He likely has feelings—otherwise he wouldn\'t keep coming back. But "liking" someone and showing up consistently are different. His behavior suggests he wants you when it suits him, not as a priority. The real question: Is his investment enough for what I need?',
+        whyItFeelsConfusing: 'Your brain seeks consistency. When he\'s warm, it feels real. When he pulls away, you try to understand why. That inconsistency creates anxiety—and anxiety creates attachment. You\'re not crazy. The confusion is built into the pattern.'
+    },
+    'breadcrumb-dynamic': {
+        id: 'breadcrumb-dynamic',
+        name: 'The Breadcrumb Dynamic',
+        description: 'He gives just enough to keep you interested, but not enough to feel secure. His words might sound promising, but his actions stay minimal. You stay hoping for more, tolerating the ambiguity.',
+        hisPattern: 'Minimal effort. He keeps you hooked with occasional attention—texts, plans, affection—without committing.',
+        herPattern: 'You tolerate the ambiguity. You stay hoping for more, rationalizing that "at least he\'s trying."',
+        dynamic: 'Validation seeking. You\'re waiting for crumbs to feel okay. He controls the pace and the terms.',
+        whatItMeans: 'He gives just enough attention to keep you invested—but not enough consistency to move forward. He keeps you available without having to invest.',
+        whyYouStay: 'Each crumb feels like progress—your brain waits for the next sign. That hope keeps you invested longer than you\'d choose if you saw it clearly.',
+        ifNothingChanges: ['the relationship stays undefined', 'you keep waiting for more that never arrives', 'emotional investment becomes one-sided', 'you\'ll stay available longer than you intended'],
+        signsYoureInIt: ['you rationalize "at least he\'s trying" when his effort is minimal', 'you feel relief when he reaches out—then anxiety when he goes quiet', 'you\'re waiting for him to give more before you feel fully invested', 'you\'ve lowered your expectations to fit what he offers'],
+        strengths: 'You see the good in people. You\'re willing to give things time. That patience, when directed toward someone who matches it, is a strength. Right now it\'s being used on someone who hasn\'t earned it.',
+        watchFor: 'Accepting less than you want because "something is better than nothing." Confusing his crumbs with real investment.',
+        watchForInstead: 'Ask yourself: "Am I getting what I need, or am I just getting enough to stay?" If it\'s the latter, that\'s your answer.',
+        nextStep: 'You know the pattern now—crumbs, hope, repeat. The real question: Does this relationship give you what you actually want? If the answer is no, the next step isn\'t waiting for more—it\'s deciding what you need and whether he can give it.',
+        coreBelief: 'If I wait long enough, he\'ll choose me.',
+        behaviorDriver: 'wait for the next crumb, or hope for more',
+        coreBeliefReframe: 'Waiting doesn\'t make him choose. His choice is independent of your patience. You can decide what you need—and leave if he can\'t give it.',
+        successSubtext: 'he gives small bursts of attention just often enough to keep you invested — but never enough to build something real',
+        whyHeActsThisWay: 'He gives minimal effort because it works. Occasional texts, plans, or affection keep you invested without him showing up fully. He controls the pace. His behavior is efficient: maximum connection, minimum commitment.',
+        doesHeLikeMe: 'He wants to keep you in his life—but not as a priority. He gives enough to maintain the connection without committing. His investment has a ceiling. The real question: Does his level of investment match what you need?',
+        whyItFeelsConfusing: 'Each crumb feels like progress. When he texts or makes a plan, it feels like he\'s choosing you. Your brain waits for the next sign. That hope keeps you invested—and confused about whether you\'re "almost there" or nowhere at all. You\'re not crazy. The ambiguity is the pattern.'
+    },
+    'commitment-avoidance': {
+        id: 'commitment-avoidance',
+        name: 'The Commitment Avoidance',
+        description: 'The future is always vague. You want clarity; he keeps it fuzzy. You stay despite the uncertainty, waiting for him to change.',
+        hisPattern: 'Avoids or deflects "where is this going?" Keeps things undefined. Says the right things but doesn\'t act.',
+        herPattern: 'You stay despite uncertainty. You wait for him to be ready, hoping your patience will pay off.',
+        dynamic: 'Ambiguity loop. You want a label, a direction, a plan. He keeps it open-ended.',
+        whatItMeans: 'He keeps the future vague on purpose. He may say he wants something serious—but his actions keep things undefined. That ambiguity isn\'t confusion. It\'s a choice. You\'re waiting for clarity he may never give.',
+        whyYouStay: '"Almost" feels like progress. You\'re so close to having what you want. Leaving feels like giving up right before you\'d get it. Your brain keeps hoping your patience will finally pay off.',
+        ifNothingChanges: ['the relationship stays undefined', 'the future stays vague', 'you\'ll keep waiting for clarity that never arrives', 'emotional investment becomes one-sided'],
+        signsYoureInIt: ['you\'ve asked "where is this going?" and didn\'t get a real answer', 'you stay because "we\'re almost there" or "he just needs time"', 'the future feels like a conversation you\'re not allowed to have', 'you\'ve lowered your expectations to avoid the question'],
+        strengths: 'You know what you\'re looking for. You\'re willing to have the hard conversations. That clarity about what you want is what allows you to stop waiting for someone who won\'t choose you.',
+        watchFor: 'Staying in "almost" because leaving feels like giving up. Waiting for him to change when he hasn\'t shown that he will.',
+        watchForInstead: 'Ask yourself: "Can he answer the question? If not, that\'s the answer." Vagueness is a choice—not confusion.',
+        nextStep: 'You know the pattern now—vague answers, "almost there," repeat. The real question: Does this relationship give you what you actually want? If the answer is no, the next step isn\'t waiting for him to be ready—it\'s deciding what you need and whether he can give it.',
+        coreBelief: 'If I\'m patient enough, he\'ll commit.',
+        behaviorDriver: 'stay patient, or wait for him to be ready',
+        coreBeliefReframe: 'Patience doesn\'t create readiness. If he wanted to commit, he would. Your patience may be enabling his avoidance.',
+        successSubtext: 'the future always stays vague — leaving you hoping things will move forward while nothing actually changes',
+        whyHeActsThisWay: 'He avoids "where is this going?" because clarity would require him to choose. Keeping things undefined lets him have connection without commitment. His actions keep things open-ended. That ambiguity isn\'t confusion. It\'s a choice.',
+        doesHeLikeMe: 'He may care—but his behavior suggests he\'s not ready to choose you in a defined way. "Liking" someone and being willing to commit are different. His vagueness is the answer: if he wanted to move forward, he would. The question: Is he capable of giving me what I need?',
+        whyItFeelsConfusing: '"Almost" feels like progress. You\'re so close to having what you want. The future feels like a conversation you\'re not allowed to have. You\'re not crazy for wanting clarity. The vagueness is the pattern—designed to keep you waiting.'
+    },
+    'emotional-distance': {
+        id: 'emotional-distance',
+        name: 'The Emotional Wall',
+        description: 'You feel shut out. He stays surface-level. You try to get closer; he keeps a wall up.',
+        hisPattern: 'Avoidant. Doesn\'t go deep. Keeps conversations light. Shuts down when things get emotional.',
+        herPattern: 'You try to get closer. You initiate deep conversations, share your feelings—and feel rejected when he doesn\'t match.',
+        dynamic: 'Pursuit-distance. You want emotional intimacy; he maintains distance. The more you pursue, the more he withdraws.',
+        whatItMeans: 'He keeps the emotional wall up on purpose. He may say he cares—but he doesn\'t go deep. You feel shut out. That distance isn\'t about you. It\'s his pattern. You can only decide if you can live with it.',
+        whyYouStay: 'When he does open up—even a little—it feels like a breakthrough. You think "if I just try harder, he\'ll let me in." Your brain keeps trying to solve the distance. That hope keeps you invested longer than you expected.',
+        ifNothingChanges: ['the emotional distance stays', 'you\'ll keep trying to get closer and feeling rejected', 'intimacy becomes one-sided', 'you\'ll exhaust yourself trying to bridge a gap he\'s not trying to close'],
+        signsYoureInIt: ['you initiate deep conversations and he keeps things surface-level', 'you feel shut out when things get emotional', 'you\'ve tried to explain what you need and nothing changed', 'you wonder if you\'re asking for too much'],
+        strengths: 'You want real connection. You\'re willing to be vulnerable. That emotional awareness is what allows you to recognize when someone can\'t meet you—and choose differently.',
+        watchFor: 'Trying to "fix" his emotional unavailability. Taking his distance personally when it may be his pattern.',
+        watchForInstead: 'Ask yourself: "Is he capable of the depth I want?" If he\'s not, that\'s not a you problem—it\'s a compatibility problem.',
+        nextStep: 'You know the pattern now—pursue, he withdraws, repeat. The real question: Does this relationship give you what you actually want? If the answer is no, the next step isn\'t trying harder to get closer—it\'s deciding if you can live with the connection he\'s capable of offering.',
+        coreBelief: 'If I open up more, he\'ll open up too.',
+        behaviorDriver: 'try to get closer, or pursue when he withdraws',
+        coreBeliefReframe: 'His capacity for depth isn\'t something you can create. You can only decide if you can live with what he offers.',
+        successSubtext: 'he keeps an emotional wall up — leaving you trying harder to connect while he stays guarded and distant',
+        whyHeActsThisWay: 'He keeps a wall up because emotional intimacy feels threatening. He may care—but he doesn\'t go deep. He shuts down when things get emotional. It\'s not about you. It\'s his pattern.',
+        doesHeLikeMe: 'He may have feelings—but his capacity for emotional depth is limited. "Liking" someone and being able to meet them emotionally are different. His distance isn\'t a sign he doesn\'t care; it\'s a sign of his capacity. The real question: Can you live with the connection he\'s capable of offering?',
+        whyItFeelsConfusing: 'When he does open up—even a little—it feels like a breakthrough. You think "if I just try harder, he\'ll let me in." You wonder if you\'re asking for too much. You\'re not. The distance is his pattern, not your failure. The confusion comes from trying to solve something that isn\'t yours to fix.'
+    },
+    'mixed-signals-loop': {
+        id: 'mixed-signals-loop',
+        name: 'The Mixed Signals Trap',
+        description: 'His words and actions don\'t match. You\'re always second-guessing. You seek clarity but end up more confused.',
+        hisPattern: 'Says one thing, does another. "I want something serious" but doesn\'t act like it. Inconsistent behavior.',
+        herPattern: 'You seek clarity. You try to understand, to make sense of the disconnect—and feel confused.',
+        dynamic: 'Trust erosion. You can\'t rely on what he says. You\'re always interpreting, wondering what\'s real.',
+        whatItMeans: 'He gives just enough attention to keep you invested—but not enough consistency to move forward. His words and actions don\'t match. That disconnect isn\'t confusion. It\'s the pattern.',
+        whyYouStay: 'The attention comes in cycles. When he\'s warm, it feels real. When he pulls away, you try to understand it. Your brain keeps solving the inconsistency—that keeps you invested longer than you expected.',
+        ifNothingChanges: ['the relationship stays undefined', 'emotional investment becomes one-sided', 'the confusion increases over time', 'clarity rarely appears suddenly'],
+        signsYoureInIt: ['you replay conversations trying to understand what he meant', 'his words and actions don\'t match', 'the relationship feels intense but unclear', 'you keep waiting for clarity that never fully arrives'],
+        strengths: 'You notice inconsistencies. You ask questions. You want clarity instead of pretending everything is fine. That awareness is what allows you to break the pattern.',
+        watchFor: 'Over-analyzing his behavior. Giving him the benefit of the doubt when his actions keep contradicting his words.',
+        watchForInstead: 'Trust his actions, not his words. Neuroscience shows: behavior predicts future behavior. If his actions don\'t match his words, the actions are the truth.',
+        nextStep: 'You know the pattern now—words and actions don\'t match, you decode, repeat. The real question: Does this relationship give you what you actually want? If the answer is no, the next step isn\'t figuring him out—it\'s trusting his actions and deciding what you\'ll accept.',
+        coreBelief: 'If I figure out what he really means, I\'ll know where I stand.',
+        behaviorDriver: 'decode his words, or analyze the disconnect',
+        coreBeliefReframe: 'You\'ll never "figure out" mixed signals—that\'s the trap. Clarity comes from his actions, not your analysis.',
+        successSubtext: 'his words and actions don\'t match — leaving you constantly trying to interpret what he really feels',
+        whyHeActsThisWay: 'His words and his willingness don\'t align. He may believe what he says in the moment—but his behavior reveals his actual investment. Mixed signals aren\'t confusion; they\'re the pattern. He keeps you guessing because that keeps you invested without him showing up consistently.',
+        doesHeLikeMe: 'When words and actions don\'t match, trust the actions. His behavior reveals his real investment. He may say he likes you or wants something serious—but if his actions don\'t back that up, the actions are the truth. The question: What is he willing to do?',
+        whyItFeelsConfusing: 'You\'re trying to decode his words instead of trusting his actions. You replay conversations. You wonder what he meant. The confusion is the trap—it keeps you analyzing instead of deciding. You\'re not crazy. Inconsistency creates anxiety. The confusion is built into the pattern.'
+    },
+    'one-sided-investment': {
+        id: 'one-sided-investment',
+        name: 'The One-Sided Investment',
+        description: 'You\'re doing most of the work. He\'s comfortable with that. You overinvest; he takes more than he gives.',
+        hisPattern: 'Takes more than he gives. Lets you initiate, plan, and invest. Comfortable with the imbalance.',
+        herPattern: 'You overinvest. You tolerate the imbalance, hoping he\'ll step up.',
+        dynamic: 'Imbalance of power. You want reciprocity; he\'s fine with the status quo. You give; he receives.',
+        whatItMeans: 'You\'re doing most of the emotional work—initiating, planning, investing. He\'s comfortable with that. He has no incentive to change when you\'re carrying the relationship. One-sided dynamics rarely shift unless you stop overgiving.',
+        whyYouStay: 'Your effort feels like love. You believe that if you give more, he\'ll match it. Your brain keeps hoping he\'ll finally step up. That hope keeps you invested—and exhausted—longer than you expected.',
+        ifNothingChanges: ['the imbalance stays', 'you\'ll keep overgiving and feeling depleted', 'the relationship only works because you\'re carrying it', 'he has no reason to change'],
+        signsYoureInIt: ['you initiate most plans and conversations', 'you feel like you\'re doing more than he is', 'you\'ve hoped he\'d step up and he hasn\'t', 'the relationship feels like work'],
+        strengths: 'You show up. You\'re generous. You\'re willing to put in effort. That capacity for investment, when matched, is a strength. Right now it\'s being used on someone who isn\'t matching it.',
+        watchFor: 'Confusing your effort with his commitment. Believing that if you give more, he\'ll match it.',
+        watchForInstead: 'Match his energy. Pull back. See if he steps up—or if the relationship was only working because you were carrying it. Research on reciprocity shows: imbalance rarely corrects itself.',
+        nextStep: 'You know the pattern now—you give, he takes, repeat. The real question: Does this relationship give you what you actually want? If the answer is no, the next step isn\'t giving more—it\'s matching his energy and seeing if he steps up.',
+        coreBelief: 'If I give more, he\'ll give back.',
+        behaviorDriver: 'give more, or overinvest hoping he\'ll match',
+        coreBeliefReframe: 'Giving more doesn\'t create reciprocity. He has no incentive to change when you\'re doing the work. Your pullback is the only leverage you have.',
+        successSubtext: 'you\'re putting in most of the effort — trying to hold the relationship together while he gives far less in return',
+        whyHeActsThisWay: 'He takes more than he gives because you allow it. He\'s comfortable with the imbalance—no incentive to change when you\'re carrying the relationship. He may care, but he\'s not matching your effort. That\'s a choice.',
+        doesHeLikeMe: 'He may care—but his behavior suggests he\'s comfortable receiving more than he gives. "Liking" someone shows up in effort: who initiates, who plans, who invests. If you\'re doing most of the work, his investment doesn\'t match yours. The question: Is he willing to show up the way I need?',
+        whyItFeelsConfusing: 'Your effort feels like love. You believe that if you give more, he\'ll match it. The relationship feels like work—and you wonder if that\'s normal. You\'re not crazy for wanting reciprocity. The imbalance is the pattern. The confusion comes from hoping he\'ll change when he hasn\'t shown that he will.'
+    }
 };
 
-// Archetype Categories (Tier 1)
+// Her Response Patterns (Secondary Result)
+window.herResponsePatterns = {
+    'reassurance-seeker': {
+        name: 'The Reassurance Seeker',
+        description: 'When you feel uncertain, you reach out more. You look for proof he cares—through his texts, his effort, his words. You may push for real answers when something bothers you. You initiate to feel connected.'
+    },
+    'space-giver': {
+        name: 'The Space Giver',
+        description: 'When he pulls away, you hold back. You give him space so you don\'t seem needy, even though it\'s hard. You wait for him to come to you.'
+    },
+    'direct-communicator': {
+        name: 'The Direct Communicator',
+        description: 'You ask directly. You bring things up and want real answers. But you often hit a wall—he deflects, gets defensive, or shuts down.'
+    },
+    'hopeful-waiter': {
+        name: 'The Hopeful Waiter',
+        description: 'You stay and hope things will change. You give him time, drop things when he deflects, and wait for him to show up the way you need.'
+    },
+    'protector': {
+        name: 'The Protector',
+        description: 'You shut down or pull back to avoid more hurt. You stop investing, stop bringing things up, and build walls to protect yourself.'
+    },
+    'balanced': {
+        name: 'The Self-Aware One',
+        description: 'You notice the dynamic and try to stay grounded. You\'re not chasing, not shutting down—you\'re aware of what\'s happening and choosing how to respond.'
+    }
+};
+
+// Pattern across relationships (from repetition question)
+window.repetitionInsights = {
+    'same-type': 'You tend to end up in dynamics where you want more than you\'re getting.',
+    'same-ending': 'Your relationships often end in the same kind of confusion.',
+    'same-confusion': 'You often choose people who keep you guessing.',
+    'different': 'You\'ve had different kinds of relationships—this one stands out.',
+    'first-time': 'This feels new to you—or you\'re noticing the pattern for the first time.'
+};
+
+// Situationship Dynamic - sub-pattern modifier (applied when undefined relationship + months without clarity)
+window.situationshipModifier = {
+    name: 'Situationship Dynamic',
+    tagline: 'Undefined relationship · Months without clarity',
+    description: 'Your pattern is amplified by the situationship context—undefined status combined with extended ambiguity.'
+};
+
+// Keep archetypeCategories for backward compatibility (map to relationship pattern)
 window.archetypeCategories = {
-    'control': {
-        name: 'The Anchor',
-        description: 'Stable, grounded, and structured',
-        symbol: '⚓'
-    },
-    'validation': {
-        name: 'The Catalyst',
-        description: 'Dynamic, influential, and driven',
-        symbol: '⚡'
-    },
-    'avoidance': {
-        name: 'The Wanderer',
-        description: 'Free, flowing, and adaptable',
-        symbol: '🌊'
-    },
-    'fear-of-rejection': {
-        name: 'The Guardian',
-        description: 'Protective, loyal, and resilient',
-        symbol: '🛡️'
-    }
+    'hot-cold-cycle': { name: 'The Hot-and-Cold Cycle', description: 'Inconsistent emotional availability', symbol: '🔄' },
+    'breadcrumb-dynamic': { name: 'The Breadcrumb Dynamic', description: 'Minimal effort to keep connection alive', symbol: '🍞' },
+    'commitment-avoidance': { name: 'The Commitment Avoidance', description: 'Future stays vague', symbol: '❓' },
+    'emotional-distance': { name: 'The Emotional Wall', description: 'Emotionally unavailable partner', symbol: '🧊' },
+    'mixed-signals-loop': { name: 'The Mixed Signals Trap', description: 'Words and actions don\'t match', symbol: '〰️' },
+    'one-sided-investment': { name: 'The One-Sided Investment', description: 'You give more than you receive', symbol: '⚖️' }
 };
 
-// Personality Patterns (Tier 2)
-window.personalityPatterns = {
-    'fixer': {
-        name: 'The Fixer',
-        archetypeCategory: 'The Anchor',
-        driver: 'control',
-        rootEmotion: 'Control',
-        coreBelief: 'If I solve it, I\'m safe.',
-        strength: 'Responsible & capable',
-        shadow: 'Overfunctioning → burnout',
-        resetFocus: 'Allow others to own their part',
-        identity: 'You take charge and solve problems, believing that if you can fix things, you\'ll stay safe and in control.',
-        cta: 'The 22-Day Reset will help you release the need to control everything and allow others to take responsibility for their own lives.'
-    },
-    'perfectionist': {
-        name: 'The Perfectionist',
-        archetypeCategory: 'The Anchor',
-        driver: 'control',
-        rootEmotion: 'Control',
-        coreBelief: 'If I do it right, I\'ll be loved.',
-        strength: 'Disciplined & driven',
-        shadow: 'Shame & rigidity',
-        resetFocus: 'Self-acceptance & rest',
-        identity: 'You strive for excellence, believing that doing things perfectly will earn you love and acceptance.',
-        cta: 'The 22-Day Reset will help you embrace self-acceptance, release shame, and find rest without perfection.'
-    },
-    'escaper': {
-        name: 'The Escaper',
-        archetypeCategory: 'The Wanderer',
-        driver: 'avoidance',
-        rootEmotion: 'Avoidance',
-        coreBelief: 'If I don\'t feel it, it can\'t hurt me.',
-        strength: 'Free & creative',
-        shadow: 'Disconnection',
-        resetFocus: 'Face emotions without fleeing',
-        identity: 'You avoid difficult feelings and situations, using freedom and spontaneity as protection from pain.',
-        cta: 'The 22-Day Reset will help you face your emotions without fleeing and build deeper connections.'
-    },
-    'overthinker': {
-        name: 'The Overthinker',
-        archetypeCategory: 'The Wanderer',
-        driver: 'avoidance',
-        rootEmotion: 'Avoidance',
-        coreBelief: 'If I analyze enough, I\'ll feel safe.',
-        strength: 'Insightful & intelligent',
-        shadow: 'Paralysis & anxiety',
-        resetFocus: 'Act before over-analyzing',
-        identity: 'You analyze everything deeply, believing that understanding will protect you from uncertainty and pain.',
-        cta: 'The 22-Day Reset will help you move from analysis to action and break free from paralysis.'
-    },
-    'pleaser': {
-        name: 'The Pleaser',
-        archetypeCategory: 'The Catalyst',
-        driver: 'validation',
-        rootEmotion: 'Validation',
-        coreBelief: 'If they\'re happy, I\'m okay.',
-        strength: 'Empathetic & kind',
-        shadow: 'People-pleasing → resentment',
-        resetFocus: 'Honesty & boundaries',
-        identity: 'You prioritize others\' happiness, believing that keeping people happy will keep you safe and loved.',
-        cta: 'The 22-Day Reset will help you set boundaries, speak your truth, and release the need to please everyone.'
-    },
-    'performer': {
-        name: 'The Performer',
-        archetypeCategory: 'The Catalyst',
-        driver: 'validation',
-        rootEmotion: 'Validation',
-        coreBelief: 'If I impress, I belong.',
-        strength: 'Charismatic & motivated',
-        shadow: 'Burnout & emptiness',
-        resetFocus: 'Authenticity over image',
-        identity: 'You work hard to impress and achieve, believing that success and recognition will make you belong.',
-        cta: 'The 22-Day Reset will help you find authenticity beyond performance and connect with your true self.'
-    },
-    'guarded-one': {
-        name: 'The Guarded One',
-        archetypeCategory: 'The Guardian',
-        driver: 'fear-of-rejection',
-        rootEmotion: 'Fear of Rejection',
-        coreBelief: 'If I don\'t open up, I won\'t get hurt.',
-        strength: 'Independent',
-        shadow: 'Isolation & loneliness',
-        resetFocus: 'Emotional vulnerability',
-        identity: 'You protect yourself by staying independent and closed off, believing that not opening up will prevent rejection.',
-        cta: 'The 22-Day Reset will help you safely open up, practice vulnerability, and build genuine connections.'
-    },
-    'overgiver': {
-        name: 'The Overgiver',
-        archetypeCategory: 'The Guardian',
-        driver: 'fear-of-rejection',
-        rootEmotion: 'Fear of Rejection',
-        coreBelief: 'If I give more, they won\'t leave.',
-        strength: 'Loyal & generous',
-        shadow: 'Self-neglect',
-        resetFocus: 'Balance & self-worth',
-        identity: 'You give endlessly to others, believing that giving more will prevent abandonment and rejection.',
-        cta: 'The 22-Day Reset will help you balance giving with receiving and recognize your own worth.'
-    }
-};
+// Map relationship patterns to personalityPatterns for backward compatibility with results-modal
+window.personalityPatterns = {};
+Object.keys(window.relationshipPatterns || {}).forEach(key => {
+    const rp = window.relationshipPatterns[key];
+    window.personalityPatterns[key] = {
+        name: rp.name,
+        archetypeCategory: rp.name,
+        driver: 'relationship-dynamic',
+        rootEmotion: 'Clarity',
+        coreBelief: rp.coreBelief,
+        strength: rp.strengths,
+        shadow: rp.watchFor,
+        resetFocus: rp.nextStep,
+        identity: rp.description,
+        cta: 'Want clarity about your specific situation? Submit your relationship story for a personalized analysis.'
+    };
+});
 
-// Quiz Questions Data - 36 questions total (34 scored + 2 optional)
-// Love (4), Money (4), Health (4), Lifestyle (1), Physical (1), Productivity (2), Purpose (2), Identity (4), Childhood (4), Trauma (1), Relationships (5), Reflection (2), Birth Date (1), Relationship Status (1)
+// Quiz Questions - 16 scored + 4 special (v2.1 Optimized)
 window.quizData = [
-    // Love & Connection (Questions 1-4)
+    // Q1 - Category 1: Consistency
     {
-        question: "When someone I care about pulls away, my first move is to:",
-        domain: 'LOVE',
+        question: 'How consistent is his attention toward you?',
+        domain: 'HIS_BEHAVIOR',
+        dimension: 'his-behavior',
         options: [
-            { text: "Step in and try to fix what went wrong.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Act casual and avoid the heavy talk.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Do more to win them back.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Emotionally withdraw to protect myself.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'Very consistent — I know where I stand', score: SCORE.NONE, dimension: 'his-behavior', subDimension: 'consistent' },
+            { text: 'Mostly consistent, with small dips', score: SCORE.MILD, dimension: 'his-behavior', subDimension: 'mostly-consistent' },
+            { text: 'Hot and cold — it changes a lot', score: SCORE.STRONG, dimension: 'his-behavior', subDimension: 'hot-cold' },
+            { text: 'He disappears and comes back without explanation', score: SCORE.STRONG, dimension: 'his-behavior', subDimension: 'hot-cold' }
         ]
     },
+    // Q2 - Category 2: Emotional availability
     {
-        question: "I feel safest in relationships when:",
-        domain: 'LOVE',
+        question: 'How emotionally open is he with you?',
+        domain: 'HIS_BEHAVIOR',
+        dimension: 'his-behavior',
         options: [
-            { text: "I can set the pace and keep things on track.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Nothing feels too serious or intense.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "I am reassured and appreciated.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "I keep some distance until I trust fully.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'Very open — we talk about feelings easily', score: SCORE.NONE, dimension: 'his-behavior', subDimension: 'open' },
+            { text: 'Somewhat open, but I usually bring it up first', score: SCORE.MILD, dimension: 'his-behavior', subDimension: 'one-sided' },
+            { text: 'Rarely — he keeps things surface-level', score: SCORE.STRONG, dimension: 'his-behavior', subDimension: 'emotional-distance' },
+            { text: 'Almost never — emotional topics shut him down', score: SCORE.STRONG, dimension: 'his-behavior', subDimension: 'emotional-distance' }
         ]
     },
+    // Q3 - Category 3: Conflict behavior (NEW)
     {
-        question: "During conflict, I usually:",
-        domain: 'LOVE',
+        question: 'When tension comes up between you, what usually happens?',
+        domain: 'HIS_BEHAVIOR',
+        dimension: 'his-behavior',
         options: [
-            { text: "Take charge and resolve it quickly.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Step away or distract myself.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Apologize or smooth things over fast.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Emotionally withdraw and go quiet.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'We talk through it', score: SCORE.NONE, dimension: 'his-behavior', subDimension: 'open' },
+            { text: 'It gets avoided', score: SCORE.MODERATE, dimension: 'his-behavior', subDimension: 'avoidant' },
+            { text: 'It creates distance between us', score: SCORE.STRONG, dimension: 'his-behavior', subDimension: 'emotional-distance' },
+            { text: 'He disappears', score: SCORE.STRONG, dimension: 'his-behavior', subDimension: 'hot-cold' }
         ]
     },
+    // Q4 - Category 4: Commitment clarity
     {
-        question: "When love feels uncertain, I tend to:",
-        domain: 'LOVE',
+        question: 'When you\'ve talked about the future or defining things, he usually…',
+        domain: 'HIS_BEHAVIOR',
+        dimension: 'his-behavior',
         options: [
-            { text: "Plan and try to control the outcome.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Change the subject or avoid the talk.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Please more to feel wanted.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Pull back so I cannot be hurt.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'Avoids the topic', score: SCORE.STRONG, dimension: 'his-behavior', subDimension: 'commitment-avoidance' },
+            { text: 'Keeps things vague ("let\'s just see where it goes")', score: SCORE.STRONG, dimension: 'his-behavior', subDimension: 'commitment-avoidance' },
+            { text: 'Says he wants the same things but doesn\'t follow through', score: SCORE.MODERATE, dimension: 'his-behavior', subDimension: 'mixed-signals' },
+            { text: 'Is clear about his intentions', score: SCORE.NONE, dimension: 'his-behavior', subDimension: 'clear' }
         ]
     },
-    // Money & Security (Questions 5-8)
+    // Q5 - Category 5: Response to vulnerability (NEW - high-value diagnostic)
     {
-        question: "My relationship with money often feels:",
-        domain: 'MONEY',
+        question: 'When you express your feelings or ask for clarity about the relationship, what usually happens?',
+        domain: 'HIS_BEHAVIOR',
+        dimension: 'his-behavior',
         options: [
-            { text: "Safe only when I am fully in control.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Stressful, so I avoid thinking about it.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Tied to my value and success.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Uncertain, and I fear losing it.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'He listens, tries to understand, and we talk through it', score: SCORE.NONE, dimension: 'his-behavior', subDimension: 'open' },
+            { text: 'He reassures me in the moment, but nothing really changes afterward', score: SCORE.MODERATE, dimension: 'his-behavior', subDimension: 'mixed-signals' },
+            { text: 'He becomes distant or pulls away after the conversation', score: SCORE.STRONG, dimension: 'his-behavior', subDimension: 'hot-cold' },
+            { text: 'He shuts the conversation down or becomes defensive', score: SCORE.STRONG, dimension: 'his-behavior', subDimension: 'emotional-distance' }
         ]
     },
+    // Q6 - Category 6: Effort balance
     {
-        question: "When a money problem hits, I:",
-        domain: 'MONEY',
+        question: 'Who puts in most of the effort in the relationship?',
+        domain: 'DYNAMIC',
+        dimension: 'dynamic',
         options: [
-            { text: "Go into fix mode with plans and tasks.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Delay and hope it feels easier later.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Feel like I failed or let people down.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Freeze and worry about worst cases.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'We both contribute equally', score: SCORE.NONE, dimension: 'dynamic', subDimension: 'balanced' },
+            { text: 'I do most of the initiating and planning', score: SCORE.STRONG, dimension: 'dynamic', subDimension: 'one-sided-investment' },
+            { text: 'I used to put in more, but I\'ve pulled back', score: SCORE.MODERATE, dimension: 'her-response', subDimension: 'protector' },
+            { text: 'He shows up when he wants to', score: SCORE.STRONG, dimension: 'dynamic', subDimension: 'breadcrumb-dynamic' }
         ]
     },
+    // Q7 - Category 7: Initiation pattern
     {
-        question: "Success to me mostly means:",
-        domain: 'MONEY',
+        question: 'Who usually initiates communication or plans?',
+        domain: 'DYNAMIC',
+        dimension: 'dynamic',
         options: [
-            { text: "Stability and control over my life.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Freedom and flexible choices.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Being respected and recognized.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Feeling safe and secure with a cushion.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'We both initiate equally', score: SCORE.NONE, dimension: 'dynamic', subDimension: 'balanced' },
+            { text: 'I usually reach out first', score: SCORE.STRONG, dimension: 'dynamic', subDimension: 'one-sided-investment' },
+            { text: 'He reaches out — but inconsistently', score: SCORE.MODERATE, dimension: 'dynamic', subDimension: 'hot-cold-cycle' },
+            { text: 'It depends on what he wants', score: SCORE.MODERATE, dimension: 'dynamic', subDimension: 'breadcrumb-dynamic' }
         ]
     },
+    // Q8 - Category 8: Emotional aftermath (powerful diagnostic)
     {
-        question: "When my income changes, I usually:",
-        domain: 'MONEY',
+        question: 'How do you usually feel after spending time with him?',
+        domain: 'EMOTIONAL_STATE',
+        dimension: 'emotional-state',
         options: [
-            { text: "Rework the plan and tighten systems.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Avoid looking closely for a while.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Link it to how worthy I am.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Worry and become guarded with spending.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'Secure and calm', score: SCORE.NONE, dimension: 'emotional-state', subDimension: 'balanced' },
+            { text: 'Happy but slightly unsure', score: SCORE.MILD, dimension: 'emotional-state', subDimension: 'breadcrumb-dynamic' },
+            { text: 'Anxious or overthinking', score: SCORE.STRONG, dimension: 'emotional-state', subDimension: 'hot-cold-cycle' },
+            { text: 'Emotionally drained', score: SCORE.STRONG, dimension: 'emotional-state', subDimension: 'one-sided-investment' }
         ]
     },
-    // Health & Habits (Questions 9-12)
+    // Q9 - Dynamic: Overall feel (primary pattern)
     {
-        question: "When I feel overwhelmed, I usually:",
-        domain: 'HEALTH',
+        question: 'Which of these feels most like your relationship right now?',
+        domain: 'DYNAMIC',
+        dimension: 'dynamic',
         options: [
-            { text: "Make a clear plan and structure my day.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Numb out or distract myself.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Look for praise or support to keep going.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Pull back from others and keep to myself.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'Hot and cold — we feel close one moment, then distant the next', score: SCORE.STRONG, dimension: 'dynamic', subDimension: 'hot-cold-cycle' },
+            { text: 'He gives just enough attention to keep me interested, but never enough to feel secure', score: SCORE.STRONG, dimension: 'dynamic', subDimension: 'breadcrumb-dynamic' },
+            { text: 'The future always feels unclear — we never fully define where this is going', score: SCORE.STRONG, dimension: 'dynamic', subDimension: 'commitment-avoidance' },
+            { text: 'His words and actions don\'t match, and it leaves me second-guessing things', score: SCORE.STRONG, dimension: 'dynamic', subDimension: 'mixed-signals-loop' },
+            { text: 'I feel like I\'m doing most of the emotional work in the relationship', score: SCORE.STRONG, dimension: 'dynamic', subDimension: 'one-sided-investment' }
         ]
     },
+    // Q10 - Her response 1: Reaction to distance (differentiated scoring)
     {
-        question: "I stay consistent with routines when:",
-        domain: 'HEALTH',
+        question: 'When you feel him pulling away, what do you tend to do?',
+        domain: 'HER_RESPONSE',
+        dimension: 'her-response',
         options: [
-            { text: "I control the schedule and rules.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "I feel inspired or in the mood.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Someone notices and cheers me on.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "I feel safe and emotionally held.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'Reach out more to reconnect', score: 6, dimension: 'her-response', subDimension: 'reassurance-seeker' },
+            { text: 'Try to act calm and give him space', score: 4, dimension: 'her-response', subDimension: 'space-giver' },
+            { text: 'Ask him directly what\'s going on', score: 2, dimension: 'her-response', subDimension: 'direct-communicator' },
+            { text: 'Pull back to protect myself', score: 5, dimension: 'her-response', subDimension: 'protector' }
         ]
     },
+    // Q11 - Her response 2: When unsure
     {
-        question: "When it comes to your physical health, what's your biggest struggle?",
-        domain: 'HEALTH',
+        question: 'When you\'re unsure where you stand, what do you usually do?',
+        domain: 'HER_RESPONSE',
+        dimension: 'her-response',
         options: [
-            { text: "Struggling to lose weight despite strict dieting and over-exercising.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Lack of energy, feeling sluggish, or dealing with chronic fatigue.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Inconsistent motivation - I start strong but lose momentum when results don't come fast.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Body image issues and feeling disconnected from my body.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'Look for signs he cares (texts, effort, attention)', score: 6, dimension: 'her-response', subDimension: 'reassurance-seeker' },
+            { text: 'Pretend I\'m fine so I don\'t seem needy', score: 4, dimension: 'her-response', subDimension: 'space-giver' },
+            { text: 'Ask directly where we stand', score: 2, dimension: 'her-response', subDimension: 'direct-communicator' },
+            { text: 'Withdraw emotionally so I don\'t get hurt', score: 5, dimension: 'her-response', subDimension: 'protector' }
         ]
     },
+    // Q12 - Her response 3: When bothered
     {
-        question: "When I try to build a new habit, I usually:",
-        domain: 'HEALTH',
+        question: 'When something he does bothers you, you usually…',
+        domain: 'HER_RESPONSE',
+        dimension: 'her-response',
         options: [
-            { text: "Create a detailed system and stick to it rigidly, even if it's unsustainable.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Start strong but lose momentum when it gets difficult or boring.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Need external accountability, support, or recognition to stay consistent.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Quit early because I feel like I'm already failing or not good enough.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'Bring it up and push for clarity', score: 5, dimension: 'her-response', subDimension: 'reassurance-seeker' },
+            { text: 'Mention it once but drop it if he deflects', score: 4, dimension: 'her-response', subDimension: 'space-giver' },
+            { text: 'Tell him clearly how it affects me', score: 2, dimension: 'her-response', subDimension: 'direct-communicator' },
+            { text: 'Keep it to myself to avoid conflict', score: 6, dimension: 'her-response', subDimension: 'protector' }
         ]
     },
-    // Lifestyle & Daily Habits (Question 13)
+    // Q13 - Category 9: Pattern history
     {
-        question: "My relationship with food is:",
-        domain: 'LIFESTYLE',
+        question: 'Looking at your past relationships, which feels most true?',
+        domain: 'REPETITION',
+        dimension: 'repetition',
         options: [
-            { text: "Rigid and controlled - I follow strict rules and feel guilty when I break them.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Emotional and chaotic - I eat to numb feelings, then feel shame about it.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Tied to my self-worth - I feel good about myself when I eat 'right' and bad when I don't.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Disconnected - I often forget to eat or eat mindlessly, feeling disconnected from my body.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'I keep attracting the same type of partner', score: SCORE.MILD, dimension: 'repetition', subDimension: 'same-type', value: 'same-type' },
+            { text: 'My relationships tend to follow the same pattern', score: SCORE.MILD, dimension: 'repetition', subDimension: 'same-ending', value: 'same-ending' },
+            { text: 'I often want more than the other person does', score: SCORE.MILD, dimension: 'repetition', subDimension: 'same-confusion', value: 'same-confusion' },
+            { text: 'This dynamic feels different from my past ones', score: SCORE.NONE, dimension: 'repetition', subDimension: 'different', value: 'different' },
+            { text: 'I\'m just now starting to notice a pattern', score: SCORE.NONE, dimension: 'repetition', subDimension: 'first-time', value: 'first-time' }
         ]
     },
-    // Physical Health & Body (Question 14)
+    // Q14 - Context: Duration (for situationship modifier)
     {
-        question: "My relationship with my body is:",
-        domain: 'PHYSICAL',
+        question: 'How long has this pattern between you been going on?',
+        domain: 'CONTEXT',
+        dimension: 'context',
         options: [
-            { text: "Critical and controlling - I'm constantly trying to fix or improve it.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Disconnected - I avoid thinking about it or looking at it closely.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Tied to my worth - I feel good about myself when my body looks 'right' to others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Shameful - I feel like my body isn't good enough and hide it from others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'Less than 3 months', score: SCORE.NONE, dimension: 'context', subDimension: 'short' },
+            { text: '3–6 months', score: SCORE.MILD, dimension: 'context', subDimension: 'medium' },
+            { text: '6–12 months', score: SCORE.MODERATE, dimension: 'context', subDimension: 'long' },
+            { text: 'Over a year', score: SCORE.STRONG, dimension: 'context', subDimension: 'very-long' }
         ]
     },
-    // Productivity & Time (Questions 15-16)
+    // Q15 - Attraction: Who wants more
     {
-        question: "My relationship with time is:",
-        domain: 'PRODUCTIVITY',
+        question: 'Who wants more clarity or commitment right now?',
+        domain: 'ATTRACTION',
+        dimension: 'attraction',
         options: [
-            { text: "Rigid and scheduled - I plan every hour and feel stressed when things don't go as planned.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Chaotic and avoidant - I lose track of time or procrastinate on important tasks.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Driven by others' needs - I fill my time helping others and neglect my own priorities.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Isolated and minimal - I keep my schedule empty to avoid depending on others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'We both want the same thing', score: SCORE.NONE, dimension: 'attraction', subDimension: 'balanced' },
+            { text: 'I want more clarity than he does', score: SCORE.STRONG, dimension: 'attraction', subDimension: 'she-wants-more' },
+            { text: 'He holds the power — I\'m waiting on him', score: SCORE.STRONG, dimension: 'attraction', subDimension: 'he-holds-cards' },
+            { text: 'We\'re both unsure', score: SCORE.MODERATE, dimension: 'attraction', subDimension: 'mutual-uncertainty' }
         ]
     },
+    // Q16 - Attraction: Her fear
     {
-        question: "When I procrastinate, it's usually because:",
-        domain: 'PRODUCTIVITY',
+        question: 'What worries you most about this relationship?',
+        domain: 'ATTRACTION',
+        dimension: 'attraction',
         options: [
-            { text: "I'm overthinking and trying to plan everything perfectly before starting.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "The task feels overwhelming or boring, so I avoid it and distract myself.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "I'm waiting for motivation or someone to hold me accountable.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "I fear I'll fail or be judged, so I delay starting.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
+            { text: 'That I\'m wasting my time', score: SCORE.MILD, dimension: 'attraction', subDimension: 'she-wants-more' },
+            { text: 'That I\'m ignoring red flags', score: SCORE.MILD, dimension: 'attraction', subDimension: 'she-wants-more' },
+            { text: 'That he\'ll eventually leave', score: SCORE.MILD, dimension: 'attraction', subDimension: 'he-holds-cards' },
+            { text: 'That I\'ll never get real clarity', score: SCORE.MILD, dimension: 'attraction', subDimension: 'she-wants-more' },
+            { text: 'That I\'m more invested than he is', score: SCORE.MILD, dimension: 'attraction', subDimension: 'he-holds-cards' }
         ]
     },
-    // Purpose & Flow (Questions 17-18)
+    // Birth Date (Q17) - Optional
     {
-        question: "I feel most alive and in flow when I'm:",
-        domain: 'PURPOSE',
-        options: [
-            { text: "Leading a project or creating a structured system that works perfectly.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Completely free and spontaneous, with no pressure or expectations.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Being recognized or appreciated for my work and contributions.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Alone and fully immersed in something that makes me feel safe.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "My relationship with my goals and purpose is:",
-        domain: 'PURPOSE',
-        options: [
-            { text: "Rigid and planned - I have detailed goals and feel off-track if I deviate.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Unclear and avoidant - I keep my options open and avoid committing to one path.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Tied to others' approval - I pursue goals that will make others proud of me.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Fearful and hidden - I have dreams but don't pursue them for fear of rejection.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    // Identity & Self (Questions 19-22)
-    {
-        question: "When I think about my direction in life, I:",
-        domain: 'IDENTITY',
-        options: [
-            { text: "Plan deeply and try to control outcomes.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Switch paths or keep it open.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Focus on how others will see me.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Doubt if I truly belong anywhere.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "My biggest fear about failing is:",
-        domain: 'IDENTITY',
-        options: [
-            { text: "Losing control of what happens next.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Having to face hard feelings.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Disappointing people who believed in me.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Being rejected or left behind.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "I feel most like myself when:",
-        domain: 'IDENTITY',
-        options: [
-            { text: "I am leading and creating structure.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "I am free and spontaneous.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "I am appreciated and seen.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "I am understood at a deep level.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "When I think about changing who I am, I feel:",
-        domain: 'IDENTITY',
-        options: [
-            { text: "Anxious about losing control of my identity and what I've built.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Resistant - I avoid thinking about it because change feels uncomfortable.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Worried about what others will think if I change.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Afraid that changing means I wasn't good enough as I was.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    // Childhood & Origin (Questions 23-26)
-    {
-        question: "Growing up, when I was upset or emotional, my parents usually:",
-        domain: 'CHILDHOOD',
-        options: [
-            { text: "Took charge and tried to fix or solve it for me.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Avoided talking about it or changed the subject.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Reassured me and made me feel better.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Withdrew or seemed uncomfortable with my emotions.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "As a child, I felt safest when:",
-        domain: 'CHILDHOOD',
-        options: [
-            { text: "I was in control of my environment and knew what to expect.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "I could escape or avoid difficult situations.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "I was praised, appreciated, or recognized by others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "I was alone or didn't have to depend on anyone.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "As a child, I learned that to feel safe and loved, I needed to:",
-        domain: 'CHILDHOOD',
-        options: [
-            { text: "Be responsible, capable, and solve problems.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Stay free, avoid conflict, and not make waves.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Please others, be helpful, and make people happy.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Stay independent and not rely on others too much.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "When I needed something as a child (comfort, help, attention), my parents usually:",
-        domain: 'CHILDHOOD',
-        options: [
-            { text: "Provided it but only if I handled things correctly first.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Were inconsistent — sometimes there, sometimes not.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Provided it warmly and made me feel valued.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Were unavailable or made me feel like a burden.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    // Trauma & Adversity (Question 27)
-    {
-        question: "Growing up, did you experience significant challenges, difficult situations, or adversity that shaped how you learned to cope?",
-        domain: 'TRAUMA',
-        options: [
-            { text: "Yes, I had to take care of others or be responsible for things beyond my age.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Yes, I learned to escape or avoid difficult situations to protect myself.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Yes, I learned that I had to earn love or approval through achievement or being helpful.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Yes, I experienced abandonment, rejection, or learned I couldn't depend on others.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    // Relationship Patterns (Questions 28-32)
-    {
-        question: "When someone gets too close or wants deeper intimacy, I usually:",
-        domain: 'RELATIONSHIPS',
-        options: [
-            { text: "Take control and set boundaries to manage the pace.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Pull away or create distance to avoid getting too close.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Try harder to be what they want so they don't leave.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Shut down emotionally or push them away to protect myself.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "When a relationship starts getting serious or committed, I tend to:",
-        domain: 'RELATIONSHIPS',
-        options: [
-            { text: "Plan and control how the relationship progresses.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Feel trapped and want to escape or keep options open.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Work harder to prove I'm worthy of commitment.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Fear they'll see the real me and reject me.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "My relationships typically end because:",
-        domain: 'RELATIONSHIPS',
-        options: [
-            { text: "I try to control or fix things too much and it becomes too much.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "I avoid difficult conversations until it's too late.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "I lose myself trying to please them and they lose interest.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "I push them away before they can reject me.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "I'm typically drawn to partners who:",
-        domain: 'RELATIONSHIPS',
-        options: [
-            { text: "Need fixing or managing, so I can be in control.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Keep things casual and don't want too much commitment.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Make me feel needed, valued, or appreciated.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Are emotionally unavailable, so I don't have to risk rejection.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "When I feel lonely or want connection, I usually:",
-        domain: 'RELATIONSHIPS',
-        options: [
-            { text: "Take charge and create opportunities to connect on my terms.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Distract myself or avoid thinking about it.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "Seek validation or approval from others to feel less alone.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Isolate myself because reaching out feels too risky.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    // Reflection (Questions 33-34)
-    {
-        question: "The hardest thing for me to let go of right now is:",
-        domain: 'REFLECTION',
-        options: [
-            { text: "Control of people or outcomes.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "Discomfort I keep avoiding.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "The need for approval.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Fear of being rejected.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    {
-        question: "Right now, my sense of self-worth and ability to change depends on:",
-        domain: 'REFLECTION',
-        options: [
-            { text: "How well I manage, perform, and control my life.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'control' },
-            { text: "How easy and pressure-free life feels - I avoid change because it's uncomfortable.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'avoidance' },
-            { text: "How much others value, praise, or validate me - I need their approval to believe I can change.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'validation' },
-            { text: "Whether I feel fully accepted - I fear I'm not good enough to change or transform.", score: QUIZ_CONFIG.POINTS_PER_ANSWER, driver: 'fear-of-rejection' }
-        ]
-    },
-    // Birth Date (Question 35 / Index 34) - Special handling, not scored
-    {
-        question: "What is your birth date?",
+        question: 'What is your birth date?',
         questionType: 'birthdate',
         domain: 'BIRTHDATE',
-        options: [] // Will be handled as text input
+        options: []
     },
-    // Relationship Status (Question 36 / Index 35) - Special handling, not scored, REQUIRED
+    // Relationship Status (Q18) - Required
     {
-        question: "What is your current relationship status?",
+        question: 'Which best describes your situation?',
         questionType: 'relationship-status',
         domain: 'RELATIONSHIP_STATUS',
         required: true,
         options: [
-            { text: "Single", value: "single" },
-            { text: "Dating / Casually seeing someone", value: "dating" },
-            { text: "In a committed relationship", value: "in a relationship" },
-            { text: "Married", value: "married" },
-            { text: "Divorced / Separated", value: "divorced" },
-            { text: "Prefer not to say", value: "prefer-not-to-say" }
+            { text: 'Dating — getting to know each other', value: 'dating' },
+            { text: 'Situationship / undefined', value: 'situationship' },
+            { text: 'In a relationship but unsure about it', value: 'emotionally-invested' },
+            { text: 'Recently ended', value: 'recently-ended' },
+            { text: 'Not in one now, but patterns keep repeating', value: 'not-in-one' }
         ]
     },
-    // Current Pain (Question 37 / Index 36) - Personalization only, REQUIRED
+    // Biggest Challenge (Q19) - Required
     {
         question: "What's the biggest challenge you're facing in love or relationships right now?",
         questionType: 'current-pain',
         domain: 'CURRENT_PAIN',
         required: true,
         options: [
-            { text: "I keep attracting the same type", value: "same-type" },
-            { text: "I stay when I know I shouldn't", value: "stay-when-shouldnt" },
-            { text: "I push people away when it gets real", value: "push-away" },
-            { text: "I lose interest when someone treats me well", value: "lose-interest" },
-            { text: "I sabotage when it gets serious", value: "sabotage" },
-            { text: "I feel stuck or disconnected in my relationship", value: "stuck-disconnected" },
-            { text: "I'm recovering but keep going back", value: "keep-going-back" },
-            { text: "I was cheated on or betrayed", value: "cheated-betrayed" },
-            { text: "I tolerate less than I deserve", value: "tolerate-less" },
-            { text: "I ignore red flags or make excuses", value: "ignore-red-flags" },
-            { text: "Emotional unavailability (theirs or mine)", value: "emotional-unavailable" },
-            { text: "Toxic or abusive patterns", value: "toxic-patterns" },
-            { text: "Same fights over and over", value: "same-fights" },
-            { text: "Situationship that won't progress", value: "situationship" },
-            { text: "I'm tired of being single", value: "tired-single" },
-            { text: "I don't know why relationships keep failing", value: "dont-know-why" },
-            { text: "Other", value: "other" }
+            { text: 'I keep attracting emotionally unavailable people', value: 'same-type' },
+            { text: 'I stay even when I know it\'s not right', value: 'stay-when-shouldnt' },
+            { text: 'I sabotage when things get serious', value: 'sabotage' },
+            { text: 'I tolerate less than I deserve', value: 'tolerate-less' },
+            { text: 'I ignore red flags or make excuses', value: 'ignore-red-flags' },
+            { text: 'Situationship that won\'t progress', value: 'situationship' },
+            { text: 'Recovering from betrayal or cheating', value: 'cheated-betrayed' },
+            { text: 'I don\'t understand why relationships keep failing', value: 'dont-know-why' },
+            { text: 'Other', value: 'other' }
         ]
     },
-    // Biggest Fear (Question 38 / Index 37) - Personalization only, REQUIRED
+    // Biggest Fear (Q20) - Required
     {
         question: "What's your biggest fear when it comes to love or relationships?",
         questionType: 'biggest-fear',
         domain: 'BIGGEST_FEAR',
         required: true,
         options: [
-            { text: "Being cheated on or betrayed", value: "cheated-betrayed" },
-            { text: "Being abandoned or left", value: "abandoned" },
-            { text: "Being rejected or not chosen", value: "rejected" },
-            { text: "Being alone forever", value: "alone-forever" },
-            { text: "Losing myself in the relationship", value: "losing-myself" },
-            { text: "Being trapped or suffocated", value: "trapped" },
-            { text: "Not being good enough", value: "not-good-enough" },
-            { text: "Being seen and then rejected", value: "seen-then-rejected" },
-            { text: "Being replaced by someone else", value: "replaced" },
-            { text: "Being hurt again (after past pain)", value: "hurt-again" },
-            { text: "Being unwanted or invisible", value: "unwanted" },
-            { text: "Being controlled or losing my freedom", value: "controlled" },
-            { text: "That I'm the problem", value: "im-the-problem" },
-            { text: "That I'll never find the right person", value: "never-find-right" },
-            { text: "That I'll repeat my parents' relationship", value: "repeat-parents" },
-            { text: "Being emotionally neglected", value: "emotionally-neglected" },
-            { text: "Being taken for granted", value: "taken-for-granted" },
-            { text: "Being vulnerable and getting hurt", value: "vulnerable-hurt" },
-            { text: "Other", value: "other" }
+            { text: 'Being abandoned', value: 'abandoned' },
+            { text: 'Being rejected or not chosen', value: 'rejected' },
+            { text: 'Being alone long-term', value: 'alone-forever' },
+            { text: 'Losing myself in a relationship', value: 'losing-myself' },
+            { text: 'Being hurt again', value: 'hurt-again' },
+            { text: 'Being emotionally neglected', value: 'emotionally-neglected' },
+            { text: 'That I\'m the problem', value: 'im-the-problem' },
+            { text: 'That I\'ll never find the right person', value: 'never-find-right' },
+            { text: 'Other', value: 'other' }
         ]
     }
 ];
-

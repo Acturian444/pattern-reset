@@ -117,7 +117,7 @@ class PostForm {
             // MVP: Single static prompt when prompts are hidden
             const mvpPrompt = document.createElement('div');
             mvpPrompt.className = 'letitout-mvp-prompt';
-            mvpPrompt.textContent = "What's happening in your relationship that you need to let out?";
+            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">What's happening in your relationship?</span><span class=\"letitout-mvp-subtitle\">Situation · Story · Confession</span>";
             formContent.appendChild(mvpPrompt);
         }
 
@@ -466,15 +466,10 @@ class PostForm {
     }
 
     showConfirmationAndRedirect(newPostId, truthNumber) {
-        this.showConfirmationModal(truthNumber);
-        setTimeout(() => {
-            this.hideConfirmationModal();
-            // Redirect to Let It Out wall page with post highlight
-            window.location.replace('letitout.html?post=' + encodeURIComponent(newPostId) + '#wall');
-        }, 1500);
+        this.showConfirmationModal(truthNumber, newPostId);
     }
 
-    showConfirmationModal(truthNumber) {
+    showConfirmationModal(truthNumber, newPostId) {
         // Remove any existing overlay
         this.hideConfirmationModal();
         const overlay = document.createElement('div');
@@ -490,9 +485,30 @@ class PostForm {
               <span class="confirmation-line">${truthLine}</span>
               <span class="confirmation-line">You're not alone here.</span>
             </div>
+            <div class="letitout-confirmation-funnel">
+              <p class="letitout-confirmation-funnel-text">Why does this keep happening in your relationships?</p>
+              <a href="index.html" class="letitout-confirmation-cta" id="confirmation-quiz-cta">Discover Your Pattern →</a>
+            </div>
           </div>
         `;
         document.body.appendChild(overlay);
+
+        // Redirect to wall after 6 seconds if user doesn't click CTA
+        const redirectTimeout = setTimeout(() => {
+            this.hideConfirmationModal();
+            window.location.replace('letitout.html?post=' + encodeURIComponent(newPostId) + '#wall');
+        }, 6000);
+
+        // If user clicks CTA, go to quiz and cancel redirect
+        const cta = overlay.querySelector('#confirmation-quiz-cta');
+        if (cta) {
+            cta.addEventListener('click', (e) => {
+                e.preventDefault();
+                clearTimeout(redirectTimeout);
+                this.hideConfirmationModal();
+                window.location.href = 'index.html';
+            });
+        }
     }
 
     hideConfirmationModal() {
@@ -540,18 +556,17 @@ class PostForm {
             };
             this.buttonContainer.appendChild(submitButton);
 
-            // Add info text below the CTA button
-            const infoText = document.createElement('div');
-            infoText.className = 'letitout-info-text';
-            infoText.style.marginTop = '1.5rem';
-            infoText.textContent = 'Your words hold power. Your truth matters.';
-            this.buttonContainer.appendChild(infoText);
+            // Add Pattern Quiz funnel (matching copy + CTA link)
+            const quizFunnel = document.createElement('div');
+            quizFunnel.className = 'letitout-quiz-funnel';
+            quizFunnel.innerHTML = '<p class="letitout-quiz-funnel-text">Why does this keep happening in your relationships?</p><a href="index.html" class="letitout-quiz-funnel-cta">Discover Your Pattern →</a>';
+            this.buttonContainer.appendChild(quizFunnel);
 
             // Add "Need Support" button
             const supportButton = document.createElement('button');
             supportButton.type = 'button';
             supportButton.className = 'support-link-btn';
-            supportButton.textContent = 'Need support right now?';
+            supportButton.textContent = 'Feeling overwhelmed?';
             supportButton.onclick = () => this.openSupportModal();
             this.buttonContainer.appendChild(supportButton);
 
@@ -906,7 +921,7 @@ class PostForm {
         banner.className = 'free-unlock-banner';
         banner.innerHTML = `
             You've unlocked replies for this post! You have <b>${left}</b> free reply view${left === 1 ? '' : 's'} left.
-            <button class="close-btn" style="position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 1.2rem; color: #ca0013; cursor: pointer; padding: 0.5rem; line-height: 1;">&times;</button>
+            <button class="close-btn" style="position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 1.2rem; color: #f10000; cursor: pointer; padding: 0.5rem; line-height: 1;">&times;</button>
         `;
         const modalContent = document.querySelector('.letitout-my-posts-modal');
         if (modalContent) {
@@ -1374,8 +1389,8 @@ class PostForm {
         overlay.innerHTML = `
             <div class="support-modal">
                 <button class="support-modal-close">&times;</button>
-                <h3 class="support-modal-title">You're not alone.</h3>
-                <p class="support-modal-body">If you're in immediate danger or feel overwhelmed, you can call or text 988 for 24/7 free and confidential support.</p>
+                <h3 class="support-modal-title">You don't have to go through this alone.</h3>
+                <p class="support-modal-body">If you're feeling overwhelmed or in immediate danger, free and confidential support is available 24/7.</p>
                 <div class="support-modal-actions">
                     <a href="tel:988" class="support-modal-btn call-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1390,6 +1405,7 @@ class PostForm {
                         <span>Text 988</span>
                     </a>
                 </div>
+                <p class="support-modal-footer">You deserve support.</p>
             </div>
         `;
 

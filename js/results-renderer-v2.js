@@ -7,7 +7,7 @@
     window.ResultsRenderer = {
         // Load and render full results content
         renderFullResults: function(container, data) {
-            const { pattern, archetype, patternDominance, dominanceLabel, driverPercentages, totalScore, exactAge, relationshipStatus, currentPain, biggestFear, currentPainOtherText, biggestFearOtherText, firstName, birthDate, sortedDrivers, answers, driverScores } = data;
+            const { pattern, archetype, patternDominance, dominanceLabel, driverPercentages, totalScore, exactAge, relationshipStatus, currentPain, biggestFear, currentPainOtherText, biggestFearOtherText, firstName, birthDate, sortedDrivers, answers, driverScores, herResponsePattern, repetitionInsight, situationshipModifier } = data;
             
             // Get driver names and descriptions
             const driverNames = {
@@ -94,7 +94,10 @@
                 personalizedIntro,
                 nextResetDate,
                 answers: answers || [],
-                driverScores: driverScores || {}
+                driverScores: driverScores || {},
+                herResponsePattern: herResponsePattern || null,
+                repetitionInsight: repetitionInsight || null,
+                situationshipModifier: situationshipModifier || false
             });
             
             container.innerHTML = html;
@@ -115,12 +118,18 @@
             driverNames, driverDescriptions, personalizedIntro, nextResetDate,
             exactAge, relationshipStatus, currentPain, biggestFear,
             currentPainOtherText, biggestFearOtherText,
-            answers, driverScores, quizData, birthDate
+            answers, driverScores, quizData, birthDate,
+            herResponsePattern, repetitionInsight
         } = data;
         
         // Safety checks - ensure required data exists
         if (!pattern || !pattern.name) {
             return '<div class="results-section"><h2>Error Loading Results</h2><p>Pattern data is missing. Please complete the quiz first.</p></div>';
+        }
+        
+        // Relationship Dynamic Quiz: use dedicated layout when pattern has hisPattern, herPattern, etc.
+        if (pattern.hisPattern && pattern.herPattern && pattern.dynamic) {
+            return getRelationshipDynamicResultsHTML(pattern, herResponsePattern, repetitionInsight, firstName, relationshipStatus, exactAge, currentPain, biggestFear, currentPainOtherText, biggestFearOtherText, data.situationshipModifier, data.answers || [], data.quizData || window.quizData || []);
         }
         
         if (!archetype || !archetype.name) {
@@ -221,49 +230,49 @@
                     <h2 class="about-pattern-title" style="margin-bottom: 0.5rem;">Transform Your Life in One Day</h2>
                     <p class="content-text" style="color: rgba(255, 255, 255, 0.9); font-size: 1rem; font-weight: 400; margin: 0 0 1.5rem 0; line-height: 1.6;">You've seen your pattern. The workbook below is your one-day reset—from autopilot to you choosing who you're becoming.</p>
                     
-                    <h4 class="how-developed-title" style="color: #ca0013; font-weight: 700; margin-bottom: 0.75rem;">You Don't Have to Wait for Life to Break You</h4>
+                    <h4 class="how-developed-title" style="color: #f10000; font-weight: 700; margin-bottom: 0.75rem;">You Don't Have to Wait for Life to Break You</h4>
                     <p class="content-text" style="margin-bottom: 1rem; color: rgba(255, 255, 255, 0.9); font-weight: 400; line-height: 1.7;">Most people only change when life forces them to change through trauma, loss, breakdown, or hitting rock bottom. We carry patterns that drive our lives and keep us stuck in loops of trauma we haven't processed, problems that repeat, unhappiness that feels unshakeable, and lack of progress in all areas of life. Until we see it, the pattern runs on autopilot. We can't change what we can't see.</p>
                     <p class="content-text" style="margin-bottom: 1rem; color: rgba(255, 255, 255, 0.9); font-weight: 400; line-height: 1.7;"><strong>You don't have to wait for a breakdown to have a breakthrough.</strong> Instead of letting your pattern run your life, you can choose to interrupt it consciously. This reset is where that happens. You choose the life you want and how you want to live it.</p>
-                    <p style="margin: 0 0 0.5rem 0; font-weight: 700; color: rgba(255, 255, 255, 0.95); font-size: 0.95rem;"><span style="background: rgba(202, 0, 19, 0.2); padding: 0.5rem 1rem; border-radius: 8px; display: inline-block; color: #fffcf1;">Your Before / After</span></p>
+                    <p style="margin: 0 0 0.5rem 0; font-weight: 700; color: rgba(255, 255, 255, 0.95); font-size: 0.95rem;"><span style="background: rgba(241, 0, 0, 0.2); padding: 0.5rem 1rem; border-radius: 8px; display: inline-block; color: #fffcf1;">Your Before / After</span></p>
                     <p class="content-text" style="margin-bottom: 2rem; color: rgba(255, 255, 255, 0.9); font-weight: 400; line-height: 1.7;">Moving from before to after requires an identity shift. Get clear on who you want to become, then commit to aligning with that version every day. That's when you reprogram yourself and break free from the loop. The workbook below is your blueprint for reprogramming yourself.</p>
                     
-                    <h4 class="how-developed-title" style="color: #ca0013; font-weight: 700; margin-bottom: 0.75rem;">Pattern Interruption</h4>
+                    <h4 class="how-developed-title" style="color: #f10000; font-weight: 700; margin-bottom: 0.75rem;">Pattern Interruption</h4>
                     <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7; color: rgba(255, 255, 255, 0.9);">Your pattern formed in childhood as a survival strategy and became deeply encoded. It runs on autopilot long after it stopped serving you. One decision can truly change your life.</p>
                     <div class="pattern-interrupt-diagram" style="margin-bottom: 1.5rem;">
                         <p style="margin: 0 0 0.75rem 0; font-weight: 700; font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">From Childhood to Autopilot</p>
                         <div style="display: flex; flex-direction: column; gap: 0;">
                             <div style="padding: 1rem 1.25rem; background: #fff; border-radius: 8px 8px 0 0; border: 1px solid rgba(0,0,0,0.06); border-bottom: none; display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">1</span>
-                                <div><p style="margin: 0 0 0.35rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Childhood Experience</p><p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #555;">Created a core fear or need (unsafe, unseen, unworthy, out of control)</p></div>
+                                <span style="width: 28px; height: 28px; background: #f10000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">1</span>
+                                <div><p style="margin: 0 0 0.35rem 0; font-weight: 700; color: #f10000; font-size: 0.9rem;">Childhood Experience</p><p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #555;">Created a core fear or need (unsafe, unseen, unworthy, out of control)</p></div>
                             </div>
                             <div style="height: 1px; background: #eee; margin: 0 1rem;"></div>
                             <div style="padding: 1rem 1.25rem; background: #fff; border-left: 1px solid rgba(0,0,0,0.06); border-right: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">2</span>
-                                <div><p style="margin: 0 0 0.35rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Emotional Driver Developed</p><p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #555;">Strategy to cope ("If I control things, I'm safe" / "If I get approval, I'm worthy" / etc.)</p></div>
+                                <span style="width: 28px; height: 28px; background: #f10000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">2</span>
+                                <div><p style="margin: 0 0 0.35rem 0; font-weight: 700; color: #f10000; font-size: 0.9rem;">Emotional Driver Developed</p><p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #555;">Strategy to cope ("If I control things, I'm safe" / "If I get approval, I'm worthy" / etc.)</p></div>
                             </div>
                             <div style="height: 1px; background: #eee; margin: 0 1rem;"></div>
                             <div style="padding: 1rem 1.25rem; background: #fff; border: 1px solid rgba(0,0,0,0.06); border-top: none; border-radius: 0 0 8px 8px; display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">3</span>
-                                <div><p style="margin: 0 0 0.35rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Pattern Became Automatic</p><p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #555;">Years of repetition wired it in. Your subconscious (95% of behavior) learned: "This is how I survive. This is who I am."</p></div>
+                                <span style="width: 28px; height: 28px; background: #f10000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">3</span>
+                                <div><p style="margin: 0 0 0.35rem 0; font-weight: 700; color: #f10000; font-size: 0.9rem;">Pattern Became Automatic</p><p style="margin: 0; font-size: 0.9rem; line-height: 1.5; color: #555;">Years of repetition wired it in. Your subconscious (95% of behavior) learned: "This is how I survive. This is who I am."</p></div>
                             </div>
                         </div>
-                        <div style="margin: 1rem 0; padding: 1.25rem; background: rgba(202, 0, 19, 0.15); border-radius: 8px; border: 1px solid rgba(202, 0, 19, 0.35); text-align: center;">
-                            <p style="margin: 0; font-weight: 700; font-size: 1rem; color: #ca0013;">⟳ Pattern Interruption</p>
+                        <div style="margin: 1rem 0; padding: 1.25rem; background: rgba(241, 0, 0, 0.15); border-radius: 8px; border: 1px solid rgba(241, 0, 0, 0.35); text-align: center;">
+                            <p style="margin: 0; font-weight: 700; font-size: 1rem; color: #f10000;">⟳ Pattern Interruption</p>
                             <p style="margin: 0.5rem 0 0 0; font-size: 0.9rem; color: rgba(255, 255, 255, 0.9); line-height: 1.5;">Hits the pause button on autopilot. Creates a moment of awareness—conscious choice where there was only automatic reaction.</p>
                         </div>
                         <p style="margin: 0 0 0.75rem 0; font-weight: 700; font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">From Awareness to New Default</p>
                         <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                             <div style="padding: 1rem 1.25rem; background: #fff; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">1</span>
-                                <div><p style="margin: 0 0 0.2rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Awareness</p><p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: #555;">Face your pattern head-on. Notice when the pattern shows up instead of running on autopilot.</p></div>
+                                <span style="width: 28px; height: 28px; background: #f10000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">1</span>
+                                <div><p style="margin: 0 0 0.2rem 0; font-weight: 700; color: #f10000; font-size: 0.9rem;">Awareness</p><p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: #555;">Face your pattern head-on. Notice when the pattern shows up instead of running on autopilot.</p></div>
                             </div>
                             <div style="padding: 1rem 1.25rem; background: #fff; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">2</span>
-                                <div><p style="margin: 0 0 0.2rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Conscious Decision</p><p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: #555;">Choose to change. Make the deliberate choice to act differently in that moment.</p></div>
+                                <span style="width: 28px; height: 28px; background: #f10000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">2</span>
+                                <div><p style="margin: 0 0 0.2rem 0; font-weight: 700; color: #f10000; font-size: 0.9rem;">Conscious Decision</p><p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: #555;">Choose to change. Make the deliberate choice to act differently in that moment.</p></div>
                             </div>
                             <div style="padding: 1rem 1.25rem; background: #fff; border-radius: 8px; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 1rem;">
-                                <span style="width: 28px; height: 28px; background: #ca0013; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">3</span>
-                                <div><p style="margin: 0 0 0.2rem 0; font-weight: 700; color: #ca0013; font-size: 0.9rem;">Daily Practice</p><p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: #555;">Reset through repetition. Repeatedly choose the new way until it becomes your default.</p></div>
+                                <span style="width: 28px; height: 28px; background: #f10000; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; flex-shrink: 0;">3</span>
+                                <div><p style="margin: 0 0 0.2rem 0; font-weight: 700; color: #f10000; font-size: 0.9rem;">Daily Practice</p><p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: #555;">Reset through repetition. Repeatedly choose the new way until it becomes your default.</p></div>
                             </div>
                         </div>
                     </div>
@@ -271,7 +280,7 @@
                     <p class="content-text" style="margin-bottom: 1rem; line-height: 1.7; color: rgba(255, 255, 255, 0.9);"><strong>One decision starts it.</strong> Choosing every day makes it stick. Each time you interrupt the old pattern and choose differently, you strengthen the new pathway. Over time, those choices compound. They stop feeling like effort and start feeling like who you are. That's the <strong>identity shift</strong>: the accumulation of daily choices that rewires what's been running on autopilot—until the new way becomes who you are without trying.</p>
                     <p class="content-text" style="margin-bottom: 2rem; color: rgba(255, 255, 255, 0.95); font-weight: 600; line-height: 1.7;">You've seen your pattern. That's the clarity. The decision is yours. The workbook supports that choice.</p>
 
-                    <h4 class="how-developed-title" style="color: #ca0013; font-weight: 700; margin-bottom: 0.75rem;">Before Your Reset</h4>
+                    <h4 class="how-developed-title" style="color: #f10000; font-weight: 700; margin-bottom: 0.75rem;">Before Your Reset</h4>
                     <p class="content-text" style="margin-bottom: 1rem; color: rgba(255, 255, 255, 0.9); font-size: 0.95rem; line-height: 1.6;">Things to know before you begin:</p>
                     <ul style="margin: 0 0 2rem 0; padding-left: 1.5rem; line-height: 1.8; color: rgba(255, 255, 255, 0.9);">
                         <li style="margin-bottom: 0.75rem;"><strong>You're not broken.</strong> There's nothing wrong with you. Your pattern isn't a flaw—it's something you developed to survive.</li>
@@ -285,7 +294,7 @@
                     </ul>
                     
                     <div style="margin-bottom: 2rem;">
-                        <h4 class="how-developed-title" style="color: #ca0013; font-weight: 700; margin-bottom: 0.75rem;">10 Principles for Transformation</h4>
+                        <h4 class="how-developed-title" style="color: #f10000; font-weight: 700; margin-bottom: 0.75rem;">10 Principles for Transformation</h4>
                         <p class="content-text" style="margin-bottom: 0; color: rgba(255, 255, 255, 0.9);">These principles explain how transformation works. They draw on neuroscience, psychology, and behavior change research. Expand any to learn why each one matters.</p>
                         <details class="principles-outer">
                             <summary class="principles-trigger">
@@ -341,14 +350,14 @@
             
                 <!-- Bridge to workbook -->
                 <div class="results-dark-bg-content" style="margin-bottom: 3rem;">
-                    <div style="margin-bottom: 0; padding: 1.25rem; background: rgba(202, 0, 19, 0.15); border-radius: 8px; border-left: 4px solid rgba(202, 0, 19, 0.5);">
-                        <p class="content-text" style="margin-bottom: 0; color: rgba(255, 255, 255, 0.95); font-weight: 600; line-height: 1.7;"><span style="color: #ca0013;">This is where your transformation begins.</span> The quiz gave you awareness; the workbook gives you the structure. One day, one reset. All it takes is a decision—a choice. Break your pattern. Create your after. The moment is now.</p>
+                    <div style="margin-bottom: 0; padding: 1.25rem; background: rgba(241, 0, 0, 0.15); border-radius: 8px; border-left: 4px solid rgba(241, 0, 0, 0.5);">
+                        <p class="content-text" style="margin-bottom: 0; color: rgba(255, 255, 255, 0.95); font-weight: 600; line-height: 1.7;"><span style="color: #f10000;">This is where your transformation begins.</span> The quiz gave you awareness; the workbook gives you the structure. One day, one reset. All it takes is a decision—a choice. Break your pattern. Create your after. The moment is now.</p>
                     </div>
                 </div>
                 
                 <!-- Workbook: visible box, Parts 1–4 collapsible inside -->
                 <div class="workbook-outer-box">
-                    <h3 class="workbook-outer-title">Your <span style="color: #ca0013;">Pattern Reset</span> Workbook</h3>
+                    <h3 class="workbook-outer-title">Your <span style="color: #f10000;">Pattern Reset</span> Workbook</h3>
                     <div class="workbook-outer-content">
                         ${getMergedHowToBreakPattern(pattern, firstName, archetype, birthDate, exactAge)}
                     </div>
@@ -407,6 +416,392 @@
             </div>
             
                     <p class="workbook-note">Your answers are saved automatically. Return anytime to continue.</p>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Relationship Dynamic Quiz - Dedicated results layout (5-part structure)
+    function getRelationshipDynamicResultsHTML(pattern, herResponsePattern, repetitionInsight, firstName, relationshipStatus, exactAge, currentPain, biggestFear, currentPainOtherText, biggestFearOtherText, situationshipModifier, answers, quizData) {
+        currentPain = currentPain || null;
+        biggestFear = biggestFear || null;
+        currentPainOtherText = currentPainOtherText || null;
+        biggestFearOtherText = biggestFearOtherText || null;
+        answers = answers || [];
+        quizData = quizData || window.quizData || [];
+        
+        // Q16 "What worries you most?" - index 15 in quizData
+        const Q16_INDEX = 15;
+        const attractionWorryIndex = answers[Q16_INDEX];
+        const attractionWorryMap = ['wasting-time', 'ignoring-red-flags', 'he-leave', 'never-clarity', 'more-invested'];
+        const attractionWorry = (typeof attractionWorryIndex === 'number' && quizData[Q16_INDEX] && quizData[Q16_INDEX].options && quizData[Q16_INDEX].options[attractionWorryIndex]) ? (attractionWorryMap[attractionWorryIndex] || null) : null;
+        
+        const painVal = (currentPain || '').toLowerCase().replace(/\s+/g, '-');
+        const fearVal = (biggestFear || '').toLowerCase().replace(/\s+/g, '-');
+        
+        // Deep insights: status-specific blocks (research-backed)
+        const STATUS_INSIGHTS = {
+            'situationship': (situationshipModifier && window.situationshipModifier) ? 'Neuroscience explains why situationships hurt: your brain craves consistency. Unpredictable attention (intermittent reinforcement) triggers dopamine spikes in anticipation—not in reward. You\'re not addicted to him; you\'re addicted to the possibility of clarity.' : null,
+            'recently-ended': 'Making sense of what happened is the first step to not repeating it. Your pattern is visible now—use that clarity. Post-breakup, you have a rare chance: you know the cost of the old pattern. The question isn\'t "What went wrong?"—it\'s "What do I want to do differently?"',
+            'not-in-one': 'Your nervous system is wired to feel "normal" with certain dynamics. Different will feel wrong at first—that\'s your brain resisting change. When you feel the pull toward someone who fits the old pattern, pause. Ask: "Is this familiar or is this healthy?"',
+            'emotionally-invested': 'Relationship anxiety can exist in otherwise healthy relationships. If you\'re constantly questioning "Is this right?"—ask: How long have you felt this way? Is it the relationship or your nervous system reacting to past hurt? Both can be true.'
+        };
+        const statusInsight = STATUS_INSIGHTS[relationshipStatus] || null;
+        
+        // Pain-specific insights (research-backed)
+        const PAIN_INSIGHTS = {
+            'same-type': 'Your nervous system associates "love" with uncertainty. Emotionally unavailable people feel like home because they match what you learned early. Breaking the cycle means tolerating the discomfort of "boring" (secure) until it feels normal.',
+            'stay-when-shouldnt': 'Your brain prefers the devil it knows. Leaving feels riskier than staying because uncertainty is neurologically threatening. The fix: name it. "I\'m staying because I\'m scared of ___." Once you see it, you can choose.',
+            'sabotage': 'Sabotage is your brain\'s exit strategy before you can get hurt. Closeness triggers your nervous system—intimacy feels like losing control. The pattern developed to protect you. It\'s not a flaw; it\'s a survival strategy that stopped serving you.',
+            'tolerate-less': 'You\'ve learned that having someone—anyone—proves you\'re worthy. So you accept less to avoid the fear of being alone. The cost: you teach people you\'ll accept less. The shift: raise your bar before the next person. Write down what you will and won\'t accept.',
+            'ignore-red-flags': 'When you\'re invested, your brain minimizes red flags to reduce cognitive dissonance. "It\'s not that bad" protects you from the pain of admitting you chose wrong. The question: Would you advise a friend to stay?',
+            'situationship': 'Situationships are designed to keep you guessing. Occasional clarity feels like progress—your brain waits for the next sign. Research shows: intermittent reinforcement creates more persistent behavior than consistent reward. You\'re not stuck—you\'re hooked on possibility.',
+            'cheated-betrayed': 'After betrayal, your brain goes into hypervigilance. Rebuilding trust starts with yourself: "Can I trust my own judgment? Can I set boundaries and hold them?" You can\'t think your way out—you have to act your way out. Small doses of evidence that vulnerability doesn\'t always lead to hurt.',
+            'dont-know-why': 'Relationships fail when both people operate from unconscious patterns. Yours runs on autopilot. The good news: once you see it, you can change it. You\'re not cursed—you\'re programmed. Neuroscience shows neural pathways change through repetition. Reprogram.'
+        };
+        const painInsight = PAIN_INSIGHTS[painVal] || null;
+        
+        // Fear-specific insights (research-backed)
+        const FEAR_INSIGHTS = {
+            'abandoned': 'Rejection activates the same brain regions as physical pain. Your fear of abandonment isn\'t weakness—it\'s your nervous system wired for connection. For those with early relational wounds, the prefrontal cortex (logic) can be overridden by fear. Awareness is the first step to choosing instead of reacting.',
+            'rejected': 'Fear of rejection centers on "I\'m inherently unlovable." It shows up as: seeking validation, people-pleasing, rejecting first to avoid being rejected. The shift: your worth isn\'t determined by how wanted you feel. You were enough before anyone chose you.',
+            'alone-forever': 'The fear of being alone forever drives accepting less now. But research shows: the clearer you are about what you want, the less heartache you suffer and the less energy you waste on guessing. You\'re not running out of time—you\'re gaining clarity.',
+            'losing-myself': 'Fear of losing yourself often means you\'ve learned that connection requires sacrificing your needs. The pattern: you give to earn love. The shift: your needs matter as much as theirs. Healthy connection doesn\'t require you to disappear.',
+            'hurt-again': 'Protection creates distance. The more you guard against hurt, the less you can receive love. Your brain believes "If I don\'t fully show up, I can\'t fully get hurt"—but the cost is you never get fully seen or loved. Small disclosures: "I felt ___ when ___." Evidence that vulnerability doesn\'t always lead to hurt.',
+            'emotionally-neglected': 'Emotional neglect isn\'t always dramatic—it\'s the absence of being met. When you initiate depth and he stays surface-level, that\'s neglect. It\'s not about you asking for too much. It\'s about his capacity. The question: Can you live with the connection he\'s capable of offering?',
+            'im-the-problem': 'It\'s rarely one person who\'s the problem—it\'s usually the dynamic. Your pattern isn\'t a flaw; it\'s a survival strategy. Asking "Am I the problem?" is healthy—but chronic self-blame harms you and the relationship. The shift: "I developed this to survive. Now I\'m choosing something different."',
+            'never-find-right': 'The fear of never finding the right person fuels staying in the wrong one. But research shows: the clearer you are about what you want, the faster you filter. You\'re not running out of options—you\'re gaining clarity.'
+        };
+        const fearInsight = FEAR_INSIGHTS[fearVal] || null;
+        
+        // Q16 worry callbacks
+        const WORRY_INSIGHTS = {
+            'wasting-time': 'The real cost isn\'t the relationship—it\'s the time. Many people in this dynamic realize later they were waiting for clarity that never came. If you\'re asking, you already know.',
+            'ignoring-red-flags': 'When you\'re invested, your brain minimizes red flags. "It\'s not that bad" protects you from admitting you chose wrong. Track three similar situations—if the pattern repeats, that\'s your answer.',
+            'he-leave': 'His staying or leaving is his choice. Your job isn\'t to prevent him from leaving—it\'s to decide what you\'ll accept. Fear of him leaving keeps you from asking for what you need.',
+            'never-clarity': 'Vagueness isn\'t confusion—it\'s a choice. If he wanted to give you clarity, he would. The question isn\'t "How do I get him to clarify?"—it\'s "What do I do with the clarity I already have?"',
+            'more-invested': 'Reciprocity research shows: imbalance rarely corrects itself. Your over-investment doesn\'t create his. Match his energy. Pull back. See if he steps up—or if the relationship was only working because you were carrying it.'
+        };
+        const worryInsight = attractionWorry ? (WORRY_INSIGHTS[attractionWorry] || null) : null;
+        
+        const PAIN_LABELS = { 'same-type':'attracting emotionally unavailable people', 'stay-when-shouldnt':'staying when you know you shouldn\'t', 'sabotage':'sabotaging when it gets serious', 'tolerate-less':'tolerating less than you deserve', 'ignore-red-flags':'ignoring red flags', 'situationship':'a situationship that won\'t progress', 'cheated-betrayed':'recovering from betrayal or cheating', 'dont-know-why':'not understanding why relationships keep failing' };
+        const FEAR_LABELS = { 'abandoned':'being abandoned', 'rejected':'being rejected or not chosen', 'alone-forever':'being alone long-term', 'losing-myself':'losing yourself', 'hurt-again':'being hurt again', 'emotionally-neglected':'being emotionally neglected', 'im-the-problem':'that you\'re the problem', 'never-find-right':'that you\'ll never find the right person' };
+        const isOtherPain = !currentPain || (currentPain || '').toLowerCase().replace(/\s+/g, '-') === 'other';
+        const isOtherFear = !biggestFear || (biggestFear || '').toLowerCase().replace(/\s+/g, '-') === 'other';
+        const painLabel = (isOtherPain && currentPainOtherText && String(currentPainOtherText).trim()) ? String(currentPainOtherText).trim() : (PAIN_LABELS[(currentPain || '').toLowerCase().replace(/\s+/g, '-')] || null);
+        const fearLabel = (isOtherFear && biggestFearOtherText && String(biggestFearOtherText).trim()) ? String(biggestFearOtherText).trim() : (FEAR_LABELS[(biggestFear || '').toLowerCase().replace(/\s+/g, '-')] || null);
+        
+        const herResponse = (window.herResponsePatterns && herResponsePattern && window.herResponsePatterns[herResponsePattern]) 
+            ? window.herResponsePatterns[herResponsePattern] 
+            : { name: 'Your Response Pattern', description: 'How you tend to show up in this dynamic.' };
+        const repetition = (window.repetitionInsights && repetitionInsight && window.repetitionInsights[repetitionInsight]) 
+            ? window.repetitionInsights[repetitionInsight] 
+            : null;
+        const isDifferentOrFirstTime = repetitionInsight === 'different' || repetitionInsight === 'first-time';
+        const repetitionBridging = isDifferentOrFirstTime 
+            ? 'Even when a relationship feels different, the pattern behind it may be familiar. That means the dynamic is partly in you, not just him. And that means you have agency—you can change your part.'
+            : 'This isn\'t just this relationship—the pattern shows up across your love life. That means the dynamic is partly in you, not just him. And that means you have agency—you can change your part.';
+        
+        const statusLabel = relationshipStatus ? {
+            'dating': 'dating',
+            'situationship': 'in a situationship',
+            'undefined': 'in an undefined relationship',
+            'emotionally-invested': 'emotionally invested but uncertain',
+            'recently-ended': 'recently out of a relationship',
+            'not-in-one': 'not currently in one'
+        }[relationshipStatus] || relationshipStatus : '';
+        const contextLine = [exactAge && `${exactAge}`, statusLabel].filter(Boolean).join(' and ') || 'your situation';
+        
+        // Her response + pattern combination insights (therapy/psychology: how her response amplifies or interrupts the dynamic)
+        const patternId = pattern.id || '';
+        const herResponseId = herResponsePattern || '';
+        const combinationInsights = {
+            'hot-cold-cycle_reassurance-seeker': 'As The Reassurance Seeker in a Hot-and-Cold dynamic, you chase when he pulls away—which can unintentionally reinforce the cycle. Your strength (wanting clarity) is exactly what you need to break it: get one direct answer, then act on it instead of chasing.',
+            'hot-cold-cycle_space-giver': 'As The Space Giver in a Hot-and-Cold dynamic, you hold back when he pulls away. That can feel protective—but it also means you\'re waiting for him to set the pace. Your clarity-seeking is your leverage: you can ask for what you need without chasing.',
+            'hot-cold-cycle_direct-communicator': 'As The Direct Communicator in a Hot-and-Cold dynamic, you ask directly—and often hit a wall. That\'s not a you problem. His deflection is the answer. Your willingness to have the hard conversation is a strength; use it to get one clear answer, then decide.',
+            'hot-cold-cycle_hopeful-waiter': 'As The Hopeful Waiter in a Hot-and-Cold dynamic, you stay and hope things will change. Neuroscience shows: hope without evidence keeps you stuck. Your patience is a strength—but it becomes a trap when you\'re waiting for someone who hasn\'t shown change.',
+            'hot-cold-cycle_protector': 'As The Protector in a Hot-and-Cold dynamic, you shut down when he pulls away. That protects you—but it also means you may be building walls instead of getting clarity. Your awareness of the pattern is the first step; the next is one direct conversation.',
+            'hot-cold-cycle_balanced': 'As The Self-Aware One in a Hot-and-Cold dynamic, you notice the cycle and try to stay grounded. That awareness is rare—and it\'s your greatest asset. Use it to get one direct answer, then choose based on reality, not hope.',
+            'breadcrumb-dynamic_reassurance-seeker': 'As The Reassurance Seeker in a Breadcrumb dynamic, you look for proof he cares. The trap: his crumbs feel like proof. Your desire for clarity is a strength—redirect it to "What do I need?" not "Does he care?"',
+            'breadcrumb-dynamic_space-giver': 'As The Space Giver in a Breadcrumb dynamic, you wait for him to come to you. That can feel dignified—but breadcrumbers rarely step up on their own. Your patience is a strength; use it to set a deadline, not to wait indefinitely.',
+            'breadcrumb-dynamic_direct-communicator': 'As The Direct Communicator in a Breadcrumb dynamic, you ask for clarity—and often get vague answers. That vagueness is the answer. Your willingness to ask is a strength; use it to decide what you\'ll accept, not to decode his words.',
+            'breadcrumb-dynamic_hopeful-waiter': 'As The Hopeful Waiter in a Breadcrumb dynamic, you stay hoping for more. Research on intermittent reinforcement shows: occasional rewards keep you hooked longer. Your hope is a strength—but it becomes a trap when you\'re waiting for crumbs to become a meal.',
+            'breadcrumb-dynamic_protector': 'As The Protector in a Breadcrumb dynamic, you\'ve likely pulled back to avoid more hurt. That protects you—but it can also keep you in limbo. Your awareness of the imbalance is the first step; the next is deciding what you need and whether he can give it.',
+            'breadcrumb-dynamic_balanced': 'As The Self-Aware One in a Breadcrumb dynamic, you see the imbalance. That awareness is your leverage. Use it to set a clear standard: "What do I need to feel secure?" If he can\'t meet it, that\'s your answer.',
+            'commitment-avoidance_reassurance-seeker': 'As The Reassurance Seeker in a Commitment Avoidance dynamic, you push for answers. That\'s a strength—but avoidant partners often deflect. Your clarity-seeking is valuable; use it to get one direct answer, then act on it instead of waiting for him to "be ready."',
+            'commitment-avoidance_space-giver': 'As The Space Giver in a Commitment Avoidance dynamic, you give him space. That can feel respectful—but avoidant partners rarely fill that space with commitment. Your patience is a strength; use it to set a timeline, not to wait indefinitely.',
+            'commitment-avoidance_direct-communicator': 'As The Direct Communicator in a Commitment Avoidance dynamic, you ask "where is this going?"—and often get deflected. That deflection is the answer. Your willingness to ask is rare; use it to decide what you\'ll accept, not to decode his vagueness.',
+            'commitment-avoidance_hopeful-waiter': 'As The Hopeful Waiter in a Commitment Avoidance dynamic, you stay hoping he\'ll be ready. Gender dynamics research shows: women often wait longer for commitment than men intend to give. Your patience may be enabling his avoidance. One direct question can change everything.',
+            'commitment-avoidance_protector': 'As The Protector in a Commitment Avoidance dynamic, you\'ve likely stopped asking. That protects you from rejection—but it also means you\'re staying in ambiguity. Your awareness of the pattern is the first step; the next is one direct conversation.',
+            'commitment-avoidance_balanced': 'As The Self-Aware One in a Commitment Avoidance dynamic, you see the vagueness. That awareness is your leverage. Use it to ask once, clearly: "What are we? Where is this going?" If he can\'t answer, that\'s your answer.',
+            'emotional-distance_reassurance-seeker': 'As The Reassurance Seeker in an Emotional Distance dynamic, you try to get closer. That\'s a strength—but avoidant partners often withdraw more when pursued. Your desire for connection is valuable; redirect it to "Can he meet me?" not "How do I get him to open up?"',
+            'emotional-distance_space-giver': 'As The Space Giver in an Emotional Distance dynamic, you give him space. That can feel respectful—but emotionally distant partners rarely bridge the gap on their own. Your patience is a strength; use it to decide if surface-level is enough for you.',
+            'emotional-distance_direct-communicator': 'As The Direct Communicator in an Emotional Distance dynamic, you bring up deep topics—and often hit a wall. That wall isn\'t about you. His capacity for depth is his. Your willingness to be vulnerable is a strength; use it to assess compatibility, not to fix him.',
+            'emotional-distance_hopeful-waiter': 'As The Hopeful Waiter in an Emotional Distance dynamic, you stay hoping he\'ll open up. Attachment research shows: avoidant partners rarely change without sustained motivation. Your hope is a strength—but it becomes a trap when you\'re waiting for depth he hasn\'t shown.',
+            'emotional-distance_protector': 'As The Protector in an Emotional Distance dynamic, you\'ve likely shut down to avoid more rejection. That protects you—but it can also mean you\'re both staying surface-level. Your awareness of the gap is the first step; the next is deciding if you can live with the distance.',
+            'emotional-distance_balanced': 'As The Self-Aware One in an Emotional Distance dynamic, you notice the pursuit-distance pattern. That awareness is rare. Use it to decide: "Is he capable of the depth I want?" If not, that\'s a compatibility answer—not a you problem.',
+            'mixed-signals-loop_reassurance-seeker': 'As The Reassurance Seeker in a Mixed Signals dynamic, you seek clarity—and end up more confused. The trap: his inconsistency keeps you analyzing. Your desire for honesty is a strength; redirect it to trusting his actions, not decoding his words.',
+            'mixed-signals-loop_space-giver': 'As The Space Giver in a Mixed Signals dynamic, you hold back when he\'s inconsistent. That can feel protective—but it also means you\'re waiting for him to make sense. Your patience is a strength; use it to observe his actions over time, then decide.',
+            'mixed-signals-loop_direct-communicator': 'As The Direct Communicator in a Mixed Signals dynamic, you ask directly—and his words still don\'t match his actions. That disconnect is the answer. Your willingness to seek clarity is a strength; use it to trust his behavior, not his explanations.',
+            'mixed-signals-loop_hopeful-waiter': 'As The Hopeful Waiter in a Mixed Signals dynamic, you stay hoping for clarity. Neuroscience shows: inconsistency creates anxiety—and anxiety creates attachment. Your hope keeps you invested; his actions are the truth. One clear observation can change everything.',
+            'mixed-signals-loop_protector': 'As The Protector in a Mixed Signals dynamic, you\'ve likely pulled back to avoid more confusion. That protects you—but it can also keep you in limbo. Your awareness of the disconnect is the first step; the next is trusting his actions over his words.',
+            'mixed-signals-loop_balanced': 'As The Self-Aware One in a Mixed Signals dynamic, you notice the words-actions gap. That awareness is your leverage. Use it to observe: What does he do? Not what does he say. Actions predict future behavior.',
+            'one-sided-investment_reassurance-seeker': 'As The Reassurance Seeker in a One-Sided dynamic, you initiate to feel connected. That\'s a strength—but it can also mean you\'re doing the emotional work for both of you. Reciprocity research shows: imbalance rarely corrects itself. Your capacity for connection is valuable; redirect it to someone who matches it.',
+            'one-sided-investment_space-giver': 'As The Space Giver in a One-Sided dynamic, you wait for him to come to you. That can feel dignified—but in an imbalanced dynamic, he may never step up. Your patience is a strength; use it to pull back and see if he matches your energy.',
+            'one-sided-investment_direct-communicator': 'As The Direct Communicator in a One-Sided dynamic, you ask for more—and often hit a wall. That wall is the answer. Your willingness to name the imbalance is rare; use it to set a standard, not to convince him to change.',
+            'one-sided-investment_hopeful-waiter': 'As The Hopeful Waiter in a One-Sided dynamic, you stay hoping he\'ll step up. Gender dynamics research shows: women often overgive in hope of reciprocity. Your hope is a strength—but it becomes a trap when you\'re carrying the relationship. Pull back once. See what happens.',
+            'one-sided-investment_protector': 'As The Protector in a One-Sided dynamic, you\'ve likely stopped overgiving. That protects you—but it can also reveal the truth: the relationship may have only worked because you were carrying it. Your pullback is the experiment.',
+            'one-sided-investment_balanced': 'As The Self-Aware One in a One-Sided dynamic, you see the imbalance. That awareness is your leverage. Use it to match his energy: pull back, contribute less, and see if he steps up. If not, that\'s your answer.'
+        };
+        const combinationKey = `${patternId}_${herResponseId}`;
+        const combinationInsight = combinationInsights[combinationKey] || null;
+        
+        function getRelationshipDynamicQuestionsAnswered(p, pVal, fVal, relStatus, worry, pLbl, fLbl) {
+            const items = [];
+            if (pVal === 'situationship' || relStatus === 'situationship') items.push({ q: 'Why won\'t my situationship progress?', a: 'Situationships keep you guessing by design. Occasional clarity feels like progress—your brain waits for the next sign. Research shows unpredictable rewards create more persistent behavior than consistent ones. His behavior is the answer: if he wanted to define it, he would have by now.' });
+            if (pVal === 'stay-when-shouldnt' || fVal === 'abandoned') items.push({ q: 'Why do I stay when I know I shouldn\'t?', a: 'Your brain prefers the devil it knows. Leaving feels riskier than staying because uncertainty is neurologically threatening. The fix: name it. "I\'m staying because I\'m scared of ___." Once you see it, you can choose.' });
+            if (pVal === 'same-type' || (relStatus === 'not-in-one' && fVal === 'never-find-right')) items.push({ q: 'Why do I keep attracting the same type?', a: 'Your nervous system is wired to feel "normal" with certain dynamics. Emotionally unavailable people feel like home. Different will feel wrong at first—that\'s your brain resisting change. When you feel the pull toward someone who fits the old pattern, pause. Ask: "Is this familiar or is this healthy?"' });
+            if (fVal === 'im-the-problem') items.push({ q: 'Am I the problem?', a: 'It\'s rarely one person—it\'s usually the dynamic. Your pattern isn\'t a flaw; it\'s a survival strategy. Chronic self-blame harms you. The shift: "I developed this to survive. Now I\'m choosing something different."' });
+            items.push({ q: 'Should I leave?', a: 'The question isn\'t "Should I leave?"—it\'s "What am I willing to accept?" If nothing changes, you have your answer. In dynamics like this, staying without change usually means more of the same. Decide what you\'ll accept. Then act on it.' });
+            items.push({ q: 'Am I overthinking?', a: 'You\'re not. You\'re not needy. The confusion is built into the pattern. These dynamics are designed to keep you guessing.' });
+            if (worry === 'wasting-time') items.push({ q: 'Am I wasting my time?', a: 'The real cost isn\'t the relationship—it\'s the time. Many people in this dynamic realize later they were waiting for clarity that never came. If you\'re asking, you already know.' });
+            const unique = items.filter((x, i, arr) => arr.findIndex(y => y.q === x.q) === i).slice(0, 4);
+            if (unique.length === 0) return '';
+            return `
+                <div class="results-dark-bg-content results-bento-card">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Questions You Want Answered</h3>
+                    ${unique.map(item => `
+                    <div style="margin-bottom: 1.25rem;">
+                        <p class="content-text" style="color: #f10000; font-weight: 600; margin-bottom: 0.35rem;">${item.q}</p>
+                        <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 0;">${item.a}</p>
+                    </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        
+        const whyItFeelsConfusing = pattern.whyItFeelsConfusing || 'These dynamics feel confusing because they\'re designed to keep you guessing. You\'re not crazy for feeling that way.';
+        const whyHeActsThisWay = pattern.whyHeActsThisWay || pattern.hisPattern;
+        const doesHeLikeMe = pattern.doesHeLikeMe || pattern.whatItMeans;
+        
+        return `
+            <div class="results-hero-section">
+                <div class="results-header">
+                    <h1 class="results-title">Hi <span class="user-name-red">${firstName || 'there'}</span>,<br>Here's what's actually going on.</h1>
+                    <div class="results-hero-intro">
+                        <p class="results-hero-standout">You're not imagining things.<br>You're not crazy. You're not broken.</p>
+                        <p class="results-hero-body">At ${contextLine}, ${(pattern.description || '').charAt(0) ? ((pattern.description || '').charAt(0).toLowerCase() + (pattern.description || '').slice(1)) : (pattern.description || '')}</p>
+                        <p class="results-hero-cta">Now you can see it clearly.</p>
+                    </div>
+                </div>
+                
+                <div class="pattern-display-prominent">
+                    <div class="pattern-identity-card">
+                        <div class="pattern-archetype-label">Your Relationship Pattern</div>
+                        <div class="pattern-name-display">
+                            <span class="pattern-name-main">${pattern.name}</span>
+                        </div>
+                        ${situationshipModifier && window.situationshipModifier ? `<div class="pattern-situationship-tag" style="margin-top: 0.5rem; font-size: 0.85rem; color: #f10000; font-weight: 600;">+ ${window.situationshipModifier.name}</div><div class="pattern-situationship-tagline" style="font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-top: 0.25rem;">${window.situationshipModifier.tagline}</div>` : ''}
+                        ${pattern.coreBelief ? `<div class="pattern-core-belief-preview">"${pattern.coreBelief}"</div>` : ''}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="results-section-divider"></div>
+            
+            <div class="results-content-section results-bento-content">
+                ${statusInsight && (relationshipStatus === 'recently-ended' || relationshipStatus === 'not-in-one') ? `
+                <div class="results-dark-bg-content results-bento-card results-section-validated">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">${relationshipStatus === 'recently-ended' ? 'Making Sense of What Happened' : 'When You Meet Someone New'}</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7;">${statusInsight}</p>
+                </div>
+                ` : ''}
+                <!-- 1. Why This Feels So Confusing - Emotional validation first -->
+                <div class="results-dark-bg-content results-bento-card results-section-validated">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Why This Feels So Confusing</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 0.5rem;">You're not overthinking. You're not needy. The confusion is built into the pattern.</p>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${(statusInsight && relationshipStatus === 'situationship') || painInsight || fearInsight ? '1rem' : '1rem'};">${whyItFeelsConfusing}</p>
+                    ${(statusInsight && (relationshipStatus === 'situationship' || relationshipStatus === 'emotionally-invested')) ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${painInsight || fearInsight ? '1rem' : '1rem'};">${statusInsight}</p>` : ''}
+                    ${painInsight ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${fearInsight ? '1rem' : '1rem'};">${painInsight}</p>` : ''}
+                    ${fearInsight ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 1rem;">${fearInsight}</p>` : ''}
+                    ${(painLabel || fearLabel) ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 0;">${painLabel && fearLabel ? `You said your biggest challenge is ${painLabel} and your biggest fear is ${fearLabel}.` : painLabel ? `You said your biggest challenge is ${painLabel}.` : `You said your biggest fear is ${fearLabel}.`} That's exactly why this pattern feels so hard to leave—and why seeing it clearly is the first step to breaking it.</p>` : ''}
+                </div>
+                
+                <!-- 2. What's Actually Happening -->
+                <div class="results-dark-bg-content results-bento-card">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">What's Actually Happening</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 1rem;">${pattern.hisPattern}</p>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 1rem;">${pattern.herPattern}</p>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 0;"><strong>The dynamic:</strong> ${pattern.dynamic}</p>
+                </div>
+                
+                <!-- 3. Why He Acts This Way - Explicit answer -->
+                <div class="results-dark-bg-content results-bento-card">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Why He Acts This Way</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7;">${whyHeActsThisWay}</p>
+                </div>
+                
+                <!-- 4. Does He Actually Like Me? - Explicit answer -->
+                <div class="results-dark-bg-content results-bento-card results-bento-card-emphasis">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Does He Actually Like Me?</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${(situationshipModifier && window.situationshipModifier) ? '1rem' : '0'};">${doesHeLikeMe}</p>
+                    ${(situationshipModifier && window.situationshipModifier) ? `<p class="content-text" style="color: #f10000; font-weight: 600; line-height: 1.7;">In a situationship, his behavior is the answer. If he wanted to define it, he would have by now.</p>` : ''}
+                </div>
+                
+                <!-- 5. Your Response Pattern -->
+                <div class="results-dark-bg-content results-bento-card">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Your Response Pattern</h3>
+                    <p class="content-text" style="color: #f10000; font-weight: 600; margin-bottom: 0.5rem;">${herResponse.name}</p>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${combinationInsight ? '1rem' : '0'};">${herResponse.description}</p>
+                    ${combinationInsight ? `<p class="content-text combination-insight-block" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; padding: 1.25rem 1.5rem; background: rgba(255, 255, 255, 0.1); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.15);">${combinationInsight}</p>` : ''}
+                </div>
+                
+                ${repetition ? `
+                <div class="results-dark-bg-content results-bento-card">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">The Pattern Across Your Relationships</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 1rem;">${repetition}</p>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7;">${repetitionBridging}</p>
+                </div>
+                ` : ''}
+                
+                <!-- 6. Why This Pattern Keeps Happening — And Why It's Hard To Leave (merged) -->
+                <div class="results-dark-bg-content results-bento-card results-bento-card-emphasis">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Why This Pattern Keeps Happening — And Why It's Hard To Leave</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${pattern.coreBelief ? '1rem' : '0'};">${pattern.whyYouStay}</p>
+                    ${pattern.coreBelief ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${pattern.coreBeliefReframe ? '1rem' : '0'};">Underneath it: you believe <em>"${pattern.coreBelief}"</em> That belief drives your behavior—it's why you ${pattern.behaviorDriver || 'chase, wait, or try harder'}.</p>` : ''}
+                    ${pattern.coreBeliefReframe ? `<p class="content-text" style="color: #f10000; font-weight: 600; line-height: 1.7;">The reframe: ${pattern.coreBeliefReframe}</p>` : ''}
+                </div>
+                
+                <!-- 7. What His Behavior Actually Means -->
+                <div class="results-dark-bg-content results-bento-card">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">What His Behavior Actually Means</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7;">${pattern.whatItMeans}</p>
+                </div>
+                
+                <!-- 8. Where This Relationship Is Likely Heading -->
+                ${pattern.ifNothingChanges && pattern.ifNothingChanges.length ? `
+                <div class="results-dark-bg-content results-bento-card">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Where This Relationship Is Likely Heading</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-bottom: 1rem;">If nothing changes, in dynamics like this:</p>
+                    <ul style="margin: 0; padding-left: 1.5rem; color: rgba(255, 255, 255, 0.95); line-height: 1.8;">
+                        ${pattern.ifNothingChanges.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-top: 1rem; margin-bottom: ${worryInsight ? '1rem' : '0'};">This pattern can last months or even years without resolution. The real risk is time—many people stay waiting for more that never arrives.</p>
+                    ${worryInsight ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 0;">${worryInsight}</p>` : ''}
+                </div>
+                ` : ''}
+                
+                <!-- 9. Signs You're In This Pattern -->
+                ${pattern.signsYoureInIt && pattern.signsYoureInIt.length ? `
+                <div class="results-dark-bg-content results-bento-card">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Signs You're In This Pattern</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-bottom: 1rem;">You're likely in this pattern if:</p>
+                    <ul style="margin: 0; padding-left: 1.5rem; color: rgba(255, 255, 255, 0.95); line-height: 1.8;">
+                        ${pattern.signsYoureInIt.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+                ` : ''}
+                
+                <!-- 10. Your Strength -->
+                <div class="results-dark-bg-content results-bento-card">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Your Strength</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7;">${pattern.strengths}</p>
+                </div>
+                
+                <!-- 11. What To Watch For -->
+                <div class="results-dark-bg-content results-bento-card">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">What To Watch For</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${pattern.watchForInstead ? '1rem' : '0'};">${pattern.watchFor}</p>
+                    ${pattern.watchForInstead ? `<p class="content-text" style="color: #f10000; font-weight: 600; line-height: 1.7;">Instead: ${pattern.watchForInstead}</p>` : ''}
+                </div>
+                
+                <!-- 12. Your Next Step -->
+                <div class="results-dark-bg-content results-bento-card results-bento-card-cta">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Your Next Step</h3>
+                    <p class="content-text" style="color: #f10000; font-weight: 600; margin-bottom: ${(painLabel || fearLabel) ? '0.75rem' : '0.5rem'};">${pattern.nextStep}</p>
+                    ${(painLabel || fearLabel) ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.9); line-height: 1.7; margin-bottom: 0.75rem;">${painLabel && fearLabel ? `Given that your biggest challenge is ${painLabel} and your biggest fear is ${fearLabel}—that's exactly why this step matters more than staying stuck.` : painLabel ? `Given that your biggest challenge is ${painLabel}—that's exactly why this step matters more than staying stuck.` : `Given that your biggest fear is ${fearLabel}—that's exactly why this step matters more than staying stuck.`}</p>` : ''}
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.9); line-height: 1.7; margin-bottom: 0;">Want clarity on your specific situation? See options below.</p>
+                </div>
+                
+                <!-- 13. Questions You Want Answered - Personalized Q&A by pain, fear, status -->
+                ${getRelationshipDynamicQuestionsAnswered(pattern, painVal, fearVal, relationshipStatus, attractionWorry, painLabel, fearLabel)}
+                
+                <!-- Sticky CTA Bar (appears on scroll) - scrolls to paid offers -->
+                <div class="results-sticky-cta-bar" id="results-sticky-cta-bar" aria-hidden="true">
+                    <span class="results-sticky-cta-text">What about your situation?</span>
+                    <button type="button" class="results-sticky-cta-btn" id="results-sticky-cta-btn" aria-label="Scroll to situation decoding options">Get it decoded →</button>
+                </div>
+                
+                <!-- Paid Offer Section - Bento Conversion Design -->
+                <div class="results-cta-paid-section" id="results-cta-paid-section">
+                    <div class="results-cta-paid-inner">
+                        <h2 class="results-cta-headline">The Quiz Revealed The Pattern.<br>But Your Situation Needs A Real Answer.</h2>
+                        <div class="results-cta-intro">
+                            <p class="results-cta-intro-text">The quiz identifies the pattern. But your situation has details that change what it actually means.</p>
+                            <p class="results-cta-intro-label">Things like:</p>
+                            <ul class="results-cta-intro-list">
+                                <li>how he communicates</li>
+                                <li>whether his actions match his words</li>
+                                <li>how he responds when you ask for clarity</li>
+                                <li>how long the pattern has been happening</li>
+                            </ul>
+                            <p class="results-cta-intro-close">Those signals reveal where this relationship is likely heading.</p>
+                        </div>
+                        <p class="results-cta-pain-mirror">Most women who take this quiz want clarity about one thing: <strong>Is this relationship actually going somewhere — or not?</strong></p>
+                        <div class="results-cta-offers-grid results-cta-offers-bento">
+                        <div class="results-cta-offer-card results-cta-offer-standard">
+                            <h3 class="results-cta-offer-title">Personal Relationship Analysis</h3>
+                            <p class="results-cta-offer-lead">Get a clear answer about your relationship.</p>
+                            <p class="results-cta-offer-spec">Personal voice analysis delivered within 24–48 hours</p>
+                            <p class="results-cta-offer-desc">Submit your story and receive a personalized voice breakdown explaining:</p>
+                            <ul class="results-cta-offer-includes">
+                                <li><i class="fas fa-check" aria-hidden="true"></i> what his behavior likely means</li>
+                                <li><i class="fas fa-check" aria-hidden="true"></i> the pattern happening between you</li>
+                                <li><i class="fas fa-check" aria-hidden="true"></i> where this relationship may actually be heading</li>
+                                <li><i class="fas fa-check" aria-hidden="true"></i> what your next move should be</li>
+                            </ul>
+                            <div class="results-cta-offer-price-wrap">
+                                <span class="results-cta-price">$39</span>
+                                <span class="results-cta-price-note">one-time</span>
+                                <span class="results-cta-offer-availability">25 analysis spots available this week.</span>
+                            </div>
+                            <a href="${(window.PATTERN_RESET_CTA_URLS && window.PATTERN_RESET_CTA_URLS.voiceBreakdown) || '#'}" class="results-cta-btn results-cta-btn-secondary">Get My Analysis →</a>
+                        </div>
+                        <div class="results-cta-offer-card results-cta-offer-premium">
+                            <span class="results-cta-offer-badge">Recommended</span>
+                            <h3 class="results-cta-offer-title">Private Relationship Session</h3>
+                            <p class="results-cta-offer-spec">30-minute private call</p>
+                            <p class="results-cta-offer-lead">A private session where we decode your situation together.</p>
+                            <p class="results-cta-offer-desc">You'll get:</p>
+                            <ul class="results-cta-offer-includes">
+                                <li><i class="fas fa-check" aria-hidden="true"></i> real-time clarity about what's happening</li>
+                                <li><i class="fas fa-check" aria-hidden="true"></i> the pattern driving the relationship</li>
+                                <li><i class="fas fa-check" aria-hidden="true"></i> answers to your specific questions</li>
+                                <li><i class="fas fa-check" aria-hidden="true"></i> clear next steps for what to do next</li>
+                            </ul>
+                            <div class="results-cta-offer-price-wrap">
+                                <span class="results-cta-price">$150</span>
+                                <span class="results-cta-price-note">per session</span>
+                                <span class="results-cta-offer-availability">15 sessions available this week.</span>
+                            </div>
+                            <a href="${(window.PATTERN_RESET_CTA_URLS && window.PATTERN_RESET_CTA_URLS.liveSession) || '#'}" class="results-cta-btn results-cta-btn-primary">Book My Session →</a>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <div class="cta-feedback-card">
+                        <span class="cta-feedback-icon"><i class="fas fa-comment-dots"></i></span>
+                        <div class="cta-feedback-content">
+                            <p class="cta-feedback-title">Questions or Feedback?</p>
+                            <p class="cta-feedback-subtitle">We'd love to hear from you.</p>
+                        </div>
+                        <button type="button" class="cta-feedback-btn" id="cta-feedback-btn">
+                            <span class="cta-feedback-btn-text">Send Feedback</span>
+                            <span class="cta-feedback-btn-icon"><i class="fas fa-paper-plane"></i></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
@@ -712,7 +1107,7 @@
                 </p>
                 
                 ${ageContext ? `
-                    <p class="pattern-intro-age" style="font-size: 1.1rem; line-height: 1.6; color: #ca0013; font-weight: 600; margin-bottom: 1.5rem;">
+                    <p class="pattern-intro-age" style="font-size: 1.1rem; line-height: 1.6; color: #f10000; font-weight: 600; margin-bottom: 1.5rem;">
                         ${ageContext}
                     </p>
                 ` : ''}
@@ -806,7 +1201,7 @@
                 ${lifeAreas}
                 
                 <div class="life-areas-summary">
-                    <p class="content-text" style="font-size: 1.15rem; font-weight: 600; color: #ca0013; margin-top: 2rem;">
+                    <p class="content-text" style="font-size: 1.15rem; font-weight: 600; color: #f10000; margin-top: 2rem;">
                         <strong>The Pattern Is Everywhere:</strong> Your ${pattern.name.toLowerCase()} pattern influences ${patternDominance}% of your decisions across all these areas. It's not isolated—it's a system-wide pattern that needs a system-wide solution.
                     </p>
                 </div>
@@ -1103,14 +1498,14 @@
         const shadowConsequence = shadowParts[1] ? shadowParts[1].toLowerCase() : 'consequences';
         
         return `
-                <p class="content-text" style="font-size: 1.2rem; font-weight: 600; color: #ca0013; margin-bottom: 1.5rem;">
+                <p class="content-text" style="font-size: 1.2rem; font-weight: 600; color: #f10000; margin-bottom: 1.5rem;">
                     ${firstName ? `${firstName}, ` : ''}Your ${pattern.name} pattern is costing you more than you realize. Here's what you're missing:
                 </p>
                 
                 <div class="cost-item">
                     <h3 class="cost-title">💔 In Relationships:</h3>
                     <p class="content-text">You're missing <strong>authentic connection</strong>. When you ${shadowBehavior}, you can't show up fully. You're hiding behind your pattern instead of being yourself, which prevents deep intimacy and leaves you feeling alone even when you're with someone.</p>
-                    ${relationshipStatus === 'single' ? '<p class="content-text" style="margin-top: 0.5rem; font-weight: 600; color: #ca0013;">This is likely why relationships haven\'t lasted—your pattern keeps repeating until you break it.</p>' : ''}
+                    ${relationshipStatus === 'single' ? '<p class="content-text" style="margin-top: 0.5rem; font-weight: 600; color: #f10000;">This is likely why relationships haven\'t lasted—your pattern keeps repeating until you break it.</p>' : ''}
                 </div>
                 
                 <div class="cost-item">
@@ -1139,7 +1534,7 @@
                 </div>
                 
                 <div class="costs-summary">
-                    <p class="content-text" style="font-size: 1.2rem; font-weight: 700; color: #ca0013; margin-top: 2rem; padding: 1.5rem; background: rgba(202, 0, 19, 0.08); border-radius: 8px; border-left: 4px solid #ca0013;">
+                    <p class="content-text" style="font-size: 1.2rem; font-weight: 700; color: #f10000; margin-top: 2rem; padding: 1.5rem; background: rgba(241, 0, 0, 0.08); border-radius: 8px; border-left: 4px solid #f10000;">
                         <strong>The Cost of Waiting:</strong> Every day you don't break this pattern, it gets stronger. Every day you wait, it costs you more—in relationships, opportunities, health, money, and your sense of self. The longer you wait, the harder it becomes to break.
                     </p>
             </div>
@@ -1193,7 +1588,7 @@
                     <p class="content-text" style="margin-top: 1rem; font-style: italic; color: #666;">Source: Multiple studies on habit formation and neuroplasticity (21-66 day range, 22 days as minimum effective dose)</p>
                 </div>
                 
-                <div class="neuroscience-highlight" style="margin-top: 2rem; padding: 1.5rem; background: rgba(202, 0, 19, 0.08); border-radius: 8px; border-left: 4px solid #ca0013;">
+                <div class="neuroscience-highlight" style="margin-top: 2rem; padding: 1.5rem; background: rgba(241, 0, 0, 0.08); border-radius: 8px; border-left: 4px solid #f10000;">
                     <p class="content-text" style="font-size: 1.15rem; font-weight: 600; color: #000; margin-bottom: 0.5rem;"><strong>The Bottom Line:</strong></p>
                     <p class="content-text">Your ${pattern.name.toLowerCase()} pattern is <strong>biologically real</strong>—it's wired into your brain. But neuroscience also shows that <strong>your brain can change</strong>. You just need the right system: consistent daily practice for 22 days, with support and accountability to ensure you don't default back to the old pathway.</p>
             </div>
@@ -1595,8 +1990,8 @@
         }
         
         const answerActionsHTML = answerSpecificActions.length > 0 
-            ? `<div class="answer-specific-actions" style="margin-top: 1.5rem; padding: 1rem; background: rgba(202, 0, 19, 0.05); border-left: 3px solid #ca0013; border-radius: 4px;">
-                <h4 style="font-size: 1.1rem; font-weight: 600; color: #ca0013; margin-bottom: 0.75rem;">Based on Your Answers:</h4>
+            ? `<div class="answer-specific-actions" style="margin-top: 1.5rem; padding: 1rem; background: rgba(241, 0, 0, 0.05); border-left: 3px solid #f10000; border-radius: 4px;">
+                <h4 style="font-size: 1.1rem; font-weight: 600; color: #f10000; margin-bottom: 0.75rem;">Based on Your Answers:</h4>
                 <ul class="content-list">
                     ${answerSpecificActions.map(action => `<li>${action}</li>`).join('')}
                 </ul>
@@ -1688,7 +2083,7 @@
                 </div>
                 
                 <div class="solution-stakes">
-                    <p class="content-text" style="font-size: 1.2rem; font-weight: 700; color: #ca0013; margin-top: 2rem; padding: 1.5rem; background: rgba(202, 0, 19, 0.08); border-radius: 8px; border-left: 4px solid #ca0013;">
+                    <p class="content-text" style="font-size: 1.2rem; font-weight: 700; color: #f10000; margin-top: 2rem; padding: 1.5rem; background: rgba(241, 0, 0, 0.08); border-radius: 8px; border-left: 4px solid #f10000;">
                         <strong>The Stakes Are High:</strong> Every day you wait, your pattern gets stronger. Every day you don't break it, it costs you more—in relationships, opportunities, health, money, and your sense of self. The 22-Day Pattern Reset gives you the system, support, and structure to actually break it. <strong>You need a system, not just willpower.</strong>
                     </p>
             </div>
@@ -1709,20 +2104,20 @@
             const secondaryName = driverNames[secondaryDriver] || secondaryDriver;
             
             if ((dominantDriver === 'control' && secondaryDriver === 'avoidance') || (dominantDriver === 'avoidance' && secondaryDriver === 'control')) {
-                interactionAnalysis = `<div class="driver-interaction" style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(202, 0, 19, 0.08); border-left: 4px solid #ca0013; border-radius: 4px;">
-                    <h4 style="font-size: 1.1rem; font-weight: 600; color: #ca0013; margin-bottom: 0.75rem;">Driver Interaction Analysis:</h4>
+                interactionAnalysis = `<div class="driver-interaction" style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(241, 0, 0, 0.08); border-left: 4px solid #f10000; border-radius: 4px;">
+                    <h4 style="font-size: 1.1rem; font-weight: 600; color: #f10000; margin-bottom: 0.75rem;">Driver Interaction Analysis:</h4>
                     <p class="content-text">Your combination of <strong>${dominantName} (${dominantPercent}%)</strong> and <strong>${secondaryName} (${secondaryPercent}%)</strong> creates internal conflict. You want to take charge (Control) but also want to avoid discomfort (Avoidance), which creates a push-pull dynamic. This conflict makes it harder to know what you actually want and creates confusion in your decision-making.</p>
                     <p class="content-text" style="margin-top: 0.75rem;"><strong>Which to work on first:</strong> Start with your dominant driver (${dominantName})—breaking this ${dominantPercent}% pattern first will reduce the conflict and give you clarity.</p>
                 </div>`;
             } else if ((dominantDriver === 'validation' && secondaryDriver === 'fear-of-rejection') || (dominantDriver === 'fear-of-rejection' && secondaryDriver === 'validation')) {
-                interactionAnalysis = `<div class="driver-interaction" style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(202, 0, 19, 0.08); border-left: 4px solid #ca0013; border-radius: 4px;">
-                    <h4 style="font-size: 1.1rem; font-weight: 600; color: #ca0013; margin-bottom: 0.75rem;">Driver Interaction Analysis:</h4>
+                interactionAnalysis = `<div class="driver-interaction" style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(241, 0, 0, 0.08); border-left: 4px solid #f10000; border-radius: 4px;">
+                    <h4 style="font-size: 1.1rem; font-weight: 600; color: #f10000; margin-bottom: 0.75rem;">Driver Interaction Analysis:</h4>
                     <p class="content-text">Your combination of <strong>${dominantName} (${dominantPercent}%)</strong> and <strong>${secondaryName} (${secondaryPercent}%)</strong> creates a cycle: You seek approval (Validation) but fear rejection (Fear of Rejection), so you perform to earn approval while simultaneously protecting yourself from being hurt. This creates exhaustion and prevents authentic connection.</p>
                     <p class="content-text" style="margin-top: 0.75rem;"><strong>Which to work on first:</strong> Start with your dominant driver (${dominantName})—breaking this ${dominantPercent}% pattern first will reduce the cycle and allow you to show up authentically.</p>
                 </div>`;
             } else {
-                interactionAnalysis = `<div class="driver-interaction" style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(202, 0, 19, 0.08); border-left: 4px solid #ca0013; border-radius: 4px;">
-                    <h4 style="font-size: 1.1rem; font-weight: 600; color: #ca0013; margin-bottom: 0.75rem;">Driver Interaction Analysis:</h4>
+                interactionAnalysis = `<div class="driver-interaction" style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(241, 0, 0, 0.08); border-left: 4px solid #f10000; border-radius: 4px;">
+                    <h4 style="font-size: 1.1rem; font-weight: 600; color: #f10000; margin-bottom: 0.75rem;">Driver Interaction Analysis:</h4>
                     <p class="content-text">Your secondary driver (<strong>${secondaryName} at ${secondaryPercent}%</strong>) is actually protecting you from your dominant driver (<strong>${dominantName} at ${dominantPercent}%</strong>). This creates internal conflict and makes it harder to know what you actually want. Breaking your dominant ${dominantPercent}% pattern first will reduce this conflict and give you clarity.</p>
                     <p class="content-text" style="margin-top: 0.75rem;"><strong>Which to work on first:</strong> Focus on your dominant driver (${dominantName})—this ${dominantPercent}% pattern is the primary one running your life.</p>
                 </div>`;
@@ -2078,7 +2473,7 @@
         story += `Every time you repeat this pattern, it gets stronger. Every day you don't break it, it costs you more—in relationships, opportunities, health, money, and your sense of self.`;
         story += `</p>`;
         
-        story += `<p class="story-content" style="margin-top: 1.5rem; font-weight: 600; color: #ca0013; font-size: 1.1rem;">`;
+        story += `<p class="story-content" style="margin-top: 1.5rem; font-weight: 600; color: #f10000; font-size: 1.1rem;">`;
         story += `But here's the truth: <strong>This pattern isn't who you are—it's what you learned to survive.</strong> And just as you learned it, you can unlearn it. You can break this cycle and create something new.`;
         story += `</p>`;
         
@@ -2239,7 +2634,7 @@
             <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(0, 0, 0, 0.1);">
                 <h4 style="font-size: 1.1rem; font-weight: 600; color: #000; margin: 0 0 1.25rem 0;">How It Shows Up in Your Daily Life</h4>
                 ${selectedExamples.map((ex, idx) => `
-                    <div style="margin-bottom: 1.25rem; padding: 1rem; background: rgba(0, 0, 0, 0.02); border-radius: 6px; border-left: 3px solid rgba(202, 0, 19, 0.3);">
+                    <div style="margin-bottom: 1.25rem; padding: 1rem; background: rgba(0, 0, 0, 0.02); border-radius: 6px; border-left: 3px solid rgba(241, 0, 0, 0.3);">
                         <p style="font-size: 0.95rem; font-weight: 600; color: #000; margin: 0 0 0.5rem 0;">${ex.area}:</p>
                         <p style="font-size: 0.95rem; line-height: 1.7; color: #333; margin: 0;">${ex.example}</p>
                     </div>
@@ -2274,13 +2669,13 @@
         const costOfWaitingMessage = `Every day you don't break this pattern, it gets stronger. Every day you wait, it costs you more—in relationships, opportunities, health, money, and your sense of self.`;
         
         return `
-            <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(202, 0, 19, 0.05); border-radius: 6px; border-left: 4px solid rgba(202, 0, 19, 0.3);">
-                <h4 style="font-size: 1rem; font-weight: 600; color: #ca0013; margin: 0 0 1rem 0;">Why This Matters Now:</h4>
+            <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(241, 0, 0, 0.05); border-radius: 6px; border-left: 4px solid rgba(241, 0, 0, 0.3);">
+                <h4 style="font-size: 1rem; font-weight: 600; color: #f10000; margin: 0 0 1rem 0;">Why This Matters Now:</h4>
                 <p style="font-size: 0.95rem; line-height: 1.7; color: #333; margin: 0 0 1.5rem 0;">
                     ${urgencyMessage}
                 </p>
                 
-                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(202, 0, 19, 0.2);">
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(241, 0, 0, 0.2);">
                     <p style="font-size: 0.95rem; font-weight: 600; color: #000; margin: 0 0 1rem 0;">What You're Missing</p>
                     
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
@@ -2311,8 +2706,8 @@
                     </div>
                 </div>
                 
-                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(202, 0, 19, 0.2);">
-                    <p style="font-size: 0.95rem; font-weight: 600; color: #ca0013; margin: 0 0 0.5rem 0;">The Cost of Waiting:</p>
+                <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(241, 0, 0, 0.2);">
+                    <p style="font-size: 0.95rem; font-weight: 600; color: #f10000; margin: 0 0 0.5rem 0;">The Cost of Waiting:</p>
                     <p style="font-size: 0.95rem; line-height: 1.7; color: #333; margin: 0;">
                         ${costOfWaitingMessage} The longer you wait, the harder it becomes to break.
                     </p>
@@ -2920,7 +3315,7 @@
                         <!-- Your Archetype -->
                         <div>
                             <p class="quick-reference-item-title">
-                                <span style="color: #ca0013;">Your Archetype:</span> ${archetype.name}
+                                <span style="color: #f10000;">Your Archetype:</span> ${archetype.name}
                             </p>
                             <p class="content-text" style="color: #555; margin: 0;">
                                 ${archetypeInfo.meaning}
@@ -2930,7 +3325,7 @@
                         <!-- Your Pattern -->
                         <div>
                             <p class="quick-reference-item-title">
-                                <span style="color: #ca0013;">Your Pattern:</span> ${pattern.name}
+                                <span style="color: #f10000;">Your Pattern:</span> ${pattern.name}
                             </p>
                             <p class="content-text" style="color: #555; margin: 0;">
                                 As ${archetype.name}, your pattern is ${pattern.name}—the way your ${archetypeDriverPhrase} shows up in daily life.
@@ -2941,7 +3336,7 @@
                         ${complex.primary && complex.definition ? `
                             <div>
                                 <p class="quick-reference-item-title">
-                                    <span style="color: #ca0013;">Why It Happens:</span> ${complex.primary}
+                                    <span style="color: #f10000;">Why It Happens:</span> ${complex.primary}
                                 </p>
                                 <p class="content-text" style="color: #555; margin: 0;">
                                     ${complex.definition}
@@ -2955,7 +3350,7 @@
                         <!-- The identity you're defending -->
                         <div>
                             <p class="quick-reference-item-title">
-                                <span style="color: #ca0013;">The identity you're defending:</span>
+                                <span style="color: #f10000;">The identity you're defending:</span>
                             </p>
                             <p class="content-text" style="color: #555; margin: 0;">
                                 "${identityToGiveUp}"
@@ -2965,7 +3360,7 @@
                         <!-- The good news (rewire) -->
                         <div>
                             <p class="quick-reference-item-title">
-                                <span style="color: #ca0013;">The good news:</span>
+                                <span style="color: #f10000;">The good news:</span>
                             </p>
                             <p class="content-text" style="color: #555; margin: 0;">
                                 That pathway strengthened with repetition—and it can rewire with consistent new practice.
@@ -2976,7 +3371,7 @@
                         ${complex.secondary && secondaryComplexInfo ? `
                             <div>
                                 <p class="quick-reference-item-title">
-                                    <span style="color: #ca0013;">You Also Have:</span> ${complex.secondary}
+                                    <span style="color: #f10000;">You Also Have:</span> ${complex.secondary}
                                 </p>
                                 <p class="content-text" style="color: #555; margin: 0 0 0.5rem 0;">
                                     ${secondaryComplexInfo.definition}
@@ -2990,7 +3385,7 @@
                         <!-- How Everything Connects -->
                         <div>
                             <p style="font-size: 1rem; font-weight: 600; color: #000; margin: 0 0 1rem 0;">
-                                <span style="color: #ca0013;">How Everything Connects</span>
+                                <span style="color: #f10000;">How Everything Connects</span>
                             </p>
                             ${buildEnhancedPatternStrengthExplanation(pattern, patternDominance, dominanceLabel, complex, sortedDriversArray, driverPercentagesObj)}
                         </div>
@@ -3081,7 +3476,7 @@
 
         // How Everything Connects - box only + caption (per user: only keep the box, add caption if needed)
         let explanation = '';
-        explanation += `<div style="margin: 1rem 0; padding: 1rem; background: rgba(0, 0, 0, 0.02); border-radius: 6px; border-left: 3px solid #ca0013;">`;
+        explanation += `<div style="margin: 1rem 0; padding: 1rem; background: rgba(0, 0, 0, 0.02); border-radius: 6px; border-left: 3px solid #f10000;">`;
         explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0 0 0.5rem 0; line-height: 1.6;"><strong>Your Emotional Drivers</strong> (${driverListText}) are what you learned to do to feel safe. They're your survival strategies.</p>`;
         explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0 0 0.5rem 0; line-height: 1.6;"><strong>Your Complexes</strong> (${complex.primary || 'complex'}${complex.secondary ? ' + ' + complex.secondary : ''}) are the beliefs that developed from those strategies. They're like the "rules" your brain follows.</p>`;
         explanation += `<p style="font-size: 0.95rem; color: #555; margin: 0 0 0.5rem 0; line-height: 1.6;"><strong>Your Pattern</strong> (${pattern.name}) is what you actually do—the behavior that shows up when you're triggered.</p>`;
@@ -3354,7 +3749,7 @@
                     <h3 class="section-box-title" style="font-size: 1.1rem; font-weight: 600; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.5px;">What This Costs You</h3>
                     <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                         ${patternData.top3Costs.map(cost => `
-                            <div class="section-box-item section-box-cost" style="padding: 0.875rem 1rem; border-radius: 6px; border-left: 3px solid #ca0013;">
+                            <div class="section-box-item section-box-cost" style="padding: 0.875rem 1rem; border-radius: 6px; border-left: 3px solid #f10000;">
                                 <p style="font-size: 0.95rem; line-height: 1.6; margin: 0;">${cost}</p>
                             </div>
                         `).join('')}
@@ -3395,7 +3790,7 @@
                         <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
                             <span class="life-area-icon-arrow" style="transform: ${iconRotation}; width: 20px; min-width: 20px; max-width: 20px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; color: #666; font-size: 0.75rem; transition: transform 0.3s ease;"><i class="fas fa-chevron-right"></i></span>
                             <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
-                                <span class="life-area-icon" style="width: 20px; min-width: 20px; display: inline-flex; align-items: center; justify-content: center; color: #ca0013; font-size: 0.9rem;"><i class="${area.faIcon}"></i></span>
+                                <span class="life-area-icon" style="width: 20px; min-width: 20px; display: inline-flex; align-items: center; justify-content: center; color: #f10000; font-size: 0.9rem;"><i class="${area.faIcon}"></i></span>
                                 <span class="life-area-title-text" style="font-size: 1rem; font-weight: 600;">
                                     ${area.title}
                                 </span>
@@ -3498,12 +3893,12 @@
         const items = RELATIONSHIP_PITFALLS[patternName] || RELATIONSHIP_PITFALLS['Fixer'];
         return `
             <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(0, 0, 0, 0.08);">
-                <h4 style="font-size: 1rem; font-weight: 700; color: #ca0013; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Common Relationship Pitfalls</h4>
+                <h4 style="font-size: 1rem; font-weight: 700; color: #f10000; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Common Relationship Pitfalls</h4>
                 <p style="font-size: 0.9rem; color: #555; margin: 0 0 1rem 0; line-height: 1.6;">When your ${pattern.name} pattern runs unchecked, these issues often show up:</p>
                 <ul style="margin: 0; padding-left: 1.25rem; list-style: none;">
                     ${items.map((item, i) => `
                         <li style="margin-bottom: 0.75rem; padding-left: 0.5rem; position: relative; font-size: 0.95rem; line-height: 1.6; color: #333;">
-                            <span style="position: absolute; left: -1.25rem; color: #ca0013; font-weight: 700;">•</span>
+                            <span style="position: absolute; left: -1.25rem; color: #f10000; font-weight: 700;">•</span>
                             ${item}
                         </li>
                     `).join('')}
@@ -3559,8 +3954,8 @@
         };
         const data = compatibility[patternName] || compatibility['Fixer'];
         return `
-            <div style="margin-top: 2rem; padding: 1.25rem; background: rgba(202, 0, 19, 0.04); border-radius: 8px; border: 1px solid rgba(202, 0, 19, 0.12);">
-                <h4 style="font-size: 1rem; font-weight: 700; color: #ca0013; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Compatibility with Other Patterns</h4>
+            <div style="margin-top: 2rem; padding: 1.25rem; background: rgba(241, 0, 0, 0.04); border-radius: 8px; border: 1px solid rgba(241, 0, 0, 0.12);">
+                <h4 style="font-size: 1rem; font-weight: 700; color: #f10000; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Compatibility with Other Patterns</h4>
                 <div style="display: flex; flex-direction: column; gap: 1rem;">
                     <div>
                         <p style="font-size: 0.8rem; font-weight: 700; color: #666; margin: 0 0 0.35rem 0; text-transform: uppercase;">You tend to attract</p>
@@ -3575,7 +3970,7 @@
                         <p style="font-size: 0.95rem; line-height: 1.6; color: #333; margin: 0;">${data.stronger}</p>
                     </div>
                 </div>
-                <a href="patterns.html" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.25rem; padding: 0.65rem 1.25rem; background: #ca0013; color: #fff; font-size: 0.9rem; font-weight: 600; text-decoration: none; border-radius: 6px; transition: background 0.2s;">Explore All Pattern Types <span style="font-size: 0.8em;">→</span></a>
+                <a href="patterns.html" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.25rem; padding: 0.65rem 1.25rem; background: #f10000; color: #fff; font-size: 0.9rem; font-weight: 600; text-decoration: none; border-radius: 6px; transition: background 0.2s;">Explore All Pattern Types <span style="font-size: 0.8em;">→</span></a>
             </div>
         `;
     }
@@ -4234,7 +4629,7 @@
                                             <p class="accordion-driver-percent" style="font-size: 0.9rem; font-weight: 600; margin: 0;">
                                                 ${driver.percent}%
                                             </p>
-                                            ${driver.isDominant ? '<span style="font-size: 0.7rem; font-weight: 600; color: #ca0013; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.2rem 0.5rem; background: rgba(202, 0, 19, 0.1); border-radius: 4px;">Dominant</span>' : ''}
+                                            ${driver.isDominant ? '<span style="font-size: 0.7rem; font-weight: 600; color: #f10000; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.2rem 0.5rem; background: rgba(241, 0, 0, 0.1); border-radius: 4px;">Dominant</span>' : ''}
                                         </div>
                                     </div>
                                 </button>
@@ -4317,7 +4712,7 @@
         };
         
         return `
-            <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.02); border-radius: 8px; border-left: 4px solid #ca0013;">
+            <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.02); border-radius: 8px; border-left: 4px solid #f10000;">
                 <p style="font-size: 1rem; font-weight: 600; color: #000; margin: 0 0 1rem 0;">Here's How Your Pattern Works:</p>
                 
                 <div style="margin-bottom: 1rem;">
@@ -4330,13 +4725,13 @@
                     <p style="font-size: 1rem; line-height: 1.7; color: #333; margin: 0;">${story.what}</p>
                 </div>
                 
-                <div style="margin-bottom: 1rem; padding: 1rem; background: rgba(202, 0, 19, 0.05); border-radius: 6px;">
+                <div style="margin-bottom: 1rem; padding: 1rem; background: rgba(241, 0, 0, 0.05); border-radius: 6px;">
                     <p style="font-size: 0.9rem; font-weight: 600; color: #666; margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Why:</p>
                     <p style="font-size: 1rem; line-height: 1.7; color: #333; margin: 0;">${story.why} (${dominantPercent}% of your responses). This was a survival strategy that worked, but now it's limiting you.</p>
                 </div>
                 
-                <div style="padding: 1rem; background: rgba(202, 0, 19, 0.08); border-radius: 6px; border-left: 3px solid #ca0013;">
-                    <p style="font-size: 0.9rem; font-weight: 600; color: #ca0013; margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.5px;">What This Costs You:</p>
+                <div style="padding: 1rem; background: rgba(241, 0, 0, 0.08); border-radius: 6px; border-left: 3px solid #f10000;">
+                    <p style="font-size: 0.9rem; font-weight: 600; color: #f10000; margin: 0 0 0.25rem 0; text-transform: uppercase; letter-spacing: 0.5px;">What This Costs You:</p>
                     <p style="font-size: 1rem; line-height: 1.7; color: #333; margin: 0; font-weight: 500;">${story.cost}</p>
                 </div>
             </div>
@@ -4413,7 +4808,7 @@
         };
         
         return `
-            <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.02); border-radius: 8px; border-left: 4px solid #ca0013;">
+            <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.02); border-radius: 8px; border-left: 4px solid #f10000;">
                 <p style="font-size: 0.9rem; font-weight: 600; color: #666; margin: 0 0 0.75rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Your Core Belief</p>
                 <p style="font-size: 1.4rem; font-weight: 400; color: #000; margin: 0 0 1.5rem 0; font-style: italic; line-height: 1.4;">
                     "${pattern.coreBelief}"
@@ -4444,8 +4839,8 @@
                 </div>
                 
                 <!-- What It Costs -->
-                <div style="margin-bottom: 1.25rem; padding: 1rem; background: rgba(202, 0, 19, 0.08); border-radius: 6px; border-left: 3px solid #ca0013;">
-                    <p style="font-size: 0.9rem; font-weight: 600; color: #ca0013; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 0.5px;">What This Costs You:</p>
+                <div style="margin-bottom: 1.25rem; padding: 1rem; background: rgba(241, 0, 0, 0.08); border-radius: 6px; border-left: 3px solid #f10000;">
+                    <p style="font-size: 0.9rem; font-weight: 600; color: #f10000; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 0.5px;">What This Costs You:</p>
                     <p style="font-size: 1rem; line-height: 1.7; color: #333; margin: 0; font-weight: 500;">
                         ${beliefData.whatItCosts}
                     </p>
@@ -4491,7 +4886,7 @@
         };
         
         return `
-            <div style="margin-bottom: 2rem; padding: 1.25rem; background: rgba(202, 0, 19, 0.03); border-radius: 6px;">
+            <div style="margin-bottom: 2rem; padding: 1.25rem; background: rgba(241, 0, 0, 0.03); border-radius: 6px;">
                 <p style="font-size: 0.95rem; font-weight: 600; color: #000; margin: 0 0 0.75rem 0;">How Your Pattern Operates:</p>
                 <p style="font-size: 1rem; line-height: 1.7; color: #333; margin: 0;">
                     ${patternOperations[pattern.name] || `When you feel stressed or uncertain, your ${pattern.name.toLowerCase()} pattern automatically activates.`}
@@ -4624,7 +5019,7 @@
                 </p>
                 
                 <div style="padding: 1.25rem; background: rgba(0, 0, 0, 0.02); border-radius: 6px; margin-bottom: 1rem;">
-                    <p style="font-size: 0.95rem; font-weight: 600; color: #ca0013; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Your First Step</p>
+                    <p style="font-size: 0.95rem; font-weight: 600; color: #f10000; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Your First Step</p>
                     <p style="font-size: 1.05rem; line-height: 1.6; color: #000; margin: 0;">
                         ${firstSteps[pattern.name] || `Notice when your ${pattern.name.toLowerCase()} pattern shows up. Just observe—awareness is the first step.`}
                     </p>
@@ -4741,7 +5136,7 @@
             const percentage = driverPercentages[driver];
             const isDominant = driver === dominantDriver;
             const barWidth = percentage;
-            const barColor = isDominant ? '#ca0013' : '#666';
+            const barColor = isDominant ? '#f10000' : '#666';
             const driverId = `driver-visual-${idx}`;
             const driverData = driverMeanings[driver];
             const isExpanded = isDominant; // Expand dominant driver by default
@@ -4811,7 +5206,7 @@
                         </p>
                     </div>
                     <div>
-                        <p style="font-size: 0.95rem; font-weight: 600; color: #ca0013; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Your Shadow</p>
+                        <p style="font-size: 0.95rem; font-weight: 600; color: #f10000; margin: 0 0 0.5rem 0; text-transform: uppercase; letter-spacing: 0.5px;">Your Shadow</p>
                         <p style="font-size: 1rem; line-height: 1.6; color: #000; margin: 0;">
                             <strong>${shadowBehavior}</strong> → <strong>${shadowConsequence}</strong> - This is what your pattern costs you.
                         </p>
@@ -4889,8 +5284,8 @@
                 <p class="content-text">You're missing <strong>knowing who you really are</strong>. Your pattern has become so ingrained that you don't know yourself outside of it.</p>
             </div>
             
-            <div style="margin-top: 2rem; padding: 1.25rem; background: rgba(202, 0, 19, 0.05); border-radius: 6px;">
-                <p style="font-size: 1.1rem; font-weight: 600; color: #ca0013; margin: 0 0 0.75rem 0;">The Cost of Waiting:</p>
+            <div style="margin-top: 2rem; padding: 1.25rem; background: rgba(241, 0, 0, 0.05); border-radius: 6px;">
+                <p style="font-size: 1.1rem; font-weight: 600; color: #f10000; margin: 0 0 0.75rem 0;">The Cost of Waiting:</p>
                 <p class="content-text" style="margin: 0;">
                     ${urgencyMessages[0]} The longer you wait, the harder it becomes to break.
                 </p>
@@ -5032,7 +5427,7 @@
 
         // 4. Persistence + hope (merged)
         const ageLine = exactAge ? `At ${exactAge}, this has been running for ${exactAge >= 30 ? 'decades' : 'years'}. ` : '';
-        story += `<p class="content-text" style="margin-bottom: 0; line-height: 1.7; color: #333;">${ageLine}Repetition rewired your brain—the pathway is strong. <strong style="color: #ca0013;">Because it was learned, it can be unlearned.</strong> New experiences and consistent practice can create new patterns that serve you better.</p>`;
+        story += `<p class="content-text" style="margin-bottom: 0; line-height: 1.7; color: #333;">${ageLine}Repetition rewired your brain—the pathway is strong. <strong style="color: #f10000;">Because it was learned, it can be unlearned.</strong> New experiences and consistent practice can create new patterns that serve you better.</p>`;
 
         return story;
     }
@@ -5321,7 +5716,7 @@
         return `
             <div style="margin-bottom: 0;">
                 ${examples.map((ex, idx) => `
-                    <div style="margin-bottom: ${idx < examples.length - 1 ? '1.25rem' : '0'}; padding: 1rem; background: rgba(0, 0, 0, 0.02); border-radius: 6px; border-left: 3px solid rgba(202, 0, 19, 0.3);">
+                    <div style="margin-bottom: ${idx < examples.length - 1 ? '1.25rem' : '0'}; padding: 1rem; background: rgba(0, 0, 0, 0.02); border-radius: 6px; border-left: 3px solid rgba(241, 0, 0, 0.3);">
                         <p style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">
                             ${ex.area}:
                         </p>
@@ -5803,7 +6198,7 @@
             <!-- Foundation: Self-Acceptance & How Your Mind Works -->
             <div style="margin-bottom: 2.5rem;">
                 <h3 class="workbook-main-title">The Foundation: You're Not Broken</h3>
-                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(202, 0, 19, 0.05); border-radius: 8px; border-left: 4px solid #ca0013;">
+                <div style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(241, 0, 0, 0.05); border-radius: 8px; border-left: 4px solid #f10000;">
                     <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 500; line-height: 1.7;">Your life will change completely the minute you understand: <strong>there's nothing wrong with you.</strong> You're not broken, and you don't need to heal yourself in order to experience abundance, wealth, freedom, richness, and love.</p>
                     <p class="content-text" style="margin-bottom: 1rem; color: #000; line-height: 1.7;">The paradox? It's the opposite: when you own and accept who you are, and learn to love yourself—not perfect, but complete—things become easy. You become magnetic. <strong>So stop fixing yourself. Allow yourself to naturally love and appreciate who you are, as you are, regardless of what you have or don't have.</strong></p>
                     <p class="content-text" style="margin-bottom: 0; color: #000; line-height: 1.7; font-style: italic;">This workbook isn't about fixing you. It's about becoming who you already are at your core: complete and whole, not defined by the patterns that keep you stuck.</p>
@@ -5839,7 +6234,7 @@
                         </div>
 
                         <!-- Principle 5 -->
-                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #ca0013;">
+                        <div style="padding: 1rem; background: #ffffff; border-radius: 6px; border-left: 3px solid #f10000;">
                             <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">5. Identity Is the True Magnet</p>
                             <p class="content-text" style="margin: 0; color: #555; line-height: 1.6;">Transformation isn't about getting—it's about becoming. Change who you believe you are, and your actions follow. <strong>Applied in Part 1 (Before)</strong>: "Create Your Vision: Who You're Becoming" and the new identity statement. <strong>Part 4 (Your After)</strong>: acting like the person you're becoming daily. Identity drives behavior.</p>
                         </div>
@@ -5875,7 +6270,7 @@
                         </div>
                     </div>
 
-                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(202, 0, 19, 0.06); border-radius: 6px; border-left: 4px solid #ca0013;">
+                    <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(241, 0, 0, 0.06); border-radius: 6px; border-left: 4px solid #f10000;">
                         <p class="content-text" style="margin: 0 0 0.5rem 0; color: #000; font-weight: 600; line-height: 1.7;">One-Day Reset Protocol</p>
                         <p class="content-text" style="margin: 0; color: #555; line-height: 1.7;"><strong>Before</strong> (Part 1): See the pattern. Name it. Feel its cost. Create your vision. — <strong>The Line</strong> (Parts 2 + 3): Decide. Interrupt. Choose differently. — <strong>Your After</strong> (Part 4): Evening reflection. Daily practice. Consciously choose every day. This workbook applies all 10 principles across that structure.</p>
                     </div>
@@ -5903,8 +6298,8 @@
             r: 0.7,
             gap: 0.12,
             pad: 0.6,
-            livedFill: 'rgba(202, 0, 19, 0.35)',
-            brandRed: '#ca0013'
+            livedFill: 'rgba(241, 0, 0, 0.35)',
+            brandRed: '#f10000'
         };
         var cell = cfg.r * 2 + cfg.gap;
         var contentW = (cfg.cols - 1) * cell + cfg.r * 2;
@@ -5978,7 +6373,7 @@
         function getLifeAreaAffirmationsHTML(p) {
             const areaAffirmations = PATTERN_ROBOTIC_AFFIRMATIONS_BY_AREA[p.name] || PATTERN_ROBOTIC_AFFIRMATIONS_BY_AREA['The Escaper'];
             const areas = [{ key: 'love', label: 'Love & connection' }, { key: 'money', label: 'Money' }, { key: 'health', label: 'Health' }, { key: 'career', label: 'Career' }, { key: 'identity', label: 'Identity & self-worth' }, { key: 'purpose', label: 'Purpose' }, { key: 'lifestyle', label: 'Lifestyle' }];
-            return areas.filter(a => areaAffirmations[a.key]).map(a => '<div style="margin-bottom: 0.75rem;"><p class="content-text" style="margin: 0 0 0.25rem 0; font-size: 0.8rem; color: #ca0013; font-weight: 600;">' + a.label + '</p><p class="content-text" style="margin: 0; font-size: 0.95rem; color: #333;"><strong style="color: #ca0013;">' + areaAffirmations[a.key] + '</strong></p></div>').join('');
+            return areas.filter(a => areaAffirmations[a.key]).map(a => '<div style="margin-bottom: 0.75rem;"><p class="content-text" style="margin: 0 0 0.25rem 0; font-size: 0.8rem; color: #f10000; font-weight: 600;">' + a.label + '</p><p class="content-text" style="margin: 0; font-size: 0.95rem; color: #333;"><strong style="color: #f10000;">' + areaAffirmations[a.key] + '</strong></p></div>').join('');
         }
 
         return `
@@ -5986,7 +6381,7 @@
             <div class="workbook-intro" style="margin-top: 1.5rem;">
                 ${getLifeInWeeksIllustration(exactAge)}
                 <p class="content-text" style="margin-bottom: 1rem; color: #555; font-size: 0.95rem;">Each circle is one week—4,160 in an average lifetime. Each week holds 7 days.${illoNote} You have a finite number; you can't add more. The only thing you control is making each one count. Your reset happens in one day: today. The red circle is that moment—the day you choose differently. Every week, every day that passes without it is time your pattern keeps running.</p>
-                <p class="workbook-intro-lead" style="margin: 0 0 1rem 0; font-size: 1.2rem; font-weight: 700; color: #ca0013; line-height: 1.5;">Make the decision. Interrupt your pattern. Step out of autopilot. Transform your life.</p>
+                <p class="workbook-intro-lead" style="margin: 0 0 1rem 0; font-size: 1.2rem; font-weight: 700; color: #f10000; line-height: 1.5;">Make the decision. Interrupt your pattern. Step out of autopilot. Transform your life.</p>
                 <p class="content-text" style="margin-bottom: 1rem;">Today you draw the line between <strong>Your Before</strong> and <strong>Your After</strong>. <strong>Your Before</strong> is the pattern that's been running your life—the survival strategy that got you to today, the autopilot that protected you but also kept you stuck. <strong>This moment</strong> is the turning point: clarity, courage, the choice to become better. <strong>Your After</strong> is who you're becoming—built through daily practice and conscious choice, not autopilot.</p>
                 <p class="content-text" style="margin-bottom: 1rem;"><strong>Full accountability</strong>—no blame, no excuses. Each day is precious. Every time you choose differently instead of your pattern, you move forward. That's how change happens. Who you're becoming gets built one choice at a time.</p>
                 <p class="content-text" style="margin: 0; font-weight: 600; color: #000;">The more honest you are, the more this works.</p>
@@ -6083,12 +6478,12 @@
                     <p class="content-text" style="margin: 0 0 0.75rem 0; color: #555; font-size: 0.9rem;">You need to consciously create pattern breaks. Take a few minutes now: create 2–3 reminders or calendar events in your phone. Include your interrupt question in each one. Schedule them at random times during the day—the more unexpected, the better. Best times: when you're commuting, walking, or have a free moment.</p>
                     <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #333; font-size: 0.9rem;">Optional questions to add (or use anytime):</p>
                     <ul class="content-list" style="margin: 0; padding-left: 1rem; line-height: 1.8; font-size: 0.9rem;">
-                        <li style="margin-bottom: 0.5rem;"><strong style="color: #ca0013;">Where in my life am I trading aliveness for safety?</strong></li>
-                        <li style="margin-bottom: 0.5rem;"><strong style="color: #ca0013;">What would change if I stopped needing people to see me as the identity I'm trying to leave behind?</strong></li>
-                        <li style="margin-bottom: 0;"><strong style="color: #ca0013;">What's the smallest version of the person I want to become that I could be tomorrow?</strong></li>
+                        <li style="margin-bottom: 0.5rem;"><strong style="color: #f10000;">Where in my life am I trading aliveness for safety?</strong></li>
+                        <li style="margin-bottom: 0.5rem;"><strong style="color: #f10000;">What would change if I stopped needing people to see me as the identity I'm trying to leave behind?</strong></li>
+                        <li style="margin-bottom: 0;"><strong style="color: #f10000;">What's the smallest version of the person I want to become that I could be tomorrow?</strong></li>
                     </ul>
                 </div>
-                <div style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; background: rgba(202, 0, 19, 0.06); border-radius: 8px; border: 2px solid #ca0013;">
+                <div style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; background: rgba(241, 0, 0, 0.06); border-radius: 8px; border: 2px solid #f10000;">
                     <p class="content-text" style="margin: 0 0 0.75rem 0; font-weight: 700; color: #000; font-size: 1rem;">Your Definite Chief Aim</p>
                     <p class="content-text" style="margin: 0 0 1rem 0; color: #555; font-size: 0.9rem; line-height: 1.6;">Write one clear statement. Be specific. Vague plans lead to vague results. Include: (1) <strong>What</strong> you want—the identity you're becoming / the ${pName} pattern you're breaking. (2) <strong>When</strong>—a specific date by which you'll have made the shift. (3) <strong>What you'll give in return</strong>—the daily practice, service, or commitment (e.g., using your interrupt, aligning with your new identity). Read aloud twice daily—morning and night—with emotion and faith until it saturates your subconscious.</p>
                     <p class="content-text" style="margin: 0 0 0.5rem 0; color: #666; font-size: 0.85rem; font-style: italic;">Example structure: &ldquo;By [date], I will have broken my ${pName} pattern and become someone who ${resetFocus.toLowerCase()}. In return, I will [your commitment—e.g., use my interrupt daily, choose one aligned action, read this statement twice daily].&rdquo;</p>
@@ -6135,14 +6530,14 @@
                     <div data-journal-id="p3-goals-habits" style="margin-bottom: 0;">${getJournalUI('e.g., Outcome: deeper connection. When I finish morning coffee, I check in with one person. Or: Outcome: peace. When I sit down, I review my interrupt.')}</div>
                     </div>
 
-                <div style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; background: linear-gradient(135deg, rgba(202, 0, 19, 0.03) 0%, rgba(202, 0, 19, 0.08) 100%); border-radius: 8px; border: 2px solid rgba(202, 0, 19, 0.25);">
+                <div style="margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; background: linear-gradient(135deg, rgba(241, 0, 0, 0.03) 0%, rgba(241, 0, 0, 0.08) 100%); border-radius: 8px; border: 2px solid rgba(241, 0, 0, 0.25);">
                     <p class="how-developed-title" style="font-size: 1rem; margin-bottom: 0.25rem; color: #000; font-weight: 700;">Your vision board list</p>
-                    <p class="content-text" style="margin: 0 0 0.75rem 0; color: #ca0013; font-size: 0.9rem; font-weight: 600;">Dream big. Your brain can't tell the difference between a vividly imagined experience and a real one.</p>
+                    <p class="content-text" style="margin: 0 0 0.75rem 0; color: #f10000; font-size: 0.9rem; font-weight: 600;">Dream big. Your brain can't tell the difference between a vividly imagined experience and a real one.</p>
                     <p class="content-text" style="margin-bottom: 1rem; color: #555; line-height: 1.6;">From the identity you've defined, list the things, experiences, and qualities you want. Write as if you're already living them—add sensory detail: what do you see, feel, experience? Elevated emotion (gratitude, joy, inspiration) primes your nervous system into a new future. Mental rehearsal wires your brain toward what you focus on.</p>
                     <div data-journal-id="p3-vision-list" style="margin-bottom: 0;">${getJournalUI('e.g., A morning routine where I feel calm and present. A relationship where I\'m seen and safe. Financial freedom that lets me create without worry. A body I feel at home in. Experiences that fill me with awe.')}</div>
                     </div>
 
-                <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: rgba(202, 0, 19, 0.06); border-radius: 6px; border-left: 4px solid #ca0013;">
+                <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: rgba(241, 0, 0, 0.06); border-radius: 6px; border-left: 4px solid #f10000;">
                     <p class="content-text" style="margin: 0 0 0.5rem 0; font-weight: 600; color: #000;">Life-area affirmations — recite daily (morning + night)</p>
                     <p class="content-text" style="margin: 0 0 0.75rem 0; color: #555; font-size: 0.95rem;">Science-backed subconscious rewiring by life area. Speak with intention and feeling. Repetition with emotion rewires the brain.</p>
                     ${getLifeAreaAffirmationsHTML(pattern)}
@@ -6208,7 +6603,7 @@
                     <li><strong>Science-backed system</strong> - Based on neuroscience and behavioral research</li>
                 </ul>
                 
-                <p class="content-text" style="margin-top: 1.5rem; font-weight: 600; color: #ca0013;">
+                <p class="content-text" style="margin-top: 1.5rem; font-weight: 600; color: #f10000;">
                     Every day you wait, your pattern gets stronger. You need a system, not just willpower.
                 </p>
             </div>
@@ -6288,7 +6683,7 @@
         }
         
         return `
-            <div class="hero-what-this-means-why" style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.02); border-radius: 8px; border-left: 3px solid #ca0013;">
+            <div class="hero-what-this-means-why" style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(0, 0, 0, 0.02); border-radius: 8px; border-left: 3px solid #f10000;">
                 <h3 class="hero-section-title">What This Means & Why You Got This:</h3>
                 <p class="hero-section-text" style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 0.75rem;">
                     ${patternExplanation} This is your dominant pattern, and it influences <strong>${patternDominance}% of your daily decisions</strong> across all areas of your life.
@@ -6346,8 +6741,8 @@
         }
         
         return `
-            <div class="hero-focus-first" style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(202, 0, 19, 0.08); border-radius: 8px; border-left: 4px solid #ca0013;">
-                <h3 class="hero-section-title" style="color: #ca0013; margin-bottom: 0.75rem;">📍 Focus On This First:</h3>
+            <div class="hero-focus-first" style="margin-top: 1.5rem; padding: 1.25rem; background: rgba(241, 0, 0, 0.08); border-radius: 8px; border-left: 4px solid #f10000;">
+                <h3 class="hero-section-title" style="color: #f10000; margin-bottom: 0.75rem;">📍 Focus On This First:</h3>
                 <p class="hero-section-text" style="font-size: 1.05rem; line-height: 1.7; margin: 0;">
                     ${focusText}
                 </p>
@@ -6379,11 +6774,11 @@
             <div class="hero-archetype-pattern-explanation">
                 <h3 class="hero-section-title">What This Means:</h3>
                 <div class="explanation-box" style="margin-bottom: 1.5rem;">
-                    <p class="explanation-label" style="font-weight: 600; color: #ca0013; margin-bottom: 0.5rem;">Your Archetype: ${archetype.name}</p>
+                    <p class="explanation-label" style="font-weight: 600; color: #f10000; margin-bottom: 0.5rem;">Your Archetype: ${archetype.name}</p>
                     <p class="explanation-text">${archetypeMeanings[archetype.name] || 'Your primary way of seeking safety and security.'}</p>
                 </div>
                 <div class="explanation-box">
-                    <p class="explanation-label" style="font-weight: 600; color: #ca0013; margin-bottom: 0.5rem;">Your Pattern: ${pattern.name}</p>
+                    <p class="explanation-label" style="font-weight: 600; color: #f10000; margin-bottom: 0.5rem;">Your Pattern: ${pattern.name}</p>
                     <p class="explanation-text">${patternMeanings[pattern.name] || 'Your specific way this archetype shows up in your life.'}</p>
                 </div>
             </div>
@@ -6545,8 +6940,8 @@
         const shadowConsequence = shadowParts[1] ? shadowParts[1].toLowerCase() : 'consequences';
         
         return `
-            <div class="hero-shadow-section" style="background: rgba(202, 0, 19, 0.08); padding: 1.25rem; border-radius: 8px; border-left: 4px solid #ca0013; margin-top: 1.5rem;">
-                <h3 class="hero-section-title" style="color: #ca0013;">⚠️ Your Shadow Side:</h3>
+            <div class="hero-shadow-section" style="background: rgba(241, 0, 0, 0.08); padding: 1.25rem; border-radius: 8px; border-left: 4px solid #f10000; margin-top: 1.5rem;">
+                <h3 class="hero-section-title" style="color: #f10000;">⚠️ Your Shadow Side:</h3>
                 <p class="hero-section-text">
                     <strong>${shadowBehaviorDisplay}</strong> → <strong>${shadowConsequence}</strong>
                 </p>
@@ -6567,15 +6962,15 @@
         ];
         
         return `
-            <div class="hero-urgency-section" style="background: rgba(202, 0, 19, 0.1); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #ca0013; margin-top: 1.5rem;">
-                <h3 class="hero-section-title" style="color: #ca0013; font-size: 1.2rem;">⏰ The Urgency:</h3>
+            <div class="hero-urgency-section" style="background: rgba(241, 0, 0, 0.1); padding: 1.5rem; border-radius: 8px; border-left: 4px solid #f10000; margin-top: 1.5rem;">
+                <h3 class="hero-section-title" style="color: #f10000; font-size: 1.2rem;">⏰ The Urgency:</h3>
                 <p class="hero-section-text" style="font-size: 1.1rem; line-height: 1.7; font-weight: 500;">
                     ${urgencyMessages[0]}
                 </p>
                 <p class="hero-section-text" style="margin-top: 0.75rem; font-size: 1rem;">
                     ${urgencyMessages[1]}
                 </p>
-                <p class="hero-section-text" style="margin-top: 0.75rem; font-weight: 600; color: #ca0013;">
+                <p class="hero-section-text" style="margin-top: 0.75rem; font-weight: 600; color: #f10000;">
                     ${urgencyMessages[2]}
                 </p>
             </div>
@@ -6644,7 +7039,7 @@
                     </button>
                     <div class="life-area-content">
                         ${area.content}
-                        ${preview ? `<p class="answer-example" style="margin-top: 1rem; padding: 0.75rem; background: rgba(202, 0, 19, 0.05); border-left: 3px solid #ca0013; font-size: 0.95rem; color: #666;">${preview}</p>` : ''}
+                        ${preview ? `<p class="answer-example" style="margin-top: 1rem; padding: 0.75rem; background: rgba(241, 0, 0, 0.05); border-left: 3px solid #f10000; font-size: 0.95rem; color: #666;">${preview}</p>` : ''}
                     </div>
                 </div>
             `;
@@ -6655,8 +7050,8 @@
             <div class="life-areas-accordion">
                 ${lifeAreaItems}
             </div>
-            <div class="life-areas-summary" style="margin-top: 2rem; padding: 1.5rem; background: rgba(202, 0, 19, 0.08); border-radius: 8px; border-left: 4px solid #ca0013;">
-                <p class="content-text" style="font-size: 1.15rem; font-weight: 600; color: #ca0013; margin: 0;">
+            <div class="life-areas-summary" style="margin-top: 2rem; padding: 1.5rem; background: rgba(241, 0, 0, 0.08); border-radius: 8px; border-left: 4px solid #f10000;">
+                <p class="content-text" style="font-size: 1.15rem; font-weight: 600; color: #f10000; margin: 0;">
                     <strong>The Pattern Is Everywhere:</strong> Your ${pattern.name.toLowerCase()} pattern influences ${patternDominance}% of your decisions across all these areas. It's not isolated—it's a system-wide pattern that needs a system-wide solution.
                 </p>
             </div>
@@ -6793,7 +7188,7 @@
         const firstAnswerIndex = domain.start;
         if (answers[firstAnswerIndex] !== undefined && quizData[firstAnswerIndex] && quizData[firstAnswerIndex].options && quizData[firstAnswerIndex].options[answers[firstAnswerIndex]]) {
             const option = quizData[firstAnswerIndex].options[answers[firstAnswerIndex]];
-            return `<p class="answer-insight" style="margin-top: 1rem; padding: 1rem; background: rgba(202, 0, 19, 0.05); border-left: 3px solid #ca0013; border-radius: 4px;"><strong>Based on your answer:</strong> ${option.text}</p>`;
+            return `<p class="answer-insight" style="margin-top: 1rem; padding: 1rem; background: rgba(241, 0, 0, 0.05); border-left: 3px solid #f10000; border-radius: 4px;"><strong>Based on your answer:</strong> ${option.text}</p>`;
         }
         return '';
     }
