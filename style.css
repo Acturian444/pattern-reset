@@ -240,7 +240,7 @@ nav {
     color: #f10000;
 }
 
-/* Let It Out nav link - match Pattern Quiz & Common Ground (size, weight, font) */
+/* Let It Out nav link - match Pattern Analysis & Common Ground (size, weight, font) */
 .letitout-link {
     font-family: 'Anton', sans-serif !important;
     font-weight: 400 !important;
@@ -1170,6 +1170,11 @@ footer {
     gap: 2.25rem; /* 36px nav spacing */
     padding: 0;
     margin: 0;
+}
+
+/* Community / Common Ground — hidden until launch (remove rule to show) */
+.nav-coming-soon {
+    display: none !important;
 }
 
 .nav-left {
@@ -3440,9 +3445,16 @@ header, nav, .nav-links a, .nav-dropdown-menu a, h1, h2, h3, h4, h5, h6 {
     padding: 0;
     background: #fffcf1;
     min-height: 100%;
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     width: 100%;
+}
+
+/* Wide desktop: use more horizontal space */
+@media (min-width: 1400px) {
+    .results-modal-content {
+        max-width: 1200px;
+    }
 }
 
 /* Completely remove theme toggle when results modal overlay exists */
@@ -4590,7 +4602,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     letter-spacing: 0.5px;
     line-height: 1.15;
     font-weight: 400;
-    max-width: 900px;
+    max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -4718,8 +4730,8 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 
 .results-modal-content .pattern-display-prominent {
     text-align: center;
-    padding: 1.5rem 0;
-    margin-bottom: 2rem;
+    padding: 1.5rem 0 1rem 0;
+    margin-bottom: 0;
     background: transparent;
 }
 
@@ -5532,6 +5544,330 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     grid-template-columns: 1fr 1.25fr;
 }
 
+/* Single offer: full-width horizontal layout */
+.results-modal-content .results-cta-paid-section .results-cta-offers-grid.results-cta-offers-single {
+    grid-template-columns: 1fr;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-card.results-cta-offer-horizontal {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    padding: 2rem 2rem;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-horizontal .results-cta-offer-main {
+    min-width: 0;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-horizontal .results-cta-offer-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 2rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-horizontal .results-cta-offer-price-wrap {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+    margin-bottom: 1.25rem;
+    text-align: center;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-horizontal .results-cta-offer-includes {
+    margin-bottom: 0;
+}
+
+/* Relationship Clarity Session - offer card (full-width rectangle, two-column on desktop) */
+.results-modal-content .results-cta-paid-section .results-cta-offer-card.results-cta-offer-clarity {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-clarity-inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-clarity-inner {
+        flex-direction: row;
+        align-items: stretch;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-clarity-left {
+        flex: 1;
+        min-width: 0;
+        padding: 1.75rem 2rem;
+        display: flex;
+        flex-direction: column;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-clarity-right {
+        flex: 1;
+        min-width: 0;
+        padding: 2.25rem 2rem 1.75rem;
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-clarity-left {
+    padding: 1.75rem 1.75rem 1.25rem;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-clarity-right {
+    padding: 1.5rem 1.75rem 1.75rem;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity:hover {
+    border-color: rgba(241, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(241, 0, 0, 0.08);
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-bridge {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 0.5rem;
+    padding: 0;
+    line-height: 1.45;
+    font-weight: 500;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-bridge em {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin: 0 0 0.75rem;
+    padding: 0;
+    line-height: 1.35;
+    text-transform: uppercase;
+}
+
+/* Price block - refined, minimal */
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-price-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.75rem;
+    background: rgba(241, 0, 0, 0.06);
+    padding: 1rem 1.5rem;
+    margin: 0 0 1rem;
+    border-radius: 8px;
+    border-left: 3px solid #f10000;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #f10000;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-price-note {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-tagline-inline {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.88);
+    margin: 0.35rem 0 0;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Benefits */
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-benefits {
+    list-style: none;
+    margin: 0;
+    padding: 1.25rem 1.75rem;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-spec {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0.75rem 0 0.5rem;
+    padding: 0;
+    font-weight: 500;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-how {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 0.35rem;
+    padding: 0;
+    font-weight: 500;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-scarcity {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0 0 1rem;
+    padding: 0;
+    font-weight: 500;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    background: transparent;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-founder-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(241, 0, 0, 0.2);
+    flex-shrink: 0;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #f10000;
+    letter-spacing: 0.02em;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-role {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-bio {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 0.6rem;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-bio em {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-bio:last-of-type {
+    margin-bottom: 0.75rem;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-tiktok-link {
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #f10000;
+    text-decoration: none;
+    transition: color 0.2s, opacity 0.2s;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-tiktok-link:hover {
+    color: #cc0000;
+    opacity: 0.9;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-guarantee {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0.75rem 0 0;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-benefits {
+    list-style: none;
+    margin: 0;
+    padding: 0 2rem;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-benefits {
+    padding: 0;
+    margin: 0;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-benefits li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-benefits li:last-child {
+    margin-bottom: 0;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-benefits li i {
+    position: absolute;
+    left: 0;
+    color: #f10000;
+    font-size: 0.75rem;
+    top: 0.45rem;
+}
+
+/* CTA action zone */
+.results-modal-content .results-cta-paid-section .results-cta-btn-clarity {
+    width: 100%;
+    max-width: none;
+    margin: 0 0 0.5rem;
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.results-modal-content .results-cta-paid-section .results-cta-btn-clarity:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(241, 0, 0, 0.3);
+}
+
 .results-modal-content .results-cta-paid-section .results-cta-offer-card {
     padding: 1.75rem 1.5rem;
     background: rgba(0, 0, 0, 0.08);
@@ -5650,10 +5986,12 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 
 .results-modal-content .results-cta-paid-section .results-cta-offer-availability {
     display: block;
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0.5rem 0 0;
     font-style: italic;
+    text-align: center;
+    letter-spacing: 0.02em;
 }
 
 .results-modal-content .results-cta-paid-section .results-cta-btn {
@@ -5736,10 +6074,82 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     border-color: rgba(241, 0, 0, 0.2) !important;
 }
 
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity {
+    background: #fff !important;
+    border-color: rgba(241, 0, 0, 0.2) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(241, 0, 0, 0.12) !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-price-block {
+    background: rgba(241, 0, 0, 0.05) !important;
+    border-left-color: #f10000 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-clarity-right {
+    border-left-color: rgba(0, 0, 0, 0.08) !important;
+    color: #555 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-price-note,
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-tagline-inline {
+    color: #555 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-bridge {
+    color: #555 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-bridge em {
+    color: #333 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-how {
+    color: #444 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-scarcity {
+    color: #888 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about {
+    background: transparent !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-role {
+    color: #666 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-bio {
+    color: #444 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-bio em {
+    color: #333 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-tiktok-link {
+    color: #f10000 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-tiktok-link:hover {
+    color: #cc0000 !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-guarantee {
+    color: #555 !important;
+}
+
 .results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-lead,
 .results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-desc,
 .results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-spec,
-.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-includes li {
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-includes li,
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-benefits li,
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-tagline {
     color: #444 !important;
 }
 
@@ -5747,7 +6157,8 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     color: #666 !important;
 }
 
-.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-title {
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-title,
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-label {
     color: #f10000 !important;
 }
 
@@ -5761,6 +6172,16 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 
 .results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-price-wrap {
     border-top-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-horizontal .results-cta-offer-side {
+    border-left-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+@media (max-width: 768px) {
+    .results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-offer-horizontal .results-cta-offer-side {
+        border-top-color: rgba(0, 0, 0, 0.12) !important;
+    }
 }
 
 .results-modal-overlay:not(.dark-mode) .results-cta-paid-section .results-cta-footer-note {
@@ -5780,8 +6201,56 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     }
 }
 
+/* Responsive: paid section - tablet */
+@media (max-width: 900px) {
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity {
+        max-width: 100%;
+        border-radius: 16px;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-title {
+        padding: 1.5rem 1.5rem 0.5rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-price-block {
+        padding: 1rem 1.5rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-benefits {
+        padding: 1.25rem 1.5rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-spec {
+        padding: 0.75rem 1.5rem;
+    }
+}
+
 /* Responsive: paid section - mobile */
 @media (max-width: 768px) {
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-title {
+        font-size: 1.2rem;
+        padding: 1.35rem 1.35rem 0.4rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-price-block {
+        padding: 1rem 1.35rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-price {
+        font-size: 1.9rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-benefits {
+        padding: 1.15rem 1.35rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-spec {
+        padding: 0.7rem 1.35rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-benefits li {
+        font-size: 0.95rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-btn-clarity {
+        width: calc(100% - 2.7rem);
+        margin: 0 1.35rem 0.5rem;
+        padding: 1rem 1.35rem;
+        font-size: 0.95rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-availability {
+        margin: 0 1.35rem 1.35rem;
+    }
     .results-modal-content .results-cta-paid-section {
         margin: 2rem 0;
     }
@@ -5806,6 +6275,21 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     .results-modal-content .results-cta-paid-section .results-cta-offer-badge {
         right: 1rem;
     }
+    /* Single offer horizontal: stack on mobile */
+    .results-modal-content .results-cta-paid-section .results-cta-offer-card.results-cta-offer-horizontal {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.75rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-horizontal .results-cta-offer-side {
+        padding-left: 0;
+        padding-top: 1.5rem;
+        border-left: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-horizontal .results-cta-offer-includes {
+        margin-bottom: 0;
+    }
 }
 
 /* Responsive: paid section - small mobile */
@@ -5823,6 +6307,50 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     }
     .results-modal-content .results-cta-paid-section .results-cta-pain-mirror {
         font-size: 1rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-title {
+        font-size: 1.05rem;
+        padding: 1.15rem 1.15rem 0.35rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-price-block {
+        padding: 0.9rem 1.15rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-price {
+        font-size: 1.75rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-tagline-inline {
+        font-size: 0.82rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-benefits {
+        padding: 1rem 1.15rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-spec {
+        font-size: 0.8rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about {
+        padding: 1rem 1.1rem;
+        gap: 1rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-founder-photo {
+        width: 72px;
+        height: 72px;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-about-bio {
+        font-size: 0.82rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-benefits li {
+        font-size: 0.88rem;
+        margin-bottom: 0.5rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-offer-clarity .results-cta-offer-availability {
+        margin: 0 1.15rem 1.15rem;
+        font-size: 0.65rem;
+    }
+    .results-modal-content .results-cta-paid-section .results-cta-btn-clarity {
+        width: calc(100% - 2.3rem);
+        margin: 0 1.15rem 0.5rem;
+        padding: 1rem 1.15rem;
+        font-size: 0.9rem;
     }
     .results-modal-content .results-cta-paid-section .results-cta-offer-card {
         padding: 1.5rem;
@@ -6461,7 +6989,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     
     .results-modal-content {
         max-width: 100%;
-        padding: 2rem 1.5rem;
+        padding: 2rem 0.5rem;
     }
     
     .results-modal-close {
@@ -6622,7 +7150,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 
 @media (max-width: 600px) {
     .results-modal-content {
-        padding: 1.5rem 0.75rem;
+        padding: 1.5rem 0.5rem;
     }
     
     .results-modal-close {
@@ -7386,7 +7914,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 /* Hero Section - Always Visible - Light mode default */
 .results-hero-section {
     background: transparent;
-    padding: 2.5rem 1.5rem;
+    padding: 2.5rem 1.5rem 1.25rem 1.5rem;
     margin-bottom: 0;
     border-radius: 0;
     position: relative;
@@ -7404,7 +7932,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 
 .results-section-divider {
     height: 0;
-    margin: 0;
+    margin: 0 0 1rem 0;
     padding: 0;
     border: none;
     background: transparent;
@@ -7412,9 +7940,39 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 
 .results-content-section {
     background: #fffcf1;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 0.5rem 2rem 0.5rem;
     margin: 0;
     margin-top: 0;
+}
+
+/* Core insight: no background, inherits from content section */
+.results-core-insight {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+.results-modal-overlay:not(.dark-mode) .results-core-insight .about-pattern-title,
+.results-modal-overlay:not(.dark-mode) .results-core-insight .results-core-insight-text {
+    color: #1a1a1a !important;
+}
+.results-modal-overlay.dark-mode .results-core-insight .about-pattern-title,
+.results-modal-overlay.dark-mode .results-core-insight .results-core-insight-text {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+.results-core-insight-cure {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+.results-modal-overlay.dark-mode .results-core-insight .results-core-insight-cure {
+    border-top-color: rgba(255, 255, 255, 0.2) !important;
+}
+.results-modal-overlay:not(.dark-mode) .results-core-insight .results-core-insight-cure {
+    border-top-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Story of Him and Her — border in dark mode */
+.results-modal-overlay.dark-mode .results-him-her-story {
+    border-top-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 /* Bento-style content cards - Relationship Dynamic results */
@@ -7460,6 +8018,57 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 .results-modal-overlay.dark-mode .results-bento-content .results-section-validated {
     background: rgba(241, 0, 0, 0.1);
     border-left: 4px solid #f10000;
+}
+
+/* ============================================
+   RESULTS CARDS GRID - single column rectangles
+   ============================================ */
+
+.results-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+.results-cards-grid .results-bento-card {
+    margin-bottom: 0;
+    border-radius: 16px;
+    padding: 1.5rem 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(241, 0, 0, 0.08);
+}
+
+.results-cards-grid .results-bento-card-emphasis {
+    box-shadow: 0 4px 20px rgba(241, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.results-cards-grid .results-bento-card-cta {
+    box-shadow: 0 4px 20px rgba(241, 0, 0, 0.15);
+}
+
+/* Dark mode: cards grid */
+.results-modal-overlay.dark-mode .results-cards-grid .results-bento-card {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(241, 0, 0, 0.1);
+}
+
+/* Full-width sections inside grid */
+.results-cards-grid .results-bento-card-full-width,
+.results-cards-grid .results-sticky-cta-bar,
+.results-cards-grid .results-cta-paid-section,
+.results-cards-grid .cta-section {
+    grid-column: 1 / -1;
+}
+
+/* Mobile: single column */
+@media (max-width: 900px) {
+    .results-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .results-cards-grid .results-bento-card {
+        margin-bottom: 0;
+    }
+    
 }
 
 .quick-summary-box {
@@ -7529,7 +8138,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     }
     
     .results-content-section {
-        padding: 2rem 1.5rem;
+        padding: 2rem 0.5rem;
     }
     
     .hero-section-title {
@@ -7560,6 +8169,87 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     .simplified-strength-shadow {
         grid-template-columns: 1fr !important;
     }
+}
+
+/* Results Q&A Accordion (details/summary) */
+.results-qa-accordion {
+    margin-top: 2rem;
+    padding: 0;
+}
+
+.results-qa-details {
+    margin-bottom: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.results-qa-details[open] {
+    border-color: rgba(241, 0, 0, 0.3);
+    background: rgba(241, 0, 0, 0.06);
+}
+
+.results-qa-summary {
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.95);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.results-qa-summary::-webkit-details-marker { display: none; }
+
+.results-qa-summary::after {
+    content: '+';
+    font-size: 1.25rem;
+    color: #f10000;
+    transition: transform 0.2s ease;
+}
+
+.results-qa-details[open] .results-qa-summary::after {
+    content: '−';
+}
+
+.results-qa-summary:hover {
+    color: #f10000;
+}
+
+.results-qa-answer {
+    padding: 0 1.25rem 1.25rem 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.results-modal-overlay:not(.dark-mode) .results-qa-details {
+    border-color: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.results-modal-overlay:not(.dark-mode) .results-qa-details[open] {
+    border-color: rgba(241, 0, 0, 0.25);
+    background: rgba(241, 0, 0, 0.04);
+}
+
+.results-modal-overlay:not(.dark-mode) .results-qa-summary {
+    color: #1a1a1a;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-qa-accordion .about-pattern-title {
+    color: #1a1a1a !important;
+}
+
+.results-modal-overlay:not(.dark-mode) .results-qa-answer .content-text,
+.results-modal-overlay:not(.dark-mode) .results-qa-answer .results-qa-answer-text {
+    color: #333 !important;
+}
+
+.results-modal-overlay.dark-mode .results-qa-answer .content-text,
+.results-modal-overlay.dark-mode .results-qa-answer .results-qa-answer-text {
+    color: rgba(255, 255, 255, 0.92) !important;
 }
 
 /* Accordion Container */
@@ -8577,7 +9267,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     }
     
     .results-content-section {
-        padding: 2rem 1rem;
+        padding: 2rem 0.5rem;
     }
     
     .results-section-divider {
@@ -8617,3 +9307,32 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
         padding: 0.75rem 1rem;
     }
 }
+
+/* =============================================
+   STANDARDIZED FOOTER — all pages
+   ============================================= */
+.pr-footer-std {
+    background: #050505;
+    border-top: 1px solid rgba(255, 252, 241, 0.07);
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+.pr-footer-std p {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.82rem;
+    color: rgba(255, 252, 241, 0.35);
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem 0.6rem;
+    line-height: 2;
+}
+.pr-footer-std a {
+    color: rgba(255, 252, 241, 0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.pr-footer-std a:hover { color: #f10000; }
+.pr-footer-dot { opacity: 0.3; }

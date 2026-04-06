@@ -59,6 +59,31 @@
       "permanent": true
     },
     {
+      "source": "/home",
+      "destination": "/home.html",
+      "permanent": false
+    },
+    {
+      "source": "/home/",
+      "destination": "/home.html",
+      "permanent": false
+    },
+    {
+      "source": "/home-v2",
+      "destination": "/home.html",
+      "permanent": true
+    },
+    {
+      "source": "/home-v2/",
+      "destination": "/home.html",
+      "permanent": true
+    },
+    {
+      "source": "/home-v2.html",
+      "destination": "/home.html",
+      "permanent": true
+    },
+    {
       "source": "/legal",
       "destination": "/legal.html",
       "permanent": true
@@ -67,6 +92,16 @@
       "source": "/legal/",
       "destination": "/legal.html",
       "permanent": true
+    },
+    {
+      "source": "/liamsaysit",
+      "destination": "/liamsaysit.html",
+      "permanent": false
+    },
+    {
+      "source": "/liamsaysit/",
+      "destination": "/liamsaysit.html",
+      "permanent": false
     },
     {
       "source": "/product/breakup-course",

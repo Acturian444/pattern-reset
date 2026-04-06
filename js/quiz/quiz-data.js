@@ -4,6 +4,9 @@
 // Scoring scale: 0 (healthy) / 2 (mild) / 4 (moderate) / 6 (strong signal)
 const SCORE = { NONE: 0, MILD: 2, MODERATE: 4, STRONG: 6 };
 
+/** Closing line under stakes on free quiz results (same for all relationship patterns) */
+const RELATIONSHIP_FREE_RESULT_COPY = 'You can keep going in circles trying to figure this out… or finally see what\'s actually happening—and know exactly what to do next.';
+
 // Relationship Patterns (Primary Result) - replaces archetype + personality pattern
 window.relationshipPatterns = {
     'hot-cold-cycle': {
@@ -25,9 +28,21 @@ window.relationshipPatterns = {
         behaviorDriver: 'chase when he pulls away, or try harder to reconnect',
         coreBeliefReframe: 'His staying or leaving is his choice. Your job is to decide what you\'ll accept—not to try harder until he chooses.',
         successSubtext: 'he pulls you close one moment and becomes distant the next — keeping you emotionally hooked but never secure about where you stand',
+        freeResultCopy: RELATIONSHIP_FREE_RESULT_COPY,
         whyHeActsThisWay: 'He pulls away when things get real—closeness triggers his need for space. He returns when he wants connection—on his terms. The inconsistency keeps you available without him having to commit. His behavior follows a pattern: pursue when distant, retreat when close.',
         doesHeLikeMe: 'He likely has feelings—otherwise he wouldn\'t keep coming back. But "liking" someone and showing up consistently are different. His behavior suggests he wants you when it suits him, not as a priority. The real question: Is his investment enough for what I need?',
-        whyItFeelsConfusing: 'Your brain seeks consistency. When he\'s warm, it feels real. When he pulls away, you try to understand why. That inconsistency creates anxiety—and anxiety creates attachment. You\'re not crazy. The confusion is built into the pattern.'
+        whyItFeelsConfusing: 'Your brain seeks consistency. When he\'s warm, it feels real. When he pulls away, you try to understand why. That inconsistency creates anxiety—and anxiety creates attachment. You\'re not crazy. The confusion is built into the pattern.',
+        hisIdentityLines: [
+            'Pulls away when things get real or too close.',
+            'Comes back when he wants connection—on his terms.',
+            'Warmth feels like proof—then distance resets you.',
+            'You never get a steady place to stand—just the next swing.'
+        ],
+        resultModal: {
+            loopBody: 'He comes close—then goes cold. You feel relief when he\'s warm, then anxiety when he disappears. You reach or replay what happened; he returns just enough to reset hope. You never get a stable place to stand—just the next swing.',
+            costAfterLead: 'you live in anxiety between highs, and you start blaming yourself for "overreacting" when the distance comes back.',
+            futureAfterLead: 'you keep chasing someone who only shows up on his terms—and clarity never arrives, because the pattern is the point.'
+        }
     },
     'breadcrumb-dynamic': {
         id: 'breadcrumb-dynamic',
@@ -48,9 +63,21 @@ window.relationshipPatterns = {
         behaviorDriver: 'wait for the next crumb, or hope for more',
         coreBeliefReframe: 'Waiting doesn\'t make him choose. His choice is independent of your patience. You can decide what you need—and leave if he can\'t give it.',
         successSubtext: 'he gives small bursts of attention just often enough to keep you invested — but never enough to build something real',
+        freeResultCopy: RELATIONSHIP_FREE_RESULT_COPY,
         whyHeActsThisWay: 'He gives minimal effort because it works. Occasional texts, plans, or affection keep you invested without him showing up fully. He controls the pace. His behavior is efficient: maximum connection, minimum commitment.',
         doesHeLikeMe: 'He wants to keep you in his life—but not as a priority. He gives enough to maintain the connection without committing. His investment has a ceiling. The real question: Does his level of investment match what you need?',
-        whyItFeelsConfusing: 'Each crumb feels like progress. When he texts or makes a plan, it feels like he\'s choosing you. Your brain waits for the next sign. That hope keeps you invested—and confused about whether you\'re "almost there" or nowhere at all. You\'re not crazy. The ambiguity is the pattern.'
+        whyItFeelsConfusing: 'Each crumb feels like progress. When he texts or makes a plan, it feels like he\'s choosing you. Your brain waits for the next sign. That hope keeps you invested—and confused about whether you\'re "almost there" or nowhere at all. You\'re not crazy. The ambiguity is the pattern.',
+        hisIdentityLines: [
+            'Gives just enough to keep you hooked—never enough to feel secure.',
+            'Controls the pace; avoids real commitment.',
+            'Crumbs feel like progress—until silence resets you.',
+            'Keeps you in the gray zone while he holds his options open.'
+        ],
+        resultModal: {
+            loopBody: 'He drops attention in bursts. You wait for the next text, plan, or sign it\'s "getting serious." Each crumb feels like proof—then silence resets you. You lower the bar so the pattern can continue.',
+            costAfterLead: 'you shrink what you need to match what he offers, and you start calling inconsistency "potential."',
+            futureAfterLead: 'you stay suspended—never secure enough to relax, never gone enough to grieve it and move on.'
+        }
     },
     'commitment-avoidance': {
         id: 'commitment-avoidance',
@@ -71,9 +98,21 @@ window.relationshipPatterns = {
         behaviorDriver: 'stay patient, or wait for him to be ready',
         coreBeliefReframe: 'Patience doesn\'t create readiness. If he wanted to commit, he would. Your patience may be enabling his avoidance.',
         successSubtext: 'the future always stays vague — leaving you hoping things will move forward while nothing actually changes',
+        freeResultCopy: RELATIONSHIP_FREE_RESULT_COPY,
         whyHeActsThisWay: 'He avoids "where is this going?" because clarity would require him to choose. Keeping things undefined lets him have connection without commitment. His actions keep things open-ended. That ambiguity isn\'t confusion. It\'s a choice.',
         doesHeLikeMe: 'He may care—but his behavior suggests he\'s not ready to choose you in a defined way. "Liking" someone and being willing to commit are different. His vagueness is the answer: if he wanted to move forward, he would. The question: Is he capable of giving me what I need?',
-        whyItFeelsConfusing: '"Almost" feels like progress. You\'re so close to having what you want. The future feels like a conversation you\'re not allowed to have. You\'re not crazy for wanting clarity. The vagueness is the pattern—designed to keep you waiting.'
+        whyItFeelsConfusing: '"Almost" feels like progress. You\'re so close to having what you want. The future feels like a conversation you\'re not allowed to have. You\'re not crazy for wanting clarity. The vagueness is the pattern—designed to keep you waiting.',
+        hisIdentityLines: [
+            'Keeps the future vague on purpose.',
+            'Sounds serious when it\'s convenient—won\'t actually choose.',
+            'Deflects "where is this going?" without a real answer.',
+            'Gets the benefit of you without naming what this is.'
+        ],
+        resultModal: {
+            loopBody: 'You want a real answer about the future. He keeps it fuzzy—enough hope to stay, never enough definition to know. "Almost" replaces the decision, so you wait instead of choose.',
+            costAfterLead: 'your patience trains you to accept vague as normal—and you put your life on hold for someone who won\'t name what this is.',
+            futureAfterLead: 'you stay in something that never becomes real—because "later" never has to become now.'
+        }
     },
     'emotional-distance': {
         id: 'emotional-distance',
@@ -94,9 +133,21 @@ window.relationshipPatterns = {
         behaviorDriver: 'try to get closer, or pursue when he withdraws',
         coreBeliefReframe: 'His capacity for depth isn\'t something you can create. You can only decide if you can live with what he offers.',
         successSubtext: 'he keeps an emotional wall up — leaving you trying harder to connect while he stays guarded and distant',
+        freeResultCopy: RELATIONSHIP_FREE_RESULT_COPY,
         whyHeActsThisWay: 'He keeps a wall up because emotional intimacy feels threatening. He may care—but he doesn\'t go deep. He shuts down when things get emotional. It\'s not about you. It\'s his pattern.',
         doesHeLikeMe: 'He may have feelings—but his capacity for emotional depth is limited. "Liking" someone and being able to meet them emotionally are different. His distance isn\'t a sign he doesn\'t care; it\'s a sign of his capacity. The real question: Can you live with the connection he\'s capable of offering?',
-        whyItFeelsConfusing: 'When he does open up—even a little—it feels like a breakthrough. You think "if I just try harder, he\'ll let me in." You wonder if you\'re asking for too much. You\'re not. The distance is his pattern, not your failure. The confusion comes from trying to solve something that isn\'t yours to fix.'
+        whyItFeelsConfusing: 'When he does open up—even a little—it feels like a breakthrough. You think "if I just try harder, he\'ll let me in." You wonder if you\'re asking for too much. You\'re not. The distance is his pattern, not your failure. The confusion comes from trying to solve something that isn\'t yours to fix.',
+        hisIdentityLines: [
+            'Stays surface-level when you try to go deep.',
+            'Shuts down or pulls back when things get emotional.',
+            'Keeps a wall up—while still staying in your life.',
+            'Makes you feel "too much" for wanting normal closeness.'
+        ],
+        resultModal: {
+            loopBody: 'You go for closeness; he stays light or shuts down. You try again—same wall. You feel rejected for wanting normal intimacy, and the gap between you becomes the default.',
+            costAfterLead: 'you carry the emotional work alone—and start wondering if you\'re "too much" for asking for depth.',
+            futureAfterLead: 'you keep starving for connection while he stays comfortable behind the wall—and nothing shifts unless you stop compensating for it.'
+        }
     },
     'mixed-signals-loop': {
         id: 'mixed-signals-loop',
@@ -117,9 +168,21 @@ window.relationshipPatterns = {
         behaviorDriver: 'decode his words, or analyze the disconnect',
         coreBeliefReframe: 'You\'ll never "figure out" mixed signals—that\'s the trap. Clarity comes from his actions, not your analysis.',
         successSubtext: 'his words and actions don\'t match — leaving you constantly trying to interpret what he really feels',
+        freeResultCopy: RELATIONSHIP_FREE_RESULT_COPY,
         whyHeActsThisWay: 'His words and his willingness don\'t align. He may believe what he says in the moment—but his behavior reveals his actual investment. Mixed signals aren\'t confusion; they\'re the pattern. He keeps you guessing because that keeps you invested without him showing up consistently.',
         doesHeLikeMe: 'When words and actions don\'t match, trust the actions. His behavior reveals his real investment. He may say he likes you or wants something serious—but if his actions don\'t back that up, the actions are the truth. The question: What is he willing to do?',
-        whyItFeelsConfusing: 'You\'re trying to decode his words instead of trusting his actions. You replay conversations. You wonder what he meant. The confusion is the trap—it keeps you analyzing instead of deciding. You\'re not crazy. Inconsistency creates anxiety. The confusion is built into the pattern.'
+        whyItFeelsConfusing: 'You\'re trying to decode his words instead of trusting his actions. You replay conversations. You wonder what he meant. The confusion is the trap—it keeps you analyzing instead of deciding. You\'re not crazy. Inconsistency creates anxiety. The confusion is built into the pattern.',
+        hisIdentityLines: [
+            'Says one thing—does another.',
+            'Keeps you in your head trying to decode him.',
+            'Actions don\'t match words—and you keep explaining it away.',
+            'Stays ambiguous because he never has to pick a lane.'
+        ],
+        resultModal: {
+            loopBody: 'His words promise; his actions hesitate. You replay, decode, and give the benefit of the doubt—then it happens again. The confusion isn\'t random; it keeps you invested without solid ground.',
+            costAfterLead: 'you live in your head, second-guess your instincts, and feel crazy for noticing what doesn\'t line up.',
+            futureAfterLead: 'you keep analyzing instead of deciding—and your trust in yourself is what erodes first.'
+        }
     },
     'one-sided-investment': {
         id: 'one-sided-investment',
@@ -140,9 +203,21 @@ window.relationshipPatterns = {
         behaviorDriver: 'give more, or overinvest hoping he\'ll match',
         coreBeliefReframe: 'Giving more doesn\'t create reciprocity. He has no incentive to change when you\'re doing the work. Your pullback is the only leverage you have.',
         successSubtext: 'you\'re putting in most of the effort — trying to hold the relationship together while he gives far less in return',
+        freeResultCopy: RELATIONSHIP_FREE_RESULT_COPY,
         whyHeActsThisWay: 'He takes more than he gives because you allow it. He\'s comfortable with the imbalance—no incentive to change when you\'re carrying the relationship. He may care, but he\'s not matching your effort. That\'s a choice.',
         doesHeLikeMe: 'He may care—but his behavior suggests he\'s comfortable receiving more than he gives. "Liking" someone shows up in effort: who initiates, who plans, who invests. If you\'re doing most of the work, his investment doesn\'t match yours. The question: Is he willing to show up the way I need?',
-        whyItFeelsConfusing: 'Your effort feels like love. You believe that if you give more, he\'ll match it. The relationship feels like work—and you wonder if that\'s normal. You\'re not crazy for wanting reciprocity. The imbalance is the pattern. The confusion comes from hoping he\'ll change when he hasn\'t shown that he will.'
+        whyItFeelsConfusing: 'Your effort feels like love. You believe that if you give more, he\'ll match it. The relationship feels like work—and you wonder if that\'s normal. You\'re not crazy for wanting reciprocity. The imbalance is the pattern. The confusion comes from hoping he\'ll change when he hasn\'t shown that he will.',
+        hisIdentityLines: [
+            'Lets you carry the relationship.',
+            'Takes more than he gives—and stays comfortable with it.',
+            'Shows up when it\'s easy; fades when real effort is required.',
+            'Has no incentive to step up while you keep holding it together.'
+        ],
+        resultModal: {
+            loopBody: 'You initiate, plan, fix, and invest. He shows up when it\'s easy. You hope effort will be matched—it isn\'t. The relationship only "works" because you\'re carrying it.',
+            costAfterLead: 'you get depleted, and your generosity gets mistaken for proof he\'s committed when he\'s mostly receiving.',
+            futureAfterLead: 'you keep overgiving until you break—or until you stop, and discover how little he was putting in all along.'
+        }
     }
 };
 
@@ -150,27 +225,63 @@ window.relationshipPatterns = {
 window.herResponsePatterns = {
     'reassurance-seeker': {
         name: 'The Reassurance Seeker',
-        description: 'When you feel uncertain, you reach out more. You look for proof he cares—through his texts, his effort, his words. You may push for real answers when something bothers you. You initiate to feel connected.'
+        description: 'When you feel uncertain, you reach out more. You look for proof he cares—through his texts, his effort, his words. You may push for real answers when something bothers you. You initiate to feel connected.',
+        identityLines: [
+            'You reach out more when uncertainty spikes.',
+            'You look for proof in texts, effort, and words.',
+            'You push for reassurance when something feels off.',
+            'You need to feel chosen again when he pulls away.'
+        ]
     },
     'space-giver': {
         name: 'The Space Giver',
-        description: 'When he pulls away, you hold back. You give him space so you don\'t seem needy, even though it\'s hard. You wait for him to come to you.'
+        description: 'When he pulls away, you hold back. You give him space so you don\'t seem needy, even though it\'s hard. You wait for him to come to you.',
+        identityLines: [
+            'You hold back so you don\'t seem needy.',
+            'You give him space when he goes quiet.',
+            'You wait for him to come to you—even when it hurts.',
+            'You swallow what you need to avoid looking "too much."'
+        ]
     },
     'direct-communicator': {
         name: 'The Direct Communicator',
-        description: 'You ask directly. You bring things up and want real answers. But you often hit a wall—he deflects, gets defensive, or shuts down.'
+        description: 'You ask directly. You bring things up and want real answers. But you often hit a wall—he deflects, gets defensive, or shuts down.',
+        identityLines: [
+            'You name what feels off—out loud.',
+            'You ask for clarity straight on.',
+            'You keep hitting walls when he deflects or shuts down.',
+            'You won\'t pretend everything is fine when it isn\'t.'
+        ]
     },
     'hopeful-waiter': {
         name: 'The Hopeful Waiter',
-        description: 'You stay and hope things will change. You give him time, drop things when he deflects, and wait for him to show up the way you need.'
+        description: 'You stay and hope things will change. You give him time, drop things when he deflects, and wait for him to show up the way you need.',
+        identityLines: [
+            'You stay when things feel unresolved.',
+            'You give him time—and drop it when he won\'t engage.',
+            'You hope "almost" will turn into something real.',
+            'You choose patience over the hard confrontation.'
+        ]
     },
     'protector': {
         name: 'The Protector',
-        description: 'You shut down or pull back to avoid more hurt. You stop investing, stop bringing things up, and build walls to protect yourself.'
+        description: 'You shut down or pull back to avoid more hurt. You stop investing, stop bringing things up, and build walls to protect yourself.',
+        identityLines: [
+            'You pull back to protect yourself from more hurt.',
+            'You stop investing when it keeps costing you.',
+            'You build walls so you don\'t get hurt again.',
+            'You go quiet first so he can\'t reject you first.'
+        ]
     },
     'balanced': {
         name: 'The Self-Aware One',
-        description: 'You notice the dynamic and try to stay grounded. You\'re not chasing, not shutting down—you\'re aware of what\'s happening and choosing how to respond.'
+        description: 'You notice the dynamic and try to stay grounded. You\'re not chasing, not shutting down—you\'re aware of what\'s happening and choosing how to respond.',
+        identityLines: [
+            'You notice what\'s actually happening between you.',
+            'You try to stay grounded—not chasing, not shutting down.',
+            'You see the pattern and choose how you want to respond.',
+            'You\'d rather reality than a story that keeps you stuck.'
+        ]
     }
 };
 
@@ -214,9 +325,45 @@ Object.keys(window.relationshipPatterns || {}).forEach(key => {
         shadow: rp.watchFor,
         resetFocus: rp.nextStep,
         identity: rp.description,
-        cta: 'Want clarity about your specific situation? Submit your relationship story for a personalized analysis.'
+        cta: 'Want clarity about your specific situation? Submit your relationship story for a personalized analysis.',
+        freeResultCopy: rp.freeResultCopy,
+        resultModal: rp.resultModal,
+        hisIdentityLines: rp.hisIdentityLines
     };
 });
+
+// Quiz success modal: one-line summary + article for dynamic name
+window.patternResultHelpers = {
+    stripLeadingThe: function (name) {
+        if (!name || typeof name !== 'string') return '';
+        return name.replace(/^The\s+/i, '').trim();
+    },
+    escapeQuizHtml: function (s) {
+        if (s == null || s === '') return '';
+        return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    },
+    /** Returns HTML; pattern names wrapped for brand accent color */
+    buildSummaryHTML: function (herPatternFullName, dynamicPatternFullName) {
+        const her = this.stripLeadingThe(herPatternFullName || '');
+        const dyn = this.stripLeadingThe(dynamicPatternFullName || '');
+        if (!her && !dyn) return '';
+        const first = (dyn || ' ').trim().charAt(0);
+        const article = first && /^[aeiouAEIOU]/.test(first) ? 'an' : 'a';
+        const esc = this.escapeQuizHtml.bind(this);
+        const herPhrase = her || 'who you\'ve become here';
+        const herPart = her
+            ? `<span class="quiz-success-summary-accent">${esc(her)}</span>`
+            : esc(herPhrase);
+        const dynPart = dyn
+            ? `${article} <span class="quiz-success-summary-accent">${esc(dyn)}</span>`
+            : 'this dynamic';
+        return `In this relationship, you've become the ${herPart}—stuck in ${dynPart}.`;
+    }
+};
 
 // Quiz Questions - 16 scored + 4 special (v2.1 Optimized)
 window.quizData = [
@@ -412,7 +559,9 @@ window.quizData = [
             { text: 'That I\'m ignoring red flags', score: SCORE.MILD, dimension: 'attraction', subDimension: 'she-wants-more' },
             { text: 'That he\'ll eventually leave', score: SCORE.MILD, dimension: 'attraction', subDimension: 'he-holds-cards' },
             { text: 'That I\'ll never get real clarity', score: SCORE.MILD, dimension: 'attraction', subDimension: 'she-wants-more' },
-            { text: 'That I\'m more invested than he is', score: SCORE.MILD, dimension: 'attraction', subDimension: 'he-holds-cards' }
+            { text: 'That I\'m more invested than he is', score: SCORE.MILD, dimension: 'attraction', subDimension: 'he-holds-cards' },
+            { text: 'That he\'s losing interest', score: SCORE.MILD, dimension: 'attraction', subDimension: 'he-holds-cards' },
+            { text: 'That he\'s interested in someone else', score: SCORE.MILD, dimension: 'attraction', subDimension: 'he-holds-cards' }
         ]
     },
     // Birth Date (Q17) - Optional
@@ -451,6 +600,10 @@ window.quizData = [
             { text: 'Situationship that won\'t progress', value: 'situationship' },
             { text: 'Recovering from betrayal or cheating', value: 'cheated-betrayed' },
             { text: 'I don\'t understand why relationships keep failing', value: 'dont-know-why' },
+            { text: 'He lost interest / went cold', value: 'he-went-cold' },
+            { text: 'He\'s keeping me as an option', value: 'keeping-me-option' },
+            { text: 'I feel like I\'m not enough for him', value: 'not-enough' },
+            { text: 'I feel invisible / overlooked in the relationship', value: 'feel-invisible' },
             { text: 'Other', value: 'other' }
         ]
     },
@@ -469,6 +622,12 @@ window.quizData = [
             { text: 'Being emotionally neglected', value: 'emotionally-neglected' },
             { text: 'That I\'m the problem', value: 'im-the-problem' },
             { text: 'That I\'ll never find the right person', value: 'never-find-right' },
+            { text: 'Losing his interest / him going cold', value: 'losing-his-interest' },
+            { text: 'Not being enough for him', value: 'not-enough' },
+            { text: 'Wasting my time / losing my best years', value: 'losing-time' },
+            { text: 'Losing him to someone else', value: 'losing-him-to-other' },
+            { text: 'Becoming invisible / overlooked', value: 'becoming-invisible' },
+            { text: 'Him never committing', value: 'him-never-committing' },
             { text: 'Other', value: 'other' }
         ]
     }

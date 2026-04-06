@@ -1,0 +1,314 @@
+/* Bio hub — Pattern Reset dark, mobile-first */
+:root {
+  --bio-bg: #050505;
+  --bio-bg-elevated: #0a0a0a;
+  --bio-text: #ffffff;
+  --bio-muted: rgba(255, 255, 255, 0.68);
+  --bio-subtle: rgba(255, 255, 255, 0.45);
+  --bio-border: rgba(255, 255, 255, 0.1);
+  --bio-accent: #f10000;
+  --bio-accent-hover: #cc0000;
+  --bio-radius: 1rem;
+  --bio-max: 26rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body.page-bio-hub {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bio-bg);
+  color: var(--bio-text);
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bio-hub {
+  max-width: var(--bio-max);
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+}
+
+/* Profile first — no brand bar above */
+.bio-hub__avatar-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.35rem;
+}
+
+.bio-hub__avatar {
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--bio-border);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+.bio-hub__name {
+  font-family: "Anton", sans-serif;
+  font-size: 1.75rem;
+  text-align: center;
+  margin: 0 0 0.35rem;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+.bio-hub__handle {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--bio-muted);
+  margin: 0 0 1rem;
+}
+
+.bio-hub__bio {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--bio-muted);
+  margin: 0 0 1.75rem;
+  line-height: 1.55;
+}
+
+.bio-hub__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.bio-hub__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.95rem 1.25rem;
+  border-radius: var(--bio-radius);
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.bio-hub__btn:focus-visible {
+  outline: 2px solid var(--bio-accent);
+  outline-offset: 3px;
+}
+
+.bio-hub__btn--primary {
+  background: var(--bio-accent);
+  color: #fff;
+}
+
+.bio-hub__btn--primary:hover {
+  background: var(--bio-accent-hover);
+}
+
+.bio-hub__btn--ghost {
+  background: transparent;
+  color: var(--bio-text);
+  border: 1px solid var(--bio-border);
+}
+
+.bio-hub__btn--ghost:hover {
+  border-color: rgba(241, 0, 0, 0.45);
+  color: #fff;
+}
+
+.bio-hub__btn--stacked {
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+  text-align: center;
+}
+
+.bio-hub__btn-line {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.bio-hub__btn-sub {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.35;
+  opacity: 0.78;
+  max-width: 18rem;
+}
+
+.bio-hub__btn--ghost .bio-hub__btn-sub {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.bio-hub__btn--ghost:hover .bio-hub__btn-sub {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* Quiz promo card — logo, headline, sub, CTA */
+.bio-hub__quiz-card {
+  position: relative;
+  padding: 1.35rem 1.2rem 1.25rem;
+  border-radius: 1.125rem;
+  background: linear-gradient(165deg, #151515 0%, #0c0c0c 45%, #080808 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 0 0 1px rgba(241, 0, 0, 0.12),
+    0 20px 50px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.bio-hub__quiz-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--bio-accent), transparent);
+  opacity: 0.85;
+}
+
+.bio-hub__quiz-card-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+  color: var(--bio-accent);
+  filter: drop-shadow(0 0 12px rgba(241, 0, 0, 0.25));
+}
+
+.bio-hub__quiz-card-title {
+  font-family: "Anton", sans-serif;
+  font-size: 1.25rem;
+  text-align: center;
+  margin: 0 0 0.85rem;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+  color: var(--bio-text);
+}
+
+.bio-hub__quiz-card-ask-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.bio-hub__quiz-card-ask-list li {
+  margin: 0 0 0.45rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.72);
+  text-align: center;
+}
+
+.bio-hub__quiz-card-ask-list li:last-child {
+  margin-bottom: 0;
+}
+
+.bio-hub__quiz-card-cta {
+  margin-top: 0.35rem;
+}
+
+.bio-hub__btn--primary.bio-hub__btn--stacked .bio-hub__btn-sub {
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 500;
+}
+
+.bio-hub__btn--primary.bio-hub__btn--stacked:hover .bio-hub__btn-sub {
+  color: #fff;
+}
+
+.bio-hub__social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 1.5rem;
+}
+
+.bio-hub__social a,
+.bio-hub__social a:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background: var(--bio-bg-elevated);
+  border: 1px solid var(--bio-border);
+  color: var(--bio-text);
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.bio-hub__social a:hover {
+  border-color: rgba(241, 0, 0, 0.5);
+  color: var(--bio-accent);
+}
+
+.bio-hub__social a:focus-visible {
+  outline: 2px solid var(--bio-accent);
+  outline-offset: 2px;
+}
+
+.bio-hub__social svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.bio-hub__footer {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--bio-border);
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--bio-subtle);
+}
+
+.bio-hub__footer a {
+  color: var(--bio-muted);
+  text-decoration: none;
+}
+
+.bio-hub__footer a:hover {
+  color: var(--bio-accent);
+}
+
+@media (min-width: 480px) {
+  .bio-hub {
+    padding-top: 2.25rem;
+  }
+
+  .bio-hub__name {
+    font-size: 2rem;
+  }
+
+  .bio-hub__avatar {
+    width: 7.5rem;
+    height: 7.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .bio-hub {
+    padding-top: 3rem;
+  }
+}

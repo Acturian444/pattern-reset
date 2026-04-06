@@ -7,6 +7,7 @@ class WallFeed {
         this.currentCity = localStorage.getItem('selectedCity') || 'Global';
         this.currentSort = 'newest';
         this.currentFilter = null;
+        this.currentSituationFilter = null;
         this.currentSearch = '';
         this.posts = [];
         this.filteredPosts = [];
@@ -413,15 +414,19 @@ class WallFeed {
             locationText = this.currentCity;
         }
         
+        const hasSituationFilter = this.currentSituationFilter;
+        
         if (hasEmotionFilter) {
             emotionText = this.currentFilter;
         } else {
             emotionText = 'All Feelings';
         }
         
+        const situationText = hasSituationFilter ? this.currentSituationFilter : 'All Situations';
+        
         return `
-            <span>${icon} ${locationText} — ${emotionText}</span>
-            <i class="fas fa-chevron-down"></i>
+            <span class="wall-location-btn-text">${icon} ${locationText} — ${emotionText} — ${situationText}</span>
+            <i class="fas fa-chevron-down wall-location-btn-chevron" aria-hidden="true"></i>
         `;
     }
 
@@ -594,6 +599,9 @@ class WallFeed {
                 return postEmotions.includes(this.currentFilter);
             });
         }
+        if (this.currentSituationFilter) {
+            posts = posts.filter(p => p.situation === this.currentSituationFilter);
+        }
         if (city === 'Global') {
             return posts.length;
         }
@@ -669,16 +677,29 @@ class WallFeed {
         };
     }
 
+    getSituationList() {
+        return ['Dating', 'Situationship', 'Talking Stage', 'Relationship', 'Breakup', 'No Contact', 'Ex', 'Marriage', 'Family', 'Friendship', 'Work', 'Self', 'Trauma', 'Healing'];
+    }
+
     openFilterModal() {
         const modal = document.createElement('div');
         modal.className = 'wall-filter-modal visible';
         modal.innerHTML = `
-            <div class="letitout-emotion-modal">
+            <div class="letitout-emotion-modal wall-filter-modal-inner">
                 <div class="letitout-emotion-modal-header">
-                    <div class="letitout-emotion-modal-title">Filter by Feeling</div>
+                    <div class="wall-filter-modal-header-text">
+                        <div class="letitout-emotion-modal-title">Filter by Feeling & Situation</div>
+                        <p class="wall-filter-modal-hint">Select one or both to narrow results.</p>
+                    </div>
                     <button class="letitout-emotion-modal-close">&times;</button>
                 </div>
-                <div class="letitout-emotion-modal-content"></div>
+                <div class="letitout-emotion-modal-content">
+                    <div class="filter-feelings-wrapper"></div>
+                    <div class="filter-situation-section">
+                        <div class="emotion-category-title">Situation</div>
+                        <div class="filter-situation-options"></div>
+                    </div>
+                </div>
                 <div class="letitout-emotion-modal-footer">
                     <button class="letitout-emotion-modal-btn clear">Clear Filter</button>
                     <button class="letitout-emotion-modal-btn done">Apply</button>
@@ -687,10 +708,52 @@ class WallFeed {
         `;
         document.body.appendChild(modal);
 
-        const content = modal.querySelector('.letitout-emotion-modal-content');
+        const content = modal.querySelector('.filter-feelings-wrapper');
+        const situationSection = modal.querySelector('.filter-situation-options');
         const doneBtn = modal.querySelector('.letitout-emotion-modal-btn.done');
         const clearBtn = modal.querySelector('.letitout-emotion-modal-btn.clear');
         const closeBtn = modal.querySelector('.letitout-emotion-modal-close');
+
+        // Situation filter options
+        const getPostCountForSituation = (situation) => {
+            let posts = this.posts;
+            if (this.currentCity !== 'Global') {
+                posts = posts.filter(p => p.city === this.currentCity);
+            }
+            if (this.currentFilter) {
+                posts = posts.filter(post => {
+                    if (!post.emotion) return false;
+                    const postEmotions = post.emotion.split(',').map(e => e.trim());
+                    return postEmotions.includes(this.currentFilter);
+                });
+            }
+            return posts.filter(p => p.situation === situation).length;
+        };
+
+        const renderSituations = () => {
+            situationSection.innerHTML = '';
+            this.getSituationList().forEach(situation => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'emotion-subtag filter-situation-btn';
+                const count = getPostCountForSituation(situation);
+                btn.innerHTML = `<span class="emotion-subtag-label">${situation}</span> <span class="emotion-subtag-count">— ${count} post${count === 1 ? '' : 's'}</span>`;
+                if (this.currentSituationFilter === situation) btn.classList.add('selected');
+                btn.onclick = () => {
+                    situationSection.querySelectorAll('.filter-situation-btn').forEach(b => b.classList.remove('selected'));
+                    if (this.currentSituationFilter === situation) {
+                        this.currentSituationFilter = null;
+                    } else {
+                        this.currentSituationFilter = situation;
+                        btn.classList.add('selected');
+                    }
+                    renderEmotions(searchInput.value);
+                };
+                situationSection.appendChild(btn);
+            });
+        };
+
+        renderSituations();
 
         // Add search input
         const searchInput = document.createElement('input');
@@ -706,11 +769,14 @@ class WallFeed {
         categoriesContainer.className = 'emotion-categories-container';
         content.appendChild(categoriesContainer);
 
-        // Helper: count posts (respecting city filter) that have this emotion
+        // Helper: count posts (respecting city + situation filter) that have this emotion
         const getPostCountForEmotion = (emotion) => {
             let posts = this.posts;
             if (this.currentCity !== 'Global') {
                 posts = posts.filter(p => p.city === this.currentCity);
+            }
+            if (this.currentSituationFilter) {
+                posts = posts.filter(p => p.situation === this.currentSituationFilter);
             }
             return posts.filter(post => {
                 if (!post.emotion) return false;
@@ -757,6 +823,7 @@ class WallFeed {
                             subTag.classList.add('selected');
                             this.currentFilter = emotion;
                         }
+                        renderSituations();
                     };
                     subTagsDiv.appendChild(subTag);
                 });
@@ -778,8 +845,10 @@ class WallFeed {
         // Clear Filter button
         clearBtn.onclick = () => {
             this.currentFilter = null;
+            this.currentSituationFilter = null;
             this.updateLocationButton();
             renderEmotions(searchInput.value);
+            renderSituations();
         };
 
         // Apply button
@@ -829,6 +898,11 @@ class WallFeed {
                 return postEmotions.includes(this.currentFilter);
             });
         }
+
+        // Apply situation filter
+        if (this.currentSituationFilter) {
+            filteredPosts = filteredPosts.filter(post => post.situation === this.currentSituationFilter);
+        }
         
         // Apply search
         if (this.currentSearch) {
@@ -836,6 +910,7 @@ class WallFeed {
             filteredPosts = filteredPosts.filter(post => 
                 post.content.toLowerCase().includes(searchTerm) ||
                 (post.emotion && post.emotion.toLowerCase().includes(searchTerm)) ||
+                (post.situation && post.situation.toLowerCase().includes(searchTerm)) ||
                 (post.truthNumber && post.truthNumber.toString().includes(searchTerm.replace(/[^\d]/g, ''))) // Search Truth numbers
             );
         }

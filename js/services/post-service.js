@@ -21,7 +21,7 @@ class PostService {
         });
     }
 
-    async createPost(content, emotion, city = null, isCustomCity = false) {
+    async createPost(content, emotion, city = null, isCustomCity = false, situation = null) {
         try {
             // Try to ensure user is authenticated
             let userId;
@@ -51,6 +51,7 @@ class PostService {
                 feltCount: 0,
                 city: city || null,
                 customCity: !!isCustomCity,
+                situation: situation || null,
                 truthNumber: truthNumber
             };
 
@@ -342,6 +343,7 @@ class PostService {
                 postText: post.content || '',
                 postEmotions: post.emotion || '',
                 postCity: post.city || 'N/A',
+                postSituation: post.situation || null,
                 postFeltCount: post.feltCount || 0,
                 postTimestamp: post.timestamp || null,
                 postAuthorId: post.userId || 'unknown',

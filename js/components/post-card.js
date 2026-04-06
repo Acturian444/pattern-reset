@@ -44,9 +44,16 @@ class PostCard {
         // Always set the full text content. The CSS will handle truncation.
         content.textContent = fullText;
 
-        // Emotion tags (one per pill, small)
+        // Situation + Emotion tags
         const emotionTags = document.createElement('div');
         emotionTags.className = 'post-emotion-tags';
+        // Situation tag (single, distinct styling)
+        if (post.situation) {
+            const situationTag = document.createElement('span');
+            situationTag.className = 'situation-tag situation-tag-small';
+            situationTag.textContent = post.situation;
+            emotionTags.appendChild(situationTag);
+        }
         if (post.isInbox) {
             // This is logic for the "My Posts" view, not the main wall.
             // It won't run here but is kept for component consistency.

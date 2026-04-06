@@ -1,0 +1,369 @@
+/* Pattern Reset — Philosophy page */
+
+:root {
+    --phil-red: #f10000;
+    --phil-dark: #050505;
+    --phil-ink: #080808;
+    --phil-cream: #fffcf1;
+    --phil-muted: rgba(255, 252, 241, 0.58);
+    --phil-soft: rgba(255, 252, 241, 0.72);
+    --phil-border: rgba(255, 252, 241, 0.08);
+    --phil-max: 40rem;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body.page-philosophy {
+    background: var(--phil-dark) !important;
+    color: var(--phil-cream);
+}
+
+body.page-philosophy header {
+    background: var(--phil-dark) !important;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+}
+
+body.page-philosophy .nav-links a,
+body.page-philosophy .hamburger {
+    color: var(--phil-cream) !important;
+}
+
+body.page-philosophy .nav-links a:hover,
+body.page-philosophy .nav-links a.active {
+    color: var(--phil-red) !important;
+}
+
+body.page-philosophy .nav-cta-button {
+    background: var(--phil-red) !important;
+    color: #fff !important;
+}
+
+body.page-philosophy .menu-overlay {
+    background: var(--phil-dark) !important;
+}
+
+body.page-philosophy .menu-overlay .menu-nav-title {
+    color: var(--phil-cream) !important;
+}
+
+body.page-philosophy .menu-overlay .menu-nav-subtitle {
+    color: rgba(255, 252, 241, 0.55) !important;
+}
+
+body.page-philosophy .menu-overlay .menu-nav-link:hover .menu-nav-title,
+body.page-philosophy .menu-overlay .menu-nav-link.active .menu-nav-title {
+    color: var(--phil-red) !important;
+}
+
+body.page-philosophy .menu-overlay .close-btn {
+    color: var(--phil-cream) !important;
+}
+
+.phil-wrap {
+    position: relative;
+    overflow: hidden;
+}
+
+.phil-hero {
+    position: relative;
+    padding: clamp(4.5rem, 12vw, 7rem) clamp(1.25rem, 4vw, 2rem) clamp(3rem, 6vw, 4.5rem);
+    text-align: center;
+    background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(241, 0, 0, 0.12), transparent 55%),
+        var(--phil-dark);
+}
+
+.phil-hero-spiral {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(720px, 95vw);
+    height: min(720px, 95vw);
+    opacity: 0.04;
+    pointer-events: none;
+    color: var(--phil-cream);
+}
+
+.phil-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: min(52rem, 100%);
+    margin: 0 auto;
+}
+
+.phil-kicker {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--phil-red);
+    margin: 0 0 1.25rem;
+}
+
+.phil-h1 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: clamp(2.2rem, 6vw, 3.75rem);
+    line-height: 1.05;
+    letter-spacing: 0.02em;
+    color: var(--phil-cream);
+    margin: 0 0 1rem;
+    text-wrap: balance;
+}
+
+.phil-hero-lead {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(1.05rem, 2.2vw, 1.2rem);
+    font-weight: 500;
+    color: rgba(255, 252, 241, 0.78);
+    line-height: 1.55;
+    max-width: 36rem;
+    margin: 0 auto;
+}
+
+.phil-main {
+    padding: 0 clamp(1.25rem, 4vw, 2rem) clamp(4rem, 8vw, 6rem);
+}
+
+.phil-inner {
+    max-width: var(--phil-max);
+    margin: 0 auto;
+}
+
+.phil-band {
+    padding: clamp(2.75rem, 5vw, 4rem) 0;
+    border-top: 1px solid var(--phil-border);
+}
+
+.phil-band--alt {
+    background: var(--phil-ink);
+    margin-left: calc(-1 * clamp(1.25rem, 4vw, 2rem));
+    margin-right: calc(-1 * clamp(1.25rem, 4vw, 2rem));
+    padding-left: clamp(1.25rem, 4vw, 2rem);
+    padding-right: clamp(1.25rem, 4vw, 2rem);
+    border-top-color: rgba(255, 252, 241, 0.05);
+}
+
+.phil-band:first-of-type {
+    border-top: none;
+    padding-top: 0;
+}
+
+.phil-h2 {
+    font-family: 'Anton', sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: clamp(1.35rem, 3vw, 1.85rem);
+    line-height: 1.12;
+    letter-spacing: 0.03em;
+    color: var(--phil-cream);
+    margin: 0 0 1.25rem;
+    text-wrap: balance;
+}
+
+.phil-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(1rem, 1.85vw, 1.08rem);
+    color: var(--phil-soft);
+    line-height: 1.82;
+    margin: 0 0 1.25rem;
+}
+
+.phil-body:last-child {
+    margin-bottom: 0;
+}
+
+.phil-body strong {
+    color: var(--phil-cream);
+    font-weight: 600;
+}
+
+.phil-pull {
+    margin: 1.75rem 0;
+    padding: 1.35rem 0 1.35rem 1.25rem;
+    border-left: 3px solid var(--phil-red);
+    background: linear-gradient(90deg, rgba(241, 0, 0, 0.06), transparent 65%);
+    border-radius: 0 12px 12px 0;
+}
+
+.phil-pull p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(1.05rem, 2vw, 1.18rem);
+    font-weight: 600;
+    color: var(--phil-cream);
+    line-height: 1.45;
+    margin: 0;
+}
+
+.phil-stack {
+    list-style: none;
+    margin: 1.5rem 0 1.75rem;
+    padding: 0;
+}
+
+.phil-stack li {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 252, 241, 0.88);
+    line-height: 1.35;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(255, 252, 241, 0.06);
+}
+
+.phil-stack li:last-child {
+    border-bottom: none;
+}
+
+.phil-verse {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(1.02rem, 1.9vw, 1.12rem);
+    color: rgba(255, 252, 241, 0.82);
+    line-height: 1.75;
+    margin: 1.5rem 0;
+}
+
+.phil-verse p {
+    margin: 0.35rem 0;
+}
+
+.phil-drop {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(1.12rem, 2.1vw, 1.28rem);
+    font-weight: 600;
+    color: var(--phil-cream);
+    line-height: 1.5;
+    margin: 2rem 0 1rem;
+}
+
+.phil-list-tight {
+    list-style: none;
+    margin: 1rem 0 1.5rem;
+    padding: 0;
+}
+
+.phil-list-tight li {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(0.95rem, 1.7vw, 1.05rem);
+    color: var(--phil-muted);
+    padding: 0.3rem 0 0.3rem 1rem;
+    position: relative;
+    line-height: 1.55;
+}
+
+.phil-list-tight li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--phil-red);
+    opacity: 0.85;
+}
+
+.phil-finale {
+    margin-top: 2.5rem;
+    padding: clamp(1.75rem, 3vw, 2.25rem);
+    border: 1px solid rgba(255, 252, 241, 0.1);
+    border-radius: 16px;
+    background:
+        linear-gradient(145deg, rgba(241, 0, 0, 0.07) 0%, transparent 45%),
+        rgba(0, 0, 0, 0.35);
+    text-align: center;
+}
+
+.phil-finale .phil-body {
+    margin-bottom: 1.5rem;
+    color: rgba(255, 252, 241, 0.85);
+}
+
+.phil-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.phil-btn {
+    display: inline-block;
+    background: var(--phil-red);
+    color: #fff;
+    font-family: 'Anton', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.95rem 1.75rem;
+    border-radius: 6px;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.phil-btn:hover {
+    background: #cc0000;
+    transform: translateY(-1px);
+}
+
+.phil-btn--ghost {
+    background: transparent;
+    color: var(--phil-cream);
+    border: 1.5px solid rgba(255, 252, 241, 0.25);
+}
+
+.phil-btn--ghost:hover {
+    border-color: var(--phil-red);
+    color: var(--phil-red);
+    background: transparent;
+}
+
+.phil-footer {
+    background: var(--phil-dark);
+    border-top: 1px solid rgba(255, 252, 241, 0.07);
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+.phil-footer p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    color: rgba(255, 252, 241, 0.35);
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem 0.6rem;
+    line-height: 2;
+}
+
+.phil-footer a {
+    color: rgba(255, 252, 241, 0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.phil-footer a:hover {
+    color: var(--phil-red);
+}
+
+.phil-dot {
+    opacity: 0.3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    .phil-btn:hover {
+        transform: none;
+    }
+}

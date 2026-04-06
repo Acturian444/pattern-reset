@@ -1,9 +1,97 @@
-/* ===== Header: match Pattern Quiz & Common Ground height, size and background ===== */
-header {
+/* ===== Header & Footer: light mode - cream background to match page ===== */
+body.page-letitout header {
     background-color: #fffcf1 !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
     min-height: 70px !important;
 }
+body.page-letitout .nav-links a,
+body.page-letitout .nav-links a.nav-dropdown-trigger {
+    color: #222 !important;
+}
+body.page-letitout .nav-links a:hover,
+body.page-letitout .nav-links a.active {
+    color: #f10000 !important;
+}
+body.page-letitout .logo-brand-combo,
+body.page-letitout .nav-logo,
+body.page-letitout .center-logo {
+    color: #f10000 !important;
+}
+body.page-letitout .logo-brand-combo:hover .nav-logo,
+body.page-letitout .logo-brand-combo:hover .center-logo {
+    color: #cc0000 !important;
+}
+body.page-letitout .nav-hamburger,
+body.page-letitout button.hamburger.nav-hamburger {
+    color: #222 !important;
+}
+body.page-letitout .nav-hamburger svg,
+body.page-letitout button.hamburger.nav-hamburger svg {
+    fill: currentColor;
+}
+body.page-letitout .nav-hamburger svg rect,
+body.page-letitout button.hamburger.nav-hamburger svg rect {
+    fill: #222 !important;
+}
+body.page-letitout .nav-cta-button {
+    background: #f10000 !important;
+    color: #fffcf1 !important;
+}
+body.page-letitout .nav-cta-button:hover,
+body.page-letitout .nav-cta-button:focus {
+    background: #d40000 !important;
+    color: #fffcf1 !important;
+}
+/* Mobile menu overlay - light */
+body.page-letitout .menu-overlay nav {
+    background: #fffcf1 !important;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+}
+body.page-letitout .menu-overlay .menu-nav-title {
+    color: #222 !important;
+}
+body.page-letitout .menu-overlay .menu-nav-subtitle {
+    color: #666 !important;
+}
+body.page-letitout .menu-overlay .menu-nav-link:hover .menu-nav-title,
+body.page-letitout .menu-overlay .menu-nav-link.active .menu-nav-title {
+    color: #f10000 !important;
+}
+body.page-letitout .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
+body.page-letitout .menu-overlay .menu-nav-link.active .menu-nav-subtitle {
+    color: #b03030 !important;
+}
+body.page-letitout .menu-overlay .close-btn,
+body.page-letitout .menu-overlay .close-btn.hamburger {
+    color: #222 !important;
+}
+body.page-letitout .menu-overlay .close-btn svg,
+body.page-letitout .menu-overlay .close-btn.hamburger svg {
+    fill: currentColor;
+}
+body.page-letitout .menu-overlay .close-btn svg rect,
+body.page-letitout .menu-overlay .close-btn.hamburger svg rect {
+    fill: #222 !important;
+}
+/* Footer — Let It Out: light cream bar in default theme; global .pr-footer-std is dark for other pages */
+body.page-letitout:not(.dark-mode) footer.pr-footer-std {
+    background: #fffcf1;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+body.page-letitout:not(.dark-mode) footer.pr-footer-std p {
+    color: rgba(0, 0, 0, 0.42);
+}
+body.page-letitout:not(.dark-mode) footer.pr-footer-std a {
+    color: rgba(0, 0, 0, 0.55);
+}
+body.page-letitout:not(.dark-mode) footer.pr-footer-std a:hover,
+body.page-letitout:not(.dark-mode) footer.pr-footer-std a:focus {
+    color: #f10000;
+}
+body.page-letitout:not(.dark-mode) footer.pr-footer-std .pr-footer-dot {
+    opacity: 0.35;
+}
+
 header .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -106,6 +194,7 @@ header .container {
 }
 
 .letitout-form .letitout-emotion-btn,
+.letitout-form .letitout-situation-btn,
 .letitout-form .letitout-city-btn {
     flex-grow: 0 !important;
     width: auto !important;
@@ -114,6 +203,7 @@ header .container {
 }
 
 .letitout-emotion-btn:hover,
+.letitout-situation-btn:hover,
 .letitout-city-btn:hover {
     background-color: #e9e9e9;
     display: flex;
@@ -136,12 +226,14 @@ header .container {
 }
 
 .letitout-emotion-btn:hover,
+.letitout-situation-btn:hover,
 .letitout-city-btn:hover {
     background-color: #e9e9e9;
     border-color: #dcdcdc;
 }
 
 .dark-mode .letitout-emotion-btn,
+.dark-mode .letitout-situation-btn,
 .dark-mode .letitout-city-btn {
     background-color: #3a3a3a !important;
     border-color: #555 !important;
@@ -149,6 +241,7 @@ header .container {
 }
 
 .letitout-selected-tags,
+.letitout-selected-situation,
 .letitout-selected-city {
     margin-top: 0.5rem;
 }
@@ -179,6 +272,11 @@ header .container {
     box-shadow: none;
 }
 
+.letitout-form textarea::placeholder {
+    color: #8a8a8a;
+    opacity: 1;
+}
+
 .char-counter {
     margin-top: -1.2rem; /* Pulls counter up */
     text-align: right;
@@ -198,6 +296,7 @@ header .container {
 }
 
 .emotion-tag,
+.situation-tag,
 .city-tag {
     background: #FFF0F0;
     color: #f10000;
@@ -226,6 +325,7 @@ header .container {
 }
 
 .emotion-tag .remove-tag,
+.situation-tag .remove-tag,
 .city-tag .remove-tag {
     cursor: pointer;
     font-size: 15px; /* Base size for mobile */
@@ -235,6 +335,7 @@ header .container {
 }
 
 .emotion-tag .remove-tag:hover,
+.situation-tag .remove-tag:hover,
 .city-tag .remove-tag:hover {
     opacity: 1;
 }
@@ -261,9 +362,13 @@ header .container {
     font-size: 16px !important; /* Larger remove icon for desktop */
   }
 
-  /* Make post card emotion tags smaller on desktop */
+  /* Make post card emotion + situation tags same size on desktop */
   .post-card .emotion-tag,
-  .my-post-card .emotion-tag {
+  .post-card .situation-tag,
+  .my-post-card .emotion-tag,
+  .my-post-card .situation-tag,
+  .original-post-card .emotion-tag,
+  .original-post-card .situation-tag {
     font-size: 12px !important;
     padding: 4px 10px !important;
   }
@@ -466,8 +571,16 @@ header .container {
 .post-emotion-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 0.8rem;
+}
+/* Reset margins so gap controls all spacing between pills */
+.post-emotion-tags .situation-tag,
+.post-emotion-tags .emotion-tag,
+.letitout-my-posts-modal .post-emotion-tags .situation-tag,
+.letitout-my-posts-modal .post-emotion-tags .emotion-tag {
+    margin: 0 !important;
 }
 
 .emotion-tag.emotion-tag-small {
@@ -604,6 +717,7 @@ header .container {
     margin-top: -1rem; /* Reduced space above buttons */
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 12px;
 }
 
@@ -679,6 +793,7 @@ header .container {
 }
 
 .emotion-tag .remove-tag,
+.situation-tag .remove-tag,
 .city-tag .remove-tag {
     cursor: pointer;
     font-size: 15px; /* Base size for mobile */
@@ -688,6 +803,7 @@ header .container {
 }
 
 .emotion-tag .remove-tag:hover,
+.situation-tag .remove-tag:hover,
 .city-tag .remove-tag:hover {
     opacity: 1;
 }
@@ -704,12 +820,14 @@ header .container {
 /* Apply larger tag styles for desktop */
 @media (min-width: 768px) {
   .emotion-tag,
+  .situation-tag,
   .city-tag {
     padding: 6px 12px !important; /* Larger padding for desktop */
     font-size: 14px !important; /* Larger font for desktop */
   }
 
   .emotion-tag .remove-tag,
+  .situation-tag .remove-tag,
   .city-tag .remove-tag {
     font-size: 16px !important; /* Larger remove icon for desktop */
   }
@@ -768,6 +886,20 @@ header .container {
     font-size: 18px;
     font-weight: 700 !important;
     color: #333;
+}
+
+.wall-filter-modal-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.wall-filter-modal-hint {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: #888;
+    margin: 0;
+    font-weight: 400;
 }
 
 .letitout-emotion-modal-close {
@@ -1031,7 +1163,7 @@ header .container {
     }
 }
 
-/* Pattern Quiz funnel - below info text, matches tone */
+/* Pattern Analysis funnel - below info text, matches tone */
 .letitout-quiz-funnel {
     margin-top: 1.5rem;
     display: flex;
@@ -1079,12 +1211,48 @@ header .container {
     }
 }
 
-/* Make sure city tag sits inline with emotion tags */
-.letitout-selected-tags, .letitout-selected-city {
+/* Make sure tags sit inline - emotion, situation, city */
+.letitout-selected-tags,
+.letitout-selected-situation,
+.letitout-selected-city {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
     margin-top: 8px;
+    justify-content: center;
+}
+
+/* Tag Situation Button - match Tag feeling & City */
+.letitout-situation-btn {
+    background: #fff;
+    color: #000;
+    border: 1.5px solid #e0e0e0;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: none;
+    width: auto;
+    min-width: fit-content;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.letitout-situation-btn:hover,
+.letitout-situation-btn:focus {
+    background: #ffe6ea;
+    color: #000;
+    border-color: #e0e0e0;
+    outline: none;
+}
+.letitout-situation-btn:active {
+    background: #fff;
+    color: #000;
+    border-color: #e0e0e0;
 }
 
 /* Tag City Button - match Add Emotion */
@@ -1356,6 +1524,171 @@ header .container {
     background: #FFB3B3;
     cursor: not-allowed;
 }
+
+/* Situation Modal - matches City modal design */
+.letitout-situation-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 5000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+.letitout-situation-modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.letitout-situation-modal {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    height: 80vh;
+    max-height: 80vh;
+    border-radius: 20px 20px 0 0;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0 0 0;
+}
+.letitout-situation-modal-overlay.visible .letitout-situation-modal {
+    transform: translateY(0);
+}
+.letitout-situation-modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.letitout-situation-modal-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111;
+}
+.letitout-situation-modal-close {
+    background: none !important;
+    border: none !important;
+    font-size: 1.6rem !important;
+    color: #888 !important;
+    cursor: pointer !important;
+    padding: 0.5rem !important;
+}
+.letitout-situation-modal-close:hover {
+    color: #f10000 !important;
+}
+.letitout-situation-modal-content {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-content: flex-start;
+}
+.situation-option-btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    background: #f5f5f5;
+    color: #333;
+    border: 1.5px solid #e0e0e0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.situation-option-btn:hover {
+    background: #ffe6ea;
+    border-color: #f10000;
+    color: #111;
+}
+.situation-option-btn.selected {
+    background: #f10000;
+    color: white;
+    border-color: #f10000;
+}
+.letitout-situation-modal-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.letitout-situation-modal-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.letitout-situation-modal-btn.cancel {
+    background: #F8F8F8;
+    color: #666;
+    border: 1px solid #eee;
+}
+.letitout-situation-modal-btn.done {
+    background: #f10000;
+    color: white;
+    border: none;
+}
+.letitout-situation-modal-btn.done:hover:not(:disabled) {
+    background: #7a0010;
+}
+.letitout-situation-modal-btn.done:disabled {
+    background: #FFB3B3;
+    cursor: not-allowed;
+}
+@media (min-width: 768px) {
+    .letitout-situation-modal {
+        border-radius: 20px;
+        max-height: 90vh;
+    }
+    .letitout-situation-modal-overlay {
+        align-items: center;
+    }
+    .letitout-situation-modal-overlay.visible .letitout-situation-modal {
+        transform: translateY(0);
+    }
+}
+
+/* Filter modal - Situation section */
+.filter-situation-section {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #eee;
+}
+.filter-situation-section .emotion-category-title {
+    margin-bottom: 0.5rem;
+}
+.filter-situation-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Post card - situation tag: same pill shape/size as emotion, subtle outline for semantic distinction */
+.post-emotion-tags .situation-tag.situation-tag-small {
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(241, 0, 0, 0.08);
+    color: #f10000;
+    border: 1px solid rgba(241, 0, 0, 0.4);
+    box-shadow: none;
+}
+
 @media (min-width: 768px) {
     .letitout-city-modal {
         border-radius: 20px;
@@ -2380,13 +2713,10 @@ header .container {
     font-family: var(--letitout-font-family);
     font-size: 0.95rem;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.5rem 0.6rem;
     border-radius: var(--letitout-radius-sm);
     transition: background-color 0.2s;
-    white-space: nowrap;
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    max-width: 320px;
 }
 
 .wall-location-btn:hover,
@@ -2395,7 +2725,22 @@ header .container {
     outline: none;
 }
 
-.wall-location-btn i {
+.wall-location-btn-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wall-location-btn .wall-location-btn-chevron,
+.wall-location-btn i.fa-chevron-down {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    margin-left: 0.2rem;
+    color: var(--letitout-primary);
+}
+
+.wall-location-btn-text i {
     font-size: 1rem;
     color: var(--letitout-primary);
 }
@@ -3164,8 +3509,16 @@ header .container {
 .post-emotion-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    align-items: center;
+    gap: 8px;
     margin-bottom: 0.8rem;
+}
+/* Reset margins so gap controls all spacing between pills */
+.post-emotion-tags .situation-tag,
+.post-emotion-tags .emotion-tag,
+.letitout-my-posts-modal .post-emotion-tags .situation-tag,
+.letitout-my-posts-modal .post-emotion-tags .emotion-tag {
+    margin: 0 !important;
 }
 
 .emotion-tag.emotion-tag-small {
@@ -5255,4 +5608,831 @@ select {
     padding: 2rem 1.5rem 1.5rem 1.5rem;
     flex: unset;
   }
+}
+
+/* —— Let It Out “Why this exists” modal —— */
+/* About (?) button: mirrors .theme-toggle-btn layout — left = theme, right = about */
+.letitout-about-btn {
+    position: absolute;
+    top: 3.5rem;
+    right: 2rem;
+    left: auto;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #000000;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: auto;
+    padding: 0.2rem;
+    line-height: 1;
+    box-shadow: none;
+    border-radius: 0;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.letitout-about-btn .letitout-about-btn-icon {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    display: block;
+}
+
+@media (max-width: 900px) {
+    .letitout-about-btn {
+        right: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .letitout-about-btn {
+        top: auto;
+        bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+        right: calc(1.5rem + env(safe-area-inset-right, 0px));
+        left: auto;
+        position: fixed;
+        background-color: #fffcf1;
+        border-radius: 50%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+        padding: 0.5rem;
+        z-index: 100;
+    }
+
+    .letitout-about-btn .letitout-about-btn-icon {
+        font-size: 1.2rem;
+    }
+}
+
+.letitout-about-btn:hover,
+.letitout-about-btn:focus {
+    outline: none;
+    opacity: 0.82;
+}
+
+.letitout-about-btn:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+    opacity: 1;
+}
+
+.letitout-about-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: max(1rem, env(safe-area-inset-top, 0px))
+        max(1rem, env(safe-area-inset-right, 0px))
+        max(1rem, env(safe-area-inset-bottom, 0px))
+        max(1rem, env(safe-area-inset-left, 0px));
+    background: rgba(20, 18, 16, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+.letitout-about-overlay:not([hidden]) {
+    opacity: 1;
+    visibility: visible;
+}
+
+.letitout-about-overlay[hidden] {
+    display: none !important;
+}
+
+/* Panel: desktop-first; width caps follow common modal patterns (480 / 520 / nearly full) */
+.letitout-about-panel {
+    position: relative;
+    width: min(100%, 480px);
+    max-width: 480px;
+    max-height: min(90vh, 820px);
+    max-height: min(90dvh, 820px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    border-radius: 1.25rem;
+    background: linear-gradient(165deg, #fffcf1 0%, #fff8ee 45%, #fffcf1 100%);
+    border: 1px solid rgba(241, 0, 0, 0.12);
+    box-shadow:
+        0 24px 48px rgba(0, 0, 0, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    transform: translateY(10px) scale(0.985);
+    transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 601px) {
+    .letitout-about-overlay:not([hidden]) .letitout-about-panel {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Tablet: slightly wider dialog, standard content max ~520px */
+@media (max-width: 1024px) and (min-width: 601px) {
+    .letitout-about-overlay {
+        padding: max(1.25rem, env(safe-area-inset-top, 0px))
+            max(1.25rem, env(safe-area-inset-right, 0px))
+            max(1.25rem, env(safe-area-inset-bottom, 0px))
+            max(1.25rem, env(safe-area-inset-left, 0px));
+    }
+
+    .letitout-about-panel {
+        width: min(100%, 520px);
+        max-width: 520px;
+        max-height: min(88vh, 780px);
+        max-height: min(88dvh, 780px);
+        border-radius: 1.3rem;
+    }
+
+    .letitout-about-inner {
+        padding: 1.85rem 1.75rem 1.65rem;
+    }
+}
+
+.letitout-about-accent {
+    position: absolute;
+    top: 0;
+    left: 1.5rem;
+    right: 1.5rem;
+    height: 3px;
+    border-radius: 0 0 4px 4px;
+    background: linear-gradient(90deg, transparent, #f10000 20%, #f10000 80%, transparent);
+    opacity: 0.85;
+}
+
+.letitout-about-close {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    z-index: 2;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-width: 44px;
+    min-height: 44px;
+    border: none;
+    background: rgba(0, 0, 0, 0.04);
+    color: #666;
+    font-size: 1.35rem;
+    line-height: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.letitout-about-close:hover,
+.letitout-about-close:focus {
+    background: rgba(241, 0, 0, 0.1);
+    color: #f10000;
+    outline: none;
+}
+
+.letitout-about-inner {
+    padding: 2rem 1.5rem 1.75rem;
+    font-family: 'DM Sans', sans-serif;
+    color: #2a2a2a;
+}
+
+.letitout-about-inner--card {
+    padding-top: 1.85rem;
+}
+
+.letitout-about-hero--brand {
+    color: #f10000;
+    font-size: 1.65rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.75rem;
+}
+
+.letitout-about-copy {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #3a3a3a;
+    margin: 0 0 0.85rem;
+    font-weight: 500;
+}
+
+.letitout-about-kicker {
+    font-family: 'Anton', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f10000;
+    margin: 0 0 0.5rem;
+}
+
+.letitout-about-hero {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: #111;
+    margin: 0 0 0.85rem;
+    text-transform: none;
+}
+
+.letitout-about-kicker.letitout-about-kicker-inline {
+    margin: 0 0 0.85rem;
+    line-height: 1.35;
+}
+
+.letitout-about-kicker-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: #666;
+}
+
+.letitout-about-purpose-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    margin: 0 0 0.5rem;
+}
+
+.letitout-about-purpose-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.letitout-about-purpose-value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #f10000;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.letitout-about-you-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888;
+    margin: 0.35rem 0 0.4rem;
+}
+
+.letitout-about-you {
+    list-style: none;
+    margin: 0 0 0.85rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.letitout-about-you li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: #444;
+    line-height: 1.4;
+}
+
+.letitout-about-you li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #f10000;
+    opacity: 0.85;
+}
+
+.letitout-about-ritual--step1 {
+    margin-bottom: 0;
+}
+
+.letitout-about-pulse {
+    list-style: none;
+    margin: 0 0 0.25rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.letitout-about-pulse li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #444;
+    line-height: 1.4;
+}
+
+.letitout-about-pulse li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #f10000;
+    opacity: 0.85;
+}
+
+.letitout-about-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.08), transparent);
+    margin: 1.1rem 0;
+}
+
+.letitout-about-lead {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 0.65rem;
+    line-height: 1.45;
+}
+
+.letitout-about-truth {
+    list-style: none;
+    margin: 0 0 1.1rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.letitout-about-truth li {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: #555;
+}
+
+.letitout-about-truth li span {
+    color: #c40000;
+    font-weight: 600;
+}
+
+.letitout-about-ritual {
+    background: rgba(241, 0, 0, 0.06);
+    border: 1px solid rgba(241, 0, 0, 0.15);
+    border-radius: 0.85rem;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.letitout-about-ritual-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #f10000;
+    margin-bottom: 0.35rem;
+}
+
+.letitout-about-ritual-text {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #3a3a3a;
+}
+
+.letitout-about-path-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #888;
+    margin: 0 0 0.6rem;
+}
+
+.letitout-about-path {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.letitout-about-path li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-size: 0.88rem;
+    line-height: 1.4;
+    color: #444;
+}
+
+.letitout-about-path strong {
+    font-weight: 700;
+    color: #111;
+    min-width: 6.5rem;
+}
+
+.letitout-about-arrow {
+    color: #f10000;
+    font-weight: 600;
+}
+
+.letitout-about-foot {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: #666;
+    margin: 0 0 1.1rem;
+    font-style: italic;
+}
+
+.letitout-about-foot.letitout-about-foot--human {
+    font-style: normal;
+    font-weight: 500;
+    color: #777;
+    margin: 0.15rem 0 1.05rem;
+}
+
+.letitout-about-dismiss {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.85rem 1rem;
+    border: none;
+    border-radius: 999px;
+    background: #f10000;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    box-sizing: border-box;
+}
+
+.letitout-about-dismiss:hover,
+.letitout-about-dismiss:focus {
+    background: #d40000;
+    outline: none;
+}
+
+.letitout-about-dismiss:active {
+    transform: scale(0.98);
+}
+
+/* Mobile: centered “card” like desktop — capped width + breathing room (not edge-to-edge) */
+@media (max-width: 600px) {
+    .letitout-about-overlay {
+        align-items: center;
+        justify-content: center;
+        padding: max(1rem, env(safe-area-inset-top, 0px))
+            max(1.25rem, env(safe-area-inset-right, 0px))
+            max(1rem, env(safe-area-inset-bottom, 0px))
+            max(1.25rem, env(safe-area-inset-left, 0px));
+    }
+
+    .letitout-about-panel {
+        /* Same visual proportion as desktop (max ~480): cap width so margins stay visible */
+        width: min(400px, calc(100vw - 2.5rem));
+        max-width: 400px;
+        margin: 0 auto;
+        border-radius: 1.25rem;
+        max-height: min(82dvh, 680px);
+        box-shadow:
+            0 16px 40px rgba(0, 0, 0, 0.14),
+            0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    }
+
+    .letitout-about-overlay:not([hidden]) .letitout-about-panel {
+        transform: translateY(0) scale(1);
+    }
+
+    .letitout-about-inner {
+        padding: 1.35rem 1.25rem 1.1rem;
+        padding-bottom: calc(1.1rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    .letitout-about-close {
+        top: 0.45rem;
+        right: 0.45rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        min-width: 44px;
+        min-height: 44px;
+        font-size: 1.25rem;
+    }
+
+    .letitout-about-hero {
+        font-size: 1.08rem;
+        line-height: 1.32;
+        letter-spacing: 0.01em;
+        margin-bottom: 0.65rem;
+        padding-right: 1.75rem;
+    }
+
+    .letitout-about-hero--brand {
+        font-size: 1.42rem;
+        line-height: 1.22;
+        margin-bottom: 0.65rem;
+    }
+
+    .letitout-about-copy {
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 0.75rem;
+    }
+
+    .letitout-about-foot.letitout-about-foot--human {
+        font-size: 0.8rem;
+        margin-bottom: 0.95rem;
+    }
+
+    .letitout-about-kicker.letitout-about-kicker-inline {
+        font-size: 0.8rem;
+        margin-bottom: 0.65rem;
+        letter-spacing: 0.1em;
+    }
+
+    .letitout-about-kicker-sub {
+        font-size: 0.72rem;
+        font-weight: 600;
+    }
+
+    .letitout-about-purpose-row {
+        margin-bottom: 0.45rem;
+    }
+
+    .letitout-about-purpose-value {
+        font-size: 0.98rem;
+    }
+
+    .letitout-about-you-label {
+        margin-top: 0.2rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .letitout-about-you {
+        margin-bottom: 0.75rem;
+        gap: 0.3rem;
+    }
+
+    .letitout-about-you li {
+        font-size: 0.88rem;
+        line-height: 1.38;
+        padding-left: 0.9rem;
+    }
+
+    .letitout-about-you li::before {
+        width: 4px;
+        height: 4px;
+        top: 0.52em;
+    }
+
+    .letitout-about-ritual {
+        padding: 0.7rem 0.85rem;
+        margin-bottom: 0.15rem;
+    }
+
+    .letitout-about-ritual-label {
+        font-size: 0.65rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .letitout-about-ritual-text {
+        font-size: 0.86rem;
+        line-height: 1.45;
+    }
+
+    .letitout-about-divider {
+        margin: 0.85rem 0;
+    }
+
+    .letitout-about-path-title {
+        font-size: 0.68rem;
+        margin-bottom: 0.45rem;
+    }
+
+    .letitout-about-path {
+        margin-bottom: 0.75rem;
+        gap: 0.35rem;
+    }
+
+    .letitout-about-path strong {
+        min-width: 100%;
+    }
+
+    .letitout-about-path li {
+        flex-direction: column;
+        gap: 0.1rem;
+        font-size: 0.82rem;
+        line-height: 1.35;
+    }
+
+    .letitout-about-foot {
+        font-size: 0.78rem;
+        line-height: 1.45;
+        margin-bottom: 1rem;
+    }
+
+    .letitout-about-dismiss {
+        min-height: 46px;
+        font-size: 0.98rem;
+        font-weight: 600;
+        padding: 0.75rem 1rem;
+        margin-top: 0.15rem;
+    }
+}
+
+/* Large desktop: slightly wider dialog (common 480–560px range) */
+@media (min-width: 1280px) {
+    .letitout-about-panel {
+        width: min(100%, 500px);
+        max-width: 500px;
+    }
+}
+
+/* Let It Out — first-time welcome modal (matches cream + red brand, about-panel family) */
+.letitout-intro-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10040;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: max(1rem, env(safe-area-inset-top, 0px))
+        max(1rem, env(safe-area-inset-right, 0px))
+        max(1rem, env(safe-area-inset-bottom, 0px))
+        max(1rem, env(safe-area-inset-left, 0px));
+    background: rgba(20, 18, 16, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: letitoutIntroFadeIn 0.35s ease;
+}
+
+.letitout-intro-modal {
+    position: relative;
+    width: min(100%, 440px);
+    max-width: 440px;
+    border-radius: 1.25rem;
+    background: linear-gradient(165deg, #fffcf1 0%, #fff8ee 45%, #fffcf1 100%);
+    border: 1px solid rgba(241, 0, 0, 0.12);
+    box-shadow:
+        0 24px 48px rgba(0, 0, 0, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    padding: 2rem 1.75rem 1.75rem;
+    box-sizing: border-box;
+    animation: letitoutIntroFadeIn 0.35s ease;
+}
+
+.letitout-intro-accent {
+    position: absolute;
+    top: 0;
+    left: 1.25rem;
+    right: 1.25rem;
+    height: 3px;
+    border-radius: 0 0 4px 4px;
+    background: linear-gradient(90deg, transparent, #f10000 20%, #f10000 80%, transparent);
+    opacity: 0.9;
+}
+
+.letitout-intro-modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.letitout-intro-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.85rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: #f10000;
+    margin: 0.35rem 0 0.75rem;
+    line-height: 1.15;
+    text-transform: none;
+}
+
+.letitout-intro-lede {
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    line-height: 1.45;
+    margin: 0 0 0.85rem;
+}
+
+.letitout-intro-desc {
+    font-size: 0.98rem;
+    font-weight: 500;
+    color: #3a3a3a;
+    line-height: 1.55;
+    margin: 0 0 0.85rem;
+}
+
+.letitout-intro-steps {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #111;
+    line-height: 1.5;
+    margin: 0 0 1.25rem;
+}
+
+.letitout-intro-age {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #666;
+    margin: 0 0 1.25rem;
+    line-height: 1.4;
+}
+
+.letitout-intro-btn {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.85rem 1.25rem;
+    border: none;
+    border-radius: 999px;
+    background: #f10000;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    box-sizing: border-box;
+}
+
+.letitout-intro-btn:hover,
+.letitout-intro-btn:focus {
+    background: #d40000;
+    outline: none;
+}
+
+.letitout-intro-btn:active {
+    transform: scale(0.98);
+}
+
+@keyframes letitoutIntroFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 600px) {
+    .letitout-intro-modal-overlay {
+        align-items: center;
+        padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
+        padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
+    }
+
+    .letitout-intro-modal {
+        width: min(100%, 400px);
+        max-width: 400px;
+        padding: 1.65rem 1.35rem 1.5rem;
+        padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    .letitout-intro-title {
+        font-size: 1.65rem;
+    }
+
+    .letitout-intro-lede {
+        font-size: 1.02rem;
+    }
+
+    .letitout-intro-desc,
+    .letitout-intro-steps {
+        font-size: 0.94rem;
+    }
+
+    .letitout-intro-age {
+        font-size: 0.84rem;
+        margin-bottom: 1.1rem;
+    }
+
+    .letitout-intro-btn {
+        min-height: 46px;
+        font-size: 0.98rem;
+    }
 }

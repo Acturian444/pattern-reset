@@ -97,7 +97,8 @@
                 driverScores: driverScores || {},
                 herResponsePattern: herResponsePattern || null,
                 repetitionInsight: repetitionInsight || null,
-                situationshipModifier: situationshipModifier || false
+                situationshipModifier: situationshipModifier || false,
+                quizData: data.quizData || window.quizData || []
             });
             
             container.innerHTML = html;
@@ -433,7 +434,7 @@
         // Q16 "What worries you most?" - index 15 in quizData
         const Q16_INDEX = 15;
         const attractionWorryIndex = answers[Q16_INDEX];
-        const attractionWorryMap = ['wasting-time', 'ignoring-red-flags', 'he-leave', 'never-clarity', 'more-invested'];
+        const attractionWorryMap = ['wasting-time', 'ignoring-red-flags', 'he-leave', 'never-clarity', 'more-invested', 'he-losing-interest', 'he-interested-someone-else'];
         const attractionWorry = (typeof attractionWorryIndex === 'number' && quizData[Q16_INDEX] && quizData[Q16_INDEX].options && quizData[Q16_INDEX].options[attractionWorryIndex]) ? (attractionWorryMap[attractionWorryIndex] || null) : null;
         
         const painVal = (currentPain || '').toLowerCase().replace(/\s+/g, '-');
@@ -457,7 +458,11 @@
             'ignore-red-flags': 'When you\'re invested, your brain minimizes red flags to reduce cognitive dissonance. "It\'s not that bad" protects you from the pain of admitting you chose wrong. The question: Would you advise a friend to stay?',
             'situationship': 'Situationships are designed to keep you guessing. Occasional clarity feels like progress—your brain waits for the next sign. Research shows: intermittent reinforcement creates more persistent behavior than consistent reward. You\'re not stuck—you\'re hooked on possibility.',
             'cheated-betrayed': 'After betrayal, your brain goes into hypervigilance. Rebuilding trust starts with yourself: "Can I trust my own judgment? Can I set boundaries and hold them?" You can\'t think your way out—you have to act your way out. Small doses of evidence that vulnerability doesn\'t always lead to hurt.',
-            'dont-know-why': 'Relationships fail when both people operate from unconscious patterns. Yours runs on autopilot. The good news: once you see it, you can change it. You\'re not cursed—you\'re programmed. Neuroscience shows neural pathways change through repetition. Reprogram.'
+            'dont-know-why': 'Relationships fail when both people operate from unconscious patterns. Yours runs on autopilot. The good news: once you see it, you can change it. You\'re not cursed—you\'re programmed. Neuroscience shows neural pathways change through repetition. Reprogram.',
+            'he-went-cold': 'His behavior shows his interest. When he went cold, that wasn\'t about your worth—it was about his pattern. The question isn\'t "What did I do wrong?"—it\'s "What does his behavior actually mean?" Clarity cuts through the self-doubt.',
+            'keeping-me-option': 'His behavior shows whether you\'re chosen or an option. When you feel like an option, that\'s usually the pattern talking—not paranoia. The dynamic reveals it. You deserve to know where you stand.',
+            'not-enough': 'The question isn\'t "Am I enough?"—it\'s "Is he showing up enough for what I need?" His behavior is the answer, not your worth. You were enough before anyone chose you.',
+            'feel-invisible': 'His behavior shows whether he sees you. When you feel overlooked, that\'s the pattern—not your imagination. The dynamic reveals whether you\'re a priority or an option.'
         };
         const painInsight = PAIN_INSIGHTS[painVal] || null;
         
@@ -470,7 +475,13 @@
             'hurt-again': 'Protection creates distance. The more you guard against hurt, the less you can receive love. Your brain believes "If I don\'t fully show up, I can\'t fully get hurt"—but the cost is you never get fully seen or loved. Small disclosures: "I felt ___ when ___." Evidence that vulnerability doesn\'t always lead to hurt.',
             'emotionally-neglected': 'Emotional neglect isn\'t always dramatic—it\'s the absence of being met. When you initiate depth and he stays surface-level, that\'s neglect. It\'s not about you asking for too much. It\'s about his capacity. The question: Can you live with the connection he\'s capable of offering?',
             'im-the-problem': 'It\'s rarely one person who\'s the problem—it\'s usually the dynamic. Your pattern isn\'t a flaw; it\'s a survival strategy. Asking "Am I the problem?" is healthy—but chronic self-blame harms you and the relationship. The shift: "I developed this to survive. Now I\'m choosing something different."',
-            'never-find-right': 'The fear of never finding the right person fuels staying in the wrong one. But research shows: the clearer you are about what you want, the faster you filter. You\'re not running out of options—you\'re gaining clarity.'
+            'never-find-right': 'The fear of never finding the right person fuels staying in the wrong one. But research shows: the clearer you are about what you want, the faster you filter. You\'re not running out of options—you\'re gaining clarity.',
+            'losing-his-interest': 'His behavior shows his interest. The question isn\'t "Am I attractive enough?"—it\'s "What does his behavior actually mean?" When he goes cold, that\'s the pattern talking. Clarity cuts through the guessing.',
+            'not-enough': 'The question isn\'t "Am I enough?"—it\'s "Is he showing up enough for what I need?" His behavior is the answer, not your worth. You were enough before anyone chose you.',
+            'losing-time': 'The real cost isn\'t the relationship—it\'s the time. Many people in this dynamic realize later they were waiting for clarity that never came. If you\'re asking, you already know. Clarity now saves years.',
+            'losing-him-to-other': 'The question isn\'t "Will he choose someone else?"—it\'s "Is he choosing me now?" His behavior reveals it. If he wanted to choose you clearly, he would. Clarity shows where you stand.',
+            'becoming-invisible': 'His behavior shows whether he sees you. When you feel overlooked, that\'s the pattern—not your imagination. The dynamic reveals whether you\'re a priority or an option. You deserve to be seen.',
+            'him-never-committing': 'Vagueness isn\'t confusion—it\'s a choice. If he wanted to commit, he would. The question isn\'t "How do I get him to commit?"—it\'s "What do I do with the clarity I already have?"'
         };
         const fearInsight = FEAR_INSIGHTS[fearVal] || null;
         
@@ -480,12 +491,14 @@
             'ignoring-red-flags': 'When you\'re invested, your brain minimizes red flags. "It\'s not that bad" protects you from admitting you chose wrong. Track three similar situations—if the pattern repeats, that\'s your answer.',
             'he-leave': 'His staying or leaving is his choice. Your job isn\'t to prevent him from leaving—it\'s to decide what you\'ll accept. Fear of him leaving keeps you from asking for what you need.',
             'never-clarity': 'Vagueness isn\'t confusion—it\'s a choice. If he wanted to give you clarity, he would. The question isn\'t "How do I get him to clarify?"—it\'s "What do I do with the clarity I already have?"',
-            'more-invested': 'Reciprocity research shows: imbalance rarely corrects itself. Your over-investment doesn\'t create his. Match his energy. Pull back. See if he steps up—or if the relationship was only working because you were carrying it.'
+            'more-invested': 'Reciprocity research shows: imbalance rarely corrects itself. Your over-investment doesn\'t create his. Match his energy. Pull back. See if he steps up—or if the relationship was only working because you were carrying it.',
+            'he-losing-interest': 'His behavior shows his interest. The question isn\'t "Am I losing him?"—it\'s "What does his behavior actually mean?" When he goes cold, that\'s the pattern. Clarity cuts through the guessing.',
+            'he-interested-someone-else': 'The question isn\'t "Is he interested in someone else?"—it\'s "Is he choosing me now?" His behavior reveals it. If he wanted to choose you clearly, he would. Clarity shows where you stand.'
         };
         const worryInsight = attractionWorry ? (WORRY_INSIGHTS[attractionWorry] || null) : null;
         
-        const PAIN_LABELS = { 'same-type':'attracting emotionally unavailable people', 'stay-when-shouldnt':'staying when you know you shouldn\'t', 'sabotage':'sabotaging when it gets serious', 'tolerate-less':'tolerating less than you deserve', 'ignore-red-flags':'ignoring red flags', 'situationship':'a situationship that won\'t progress', 'cheated-betrayed':'recovering from betrayal or cheating', 'dont-know-why':'not understanding why relationships keep failing' };
-        const FEAR_LABELS = { 'abandoned':'being abandoned', 'rejected':'being rejected or not chosen', 'alone-forever':'being alone long-term', 'losing-myself':'losing yourself', 'hurt-again':'being hurt again', 'emotionally-neglected':'being emotionally neglected', 'im-the-problem':'that you\'re the problem', 'never-find-right':'that you\'ll never find the right person' };
+        const PAIN_LABELS = { 'same-type':'attracting emotionally unavailable people', 'stay-when-shouldnt':'staying when you know you shouldn\'t', 'sabotage':'sabotaging when it gets serious', 'tolerate-less':'tolerating less than you deserve', 'ignore-red-flags':'ignoring red flags', 'situationship':'a situationship that won\'t progress', 'cheated-betrayed':'recovering from betrayal or cheating', 'dont-know-why':'not understanding why relationships keep failing', 'he-went-cold':'him losing interest or going cold', 'keeping-me-option':'him keeping you as an option', 'not-enough':'feeling like you\'re not enough for him', 'feel-invisible':'feeling invisible or overlooked in the relationship' };
+        const FEAR_LABELS = { 'abandoned':'being abandoned', 'rejected':'being rejected or not chosen', 'alone-forever':'being alone long-term', 'losing-myself':'losing yourself', 'hurt-again':'being hurt again', 'emotionally-neglected':'being emotionally neglected', 'im-the-problem':'that you\'re the problem', 'never-find-right':'that you\'ll never find the right person', 'losing-his-interest':'losing his interest or him going cold', 'not-enough':'not being enough for him', 'losing-time':'wasting your time or losing your best years', 'losing-him-to-other':'losing him to someone else', 'becoming-invisible':'becoming invisible or overlooked', 'him-never-committing':'him never committing' };
         const isOtherPain = !currentPain || (currentPain || '').toLowerCase().replace(/\s+/g, '-') === 'other';
         const isOtherFear = !biggestFear || (biggestFear || '').toLowerCase().replace(/\s+/g, '-') === 'other';
         const painLabel = (isOtherPain && currentPainOtherText && String(currentPainOtherText).trim()) ? String(currentPainOtherText).trim() : (PAIN_LABELS[(currentPain || '').toLowerCase().replace(/\s+/g, '-')] || null);
@@ -510,7 +523,65 @@
             'recently-ended': 'recently out of a relationship',
             'not-in-one': 'not currently in one'
         }[relationshipStatus] || relationshipStatus : '';
-        const contextLine = [exactAge && `${exactAge}`, statusLabel].filter(Boolean).join(' and ') || 'your situation';
+        // Q14 (index 13): duration — surface when long/very-long for stronger aha
+        const Q14_INDEX = 13;
+        const durationAnswer = (typeof answers[Q14_INDEX] === 'number' && quizData[Q14_INDEX] && quizData[Q14_INDEX].options && quizData[Q14_INDEX].options[answers[Q14_INDEX]]) ? quizData[Q14_INDEX].options[answers[Q14_INDEX]] : null;
+        const durationSub = durationAnswer ? (durationAnswer.subDimension || '') : '';
+        const DURATION_LABELS = { 'short': 'less than 3 months', 'medium': '3–6 months', 'long': '6–12 months', 'very-long': 'over a year' };
+        const durationLabel = DURATION_LABELS[durationSub] || null;
+        const showDuration = durationSub === 'long' || durationSub === 'very-long';
+        const contextLine = [exactAge && `${exactAge}`, statusLabel, showDuration && durationLabel ? `you've been in this dynamic for ${durationLabel}` : null].filter(Boolean).join(', ') || 'your situation';
+        // Q15 (index 14): Who wants more
+        const Q15_INDEX = 14;
+        const whoWantsMoreAnswer = (typeof answers[Q15_INDEX] === 'number' && quizData[Q15_INDEX] && quizData[Q15_INDEX].options && quizData[Q15_INDEX].options[answers[Q15_INDEX]]) ? quizData[Q15_INDEX].options[answers[Q15_INDEX]] : null;
+        const whoWantsMoreSub = whoWantsMoreAnswer ? (whoWantsMoreAnswer.subDimension || '') : '';
+        
+        // Personalized CTA section - mirrors user's pain, fear, pattern, and situation (no repetition)
+        // Segment-aware: "Is this going somewhere?" for current relationships; different trigger for past/not-in-one
+        function getPersonalizedCTASection(pattern, painLabel, fearLabel, statusLabel, contextLine, relationshipStatus) {
+            const pNameRaw = pattern.name || 'your pattern';
+            const pName = pNameRaw.replace(/^The /, ''); // "The Hot-and-Cold Cycle" -> "Hot-and-Cold Cycle"
+            const signs = (pattern.signsYoureInIt || []).slice(0, 4);
+            const outcomes = (pattern.ifNothingChanges || []).slice(0, 2);
+            const defaultThings = ['how he communicates', 'whether his actions match his words', 'how he responds when you ask for clarity', 'how long the pattern has been happening'];
+            const shortenSign = (s) => s.toLowerCase().replace(/^you /, '').replace(/^you're /, '').replace(/\.$/, '').replace(/—.*$/, '').trim();
+            const thingsLike = signs.length >= 2 ? signs.map(shortenSign) : defaultThings;
+            const thingsList = thingsLike.map(t => `<li>${t}</li>`).join('');
+            const outcomePhrase = outcomes.length ? outcomes[0].toLowerCase().replace(/\.$/, '') : 'the pattern keeps repeating';
+            const introText = contextLine
+                ? `Where you're at—${contextLine}—changes what the pattern actually means for you.`
+                : `Your situation has details that change what the pattern actually means for you.`;
+            // Core question by segment: current relationship vs past/not-in-one
+            const isCurrentRelationship = ['situationship', 'dating', 'emotionally-invested', 'undefined'].includes(relationshipStatus);
+            const coreQuestion = isCurrentRelationship
+                ? 'Is this going somewhere — or not?'
+                : (relationshipStatus === 'recently-ended'
+                    ? 'What do I need to know so I don\'t repeat this?'
+                    : 'What do I need to know to break this pattern?');
+            let painMirror = '';
+            if (painLabel && fearLabel) {
+                painMirror = `You said your biggest challenge is ${painLabel} and your biggest fear is ${fearLabel}. That's exactly why you need a real answer—not just the pattern, but what it means for your specific situation. <strong>${coreQuestion}</strong>`;
+            } else if (painLabel) {
+                painMirror = `You said your biggest challenge is ${painLabel}. That's exactly why you need a real answer—not just the pattern, but what it means for your situation. <strong>${coreQuestion}</strong>`;
+            } else if (fearLabel) {
+                painMirror = `You said your biggest fear is ${fearLabel}. That's exactly why you need a real answer—not just the pattern, but what it means for you. <strong>${coreQuestion}</strong>`;
+            } else if (statusLabel) {
+                painMirror = `When you're ${statusLabel}, the question that keeps coming up: <strong>${coreQuestion}</strong>`;
+            } else {
+                painMirror = `Most women who take this quiz need one thing: a real answer so they can stop guessing. <strong>${coreQuestion}</strong>`;
+            }
+            return `
+                        <h2 class="results-cta-headline">Your ${pName} Pattern Is Clear.<br>${isCurrentRelationship ? 'Is This Relationship Going Somewhere — Or Not?' : 'You Need A Real Answer.'}</h2>
+                        <div class="results-cta-intro">
+                            <p class="results-cta-intro-text">${introText}</p>
+                            <p class="results-cta-intro-label">Things like:</p>
+                            <ul class="results-cta-intro-list">
+                                ${thingsList}
+                            </ul>
+                            <p class="results-cta-intro-close">Those signals reveal where this is likely heading—and whether ${outcomePhrase} or something can actually change.</p>
+                        </div>
+                        <p class="results-cta-pain-mirror">${painMirror}</p>`;
+        }
         
         // Her response + pattern combination insights (therapy/psychology: how her response amplifies or interrupts the dynamic)
         const patternId = pattern.id || '';
@@ -556,53 +627,328 @@
         const combinationKey = `${patternId}_${herResponseId}`;
         const combinationInsight = combinationInsights[combinationKey] || null;
         
-        function getRelationshipDynamicQuestionsAnswered(p, pVal, fVal, relStatus, worry, pLbl, fLbl) {
+        function getRelationshipDynamicQuestionsItems(pVal, fVal, relStatus, worry) {
             const items = [];
             if (pVal === 'situationship' || relStatus === 'situationship') items.push({ q: 'Why won\'t my situationship progress?', a: 'Situationships keep you guessing by design. Occasional clarity feels like progress—your brain waits for the next sign. Research shows unpredictable rewards create more persistent behavior than consistent ones. His behavior is the answer: if he wanted to define it, he would have by now.' });
             if (pVal === 'stay-when-shouldnt' || fVal === 'abandoned') items.push({ q: 'Why do I stay when I know I shouldn\'t?', a: 'Your brain prefers the devil it knows. Leaving feels riskier than staying because uncertainty is neurologically threatening. The fix: name it. "I\'m staying because I\'m scared of ___." Once you see it, you can choose.' });
+            if (fVal === 'abandoned') items.push({ q: 'What if I leave and regret it?', a: 'Your brain prefers the devil it knows. Leaving feels riskier than staying because uncertainty is neurologically threatening. But staying in ambiguity has a cost too—time, clarity, peace. The question isn\'t "Will I regret leaving?"—it\'s "What will I regret more: leaving now or staying another year without clarity?"' });
             if (pVal === 'same-type' || (relStatus === 'not-in-one' && fVal === 'never-find-right')) items.push({ q: 'Why do I keep attracting the same type?', a: 'Your nervous system is wired to feel "normal" with certain dynamics. Emotionally unavailable people feel like home. Different will feel wrong at first—that\'s your brain resisting change. When you feel the pull toward someone who fits the old pattern, pause. Ask: "Is this familiar or is this healthy?"' });
             if (fVal === 'im-the-problem') items.push({ q: 'Am I the problem?', a: 'It\'s rarely one person—it\'s usually the dynamic. Your pattern isn\'t a flaw; it\'s a survival strategy. Chronic self-blame harms you. The shift: "I developed this to survive. Now I\'m choosing something different."' });
-            items.push({ q: 'Should I leave?', a: 'The question isn\'t "Should I leave?"—it\'s "What am I willing to accept?" If nothing changes, you have your answer. In dynamics like this, staying without change usually means more of the same. Decide what you\'ll accept. Then act on it.' });
-            items.push({ q: 'Am I overthinking?', a: 'You\'re not. You\'re not needy. The confusion is built into the pattern. These dynamics are designed to keep you guessing.' });
-            if (worry === 'wasting-time') items.push({ q: 'Am I wasting my time?', a: 'The real cost isn\'t the relationship—it\'s the time. Many people in this dynamic realize later they were waiting for clarity that never came. If you\'re asking, you already know.' });
-            const unique = items.filter((x, i, arr) => arr.findIndex(y => y.q === x.q) === i).slice(0, 4);
-            if (unique.length === 0) return '';
-            return `
-                <div class="results-dark-bg-content results-bento-card">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Questions You Want Answered</h3>
-                    ${unique.map(item => `
-                    <div style="margin-bottom: 1.25rem;">
-                        <p class="content-text" style="color: #f10000; font-weight: 600; margin-bottom: 0.35rem;">${item.q}</p>
-                        <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 0;">${item.a}</p>
-                    </div>
-                    `).join('')}
-                </div>
-            `;
+            if (pVal === 'sabotage') items.push({ q: 'Why do I sabotage when it gets good?', a: 'Sabotage is your brain\'s exit strategy before you can get hurt. Closeness triggers your nervous system—intimacy feels like losing control. The pattern developed to protect you. It\'s not a flaw; it\'s a survival strategy that stopped serving you.' });
+            if (pVal === 'tolerate-less') items.push({ q: 'Why do I tolerate less than I deserve?', a: 'You\'ve learned that having someone—anyone—proves you\'re worthy. So you accept less to avoid the fear of being alone. The cost: you teach people you\'ll accept less. The shift: raise your bar before the next person. Write down what you will and won\'t accept.' });
+            if (pVal === 'ignore-red-flags' || worry === 'ignoring-red-flags') items.push({ q: 'Why do I ignore red flags?', a: 'When you\'re invested, your brain minimizes red flags to reduce cognitive dissonance. "It\'s not that bad" protects you from the pain of admitting you chose wrong. The question: Would you advise a friend to stay? Track three similar situations—if the pattern repeats, that\'s your answer.' });
+            if (pVal === 'he-went-cold' || fVal === 'losing-his-interest' || worry === 'he-losing-interest') items.push({ q: 'Why did he lose interest?', a: 'His behavior shows his interest. The question isn\'t "What did I do wrong?"—it\'s "What does his behavior actually mean?" When he went cold, that\'s the pattern—not a reflection of your worth. Clarity cuts through the guessing.' });
+            if (fVal === 'not-enough' || pVal === 'not-enough') items.push({ q: 'Am I enough for him?', a: 'The question isn\'t "Am I enough?"—it\'s "Is he showing up enough for what I need?" His behavior is the answer, not your worth. You were enough before anyone chose you.' });
+            if (fVal === 'losing-him-to-other' || worry === 'he-interested-someone-else') items.push({ q: 'Is he interested in someone else?', a: 'The question isn\'t "Is he interested in someone else?"—it\'s "Is he choosing me now?" His behavior reveals it. If he wanted to choose you clearly, he would. Clarity shows where you stand.' });
+            if (fVal === 'losing-time' || worry === 'wasting-time') items.push({ q: 'Am I wasting my time?', a: 'The real cost isn\'t the relationship—it\'s the time. Many people in this dynamic realize later they were waiting for clarity that never came. If you\'re asking, you already know.' });
+            if (worry === 'never-clarity') items.push({ q: 'Why won\'t he give me clarity?', a: 'Vagueness isn\'t confusion—it\'s a choice. If he wanted to give you clarity, he would. The question isn\'t "How do I get him to clarify?"—it\'s "What do I do with the clarity I already have?"' });
+            if (worry === 'he-leave') items.push({ q: 'What if he leaves?', a: 'His staying or leaving is his choice. Your job isn\'t to prevent him from leaving—it\'s to decide what you\'ll accept. Fear of him leaving keeps you from asking for what you need.' });
+            if (worry === 'more-invested') items.push({ q: 'Why am I more invested than he is?', a: 'Reciprocity research shows: imbalance rarely corrects itself. Your over-investment doesn\'t create his. Match his energy. Pull back. See if he steps up—or if the relationship was only working because you were carrying it.' });
+            if (fVal === 'becoming-invisible' || pVal === 'feel-invisible') items.push({ q: 'Am I invisible to him?', a: 'His behavior shows whether he sees you. When you feel overlooked, that\'s the pattern—not your imagination. The dynamic reveals whether you\'re a priority or an option.' });
+            if (fVal === 'him-never-committing') items.push({ q: 'Why won\'t he commit?', a: 'Vagueness isn\'t confusion—it\'s a choice. If he wanted to commit, he would. The question isn\'t "How do I get him to commit?"—it\'s "What do I do with the clarity I already have?"' });
+            return items.filter((x, i, arr) => arr.findIndex(y => y.q === x.q) === i);
         }
         
         const whyItFeelsConfusing = pattern.whyItFeelsConfusing || 'These dynamics feel confusing because they\'re designed to keep you guessing. You\'re not crazy for feeling that way.';
         const whyHeActsThisWay = pattern.whyHeActsThisWay || pattern.hisPattern;
         const doesHeLikeMe = pattern.doesHeLikeMe || pattern.whatItMeans;
         
+        // Pull key answer callbacks for story personalization
+        function getAnswerText(idx) {
+            const ans = answers[idx];
+            const qData = quizData[idx];
+            if (typeof ans !== 'number' || !qData || !qData.options || !qData.options[ans]) return null;
+            return qData.options[ans].text;
+        }
+        const aftermathText = getAnswerText(7); // How you feel after time together
+        const effortText = getAnswerText(5);   // Who puts in effort
+        const initText = getAnswerText(6);     // Who initiates
+        const repetitionText = getAnswerText(12); // Pattern history
+        const tensionText = getAnswerText(2);  // When tension comes up (Q3)
+        const vulnerabilityText = getAnswerText(4); // When you express feelings (Q5)
+        
+        // Story of Him and Her — highly personalized narrative
+        function getHimHerStoryHTML() {
+            const ORIGINS_BY_PATTERN = {
+                'hot-cold-cycle': 'His pattern often comes from a place where closeness felt unsafe—maybe he learned early that getting too close meant losing himself or being overwhelmed. So he pursues, then retreats. It\'s not about you. It\'s his nervous system.',
+                'breadcrumb-dynamic': 'His minimal effort often comes from a place where "enough" was never required. He may have learned that he could have connection without full investment. He\'s not malicious—he\'s operating from what feels normal to him.',
+                'commitment-avoidance': 'His vagueness often comes from fear of being trapped or losing options. He may have seen commitment as a loss of freedom. Keeping things open feels safe. Clarity would require him to choose—and that\'s the part he avoids.',
+                'emotional-distance': 'His wall often comes from early experiences where emotional expression wasn\'t safe or wasn\'t modeled. He may have learned that going deep means vulnerability—and vulnerability means hurt. So he stays surface-level.',
+                'mixed-signals-loop': 'His inconsistency often comes from a disconnect between what he wants to feel and what he\'s willing to do. He may believe his words in the moment—but his behavior reveals where his actual investment is.',
+                'one-sided-investment': 'His comfort with imbalance often comes from never having to step up. He may have learned that someone else would carry it. He\'s not lazy—he\'s operating from what the dynamic has taught him works.'
+            };
+            const HER_ORIGINS = {
+                'reassurance-seeker': 'You look for proof because your brain craves certainty. That desire for clarity isn\'t neediness—it\'s your nervous system trying to feel safe. It developed from somewhere: maybe past inconsistency, or a belief that love has to be earned.',
+                'space-giver': 'You hold back because you\'ve learned that pursuing can push people away—or that "needy" is something to avoid. That restraint comes from a place of protecting yourself. It can feel dignified, but it also means you\'re waiting for him to set the pace.',
+                'direct-communicator': 'You ask directly because you\'d rather know than guess. That clarity-seeking is a strength—it comes from a place of wanting real connection. The challenge: when he deflects, you hit a wall. That\'s not your failure. It\'s his pattern.',
+                'hopeful-waiter': 'You stay and hope because leaving feels like giving up. That patience comes from a belief that love grows with time. The challenge: hope without evidence can keep you stuck. Your willingness to wait is a strength—but it can become a trap.',
+                'protector': 'You\'ve pulled back because getting hurt again isn\'t a risk you\'re willing to take. That protection is your brain\'s way of keeping you safe. It developed from somewhere: maybe past rejection, or the cost of overinvesting.',
+                'balanced': 'You notice the dynamic and try to stay grounded. That awareness is rare—it comes from a place of wanting to choose, not just react. You\'re not chasing, not shutting down. You\'re watching.'
+            };
+            const MARRIAGE_BY_PATTERN = {
+                'hot-cold-cycle': 'Marriage doesn\'t fix the cycle. Without change, you\'d still feel close one moment and distant the next. The chase-withdraw pattern often intensifies under the pressure of commitment. You\'d have a ring—and the same anxiety.',
+                'breadcrumb-dynamic': 'Marriage doesn\'t turn crumbs into a meal. Without change, you\'d still be waiting for his effort to match yours. He\'d still show up when he wants to. You\'d have a ring—and the same imbalance.',
+                'commitment-avoidance': 'If he avoids commitment now, marriage would be a leap—or it wouldn\'t happen. If he did marry without real readiness, the vagueness would shift to other areas: finances, kids, the future. The pattern adapts.',
+                'emotional-distance': 'Marriage doesn\'t lower the wall. Without change, you\'d still feel shut out. The emotional distance would persist—maybe worsen under the weight of "forever." You\'d have a ring—and the same loneliness.',
+                'mixed-signals-loop': 'Marriage doesn\'t align words and actions. Without change, you\'d still be decoding. You\'d have a ring—and the same confusion. Trust erodes when the disconnect continues.',
+                'one-sided-investment': 'Marriage doesn\'t fix the imbalance. Without change, you\'d still be carrying the relationship. You\'d plan, initiate, invest—and he\'d take. You\'d have a ring—and the same exhaustion.'
+            };
+            const KIDS_BY_PATTERN = {
+                'hot-cold-cycle': 'Kids add pressure. The inconsistency would show up in parenting too—present one moment, checked out the next. You\'d carry the emotional load for the family. The cycle would repeat, but with little people watching.',
+                'breadcrumb-dynamic': 'Kids need consistency. You\'d likely be the one who shows up—for school, for bedtime, for the hard stuff. He\'d show up when he wants to. You\'d have kids—and the same imbalance, now with higher stakes.',
+                'commitment-avoidance': 'Kids require commitment. If he can\'t answer "where is this going?" now, the big questions—kids, finances, life—would stay vague. You\'d make decisions alone. Or you\'d wait forever.',
+                'emotional-distance': 'Kids need emotional presence. His wall would show up in parenting too—surface-level when they need depth. You\'d be the one who bridges the emotional gap. You\'d have kids—and the same distance, now with more to carry.',
+                'mixed-signals-loop': 'Kids need reliability. You can\'t decode a co-parent. The inconsistency would show up in parenting—saying one thing, doing another. You\'d have kids—and the same confusion, now with little people caught in it.',
+                'one-sided-investment': 'Kids multiply the load. You\'d carry the relationship and the parenting. He\'d take more than he gives. You\'d have kids—and the same exhaustion, now with no way to pull back.'
+            };
+            const WORST_CASE_BY_PATTERN = {
+                'hot-cold-cycle': 'Years of anxiety. The cycle repeats until you\'re exhausted—or until you finally leave, wondering why you waited so long. The cost: time, peace, and the belief that you deserved more.',
+                'breadcrumb-dynamic': 'Years of waiting for more that never arrives. You\'d stay available, hoping the next crumb would be the meal. The cost: time, clarity, and the realization that you\'d lowered your bar to fit his ceiling.',
+                'commitment-avoidance': 'Years of "almost." You\'d stay hoping he\'d be ready. The cost: time, clarity, and the slow erosion of your self-respect. The worst case: you never get the answer—or you get it too late.',
+                'emotional-distance': 'Years of feeling shut out. You\'d exhaust yourself trying to bridge a gap he\'s not closing. The cost: loneliness inside a relationship, and the feeling that you\'re asking for too much when you\'re not.',
+                'mixed-signals-loop': 'Years of decoding. You\'d lose trust in what he says—and in your own judgment. The cost: confusion, eroded trust, and the feeling that you can\'t rely on the person closest to you.',
+                'one-sided-investment': 'Years of carrying it. You\'d give until you\'re depleted. The cost: exhaustion, resentment, and the realization that the relationship only worked because you were doing the work.'
+            };
+            const EMOTIONAL_COMPATIBILITY_BY_PATTERN = {
+                'hot-cold-cycle': 'Emotionally, you\'re mismatched. You want consistency and reassurance; he cycles between closeness and distance. The pursue-withdraw dynamic—one of the most common patterns couples bring to therapy—creates anxiety for you and overwhelm for him. You\'re not too much; you\'re wired for connection. He\'s wired to retreat when it gets intense.',
+                'breadcrumb-dynamic': 'Emotionally, you\'re out of sync. You want more than crumbs—real investment, presence, follow-through. He\'s comfortable with minimal. Research on avoidant breadcrumbing shows: he may unconsciously maintain distance because closeness feels threatening. You invest; he stays at arm\'s length. That gap rarely closes on its own.',
+                'commitment-avoidance': 'You\'re mismatched on commitment. You want clarity, a direction, a plan. He wants options open. His vagueness isn\'t confusion—it\'s a choice. You\'re ready to choose; he\'s not. That fundamental difference drives the tension.',
+                'emotional-distance': 'Emotionally, you\'re incompatible at the level you want. You crave depth; he stays surface-level. Classic pursuer-distancer: the more you reach for connection, the more he withdraws. His need for space and your need for closeness aren\'t wrong—they\'re just mismatched. Attachment research shows this is one of the hardest dynamics to shift.',
+                'mixed-signals-loop': 'Trust is eroded. You can\'t rely on what he says—so emotional safety never fully builds. His words and actions don\'t align; you\'re always interpreting. That disconnect makes real compatibility impossible. You\'re not overreacting; inconsistency creates anxiety and keeps you from feeling secure.',
+                'one-sided-investment': 'You\'re mismatched on reciprocity. You give; he receives. You want a partner who shows up the way you do; he\'s comfortable with the imbalance. Research on reciprocity shows it rarely corrects itself. Your capacity for investment is a strength—but it\'s being used on someone who isn\'t matching it.'
+            };
+            const COMMON_FIGHTS_BY_PATTERN = {
+                'hot-cold-cycle': 'Common fights: "Where did you go?" "Why are you so distant?" "Can we talk about us?" You want to discuss; he needs space. He may say "You\'re too much" or "I need space"—and you hear rejection. The pursuer-withdrawer cycle: you bring up problems, he goes quiet. Both are protecting themselves, but the opposite approaches create a painful loop.',
+                'breadcrumb-dynamic': 'Common fights: "Why don\'t you reach out more?" "I need more from you." "When will we see each other?" You want plans, effort, presence; he says "I\'m busy" or "I\'m trying." You feel like you\'re asking for the bare minimum; he feels pressured. The same argument repeats: you need more, he gives just enough to keep you there.',
+                'commitment-avoidance': 'Common fights: "Where is this going?" "When can we define this?" "What are we?" You want answers; he deflects or says "Let\'s just see" or "I\'m not ready." You bring it up; he avoids. The future becomes a conversation you\'re not allowed to have—and the fight about it becomes the pattern.',
+                'emotional-distance': 'Common fights: "Why won\'t you open up?" "I need more from you emotionally." "Can we talk about us?" You want depth; he shuts down or says "I need space" or "You\'re too much." You feel rejected when he withdraws; he feels overwhelmed when you pursue. The more you try to connect, the more he pulls back. It\'s the classic space-vs.-closeness conflict.',
+                'mixed-signals-loop': 'Common fights: "You said X but did Y." "You\'re not following through." "Why don\'t your words match your actions?" You want consistency; he deflects with "I\'m trying" or "You\'re overreacting." You replay conversations; he moves on. The disconnect becomes the fight—and the fight never resolves because the behavior doesn\'t change.',
+                'one-sided-investment': 'Common fights: "Why don\'t you reach out first?" "I\'m doing all the work." "I need you to step up." You want reciprocity; he says "I\'m not good at this" or "You\'re better at planning." You feel like you\'re carrying it; he\'s comfortable. The resentment builds—and the same argument about effort repeats.'
+            };
+            // Fear-specific red flags: top signs her biggest fear is coming true (pattern + expert insight)
+            const RED_FLAGS_BY_PATTERN_FEAR = {
+                'losing-his-interest': {
+                    'hot-cold-cycle': { flags: ['His cold phases get longer; his warm phases get shorter', 'He stops initiating—you\'re always the one reaching out', 'Conversations shrink to logistics; he stops asking about your life', 'He becomes irritable when you bring up "us"—your needs get reframed as "too much"', 'He pulls away after intimacy or vulnerability—classic deactivation'], instead: 'His behavior shows his interest. If the pattern has shifted toward more distance and less initiation, that\'s data. Ask yourself: Has his behavior actually changed? If not, that\'s your answer. Your job isn\'t to win him back—it\'s to decide what you\'ll accept.' },
+                    'breadcrumb-dynamic': { flags: ['His crumbs get smaller—less frequent texts, shorter replies, more cancellations', 'He only reaches out when bored or between other plans', 'He stops making future plans; everything is "maybe" or last-minute', 'You\'re always the one suggesting time together', 'He goes quiet for longer stretches without explanation'], instead: 'Crumbs shrinking is a sign. If he wanted to give more, he would. Ask yourself: Am I getting what I need, or just enough to stay? If it\'s the latter, that\'s your answer.' },
+                    'commitment-avoidance': { flags: ['He deflects "where is this going?" more often or with more irritation', 'His language about the future loses the "we"—plans become "I\'ll see"', 'He stops including you in future sentences or long-term talk', 'He becomes defensive when you ask for clarity', 'He pulls away after you bring up commitment'], instead: 'Vagueness increasing is a sign. If he wanted to choose you, he would. Can he answer the question? If not, that\'s the answer.' },
+                    'emotional-distance': { flags: ['He shuts down more quickly when you try to connect', 'He avoids eye contact and physical affection', 'He keeps his phone close, face-down, or takes it everywhere', 'He becomes cold or dismissive when you express needs', 'He spends more time distracted—work, hobbies, screens—and less present with you'], instead: 'His distance isn\'t about your worth. If he\'s pulling further back, that\'s his capacity—or his choice. Ask: Is he capable of the depth I want? If not, that\'s a compatibility answer.' },
+                    'mixed-signals-loop': { flags: ['His words and actions disconnect more often—promises with no follow-through', 'He reassures in the moment but nothing changes afterward', 'He becomes defensive when you point out the disconnect', 'He stops explaining; he just moves on', 'You feel like you\'re decoding him more than ever'], instead: 'When words and actions don\'t match, trust the actions. Behavior predicts future behavior. If his effort has dropped, that\'s the truth.' },
+                    'one-sided-investment': { flags: ['He initiates even less—you\'re carrying all of it', 'He cancels or reschedules more often', 'He stops asking about your day; conversations become one-sided', 'He takes your effort for granted—no acknowledgment, no reciprocity', 'When you pull back, the connection fades instead of him stepping up'], instead: 'His effort shows his interest. If you\'re doing all the work and he\'s comfortable with that, his investment is the answer. Match his energy. See what happens.' }
+                },
+                'losing-him-to-other': {
+                    'hot-cold-cycle': { flags: ['His phone becomes guarded—face-down, password changed, takes it everywhere', 'Unexplained gaps in his schedule; "work got crazy" or new hobbies he won\'t include you in', 'He becomes emotionally detached, then swings to guilt or over-affection', 'He accuses you of things you\'re not doing—projection', 'He becomes irritable when you ask where he\'s been or who he\'s with'], instead: 'The question isn\'t "Is he cheating?"—it\'s "Is he choosing me now?" His behavior reveals it. If he\'s hiding, deflecting, or his availability has shifted, trust your gut. You deserve someone who shows up clearly.' },
+                    'breadcrumb-dynamic': { flags: ['His crumbs become even more sporadic—he\'s "busy" more often', 'He keeps you at arm\'s length while staying in touch just enough', 'He avoids defining the relationship—keeps options open', 'He\'s vague about his plans and who he\'s with', 'He reaches out on his schedule only, never yours'], instead: 'Crumbs keep you available without commitment. If he wanted to choose you exclusively, he would. His effort reveals his priorities. Trust his actions.' },
+                    'commitment-avoidance': { flags: ['He refuses to define the relationship—"we\'re just seeing where it goes"', 'He keeps future talk vague; won\'t meet friends or family', 'He has unexplained time away; gets defensive when you ask', 'He avoids exclusivity conversations', 'He says he wants you but his actions keep options open'], instead: 'Vagueness is a choice. If he wanted to choose you clearly, he would. His refusal to define things is the answer.' },
+                    'emotional-distance': { flags: ['He becomes more closed off—less sharing, more secrecy', 'He keeps his phone private; gets defensive about privacy', 'He spends more time "alone" or "with friends" without details', 'He withdraws from physical and emotional intimacy', 'He becomes cold or dismissive when you seek connection'], instead: 'His distance and secrecy are data. If he\'s hiding parts of his life, that\'s a sign. You deserve transparency. Trust his actions.' },
+                    'mixed-signals-loop': { flags: ['His words say "you\'re the only one" but his actions don\'t match', 'He\'s inconsistent about availability—here one day, gone the next', 'He deflects when you ask direct questions about his loyalty', 'He accuses you of not trusting him when you seek clarity', 'His behavior becomes harder to predict'], instead: 'When words and actions don\'t match, trust the actions. If something feels off, it usually is. You deserve someone whose behavior matches his words.' },
+                    'one-sided-investment': { flags: ['He invests even less—you\'re the only one making plans', 'He\'s "too busy" for you but has time for others', 'He stops including you in his life; you\'re an option, not a priority', 'He takes without giving—your effort, your time, your care', 'When you ask for more, he deflects or gets defensive'], instead: 'His effort shows his priorities. If you\'re not a priority, that\'s the answer. You deserve someone who chooses you clearly.' }
+                },
+                'losing-time': {
+                    'hot-cold-cycle': { flags: ['Months pass with no change—the cycle repeats, you\'re still guessing', 'You\'re always waiting for the "right moment" to have the conversation', 'You feel more anxious after time together, not more secure', 'You\'ve lowered your expectations to fit what he offers', 'You keep hoping "this time" will be different—it hasn\'t'], instead: 'If nothing has shifted by now, it usually won\'t. Set a deadline. Ask yourself: If I\'m still here in 6 months with no clarity, what will I have lost? Clarity now saves years.' },
+                    'breadcrumb-dynamic': { flags: ['You\'ve been waiting for "more" for months—it hasn\'t arrived', 'You\'re always the one initiating; he shows up when convenient', 'No relationship progression—no labels, no meeting people, no integration', 'You feel anxious between his texts instead of secure', 'You\'ve rationalized "at least he\'s trying" when his effort is minimal'], instead: 'Research shows: if he wanted to give more, he would have by now. Am I getting what I need, or just enough to stay? Set a deadline. If nothing changes, you have your answer.' },
+                    'commitment-avoidance': { flags: ['You\'ve asked "where is this going?" and still don\'t have a real answer', 'Months or years with no labels, no plans, no clarity', 'He says "someday" or "eventually" but never acts', 'You\'re dating potential, not reality', 'The future feels like a conversation you\'re not allowed to have'], instead: 'Vagueness is the answer. If he wanted to commit, he would have by now. Your patience may be enabling his avoidance. Act on the clarity you already have.' },
+                    'emotional-distance': { flags: ['You\'ve been trying to get closer for a long time—the wall stays up', 'You feel lonelier inside the relationship than outside it', 'You\'ve exhausted yourself bridging a gap he\'s not closing', 'You keep hoping he\'ll "open up eventually"—he hasn\'t', 'You wonder if you\'re asking for too much. You\'re not.'], instead: 'Attachment research: avoidant partners rarely change without sustained motivation. Is he capable of the depth I want? If not, that\'s a compatibility answer. Time is the cost.' },
+                    'mixed-signals-loop': { flags: ['You\'ve been decoding his words for months—still no clarity', 'His promises never become actions', 'You replay conversations instead of feeling secure', 'You\'ve given him the benefit of the doubt repeatedly—nothing changes', 'Trust has eroded; you can\'t rely on what he says'], instead: 'Decoding costs time. Trust his actions. If they don\'t match his words, the actions are the truth. Set a deadline. Clarity now saves years.' },
+                    'one-sided-investment': { flags: ['You\'ve been carrying it for months—he hasn\'t stepped up', 'You pull back and the connection fades; he doesn\'t match your energy', 'You\'re exhausted; the relationship feels like work', 'You\'ve hoped he\'d "finally" contribute—he hasn\'t', 'Reciprocity research: imbalance rarely corrects itself'], instead: 'If you stopped carrying this, would it still exist? If not, that\'s your answer. Match his energy. See if he steps up. If not, you\'ve saved yourself years.' }
+                },
+                'him-never-committing': {
+                    'hot-cold-cycle': { flags: ['He comes back when he wants connection—but never defines what you are', 'The cycle repeats; you never get a real answer about the future', 'He avoids "what are we?" or gets irritable when you ask', 'He keeps things undefined so he can have closeness without commitment', 'Months pass; you\'re still in the same undefined loop'], instead: 'The cycle works for him—he gets connection on his terms. If he wanted to commit, he would. Vagueness is a choice. Can he answer the question? If not, that\'s the answer.' },
+                    'breadcrumb-dynamic': { flags: ['He gives just enough to keep you—never enough to move forward', 'No labels, no meeting people, no integration into his life', 'He keeps you available without choosing you clearly', 'Months of crumbs; no progression', 'He says he wants something serious but his actions stay minimal'], instead: 'Crumbs aren\'t commitment. If he wanted to define it, he would have by now. Am I getting what I need, or just enough to stay? That\'s your answer.' },
+                    'commitment-avoidance': { flags: ['He deflects every "where is this going?" conversation', 'He says "let\'s just see" or "I\'m not ready" repeatedly', 'Years pass; the future stays vague', 'He keeps options open; clarity would require him to choose', 'You\'ve lowered your expectations to avoid the question'], instead: 'You named the fear. Can he answer the question? If not, that\'s the answer. Vagueness is a choice. Your patience may be enabling his avoidance.' },
+                    'emotional-distance': { flags: ['He stays surface-level; commitment requires depth he won\'t give', 'He shuts down when you bring up the future', 'He may care but his capacity for "forever" is limited', 'The wall stays up; you can\'t build a future on that', 'You\'re waiting for him to be ready—he hasn\'t shown that'], instead: 'His capacity for commitment is his. If he can\'t go deep, he can\'t commit fully. Is he capable of what I want? If not, that\'s the answer.' },
+                    'mixed-signals-loop': { flags: ['He says he wants commitment but his actions don\'t match', 'Promises about the future never become plans', 'You can\'t rely on what he says—so you can\'t build toward commitment', 'He deflects when you ask for clarity', 'Words without action = no real commitment'], instead: 'When words and actions don\'t match, trust the actions. If he wanted to commit, his behavior would show it. What does he do? That\'s your answer.' },
+                    'one-sided-investment': { flags: ['You\'re doing all the work—he has no incentive to commit', 'He\'s comfortable receiving; commitment would require him to give', 'You\'ve hoped he\'d step up—he hasn\'t', 'The relationship only works because you\'re carrying it', 'Reciprocity: he won\'t commit when he\'s not investing'], instead: 'One-sided effort rarely leads to commitment. Match his energy. If he doesn\'t step up, that\'s your answer. If he wanted to commit, he would.' }
+                },
+                'not-enough': {
+                    'default': { flags: ['He gives minimal effort—you interpret it as "I\'m not enough"', 'He pulls away and you blame yourself', 'You keep trying harder, hoping he\'ll show up more', 'His behavior feels like proof of your worth—it\'s not', 'You\'ve lowered your bar to fit what he offers'], instead: 'The question isn\'t "Am I enough?"—it\'s "Is he showing up enough for what I need?" His behavior is the answer, not your worth. You were enough before anyone chose you.' }
+                },
+                'becoming-invisible': {
+                    'default': { flags: ['He stops asking about your life; conversations become one-sided', 'He only reaches out when he wants something', 'You feel overlooked in his plans and priorities', 'Your needs get dismissed as "too much" or "overthinking"', 'You\'re an option, not a priority—his behavior shows it'], instead: 'His behavior shows whether he sees you. If his actions don\'t show you\'re a priority, that\'s the answer. You deserve to be seen. Trust his actions.' }
+                },
+                'abandoned': {
+                    'default': { flags: ['He disappears without explanation; you fear he won\'t come back', 'His inconsistency triggers your abandonment wound', 'You chase harder when he pulls away—fear drives the cycle', 'You stay in hope instead of reality to avoid the pain of leaving', 'You tolerate ambiguity because certainty (even bad) feels safer than the unknown'], instead: 'Staying won\'t prevent him from leaving. Your job isn\'t to hold on—it\'s to decide what you\'ll accept. Fear of abandonment keeps you from choosing yourself. What would you advise a friend?' }
+                }
+            };
+            const getFearRedFlags = () => {
+                const fearData = RED_FLAGS_BY_PATTERN_FEAR[fearVal];
+                if (!fearData) return null;
+                const patternData = fearData[patternId] || fearData['default'];
+                if (!patternData) return null;
+                return patternData;
+            };
+            const fearRedFlags = getFearRedFlags();
+            const redFlags = fearRedFlags ? fearRedFlags.flags : (pattern.signsYoureInIt || []).slice(0, 4);
+            const redFlagsInstead = fearRedFlags ? fearRedFlags.instead : (pattern.watchForInstead || 'Ask yourself: Has his behavior actually changed? If not, that\'s your answer. His staying or leaving is his choice—your job is to decide what you\'ll accept.');
+            const outcomes = (pattern.ifNothingChanges || []).slice(0, 2);
+            const originHis = ORIGINS_BY_PATTERN[patternId] || 'His pattern comes from somewhere—often early experiences that shaped how he shows up in relationships. It\'s not about you. It\'s his wiring.';
+            const originHer = HER_ORIGINS[herResponseId] || 'Your response pattern comes from somewhere—often a place of wanting to feel safe, chosen, or in control. It\'s not a flaw. It\'s how you\'ve learned to survive.';
+            const marriageBlurb = MARRIAGE_BY_PATTERN[patternId] || 'Marriage doesn\'t fix patterns. Without change, the dynamic would persist—with higher stakes.';
+            const kidsBlurb = KIDS_BY_PATTERN[patternId] || 'Kids add pressure. Without change, the pattern would show up in parenting too.';
+            const worstCase = WORST_CASE_BY_PATTERN[patternId] || 'The worst case: years of the same pattern, with the cost of time and clarity.';
+            const emotionalCompat = EMOTIONAL_COMPATIBILITY_BY_PATTERN[patternId] || 'Emotionally, you\'re mismatched. The pattern creates tension that rarely resolves without change.';
+            const commonFights = COMMON_FIGHTS_BY_PATTERN[patternId] || 'The same arguments repeat—usually about connection, clarity, or effort.';
+            const effortLine = (effortText || initText) ? ' You said ' + (effortText ? effortText.toLowerCase() : initText.toLowerCase()) + '—that\'s the dynamic in action.' : '';
+            const repetitionLine = repetitionText ? ' You\'ve noticed ' + repetitionText.toLowerCase() + '. That repetition is data. It means the pattern runs deeper than this one relationship.' : '';
+            const tensionLine = (tensionText || vulnerabilityText) ? ' You said ' + (tensionText ? tensionText.toLowerCase() : vulnerabilityText.toLowerCase()) + '—that\'s the conflict pattern in action.' : '';
+            return `
+                <div class="results-him-her-story results-core-insight" style="margin-bottom: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(0,0,0,0.08);">
+                    <h2 class="about-pattern-title" style="margin-bottom: 1.25rem; font-size: 1.35rem;">The story of you and him</h2>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1.25rem;">${pattern.hisPattern} ${pattern.herPattern} Together, ${pattern.dynamic.toLowerCase()}${effortLine}</p>
+                    ${repetition && repetitionInsight ? `<p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1.25rem;">${repetition} ${repetitionBridging}</p>` : repetitionLine ? `<p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1.25rem;">${repetitionLine}</p>` : ''}
+                    ${aftermathText ? `<p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1.25rem;">You said you usually feel <em>${aftermathText.toLowerCase()}</em> after spending time with him. That\'s not random—it\'s your nervous system responding to the dynamic. ${patternId === 'hot-cold-cycle' ? 'Anxiety after time together is the cycle talking. Your brain is trying to solve the inconsistency.' : patternId === 'one-sided-investment' ? 'Emotional exhaustion is the cost of carrying it. Your body is telling you something.' : 'That feeling is data. Pay attention to it.'}</p>` : ''}
+                    <h3 class="about-pattern-title" style="margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Where This May Come From</h3>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 0.5rem;">${originHis}</p>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1.25rem;">${originHer}</p>
+                    <h3 class="about-pattern-title" style="margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Your Fears & the Signs They're Coming True</h3>
+                    ${(painLabel || fearLabel) ? `<p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1rem;">You named ${painLabel && fearLabel ? painLabel + ' and ' + fearLabel : painLabel || fearLabel}. Those aren\'t random—they\'re wired into the pattern. ${pattern.strengths} The question isn\'t whether you\'re "too much." It\'s whether this dynamic is right for you. Your fears aren\'t paranoia; they\'re data. Here are the top signs that ${fearLabel ? 'your fear' : (painLabel ? 'your challenge' : 'this')} may be coming true—based on your pattern, your answers, and what experts see in dynamics like this:</p>` : `<p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1rem;">${pattern.strengths} In dynamics like this, the pattern creates specific warning signs. Your awareness is what allows you to break it. Here\'s what to watch for—and what to do instead:</p>`}
+                    ${tensionText ? `<p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 0.75rem;">You said when tension comes up, ${tensionText.toLowerCase()}. That\'s one of the earliest signs—pay attention when it repeats.</p>` : vulnerabilityText ? `<p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 0.75rem;">You said when you express your feelings, ${vulnerabilityText.toLowerCase()}. That\'s a key signal—experts see this as a top red flag in dynamics like yours.</p>` : ''}
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 0.5rem;">${(Array.isArray(redFlags) && redFlags.length) ? '<ol style="margin: 0 0 0.5rem 0; padding-left: 1.25rem;">' + redFlags.map(r => '<li style="margin-bottom: 0.35rem;">' + r + '</li>').join('') + '</ol>' : (pattern.watchFor || '')}</p>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1.25rem; font-weight: 500;">The shift: ${redFlagsInstead}</p>
+                    <h3 class="about-pattern-title" style="margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Emotional Compatibility</h3>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1.25rem;">${emotionalCompat}${tensionLine}</p>
+                    <h3 class="about-pattern-title" style="margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">Conflict & What Happens</h3>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1rem;">${commonFights}</p>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 0.5rem;">In dynamics like this: ${outcomes.join('; ')}. This pattern can last months or years. The real risk is time—many people stay waiting for more that never arrives.</p>
+                    <h3 class="about-pattern-title" style="margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">If We Get Married</h3>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1.25rem;">${marriageBlurb}</p>
+                    <h3 class="about-pattern-title" style="margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">If We Have Kids</h3>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 1.25rem;">${kidsBlurb}</p>
+                    <h3 class="about-pattern-title" style="margin: 1.5rem 0 0.75rem 0; font-size: 1.1rem;">The Costs and Worst Case</h3>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.75; margin-bottom: 0;">${worstCase}</p>
+                </div>`;
+        }
+        
+        // "What your answers revealed" — tie 2–3 answers to the pattern for stronger aha moments
+        function getWhatYourAnswersRevealedHTML(answers, quizData, patternId) {
+            const HIGH_SIGNAL_QUESTIONS = [
+                { idx: 8, label: 'Which feels most like your relationship' },
+                { idx: 2, label: 'When tension comes up' },
+                { idx: 4, label: 'When you ask for clarity' },
+                { idx: 7, label: 'How you feel after time together' },
+                { idx: 5, label: 'Who puts in the effort' },
+                { idx: 6, label: 'Who initiates' }
+            ];
+            const items = [];
+            const usedSubs = new Set();
+            for (const q of HIGH_SIGNAL_QUESTIONS) {
+                const ans = answers[q.idx];
+                const qData = quizData[q.idx];
+                if (typeof ans !== 'number' || !qData || !qData.options || !qData.options[ans]) continue;
+                const opt = qData.options[ans];
+                const text = opt.text;
+                const sub = opt.subDimension || '';
+                const dim = opt.dimension || '';
+                if (!sub && !dim) continue;
+                // Pattern-specific insights — connect answer to pattern without repeating existing content
+                const insightMap = {
+                    'hot-cold-cycle': {
+                        'hot-cold': 'That\'s not random—it\'s the chase-withdraw cycle in action. His disappearing is the pattern, not a one-off.',
+                        'emotional-distance': 'Distance after conflict feeds the cycle. The more he pulls away, the more you chase—and the cycle deepens.',
+                        'avoidant': 'Avoiding conflict creates the same cycle. He retreats; you wait. The pattern runs on silence.',
+                        'mixed-signals': 'Reassurance without change keeps you hooked. Your brain waits for the next sign. That\'s how this pattern holds you.',
+                        'hot-cold-cycle': 'Anxiety after time together is your nervous system responding to inconsistency. It\'s not you—it\'s the pattern.',
+                        'one-sided-investment': 'When you\'re doing most of the work, the imbalance fuels the cycle. He has no reason to show up consistently.',
+                        'breadcrumb-dynamic': 'He shows up when he wants to—that\'s the cycle. You\'re waiting for him to set the pace.'
+                    },
+                    'breadcrumb-dynamic': {
+                        'avoidant': 'Avoiding conflict keeps you waiting. He controls the pace; you\'re hoping for more that never arrives.',
+                        'hot-cold': 'His disappearing is the crumb pattern—just enough to keep you interested, never enough to feel secure.',
+                        'mixed-signals': 'Reassurance without follow-through is a crumb. Your brain treats it as progress. That\'s the trap.',
+                        'breadcrumb-dynamic': 'Slightly unsure after time together—that\'s the crumb effect. You\'re waiting for the next sign instead of feeling secure.',
+                        'one-sided-investment': 'You\'re carrying the effort. Crumbs feel like enough when you\'re doing the work. They\'re not.',
+                        'hot-cold-cycle': 'Inconsistent attention is the crumb. You rationalize "at least he\'s trying." He\'s controlling when you get it.'
+                    },
+                    'commitment-avoidance': {
+                        'commitment-avoidance': 'Avoiding or keeping things vague isn\'t confusion—it\'s the pattern. You\'re waiting for clarity he may never give.',
+                        'mixed-signals': 'Saying one thing and not following through keeps the future undefined. That\'s the avoidance in action.',
+                        'hot-cold': 'His pulling away when you ask for clarity is the answer. He\'s not "not ready"—he\'s avoiding the question.',
+                        'emotional-distance': 'Shutting down when you bring up the future is the pattern. The vagueness is a choice.',
+                        'one-sided-investment': 'When you\'re doing most of the work, you\'re waiting for him to choose. He has no incentive to define things.'
+                    },
+                    'emotional-distance': {
+                        'emotional-distance': 'That distance isn\'t about you. It\'s his pattern—and you\'ve been trying to solve something that isn\'t yours to fix.',
+                        'avoidant': 'Avoiding conflict keeps the wall up. He won\'t go there—and you\'re left trying to bridge a gap he\'s not closing.',
+                        'hot-cold': 'His disappearing when things get real is the wall. He can\'t sustain closeness—that\'s his capacity.',
+                        'mixed-signals': 'Reassurance without depth is surface-level. He may care, but he\'s not going deeper.',
+                        'one-sided-investment': 'You\'re doing the emotional work. He\'s comfortable receiving. The wall stays up because he doesn\'t have to lower it.'
+                    },
+                    'mixed-signals-loop': {
+                        'mixed-signals': 'Words without action—that\'s the pattern. You\'re decoding instead of deciding. His behavior is the truth.',
+                        'hot-cold': 'Inconsistency creates the mixed signals. You\'re trying to make sense of someone who doesn\'t make sense.',
+                        'emotional-distance': 'Shutting down when you ask for clarity is a mixed signal. His actions say more than his words.',
+                        'hot-cold-cycle': 'Anxiety after time together—your brain is trying to solve the disconnect. The confusion is the trap.',
+                        'one-sided-investment': 'When you\'re doing most of the work, his words and actions already don\'t match. Effort is the truth.'
+                    },
+                    'one-sided-investment': {
+                        'one-sided-investment': 'That\'s not love—that\'s the pattern. You\'re carrying the relationship. He has no reason to step up.',
+                        'breadcrumb-dynamic': 'He shows up when he wants to. You\'re waiting for him to match your effort. He won\'t—the imbalance works for him.',
+                        'hot-cold-cycle': 'Inconsistent initiation keeps you chasing. You invest more to feel connected. The cycle deepens.',
+                        'protector': 'You\'ve pulled back—and that may have revealed the truth: the relationship only worked when you were carrying it.'
+                    }
+                };
+                const patternInsights = insightMap[patternId] || {};
+                let insight = (patternInsights[sub] && String(patternInsights[sub]).trim()) ? patternInsights[sub] : null;
+                if (!insight) {
+                    const FALLBACK_BY_PATTERN = {
+                        'hot-cold-cycle': { 'hot-cold': 'His disappearing is the pattern. The cycle runs on inconsistency—and your brain keeps trying to solve it.', 'emotional-distance': 'Distance feeds the cycle. The more he pulls away, the more you chase.', 'avoidant': 'Avoiding conflict keeps the cycle going. He retreats; you wait.', 'mixed-signals': 'Reassurance without change keeps you hooked. That\'s how this pattern holds you.', 'one-sided-investment': 'When you\'re doing most of the work, he has no reason to show up consistently.', 'breadcrumb-dynamic': 'He shows up when he wants to. You\'re waiting for him to set the pace.', 'hot-cold-cycle': 'Anxiety after time together is your nervous system responding to inconsistency. It\'s not you—it\'s the pattern.' },
+                        'breadcrumb-dynamic': { 'avoidant': 'Avoiding conflict keeps you waiting. He controls the pace.', 'hot-cold': 'His disappearing is the crumb pattern—just enough to keep you interested.', 'mixed-signals': 'Reassurance without follow-through is a crumb. Your brain treats it as progress.', 'one-sided-investment': 'You\'re carrying the effort. Crumbs feel like enough when you\'re doing the work. They\'re not.', 'breadcrumb-dynamic': 'Slightly unsure after time together—that\'s the crumb effect. You\'re waiting for the next sign.', 'hot-cold-cycle': 'Inconsistent attention is the crumb. He\'s controlling when you get it.' },
+                        'commitment-avoidance': { 'commitment-avoidance': 'Avoiding or keeping things vague isn\'t confusion—it\'s the pattern.', 'mixed-signals': 'Saying one thing and not following through keeps the future undefined.', 'hot-cold': 'His pulling away when you ask for clarity is the answer. He\'s avoiding the question.', 'emotional-distance': 'Shutting down when you bring up the future is the pattern.', 'one-sided-investment': 'When you\'re doing most of the work, you\'re waiting for him to choose.' },
+                        'emotional-distance': { 'emotional-distance': 'That distance isn\'t about you. It\'s his pattern.', 'avoidant': 'Avoiding conflict keeps the wall up.', 'hot-cold': 'His disappearing when things get real is the wall.', 'mixed-signals': 'Reassurance without depth is surface-level.', 'one-sided-investment': 'You\'re doing the emotional work. He\'s comfortable receiving.' },
+                        'mixed-signals-loop': { 'mixed-signals': 'Words without action—that\'s the pattern. His behavior is the truth.', 'hot-cold': 'Inconsistency creates the mixed signals.', 'emotional-distance': 'Shutting down when you ask for clarity is a mixed signal.', 'hot-cold-cycle': 'Anxiety after time together—your brain is trying to solve the disconnect.', 'one-sided-investment': 'When you\'re doing most of the work, his words and actions already don\'t match.' },
+                        'one-sided-investment': { 'one-sided-investment': 'That\'s the pattern. You\'re carrying the relationship.', 'breadcrumb-dynamic': 'He shows up when he wants to. The imbalance works for him.', 'hot-cold-cycle': 'Inconsistent initiation keeps you chasing.', 'protector': 'You\'ve pulled back—that may have revealed the truth.' }
+                    };
+                    const fallbacks = FALLBACK_BY_PATTERN[patternId] || {};
+                    insight = (fallbacks[sub] && String(fallbacks[sub]).trim()) ? fallbacks[sub] : null;
+                }
+                if (!insight) continue;
+                if (usedSubs.has(sub)) continue;
+                usedSubs.add(sub);
+                items.push({ answer: text, insight });
+                if (items.length >= 3) break;
+            }
+            if (items.length === 0) {
+                const GENERIC_FALLBACK = {
+                    'hot-cold-cycle': 'Your answers point to the same pattern: inconsistency. His behavior hasn\'t changed—and the cycle repeats.',
+                    'breadcrumb-dynamic': 'Your answers show the crumb pattern: just enough to keep you interested, never enough to feel secure.',
+                    'commitment-avoidance': 'Your answers reveal the pattern: vagueness. The future stays undefined by design.',
+                    'emotional-distance': 'Your answers point to the same dynamic: emotional distance. The wall isn\'t yours to fix.',
+                    'mixed-signals-loop': 'Your answers show the pattern: words and actions don\'t match. Trust the actions.',
+                    'one-sided-investment': 'Your answers reveal the imbalance: you\'re carrying the relationship. He has no reason to step up.'
+                };
+                const genericInsight = GENERIC_FALLBACK[patternId];
+                if (genericInsight) {
+                    const firstAns = HIGH_SIGNAL_QUESTIONS.find(q => typeof answers[q.idx] === 'number' && quizData[q.idx] && quizData[q.idx].options && quizData[q.idx].options[answers[q.idx]]);
+                    const firstText = firstAns && quizData[firstAns.idx].options[answers[firstAns.idx]] ? quizData[firstAns.idx].options[answers[firstAns.idx]].text : 'Your relationship dynamic';
+                    items.push({ answer: firstText, insight: genericInsight });
+                }
+            }
+            if (items.length === 0) return '';
+            return `
+                <div class="results-dark-bg-content results-bento-card results-bento-card-full-width" style="border-left: 4px solid #f10000;">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">What Your Answers Revealed</h3>
+                    <p class="content-text" style="color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-bottom: 1.25rem;">Your quiz answers didn\'t just identify the pattern—they showed exactly how it shows up for you.</p>
+                    ${items.map(item => `
+                        <div style="margin-bottom: ${items.indexOf(item) < items.length - 1 ? '1.25rem' : '0'}; padding: 1rem 1.25rem; background: rgba(255, 255, 255, 0.06); border-radius: 8px;">
+                            <p class="content-text" style="color: rgba(255, 255, 255, 0.95); font-style: italic; margin: 0 0 0.5rem 0;">"${item.answer}"</p>
+                            <p class="content-text" style="color: #f10000; font-weight: 600; margin: 0; line-height: 1.6;">${item.insight}</p>
+                        </div>
+                    `).join('')}
+                </div>`;
+        }
+        
         return `
             <div class="results-hero-section">
                 <div class="results-header">
                     <h1 class="results-title">Hi <span class="user-name-red">${firstName || 'there'}</span>,<br>Here's what's actually going on.</h1>
-                    <div class="results-hero-intro">
-                        <p class="results-hero-standout">You're not imagining things.<br>You're not crazy. You're not broken.</p>
-                        <p class="results-hero-body">At ${contextLine}, ${(pattern.description || '').charAt(0) ? ((pattern.description || '').charAt(0).toLowerCase() + (pattern.description || '').slice(1)) : (pattern.description || '')}</p>
-                        <p class="results-hero-cta">Now you can see it clearly.</p>
-                    </div>
-                </div>
-                
-                <div class="pattern-display-prominent">
-                    <div class="pattern-identity-card">
-                        <div class="pattern-archetype-label">Your Relationship Pattern</div>
-                        <div class="pattern-name-display">
-                            <span class="pattern-name-main">${pattern.name}</span>
+                    <div class="pattern-display-prominent">
+                        <div class="pattern-identity-card">
+                            <div class="pattern-archetype-label">Your Relationship Pattern</div>
+                            <div class="pattern-name-display">
+                                <span class="pattern-name-main">${pattern.name}</span>
+                            </div>
+                            ${situationshipModifier && window.situationshipModifier ? `<div class="pattern-situationship-tag" style="margin-top: 0.5rem; font-size: 0.85rem; color: #f10000; font-weight: 600;">+ ${window.situationshipModifier.name}</div><div class="pattern-situationship-tagline" style="font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-top: 0.25rem;">${window.situationshipModifier.tagline}</div>` : ''}
+                            ${pattern.coreBelief ? `<div class="pattern-core-belief-preview">"${pattern.coreBelief}"</div>` : ''}
                         </div>
-                        ${situationshipModifier && window.situationshipModifier ? `<div class="pattern-situationship-tag" style="margin-top: 0.5rem; font-size: 0.85rem; color: #f10000; font-weight: 600;">+ ${window.situationshipModifier.name}</div><div class="pattern-situationship-tagline" style="font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-top: 0.25rem;">${window.situationshipModifier.tagline}</div>` : ''}
-                        ${pattern.coreBelief ? `<div class="pattern-core-belief-preview">"${pattern.coreBelief}"</div>` : ''}
                     </div>
                 </div>
             </div>
@@ -610,181 +956,131 @@
             <div class="results-section-divider"></div>
             
             <div class="results-content-section results-bento-content">
-                ${statusInsight && (relationshipStatus === 'recently-ended' || relationshipStatus === 'not-in-one') ? `
-                <div class="results-dark-bg-content results-bento-card results-section-validated">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">${relationshipStatus === 'recently-ended' ? 'Making Sense of What Happened' : 'When You Meet Someone New'}</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7;">${statusInsight}</p>
-                </div>
-                ` : ''}
-                <!-- 1. Why This Feels So Confusing - Emotional validation first -->
-                <div class="results-dark-bg-content results-bento-card results-section-validated">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Why This Feels So Confusing</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 0.5rem;">You're not overthinking. You're not needy. The confusion is built into the pattern.</p>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${(statusInsight && relationshipStatus === 'situationship') || painInsight || fearInsight ? '1rem' : '1rem'};">${whyItFeelsConfusing}</p>
-                    ${(statusInsight && (relationshipStatus === 'situationship' || relationshipStatus === 'emotionally-invested')) ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${painInsight || fearInsight ? '1rem' : '1rem'};">${statusInsight}</p>` : ''}
-                    ${painInsight ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${fearInsight ? '1rem' : '1rem'};">${painInsight}</p>` : ''}
-                    ${fearInsight ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 1rem;">${fearInsight}</p>` : ''}
-                    ${(painLabel || fearLabel) ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 0;">${painLabel && fearLabel ? `You said your biggest challenge is ${painLabel} and your biggest fear is ${fearLabel}.` : painLabel ? `You said your biggest challenge is ${painLabel}.` : `You said your biggest fear is ${fearLabel}.`} That's exactly why this pattern feels so hard to leave—and why seeing it clearly is the first step to breaking it.</p>` : ''}
-                </div>
-                
-                <!-- 2. What's Actually Happening -->
-                <div class="results-dark-bg-content results-bento-card">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">What's Actually Happening</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 1rem;">${pattern.hisPattern}</p>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 1rem;">${pattern.herPattern}</p>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 0;"><strong>The dynamic:</strong> ${pattern.dynamic}</p>
-                </div>
-                
-                <!-- 3. Why He Acts This Way - Explicit answer -->
-                <div class="results-dark-bg-content results-bento-card">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Why He Acts This Way</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7;">${whyHeActsThisWay}</p>
-                </div>
-                
-                <!-- 4. Does He Actually Like Me? - Explicit answer -->
-                <div class="results-dark-bg-content results-bento-card results-bento-card-emphasis">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Does He Actually Like Me?</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${(situationshipModifier && window.situationshipModifier) ? '1rem' : '0'};">${doesHeLikeMe}</p>
-                    ${(situationshipModifier && window.situationshipModifier) ? `<p class="content-text" style="color: #f10000; font-weight: 600; line-height: 1.7;">In a situationship, his behavior is the answer. If he wanted to define it, he would have by now.</p>` : ''}
-                </div>
-                
-                <!-- 5. Your Response Pattern -->
-                <div class="results-dark-bg-content results-bento-card">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Your Response Pattern</h3>
-                    <p class="content-text" style="color: #f10000; font-weight: 600; margin-bottom: 0.5rem;">${herResponse.name}</p>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${combinationInsight ? '1rem' : '0'};">${herResponse.description}</p>
-                    ${combinationInsight ? `<p class="content-text combination-insight-block" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; padding: 1.25rem 1.5rem; background: rgba(255, 255, 255, 0.1); border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.15);">${combinationInsight}</p>` : ''}
+                <!-- ONE MAIN INSIGHT: What's going on + what it means + the cure -->
+                <div class="results-core-insight" style="margin-bottom: 1.5rem;">
+                    <h2 class="about-pattern-title" style="margin-bottom: 1.25rem; font-size: 1.35rem;">Here's What's Actually Going On</h2>
+                    <p class="content-text results-core-insight-text results-core-validation" style="line-height: 1.7; margin-bottom: 0.75rem; font-weight: 600;">You're not imagining things. You're not crazy. You're not broken.</p>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.7; margin-bottom: 1rem;">At ${contextLine}, ${(pattern.description || '').charAt(0) ? ((pattern.description || '').charAt(0).toLowerCase() + (pattern.description || '').slice(1)) : (pattern.description || '')}</p>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.7; margin-bottom: 1.25rem; font-weight: 500;">Now you can see it clearly.</p>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.7; margin-bottom: 1rem;">${pattern.hisPattern}</p>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.7; margin-bottom: 1rem;">${pattern.herPattern}</p>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.7; margin-bottom: 1rem;"><strong>The dynamic:</strong> ${pattern.dynamic}</p>
+                    <p class="content-text results-core-insight-text" style="line-height: 1.7; margin-bottom: ${(painLabel || fearLabel) ? '1.25rem' : '0'};">${pattern.whatItMeans}</p>
+                    ${(painLabel || fearLabel) ? (function() {
+                        const CURE_BY_PATTERN_FEAR = {
+                            'hot-cold-cycle': { 'losing-his-interest': 'His behavior shows his interest—not your worth. The shift: stop chasing for proof. Get one direct answer, then act on it.', 'he-went-cold': 'His behavior shows his interest—not your worth. The shift: stop chasing for proof. Get one direct answer, then act on it.', 'not-enough': 'You are enough. The shift: the question isn\'t "Am I enough?"—it\'s "Is he showing up enough?" His behavior is the answer.', 'losing-time': 'The real cost is time. The shift: decide what you\'ll accept. If nothing changes, you have your answer.', 'losing-him-to-other': 'The question isn\'t who else—it\'s whether he\'s choosing you now. The shift: trust his actions. They reveal it.', 'becoming-invisible': 'His behavior shows whether he sees you. The shift: you deserve to be a priority. If his actions don\'t show it, that\'s your answer.', 'feel-invisible': 'His behavior shows whether he sees you. The shift: you deserve to be a priority. If his actions don\'t show it, that\'s your answer.', 'him-never-committing': 'Vagueness is a choice. The shift: can he answer the question? If not, that\'s the answer.', 'keeping-me-option': 'Vagueness is a choice. The shift: can he answer the question? If not, that\'s the answer.' },
+                            'breadcrumb-dynamic': { 'losing-his-interest': 'Crumbs feel like interest—they\'re not. The shift: am I getting what I need, or just enough to stay?', 'he-went-cold': 'Crumbs feel like interest—they\'re not. The shift: am I getting what I need, or just enough to stay?', 'not-enough': 'You are enough. The shift: his crumbs aren\'t a measure of your worth. Decide what you need—and leave if he can\'t give it.', 'losing-time': 'Waiting for crumbs costs time. The shift: set a deadline. If nothing changes, you have your answer.', 'losing-him-to-other': 'The question isn\'t who else—it\'s whether he\'s choosing you. The shift: his effort reveals it. Crumbs aren\'t choice.', 'becoming-invisible': 'Crumbs keep you visible enough to stay—not chosen enough to matter. The shift: you deserve a meal, not scraps.', 'feel-invisible': 'Crumbs keep you visible enough to stay—not chosen enough to matter. The shift: you deserve a meal, not scraps.', 'him-never-committing': 'Crumbs avoid commitment. The shift: can he give more? If not, that\'s the answer.', 'keeping-me-option': 'Crumbs avoid commitment. The shift: can he give more? If not, that\'s the answer.' },
+                            'commitment-avoidance': { 'losing-his-interest': 'His vagueness isn\'t about you. The shift: can he answer the question? If not, that\'s the answer.', 'he-went-cold': 'His vagueness isn\'t about you. The shift: can he answer the question? If not, that\'s the answer.', 'not-enough': 'You are enough. The shift: his avoidance isn\'t about your worth. If he wanted to commit, he would.', 'losing-time': 'Waiting for clarity costs time. The shift: vagueness is the answer. Act on the clarity you already have.', 'losing-him-to-other': 'The question isn\'t who else—it\'s whether he\'s choosing you. The shift: his vagueness reveals it.', 'becoming-invisible': 'Vagueness keeps you in limbo—visible enough to stay, not chosen enough to matter. The shift: you deserve a clear answer.', 'feel-invisible': 'Vagueness keeps you in limbo—visible enough to stay, not chosen enough to matter. The shift: you deserve a clear answer.', 'him-never-committing': 'You named the fear. The shift: can he answer the question? If not, that\'s the answer. Your patience may be enabling his avoidance.', 'keeping-me-option': 'You named the challenge. The shift: can he answer the question? If not, that\'s the answer. Your patience may be enabling his avoidance.' },
+                            'emotional-distance': { 'losing-his-interest': 'His distance isn\'t about your worth. The shift: is he capable of the depth you want? If not, that\'s a compatibility answer.', 'he-went-cold': 'His distance isn\'t about your worth. The shift: is he capable of the depth you want? If not, that\'s a compatibility answer.', 'not-enough': 'You are enough. The shift: his wall isn\'t about you. It\'s his capacity. You can only decide if you can live with it.', 'losing-time': 'Trying to bridge his wall costs time. The shift: is he capable of meeting you? If not, that\'s your answer.', 'losing-him-to-other': 'The question isn\'t who else—it\'s whether he can meet you. The shift: his capacity is the answer.', 'becoming-invisible': 'His wall makes you feel unseen. The shift: you\'re not asking for too much. He may not be capable of giving it.', 'feel-invisible': 'His wall makes you feel unseen. The shift: you\'re not asking for too much. He may not be capable of giving it.', 'emotionally-neglected': 'You named the fear. The shift: you\'re not asking for too much. The question is whether he can meet you—and if you can live with it if he can\'t.' },
+                            'mixed-signals-loop': { 'losing-his-interest': 'Mixed signals keep you guessing—that\'s the trap. The shift: trust his actions, not his words.', 'he-went-cold': 'Mixed signals keep you guessing—that\'s the trap. The shift: trust his actions, not his words.', 'not-enough': 'You are enough. The shift: his inconsistency isn\'t about your worth. His actions are the truth.', 'losing-time': 'Decoding him costs time. The shift: trust his actions. If they don\'t match his words, the actions are the answer.', 'losing-him-to-other': 'The question isn\'t who else—it\'s what his actions show. The shift: when words and actions don\'t match, trust the actions.', 'becoming-invisible': 'Mixed signals keep you analyzing instead of deciding. The shift: his behavior shows whether he sees you. Trust it.', 'feel-invisible': 'Mixed signals keep you analyzing instead of deciding. The shift: his behavior shows whether he sees you. Trust it.', 'him-never-committing': 'Words without action are vagueness. The shift: what does he do? Not what does he say. That\'s your answer.', 'keeping-me-option': 'Words without action are vagueness. The shift: what does he do? Not what does he say. That\'s your answer.' },
+                            'one-sided-investment': { 'losing-his-interest': 'His effort shows his interest. The shift: match his energy. See if he steps up—or if the relationship was only working because you were carrying it.', 'he-went-cold': 'His effort shows his interest. The shift: match his energy. See if he steps up—or if the relationship was only working because you were carrying it.', 'not-enough': 'You are enough. The shift: the question isn\'t your worth—it\'s his effort. If you\'re doing most of the work, his investment is the answer.', 'losing-time': 'Carrying the relationship costs time. The shift: pull back. See if he steps up. If not, that\'s your answer.', 'losing-him-to-other': 'The question isn\'t who else—it\'s whether he\'ll match your effort. The shift: pull back. His response reveals it.', 'becoming-invisible': 'Overgiving can make you invisible—he takes without seeing. The shift: match his energy. Your pullback reveals whether he sees you.', 'feel-invisible': 'Overgiving can make you invisible—he takes without seeing. The shift: match his energy. Your pullback reveals whether he sees you.', 'him-never-committing': 'One-sided effort rarely leads to commitment. The shift: match his energy. If he doesn\'t step up, that\'s your answer.', 'keeping-me-option': 'One-sided effort rarely leads to commitment. The shift: match his energy. If he doesn\'t step up, that\'s your answer.' }
+                        };
+                        const patternCures = CURE_BY_PATTERN_FEAR[patternId] || {};
+                        let cureLine = (fearVal && patternCures[fearVal]) ? patternCures[fearVal] : (painVal && patternCures[painVal]) ? patternCures[painVal] : null;
+                        if (!cureLine) {
+                            const FALLBACK_CURES = {
+                                'hot-cold-cycle': 'Trust his actions. Get one direct answer—then act on it. If nothing changes, you have your answer.',
+                                'breadcrumb-dynamic': 'Am I getting what I need, or just enough to stay? If it\'s the latter, that\'s your answer.',
+                                'commitment-avoidance': 'Can he answer the question? If not, that\'s the answer. Vagueness is a choice.',
+                                'emotional-distance': 'Is he capable of the depth I want? If not, that\'s a compatibility answer—not a you problem.',
+                                'mixed-signals-loop': 'Trust his actions, not his words. If they don\'t match, the actions are the truth.',
+                                'one-sided-investment': 'Match his energy. Pull back. See if he steps up—or if the relationship only worked because you were carrying it.'
+                            };
+                            cureLine = FALLBACK_CURES[patternId] || null;
+                        }
+                        if (!cureLine) return '';
+                        return `<div class="results-core-insight-cure"><p class="content-text results-core-insight-text" style="line-height: 1.7; margin-bottom: 0.5rem;">${painLabel && fearLabel ? `Your challenge: ${painLabel}. Your fear: ${fearLabel}.` : painLabel ? `Your challenge: ${painLabel}.` : `Your fear: ${fearLabel}.`}</p><p class="content-text" style="color: #f10000; font-weight: 600; line-height: 1.7; margin: 0;">${cureLine}</p></div>`;
+                    })() : ''}
                 </div>
                 
-                ${repetition ? `
-                <div class="results-dark-bg-content results-bento-card">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">The Pattern Across Your Relationships</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 1rem;">${repetition}</p>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7;">${repetitionBridging}</p>
-                </div>
-                ` : ''}
+                <!-- Story of Him and Her — personalized narrative -->
+                ${getHimHerStoryHTML()}
                 
-                <!-- 6. Why This Pattern Keeps Happening — And Why It's Hard To Leave (merged) -->
-                <div class="results-dark-bg-content results-bento-card results-bento-card-emphasis">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Why This Pattern Keeps Happening — And Why It's Hard To Leave</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${pattern.coreBelief ? '1rem' : '0'};">${pattern.whyYouStay}</p>
-                    ${pattern.coreBelief ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${pattern.coreBeliefReframe ? '1rem' : '0'};">Underneath it: you believe <em>"${pattern.coreBelief}"</em> That belief drives your behavior—it's why you ${pattern.behaviorDriver || 'chase, wait, or try harder'}.</p>` : ''}
-                    ${pattern.coreBeliefReframe ? `<p class="content-text" style="color: #f10000; font-weight: 600; line-height: 1.7;">The reframe: ${pattern.coreBeliefReframe}</p>` : ''}
-                </div>
-                
-                <!-- 7. What His Behavior Actually Means -->
-                <div class="results-dark-bg-content results-bento-card">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">What His Behavior Actually Means</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7;">${pattern.whatItMeans}</p>
-                </div>
-                
-                <!-- 8. Where This Relationship Is Likely Heading -->
-                ${pattern.ifNothingChanges && pattern.ifNothingChanges.length ? `
-                <div class="results-dark-bg-content results-bento-card">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Where This Relationship Is Likely Heading</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-bottom: 1rem;">If nothing changes, in dynamics like this:</p>
-                    <ul style="margin: 0; padding-left: 1.5rem; color: rgba(255, 255, 255, 0.95); line-height: 1.8;">
-                        ${pattern.ifNothingChanges.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-top: 1rem; margin-bottom: ${worryInsight ? '1rem' : '0'};">This pattern can last months or even years without resolution. The real risk is time—many people stay waiting for more that never arrives.</p>
-                    ${worryInsight ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: 0;">${worryInsight}</p>` : ''}
-                </div>
-                ` : ''}
-                
-                <!-- 9. Signs You're In This Pattern -->
-                ${pattern.signsYoureInIt && pattern.signsYoureInIt.length ? `
-                <div class="results-dark-bg-content results-bento-card">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Signs You're In This Pattern</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin-bottom: 1rem;">You're likely in this pattern if:</p>
-                    <ul style="margin: 0; padding-left: 1.5rem; color: rgba(255, 255, 255, 0.95); line-height: 1.8;">
-                        ${pattern.signsYoureInIt.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
-                </div>
-                ` : ''}
-                
-                <!-- 10. Your Strength -->
-                <div class="results-dark-bg-content results-bento-card">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Your Strength</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7;">${pattern.strengths}</p>
+                <!-- Q&A Accordion: Questions you may have about all this -->
+                <div class="results-qa-accordion">
+                    <h3 class="about-pattern-title" style="margin-bottom: 1.25rem; font-size: 1.15rem;">Your questions, answered</h3>
+                    ${(function() {
+                        const qItems = [];
+                        if (statusInsight && (relationshipStatus === 'situationship' || relationshipStatus === 'emotionally-invested')) qItems.push({ q: relationshipStatus === 'situationship' ? 'Why do situationships hurt so much?' : 'Is this relationship anxiety or something else?', a: statusInsight });
+                        if (statusInsight && (relationshipStatus === 'recently-ended' || relationshipStatus === 'not-in-one')) qItems.push({ q: relationshipStatus === 'recently-ended' ? 'How do I make sense of what happened?' : 'What do I need to know when I meet someone new?', a: statusInsight });
+                        if (showDuration && durationLabel) qItems.push({ q: 'How long is too long to wait?', a: `You've been in this dynamic for ${durationLabel}. Research and experience show: if nothing has shifted by now, it usually won't. The pattern has had time to change. Clarity now saves years.` });
+                        const WILL_HE_CHANGE = { 'hot-cold-cycle': 'Change requires sustained motivation. In this pattern, he has no incentive—the cycle works for him. Your pullback is the only real test: see if he steps up when you stop chasing.', 'breadcrumb-dynamic': 'Crumbs rarely become a meal. He\'s had time to give more. If he wanted to, he would have by now. The question: Am I getting what I need, or just enough to stay?', 'commitment-avoidance': 'If he wanted to commit, he would have by now. Vagueness is a choice—not confusion. Your patience may be enabling his avoidance.', 'emotional-distance': 'Attachment research shows: avoidant partners rarely change without sustained motivation. His capacity for depth is his. You can only decide if you can live with what he offers.', 'mixed-signals-loop': 'When words and actions don\'t match, trust the actions. Behavior predicts future behavior. If he wanted to show up consistently, he would.', 'one-sided-investment': 'Reciprocity research shows: imbalance rarely corrects itself. He has no incentive to change when you\'re carrying the relationship. Your pullback is the experiment.' };
+                        qItems.push({ q: 'Will he change?', a: (WILL_HE_CHANGE[patternId] || 'Change requires sustained motivation. In dynamics like this, the pattern usually persists unless something shifts. The real question: What am I willing to accept if nothing changes?') + (showDuration ? ' You\'ve been in this long enough to know.' : '') });
+                        if (patternId === 'hot-cold-cycle') qItems.push({ q: 'Why does he keep coming back?', a: 'He comes back when he wants connection—on his terms. The cycle works for him: he gets closeness when he wants it, space when he doesn\'t. Your availability is the reward. That\'s not love—it\'s the pattern. The question: Is that enough for you?' });
+                        if (patternId === 'breadcrumb-dynamic') qItems.push({ q: 'Is he breadcrumbing me?', a: 'Yes. Breadcrumbing is giving just enough to keep you interested—texts, plans, affection—without real investment. You\'re waiting for crumbs to become a meal. They won\'t. The question: Am I getting what I need, or just enough to stay?' });
+                        if (patternId === 'one-sided-investment') qItems.push({ q: 'How do I stop overgiving?', a: 'Match his energy. Pull back. See if he steps up—or if the relationship was only working because you were carrying it. Reciprocity research shows: imbalance rarely corrects itself. Your over-investment doesn\'t create his. Your pullback is the experiment.' });
+                        qItems.push({ q: 'Am I being too needy?', a: 'You\'re not needy. You\'re not overthinking. Wanting clarity and consistency is normal. These dynamics are designed to make you feel that way—they keep you guessing so you stay invested. The confusion is the pattern, not a character flaw.' });
+                        let doesHeLikeMeA = doesHeLikeMe;
+                        if (situationshipModifier && window.situationshipModifier) doesHeLikeMeA = 'In a situationship, his behavior is the answer. If he wanted to define it, he would have by now. ' + doesHeLikeMe;
+                        else if (fearVal === 'losing-his-interest') doesHeLikeMeA = doesHeLikeMe + ' The question isn\'t "Am I losing him?"—it\'s "What does his behavior actually mean?" His interest shows up in his actions.';
+                        else if (fearVal === 'not-enough') doesHeLikeMeA = doesHeLikeMe + ' The question isn\'t "Am I enough?"—it\'s "Is he showing up enough for what I need?" You were enough before anyone chose you.';
+                        else if (fearVal === 'losing-him-to-other') doesHeLikeMeA = doesHeLikeMe + ' The question isn\'t "Is he interested in someone else?"—it\'s "Is he choosing me now?" His behavior reveals it.';
+                        else if ((whoWantsMoreSub === 'she-wants-more' || whoWantsMoreSub === 'he-holds-cards') && doesHeLikeMeA) doesHeLikeMeA = 'You said you want more clarity than he does. That imbalance is the pattern. ' + doesHeLikeMeA;
+                        qItems.push({ q: 'Does he actually like me?', a: doesHeLikeMeA });
+                        qItems.push({ q: 'Why does he act this way?', a: whyHeActsThisWay });
+                        qItems.push({ q: 'Why do I stay?', a: (herResponse.description + (combinationInsight ? ' ' + combinationInsight : '') + ' ') + (repetition ? repetition + ' ' + repetitionBridging + ' ' : '') + pattern.whyYouStay + (pattern.coreBelief ? ' Underneath: you believe "' + pattern.coreBelief + '"—that drives your behavior. The reframe: ' + (pattern.coreBeliefReframe || '') : '') });
+                        if (pattern.ifNothingChanges && pattern.ifNothingChanges.length) qItems.push({ q: 'Where is this heading if nothing changes?', a: 'In dynamics like this: ' + pattern.ifNothingChanges.join('; ') + '. This pattern can last months or even years. The real risk is time—many people stay waiting for more that never arrives.' + (fearVal === 'losing-time' ? ' If you\'re asking where this is heading—you already know. Clarity now saves years.' : fearVal === 'him-never-committing' ? ' In this pattern, vagueness is the answer. If he wanted to commit, he would.' : '') });
+                        const NEXT_STEP_BY_FEAR = { 'losing-his-interest': 'Stop chasing for proof. Get one direct answer—then act on it.', 'not-enough': 'The question isn\'t "Am I enough?"—it\'s "Is he showing up enough?" Decide what you need.', 'losing-time': 'Set a deadline. If nothing changes, you have your answer. Clarity now saves years.', 'losing-him-to-other': 'Trust his actions. Is he choosing you now? If his behavior doesn\'t show it, that\'s your answer.', 'becoming-invisible': 'You deserve to be a priority. If his actions don\'t show he sees you, that\'s your answer.', 'him-never-committing': 'Ask once, clearly: "Can you answer the question?" If not, that\'s the answer.' };
+                        const NEXT_STEP_BY_PAIN = { 'he-went-cold': 'Get one direct answer. His behavior shows his interest—not your worth.', 'keeping-me-option': 'Ask once: "Can you give me more?" If he can\'t or won\'t, that\'s your answer.', 'feel-invisible': 'Match his energy. Your pullback reveals whether he sees you.' };
+                        const step = (fearVal && NEXT_STEP_BY_FEAR[fearVal]) ? NEXT_STEP_BY_FEAR[fearVal] : (painVal && NEXT_STEP_BY_PAIN[painVal]) ? NEXT_STEP_BY_PAIN[painVal] : pattern.nextStep;
+                        const stepWithWatch = step + (pattern.watchFor ? ' ' + pattern.strengths + ' ' + pattern.watchFor + (pattern.watchForInstead ? ' Instead: ' + pattern.watchForInstead : '') : '');
+                        qItems.push({ q: 'What\'s my next step?', a: stepWithWatch });
+                        getRelationshipDynamicQuestionsItems(painVal, fearVal, relationshipStatus, attractionWorry).forEach(item => { if (!qItems.some(x => x.q === item.q)) qItems.push(item); });
+                        qItems.push({ q: 'Should I leave?', a: 'The question isn\'t "Should I leave?"—it\'s "What am I willing to accept?" If nothing changes, you have your answer. Decide what you\'ll accept. Then act on it.' });
+                        return qItems.slice(0, 18).map(item => `
+                    <details class="results-qa-details">
+                        <summary class="results-qa-summary">${item.q}</summary>
+                        <div class="results-qa-answer"><p class="content-text results-qa-answer-text" style="line-height: 1.7; margin: 0;">${item.a}</p></div>
+                    </details>`).join('');
+                    })()}
                 </div>
                 
-                <!-- 11. What To Watch For -->
-                <div class="results-dark-bg-content results-bento-card">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">What To Watch For</h3>
-                    <p class="content-text" style="color: rgba(255, 255, 255, 0.95); line-height: 1.7; margin-bottom: ${pattern.watchForInstead ? '1rem' : '0'};">${pattern.watchFor}</p>
-                    ${pattern.watchForInstead ? `<p class="content-text" style="color: #f10000; font-weight: 600; line-height: 1.7;">Instead: ${pattern.watchForInstead}</p>` : ''}
-                </div>
-                
-                <!-- 12. Your Next Step -->
-                <div class="results-dark-bg-content results-bento-card results-bento-card-cta">
-                    <h3 class="about-pattern-title" style="margin-bottom: 1rem;">Your Next Step</h3>
-                    <p class="content-text" style="color: #f10000; font-weight: 600; margin-bottom: ${(painLabel || fearLabel) ? '0.75rem' : '0.5rem'};">${pattern.nextStep}</p>
-                    ${(painLabel || fearLabel) ? `<p class="content-text" style="color: rgba(255, 255, 255, 0.9); line-height: 1.7; margin-bottom: 0.75rem;">${painLabel && fearLabel ? `Given that your biggest challenge is ${painLabel} and your biggest fear is ${fearLabel}—that's exactly why this step matters more than staying stuck.` : painLabel ? `Given that your biggest challenge is ${painLabel}—that's exactly why this step matters more than staying stuck.` : `Given that your biggest fear is ${fearLabel}—that's exactly why this step matters more than staying stuck.`}</p>` : ''}
+                <div class="results-dark-bg-content results-bento-card results-bento-card-full-width results-bento-card-cta">
                     <p class="content-text" style="color: rgba(255, 255, 255, 0.9); line-height: 1.7; margin-bottom: 0;">Want clarity on your specific situation? See options below.</p>
                 </div>
                 
-                <!-- 13. Questions You Want Answered - Personalized Q&A by pain, fear, status -->
-                ${getRelationshipDynamicQuestionsAnswered(pattern, painVal, fearVal, relationshipStatus, attractionWorry, painLabel, fearLabel)}
-                
-                <!-- Sticky CTA Bar (appears on scroll) - scrolls to paid offers -->
-                <div class="results-sticky-cta-bar" id="results-sticky-cta-bar" aria-hidden="true">
-                    <span class="results-sticky-cta-text">What about your situation?</span>
-                    <button type="button" class="results-sticky-cta-btn" id="results-sticky-cta-btn" aria-label="Scroll to situation decoding options">Get it decoded →</button>
-                </div>
-                
-                <!-- Paid Offer Section - Bento Conversion Design -->
+                <!-- Paid Offer Section - Personalized to user's pattern, pain, fear, status -->
                 <div class="results-cta-paid-section" id="results-cta-paid-section">
                     <div class="results-cta-paid-inner">
-                        <h2 class="results-cta-headline">The Quiz Revealed The Pattern.<br>But Your Situation Needs A Real Answer.</h2>
-                        <div class="results-cta-intro">
-                            <p class="results-cta-intro-text">The quiz identifies the pattern. But your situation has details that change what it actually means.</p>
-                            <p class="results-cta-intro-label">Things like:</p>
-                            <ul class="results-cta-intro-list">
-                                <li>how he communicates</li>
-                                <li>whether his actions match his words</li>
-                                <li>how he responds when you ask for clarity</li>
-                                <li>how long the pattern has been happening</li>
-                            </ul>
-                            <p class="results-cta-intro-close">Those signals reveal where this relationship is likely heading.</p>
-                        </div>
-                        <p class="results-cta-pain-mirror">Most women who take this quiz want clarity about one thing: <strong>Is this relationship actually going somewhere — or not?</strong></p>
-                        <div class="results-cta-offers-grid results-cta-offers-bento">
-                        <div class="results-cta-offer-card results-cta-offer-standard">
-                            <h3 class="results-cta-offer-title">Personal Relationship Analysis</h3>
-                            <p class="results-cta-offer-lead">Get a clear answer about your relationship.</p>
-                            <p class="results-cta-offer-spec">Personal voice analysis delivered within 24–48 hours</p>
-                            <p class="results-cta-offer-desc">Submit your story and receive a personalized voice breakdown explaining:</p>
-                            <ul class="results-cta-offer-includes">
-                                <li><i class="fas fa-check" aria-hidden="true"></i> what his behavior likely means</li>
-                                <li><i class="fas fa-check" aria-hidden="true"></i> the pattern happening between you</li>
-                                <li><i class="fas fa-check" aria-hidden="true"></i> where this relationship may actually be heading</li>
-                                <li><i class="fas fa-check" aria-hidden="true"></i> what your next move should be</li>
-                            </ul>
-                            <div class="results-cta-offer-price-wrap">
-                                <span class="results-cta-price">$39</span>
-                                <span class="results-cta-price-note">one-time</span>
-                                <span class="results-cta-offer-availability">25 analysis spots available this week.</span>
+                        ${getPersonalizedCTASection(pattern, painLabel, fearLabel, statusLabel, contextLine, relationshipStatus)}
+                        <div class="results-cta-offers-grid results-cta-offers-single">
+                        <div class="results-cta-offer-card results-cta-offer-premium results-cta-offer-clarity">
+                            <div class="results-cta-offer-clarity-inner">
+                                <div class="results-cta-offer-clarity-left">
+                                    <p class="results-cta-offer-bridge">You've seen your pattern. Now get clarity on <em>your</em> situation.</p>
+                                    <h3 class="results-cta-offer-title">Get Clear Answers About Your Relationship</h3>
+                                    <div class="results-cta-offer-price-block">
+                                        <span class="results-cta-offer-price">$150</span>
+                                        <span class="results-cta-offer-price-note">per session</span>
+                                        <p class="results-cta-offer-tagline-inline">Stop overthinking. Know exactly where you stand.</p>
+                                    </div>
+                                    <p class="results-cta-offer-spec">Not therapy. Not coaching.</p>
+                                    <p class="results-cta-offer-how">Book a time → 40-min private call → Leave with clarity.</p>
+                                    <p class="results-cta-offer-scarcity">Limited spots each week.</p>
+                                    <a href="${(window.PATTERN_RESET_CTA_URLS && window.PATTERN_RESET_CTA_URLS.relationshipBreakdown) || (window.PATTERN_RESET_CTA_URLS && window.PATTERN_RESET_CTA_URLS.liveSession) || '#'}" class="results-cta-btn results-cta-btn-primary results-cta-btn-clarity">GET CLEAR ANSWERS</a>
+                                    <p class="results-cta-offer-guarantee">Not satisfied? We'll make it right.</p>
+                                </div>
+                                <div class="results-cta-offer-clarity-right">
+                                    <div class="results-cta-offer-about">
+                                        <img src="images/founder.png" alt="Liam, founder of Pattern Reset" class="results-cta-offer-founder-photo">
+                                        <div class="results-cta-offer-about-content">
+                                            <div class="results-cta-offer-about-header">
+                                                <span class="results-cta-offer-about-name">1:1 with Liam</span>
+                                                <span class="results-cta-offer-about-role">Founder of Pattern Reset</span>
+                                            </div>
+                                            <p class="results-cta-offer-about-bio">I created the Pattern Analysis because women kept asking "Is it me or is it him?"—and nobody was helping them decode the patterns behind men's behavior.</p>
+                                            <p class="results-cta-offer-about-bio">My edge: male behavioral insight and pattern recognition. So you stop wasting years—one focused conversation at a time. A call gets you answers for <em>your</em> situation—not generic content.</p>
+                                            <a href="https://www.tiktok.com/@liamsaysit" target="_blank" rel="noopener noreferrer" class="results-cta-offer-tiktok-link">@liamsaysit</a>
+                                        </div>
+                                    </div>
+                                    <ul class="results-cta-offer-benefits">
+                                        <li><i class="fas fa-check" aria-hidden="true"></i> What his behavior actually means (not what he says)</li>
+                                        <li><i class="fas fa-check" aria-hidden="true"></i> Whether this is going somewhere — or not</li>
+                                        <li><i class="fas fa-check" aria-hidden="true"></i> The feelings you can't quite name—and what they mean</li>
+                                        <li><i class="fas fa-check" aria-hidden="true"></i> What to do next — clearly and confidently</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <a href="${(window.PATTERN_RESET_CTA_URLS && window.PATTERN_RESET_CTA_URLS.voiceBreakdown) || '#'}" class="results-cta-btn results-cta-btn-secondary">Get My Analysis →</a>
-                        </div>
-                        <div class="results-cta-offer-card results-cta-offer-premium">
-                            <span class="results-cta-offer-badge">Recommended</span>
-                            <h3 class="results-cta-offer-title">Private Relationship Session</h3>
-                            <p class="results-cta-offer-spec">30-minute private call</p>
-                            <p class="results-cta-offer-lead">A private session where we decode your situation together.</p>
-                            <p class="results-cta-offer-desc">You'll get:</p>
-                            <ul class="results-cta-offer-includes">
-                                <li><i class="fas fa-check" aria-hidden="true"></i> real-time clarity about what's happening</li>
-                                <li><i class="fas fa-check" aria-hidden="true"></i> the pattern driving the relationship</li>
-                                <li><i class="fas fa-check" aria-hidden="true"></i> answers to your specific questions</li>
-                                <li><i class="fas fa-check" aria-hidden="true"></i> clear next steps for what to do next</li>
-                            </ul>
-                            <div class="results-cta-offer-price-wrap">
-                                <span class="results-cta-price">$150</span>
-                                <span class="results-cta-price-note">per session</span>
-                                <span class="results-cta-offer-availability">15 sessions available this week.</span>
-                            </div>
-                            <a href="${(window.PATTERN_RESET_CTA_URLS && window.PATTERN_RESET_CTA_URLS.liveSession) || '#'}" class="results-cta-btn results-cta-btn-primary">Book My Session →</a>
                         </div>
                     </div>
                     </div>
@@ -5992,6 +6288,12 @@
     function getPatternPainOptions(patternName) {
         var name = (patternName === 'The Guarded One' || patternName === 'Guarded One') ? 'Withdrawer' : (patternName || 'Fixer');
         var opts = {
+            'The Hot-and-Cold Cycle': ['Chasing when he pulls away', 'Never knowing where you stand', 'Anxiety from the inconsistency', 'Relief when he returns—then the cycle repeats', 'Exhausted from trying to understand'],
+            'The Breadcrumb Dynamic': ['Accepting crumbs instead of a meal', 'Rationalizing "at least he\'s trying"', 'Waiting for more that never arrives', 'Lowering expectations to fit what he offers', 'Hope that keeps you stuck'],
+            'The Commitment Avoidance': ['Waiting for clarity that never comes', 'Staying in "almost"', 'Future that stays vague', 'Patience that enables his avoidance', 'Lowering the bar to avoid the question'],
+            'The Emotional Wall': ['Trying to get closer and feeling rejected', 'Exhausting yourself bridging a gap he won\'t close', 'Taking his distance personally', 'Waiting for him to open up', 'Feeling shut out'],
+            'The Mixed Signals Trap': ['Decoding his words instead of deciding', 'Replaying conversations to understand', 'Trust erosion from inconsistency', 'Giving him the benefit of the doubt', 'Confusion that keeps you analyzing'],
+            'The One-Sided Investment': ['Carrying the relationship', 'Overgiving and feeling depleted', 'Hoping he\'ll step up when he hasn\'t', 'Confusing your effort with his commitment', 'Exhausted from doing most of the work'],
             'Fixer': ['Fixing everyone else\'s problems', 'Taking on too much', 'Burnout from overdoing', 'Can\'t let others solve their own issues', 'Exhausted from always being in charge'],
             'Perfectionist': ['All-or-nothing thinking', 'Paralysis from perfectionism', 'Giving up when I "fail"', 'Rigid routines that don\'t stick', 'Fear of making mistakes'],
             'Pleaser': ['Saying yes when I mean no', 'Putting others first always', 'Losing myself in relationships', 'Resentment from people-pleasing', 'Exhausted from absorbing others\' needs'],

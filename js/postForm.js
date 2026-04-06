@@ -117,7 +117,7 @@ class PostForm {
             // MVP: Single static prompt when prompts are hidden
             const mvpPrompt = document.createElement('div');
             mvpPrompt.className = 'letitout-mvp-prompt';
-            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">What's happening in your relationship?</span><span class=\"letitout-mvp-subtitle\">Situation · Story · Confession</span>";
+            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Say What You Can't Say</span><span class=\"letitout-mvp-subtitle\">Anonymous. Get it off your chest.</span>";
             formContent.appendChild(mvpPrompt);
         }
 
@@ -126,7 +126,7 @@ class PostForm {
         textareaWrapper.className = 'textarea-wrapper';
         
         const textarea = document.createElement('textarea');
-        textarea.placeholder = "Example: I've been dating someone for 6 months but he still won't commit…";
+        textarea.placeholder = "What\u2019s one thing you\u2019ve been holding in?";
         textarea.maxLength = 500;
         textarea.required = true;
         
@@ -179,6 +179,11 @@ class PostForm {
         this.selectedCity = null;
         this.customCity = null;
         this.isCustomCity = false;
+        this.selectedSituation = null;
+        this.situationList = [
+            'Dating', 'Situationship', 'Talking Stage', 'Relationship', 'Breakup', 'No Contact',
+            'Ex', 'Marriage', 'Family', 'Friendship', 'Work', 'Self', 'Trauma', 'Healing'
+        ];
         this.cityList = [
             'Atlanta, GA', 'Austin, TX', 'Bay Area, CA', 'Boston, MA', 'Chicago, IL', 'Denver, CO',
             'Houston, TX', 'Las Vegas, NV', 'Los Angeles, CA', 'Miami, FL', 'Minneapolis, MN',
@@ -215,6 +220,24 @@ class PostForm {
         emotionBtn.addEventListener('mouseup', function() { this.blur(); });
         emotionBtn.addEventListener('touchend', function() { this.blur(); });
 
+        // --- SITUATION TAG BUTTON (Optional) ---
+        const situationBtn = document.createElement('button');
+        situationBtn.type = 'button';
+        situationBtn.className = 'letitout-situation-btn';
+        situationBtn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Tag situation
+        `;
+        situationBtn.onclick = () => {
+            this.openSituationModal();
+            this.saveDraft();
+        };
+        situationBtn.addEventListener('mouseup', function() { this.blur(); });
+        situationBtn.addEventListener('touchend', function() { this.blur(); });
+
         // --- CITY TAG BUTTON ---
         const cityBtn = document.createElement('button');
         cityBtn.type = 'button';
@@ -232,6 +255,11 @@ class PostForm {
         this.selectedTagsDisplay = document.createElement('div');
         this.selectedTagsDisplay.className = 'letitout-selected-tags';
 
+        // Selected situation display
+        this.selectedSituationDisplay = document.createElement('div');
+        this.selectedSituationDisplay.className = 'letitout-selected-situation';
+        this.updateSelectedSituation();
+
         // Selected city display
         this.selectedCityDisplay = document.createElement('div');
         this.selectedCityDisplay.className = 'letitout-selected-city';
@@ -244,9 +272,11 @@ class PostForm {
 
         // Assemble emotion section
         emotionBtnRow.appendChild(emotionBtn);
+        emotionBtnRow.appendChild(situationBtn);
         emotionBtnRow.appendChild(cityBtn);
         emotionSection.appendChild(emotionBtnRow);
         emotionSection.appendChild(this.selectedTagsDisplay);
+        emotionSection.appendChild(this.selectedSituationDisplay);
         emotionSection.appendChild(this.selectedCityDisplay);
         emotionSection.appendChild(this.emotionError);
         formContent.appendChild(emotionSection);
@@ -436,7 +466,8 @@ class PostForm {
                 content,
                 this.selectedEmotions.join(', '),
                 this.selectedCity,
-                this.isCustomCity
+                this.isCustomCity,
+                this.selectedSituation
             );
             newPostId = post.id;
 
@@ -447,10 +478,12 @@ class PostForm {
             this.selectedCity = null;
             this.customCity = null;
             this.isCustomCity = false;
+            this.selectedSituation = null;
             this.updateSelectedCity();
+            this.updateSelectedSituation();
             this.clearDraft(); // Clear draft on successful post
             if (submitButton) {
-                submitButton.textContent = 'Share Anonymously';
+                submitButton.textContent = 'Post Anonymously';
                 submitButton.disabled = false;
             }
 
@@ -460,7 +493,7 @@ class PostForm {
             window.LetItOutUtils.showError('Error posting. Please try again.');
             if (submitButton) {
                 submitButton.disabled = false;
-                submitButton.textContent = 'Share Anonymously';
+                submitButton.textContent = 'Post Anonymously';
             }
         }
     }
@@ -487,7 +520,7 @@ class PostForm {
             </div>
             <div class="letitout-confirmation-funnel">
               <p class="letitout-confirmation-funnel-text">Why does this keep happening in your relationships?</p>
-              <a href="index.html" class="letitout-confirmation-cta" id="confirmation-quiz-cta">Discover Your Pattern →</a>
+              <a href="index.html#quiz-section" class="letitout-confirmation-cta" id="confirmation-quiz-cta">Show Me My Pattern</a>
             </div>
           </div>
         `;
@@ -506,7 +539,7 @@ class PostForm {
                 e.preventDefault();
                 clearTimeout(redirectTimeout);
                 this.hideConfirmationModal();
-                window.location.href = 'index.html';
+                window.location.href = 'index.html#quiz-section';
             });
         }
     }
@@ -549,17 +582,17 @@ class PostForm {
             const submitButton = document.createElement('button');
             submitButton.type = 'button';
             submitButton.className = 'letitout-submit-btn';
-            submitButton.textContent = 'Share Anonymously';
+            submitButton.textContent = 'Post Anonymously';
             submitButton.onclick = (e) => {
                 e.preventDefault();
                 this.form.requestSubmit();
             };
             this.buttonContainer.appendChild(submitButton);
 
-            // Add Pattern Quiz funnel (matching copy + CTA link)
+            // Add Pattern Analysis funnel (matching copy + CTA link)
             const quizFunnel = document.createElement('div');
             quizFunnel.className = 'letitout-quiz-funnel';
-            quizFunnel.innerHTML = '<p class="letitout-quiz-funnel-text">Why does this keep happening in your relationships?</p><a href="index.html" class="letitout-quiz-funnel-cta">Discover Your Pattern →</a>';
+            quizFunnel.innerHTML = '<p class="letitout-quiz-funnel-text">Why does this keep happening in your relationships?</p><a href="index.html#quiz-section" class="letitout-quiz-funnel-cta">Show Me My Pattern</a>';
             this.buttonContainer.appendChild(quizFunnel);
 
             // Add "Need Support" button
@@ -652,20 +685,26 @@ class PostForm {
                 timestamp = formattedDate;
             }
             
-            // Render emotion tags if present, using WallFeed markup
-            let emotionsHtml = '';
-            if (Array.isArray(post.emotions) && post.emotions.length) {
-                emotionsHtml = `<div class="post-emotions">${post.emotions.map(e => `<span class="emotion-tag">${e}</span>`).join(' ')}</div>`;
-            } else if (post.emotion && typeof post.emotion === 'string') {
-                // If emotion is a comma-separated string, split and render each as a tag
-                const emotionArr = post.emotion.includes(',') ? post.emotion.split(',').map(e => e.trim()) : [post.emotion];
-                emotionsHtml = `<div class="post-emotions">${emotionArr.map(e => `<span class="emotion-tag">${e}</span>`).join(' ')}</div>`;
+            // Render situation + emotion tags (same markup as wall feed)
+            let tagsHtml = '';
+            const hasSituation = post.situation && typeof post.situation === 'string';
+            const emotionItems = Array.isArray(post.emotions) && post.emotions.length
+                ? post.emotions
+                : (post.emotion && typeof post.emotion === 'string')
+                    ? (post.emotion.includes(',') ? post.emotion.split(',').map(e => e.trim()) : [post.emotion])
+                    : [];
+            if (hasSituation || emotionItems.length) {
+                const situationSpan = hasSituation
+                    ? `<span class="situation-tag situation-tag-small">${post.situation}</span>`
+                    : '';
+                const emotionSpans = emotionItems.map(e => `<span class="emotion-tag emotion-tag-small">${e}</span>`).join('');
+                tagsHtml = `<div class="post-emotion-tags">${situationSpan}${emotionSpans}</div>`;
             }
             
             // Generate a unique id for the post card
             const postId = post.id || Math.random().toString(36).substr(2, 9);
             html += `<div class="my-post-card" data-post-id="${postId}">
-                ${emotionsHtml}
+                ${tagsHtml}
                 <div class="my-post-message" data-expanded="false">${post.content}</div>
                 <a href="#" class="my-post-read-more" style="display:none;">Read more</a>
                 <div class="my-post-timestamp" style="font-size:0.97rem;color:#888;margin-top:0.3rem;font-weight:400;letter-spacing:0.01em;line-height:1.4;">${timestamp}</div>
@@ -846,13 +885,20 @@ class PostForm {
             let postDate = post.timestamp?.toDate?.() || new Date(post.timestamp);
             const postTimestamp = !isNaN(postDate) ? postDate.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : '';
 
-            // Render emotion tags
-            let emotionsHtml = '';
-            if (Array.isArray(post.emotions) && post.emotions.length) {
-                emotionsHtml = `<div class="post-emotions">${post.emotions.map(e => `<span class="emotion-tag">${e}</span>`).join(' ')}</div>`;
-            } else if (post.emotion && typeof post.emotion === 'string') {
-                const emotionArr = post.emotion.includes(',') ? post.emotion.split(',').map(e => e.trim()) : [post.emotion];
-                emotionsHtml = `<div class="post-emotions">${emotionArr.map(e => `<span class="emotion-tag">${e}</span>`).join(' ')}</div>`;
+            // Render situation + emotion tags (same markup as wall feed)
+            let tagsHtml = '';
+            const hasSituation = post.situation && typeof post.situation === 'string';
+            const emotionItems = Array.isArray(post.emotions) && post.emotions.length
+                ? post.emotions
+                : (post.emotion && typeof post.emotion === 'string')
+                    ? (post.emotion.includes(',') ? post.emotion.split(',').map(e => e.trim()) : [post.emotion])
+                    : [];
+            if (hasSituation || emotionItems.length) {
+                const situationSpan = hasSituation
+                    ? `<span class="situation-tag situation-tag-small">${post.situation}</span>`
+                    : '';
+                const emotionSpans = emotionItems.map(e => `<span class="emotion-tag emotion-tag-small">${e}</span>`).join('');
+                tagsHtml = `<div class="post-emotion-tags">${situationSpan}${emotionSpans}</div>`;
             }
 
             // Render replies
@@ -879,7 +925,7 @@ class PostForm {
                 <div class="letitout-my-posts-title">Replies</div>
                 <div class="letitout-my-posts-content">
                     <div class="original-post-card">
-                        ${emotionsHtml}
+                        ${tagsHtml}
                         <div class="original-post-message">${post.content}</div>
                         <div class="original-post-timestamp">${postTimestamp}</div>
                     </div>
@@ -1212,6 +1258,24 @@ class PostForm {
         }
     }
 
+    updateSelectedSituation() {
+        this.selectedSituationDisplay.innerHTML = '';
+        if (this.selectedSituation) {
+            const tag = document.createElement('div');
+            tag.className = 'situation-tag';
+            tag.innerHTML = `
+                ${this.selectedSituation}
+                <span class="remove-tag">&times;</span>
+            `;
+            tag.querySelector('.remove-tag').onclick = () => {
+                this.selectedSituation = null;
+                this.updateSelectedSituation();
+                this.saveDraft();
+            };
+            this.selectedSituationDisplay.appendChild(tag);
+        }
+    }
+
     updateSelectedCity() {
         this.selectedCityDisplay.innerHTML = '';
         if (this.selectedCity) {
@@ -1230,6 +1294,71 @@ class PostForm {
             };
             this.selectedCityDisplay.appendChild(tag);
         }
+    }
+
+    openSituationModal() {
+        if (!this.situationModal) {
+            this.situationModal = document.createElement('div');
+            this.situationModal.className = 'letitout-situation-modal-overlay';
+            this.situationModal.innerHTML = `
+                <div class="letitout-situation-modal">
+                    <div class="letitout-situation-modal-header">
+                        <div class="letitout-situation-modal-title">Tag Situation (Optional)</div>
+                        <button class="letitout-situation-modal-close">&times;</button>
+                    </div>
+                    <div class="letitout-situation-modal-content"></div>
+                    <div class="letitout-situation-modal-footer">
+                        <button class="letitout-situation-modal-btn cancel">Cancel</button>
+                        <button class="letitout-situation-modal-btn done" disabled>Done</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(this.situationModal);
+        }
+        const modal = this.situationModal;
+        const content = modal.querySelector('.letitout-situation-modal-content');
+        const doneBtn = modal.querySelector('.letitout-situation-modal-btn.done');
+        const closeBtn = modal.querySelector('.letitout-situation-modal-close');
+        const cancelBtn = modal.querySelector('.letitout-situation-modal-btn.cancel');
+
+        content.innerHTML = '';
+        this.situationList.forEach(situation => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'situation-option-btn';
+            btn.textContent = situation;
+            if (this.selectedSituation === situation) btn.classList.add('selected');
+            btn.onclick = () => {
+                // Single select: toggle or select
+                content.querySelectorAll('.situation-option-btn').forEach(b => b.classList.remove('selected'));
+                if (this.selectedSituation === situation) {
+                    this.selectedSituation = null;
+                } else {
+                    this.selectedSituation = situation;
+                    btn.classList.add('selected');
+                }
+                doneBtn.disabled = false;
+            };
+            content.appendChild(btn);
+        });
+
+        doneBtn.disabled = false; /* Situation is optional - always allow Done to apply/close */
+
+        const closeModal = () => modal.classList.remove('visible');
+        closeBtn.onclick = () => {
+            closeModal();
+        };
+        cancelBtn.onclick = closeModal;
+        doneBtn.onclick = () => {
+            this.updateSelectedSituation();
+            this.saveDraft();
+            closeModal();
+        };
+        modal.onclick = (e) => {
+            if (e.target === modal) closeModal();
+        };
+
+        modal.classList.add('visible');
     }
 
     openCityModal() {
@@ -1344,6 +1473,7 @@ class PostForm {
             emotions: this.selectedEmotions,
             city: this.selectedCity,
             isCustomCity: this.isCustomCity,
+            situation: this.selectedSituation,
         };
         sessionStorage.setItem(this.draftKey, JSON.stringify(draft));
     }
@@ -1360,10 +1490,12 @@ class PostForm {
             this.selectedEmotions = draft.emotions || [];
             this.selectedCity = draft.city || null;
             this.isCustomCity = draft.isCustomCity || false;
+            this.selectedSituation = draft.situation || null;
 
             // Trigger updates to reflect loaded data
             textarea.dispatchEvent(new Event('input', { bubbles: true })); // Updates counter and auto-expands
             this.updateSelectedTags();
+            this.updateSelectedSituation();
             this.updateSelectedCity();
 
         } catch (error) {
@@ -1514,12 +1646,14 @@ class PostForm {
             textarea.value = '';
             textarea.dispatchEvent(new Event('input', { bubbles: true }));
         }
-        // Clear emotion tags and city
+        // Clear emotion tags, situation, and city
         this.selectedEmotions = [];
         this.selectedCity = null;
         this.customCity = null;
         this.isCustomCity = false;
+        this.selectedSituation = null;
         this.updateSelectedTags();
+        this.updateSelectedSituation();
         this.updateSelectedCity();
         // Clear draft
         this.clearDraft();

@@ -1,4 +1,4 @@
-// Feedback Modal - Questions or feedback about pattern quiz results
+// Feedback Modal - Questions or feedback about pattern analysis results
 // Sends via Apps Script Web App proxy (avoids 400 from direct Google Form POST)
 (function() {
     'use strict';
@@ -121,7 +121,7 @@
                 <button type="button" class="feedback-modal-close" aria-label="Close">&times;</button>
                 <div id="feedback-form-view">
                     <h3 class="feedback-modal-title">Questions or Feedback?</h3>
-                    <p class="feedback-modal-subtitle">We'd love to hear from you. Your feedback helps us improve the pattern quiz experience.</p>
+                    <p class="feedback-modal-subtitle">We'd love to hear from you. Your feedback helps us improve the pattern analysis experience.</p>
                     <form id="feedback-form" class="feedback-form">
                         <textarea id="feedback-message" name="feedback" placeholder="Your message, questions, or suggestions..." rows="5" required maxlength="2000"></textarea>
                         <span class="feedback-char-count"><span id="feedback-char-num">0</span>/2000</span>
