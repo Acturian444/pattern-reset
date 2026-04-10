@@ -128,8 +128,453 @@
     <style>
     /* Homepage dark theme - consistent with hero (#050505) */
     body { background: #050505 !important; }
-    #home-hero, .pain-clarity-section, .pattern-signals-section, .faq-section { margin-bottom: 0 !important; }
+    #home-hero, .pr-search-cluster-section, .pattern-signals-section, .pain-stack-section, .faq-section { margin-bottom: 0 !important; }
     .faq-section { margin-top: 0 !important; }
+
+    /* Animated down-arrow between LP sections (same motion as #home-hero .pr-hero-scroll-hint) */
+    .pr-lp-between-arrow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: clamp(0.65rem, 2vw, 1.15rem) clamp(1.25rem, 4vw, 3rem);
+        width: 100%;
+        box-sizing: border-box;
+        background: #080808;
+    }
+    .pr-lp-between-arrow--dark {
+        background: #050505;
+    }
+    .pr-lp-between-arrow__icon {
+        display: flex;
+        color: rgba(255, 252, 241, 0.3);
+    }
+    .pr-lp-between-arrow__icon svg {
+        display: block;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+        .pr-lp-between-arrow__icon {
+            animation: pr-lp-between-arrow-bounce 2.5s ease-in-out infinite;
+        }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .pr-lp-between-arrow__icon {
+            animation: none;
+        }
+    }
+    @keyframes pr-lp-between-arrow-bounce {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(6px);
+        }
+    }
+    a.pr-lp-between-arrow {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+    }
+    a.pr-lp-between-arrow:focus-visible {
+        outline: 2px solid rgba(241, 0, 0, 0.55);
+        outline-offset: 3px;
+    }
+
+    /* LP CTAs → quiz intro (#quiz-section; same look as #home-hero primary) */
+    .pr-lp-quiz-cta-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: clamp(1.15rem, 2.8vw, 1.75rem);
+    }
+    .pr-lp-quiz-cta-wrap--left {
+        justify-content: flex-start;
+    }
+    a.pr-btn-primary.pr-lp-quiz-cta {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #f10000;
+        color: #fff;
+        font-family: 'Anton', sans-serif;
+        font-size: clamp(0.78rem, 0.35rem + 1.85vw, 1rem);
+        font-weight: 400;
+        letter-spacing: clamp(0.08em, 0.04em + 0.35vw, 0.12em);
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: clamp(0.7rem, 0.55rem + 0.65vw, 1.125rem) clamp(1.15rem, 0.75rem + 2.75vw, 2.5rem);
+        line-height: 1;
+        min-height: clamp(44px, 2.65rem + 1vw, 52px);
+        width: auto;
+        max-width: min(18rem, 100%);
+        border-radius: 6px;
+        transition: background 0.2s, transform 0.15s;
+        box-sizing: border-box;
+        text-align: center;
+        white-space: nowrap;
+    }
+    a.pr-btn-primary.pr-lp-quiz-cta:hover,
+    a.pr-btn-primary.pr-lp-quiz-cta:focus {
+        background: #cc0000;
+        transform: translateY(-1px);
+    }
+    a.pr-btn-primary.pr-lp-quiz-cta:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.45);
+        outline-offset: 3px;
+    }
+
+    /* Quiz LP blocks — match home #method / Pattern Reset system (shell + type) */
+    .pain-clarity-section.pr-lp-section,
+    .pain-stack-section.pr-lp-section,
+    .faq-section.pr-lp-section,
+    .pattern-signals-section.pr-lp-section {
+        --pr-red: #f10000;
+        --pr-cream: #fffcf1;
+        --pr-section-pad-y: clamp(3.75rem, 7.5vw, 7.5rem);
+        --pr-section-pad-x: clamp(1.25rem, 4vw, 3rem);
+        background: #080808;
+        border-top: 1px solid rgba(255, 252, 241, 0.04);
+        padding: var(--pr-section-pad-y) var(--pr-section-pad-x);
+        width: 100%;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+    }
+    .pain-clarity-inner.pr-lp-inner,
+    .pain-stack-inner.pr-lp-inner,
+    .faq-section .faq-inner.pr-lp-inner,
+    .pattern-signals-inner.pr-lp-inner {
+        max-width: 640px;
+        margin: 0 auto;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+    }
+    .pain-stack-inner.pr-lp-inner {
+        container-type: inline-size;
+    }
+    .pain-clarity-section .pr-label,
+    .pain-stack-section .pr-label,
+    .faq-section .pr-label,
+    .pattern-signals-section .pr-label {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--pr-red);
+        display: block;
+        margin: 0 0 0.75rem;
+    }
+    .pain-clarity-section .pr-lp-h2,
+    .pain-stack-section .pr-lp-h2,
+    .faq-section .pr-lp-h2,
+    .pattern-signals-section .pr-lp-h2.pattern-signals-title {
+        font-family: 'Anton', sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: var(--pr-cream);
+        font-size: clamp(1.5rem, 3.2vw, 2.15rem);
+        line-height: 1.12;
+        margin: 0 0 1.25rem;
+        letter-spacing: 0.02em;
+        text-wrap: balance;
+    }
+    .pain-stack-section .pr-lp-h2 {
+        margin-bottom: 0.5rem;
+    }
+    .pain-stack-section .pain-stack-subhead {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.95rem, 1.75vw, 1.05rem);
+        font-weight: 500;
+        color: rgba(255, 252, 241, 0.52);
+        line-height: 1.55;
+        margin: 0 0 0.85rem;
+        max-width: 36rem;
+        text-wrap: pretty;
+    }
+    .pain-stack-section ul.pain-stack-pills {
+        list-style: none;
+        margin: 0 0 1.35rem;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.45rem;
+    }
+    @media (max-width: 420px) {
+        .pain-stack-section ul.pain-stack-pills {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .pain-stack-section .pain-stack-pill {
+            text-align: center;
+        }
+    }
+    .pain-stack-section .pain-stack-pill {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.7rem, 1.35vw, 0.8rem);
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        text-transform: none;
+        color: rgba(255, 252, 241, 0.58);
+        padding: 0.45rem 0.95rem;
+        border: 1px solid rgba(255, 252, 241, 0.09);
+        border-radius: 999px;
+        background: rgba(255, 252, 241, 0.025);
+        line-height: 1.35;
+        text-wrap: balance;
+    }
+
+    /* Short bridge section: organic-search cluster below hero (overflow visible — avoids clip) */
+    .pr-search-cluster-section {
+        --pr-cluster-pad-y: clamp(1.1rem, 3.2vh, 2rem);
+        background: linear-gradient(180deg, #050505 0%, #070707 45%, #080808 100%);
+        border-top: 1px solid rgba(255, 252, 241, 0.035);
+        padding: var(--pr-cluster-pad-y) clamp(1rem, 4vw, 2.5rem) calc(var(--pr-cluster-pad-y) + 0.35rem);
+        width: 100%;
+        box-sizing: border-box;
+        overflow: visible;
+        position: relative;
+        z-index: 2;
+    }
+    .pr-search-cluster-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 85% 70% at 50% 55%, rgba(241, 0, 0, 0.045) 0%, transparent 62%);
+        pointer-events: none;
+        z-index: 0;
+    }
+    .pr-search-cluster-inner {
+        position: relative;
+        z-index: 1;
+        max-width: min(52rem, 100%);
+        margin: 0 auto;
+    }
+    .pr-search-cluster-eyebrow {
+        font-family: 'DM Sans', sans-serif;
+        text-align: center;
+        margin: 0 0 clamp(1rem, 2.5vw, 1.35rem);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(0.45rem, 1.2vw, 0.65rem);
+    }
+    .pr-search-cluster-eyebrow__main {
+        font-size: clamp(0.95rem, 2.1vw, 1.2rem);
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        text-transform: none;
+        color: rgba(255, 252, 241, 0.88);
+        line-height: 1.45;
+        max-width: min(28rem, 94vw);
+        text-wrap: balance;
+    }
+    .pr-search-cluster-eyebrow__sub {
+        font-size: clamp(1.02rem, 2.25vw, 1.35rem);
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: none;
+        color: #f10000;
+        line-height: 1.35;
+        max-width: min(30rem, 94vw);
+        text-wrap: balance;
+    }
+    .pr-search-cluster {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        gap: 0.28rem 0.32rem;
+        padding: 0.15rem 0 0.1rem;
+        margin: 0;
+        list-style: none;
+        box-sizing: border-box;
+    }
+    .pr-search-cluster > li {
+        margin: 0;
+    }
+    .pr-search-cluster-pill {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.58rem, 1.2vw, 0.74rem);
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        color: rgba(255, 252, 241, 0.48);
+        padding: 0.3rem 0.68rem;
+        border: 1px solid rgba(255, 252, 241, 0.085);
+        border-radius: 999px;
+        background: rgba(255, 252, 241, 0.035);
+        line-height: 1.2;
+        text-wrap: balance;
+        max-width: 100%;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+        transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .pr-search-cluster-pill:nth-child(5n + 1) { transform: rotate(-1.1deg); }
+    .pr-search-cluster-pill:nth-child(5n + 2) { transform: rotate(0.75deg); }
+    .pr-search-cluster-pill:nth-child(5n + 3) { transform: rotate(-0.45deg); }
+    .pr-search-cluster-pill:nth-child(5n + 4) { transform: rotate(1deg); }
+    .pr-search-cluster-pill:nth-child(5n) { transform: rotate(-0.65deg); }
+    @media (prefers-reduced-motion: no-preference) {
+        .pr-search-cluster-pill:nth-child(odd) {
+            animation: pr-search-cluster-pill-float 5.5s ease-in-out infinite;
+        }
+        .pr-search-cluster-pill:nth-child(even) {
+            animation: pr-search-cluster-pill-float 5.5s ease-in-out infinite reverse;
+        }
+        .pr-search-cluster-pill:nth-child(3n) { animation-delay: 0.4s; }
+        .pr-search-cluster-pill:nth-child(3n + 1) { animation-delay: 0.85s; }
+        .pr-search-cluster-pill:nth-child(3n + 2) { animation-delay: 1.25s; }
+    }
+    @keyframes pr-search-cluster-pill-float {
+        0%, 100% { filter: brightness(1); }
+        50% { filter: brightness(1.12); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .pr-search-cluster-pill { animation: none !important; }
+    }
+
+    .pain-clarity-section .pr-lp-muted.pr-lp-muted--flush.pain-clarity-lead {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.98rem, 1.85vw, 1.1rem);
+        color: rgba(255, 252, 241, 0.58);
+        line-height: 1.65;
+        margin: 0 0 1.25rem;
+        text-wrap: pretty;
+    }
+    /* List rhythm: match .pr-lp-method-steps top spacing */
+    .pain-clarity-section .pr-lp-list.pain-clarity-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .pain-clarity-section .pr-lp-list.pain-clarity-list li {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.95rem, 1.75vw, 1.05rem);
+        color: rgba(255, 252, 241, 0.75);
+        line-height: 1.55;
+        padding: 0.4rem 0;
+        padding-left: 1.1rem;
+        position: relative;
+    }
+    .pain-clarity-section .pr-lp-list.pain-clarity-list li::before {
+        content: '·';
+        position: absolute;
+        left: 0;
+        color: var(--pr-red);
+        font-weight: 800;
+    }
+    /* Bridge: same divider language as pain-stack close / method rows */
+    .pain-clarity-section .pain-clarity-bridge {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.98rem, 1.85vw, 1.1rem);
+        font-weight: 600;
+        color: rgba(255, 252, 241, 0.82);
+        line-height: 1.55;
+        margin: 1.25rem 0 0;
+        padding-top: 0.85rem;
+        border-top: 1px solid rgba(255, 252, 241, 0.06);
+        text-wrap: pretty;
+    }
+
+    /* THE EMOTIONAL COST — rail + copy (640px column matches #method) */
+    .pain-stack-section .pain-stack-flow {
+        list-style: none;
+        margin: 0 0 1.2rem;
+        padding: 0;
+        position: relative;
+        --pain-stack-rail: 5px;
+    }
+    .pain-stack-section .pain-stack-flow::before {
+        content: '';
+        position: absolute;
+        left: var(--pain-stack-rail);
+        top: 0.65rem;
+        bottom: 0.65rem;
+        width: 1px;
+        background: rgba(241, 0, 0, 0.38);
+    }
+    .pain-stack-section .pain-stack-step {
+        display: grid;
+        grid-template-columns: 1.35rem minmax(0, 1fr);
+        gap: 0.75rem;
+        align-items: start;
+        margin: 0 0 0.85rem;
+        position: relative;
+    }
+    .pain-stack-section .pain-stack-step:last-child {
+        margin-bottom: 0;
+    }
+    .pain-stack-section .pain-stack-marker {
+        position: relative;
+        width: 100%;
+        min-height: 1.5rem;
+        z-index: 1;
+    }
+    .pain-stack-section .pain-stack-marker::after {
+        content: '';
+        position: absolute;
+        left: var(--pain-stack-rail);
+        top: 0.72rem;
+        width: 0.95rem;
+        height: 1px;
+        background: rgba(241, 0, 0, 0.38);
+        transform: translateY(-50%);
+    }
+    .pain-stack-section .pain-stack-line {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.95rem, 1.75vw, 1.05rem);
+        font-weight: 500;
+        line-height: 1.55;
+        color: rgba(255, 252, 241, 0.75);
+        margin: 0;
+        padding: 0.35rem 0 0;
+        text-wrap: pretty;
+    }
+    .pain-stack-section .pain-stack-close {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.95rem, 1.85vw, 1.08rem);
+        color: var(--pr-cream);
+        font-weight: 600;
+        line-height: 1.5;
+        margin: 1.25rem 0 0;
+        padding-top: 0.85rem;
+        border-top: 1px solid rgba(255, 252, 241, 0.06);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        text-wrap: balance;
+        letter-spacing: 0;
+        overflow-x: visible;
+    }
+    .pain-stack-section .pain-stack-close-label {
+        color: var(--pr-red);
+        font-size: clamp(0.68rem, 1.2vw, 0.78rem);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin: 0;
+        display: block;
+        font-weight: 700;
+    }
+    .pain-stack-section .pain-stack-close-text {
+        display: block;
+        font-weight: 600;
+        color: var(--pr-cream);
+        line-height: 1.55;
+        margin: 0;
+        text-wrap: pretty;
+    }
+    @media (max-width: 700px) {
+        .pain-stack-section .pain-stack-step {
+            grid-template-columns: 1.2rem minmax(0, 1fr);
+            gap: 0.65rem;
+        }
+    }
     #quiz-section.quiz-section {
         margin-top: clamp(1.5rem, 4vw, 2.75rem) !important;
         margin-bottom: clamp(1.5rem, 4vw, 2.75rem) !important;
@@ -142,10 +587,15 @@
         letter-spacing: 1.5px;
     }
     
-    /* Quiz section: at least one viewport tall; centers the card stack (safe center falls back when content is taller). */
+    /* Quiz section: nearly full-viewport; --quiz-screen-pad = edge inset on all breakpoints */
     .quiz-section {
+        --quiz-screen-pad: clamp(0.65rem, 3.5vw, 1.5rem);
         background: #050505;
-        padding: clamp(1.35rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.5rem);
+        padding:
+            calc(env(safe-area-inset-top, 0px) + var(--quiz-screen-pad))
+            calc(env(safe-area-inset-right, 0px) + var(--quiz-screen-pad))
+            calc(env(safe-area-inset-bottom, 0px) + var(--quiz-screen-pad))
+            calc(env(safe-area-inset-left, 0px) + var(--quiz-screen-pad));
         width: 100%;
         box-sizing: border-box;
         position: relative;
@@ -175,17 +625,21 @@
         scroll-margin-bottom: 1.5rem;
     }
 
-    /* Match .about-merged-panel — card shell for every quiz step */
+    /* Quiz steps: full-bleed panels (no card chrome) */
     .quiz-panel {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 12px;
-        background: linear-gradient(165deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0.2) 100%);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-        padding: clamp(1.35rem, 3.5vw, 2rem);
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        padding: clamp(1.5rem, 5vw, 2.75rem);
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
         margin: 0 auto;
+    }
+    /* Step / results / question panels: nearly full viewport height */
+    .quiz-panel:not(.quiz-intro) {
+        min-height: min(90dvh, 52rem);
     }
 
     .quiz-intro {
@@ -198,61 +652,181 @@
         justify-content: flex-start;
     }
 
-    /* Cover step: taller card + more vertical rhythm */
+    /* Intro: type matches #home-hero (quiz landing hero) — vertical rhythm via shared gaps */
     .quiz-intro.quiz-panel {
-        padding: clamp(3.25rem, 9vw, 5.5rem) clamp(1.75rem, 4.5vw, 3rem);
-        min-height: clamp(28rem, 62vh, 44rem);
+        --qi-gap-label: clamp(0.65rem, 1.5vw, 0.95rem);
+        --qi-gap-head-sub: clamp(0.95rem, 2.5vw, 1.45rem);
+        --qi-gap-sub-cta: clamp(1.75rem, 5vw, 2.75rem);
+        --qi-gap-cta-micro: clamp(0.7rem, 2vw, 1rem);
+        position: relative;
+        padding: clamp(3rem, 10vw, 7rem) clamp(1.25rem, 4vw, 2.5rem);
+        min-height: min(90dvh, 56rem);
+        max-width: min(900px, 100%);
+        margin-left: auto;
+        margin-right: auto;
         justify-content: center;
         box-sizing: border-box;
+        overflow: hidden;
     }
-    .quiz-intro-kicker {
+    /* Header logo geometry — each ring rotates independently (counter-rotating mix), thin strokes */
+    .quiz-intro-spiral-wrap,
+    #home-hero .pr-hero-spiral-wrap {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .quiz-intro-spiral-wrap::before,
+    #home-hero .pr-hero-spiral-wrap::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 72% 68% at 50% 45%, rgba(255, 252, 241, 0.045) 0%, transparent 62%);
+        pointer-events: none;
+    }
+    .quiz-intro-spiral-bg,
+    #home-hero .pr-hero-spiral-bg {
+        width: min(100vmin, 46rem);
+        height: min(100vmin, 46rem);
+        flex-shrink: 0;
+        overflow: visible;
+        color: rgba(255, 252, 241, 0.28);
+        animation: quizIntroMapFloat 16s ease-in-out infinite alternate;
+        will-change: transform;
+    }
+    .quiz-intro-spiral-bg .quiz-map-ring-layer,
+    #home-hero .pr-hero-spiral-bg .quiz-map-ring-layer {
+        transform-origin: 50% 50%;
+        transform-box: fill-box;
+    }
+    .quiz-intro-spiral-bg .quiz-map-ring-layer--outer,
+    #home-hero .pr-hero-spiral-bg .quiz-map-ring-layer--outer {
+        animation: quizMapOrbit 38s linear infinite;
+    }
+    .quiz-intro-spiral-bg .quiz-map-ring-layer--middle,
+    #home-hero .pr-hero-spiral-bg .quiz-map-ring-layer--middle {
+        animation: quizMapOrbit 28s linear infinite reverse;
+    }
+    .quiz-intro-spiral-bg .quiz-map-ring-layer--inner,
+    #home-hero .pr-hero-spiral-bg .quiz-map-ring-layer--inner {
+        animation: quizMapOrbit 21s linear infinite;
+    }
+    .quiz-intro-spiral-bg .quiz-map-ring-layer--center,
+    #home-hero .pr-hero-spiral-bg .quiz-map-ring-layer--center {
+        animation: quizMapOrbit 24s linear infinite reverse;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .quiz-intro-spiral-bg,
+        #home-hero .pr-hero-spiral-bg {
+            animation: none;
+        }
+        .quiz-intro-spiral-bg .quiz-map-ring-layer--outer,
+        .quiz-intro-spiral-bg .quiz-map-ring-layer--middle,
+        .quiz-intro-spiral-bg .quiz-map-ring-layer--inner,
+        .quiz-intro-spiral-bg .quiz-map-ring-layer--center,
+        #home-hero .pr-hero-spiral-bg .quiz-map-ring-layer--outer,
+        #home-hero .pr-hero-spiral-bg .quiz-map-ring-layer--middle,
+        #home-hero .pr-hero-spiral-bg .quiz-map-ring-layer--inner,
+        #home-hero .pr-hero-spiral-bg .quiz-map-ring-layer--center {
+            animation: none;
+        }
+    }
+    @keyframes quizMapOrbit {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes quizIntroMapFloat {
+        from {
+            transform: translateY(5px) scale(1);
+        }
+        to {
+            transform: translateY(-7px) scale(1.02);
+        }
+    }
+    .quiz-intro.quiz-panel > *:not(.quiz-intro-spiral-wrap) {
+        position: relative;
+        z-index: 1;
+    }
+    /* Same as #home-hero .pr-label--quiz-hero */
+    .quiz-intro-label {
+        display: block;
         font-family: 'DM Sans', sans-serif;
-        font-size: 0.68rem;
+        font-size: 0.78rem;
         font-weight: 700;
-        letter-spacing: 0.24em;
+        letter-spacing: 0.22em;
         text-transform: uppercase;
         color: #f10000;
-        margin: 0 0 1.05rem 0;
+        margin: 0 0 var(--qi-gap-label, 0.85rem);
         line-height: 1.35;
-        max-width: min(22rem, 100%);
+        max-width: 100%;
+        text-wrap: balance;
+        text-align: center;
+    }
+    /* Same as #home-hero .pr-hero-headline.pr-lp-hero-title */
+    .quiz-intro-headline {
+        font-family: 'Anton', sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: #fffcf1;
+        font-size: clamp(1.85rem, 3.4vw + 0.45rem, 3.65rem);
+        line-height: 1.08;
+        letter-spacing: 0.015em;
+        margin: 0;
+        text-align: center;
+        text-wrap: balance;
+        max-width: min(36rem, 100%);
+        margin-left: auto;
+        margin-right: auto;
+    }
+    /* Same as #home-hero .pr-hero-subtext */
+    .quiz-intro-subhead {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.98rem, 1.85vw, 1.12rem);
+        font-weight: 500;
+        color: rgba(255, 252, 241, 0.78);
+        line-height: 1.65;
+        margin: var(--qi-gap-head-sub, 1.15rem) auto 0;
+        text-align: center;
+        max-width: min(38rem, 100%);
+        letter-spacing: 0.01em;
         text-wrap: balance;
     }
-    .quiz-intro.quiz-panel .quiz-title {
-        margin-bottom: 1.1rem;
-        text-transform: none;
-    }
+    /* Same as #home-hero .pr-hero-cta-note */
     .quiz-intro-micro {
         font-family: 'DM Sans', sans-serif;
-        font-size: 0.8125rem;
-        font-weight: 500;
-        letter-spacing: 0.04em;
-        color: rgba(255, 252, 241, 0.52);
-        margin: 1.15rem 0 0;
+        font-size: clamp(0.78rem, 1.5vw, 0.8125rem);
+        font-weight: 400;
+        color: rgba(255, 252, 241, 0.42);
         line-height: 1.45;
+        margin: var(--qi-gap-cta-micro, 0.85rem) auto 0;
+        letter-spacing: 0.02em;
+        max-width: min(30rem, 100%);
         text-align: center;
+        text-wrap: balance;
     }
-    .quiz-intro-sub {
-        font-family: 'DM Sans', sans-serif;
-        font-size: clamp(0.95rem, 1.85vw, 1.08rem);
-        font-weight: 500;
-        color: rgba(255, 255, 255, 0.82);
-        line-height: 1.55;
-        margin: 0 0 2rem 0;
-        text-align: center;
-        max-width: min(34rem, 100%);
+    @media (max-width: 768px) {
+        .quiz-intro.quiz-panel {
+            --qi-gap-label: clamp(0.55rem, 2vw, 0.85rem);
+            --qi-gap-head-sub: clamp(0.9rem, 3vw, 1.25rem);
+            --qi-gap-sub-cta: clamp(1.65rem, 5.5vw, 2.5rem);
+            --qi-gap-cta-micro: clamp(0.65rem, 2.2vw, 0.9rem);
+        }
     }
-    .quiz-intro.quiz-panel .quiz-intro-sub {
-        margin-bottom: 2.15rem;
-    }
-
-    .quiz-intro-label {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 0.9rem;
-        font-weight: 700;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: #f10000;
-        margin: 0 0 1rem 0;
+    @media (max-width: 480px) {
+        .quiz-intro.quiz-panel {
+            --qi-gap-sub-cta: clamp(1.5rem, 5vw, 2.25rem);
+        }
+        .quiz-intro-headline {
+            font-size: clamp(1.65rem, 6.5vw + 0.35rem, 2.35rem);
+            line-height: 1.09;
+        }
     }
 
     .quiz-intro-note {
@@ -260,7 +834,7 @@
         font-size: 0.8125rem;
         color: rgba(255, 255, 255, 0.8);
         margin-bottom: 0.5rem;
-        font-style: italic;
+        font-style: normal;
     }
     .quiz-intro-meta {
         font-family: 'DM Sans', sans-serif;
@@ -332,40 +906,49 @@
         text-align: center;
         margin: 0 auto 2rem;
         line-height: 1.5;
-        font-style: italic;
+        font-style: normal;
     }
 
-    .quiz-intro .btn-mission-primary,
-    #start-quiz-btn.btn-mission-primary {
+    /* Match #home-hero .pr-btn-primary — !important beats global .btn-mission-primary in style.css */
+    #quiz-section .quiz-intro .btn-mission-primary,
+    #quiz-section #start-quiz-btn.btn-mission-primary {
+        margin-top: var(--qi-gap-sub-cta, 2.25rem);
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box;
         background: #f10000 !important;
-        color: #fffcf1 !important;
+        color: #fff !important;
         border: none !important;
-        padding: 1.1rem 2.5rem;
-        font-size: 0.9rem;
-        font-weight: 700;
-        min-height: 56px;
-        min-width: 180px;
+        font-family: 'Anton', sans-serif !important;
+        font-size: clamp(0.78rem, 0.35rem + 1.85vw, 1rem) !important;
+        font-weight: 400 !important;
+        letter-spacing: clamp(0.08em, 0.04em + 0.35vw, 0.12em) !important;
+        text-transform: uppercase;
+        padding: clamp(0.7rem, 0.55rem + 0.65vw, 1.125rem) clamp(1.15rem, 0.75rem + 2.75vw, 2.5rem) !important;
+        line-height: 1 !important;
+        min-height: clamp(44px, 2.65rem + 1vw, 52px) !important;
+        width: auto !important;
+        max-width: min(18rem, 100%) !important;
+        border-radius: 6px !important;
         white-space: nowrap;
         cursor: pointer;
-        transition: all 0.25s ease;
-        border-radius: 8px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        box-shadow: 0 4px 24px rgba(241, 0, 0, 0.4);
+        transition: background 0.2s, transform 0.15s;
+        box-shadow: none;
     }
 
-    .quiz-intro .btn-mission-primary:hover,
-    .quiz-intro .btn-mission-primary:focus,
-    .quiz-intro .btn-mission-primary:active,
-    #start-quiz-btn.btn-mission-primary:hover,
-    #start-quiz-btn.btn-mission-primary:focus,
-    #start-quiz-btn.btn-mission-primary:active {
-        background: #d40000 !important;
-        color: #fffcf1 !important;
+    #quiz-section .quiz-intro .btn-mission-primary:hover,
+    #quiz-section .quiz-intro .btn-mission-primary:focus,
+    #quiz-section .quiz-intro .btn-mission-primary:active,
+    #quiz-section #start-quiz-btn.btn-mission-primary:hover,
+    #quiz-section #start-quiz-btn.btn-mission-primary:focus,
+    #quiz-section #start-quiz-btn.btn-mission-primary:active {
+        background: #cc0000 !important;
+        color: #fff !important;
         border: none !important;
         outline: none;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 32px rgba(241, 0, 0, 0.5);
+        transform: translateY(-1px);
+        box-shadow: none;
     }
 
     .quiz-story-step {
@@ -423,7 +1006,7 @@
         color: #1a1a1a;
         background: #fffcf1;
         border: 2px solid rgba(241, 0, 0, 0.25);
-        border-radius: 8px;
+        border-radius: 0;
         resize: vertical;
         margin-bottom: 0.5rem;
         transition: border-color 0.2s;
@@ -529,7 +1112,7 @@
         color: #1a1a1a;
         background: #fffcf1;
         border: 2px solid rgba(241, 0, 0, 0.25);
-        border-radius: 8px;
+        border-radius: 0;
         transition: border-color 0.2s;
     }
     .quiz-contact-input:focus {
@@ -630,7 +1213,7 @@
         padding: 1rem;
         background: rgba(241, 0, 0, 0.15);
         border: 1px solid rgba(241, 0, 0, 0.3);
-        border-radius: 8px;
+        border-radius: 0;
     }
     .quiz-load-error a { color: #c00; text-decoration: underline; }
     .quiz-question {
@@ -652,30 +1235,30 @@
     }
 
     .quiz-option {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1.5px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 0;
         padding: 1.25rem 1.5rem;
         cursor: pointer;
         transition: all 0.25s ease;
         display: flex;
         align-items: center;
         gap: 1rem;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: none;
     }
 
     .quiz-option:hover {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.04);
         border-color: rgba(241, 0, 0, 0.35);
         transform: translateX(4px);
-        box-shadow: 0 4px 12px rgba(241, 0, 0, 0.08);
+        box-shadow: none;
     }
 
     .quiz-option.selected {
         background: rgba(241, 0, 0, 0.12);
         border-color: #f10000;
         border-width: 2px;
-        box-shadow: 0 4px 16px rgba(241, 0, 0, 0.2);
+        box-shadow: none;
     }
 
     .quiz-option.selected .quiz-option-text {
@@ -700,9 +1283,9 @@
         justify-content: flex-start;
     }
     .quiz-option-pill {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1.5px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 0;
         padding: 0.7rem 1.1rem;
         cursor: pointer;
         transition: all 0.25s ease;
@@ -712,12 +1295,12 @@
         color: rgba(255, 255, 255, 0.92);
         line-height: 1.4;
         flex-shrink: 0;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        box-shadow: none;
     }
     .quiz-option-pill:hover {
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 255, 0.04);
         border-color: rgba(241, 0, 0, 0.35);
-        box-shadow: 0 2px 8px rgba(241, 0, 0, 0.08);
+        box-shadow: none;
     }
     .quiz-option-pill.selected {
         background: rgba(241, 0, 0, 0.12);
@@ -725,7 +1308,7 @@
         border-width: 2px;
         color: #f10000;
         font-weight: 600;
-        box-shadow: 0 2px 10px rgba(241, 0, 0, 0.2);
+        box-shadow: none;
     }
     .quiz-other-text-wrap {
         margin-top: 1rem;
@@ -736,7 +1319,7 @@
         max-width: 400px;
         padding: 0.75rem 1rem;
         border: 1.5px solid rgba(255, 255, 255, 0.2);
-        border-radius: 10px;
+        border-radius: 0;
         font-size: 1rem;
         font-family: inherit;
         background: rgba(255, 255, 255, 0.06);
@@ -757,7 +1340,7 @@
     #quiz-birthdate-input {
         background: rgba(255, 255, 255, 0.06);
         border: 2px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
+        border-radius: 0;
         padding: 1rem 1.5rem;
         font-family: 'DM Sans', sans-serif;
         font-size: 1rem;
@@ -784,7 +1367,7 @@
         font-family: 'DM Sans', sans-serif;
         font-size: 0.875rem;
         color: rgba(255, 255, 255, 0.7);
-        font-style: italic;
+        font-style: normal;
         margin-top: 0.25rem;
     }
 
@@ -799,7 +1382,7 @@
     .quiz-select {
         background: rgba(255, 255, 255, 0.06);
         border: 2px solid rgba(255, 255, 255, 0.2);
-        border-radius: 8px;
+        border-radius: 0;
         padding: 1rem 1.5rem;
         font-family: 'DM Sans', sans-serif;
         font-size: 1rem;
@@ -907,7 +1490,7 @@
         padding: 0.75rem 1.25rem;
         background: rgba(241, 0, 0, 0.08);
         border: 1px solid rgba(241, 0, 0, 0.2);
-        border-radius: 8px;
+        border-radius: 0;
         width: auto;
         min-width: fit-content;
         max-width: none;
@@ -939,9 +1522,10 @@
         padding-right: 0;
     }
     .quiz-results.quiz-panel .quiz-success-results-merged {
-        background: rgba(12, 12, 12, 0.65);
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
     }
     .quiz-results-content {
         display: flex;
@@ -1009,7 +1593,7 @@
         text-align: center;
         margin-top: 0.75rem;
         margin-bottom: 0;
-        font-style: italic;
+        font-style: normal;
         font-weight: 400;
         letter-spacing: 0.3px;
     }
@@ -1038,7 +1622,7 @@
         margin-bottom: 1.5rem;
         padding: 0 1rem;
         line-height: 1.5;
-        font-style: italic;
+        font-style: normal;
     }
 
     .top-drivers-preview {
@@ -1072,7 +1656,7 @@
         color: rgba(255, 255, 255, 0.6);
         text-align: center;
         font-weight: 400;
-        font-style: italic;
+        font-style: normal;
         margin-top: 1.5rem;
         padding-top: 0;
         border: none;
@@ -1187,7 +1771,7 @@
         background: transparent;
         border: 2px solid rgba(241, 0, 0, 0.2);
         border-left: 3px solid #f10000;
-        border-radius: 6px;
+        border-radius: 0;
     }
 
     .quiz-pattern-cta-text {
@@ -1240,7 +1824,7 @@
     #quiz-archetype-dynamic {
         font-weight: 700;
         color: #f10000;
-        font-style: italic;
+        font-style: normal;
     }
 
     .quiz-email-form {
@@ -1354,12 +1938,12 @@
         width: 100%;
         max-width: min(920px, 100%);
         margin: 0 auto 2rem;
-        background: rgba(28, 28, 28, 0.95);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
+        background: transparent;
+        border: none;
+        border-radius: 0;
         padding: clamp(1.5rem, 3.5vw, 2.35rem) clamp(1.35rem, 3.5vw, 2.35rem);
         text-align: center;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+        box-shadow: none;
         box-sizing: border-box;
     }
 
@@ -1530,9 +2114,10 @@
     }
 
     .quiz-success-result-card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0;
         padding: 1.25rem 1.5rem;
         text-align: center;
     }
@@ -1566,7 +2151,7 @@
         text-align: center;
         margin: 0 auto 1.25rem;
         border: 2px solid #f10000;
-        border-radius: 12px;
+        border-radius: 0;
         padding: 1.25rem 2rem;
         display: block;
         width: 100%;
@@ -1618,9 +2203,10 @@
         max-width: 400px;
         margin: 0 auto 0;
         padding: 1.25rem 1.5rem;
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 8px;
+        background: transparent;
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0;
         text-align: center;
     }
     
@@ -1828,7 +2414,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: clamp(1rem, 4vw, 1.75rem);
+        --quiz-paywall-inset: clamp(0.5rem, 2.5vw, 1.15rem);
+        padding:
+            calc(env(safe-area-inset-top, 0px) + var(--quiz-paywall-inset))
+            calc(env(safe-area-inset-right, 0px) + var(--quiz-paywall-inset))
+            calc(env(safe-area-inset-bottom, 0px) + var(--quiz-paywall-inset))
+            calc(env(safe-area-inset-left, 0px) + var(--quiz-paywall-inset));
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -1843,12 +2434,12 @@
         max-width: min(900px, 100%);
         width: 100%;
         margin: auto;
-        max-height: min(92vh, 900px);
+        max-height: min(98dvh, 920px);
         overflow-y: auto;
-        background: linear-gradient(168deg, #1a1a1a 0%, #111111 50%, #0a0a0a 100%);
-        border-radius: 16px;
-        padding: clamp(1.5rem, 4vw, 2.25rem);
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: transparent;
+        border-radius: 0;
+        padding: clamp(1.5rem, 5vw, 2.75rem);
+        border: none;
         scrollbar-width: thin;
         box-sizing: border-box;
     }
@@ -1873,7 +2464,7 @@
         font-size: 1.5rem;
         width: 36px;
         height: 36px;
-        border-radius: 10px;
+        border-radius: 0;
         cursor: pointer;
         line-height: 1;
         display: flex;
@@ -1927,10 +2518,11 @@
         line-height: 1.55;
         color: rgba(255, 252, 241, 0.95);
         margin: 0 0 1.25rem 0;
-        padding: 1rem 1.15rem;
-        background: rgba(28, 28, 28, 0.95);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
+        padding: 1rem 0;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0;
         text-align: center;
     }
     .quiz-paywall-stakes {
@@ -1959,12 +2551,12 @@
     }
     .quiz-paywall-inside {
         list-style: none;
-        padding: 0;
         margin: 0 0 2rem 0;
-        background: rgba(241, 0, 0, 0.035);
-        border: 1px solid rgba(241, 0, 0, 0.12);
-        border-radius: 14px;
-        padding: 1.35rem 1.5rem 1.35rem 2.5rem;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0;
+        padding: 0 0 1.25rem 2.5rem;
     }
     .quiz-paywall-inside li {
         font-family: 'DM Sans', sans-serif;
@@ -2007,7 +2599,7 @@
         justify-content: center;
         text-align: center;
         padding: 1.75rem 1.5rem;
-        border-radius: 14px;
+        border-radius: 0;
         text-decoration: none;
         transition: all 0.2s ease;
     }
@@ -2017,7 +2609,7 @@
         background: linear-gradient(145deg, #f10000 0%, #c40000 50%, #a80000 100%);
         color: #fffcf1;
         position: relative;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: none;
     }
     .quiz-paywall-offer-primary::before {
         content: 'Most Popular';
@@ -2038,17 +2630,17 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .quiz-paywall-offer-primary:hover {
-        border-color: rgba(255, 255, 255, 0.2);
+        filter: brightness(1.05);
     }
     .quiz-paywall-offer-secondary {
-        background: rgba(28, 28, 28, 0.8);
+        background: transparent;
         color: #fffcf1;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         transition: all 0.2s ease;
     }
     .quiz-paywall-offer-secondary:hover {
-        background: rgba(38, 38, 38, 0.9);
-        border-color: rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.04);
+        border-color: rgba(255, 255, 255, 0.35);
     }
     .quiz-paywall-offer-label {
         display: block;
@@ -2084,7 +2676,7 @@
         letter-spacing: 0.14em;
         text-transform: uppercase;
         padding: 0.7rem 1.5rem;
-        border-radius: 10px;
+        border-radius: 0;
         transition: all 0.2s ease;
     }
     .quiz-paywall-offer-primary .quiz-paywall-offer-cta {
@@ -2109,7 +2701,7 @@
         width: 100%;
         box-sizing: border-box;
         margin: 0;
-        background: rgba(18, 18, 18, 0.95);
+        background: transparent;
         color: #fffcf1;
         border: 1px dashed rgba(241, 0, 0, 0.45);
         cursor: pointer;
@@ -2119,7 +2711,7 @@
     }
     .quiz-paywall-offer-tertiary:hover {
         border-color: rgba(241, 0, 0, 0.75);
-        background: rgba(24, 24, 24, 0.98);
+        background: rgba(241, 0, 0, 0.06);
     }
     .quiz-paywall-offer-tertiary:focus-visible {
         outline: 2px solid rgba(241, 0, 0, 0.6);
@@ -2146,8 +2738,8 @@
     /* Paywall desktop/tablet: larger modal, no scroll needed */
     @media (min-width: 701px) {
         .quiz-paywall-modal {
-            padding: 2.5rem 2.5rem 2.5rem;
-            max-height: 90vh;
+            padding: clamp(2rem, 3.5vw, 3rem);
+            max-height: min(96vh, 940px);
             overflow-y: visible;
         }
         .quiz-paywall-header {
@@ -2171,7 +2763,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 0 2.5rem;
             margin: 0 0 1.75rem 0;
-            padding: 1.35rem 1.75rem 1.35rem 2.75rem;
+            padding: 0 0 1.25rem 2.75rem;
         }
         .quiz-paywall-inside li {
             padding: 0.4rem 0;
@@ -2222,15 +2814,19 @@
     }
     @media (max-width: 600px) {
         .quiz-paywall-overlay {
-            padding: 0.75rem;
+            --quiz-paywall-inset: clamp(0.4rem, 2vw, 0.85rem);
             align-items: flex-start;
-            padding-top: 2rem;
+            padding:
+                calc(env(safe-area-inset-top, 0px) + clamp(0.65rem, 3vw, 1.25rem))
+                calc(env(safe-area-inset-right, 0px) + var(--quiz-paywall-inset))
+                calc(env(safe-area-inset-bottom, 0px) + var(--quiz-paywall-inset))
+                calc(env(safe-area-inset-left, 0px) + var(--quiz-paywall-inset));
         }
         .quiz-paywall-modal {
             max-width: 100%;
-            padding: 2rem 1.35rem 2.25rem;
-            border-radius: 16px;
-            max-height: 95vh;
+            padding: clamp(1.35rem, 4.5vw, 2.25rem);
+            border-radius: 0;
+            max-height: min(98dvh, 100%);
         }
         .quiz-paywall-close {
             top: 0.85rem;
@@ -2254,7 +2850,7 @@
             margin-bottom: 1.25rem;
         }
         .quiz-paywall-inside {
-            padding: 1rem 1.25rem 1rem 2rem;
+            padding: 0 0 1.25rem 2rem;
             margin-bottom: 1.75rem;
         }
         .quiz-paywall-inside li {
@@ -2281,28 +2877,25 @@
     }
     @media (max-width: 380px) {
         .quiz-paywall-modal {
-            padding: 1.75rem 1.15rem 2rem;
+            padding: clamp(1.25rem, 4vw, 1.85rem);
+            border-radius: 0;
         }
         .quiz-paywall-title {
             font-size: 1.25rem;
         }
         .quiz-paywall-inside {
-            padding: 0.9rem 1rem 0.9rem 1.75rem;
+            padding: 0 0 1.1rem 1.75rem;
         }
     }
 
     @media (min-width: 601px) and (max-width: 900px) {
         .quiz-section {
-            padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2.5rem);
+            --quiz-screen-pad: clamp(0.75rem, 3.5vw, 1.65rem);
             min-height: 100dvh;
         }
         .quiz-intro.quiz-panel {
-            padding: clamp(2.85rem, 8vw, 4.75rem) clamp(1.6rem, 4vw, 2.25rem);
-            min-height: clamp(25rem, 58vh, 38rem);
-        }
-        .quiz-title {
-            font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-            margin-bottom: 0.9rem;
+            padding: clamp(3rem, 9vw, 5.5rem) clamp(1.25rem, 4vw, 2.25rem);
+            min-height: min(88dvh, 52rem);
         }
         .quiz-subtitle {
             font-size: clamp(1rem, 2vw, 1.1rem);
@@ -2412,16 +3005,18 @@
         .quiz-subtitle .desktop-break {
             display: none;
         }
-        .quiz-intro .btn-mission-primary {
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            min-height: 52px;
+        #quiz-section .quiz-intro .btn-mission-primary,
+        #quiz-section #start-quiz-btn.btn-mission-primary {
+            padding: clamp(0.85rem, 0.6rem + 0.8vw, 1.125rem) clamp(1.35rem, 1rem + 2vw, 2.25rem) !important;
+            font-size: clamp(0.88rem, 0.4rem + 1.2vw, 1rem) !important;
+            min-height: clamp(48px, 11vw, 52px) !important;
+            max-width: min(18rem, 100%) !important;
         }
     }
 
     @media (max-width: 600px) {
         .quiz-section {
-            padding: clamp(1.15rem, 4vw, 2rem) clamp(1.15rem, 4vw, 1.5rem);
+            --quiz-screen-pad: clamp(0.55rem, 3vw, 1.25rem);
             min-height: 100dvh;
             min-height: 100svh;
         }
@@ -2429,27 +3024,8 @@
             scroll-margin-top: 72px;
         }
         .quiz-intro.quiz-panel {
-            padding: clamp(2.5rem, 8vw, 3.5rem) clamp(1.15rem, 4vw, 1.5rem);
-            min-height: clamp(22rem, 58svh, 36rem);
-        }
-        .quiz-intro-label {
-            font-size: 0.8rem;
-            margin-bottom: 1rem;
-        }
-        .quiz-title {
-            font-size: clamp(1.6rem, 4.5vw, 2.75rem) !important;
-            margin-bottom: 0.75rem !important;
-            line-height: 1.35 !important;
-        }
-        .quiz-intro.quiz-panel .quiz-title {
-            margin-bottom: 1.1rem !important;
-        }
-        .quiz-intro-sub {
-            font-size: clamp(0.88rem, 2.5vw, 1rem);
-            margin-bottom: 1.75rem;
-        }
-        .quiz-intro.quiz-panel .quiz-intro-sub {
-            margin-bottom: 1.95rem;
+            padding: clamp(2.75rem, 9vw, 4.5rem) clamp(1rem, 3.5vw, 1.65rem);
+            min-height: min(88svh, 48rem);
         }
         .quiz-subtitle {
             font-size: 0.95rem !important;
@@ -2464,15 +3040,19 @@
             font-size: 0.8rem;
             margin-bottom: 1.5rem;
         }
-        .quiz-intro .btn-mission-primary {
-            padding: 1rem 2rem;
-            font-size: 0.9rem;
-            min-height: 50px;
-            width: auto;
-            min-width: 160px;
+        #quiz-section .quiz-intro .btn-mission-primary,
+        #quiz-section #start-quiz-btn.btn-mission-primary {
+            padding: clamp(0.65rem, 0.5rem + 0.85vw, 1rem) clamp(1rem, 0.6rem + 2.4vw, 1.75rem) !important;
+            font-size: clamp(0.74rem, 0.3rem + 1.75vw, 0.95rem) !important;
+            letter-spacing: clamp(0.07em, 0.04em + 0.2vw, 0.1em) !important;
+            min-height: clamp(44px, 10.5vw, 50px) !important;
+            width: auto !important;
+            max-width: min(17.5rem, 100%) !important;
+            min-width: 0 !important;
         }
-        .quiz-panel {
-            padding: 1.15rem 1.1rem 1.35rem;
+        .quiz-panel:not(.quiz-intro) {
+            padding: clamp(1.35rem, 4.5vw, 2.25rem);
+            min-height: min(92dvh, 52rem);
         }
         .quiz-content {
             padding: 0;
@@ -2798,33 +3378,16 @@
 
     @media (max-width: 380px) {
         .quiz-section {
-            padding: clamp(1rem, 3.5vw, 1.75rem) clamp(0.85rem, 3.5vw, 1.25rem);
+            --quiz-screen-pad: clamp(0.5rem, 2.5vw, 1.15rem);
             min-height: 100svh;
         }
-        .quiz-panel {
-            padding: 1rem 0.95rem 1.2rem;
+        .quiz-panel:not(.quiz-intro) {
+            padding: clamp(1.35rem, 4vw, 2rem);
+            min-height: min(93dvh, 52rem);
         }
         .quiz-intro.quiz-panel {
-            padding: clamp(2.1rem, 6.5vw, 2.85rem) clamp(0.95rem, 3.5vw, 1.25rem);
-            min-height: clamp(20rem, 54svh, 30rem);
-        }
-        .quiz-intro.quiz-panel .quiz-title {
-            margin-bottom: 1rem !important;
-        }
-        .quiz-intro.quiz-panel .quiz-intro-sub {
-            margin-bottom: 1.65rem;
-            font-size: 0.9rem;
-        }
-        .quiz-intro-kicker {
-            font-size: 0.62rem;
-            letter-spacing: 0.2em;
-        }
-        .quiz-intro-micro {
-            font-size: 0.78rem;
-            margin-top: 1rem;
-        }
-        .quiz-title {
-            font-size: 1.6rem !important;
+            padding: clamp(2.5rem, 8vw, 3.75rem) clamp(0.95rem, 3.5vw, 1.35rem);
+            min-height: min(85svh, 44rem);
         }
         .quiz-email-title {
             font-size: 1rem !important;
@@ -2841,64 +3404,30 @@
         }
     }
 
-    /* FAQ Section Styles - consistent with hero (#050505) */
-    .faq-section {
-        background: #050505 !important;
-        padding: clamp(2rem, 4vw, 3rem) 0 clamp(5rem, 12vw, 8rem);
-    }
-    .faq-section .container {
-        max-width: 720px;
-        margin: 0 auto;
-        padding: 0 clamp(1.5rem, 4vw, 2.5rem);
-        position: relative;
-        z-index: 1;
-    }
-
-    .faq-label {
-        display: block;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: rgba(241, 0, 0, 0.9);
-        text-align: center;
-        margin-bottom: 0.75rem;
-    }
-    .faq-title {
-        font-family: 'Anton', sans-serif;
-        color: rgba(255, 255, 255, 0.98);
-        font-size: clamp(1.75rem, 4vw, 2.5rem);
-        font-weight: 700;
-        text-transform: uppercase;
-        text-align: center;
-        letter-spacing: -0.03em;
-        margin-bottom: 2rem;
-        line-height: 1.2;
-    }
-
-    .faq-container {
-        max-width: 680px;
-        margin: 0 auto;
+    /* FAQ — flat rows like .pr-lp-method-step (shell + type from shared LP block above) */
+    .faq-section.pr-lp-section .faq-container {
+        margin: 1.25rem 0 0;
+        max-width: 100%;
         display: flex;
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 0;
     }
-
-    .faq-item {
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.03);
-        overflow: hidden;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-        transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    .faq-section .faq-item {
+        border: none;
+        border-bottom: 1px solid rgba(255, 252, 241, 0.06);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        overflow: visible;
+        transition: border-color 0.2s ease;
     }
-
-    .faq-item:hover {
-        border-color: rgba(241, 0, 0, 0.3);
+    .faq-section .faq-item:first-of-type {
+        border-top: 1px solid rgba(255, 252, 241, 0.06);
     }
-
-    .faq-question {
+    .faq-section .faq-item:hover {
+        border-color: rgba(255, 252, 241, 0.06);
+    }
+    .faq-section .faq-question {
         width: 100%;
         background: none;
         border: none;
@@ -2908,114 +3437,73 @@
         justify-content: space-between;
         font-family: 'DM Sans', sans-serif;
         font-weight: 600;
-        color: rgba(255, 255, 255, 0.95);
-        font-size: 1rem;
-        padding: 1.15rem 1.25rem;
+        color: rgba(255, 252, 241, 0.88);
+        font-size: clamp(0.95rem, 1.75vw, 1.05rem);
+        padding: 0.85rem 0;
         cursor: pointer;
-        transition: background 0.2s, color 0.2s;
+        transition: color 0.2s;
         text-align: left;
     }
-
-    .faq-question:hover {
-        color: #f10000;
+    .faq-section .faq-question:hover {
+        color: var(--pr-red);
     }
-
-    .faq-question.active {
-        background: rgba(241, 0, 0, 0.1);
-        color: #f10000;
+    .faq-section .faq-question.active {
+        background: transparent;
+        color: var(--pr-red);
     }
-
-    .faq-question i {
+    .faq-section .faq-question i {
         font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.6);
+        color: rgba(255, 252, 241, 0.45);
         margin-left: 1rem;
         transition: transform 0.3s, color 0.2s;
         display: inline-block;
         flex-shrink: 0;
     }
-
-    .faq-question.active i {
+    .faq-section .faq-question.active i {
         transform: rotate(180deg);
-        color: #f10000;
+        color: var(--pr-red);
     }
-
-    .faq-answer {
+    .faq-section .faq-answer {
         max-height: 0;
         overflow: hidden;
         background: transparent;
-        transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
-        padding: 0 1.25rem;
+        transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0;
     }
-
-    .faq-answer.active {
+    .faq-section .faq-answer.active {
         max-height: 800px;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        padding-top: 0.25rem;
-        padding-bottom: 1.25rem;
+        padding-top: 0.15rem;
+        padding-bottom: 0.85rem;
     }
-
-    .faq-answer p {
+    .faq-section .faq-answer p {
         font-family: 'DM Sans', sans-serif;
-        color: rgba(255, 255, 255, 0.85);
-        font-size: 1rem;
-        padding: 0.35rem 0;
+        color: rgba(255, 252, 241, 0.62);
+        font-size: clamp(0.95rem, 1.75vw, 1.05rem);
+        padding: 0.3rem 0;
         margin: 0;
-        line-height: 1.6;
+        line-height: 1.55;
     }
-
-    .faq-answer ul {
+    .faq-section .faq-answer ul {
         margin: 0.5rem 0;
-        padding-left: 1.5rem;
+        padding-left: 1.25rem;
     }
-
-    .faq-answer li {
+    .faq-section .faq-answer li {
         font-family: 'DM Sans', sans-serif;
-        color: rgba(255, 255, 255, 0.85);
-        font-size: 1rem;
+        color: rgba(255, 252, 241, 0.62);
+        font-size: clamp(0.95rem, 1.75vw, 1.05rem);
         padding: 0.2rem 0;
         margin: 0;
-        line-height: 1.6;
+        line-height: 1.55;
     }
-
-    /* Mobile FAQ Styles */
     @media (max-width: 600px) {
-        .faq-section {
-            padding: 2rem 0 3rem;
-        }
-        .faq-section .container {
-            padding: 0 1.25rem;
-        }
-        .faq-title {
-            font-size: 2.25rem;
-            margin-bottom: 1.5rem;
-        }
-        .faq-container {
-            max-width: 99vw;
-            gap: 0.7rem;
-        }
-        .faq-question {
-            font-size: 1rem;
-            padding: 0.85rem 0.9rem;
-        }
-        .faq-question i {
-            font-size: 1.1rem;
-            margin-left: 0.7rem;
-        }
-        .faq-answer {
-            padding: 0 0.9rem;
-        }
-        .faq-answer.active {
-            padding-top: 0.3rem;
-            padding-bottom: 0.7rem;
+        .faq-section .faq-answer.active {
             max-height: min(70vh, 400px);
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
-        .faq-answer p,
-        .faq-answer li {
+        .faq-section .faq-answer p,
+        .faq-section .faq-answer li {
             font-size: 0.97rem;
-            padding: 0.28rem 0;
         }
     }
 
@@ -3197,43 +3685,61 @@
 
     <main>
         <section id="home-hero" class="pr-hero pr-hero-movement pr-hero--quiz" aria-labelledby="quiz-hero-heading">
-            <svg class="pr-hero-spiral-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <path d="M50,18 Q18,18 18,50 Q18,82 50,82 Q82,82 82,50 Q82,18 50,18" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <path d="M50,31 Q31,31 31,50 Q31,69 50,69 Q69,69 69,50 Q69,31 50,31" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <path d="M50,42 Q42,42 42,50 Q42,58 50,58 Q58,58 58,50 Q58,42 50,42" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <circle cx="50" cy="50" r="3" fill="currentColor"/>
-            </svg>
-            <div class="pr-hero-inner pr-hero-inner--quiz">
+            <div class="pr-hero-spiral-wrap" aria-hidden="true">
+                <svg class="pr-hero-spiral-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <style>
+                            .quiz-map-ring { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+                        </style>
+                    </defs>
+                    <g class="quiz-map-ring-layer quiz-map-ring-layer--outer" aria-hidden="true">
+                        <path class="quiz-map-ring" d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke-width="0.32" opacity="0.26"/>
+                    </g>
+                    <g class="quiz-map-ring-layer quiz-map-ring-layer--middle" aria-hidden="true">
+                        <path class="quiz-map-ring" d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke-width="0.28" opacity="0.22"/>
+                    </g>
+                    <g class="quiz-map-ring-layer quiz-map-ring-layer--inner" aria-hidden="true">
+                        <path class="quiz-map-ring" d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke-width="0.24" opacity="0.18"/>
+                    </g>
+                    <g class="quiz-map-ring-layer quiz-map-ring-layer--center" aria-hidden="true">
+                        <circle class="quiz-map-center" cx="50" cy="50" r="1.2" fill="currentColor" opacity="0.14"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="pr-hero-inner pr-hero-inner--quiz pr-lp-hero-inner">
                 <div class="pr-hero-text" id="hero-text-container">
-                    <span class="pr-label pr-label--quiz-hero">Your relationship is the mirror</span>
-                    <h1 class="pr-hero-headline" id="quiz-hero-heading">
-                        <span class="pr-hero-line">Your relationships are revealing</span>
-                        <span class="pr-hero-line">the pattern running your life.</span>
-                    </h1>
-                    <p class="pr-hero-subtext">The people you choose, what you tolerate, and what you keep going back to isn’t random. There’s a pattern behind it—and this quiz shows you what it is and what to do next.</p>
+                    <span class="pr-label pr-label--quiz-hero">You&rsquo;re not overthinking</span>
+                    <h1 class="pr-hero-headline pr-lp-hero-title" id="quiz-hero-heading">You already feel something is off. You just don&rsquo;t fully trust it yet.</h1>
+                    <p class="pr-hero-subtext">You keep replaying it in your head&mdash;trying to make it make sense.<br />But this isn&rsquo;t confusion. It&rsquo;s a pattern.</p>
                     <div class="pr-hero-ctas">
-                        <a href="#quiz-section" class="pr-btn-primary pr-hero-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Show Me My Pattern</a>
+                        <a href="#quiz-section" class="pr-btn-primary pr-hero-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Show me my pattern</a>
                     </div>
-                    <p class="pr-hero-cta-note">Takes 5 minutes. Instant clarity.</p>
+                    <p class="pr-hero-cta-note">5 minutes. Get clear fast.</p>
                 </div>
             </div>
-            <div class="pr-hero-scroll-hint" aria-hidden="true">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-            </div>
+            <a href="#pr-search-cluster-section" class="pr-hero-scroll-hint" aria-label="Scroll to the next section">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
             <style>
             /* Quiz landing hero — matches home Pattern Reset hero (pr-hero-movement) */
             #home-hero.pr-hero {
                 --pr-red: #f10000;
                 --pr-dark: #050505;
                 --pr-cream: #fffcf1;
-                --pr-max-hero: 860px;
+                /* Match quiz intro + LP column rhythm */
+                --pr-max-hero: min(900px, 100%);
+                --qi-gap-label: clamp(0.65rem, 1.5vw, 0.95rem);
+                --qi-gap-head-sub: clamp(0.95rem, 2.5vw, 1.45rem);
+                --qi-gap-sub-cta: clamp(1.75rem, 5vw, 2.75rem);
+                --qi-gap-cta-micro: clamp(0.7rem, 2vw, 1rem);
                 background: var(--pr-dark);
+                width: 100%;
+                max-width: 100%;
                 min-height: 100vh;
                 min-height: 100dvh;
                 display: flex;
                 align-items: center;
-                padding: clamp(5rem, 10vw, 8rem) clamp(1.25rem, 4vw, 3rem) clamp(4rem, 8vw, 6rem);
+                padding: clamp(5.5rem, 12vw, 9rem) clamp(1.25rem, 4vw, 2.5rem) clamp(3rem, 10vw, 7rem);
                 box-sizing: border-box;
                 position: relative;
                 overflow: hidden;
@@ -3248,18 +3754,20 @@
                 background: radial-gradient(circle, rgba(241,0,0,0.07) 0%, transparent 70%);
                 pointer-events: none;
             }
-            #home-hero .pr-hero-spiral-bg {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: min(700px, 90vw);
-                height: min(700px, 90vw);
-                opacity: 0.035;
-                pointer-events: none;
-                color: var(--pr-cream);
+            /* Layered logo mark — same structure / motion as quiz intro (see global .pr-hero-spiral-bg rules) */
+            #home-hero .pr-hero-spiral-wrap {
+                z-index: 0;
+                transform: translateY(-5vh);
             }
-            #home-hero .pr-hero-inner--quiz {
+            #home-hero .pr-hero-spiral-bg {
+                position: relative;
+                margin: 0;
+                max-width: 100%;
+                max-height: 100%;
+                pointer-events: none;
+                box-sizing: border-box;
+            }
+            #home-hero .pr-hero-inner--quiz.pr-lp-hero-inner {
                 max-width: var(--pr-max-hero);
                 margin: 0 auto;
                 width: 100%;
@@ -3267,6 +3775,16 @@
                 position: relative;
                 z-index: 1;
             }
+            #home-hero #hero-text-container {
+                max-width: 100%;
+                width: 100%;
+                margin: 0 auto;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            /* Aligned with .quiz-intro-label */
             #home-hero .pr-label--quiz-hero {
                 font-family: 'DM Sans', sans-serif;
                 font-size: 0.78rem;
@@ -3275,66 +3793,82 @@
                 text-transform: uppercase;
                 color: var(--pr-red);
                 display: block;
-                margin: 0 auto 1rem;
+                margin: 0 0 var(--qi-gap-label);
+                line-height: 1.35;
+                text-wrap: balance;
             }
-            #home-hero .pr-hero-headline {
+            /* Aligned with .quiz-intro-headline */
+            #home-hero .pr-hero-headline.pr-lp-hero-title {
                 font-family: 'Anton', sans-serif;
                 font-weight: 400;
                 text-transform: uppercase;
                 color: var(--pr-cream);
-                line-height: 1.05;
-                letter-spacing: 0.01em;
-                font-size: clamp(2.4rem, 5.5vw, 5rem);
-                margin: 0 0 0.5rem;
+                max-width: min(36rem, 100%);
+                margin: 0 auto;
+                text-wrap: balance;
+                font-size: clamp(1.85rem, 3.4vw + 0.45rem, 3.65rem);
+                line-height: 1.08;
+                letter-spacing: 0.015em;
             }
-            #home-hero .pr-hero-line { display: block; }
+            /* Aligned with .quiz-intro-subhead */
             #home-hero .pr-hero-subtext {
                 font-family: 'DM Sans', sans-serif;
-                font-size: clamp(1.05rem, 2.15vw, 1.4rem);
+                font-size: clamp(0.98rem, 1.85vw, 1.12rem);
                 font-weight: 500;
                 color: rgba(255, 252, 241, 0.78);
-                line-height: 1.45;
-                margin: clamp(1.1rem, 2.5vw, 1.5rem) auto 0;
-                max-width: min(36rem, 100%);
-                letter-spacing: 0.03em;
+                line-height: 1.65;
+                margin: var(--qi-gap-head-sub) auto 0;
+                max-width: min(38rem, 100%);
+                letter-spacing: 0.01em;
                 text-wrap: balance;
             }
             #home-hero .pr-hero-ctas {
                 display: flex;
                 justify-content: center;
-                margin-top: 3rem;
+                margin-top: var(--qi-gap-sub-cta);
                 flex-wrap: wrap;
                 gap: 1rem;
             }
+            /* Aligned with #quiz-section .quiz-intro .btn-mission-primary */
             #home-hero .pr-btn-primary {
-                display: inline-block;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
                 background: var(--pr-red);
                 color: #fff;
                 font-family: 'Anton', sans-serif;
-                font-size: 1rem;
+                font-size: clamp(0.78rem, 0.35rem + 1.85vw, 1rem);
                 font-weight: 400;
-                letter-spacing: 0.12em;
+                letter-spacing: clamp(0.08em, 0.04em + 0.35vw, 0.12em);
                 text-transform: uppercase;
                 text-decoration: none;
-                padding: 1rem 2rem;
+                padding: clamp(0.7rem, 0.55rem + 0.65vw, 1.125rem) clamp(1.15rem, 0.75rem + 2.75vw, 2.5rem);
+                line-height: 1;
+                min-height: clamp(44px, 2.65rem + 1vw, 52px);
+                width: auto;
+                max-width: min(18rem, 100%);
                 border-radius: 6px;
                 transition: background 0.2s, transform 0.15s;
                 white-space: nowrap;
+                box-sizing: border-box;
             }
             #home-hero .pr-btn-primary:hover,
             #home-hero .pr-btn-primary:focus {
                 background: #cc0000;
                 transform: translateY(-1px);
             }
+            /* Aligned with .quiz-intro-micro */
             #home-hero .pr-hero-cta-note {
                 font-family: 'DM Sans', sans-serif;
-                font-size: 0.8125rem;
+                font-size: clamp(0.78rem, 1.5vw, 0.8125rem);
                 font-weight: 400;
-                color: rgba(255,252,241,0.42);
-                line-height: 1.4;
-                margin: 0.85rem auto 0;
-                letter-spacing: 0.01em;
-                max-width: 22rem;
+                color: rgba(255, 252, 241, 0.42);
+                line-height: 1.45;
+                margin: var(--qi-gap-cta-micro) auto 0;
+                letter-spacing: 0.02em;
+                max-width: min(30rem, 100%);
+                text-wrap: balance;
             }
             #home-hero .pr-hero-scroll-hint {
                 position: absolute;
@@ -3350,6 +3884,13 @@
                 font-size: 0.7rem;
                 letter-spacing: 0.15em;
                 text-transform: uppercase;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            #home-hero .pr-hero-scroll-hint:focus-visible {
+                outline: 2px solid rgba(241, 0, 0, 0.55);
+                outline-offset: 4px;
+                border-radius: 4px;
             }
             @media (prefers-reduced-motion: no-preference) {
                 #home-hero .pr-hero-scroll-hint { animation: pr-quiz-hero-bounce 2.5s ease-in-out infinite; }
@@ -3359,792 +3900,330 @@
                 50% { transform: translateX(-50%) translateY(6px); }
             }
             @media (max-width: 768px) {
-                #home-hero.pr-hero { min-height: auto; padding-top: clamp(5rem, 12vw, 7rem); }
+                #home-hero .pr-hero-spiral-wrap {
+                    transform: translateY(-8vh);
+                }
+                #home-hero.pr-hero {
+                    --qi-gap-label: clamp(0.55rem, 2vw, 0.85rem);
+                    --qi-gap-head-sub: clamp(0.9rem, 3vw, 1.25rem);
+                    --qi-gap-sub-cta: clamp(1.65rem, 5.5vw, 2.5rem);
+                    --qi-gap-cta-micro: clamp(0.65rem, 2.2vw, 0.9rem);
+                    min-height: 100dvh;
+                    min-height: 100svh;
+                    align-items: center;
+                    justify-content: center;
+                    padding-top: calc(env(safe-area-inset-top, 0px) + clamp(7.5rem, 20vh, 14rem));
+                    padding-right: clamp(1.25rem, 4vw, 2.5rem);
+                    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(8rem, 26vh, 17rem));
+                    padding-left: clamp(1.25rem, 4vw, 2.5rem);
+                }
                 #home-hero .pr-hero-scroll-hint { display: none; }
-                #home-hero .pr-hero-subtext { max-width: 100%; }
+            }
+            @media (max-width: 480px) {
+                #home-hero.pr-hero {
+                    --qi-gap-sub-cta: clamp(1.5rem, 5vw, 2.25rem);
+                    padding-top: calc(env(safe-area-inset-top, 0px) + clamp(7rem, 22vh, 13rem));
+                    padding-right: clamp(1.15rem, 5vw, 1.35rem);
+                    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(8.25rem, 28vh, 16rem));
+                    padding-left: clamp(1.15rem, 5vw, 1.35rem);
+                }
+                #home-hero .pr-hero-headline.pr-lp-hero-title {
+                    font-size: clamp(1.65rem, 6.5vw + 0.35rem, 2.35rem);
+                    line-height: 1.09;
+                }
             }
             html { scroll-behavior: smooth; }
             </style>
         </section>
 
-        <!-- Loop / pattern truth — matches home “The problem” section styling -->
-        <section class="index-loop-section pr-section pr-lp-section" id="pattern-truth-section" aria-labelledby="pattern-truth-heading">
-            <div class="pr-lp-inner">
-                <p class="pr-label">The loop</p>
-                <h2 class="pr-lp-h2" id="pattern-truth-heading">You say you’re done—but somehow, you keep going back.</h2>
-                <p class="pr-lp-punch">You see the signs.</p>
-                <p class="pr-lp-punch">He goes cold when you need him present—or when you finally say what you feel.</p>
-                <p class="pr-lp-punch">But you still stay longer than you should.</p>
-                <p class="pr-lp-em">It’s not because you’re weak or broken.</p>
-                <p class="pr-lp-em index-loop-finale">It’s because you’re in a <span class="index-loop-accent">pattern</span>.</p>
-            </div>
-            <style>
-            /* Mirrors home.html #seen (“The problem”) — scoped to quiz page */
-            #pattern-truth-section.index-loop-section.pr-lp-section {
-                background: #080808;
-                border-top: 1px solid rgba(255, 252, 241, 0.04);
-                padding: clamp(3.75rem, 7.5vw, 7.5rem) clamp(1.25rem, 4vw, 3rem);
-                box-sizing: border-box;
-            }
-            #pattern-truth-section .pr-lp-inner {
-                max-width: 640px;
-                margin: 0 auto;
-                width: 100%;
-            }
-            #pattern-truth-section .pr-label {
-                font-family: 'DM Sans', sans-serif;
-                font-size: 0.78rem;
-                font-weight: 700;
-                letter-spacing: 0.22em;
-                text-transform: uppercase;
-                color: #f10000;
-                display: block;
-                margin-bottom: 0.75rem;
-            }
-            #pattern-truth-section .pr-lp-h2 {
-                font-family: 'Anton', sans-serif;
-                font-weight: 400;
-                text-transform: uppercase;
-                color: #fffcf1;
-                font-size: clamp(1.5rem, 3.2vw, 2.15rem);
-                line-height: 1.12;
-                margin: 0 0 1.25rem;
-                letter-spacing: 0.02em;
-                text-wrap: balance;
-            }
-            #pattern-truth-section .pr-lp-punch {
-                font-family: 'DM Sans', sans-serif;
-                font-size: clamp(1.05rem, 2vw, 1.22rem);
-                color: rgba(255, 252, 241, 0.88);
-                line-height: 1.55;
-                margin: 0 0 0.65rem;
-                font-weight: 500;
-            }
-            #pattern-truth-section .pr-lp-h2 + .pr-lp-punch {
-                font-size: clamp(1.12rem, 2.15vw, 1.32rem);
-                font-weight: 600;
-                color: rgba(255, 252, 241, 0.93);
-            }
-            #pattern-truth-section .pr-lp-em {
-                font-family: 'DM Sans', sans-serif;
-                font-size: clamp(1.1rem, 2.1vw, 1.28rem);
-                color: #fffcf1;
-                font-weight: 600;
-                margin: 1.5rem 0 0;
-                line-height: 1.45;
-            }
-            #pattern-truth-section .index-loop-finale {
-                margin-top: 0.85rem;
-            }
-            #pattern-truth-section .index-loop-accent {
-                color: #f10000;
-                font-weight: 700;
-            }
-            </style>
-        </section>
-
-        <!-- Pain & Clarity Section - SEO-aligned, audience resonance -->
-        <section class="pain-clarity-section" id="pain-clarity-section">
-            <div class="pain-clarity-inner">
-                <span class="pain-clarity-label">You keep trying to figure it out…</span>
-                <h2 class="pain-clarity-headline">The Questions You Can’t Stop Thinking About</h2>
-                <p class="pain-clarity-subhead">Is he serious? Am I overthinking? Why the distance—or the blow-ups? Should I leave? You deserve a real answer.</p>
-                
-                <div class="pain-clarity-grid">
-                    <div class="pain-clarity-item">
-                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
-                        <span class="pain-clarity-text">Why do I keep ending up in the same kind of relationship?</span>
-                    </div>
-                    <div class="pain-clarity-item">
-                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
-                        <span class="pain-clarity-text">Why can’t I let go, even when I know this isn’t right?</span>
-                    </div>
-                    <div class="pain-clarity-item">
-                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
-                        <span class="pain-clarity-text">Why do I overthink everything he says and does?</span>
-                    </div>
-                    <div class="pain-clarity-item">
-                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
-                        <span class="pain-clarity-text">Why do I feel anxious when he pulls away?</span>
-                    </div>
-                    <div class="pain-clarity-item">
-                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
-                        <span class="pain-clarity-text">Why do I tolerate things I know I shouldn’t?</span>
-                    </div>
-                    <div class="pain-clarity-item">
-                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
-                        <span class="pain-clarity-text">Why do I keep losing myself in relationships?</span>
-                    </div>
-                    <div class="pain-clarity-item">
-                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
-                        <span class="pain-clarity-text">Why do I feel stuck between leaving and hoping?</span>
-                    </div>
-                    <div class="pain-clarity-item">
-                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
-                        <span class="pain-clarity-text">Am I being played—and just ignoring it?</span>
-                    </div>
-                    <div class="pain-clarity-item">
-                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
-                        <span class="pain-clarity-text">Is this going anywhere—or am I wasting my time?</span>
-                    </div>
-                    <div class="pain-clarity-item">
-                        <span class="pain-clarity-icon" aria-hidden="true">?</span>
-                        <span class="pain-clarity-text">Why does he shut down—or go cold when things get real?</span>
-                    </div>
-                </div>
-
-                <div class="pain-clarity-payoff about-merged">
-                    <div class="about-merged-panel">
-                        <div class="about-merged-label-row">
-                            <span class="about-merged-label-line" aria-hidden="true"></span>
-                            <span class="about-merged-label"><span class="about-merged-label-quiet">Built by</span> <span class="about-merged-label-name">Liam</span></span>
-                        </div>
-                        <div class="about-merged-main">
-                            <div class="about-merged-copy">
-                                <h3 class="about-merged-title">
-                                    <span class="about-merged-title-line">It's not in your head.</span>
-                                    <span class="about-merged-title-line about-merged-title-line--second">There's a reason this keeps happening.</span>
-                                </h3>
-                                <p class="about-merged-text">I’ve seen this pattern play out in thousands of situations—<br>and most people don’t realize they’re in one.</p>
-                                <p class="about-merged-text about-merged-text--standout">This isn’t about him.</p>
-                                <p class="about-merged-text about-merged-text--standout">It’s about what this is revealing about you.</p>
-                                <p class="about-merged-text">This shows you what you’re actually dealing with—<br>so you can stop second-guessing yourself<br>and finally know what to do next.</p>
-                            </div>
-                            <div class="about-you-photo-wrap">
-                                <img src="images/founder.png" alt="Liam" class="about-you-photo" width="172" height="215" decoding="async">
-                                <a href="https://www.tiktok.com/@liamsaysit" target="_blank" rel="noopener noreferrer" class="about-you-handle">@LiamSaysit</a>
-                            </div>
-                        </div>
-                        <div class="about-merged-cta-wrap">
-                            <a href="#quiz-section" class="about-merged-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Show Me My Pattern</a>
-                        </div>
-                    </div>
+        <section class="pr-search-cluster-section pr-section" id="pr-search-cluster-section" aria-labelledby="pr-search-cluster-heading">
+            <div class="pr-search-cluster-inner">
+                <h2 class="visually-hidden" id="pr-search-cluster-heading">It&rsquo;s not just him or you alone. It&rsquo;s what keeps happening between you.</h2>
+                <p class="pr-search-cluster-eyebrow">
+                    <span class="pr-search-cluster-eyebrow__main">It&rsquo;s not just him. It&rsquo;s not just you.</span>
+                    <span class="pr-search-cluster-eyebrow__sub">It&rsquo;s what keeps happening between you.</span>
+                </p>
+                <ul class="pr-search-cluster">
+                    <li class="pr-search-cluster-pill">overthinking everything</li>
+                    <li class="pr-search-cluster-pill">mixed signals</li>
+                    <li class="pr-search-cluster-pill">hot and cold</li>
+                    <li class="pr-search-cluster-pill">situationship</li>
+                    <li class="pr-search-cluster-pill">breadcrumbing</li>
+                    <li class="pr-search-cluster-pill">anxious attachment</li>
+                    <li class="pr-search-cluster-pill">avoidant partner</li>
+                    <li class="pr-search-cluster-pill">feeling anxious when he pulls away</li>
+                    <li class="pr-search-cluster-pill">fear of abandonment</li>
+                    <li class="pr-search-cluster-pill">can&rsquo;t let go</li>
+                    <li class="pr-search-cluster-pill">same fights on repeat</li>
+                    <li class="pr-search-cluster-pill">taking him back again</li>
+                    <li class="pr-search-cluster-pill">am I the problem?</li>
+                    <li class="pr-search-cluster-pill">losing yourself in the relationship</li>
+                    <li class="pr-search-cluster-pill">people pleasing</li>
+                    <li class="pr-search-cluster-pill">walking on eggshells</li>
+                    <li class="pr-search-cluster-pill">gaslighting</li>
+                    <li class="pr-search-cluster-pill">love bombing</li>
+                    <li class="pr-search-cluster-pill">emotional neglect</li>
+                    <li class="pr-search-cluster-pill">abuse</li>
+                    <li class="pr-search-cluster-pill">trauma bond</li>
+                    <li class="pr-search-cluster-pill">codependency</li>
+                    <li class="pr-search-cluster-pill">cheating</li>
+                    <li class="pr-search-cluster-pill">emotional affair</li>
+                    <li class="pr-search-cluster-pill">micro-cheating</li>
+                    <li class="pr-search-cluster-pill">mistrust</li>
+                    <li class="pr-search-cluster-pill">jealousy</li>
+                    <li class="pr-search-cluster-pill">lack of intimacy</li>
+                    <li class="pr-search-cluster-pill">sexless relationship</li>
+                </ul>
+                <div class="pr-lp-quiz-cta-wrap">
+                    <a href="#quiz-section" class="pr-btn-primary pr-lp-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Show me my pattern</a>
                 </div>
             </div>
-            <style>
-            .pain-clarity-section {
-                background: #050505;
-                padding: clamp(4rem, 10vw, 6rem) clamp(1.5rem, 4vw, 2.5rem);
-                    width: 100%;
-                    position: relative;
-                    overflow: hidden;
-                }
-            .pain-clarity-inner {
-                position: relative;
-                z-index: 2;
-                max-width: 900px;
-                margin: 0 auto;
-                text-align: left;
-            }
-            .pain-clarity-label {
-                display: block;
-                font-family: 'DM Sans', sans-serif;
-                font-size: 0.9rem;
-                    font-weight: 700;
-                letter-spacing: 0.2em;
-                    text-transform: uppercase;
-                color: rgba(241, 0, 0, 0.9);
-                margin-bottom: 1rem;
-                }
-            .pain-clarity-headline {
-                    font-family: 'Anton', sans-serif;
-                font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-                    font-weight: 700;
-                color: rgba(255, 255, 255, 0.98);
-                line-height: 1.15;
-                letter-spacing: -0.02em;
-                    text-transform: uppercase;
-                margin-bottom: 1rem;
-                }
-            .pain-clarity-subhead {
-                    font-family: 'DM Sans', sans-serif;
-                font-size: clamp(1rem, 2vw, 1.15rem);
-                color: rgba(255, 255, 255, 0.8);
-                    line-height: 1.6;
-                margin-bottom: 2.5rem;
-            }
-            .pain-clarity-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.5rem 1.25rem;
-                margin-bottom: 2.5rem;
-            }
-            .pain-clarity-item {
-                display: flex;
-                align-items: flex-start;
-                gap: 0.6rem;
-                padding: 0.75rem 1rem;
-                border: 1px solid rgba(255, 255, 255, 0.07);
-                border-radius: 6px;
-            }
-            .pain-clarity-icon {
-                flex-shrink: 0;
-                width: 20px;
-                height: 20px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: rgba(241, 0, 0, 0.7);
-                font-family: 'DM Sans', sans-serif;
-                font-size: 0.8rem;
-                font-weight: 600;
-            }
-            .pain-clarity-text {
-                    font-family: 'DM Sans', sans-serif;
-                font-size: clamp(0.9rem, 1.8vw, 1.05rem);
-                    font-weight: 500;
-                color: rgba(255, 255, 255, 0.92);
-                line-height: 1.5;
-            }
-            .pain-clarity-payoff {
-                text-align: left;
-                padding: clamp(2.5rem, 5vw, 3rem) 0 0;
-                position: relative;
-            }
-            .about-merged {
-                display: flex;
-                flex-direction: column;
-                gap: 0;
-            }
-            .about-merged-panel {
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 12px;
-                background: linear-gradient(165deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(0, 0, 0, 0.2) 100%);
-                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-                padding: clamp(1.35rem, 3.5vw, 2rem);
-                position: relative;
-            }
-            .about-merged-label-row {
-                display: flex;
-                align-items: center;
-                gap: 0.65rem;
-                margin-bottom: 1rem;
-            }
-            .about-merged-label-line {
-                width: 1.25rem;
-                height: 1px;
-                flex-shrink: 0;
-                background: linear-gradient(90deg, rgba(241, 0, 0, 0.95), rgba(241, 0, 0, 0.15));
-                border-radius: 1px;
-            }
-            .about-merged-label {
-                display: inline;
-                font-family: 'DM Sans', sans-serif;
-                font-size: 0.6875rem;
-                font-weight: 500;
-                letter-spacing: 0.14em;
-                text-transform: uppercase;
-                color: rgba(255, 252, 241, 0.38);
-                margin: 0;
-                line-height: 1;
-            }
-            .about-merged-label-quiet {
-                font-weight: 500;
-                letter-spacing: 0.18em;
-            }
-            .about-merged-label-name {
-                font-weight: 600;
-                letter-spacing: 0.16em;
-                color: rgba(255, 252, 241, 0.82);
-            }
-            .about-merged-main {
-                display: grid;
-                grid-template-columns: minmax(0, 1fr) auto;
-                gap: clamp(1.35rem, 3vw, 2.25rem);
-                align-items: start;
-            }
-            .about-merged-copy {
-                min-width: 0;
-            }
-            .about-merged-title {
-                font-family: 'Anton', sans-serif;
-                font-weight: 400;
-                line-height: 1.12;
-                letter-spacing: 0.02em;
-                margin: 0 0 1.05rem 0;
-                padding: 0;
-                text-wrap: pretty;
-            }
-            .about-merged-title-line {
-                display: block;
-                font-size: clamp(1.4rem, 3.2vw, 2rem);
-                color: rgba(255, 255, 255, 0.99);
-                background: transparent;
-            }
-            .about-merged-title-line--second {
-                margin-top: 0.4rem;
-                font-size: clamp(1.12rem, 2.35vw, 1.45rem);
-                color: rgba(255, 255, 255, 0.78);
-                letter-spacing: 0.01em;
-                line-height: 1.2;
-                background: transparent;
-            }
-            .about-merged-text--standout {
-                font-weight: 600;
-                color: rgba(255, 252, 241, 0.96);
-                letter-spacing: 0.01em;
-                margin: 0.3rem 0 0;
-                line-height: 1.45;
-            }
-            .about-merged-copy .about-merged-text + .about-merged-text--standout {
-                margin-top: 1.05rem;
-                padding-top: 1rem;
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            .about-merged-cta-wrap {
-                margin-top: 1.35rem;
-                padding-top: 1.2rem;
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-            }
-            .about-merged-cta {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0.9rem 2rem;
-                background: #f10000;
-                color: #fff;
-                font-family: 'DM Sans', sans-serif;
-                font-size: 0.95rem;
-                font-weight: 600;
-                text-decoration: none;
-                text-transform: uppercase;
-                letter-spacing: 0.06em;
-                border-radius: 8px;
-                transition: background 0.25s ease, transform 0.2s ease;
-            }
-            .about-merged-cta:hover {
-                background: #d40000;
-                transform: translateY(-1px);
-            }
-            .about-you-photo-wrap {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                gap: 0.65rem;
-                padding-top: 0.15rem;
-                text-align: center;
-                justify-self: end;
-                width: max-content;
-                max-width: 100%;
-            }
-            .about-you-photo {
-                display: block;
-                width: 100%;
-                max-width: clamp(140px, 24vw, 176px);
-                aspect-ratio: 4 / 5;
-                height: auto;
-                border-radius: 12px;
-                object-fit: cover;
-                object-position: center center;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-                border: 1px solid rgba(255, 255, 255, 0.07);
-            }
-            .about-you-handle {
-                font-family: 'DM Sans', sans-serif;
-                font-size: 0.85rem;
-                font-weight: 500;
-                color: rgba(255, 255, 255, 0.65);
-                text-decoration: none;
-                transition: color 0.2s ease;
-            }
-            .about-you-handle:hover {
-                color: rgba(241, 0, 0, 0.9);
-            }
-            .about-merged-text {
-                font-family: 'DM Sans', sans-serif;
-                font-size: clamp(1rem, 1.65vw, 1.12rem);
-                font-weight: 500;
-                color: rgba(255, 255, 255, 0.88);
-                line-height: 1.65;
-                margin: 0;
-                letter-spacing: 0.01em;
-                text-wrap: pretty;
-            }
-            .about-merged-copy .about-merged-text + .about-merged-text {
-                margin-top: 1rem;
-            }
-            @media (max-width: 700px) {
-                .pain-clarity-grid {
-                    grid-template-columns: 1fr;
-                    gap: 0;
-                    margin-bottom: 2rem;
-                }
-                .pain-clarity-item {
-                    padding: 0.7rem 0.9rem;
-                }
-                .pain-clarity-payoff {
-                    padding: 2rem 0;
-                }
-                .about-merged-panel {
-                    padding: 1.15rem 1.1rem 1.25rem;
-                }
-                .about-merged-title {
-                    margin-bottom: 1rem;
-                }
-                .about-merged-main {
-                    grid-template-columns: 1fr;
-                    gap: 1.35rem;
-                }
-                .about-you-photo-wrap {
-                    justify-self: center;
-                    margin: 0 auto;
-                    padding-top: 0;
-                }
-                .about-you-photo {
-                    max-width: min(260px, 82vw);
-                }
-            }
-                  @media (max-width: 600px) {
-                .pain-clarity-headline {
-                    font-size: clamp(1.85rem, 4.5vw, 2.5rem) !important;
-                }
-            }
-            @media (max-width: 480px) {
-                .pain-clarity-section {
-                    padding: 3rem 1.25rem 4rem;
-                }
-                .pain-clarity-headline {
-                    font-size: 1.85rem !important;
-                }
-                .pain-clarity-subhead {
-                    margin-bottom: 2rem;
-                    }
-                  }
-                </style>
         </section>
 
-        <!-- Pattern signals + what you’ll discover (merged) -->
-        <section class="pattern-signals-section" id="pattern-data-signals" aria-labelledby="pattern-signals-heading">
-            <div class="pattern-signals-inner">
-                <span class="pattern-signals-label">This isn’t just about him.</span>
-                <h2 class="pattern-signals-title" id="pattern-signals-heading">It’s about what this relationship is revealing in you:</h2>
-                <p class="pattern-signals-lead">What you fear, what you tolerate, what you still need, and where you’ve been leaving yourself behind. That reveals the <strong class="pattern-signals-strong">pattern</strong>.</p>
-                <div class="pattern-signals-track">
-                <ol class="pattern-signals-timeline">
-                    <li class="pattern-signals-item">
-                        <span class="pattern-signals-marker" aria-hidden="true"></span>
-                        <div class="pattern-signals-card">
-                            <h3 class="pattern-signals-item-title">What you choose</h3>
-                            <p class="pattern-signals-item-text">Who you’re drawn to is data—not always because it’s healthy, often because it’s <em>familiar</em>. That shows what your nervous system has learned to call love, even when it hurts.</p>
-                        </div>
+        <a href="#pain-stack-section" class="pr-lp-between-arrow" aria-label="Continue to The Emotional Cost section">
+            <span class="pr-lp-between-arrow__icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+        </a>
+
+        <!-- Emotional toll stack -->
+        <section class="pain-stack-section pr-section pr-lp-section" id="pain-stack-section" aria-labelledby="pain-stack-heading">
+            <div class="pain-stack-inner pr-lp-inner">
+                <p class="pr-label">THE REAL COST</p>
+                <h2 class="pr-lp-h2" id="pain-stack-heading">What this pattern is actually costing you</h2>
+                <p class="pain-stack-subhead">You&rsquo;re carrying the relationship &mdash; and paying for it everywhere else. The longer this continues, the more you lose yourself in it.</p>
+                <ol class="pain-stack-flow" aria-label="What this pattern is costing you">
+                    <li class="pain-stack-step">
+                        <span class="pain-stack-marker" aria-hidden="true"></span>
+                        <p class="pain-stack-line">Draining your time</p>
                     </li>
-                    <li class="pattern-signals-item">
-                        <span class="pattern-signals-marker" aria-hidden="true"></span>
-                        <div class="pattern-signals-card">
-                            <h3 class="pattern-signals-item-title">What you tolerate</h3>
-                            <p class="pattern-signals-item-text">What you keep excusing is data. Not because you’re weak—because some part of you learned: <span class="pattern-signals-whisper">this is normal</span> · <span class="pattern-signals-whisper">this is all I get</span> · <span class="pattern-signals-whisper">this is the price of being chosen</span>.</p>
-                        </div>
+                    <li class="pain-stack-step">
+                        <span class="pain-stack-marker" aria-hidden="true"></span>
+                        <p class="pain-stack-line">Pulling your focus away from what matters</p>
                     </li>
-                    <li class="pattern-signals-item">
-                        <span class="pattern-signals-marker" aria-hidden="true"></span>
-                        <div class="pattern-signals-card">
-                            <h3 class="pattern-signals-item-title">What you chase</h3>
-                            <p class="pattern-signals-item-text">What creates obsession is data. If inconsistency hooks you, or distance makes you want them more—that says something.</p>
-                        </div>
+                    <li class="pain-stack-step">
+                        <span class="pain-stack-marker" aria-hidden="true"></span>
+                        <p class="pain-stack-line">Lowering your energy day by day</p>
                     </li>
-                    <li class="pattern-signals-item">
-                        <span class="pattern-signals-marker" aria-hidden="true"></span>
-                        <div class="pattern-signals-card">
-                            <h3 class="pattern-signals-item-title">What triggers you</h3>
-                            <p class="pattern-signals-item-text">Your strongest reactions are data. Spiral, overthink, shut down, people-please, cling—that shows what this dynamic hooks in you.</p>
-                        </div>
-                    </li>
-                    <li class="pattern-signals-item">
-                        <span class="pattern-signals-marker" aria-hidden="true"></span>
-                        <div class="pattern-signals-card">
-                            <h3 class="pattern-signals-item-title">What you abandon in yourself</h3>
-                            <p class="pattern-signals-item-text">Relationships show where you leave yourself: you go quiet, shrink your needs, overfocus on them. That’s one of the biggest signals.</p>
-                        </div>
-                    </li>
-                    <li class="pattern-signals-item">
-                        <span class="pattern-signals-marker" aria-hidden="true"></span>
-                        <div class="pattern-signals-card">
-                            <h3 class="pattern-signals-item-title">What keeps repeating</h3>
-                            <p class="pattern-signals-item-text">Repetition is the clearest data. Different face, same feeling. Different person, same dynamic. <strong class="pattern-signals-strong">That’s the pattern.</strong></p>
-                        </div>
+                    <li class="pain-stack-step">
+                        <span class="pain-stack-marker" aria-hidden="true"></span>
+                        <p class="pain-stack-line">Clouding your clarity and decision-making</p>
                     </li>
                 </ol>
+                <p class="pain-stack-close">
+                    <span class="pain-stack-close-label">Leads to:</span>
+                    <span class="pain-stack-close-text">You slowly abandon yourself to keep the connection.<br />You&rsquo;re losing time you won&rsquo;t get back.</span>
+                </p>
+                <div class="pr-lp-quiz-cta-wrap pr-lp-quiz-cta-wrap--left">
+                    <a href="#quiz-section" class="pr-btn-primary pr-lp-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Show me my pattern</a>
+                </div>
+            </div>
+        </section>
 
-                <div class="pattern-signals-outcome-row" id="what-youll-discover">
-                    <span class="pattern-signals-marker pattern-signals-marker--outcome" aria-hidden="true"></span>
-                    <div class="pattern-signals-outcome-card">
-                        <p class="pattern-signals-outcome-label">The breakdown</p>
-                        <h3 class="pattern-signals-outcome-title" id="quiz-discover-heading">Your Pattern, Explained</h3>
-                        <ul class="pattern-signals-outcome-list" aria-labelledby="quiz-discover-heading">
-                            <li>Your core relationship pattern</li>
-                            <li>The dynamic you’re in right now</li>
-                            <li>Why you keep repeating it</li>
-                            <li>What it’s revealing about you</li>
-                            <li>What needs to change to break it</li>
-                        </ul>
+        <a href="#pattern-data-signals" class="pr-lp-between-arrow" aria-label="Continue to This is the loop section">
+            <span class="pr-lp-between-arrow__icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+        </a>
+
+        <!-- Pattern signals — matches home “Pattern Reset system” (pr-lp-method-steps) -->
+        <section class="pattern-signals-section pr-section pr-lp-section" id="pattern-data-signals" aria-labelledby="pattern-signals-heading">
+            <div class="pattern-signals-inner pr-lp-inner">
+                <p class="pr-label pattern-signals-label">This is the loop</p>
+                <h2 class="pr-lp-h2 pattern-signals-title" id="pattern-signals-heading">This is the pattern you&rsquo;re stuck in</h2>
+                <div class="pattern-signals-lead-block">
+                    <p class="pr-lp-punch pattern-signals-lead">What you&rsquo;re drawn to, what you tolerate, and what you keep going back to&mdash;isn&rsquo;t random. It&rsquo;s what&rsquo;s draining your time, energy, and clarity.</p>
+                </div>
+                <div class="pr-lp-method-steps">
+                    <div class="pr-lp-method-step">
+                        <div>
+                            <strong>WHAT YOU&rsquo;RE DRAWN TO</strong>
+                            <span class="pr-lp-method-quote">You feel pulled toward what&rsquo;s familiar<br />even when you know it isn&rsquo;t right.</span>
+                        </div>
+                    </div>
+                    <div class="pr-lp-method-step">
+                        <div>
+                            <strong>WHAT YOU KEEP ACCEPTING</strong>
+                            <span class="pr-lp-method-quote">You keep tolerating things you said you wouldn&rsquo;t<br />and overriding what you actually need.</span>
+                        </div>
+                    </div>
+                    <div class="pr-lp-method-step">
+                        <div>
+                            <strong>WHAT YOU KEEP GOING BACK TO</strong>
+                            <span class="pr-lp-method-quote">You tell yourself this is the last time<br />but you still end up in the same situation.</span>
+                        </div>
+                    </div>
+                    <div class="pr-lp-method-step">
+                        <div>
+                            <strong>WHAT KEEPS REPEATING</strong>
+                            <span class="pr-lp-method-quote">You think it&rsquo;s going to change<br />but you end up in the same conversations, same problems.</span>
+                        </div>
+                    </div>
+                    <div class="pr-lp-method-step pr-lp-method-step--results" id="what-youll-discover">
+                        <div>
+                            <strong id="quiz-discover-heading">WHAT YOU&rsquo;LL FINALLY SEE CLEARLY:</strong>
+                            <ul class="pattern-signals-outcome-list" aria-labelledby="quiz-discover-heading">
+                                <li>The pattern you keep falling into</li>
+                                <li>The dynamic you&rsquo;re in right now</li>
+                                <li>Why it keeps pulling you back</li>
+                                <li>What it&rsquo;s revealing about you</li>
+                                <li>What needs to change to break it</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+                <div class="pr-lp-quiz-cta-wrap pr-lp-quiz-cta-wrap--left">
+                    <a href="#quiz-section" class="pr-btn-primary pr-lp-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Show me my pattern</a>
                 </div>
             </div>
             <style>
-            .pattern-signals-section {
-                background: #050505;
-                border-top: 1px solid rgba(255, 252, 241, 0.06);
-                padding: clamp(3.25rem, 8vw, 5.5rem) clamp(1.25rem, 4vw, 2.5rem);
-                width: 100%;
-                box-sizing: border-box;
-                position: relative;
-                overflow: hidden;
-            }
-            .pattern-signals-section::before {
-                content: '';
-                pointer-events: none;
-                position: absolute;
-                inset: 0;
-                background:
-                    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(241, 0, 0, 0.09), transparent 55%),
-                    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(255, 252, 241, 0.03), transparent 50%);
-            }
-            .pattern-signals-inner {
-                position: relative;
-                z-index: 1;
-                max-width: 720px;
-                margin: 0 auto;
-            }
-            /* Match .pain-clarity-label / .pain-clarity-headline / .pain-clarity-subhead */
-            .pattern-signals-label {
-                display: block;
-                font-family: 'DM Sans', sans-serif;
-                font-size: 0.9rem;
-                font-weight: 700;
-                letter-spacing: 0.2em;
-                text-transform: uppercase;
-                color: rgba(241, 0, 0, 0.9);
+            /* Shell + headings live in page head; method steps match home #method */
+            .pattern-signals-lead-block {
                 margin: 0 0 1rem;
+                max-width: 100%;
             }
-            .pattern-signals-title {
-                font-family: 'Anton', sans-serif;
-                font-size: clamp(1.75rem, 4.5vw, 2.75rem);
-                font-weight: 700;
-                line-height: 1.15;
-                letter-spacing: -0.02em;
-                text-transform: uppercase;
-                color: rgba(255, 255, 255, 0.98);
-                margin: 0 0 1rem;
-                text-wrap: balance;
-            }
-            .pattern-signals-lead {
+            /* Muted cream (not #fff): aligns with .pr-lp-muted / method-quote tier on LP */
+            .pattern-signals-section .pr-lp-punch.pattern-signals-lead {
                 font-family: 'DM Sans', sans-serif;
-                font-size: clamp(1rem, 2vw, 1.15rem);
+                font-size: clamp(0.98rem, 1.85vw, 1.1rem);
+                color: rgba(255, 252, 241, 0.62) !important;
+                line-height: 1.65;
+                margin: 0;
                 font-weight: 500;
-                line-height: 1.6;
-                color: rgba(255, 255, 255, 0.8);
-                margin: 0 0 clamp(2rem, 4vw, 2.75rem);
-                max-width: 38rem;
                 text-wrap: pretty;
             }
-            .pattern-signals-track {
-                position: relative;
-                padding-bottom: 0.25rem;
-            }
-            /* One continuous spine: signals → outcome (journey → destination) */
-            .pattern-signals-track::before {
-                content: '';
-                position: absolute;
-                left: calc(0.65rem + 5px);
-                top: 0.5rem;
-                bottom: 0.85rem;
-                width: 1px;
-                background: linear-gradient(
-                    180deg,
-                    rgba(241, 0, 0, 0.5) 0%,
-                    rgba(241, 0, 0, 0.22) 28%,
-                    rgba(255, 252, 241, 0.1) 55%,
-                    rgba(241, 0, 0, 0.35) 100%
-                );
-            }
-            .pattern-signals-timeline {
-                list-style: none;
-                margin: 0;
-                padding: 0;
-                position: relative;
-                counter-reset: pattern-signal;
-            }
-            .pattern-signals-item {
-                position: relative;
-                display: grid;
-                grid-template-columns: 1.35rem 1fr;
-                gap: clamp(0.85rem, 2.5vw, 1.25rem);
-                align-items: start;
-                margin-bottom: clamp(1.1rem, 2.5vw, 1.35rem);
-                counter-increment: pattern-signal;
-            }
-            .pattern-signals-item:last-child {
-                margin-bottom: clamp(0.65rem, 2vw, 1rem);
-            }
-            .pattern-signals-marker {
-                display: block;
-                width: 11px;
-                height: 11px;
-                margin-top: 0.45rem;
-                border-radius: 50%;
-                flex-shrink: 0;
-                background: #050505;
-                border: 2px solid rgba(241, 0, 0, 0.85);
-                box-shadow: 0 0 0 3px rgba(241, 0, 0, 0.12);
-                position: relative;
-                z-index: 1;
-            }
-            /* Same ring style as other steps — one continuous path */
-            .pattern-signals-marker--outcome {
-                margin-top: 0.45rem;
-            }
-            .pattern-signals-card {
-                border: 1px solid rgba(255, 252, 241, 0.09);
-                border-radius: 12px;
-                background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.015) 55%, rgba(0, 0, 0, 0.15) 100%);
-                padding: clamp(1rem, 2.5vw, 1.25rem) clamp(1.05rem, 2.8vw, 1.35rem);
-                transition: border-color 0.25s ease, box-shadow 0.25s ease;
-            }
-            .pattern-signals-item:hover .pattern-signals-card {
-                border-color: rgba(255, 252, 241, 0.14);
-                box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
-            }
-            .pattern-signals-item-title {
-                font-family: 'Anton', sans-serif;
-                font-weight: 400;
-                font-size: clamp(1.05rem, 2.2vw, 1.2rem);
-                letter-spacing: 0.04em;
-                text-transform: uppercase;
-                color: rgba(255, 252, 241, 0.95);
-                margin: 0 0 0.5rem;
-                line-height: 1.2;
-            }
-            .pattern-signals-item-title::before {
-                content: counter(pattern-signal, decimal-leading-zero);
-                display: block;
-                font-family: 'DM Sans', sans-serif;
-                font-size: 0.6875rem;
-                font-weight: 700;
-                letter-spacing: 0.16em;
-                color: rgba(241, 0, 0, 0.88);
-                margin-bottom: 0.4rem;
-            }
-            .pattern-signals-item-text {
-                font-family: 'DM Sans', sans-serif;
-                font-size: clamp(0.9375rem, 1.65vw, 1.02rem);
-                font-weight: 500;
-                line-height: 1.62;
-                color: rgba(255, 252, 241, 0.78);
-                margin: 0;
-                text-wrap: pretty;
-            }
-            .pattern-signals-item-text em {
-                font-style: italic;
-                font-weight: 600;
-                color: rgba(255, 252, 241, 0.9);
-            }
-            .pattern-signals-whisper {
-                display: inline;
-                font-weight: 600;
-                color: rgba(255, 252, 241, 0.88);
-                letter-spacing: 0.02em;
-            }
-            .pattern-signals-strong {
-                font-weight: 700;
-                color: rgba(255, 252, 241, 0.95);
-            }
-            .pattern-signals-outcome-row {
-                position: relative;
-                display: grid;
-                grid-template-columns: 1.35rem 1fr;
-                gap: clamp(0.85rem, 2.5vw, 1.25rem);
-                align-items: start;
+            .pattern-signals-section .pr-lp-method-step--results {
                 scroll-margin-top: 88px;
             }
-            .pattern-signals-outcome-card {
-                border: 1px solid rgba(255, 252, 241, 0.09);
-                border-radius: 12px;
-                background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.015) 55%, rgba(0, 0, 0, 0.15) 100%);
-                padding: clamp(1rem, 2.5vw, 1.25rem) clamp(1.05rem, 2.8vw, 1.35rem);
+            .pattern-signals-section .pr-lp-method-step--results > div > strong {
+                margin-bottom: 0.4rem;
             }
-            .pattern-signals-outcome-label {
+            .pattern-signals-section .pr-lp-method-steps {
+                display: grid;
+                gap: 0.65rem;
+                margin: 1.25rem 0 0;
+                counter-reset: lpstep;
+            }
+            .pattern-signals-section .pr-lp-method-step {
+                display: flex;
+                gap: 1rem;
+                align-items: flex-start;
+                padding: 0.85rem 0;
+                border-bottom: 1px solid rgba(255, 252, 241, 0.06);
+            }
+            .pattern-signals-section .pr-lp-method-step:last-child {
+                border-bottom: none;
+            }
+            .pattern-signals-section .pr-lp-method-step::before {
+                counter-increment: lpstep;
+                content: counter(lpstep);
+                flex-shrink: 0;
+                width: 1.75rem;
+                height: 1.75rem;
+                border-radius: 50%;
+                background: rgba(241, 0, 0, 0.15);
+                color: var(--pr-red);
                 font-family: 'DM Sans', sans-serif;
-                font-size: 0.6875rem;
-                font-weight: 700;
-                letter-spacing: 0.16em;
-                text-transform: uppercase;
-                color: rgba(241, 0, 0, 0.88);
-                margin: 0 0 0.4rem;
+                font-size: 0.75rem;
+                font-weight: 800;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 0.1rem;
             }
-            .pattern-signals-outcome-title {
-                font-family: 'Anton', sans-serif;
-                font-weight: 400;
-                font-size: clamp(1.05rem, 2.2vw, 1.2rem);
-                line-height: 1.2;
+            .pattern-signals-section .pr-lp-method-step strong {
+                font-family: 'DM Sans', sans-serif;
+                font-weight: 600;
+                color: rgba(255, 252, 241, 0.92);
+                display: block;
+                margin-bottom: 0;
+                font-size: clamp(0.76rem, 1.35vw, 0.84rem);
+                letter-spacing: 0.08em;
+                line-height: 1.35;
+            }
+            .pattern-signals-section .pr-lp-method-tag {
+                font-weight: 600;
+                font-size: 0.88em;
+                color: rgba(255, 252, 241, 0.45);
                 letter-spacing: 0.02em;
-                text-transform: none;
-                color: rgba(255, 252, 241, 0.95);
-                margin: 0 0 0.75rem;
-                text-wrap: balance;
             }
-            .pattern-signals-outcome-list {
-                margin: 0;
+            .pattern-signals-section .pr-lp-method-quote {
+                display: block;
+                margin-top: 0.4rem;
+                font-family: 'DM Sans', sans-serif;
+                font-size: 0.88rem;
+                font-style: normal;
+                font-weight: 400;
+                color: rgba(255, 252, 241, 0.55);
+                line-height: 1.5;
+            }
+            .pattern-signals-section .pr-lp-method-step--results .pattern-signals-outcome-list {
+                margin: 0.65rem 0 0;
                 padding: 0;
                 list-style: none;
             }
-            .pattern-signals-outcome-list li {
+            /* Match .pr-lp-method-quote (step subtext) */
+            .pattern-signals-section .pr-lp-method-step--results .pattern-signals-outcome-list li {
                 font-family: 'DM Sans', sans-serif;
-                font-size: clamp(0.9375rem, 1.65vw, 1.02rem);
-                font-weight: 500;
-                line-height: 1.62;
-                color: rgba(255, 252, 241, 0.78);
-                padding: 0.55rem 0 0.55rem 1.25rem;
+                font-size: 0.88rem;
+                font-weight: 400;
+                line-height: 1.5;
+                color: rgba(255, 252, 241, 0.55);
+                padding: 0.35rem 0;
+                padding-left: 1.1rem;
                 position: relative;
                 border-bottom: 1px solid rgba(255, 252, 241, 0.06);
             }
-            .pattern-signals-outcome-list li:last-child {
+            .pattern-signals-section .pr-lp-method-step--results .pattern-signals-outcome-list li:last-child {
                 border-bottom: none;
             }
-            .pattern-signals-outcome-list li::before {
-                content: '';
+            .pattern-signals-section .pr-lp-method-step--results .pattern-signals-outcome-list li::before {
+                content: '·';
                 position: absolute;
                 left: 0;
-                top: 50%;
-                margin-top: -3px;
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                background: #f10000;
-                box-shadow: 0 0 0 3px rgba(241, 0, 0, 0.2);
-            }
-            @media (min-width: 640px) {
-                .pattern-signals-track::before {
-                    left: calc(0.65rem + 5px);
-                }
-            }
-            @media (max-width: 480px) {
-                .pattern-signals-track::before {
-                    left: calc(0.5rem + 5px);
-                }
-                .pattern-signals-item,
-                .pattern-signals-outcome-row {
-                    grid-template-columns: 1.1rem 1fr;
-                    gap: 0.75rem;
-                }
+                color: var(--pr-red);
+                font-weight: 800;
             }
             </style>
         </section>
+
+        <a href="#quiz-section" class="pr-lp-between-arrow pr-lp-between-arrow--dark" aria-label="Continue to the quiz" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">
+            <span class="pr-lp-between-arrow__icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+        </a>
 
         <!-- Quiz Section -->
         <section id="quiz-section" class="quiz-section">
             <div class="quiz-container">
                 <div class="quiz-intro quiz-panel" id="quiz-intro">
-                    <p class="quiz-intro-kicker">YOU’VE BEEN TRYING TO FIGURE IT OUT…</p>
-                    <h2 class="quiz-title">Let’s find the pattern behind it.</h2>
-                    <p class="quiz-intro-sub">See what’s actually going on—and what to do next.</p>
+                    <div class="quiz-intro-spiral-wrap" aria-hidden="true">
+                        <svg class="quiz-intro-spiral-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <style>
+                                    .quiz-map-ring { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+                                </style>
+                            </defs>
+                            <!-- 3 rings + center — same paths as header; each layer spins independently -->
+                            <g class="quiz-map-ring-layer quiz-map-ring-layer--outer" aria-hidden="true">
+                                <path class="quiz-map-ring" d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke-width="0.32" opacity="0.26"/>
+                            </g>
+                            <g class="quiz-map-ring-layer quiz-map-ring-layer--middle" aria-hidden="true">
+                                <path class="quiz-map-ring" d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke-width="0.28" opacity="0.22"/>
+                            </g>
+                            <g class="quiz-map-ring-layer quiz-map-ring-layer--inner" aria-hidden="true">
+                                <path class="quiz-map-ring" d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke-width="0.24" opacity="0.18"/>
+                            </g>
+                            <g class="quiz-map-ring-layer quiz-map-ring-layer--center" aria-hidden="true">
+                                <circle class="quiz-map-center" cx="50" cy="50" r="1.2" fill="currentColor" opacity="0.14"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <p class="quiz-intro-label">This is where you get clarity</p>
+                    <h2 class="quiz-intro-headline">Finally see what&rsquo;s actually going on.</h2>
+                    <p class="quiz-intro-subhead">So you can understand what&rsquo;s going on &mdash; and know what to do next.</p>
                     <button type="button" class="btn btn-mission btn-mission-primary" id="start-quiz-btn">SHOW ME MY PATTERN</button>
-                    <p class="quiz-intro-micro">Takes 2 minutes. Instant clarity.</p>
+                    <p class="quiz-intro-micro">5 min &middot; Honest answers = clearer results</p>
                 </div>
 
                 <!-- Story step: not shown at quiz start — opened from paywall (personal breakdown offer) -->
@@ -4253,10 +4332,10 @@
         </section>
 
         <!-- FAQ Section -->
-        <section class="faq-section">
-            <div class="container">
-                <span class="faq-label">FAQs</span>
-                <h2 class="faq-title">Before You Start</h2>
+        <section class="faq-section pr-section pr-lp-section" aria-labelledby="faq-heading">
+            <div class="faq-inner pr-lp-inner">
+                <p class="pr-label">FAQs</p>
+                <h2 class="pr-lp-h2" id="faq-heading">Before You Start</h2>
                 <div class="faq-container">
                     <div class="faq-item">
                         <button class="faq-question" onclick="toggleFAQ(this)">
@@ -4264,7 +4343,8 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>It shows the pattern you're in, what his behavior actually means, and where this is likely heading—so you know what to do next.</p>
+                            <p>It maps the pattern you&rsquo;re running and the dynamic between you two &mdash; what keeps repeating, and what it tends to cost you when nothing changes.</p>
+                            <p>So you can see clearly and choose what&rsquo;s next instead of spiraling.</p>
                         </div>
                     </div>
 
@@ -4274,9 +4354,8 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>It starts with him—but it’s about you.</p>
-                            <p>Not to blame you—but to show you what your relationship is revealing.</p>
-                            <p>That’s where real change happens.</p>
+                            <p>It&rsquo;s about the dynamic &mdash; and your side of the loop.</p>
+                            <p>Not a blame game, and not &ldquo;decode him&rdquo; as the only point.</p>
                         </div>
                     </div>
 
@@ -4286,8 +4365,8 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Because relationships are where patterns show up the clearest.</p>
-                            <p>The same patterns that show up here… also show up in your decisions, your habits, and your life.</p>
+                            <p>Because love is where the pattern shows up loudest for most people.</p>
+                            <p>The same loop shows up in decisions, confidence, and what you accept &mdash; but relationships make it impossible to ignore.</p>
                         </div>
                     </div>
 
@@ -4298,7 +4377,7 @@
                         </button>
                         <div class="faq-answer">
                             <p><strong>No.</strong></p>
-                            <p>If you're talking to someone, recently ended things, or stuck thinking about someone—this still applies.</p>
+                            <p>If you&rsquo;re talking to someone, recently ended something, or stuck on someone in your head &mdash; it still applies. If it affected you, it can reveal the pattern.</p>
                         </div>
                     </div>
 
@@ -4308,7 +4387,8 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>Quick questions—most people finish in one sitting.</p>
+                            <p>About 5 minutes.</p>
+                            <p>Short questions. Clear results on your screen.</p>
                         </div>
                     </div>
 
@@ -4318,7 +4398,18 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>It's based on the exact situation you describe and the patterns behind it. The more honest you are, the more accurate your result will be.</p>
+                            <p>It reflects your answers. The more honest you are, the more it will feel true.</p>
+                            <p>This is not therapy and not a diagnosis &mdash; it&rsquo;s a pattern + dynamic read.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            What do I see on my results screen?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Your pattern and the dynamic you&rsquo;re in &mdash; broken down so it&rsquo;s legible, not vague.</p>
                         </div>
                     </div>
 
@@ -4328,7 +4419,8 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>You'll see your pattern right away. Then you can unlock your full answer—what it means for your situation and what to do next.</p>
+                            <p>You&rsquo;ll have your pattern + dynamic right away.</p>
+                            <p>If you want to go deeper, you can optionally add a personalized breakdown for your specific situation (that&rsquo;s the paid step &mdash; not required to get value from the quiz).</p>
                         </div>
                     </div>
 
@@ -4339,7 +4431,7 @@
                         </button>
                         <div class="faq-answer">
                             <p><strong>Yes.</strong></p>
-                            <p>Your response is private and only used to generate your result.</p>
+                            <p>Your responses are used to generate your result and aren&rsquo;t shared publicly.</p>
                         </div>
                     </div>
 
@@ -4349,7 +4441,18 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>That's exactly why this works. You'll get a clear breakdown of what's actually going on—without the confusion.</p>
+                            <p>That&rsquo;s common.</p>
+                            <p>The point is to name what&rsquo;s actually happening &mdash; without you having to overthink every angle alone.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            Is this going to tell me to break up?
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>No. It&rsquo;s built to clarify the loop and the dynamic so you can decide &mdash; stay, pause, speak up, or exit &mdash; with your eyes open.</p>
                         </div>
                     </div>
                 </div>
@@ -4366,7 +4469,7 @@
             <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
             <a href="letitout.html">Let It Out</a>
             <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
-            <a href="philosophy.html">Philosophy</a>
+            <a href="philosophy.html" title="Pattern Reset System™">The System</a>
             <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
             <a href="legal.html">Legal</a>
         </p>

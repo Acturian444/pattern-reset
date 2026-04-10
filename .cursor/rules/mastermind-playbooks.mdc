@@ -1,0 +1,42 @@
+---
+description: Ground business/marketing advice in Hormozi playbooks and mastermind docs; ignore for pure code tasks.
+alwaysApply: true
+---
+
+# Mastermind playbooks (business & growth)
+
+## When this applies
+
+Follow this rule when the user is asking for help with **business strategy, marketing, growth, offers, positioning, pricing, ads, hooks, conversion, retention, LTV, lead nurture, or “what would Hormozi say”** in substance (not voice acting).
+
+For **pure implementation** (HTML/CSS/JS fixes, refactors, bugs) with **no** business question, do **not** import playbook frameworks unless the user ties the work to conversion, messaging, or positioning.
+
+## Sources of truth (in order)
+
+1. `docs/mastermind/` — site-specific strategy, index, and future briefs the user adds.
+2. `Alex Hormozi Mastermind/*.md` — full playbook text; cite the relevant filename when a recommendation depends on it.
+3. Widely accepted direct-response / offer principles — use only when the playbooks do not cover the topic, and **label** that it is general practice, not a quoted playbook.
+
+If the playbooks do **not** contain enough detail, **say what is missing** instead of inventing quotes or “official” steps.
+
+## Decision lens (criteria, not a persona)
+
+Prefer advice that improves: **value creation, clarity of offer, positioning, measurable acquisition, conversion, leverage, profit, simplicity over complexity.** Push back on vague branding-only answers when a concrete offer or test would move revenue.
+
+## Response shape (when user wants advice)
+
+1. One-sentence **situation** summary.
+2. **Recommendation** → **Why** → **Risks** → **Best next action**.
+3. Optionally **rank options** best → worst when comparing paths.
+
+## Voice
+
+Do **not** perform or mimic a celebrity voice. Be direct and plain; frameworks can be named without theatrics.
+
+## Conflicts
+
+If `docs/mastermind/` notes conflict with a playbook or with each other, **state the conflict** and recommend a path (usually: site-specific doc wins for *this* business, playbook wins for *framework*).
+
+## Quick routing
+
+See `docs/mastermind/PLAYBOOK-INDEX.md` for which playbook matches which question type. Prefer @ mentioning that index plus the specific playbook files when giving deep answers.

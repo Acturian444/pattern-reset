@@ -177,6 +177,8 @@
     /* =========== HERO =========== */
     .pr-hero {
         background: var(--pr-dark);
+        width: 100%;
+        max-width: 100%;
         min-height: 100vh;
         min-height: 100dvh;
         display: flex;
@@ -712,16 +714,21 @@
     }
     .pr-hero-spiral-bg {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        inset: 0;
+        margin: auto;
         width: min(700px, 90vw);
         height: min(700px, 90vw);
+        max-width: 100%;
+        max-height: 100%;
         opacity: 0.035;
         pointer-events: none;
         color: var(--pr-cream);
+        box-sizing: border-box;
     }
     @media (max-width: 768px) {
+        .pr-hero .pr-hero-spiral-bg {
+            transform: translateY(-8vh);
+        }
         .pr-hero-movement { min-height: auto; }
         .pr-hero-movement .pr-hero-inner { text-align: center; }
     }
@@ -2592,7 +2599,7 @@
             <a href="index.html" class="menu-nav-link"><span class="menu-nav-title">My Pattern</span><span class="menu-nav-subtitle">Discover your relationship pattern</span></a>
             <a href="letitout.html" class="menu-nav-link letitout-link"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your situation anonymously</span></a>
             <a href="common-ground.html" class="menu-nav-link nav-coming-soon"><span class="menu-nav-title">Community</span><span class="menu-nav-subtitle">Meet people in real life</span></a>
-            <a href="philosophy.html" class="menu-nav-link"><span class="menu-nav-title">Philosophy</span><span class="menu-nav-subtitle">How we think about patterns</span></a>
+            <a href="philosophy.html" class="menu-nav-link"><span class="menu-nav-title">The System</span><span class="menu-nav-subtitle">Pattern Reset System™</span></a>
             <a href="mailto:support@mypatternreset.com" class="menu-nav-link"><span class="menu-nav-title">Contact</span><span class="menu-nav-subtitle">Get in touch</span></a>
         </nav>
     </div>
@@ -2970,7 +2977,7 @@
         <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
         <a href="letitout.html">Let It Out</a>
         <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
-        <a href="philosophy.html">Philosophy</a>
+        <a href="philosophy.html" title="Pattern Reset System™">The System</a>
         <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
         <a href="legal.html">Legal</a>
     </p>

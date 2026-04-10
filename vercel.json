@@ -12,6 +12,14 @@
   ],
   "rewrites": [
     {
+      "source": "/pattern-reset-system",
+      "destination": "/philosophy.html"
+    },
+    {
+      "source": "/pattern-reset-system/",
+      "destination": "/philosophy.html"
+    },
+    {
       "source": "/create-checkout-session",
       "destination": "/server.js"
     },
@@ -81,6 +89,21 @@
     {
       "source": "/home-v2.html",
       "destination": "/home.html",
+      "permanent": true
+    },
+    {
+      "source": "/philosophy.html",
+      "destination": "/pattern-reset-system",
+      "permanent": true
+    },
+    {
+      "source": "/philosophy",
+      "destination": "/pattern-reset-system",
+      "permanent": true
+    },
+    {
+      "source": "/philosophy/",
+      "destination": "/pattern-reset-system",
       "permanent": true
     },
     {

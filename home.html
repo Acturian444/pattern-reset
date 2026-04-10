@@ -56,7 +56,7 @@
         --pr-read-max: 40rem;
         /* Content column widths (home narrative sections) */
         --pr-max-content: 1100px;
-        --pr-max-hero: 860px;
+        --pr-max-hero: 900px;
         --pr-max-doctrine: 760px;
         --pr-max-story: 720px;
         --pr-max-email: 640px;
@@ -177,6 +177,8 @@
     /* =========== HERO =========== */
     .pr-hero {
         background: var(--pr-dark);
+        width: 100%;
+        max-width: 100%;
         min-height: 100vh;
         min-height: 100dvh;
         display: flex;
@@ -660,20 +662,41 @@
         text-align: center;
         max-width: var(--pr-max-hero);
         margin: 0 auto;
+        position: relative;
+        z-index: 1;
     }
-    .pr-hero-movement .pr-hero-headline { font-size: clamp(2.4rem, 5.5vw, 5rem); }
+    /* Headline: same horizontal band as quiz (#home-hero .pr-hero-headline.pr-lp-hero-title) — full column width, not a narrow measure */
+    .pr-hero-movement .pr-lp-hero-title {
+        max-width: 100%;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        box-sizing: border-box;
+        text-wrap: pretty;
+    }
+    .pr-hero-movement .pr-hero-headline.pr-lp-hero-title {
+        font-size: clamp(2.05rem, 3.8vw + 0.55rem, 3.85rem);
+        line-height: 1.14;
+        letter-spacing: 0.015em;
+    }
+    /* Breathing room between stacked lines (quiz uses one flowing line) */
+    .pr-hero-movement .pr-lp-hero-title .pr-hero-line + .pr-hero-line {
+        margin-top: 0.12em;
+    }
     .pr-hero-movement .pr-hero-subtext {
         font-family: 'DM Sans', sans-serif;
-        font-size: clamp(1.05rem, 2.15vw, 1.4rem);
+        font-size: clamp(1rem, 2vw, 1.15rem);
         font-weight: 500;
-        color: rgba(255, 252, 241, 0.78);
-        line-height: 1.45;
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.6;
         margin: clamp(1.1rem, 2.5vw, 1.5rem) auto 0;
-        max-width: min(36rem, 100%);
-        letter-spacing: 0.03em;
+        max-width: min(40rem, 100%);
+        letter-spacing: 0.01em;
         text-wrap: balance;
     }
-    .pr-hero-movement .pr-hero-ctas { justify-content: center; margin-top: 3rem; }
+    .pr-hero-movement .pr-hero-ctas { justify-content: center; margin-top: 3rem; flex-wrap: wrap; gap: 1rem; }
     .pr-hero-cta-note {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.8125rem;
@@ -686,7 +709,7 @@
     .pr-hero-movement .pr-hero-cta-note {
         margin-left: auto;
         margin-right: auto;
-        max-width: 22rem;
+        max-width: min(28rem, 100%);
     }
     .pr-hero-byline {
         font-family: 'DM Sans', sans-serif;
@@ -710,20 +733,104 @@
         display: block;
         margin: 0.5rem 0 0.75rem;
     }
-    .pr-hero-spiral-bg {
+    /* Gateway hero background: same layered logo + motion as quiz intro & quiz landing #home-hero */
+    .pr-hero .pr-hero-spiral-wrap {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: min(700px, 90vw);
-        height: min(700px, 90vw);
-        opacity: 0.035;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         pointer-events: none;
-        color: var(--pr-cream);
+        z-index: 0;
+    }
+    .pr-hero .pr-hero-spiral-wrap::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 72% 68% at 50% 45%, rgba(255, 252, 241, 0.045) 0%, transparent 62%);
+        pointer-events: none;
+    }
+    .pr-hero .pr-hero-spiral-bg {
+        width: min(100vmin, 46rem);
+        height: min(100vmin, 46rem);
+        max-width: 100%;
+        max-height: 100%;
+        flex-shrink: 0;
+        overflow: visible;
+        color: rgba(255, 252, 241, 0.28);
+        animation: pr-homeQuizIntroMapFloat 16s ease-in-out infinite alternate;
+        will-change: transform;
+    }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer {
+        transform-origin: 50% 50%;
+        transform-box: fill-box;
+    }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--outer {
+        animation: pr-homeQuizMapOrbit 38s linear infinite;
+    }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--middle {
+        animation: pr-homeQuizMapOrbit 28s linear infinite reverse;
+    }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--inner {
+        animation: pr-homeQuizMapOrbit 21s linear infinite;
+    }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--center {
+        animation: pr-homeQuizMapOrbit 24s linear infinite reverse;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .pr-hero .pr-hero-spiral-bg {
+            animation: none;
+        }
+        .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--outer,
+        .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--middle,
+        .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--inner,
+        .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--center {
+            animation: none;
+        }
+    }
+    @keyframes pr-homeQuizMapOrbit {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    @keyframes pr-homeQuizIntroMapFloat {
+        from { transform: translateY(5px) scale(1); }
+        to { transform: translateY(-7px) scale(1.02); }
     }
     @media (max-width: 768px) {
+        .pr-hero .pr-hero-spiral-wrap {
+            transform: translateY(-8vh);
+        }
         .pr-hero-movement { min-height: auto; }
         .pr-hero-movement .pr-hero-inner { text-align: center; }
+    }
+
+    /* Gateway hero only: same horizontal rhythm + mobile “almost full-screen” padding as quiz landing */
+    body.page-home--v2 .pr-hero.pr-hero-movement {
+        padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 4vw, 2.5rem) clamp(4rem, 10vw, 6rem);
+    }
+    @media (max-width: 768px) {
+        body.page-home--v2 .pr-hero.pr-hero-movement {
+            min-height: 100dvh;
+            min-height: 100svh;
+            align-items: center;
+            justify-content: center;
+            padding-top: calc(env(safe-area-inset-top, 0px) + clamp(7.5rem, 20vh, 14rem));
+            padding-right: clamp(1.25rem, 4.5vw, 1.5rem);
+            padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(8rem, 26vh, 17rem));
+            padding-left: clamp(1.25rem, 4.5vw, 1.5rem);
+        }
+        body.page-home--v2 .pr-hero-movement .pr-hero-headline.pr-lp-hero-title {
+            margin-bottom: 0.85rem;
+        }
+        body.page-home--v2 .pr-hero-movement .pr-hero-subtext {
+            margin-top: clamp(1.5rem, 5vw, 2rem);
+        }
+        body.page-home--v2 .pr-hero-movement .pr-lp-hero-ctas {
+            margin-top: clamp(2.85rem, 11vw, 4rem);
+        }
+        body.page-home--v2 .pr-hero-movement .pr-lp-hero-note {
+            margin-top: 1.15rem;
+        }
     }
 
     /* =========== THE STAKES =========== */
@@ -2535,6 +2642,11 @@
         align-items: center;
         margin-top: clamp(1.75rem, 4vw, 2.5rem);
     }
+    /* Hero CTAs: match quiz landing (#home-hero) spacing */
+    body.page-home--v2 .pr-hero-movement .pr-lp-hero-ctas {
+        margin-top: 3rem;
+        gap: 1rem;
+    }
     body.page-home--v2 .pr-lp-hero-ctas .pr-btn-ghost {
         font-size: clamp(0.88rem, 1.5vw, 1rem);
         padding: 1rem 2rem;
@@ -2933,7 +3045,7 @@
             <a href="index.html" class="menu-nav-link"><span class="menu-nav-title">My Pattern</span><span class="menu-nav-subtitle">Discover your relationship pattern</span></a>
             <a href="letitout.html" class="menu-nav-link letitout-link"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your situation anonymously</span></a>
             <a href="common-ground.html" class="menu-nav-link nav-coming-soon"><span class="menu-nav-title">Community</span><span class="menu-nav-subtitle">Meet people in real life</span></a>
-            <a href="philosophy.html" class="menu-nav-link"><span class="menu-nav-title">Philosophy</span><span class="menu-nav-subtitle">How we think about patterns</span></a>
+            <a href="philosophy.html" class="menu-nav-link"><span class="menu-nav-title">The System</span><span class="menu-nav-subtitle">Pattern Reset System™</span></a>
             <a href="mailto:support@mypatternreset.com" class="menu-nav-link"><span class="menu-nav-title">Contact</span><span class="menu-nav-subtitle">Get in touch</span></a>
         </nav>
     </div>
@@ -2943,19 +3055,34 @@
 
     <!-- HERO -->
     <section class="pr-hero pr-hero-movement pr-lp-fade-in" aria-labelledby="lp-hero-heading">
-        <svg class="pr-hero-spiral-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <path d="M50,18 Q18,18 18,50 Q18,82 50,82 Q82,82 82,50 Q82,18 50,18" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <path d="M50,31 Q31,31 31,50 Q31,69 50,69 Q69,69 69,50 Q69,31 50,31" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <path d="M50,42 Q42,42 42,50 Q42,58 50,58 Q58,58 58,50 Q58,42 50,42" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <circle cx="50" cy="50" r="3" fill="currentColor"/>
-        </svg>
+        <div class="pr-hero-spiral-wrap" aria-hidden="true">
+            <svg class="pr-hero-spiral-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <style>
+                        .quiz-map-ring { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+                    </style>
+                </defs>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--outer" aria-hidden="true">
+                    <path class="quiz-map-ring" d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke-width="0.32" opacity="0.26"/>
+                </g>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--middle" aria-hidden="true">
+                    <path class="quiz-map-ring" d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke-width="0.28" opacity="0.22"/>
+                </g>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--inner" aria-hidden="true">
+                    <path class="quiz-map-ring" d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke-width="0.24" opacity="0.18"/>
+                </g>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--center" aria-hidden="true">
+                    <circle class="quiz-map-center" cx="50" cy="50" r="1.2" fill="currentColor" opacity="0.14"/>
+                </g>
+            </svg>
+        </div>
         <div class="pr-hero-inner pr-lp-hero-inner">
             <div class="pr-hero-text">
                 <span class="pr-label">Pattern Reset™</span>
                 <h1 class="pr-hero-headline pr-lp-hero-title" id="lp-hero-heading">
                     <span class="pr-hero-line">You’re not stuck.</span>
-                    <span class="pr-hero-line">You’re repeating a pattern you haven’t seen yet.</span>
+                    <span class="pr-hero-line">You’re repeating a pattern</span>
+                    <span class="pr-hero-line">you haven’t seen yet.</span>
                 </h1>
                 <p class="pr-hero-subtext">See the pattern. Release it. Reset your life.</p>
                 <div class="pr-hero-ctas pr-lp-hero-ctas">
@@ -3217,13 +3344,13 @@
         </div>
     </section>
 
-    <!-- PHILOSOPHY -->
-    <section class="pr-section pr-lp-section pr-lp-philosophy-teaser" id="philosophy" aria-labelledby="lp-philosophy-heading">
+    <!-- PATTERN RESET SYSTEM -->
+    <section class="pr-section pr-lp-section pr-lp-philosophy-teaser" id="pattern-reset-system" aria-labelledby="lp-system-heading">
         <div class="pr-lp-inner">
             <p class="pr-label">Go deeper</p>
-            <h2 class="pr-lp-h2" id="lp-philosophy-heading">Pattern Reset philosophy</h2>
-            <p class="pr-lp-muted pr-lp-muted--flush">Why we focus on awareness, release, and alignment—and why this is a daily practice, not a one-time fix.</p>
-            <a href="philosophy.html" class="pr-btn-ghost">Read the full philosophy</a>
+            <h2 class="pr-lp-h2" id="lp-system-heading">The Pattern Reset System™</h2>
+            <p class="pr-lp-muted pr-lp-muted--flush">A system for breaking the patterns running your life—structured, repeatable, life-wide. How it works, why relationships are the gateway, and what runs inside the system.</p>
+            <a href="philosophy.html" class="pr-btn-ghost">Explore the Pattern Reset System™</a>
         </div>
     </section>
 
@@ -3255,7 +3382,7 @@
         <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
         <a href="letitout.html">Let It Out</a>
         <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
-        <a href="philosophy.html">Philosophy</a>
+        <a href="philosophy.html" title="Pattern Reset System™">The System</a>
         <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
         <a href="legal.html">Legal</a>
     </p>
