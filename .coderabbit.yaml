@@ -6,6 +6,11 @@ reviews:
   auto_review:
     enabled: true
   high_level_summary: true
-  # PR #5 hit CodeRabbit’s 150-file cap (151 after default ignores). Exclude snapshot backup from review scope.
+  # Stay under CodeRabbit’s ~150-file PR limit (counts paths still in the diff). These dirs/files are
+  # reference, backups, or internal notes—not runtime app logic. Excluding only affects the bot, not Vercel/builds.
   path_filters:
     - "!backup/**"
+    - "!docs/**"
+    - "!Alex Hormozi Mastermind/**"
+    - "!EXPERT_ROUNDTABLE.md"
+    - "!QUIZ_EXPERT_ANALYSIS.md"
