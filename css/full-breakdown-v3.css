@@ -1,0 +1,416 @@
+/* Full Pattern Breakdown V3 — standalone page; light/dark via .fb3-page.dark */
+
+.fb3-page {
+    --fb3-bg: #fffcf1;
+    --fb3-bg-elevated: #ffffff;
+    --fb3-text: #050505;
+    --fb3-muted: rgba(5, 5, 5, 0.55);
+    --fb3-border: rgba(5, 5, 5, 0.1);
+    --fb3-card: #ffffff;
+    --fb3-accent: #f10000;
+    --fb3-highlight: rgba(241, 0, 0, 0.08);
+    --fb3-hero-edge: linear-gradient(135deg, rgba(241, 0, 0, 0.06) 0%, transparent 55%);
+    min-height: 100vh;
+    background: var(--fb3-bg);
+    color: var(--fb3-text);
+    font-family: "DM Sans", system-ui, sans-serif;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+.fb3-page.dark {
+    --fb3-bg: #050505;
+    --fb3-bg-elevated: #0c0c0c;
+    --fb3-text: #fffcf1;
+    --fb3-muted: rgba(255, 252, 241, 0.55);
+    --fb3-border: rgba(255, 255, 255, 0.1);
+    --fb3-card: #0c0c0c;
+    --fb3-highlight: rgba(241, 0, 0, 0.15);
+    --fb3-hero-edge: linear-gradient(135deg, rgba(241, 0, 0, 0.12) 0%, transparent 55%);
+}
+
+.fb3-shell {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.25rem 4rem;
+}
+
+.fb3-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to bottom, var(--fb3-bg) 70%, transparent);
+    backdrop-filter: blur(8px);
+}
+
+.fb3-logo {
+    font-family: Anton, Impact, sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    color: var(--fb3-text);
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.fb3-top-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.fb3-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--fb3-border);
+    background: var(--fb3-card);
+    color: var(--fb3-text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.fb3-icon-btn:hover {
+    border-color: var(--fb3-accent);
+}
+
+.fb3-icon-btn i {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.fb3-error {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: var(--fb3-muted);
+}
+
+.fb3-legacy-wrap {
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.fb3-legacy-wrap .fb3-btn {
+    margin-top: 1.5rem;
+}
+
+.fb3-inner {
+    padding-top: 0.25rem;
+}
+
+.fb3-hero {
+    padding: 1.5rem 0 2rem;
+    background: var(--fb3-hero-edge);
+    border-radius: 0 0 1.25rem 1.25rem;
+    margin: 0 -0.25rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.fb3-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fb3-accent);
+    margin: 0 0 0.75rem;
+}
+
+.fb3-h1 {
+    font-family: Anton, Impact, sans-serif;
+    font-size: clamp(1.75rem, 5vw, 2.35rem);
+    line-height: 1.1;
+    margin: 0 0 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.fb3-hero-sub {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--fb3-muted);
+    margin: 0 0 1.75rem;
+    max-width: 36rem;
+}
+
+.fb3-pattern-card {
+    background: var(--fb3-card);
+    border: 1px solid var(--fb3-border);
+    border-radius: 16px;
+    padding: 1.35rem 1.35rem 1.25rem;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+}
+
+.fb3-page.dark .fb3-pattern-card {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.fb3-pattern-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fb3-muted);
+    margin-bottom: 0.35rem;
+}
+
+.fb3-pattern-name {
+    font-family: Anton, Impact, sans-serif;
+    font-size: clamp(1.35rem, 4vw, 1.75rem);
+    line-height: 1.15;
+    color: var(--fb3-accent);
+    margin: 0 0 0.5rem;
+}
+
+.fb3-pattern-line {
+    font-size: 0.98rem;
+    line-height: 1.5;
+    margin: 0 0 1.25rem;
+    color: var(--fb3-text);
+    opacity: 0.92;
+}
+
+.fb3-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--fb3-border);
+}
+
+@media (max-width: 540px) {
+    .fb3-split {
+        grid-template-columns: 1fr;
+    }
+}
+
+.fb3-mini-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fb3-muted);
+    margin-bottom: 0.35rem;
+}
+
+.fb3-mini-val {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.fb3-small {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: var(--fb3-muted);
+    margin: 0.35rem 0 0;
+}
+
+.fb3-tag {
+    margin: 0.75rem 0 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--fb3-accent);
+}
+
+.fb3-section {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--fb3-border);
+}
+
+.fb3-section-tight {
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+}
+
+.fb3-h2 {
+    font-family: Anton, Impact, sans-serif;
+    font-size: clamp(1.15rem, 3.5vw, 1.4rem);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 1rem;
+}
+
+.fb3-h3 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fb3-muted);
+    margin: 0 0 0.5rem;
+}
+
+.fb3-p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin: 0 0 0.75rem;
+}
+
+.fb3-p:last-child {
+    margin-bottom: 0;
+}
+
+.fb3-note {
+    font-size: 0.82rem;
+    color: var(--fb3-muted);
+    margin: -0.25rem 0 1rem;
+}
+
+.fb3-strong {
+    font-weight: 600;
+}
+
+.fb3-muted {
+    font-size: 0.88rem;
+    color: var(--fb3-muted);
+    margin: 0 0 1rem;
+}
+
+.fb3-list-plain {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.65;
+}
+
+.fb3-list-plain li {
+    margin-bottom: 0.65rem;
+}
+
+.fb3-list-plain li:last-child {
+    margin-bottom: 0;
+}
+
+.fb3-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 560px) {
+    .fb3-grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.fb3-card {
+    background: var(--fb3-card);
+    border: 1px solid var(--fb3-border);
+    border-radius: 12px;
+    padding: 1rem 1.1rem;
+}
+
+.fb3-highlight {
+    margin-top: 1rem;
+    padding: 1rem 1.1rem;
+    border-radius: 12px;
+    background: var(--fb3-highlight);
+    border: 1px solid rgba(241, 0, 0, 0.2);
+}
+
+.fb3-decision {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 560px) {
+    .fb3-decision {
+        grid-template-columns: 1fr;
+    }
+}
+
+.fb3-decision-yes,
+.fb3-decision-no {
+    padding: 1rem 1.1rem;
+    border-radius: 12px;
+    border: 1px solid var(--fb3-border);
+    background: var(--fb3-card);
+}
+
+.fb3-dec-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fb3-accent);
+    margin-bottom: 0.5rem;
+}
+
+.fb3-ol {
+    margin: 0;
+    padding-left: 1.2rem;
+    font-size: 0.92rem;
+    line-height: 1.65;
+}
+
+.fb3-ol li {
+    margin-bottom: 0.55rem;
+}
+
+.fb3-appendix {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.fb3-appendix-row {
+    padding: 1rem 1.1rem;
+    border-radius: 12px;
+    background: var(--fb3-bg-elevated);
+    border: 1px solid var(--fb3-border);
+}
+
+.fb3-quote {
+    font-style: italic;
+    margin: 0 0 0.5rem;
+    font-size: 0.92rem;
+    color: var(--fb3-text);
+    opacity: 0.95;
+}
+
+.fb3-signal {
+    margin: 0;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--fb3-accent);
+    line-height: 1.5;
+}
+
+.fb3-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.25rem;
+    border-radius: 999px;
+    background: var(--fb3-accent);
+    color: #fffcf1;
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s, transform 0.15s;
+}
+
+.fb3-btn:hover {
+    filter: brightness(1.08);
+}
+
+.fb3-lead {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0 0 1rem;
+}

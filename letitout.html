@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#fffcf1">
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="index, follow">
     <meta name="author" content="Pattern Reset™">
     
     <!-- Google tag (gtag.js) - pattern-reset property @ analytics.google.com -->
@@ -16,12 +16,12 @@
 
     gtag('config', 'G-ZEZQRBTLR7');
     </script>
-    <title>Let It Out | An Anonymous Space to Share Your Story & Heal</title>
-    <meta name="description" content="Let It Out is a public emotional wall where you can post anonymously, release your truth, and read what others are carrying too. No login. No judgment. The most honest wall on the internet.">
+    <title>Let It Out — anonymous wall to vent and feel less alone | Pattern Reset™</title>
+    <meta name="description" content="Post anonymously on a public wall—breakup, family, anxiety, situationship spirals, anything heavy. No account. Read others&rsquo; truths and remember you are not the only one carrying it.">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Let It Out | An Anonymous Space to Share Your Story & Heal">
-    <meta property="og:description" content="Let It Out is a public emotional wall where you can post anonymously, release your truth, and read what others are carrying too. No login. No judgment. The most honest wall on the internet.">
+    <meta property="og:title" content="Let It Out — anonymous emotional wall | Pattern Reset™">
+    <meta property="og:description" content="Say the thing you cannot post anywhere else. Anonymous posts, real-time wall, no login—vent, release, and see you are not alone.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mypatternreset.com/letitout">
     <meta property="og:image" content="https://mypatternreset.com/images/Let%20It%20Out%20Logo.png">
@@ -31,8 +31,8 @@
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Let It Out | An Anonymous Space to Share Your Story & Heal">
-    <meta name="twitter:description" content="Let It Out is a public emotional wall where you can post anonymously, release your truth, and read what others are carrying too. No login. No judgment. The most honest wall on the internet.">
+    <meta name="twitter:title" content="Let It Out — anonymous wall | Pattern Reset™">
+    <meta name="twitter:description" content="Anonymous vent wall: post what you are holding, read what others released. No login. Part of Pattern Reset™.">
     <meta name="twitter:image" content="https://mypatternreset.com/images/Let%20It%20Out%20Logo.png">
     
     <!-- Structured Data (JSON-LD) -->
@@ -41,7 +41,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Let It Out",
-      "description": "An anonymous emotional release tool for people silently carrying emotional weight. A mirror for people to see they're not alone. A healing space for letting go of what's never been shared. A community wall for unspoken truths.",
+      "description": "Anonymous public wall for emotional release—relationship stress, grief, anxiety, and hard truths. Post without an account; read others and feel less alone. Part of Pattern Reset™.",
       "url": "https://mypatternreset.com/letitout",
       "applicationCategory": "SocialNetworkingApplication",
       "operatingSystem": "Web Browser",
@@ -96,11 +96,11 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="style.css?v=2">
-            <link rel="stylesheet" href="styles/letitout.css?v=25">
+    <link rel="stylesheet" href="styles/letitout-theme.css?v=3">
+    <link rel="stylesheet" href="styles/letitout.css?v=55">
     <link rel="stylesheet" href="styles/letitout-mobile.css?v=2">
-    <link rel="stylesheet" href="styles/letitout-theme.css?v=2">
-    <link rel="stylesheet" href="styles/letitout-dark.css?v=7">
-    <link rel="stylesheet" href="styles/letitout-location-fix.css?v=1">
+    <link rel="stylesheet" href="styles/letitout-dark.css?v=29">
+    <link rel="stylesheet" href="styles/letitout-location-fix.css?v=7">
     <link rel="stylesheet" href="styles/letitout-button-fix.css?v=1">
     <style>
     .letitout-title-bar {
@@ -146,8 +146,13 @@
         box-shadow: 0 2px 8px rgba(241,0,0,0.08);
     }
     @media (max-width: 600px) {
+        .letitout-title-bar {
+            margin-top: 1.35rem;
+            margin-bottom: 1.5rem;
+        }
         .letitout-title {
             font-size: 2rem;
+            margin-bottom: 1.25rem;
         }
         .letitout-segmented-control {
             gap: 0.25rem;
@@ -169,12 +174,21 @@
         <div class="letitout-intro-modal">
             <div class="letitout-intro-accent" aria-hidden="true"></div>
             <div class="letitout-intro-modal-content">
-                <h2 id="letitout-intro-heading" class="letitout-intro-title">Let It Out</h2>
-                <p class="letitout-intro-lede">Say what you haven’t been able to say out loud.</p>
-                <p class="letitout-intro-desc">Anonymous space for confessions, situations, and things you’ve been carrying.</p>
-                <p class="letitout-intro-steps">Post it. Read others. Realize you’re not the only one.</p>
+                <h2 id="letitout-intro-heading" class="letitout-intro-title">LET IT OUT</h2>
+                <p class="letitout-intro-lede">Anonymous. No pressure.</p>
+                <div class="letitout-intro-body">
+                    <section class="letitout-intro-section" aria-label="Why it builds up">
+                        <p class="letitout-intro-copy">The things you keep inside don’t disappear.<br>They stay with you.</p>
+                        <p class="letitout-intro-copy">When you put it into words,<br>it stops running in your head.</p>
+                    </section>
+                    <section class="letitout-intro-section" aria-label="What to write">
+                        <p class="letitout-intro-section-lead">Write what happened.<br>What you felt.<br>What you never said.</p>
+                        <p class="letitout-intro-copy letitout-intro-copy--brand letitout-intro-copy--brand-tight">Don’t overthink it. Just write it.</p>
+                        <p class="letitout-intro-copy letitout-intro-copy--brand">Just get it out.</p>
+                    </section>
+                </div>
                 <p class="letitout-intro-age">You must be 13 or older to enter.</p>
-                <button type="button" class="letitout-intro-btn" id="letitout-intro-btn">Share Anonymously</button>
+                <button type="button" class="letitout-intro-btn" id="letitout-intro-btn">Let It Out Now</button>
             </div>
         </div>
     </div>
@@ -217,9 +231,8 @@
                 </div>
                 <div class="nav-right">
                     <ul class="nav-links">
-                        <li><a href="index.html">My Pattern</a></li>
+                        <li><a href="index.html">Get Clarity</a></li>
                         <li><a href="letitout.html" class="letitout-link active">Let It Out</a></li>
-                        <li class="nav-coming-soon"><a href="common-ground.html">Community</a></li>
                         <li id="myCourseLink" style="display: none;"><a href="course/breakup-course.html" id="desktopContinueBreakupResetLink">Continue Pattern Reset</a></li>
                     </ul>
                     <button type="button" class="nav-cta-button letitout-my-posts-btn-global letitout-inbox-cta" id="my-posts-btn" aria-label="My Stories & Inbox">
@@ -233,11 +246,10 @@
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
             </button>
             <nav>
-                <a href="index.html" class="menu-nav-link"><span class="menu-nav-title">My Pattern</span><span class="menu-nav-subtitle">Discover your relationship pattern</span></a>
-                <a href="letitout.html" class="menu-nav-link letitout-link active"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your situation anonymously</span></a>
-                <a href="common-ground.html" class="menu-nav-link nav-coming-soon"><span class="menu-nav-title">Community</span><span class="menu-nav-subtitle">Meet people in real life</span></a>
-                <a href="mailto:support@mypatternreset.com" class="menu-nav-link"><span class="menu-nav-title">Contact</span><span class="menu-nav-subtitle">Get in touch</span></a>
-                <a id="mobileCourseLink" href="course/breakup-course.html" class="menu-nav-link" style="display: none;"><span class="menu-nav-title">Continue Pattern Reset</span><span class="menu-nav-subtitle">Pick up where you left off</span></a>
+                <a href="index.html" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Get Clarity</span><span class="menu-nav-subtitle">Discover your relationship pattern</span></a>
+                <a href="letitout.html" class="menu-nav-link letitout-link active" onclick="closeMenu()"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your situation anonymously</span></a>
+                <a href="home.html#newsletter" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Reset</span><span class="menu-nav-subtitle">Your weekly Sunday reset</span></a>
+                <a id="mobileCourseLink" href="course/breakup-course.html" class="menu-nav-link" style="display: none;" onclick="closeMenu()"><span class="menu-nav-title">Continue Pattern Reset</span><span class="menu-nav-subtitle">Pick up where you left off</span></a>
             </nav>
         </div>
         <button type="button" class="letitout-mobile-inbox-btn letitout-my-posts-btn-global" id="mobile-inbox-btn" aria-label="My Stories & Inbox">
@@ -266,11 +278,9 @@
         <p>
             &copy; 2026 Pattern Reset™
             <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
-            <a href="index.html">My Pattern</a>
+            <a href="index.html">Get Clarity</a>
             <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
-            <a href="letitout.html">Let It Out</a>
-            <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
-            <a href="philosophy.html" title="Pattern Reset System™">The System</a>
+            <a href="letitout.html">Let It Out&trade;</a>
             <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
             <a href="legal.html">Legal</a>
         </p>
@@ -284,11 +294,20 @@
             <button type="button" class="letitout-about-close" aria-label="Close">&times;</button>
             <div class="letitout-about-accent" aria-hidden="true"></div>
             <div class="letitout-about-inner letitout-about-inner--card">
-                <h2 id="letitout-about-heading" class="letitout-about-hero letitout-about-hero--brand">Let It Out</h2>
-                <p class="letitout-about-copy">What stays hidden keeps repeating. What you put into words starts to loosen its grip.</p>
-                <p class="letitout-about-copy">When it only lives in your head, it loops—you replay it, hide it, and carry it alone.</p>
-                <p class="letitout-about-copy">Write here anonymously—your post goes on the live wall. You get it out of your head, no name, no performance. You can read what others post too: like journaling, but out in the open, with proof you’re not the only one carrying heavy stuff.</p>
-                <p class="letitout-about-foot letitout-about-foot--human">Most of us stay stuck when we keep it all in our head.</p>
+                <h2 id="letitout-about-heading" class="letitout-about-hero letitout-about-hero--brand">Why Let It Out Works</h2>
+                <div class="letitout-about-prose">
+                    <p class="letitout-about-copy">You’re not stuck because you don’t want to change. You’re stuck because there are things you never got to say.</p>
+                    <p class="letitout-about-copy">Things you kept to yourself. Things you pushed down. Things you moved on from but never actually let go of.</p>
+                    <p class="letitout-about-copy"><strong>You carried it.</strong> And it shows up in your life—in your thoughts, in your reactions, in your relationships—over and over again, until it starts to feel like who you are.</p>
+                    <p class="letitout-about-copy">That’s why it feels like nothing really changes.</p>
+                    <p class="letitout-about-copy"><strong>Letting it out is how you break that.</strong> When you write it down, you get it out of your head and in front of you.</p>
+                    <p class="letitout-about-copy">You can finally see it clearly, instead of just feeling it. <strong>That’s the moment.</strong></p>
+                    <p class="letitout-about-copy">What felt stuck starts to move. What felt isolating becomes shared. You realize you’re not the only one carrying this.</p>
+                    <p class="letitout-about-copy">Real change doesn’t start by fixing yourself. It starts by creating space—by saying what’s true, by facing what you’ve been avoiding.</p>
+                </div>
+                <div class="letitout-about-closer" role="group" aria-label="How it works">
+                    <p class="letitout-about-closer-text">Not by forcing it. Not by overthinking it. <strong>By letting it out.</strong></p>
+                </div>
                 <button type="button" class="letitout-about-dismiss">Got it</button>
             </div>
         </div>
@@ -321,20 +340,22 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-check-compat.js"></script>
 
     <!-- Application Scripts -->
-    <script src="js/config/firebase-config.js?v=2"></script>
+    <script src="js/config/firebase-config.js?v=3"></script>
     <script src="js/config/mvp-config.js?v=1"></script>
     <script src="js/localId.js?v=2"></script>
     <script src="js/utils.js?v=3"></script>
     <script src="js/darkMode.js"></script>
-    <script src="js/firebase.js?v=2"></script>
+    <script src="js/firebase.js?v=3"></script>
     <!-- <script src="js/firebase-debug.js?v=1"></script> -->
     <script src="js/services/post-service.js?v=2"></script>
-    <script src="js/components/post-card.js?v=2"></script>
+    <script src="js/components/post-card.js?v=5"></script>
     <script src="js/premium-packs.js?v=1"></script>
-    <script src="js/postForm.js?v=9"></script>
-    <script src="js/wallFeed.js?v=2"></script>
+    <script src="js/letitout-situations.js?v=3"></script>
+    <script src="js/postForm.js?v=26"></script>
+    <script src="js/wallFeed.js?v=19"></script>
     
     <!-- Test Script -->
     <!-- <script src="js/test-setup.js"></script> -->

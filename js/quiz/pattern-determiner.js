@@ -4,9 +4,8 @@
 (function() {
     'use strict';
     
-    const RELATIONSHIP_PATTERN_QUESTION_INDEX = 8; // Q9 - "Which description feels closest"
-    const HER_RESPONSE_QUESTIONS = [9, 10, 11]; // Q10-Q12 indices (0-based) - 3 questions
-    const DURATION_QUESTION_INDEX = 13; // Q14 - "How long has this dynamic been going on?"
+    const RELATIONSHIP_PATTERN_QUESTION_INDEX = 5; // Q6 — pattern anchor (v6.0 10-Q)
+    const HER_RESPONSE_QUESTIONS = [6]; // Her-response (index 6)
     
     const SUBDIMENSION_TO_PATTERN = {
         'hot-cold-cycle': 'hot-cold-cycle',
@@ -18,7 +17,8 @@
         'hot-cold': 'hot-cold-cycle',
         'breadcrumb': 'breadcrumb-dynamic',
         'avoidant': 'emotional-distance',
-        'one-sided': 'one-sided-investment'
+        'one-sided': 'one-sided-investment',
+        'mixed-signals': 'mixed-signals-loop'
     };
     
     const SUBDIMENSION_TO_HER_RESPONSE = {
@@ -31,7 +31,7 @@
     
     window.PatternDeterminer = {
         determinePattern: function(driverScores, answers, quizData, personalityPatterns, archetypeCategories) {
-            // Primary: Use Q9 (dynamic question) if available - strongest signal
+            // Primary: pattern-anchor question (Q6, index 5) — strongest single signal
             const dynamicQuestion = quizData && quizData[RELATIONSHIP_PATTERN_QUESTION_INDEX];
             if (dynamicQuestion && dynamicQuestion.options && answers[RELATIONSHIP_PATTERN_QUESTION_INDEX] !== undefined) {
                 const ansIdx = answers[RELATIONSHIP_PATTERN_QUESTION_INDEX];
@@ -78,23 +78,17 @@
         },
         
         getRepetitionInsight: function(answers, quizData) {
-            const repetitionIdx = 12; // Q13
-            if (!quizData || !quizData[repetitionIdx] || !quizData[repetitionIdx].options) return null;
-            const ansIdx = answers[repetitionIdx];
+            const futureIdx = 7; // Future projection (Q8, index 7)
+            if (!quizData || !quizData[futureIdx] || !quizData[futureIdx].options) return null;
+            const ansIdx = answers[futureIdx];
             if (ansIdx === undefined) return null;
-            const option = quizData[repetitionIdx].options[ansIdx];
+            const option = quizData[futureIdx].options[ansIdx];
             return option && option.value ? option.value : null;
         },
         
-        // Situationship modifier: applies when undefined relationship + months without clarity
+        // v4.6: duration question removed, so this modifier is currently disabled.
         hasSituationshipModifier: function(answers, quizData, relationshipStatus) {
-            if (!relationshipStatus || relationshipStatus !== 'situationship') return false;
-            if (!quizData || !quizData[DURATION_QUESTION_INDEX] || !quizData[DURATION_QUESTION_INDEX].options) return false;
-            const ansIdx = answers[DURATION_QUESTION_INDEX];
-            if (ansIdx === undefined) return false;
-            const option = quizData[DURATION_QUESTION_INDEX].options[ansIdx];
-            if (!option || !option.subDimension) return false;
-            return option.subDimension === 'long' || option.subDimension === 'very-long';
+            return false;
         }
     };
 })();

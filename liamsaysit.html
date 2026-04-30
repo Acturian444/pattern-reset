@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#050505">
   <meta name="robots" content="index, follow">
   <title>Liam | Pattern Reset™</title>
-  <meta name="description" content="Pattern analysis quiz, Let It Out wall, and more from Pattern Reset™.">
+  <meta name="description" content="Liam — Pattern Reset™. Weekly Sunday reset email, relationship clarity tools, and where to start when a pattern keeps repeating.">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,10 +15,14 @@
   <link rel="stylesheet" href="styles/bio-hub.css">
 
   <meta property="og:title" content="Liam | Pattern Reset™">
-  <meta property="og:description" content="Start the free pattern quiz, Let It Out, and connect with Pattern Reset™.">
+  <meta property="og:description" content="Weekly Sunday reset, Let It Out wall, and the relationship clarity quiz—one place to plug into Pattern Reset™.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://mypatternreset.com/liamsaysit">
   <meta property="og:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Liam | Pattern Reset™">
+  <meta name="twitter:description" content="Sunday reset email, Let It Out, and the clarity quiz—start here.">
+  <meta name="twitter:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
   <link rel="canonical" href="https://mypatternreset.com/liamsaysit">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEZQRBTLR7"></script>
@@ -37,68 +41,52 @@
 
     <h1 class="bio-hub__name">Liam</h1>
     <p class="bio-hub__handle">@liamsaysit</p>
-    <p class="bio-hub__bio">
-      Confused by his behavior?<br>
-      I help you see what’s actually going on—so you know what to do next.
-    </p>
 
     <div class="bio-hub__actions">
-      <section class="bio-hub__quiz-card" aria-labelledby="quiz-card-title">
-        <div class="bio-hub__quiz-card-logo" aria-hidden="true">
-          <svg width="48" height="48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="50" cy="50" r="3.5" fill="currentColor"/>
-          </svg>
+      <!-- Weekly Reset — same copy, Firestore, and Google Form as home.html #newsletter -->
+      <section class="bio-hub__newsletter" aria-labelledby="bio-newsletter-heading">
+        <div class="pr-hero-waitlist bio-hub__pr-hero-waitlist" id="newsletter">
+          <span class="pr-email-kicker">Pattern Reset&trade;</span>
+          <h2 class="pr-hero-waitlist-title" id="bio-newsletter-heading">Don&rsquo;t carry this week into the next one.</h2>
+          <p class="pr-hero-waitlist-lead pr-body">A weekly Sunday reset to release what you&rsquo;re holding,<br class="pr-waitlist-lead__br" /> get clear, and start fresh.</p>
+          <form class="pr-email-form" id="prEmailForm" novalidate>
+            <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for Sunday&rsquo;s reset">
+            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Get this Sunday&rsquo;s Reset &rarr;</button>
+          </form>
+          <p class="pr-home-micro">Delivered every Sunday evening. Join live or reset on your own.</p>
+          <div class="pr-email-success" id="prEmailSuccess" role="status" aria-live="polite">You&rsquo;re in. Look for this Sunday&rsquo;s reset in your inbox.</div>
         </div>
-        <h2 class="bio-hub__quiz-card-title" id="quiz-card-title">If you’ve been asking yourself:</h2>
-        <ul class="bio-hub__quiz-card-ask-list">
-          <li>Is he actually serious about me?</li>
-          <li>Am I being played or led on?</li>
-          <li>Is he being honest with me?</li>
-          <li>Why do we keep having the same fights?</li>
-          <li>Am I wasting my time with him?</li>
-        </ul>
-        <a class="bio-hub__btn bio-hub__btn--stacked bio-hub__btn--primary bio-hub__quiz-card-cta" href="index.html#quiz-section" aria-label="Get your answer. Free, takes 5 minutes.">
-          <span class="bio-hub__btn-line">Get your answer</span>
-          <span class="bio-hub__btn-sub">Free · takes 5 minutes</span>
-        </a>
       </section>
 
-      <a class="bio-hub__btn bio-hub__btn--stacked bio-hub__btn--ghost" href="letitout.html" aria-label="Write what you can’t say out loud. Anonymous. Post it and see you’re not the only one.">
-        <span class="bio-hub__btn-line">Write what you can’t say out loud</span>
-        <span class="bio-hub__btn-sub">Anonymous · post it and see you’re not the only one</span>
+      <a class="bio-hub__btn bio-hub__btn--stacked bio-hub__btn--ghost" href="letitout.html" aria-label="Let it out. Write what you haven’t been able to say. Anonymous.">
+        <span class="bio-hub__btn-line bio-hub__btn-line--caps">LET IT OUT</span>
+        <span class="bio-hub__btn-sub">Write what you haven&rsquo;t been able to say. Anonymous.</span>
       </a>
 
-      <!-- Ask me directly: swap href for Stripe / paywall URL from pattern results if needed -->
-      <a class="bio-hub__btn bio-hub__btn--stacked bio-hub__btn--ghost" href="mailto:support@mypatternreset.com?subject=Ask%20me%20about%20my%20situation" aria-label="Ask me directly. I’ll read your situation and tell you exactly what’s happening.">
-        <span class="bio-hub__btn-line">Ask me directly</span>
-        <span class="bio-hub__btn-sub">I’ll read your situation and tell you exactly what’s happening</span>
+      <!-- Free pattern quiz — START HERE / Let’s look at your situation (#quiz-section scroll on index) -->
+      <a class="bio-hub__btn bio-hub__btn--stacked bio-hub__btn--ghost" href="index.html#quiz-section" aria-label="Start the free pattern quiz. Start here: let’s look at your situation.">
+        <span class="bio-hub__btn-line bio-hub__btn-line--caps">GET CLARITY</span>
+        <span class="bio-hub__btn-sub">Get clear on what&rsquo;s actually going on and what to do next.</span>
       </a>
 
-      <!-- 1:1 — same offer as pattern-results paywall; replace with Calendly or checkout URL -->
-      <a class="bio-hub__btn bio-hub__btn--stacked bio-hub__btn--ghost" href="https://calendly.com/" target="_blank" rel="noopener noreferrer" aria-label="Talk to me 1:1. 30-min live call. I’ll break down what’s happening and tell you exactly what to do.">
-        <span class="bio-hub__btn-line">Talk to me 1:1</span>
-        <span class="bio-hub__btn-sub">30-min live call · I’ll break down what’s happening and tell you exactly what to do</span>
+      <!-- Direct Answer — use .html so static/dev servers resolve (clean /personal-relationship-read needs rewrite rules) -->
+      <a class="bio-hub__btn bio-hub__btn--stacked bio-hub__btn--ghost" href="personal-relationship-read.html" aria-label="Direct message me. Send what’s happening; I’ll tell you what’s really going on. Opens Direct Answer application.">
+        <span class="bio-hub__btn-line bio-hub__btn-line--caps">DIRECT MESSAGE ME</span>
+        <span class="bio-hub__btn-sub">Send me what&rsquo;s happening. I&rsquo;ll tell you what&rsquo;s really going on.</span>
+      </a>
+
+      <!-- 1:1 — update href if Calendly event is 60 min (currently resetmypattern/30min) -->
+      <a class="bio-hub__btn bio-hub__btn--stacked bio-hub__btn--ghost" href="https://calendly.com/resetmypattern/30min" target="_blank" rel="noopener noreferrer" aria-label="Talk to me one to one. Sixty-minute call on Calendly.">
+        <span class="bio-hub__btn-line bio-hub__btn-line--caps">TALK TO ME 1:1</span>
+        <span class="bio-hub__btn-sub">60-min call. We&rsquo;ll break it down and decide what to do next.</span>
       </a>
     </div>
 
-    <div class="bio-hub__social" aria-label="Social and email">
-      <!-- Replace # with your profile URLs -->
-      <a href="https://www.instagram.com/heartmatters__/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-      </a>
-      <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook — replace with your page URL in liamsaysit.html">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-      </a>
-      <a href="https://www.tiktok.com/@liamsaysit" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+    <div class="bio-hub__social" aria-label="TikTok and email">
+      <a href="https://www.tiktok.com/@liamsaysit" target="_blank" rel="noopener noreferrer" aria-label="TikTok @liamsaysit">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 11-2.89-2.89c.09 0 .18.01.27.02V9.6a6.33 6.33 0 00-1-.07A6.34 6.34 0 005 15.95 6.34 6.34 0 0011.34 22a6.34 6.34 0 006.34-6.34V8.56a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-2.86-.99z"/></svg>
       </a>
-      <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube — replace URL in liamsaysit.html">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-      </a>
-      <a href="mailto:support@mypatternreset.com?subject=Pattern%20Reset" aria-label="Email Pattern Reset">
+      <a href="mailto:liamsaysit@gmail.com?subject=Pattern%20Reset%20%E2%80%94%20from%20bio" aria-label="Email Liam at liamsaysit@gmail.com">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
       </a>
     </div>
@@ -108,8 +96,104 @@
     </footer>
   </main>
 
+  <iframe name="weekly-reset-iframe" id="weekly-reset-iframe" title="Form submit" style="display:none;width:0;height:0;border:0;" aria-hidden="true"></iframe>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-check-compat.js"></script>
+  <script src="js/config/firebase-config.js?v=3"></script>
+  <script src="js/firebase.js?v=3"></script>
+
   <script>
     document.getElementById('bio-year').textContent = new Date().getFullYear();
+
+    /**
+     * Keep PR_WEEKLY_RESET_FORM_ACTION / PR_FORM_ENTRY_* in sync with home.html
+     * (see WEEKLY RESET comment in home.html <head>).
+     */
+    var PR_WEEKLY_RESET_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSfyNFXWb8mZ0A-EOemynRlZemc1_Pm1fvYvl5O9DKqpfwjAAw/formResponse';
+    var PR_FORM_ENTRY_EMAIL = 'entry.2011616989';
+    var PR_FORM_ENTRY_SOURCE = '';
+
+    function postWeeklyResetToGoogleForm(email) {
+      if (!PR_WEEKLY_RESET_FORM_ACTION || !PR_FORM_ENTRY_EMAIL) return;
+      var f = document.createElement('form');
+      f.setAttribute('method', 'POST');
+      f.setAttribute('action', PR_WEEKLY_RESET_FORM_ACTION);
+      f.setAttribute('target', 'weekly-reset-iframe');
+      f.setAttribute('accept-charset', 'UTF-8');
+      f.style.cssText = 'position:absolute;left:-9999px;opacity:0;pointer-events:none;';
+      if (PR_FORM_ENTRY_SOURCE) {
+        var t = document.createElement('input');
+        t.setAttribute('type', 'hidden');
+        t.setAttribute('name', PR_FORM_ENTRY_SOURCE);
+        t.setAttribute('value', 'weekly_reset_liamsaysit');
+        f.appendChild(t);
+      }
+      var m = document.createElement('input');
+      m.setAttribute('type', 'hidden');
+      m.setAttribute('name', PR_FORM_ENTRY_EMAIL);
+      m.setAttribute('value', email);
+      f.appendChild(m);
+      document.body.appendChild(f);
+      f.submit();
+      document.body.removeChild(f);
+    }
+
+    var prEmailFormEl = document.getElementById('prEmailForm');
+    if (prEmailFormEl) {
+      prEmailFormEl.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var form = this;
+        var input = document.getElementById('prEmailInput');
+        var btn = document.getElementById('prEmailSubmit');
+        var success = document.getElementById('prEmailSuccess');
+        if (!input || !success) return;
+        var v = (input.value || '').trim();
+        if (!v || v.indexOf('@') === -1) {
+          input.style.borderColor = 'var(--pr-red, #f10000)';
+          input.focus();
+          return;
+        }
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+        var db = window.letitoutDb;
+        var doneUi = function () {
+          if (input) { input.style.display = 'none'; input.style.borderColor = ''; }
+          if (btn) { btn.style.display = 'none'; }
+          if (typeof form.querySelectorAll === 'function') {
+            form.querySelectorAll('label').forEach(function (l) { l.style.display = 'none'; });
+          }
+          var micro = form.parentNode ? form.parentNode.querySelector('.pr-home-micro') : null;
+          if (micro) micro.style.display = 'none';
+          success.style.display = 'block';
+          if (typeof gtag === 'function') {
+            gtag('event', 'sign_up', { method: 'weekly_reset_liamsaysit' });
+          }
+        };
+        var runGoogle = function () { try { postWeeklyResetToGoogleForm(v); } catch (err) { console.error(err); } };
+        var finish = function () {
+          runGoogle();
+          setTimeout(doneUi, 400);
+        };
+        if (db) {
+          firebase.auth().signInAnonymously()
+            .then(function () {
+              return db.collection('weeklyResetSignups').add({
+                email: v,
+                source: 'liamsaysit',
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
+            })
+            .then(finish)
+            .catch(function (err) {
+              console.error('weeklyResetSignups or auth', err);
+              finish();
+            });
+        } else {
+          finish();
+        }
+      });
+    }
   </script>
 </body>
 </html>

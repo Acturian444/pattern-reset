@@ -1,6 +1,18 @@
 // Initialize Firebase
 firebase.initializeApp(window.firebaseConfig);
 
+// App Check — must load firebase-app-check-compat.js before this file. Inactive if firebaseAppCheckSiteKey is empty.
+(function initAppCheck() {
+    try {
+        if (typeof firebase === 'undefined' || typeof firebase.appCheck !== 'function') return;
+        var key = typeof window !== 'undefined' && window.firebaseAppCheckSiteKey;
+        if (!key || !String(key).trim()) return;
+        firebase.appCheck().activate(new firebase.appCheck.ReCaptchaV3Provider(String(key).trim()), true);
+    } catch (e) {
+        console.warn('Firebase App Check activate failed:', e.message);
+    }
+})();
+
 // Initialize Firestore
 const db = firebase.firestore();
 

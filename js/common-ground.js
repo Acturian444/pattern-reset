@@ -176,7 +176,7 @@
             document.getElementById('cg-success').classList.add('show');
         } catch (err) {
             console.error('Application error:', err);
-            alert('Something went wrong. Please try again or contact us at support@mypatternreset.com');
+            alert('Something went wrong. Please try again or contact us at resetmypattern@gmail.com');
         } finally {
             if (btn) {
                 btn.disabled = false;

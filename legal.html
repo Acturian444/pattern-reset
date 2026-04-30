@@ -3,50 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080808">
     <meta name="robots" content="index,follow">
     <meta name="author" content="Pattern Reset™">
-    <title>Legal & Intellectual Property | Pattern Reset™</title>
-    <meta name="description" content="Legal information, intellectual property notices, and terms of use for Pattern Reset™ - protecting our brand and your rights.">
+    <title>Legal | Pattern Reset™</title>
+    <meta name="description" content="Trademarks, terms, privacy, and contact for legal questions about Pattern Reset™.">
     
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Legal & Intellectual Property | Pattern Reset™">
-    <meta property="og:description" content="Legal information, intellectual property notices, and terms of use for Pattern Reset™ - protecting our brand and your rights.">
+    <meta property="og:title" content="Legal | Pattern Reset™">
+    <meta property="og:description" content="Trademarks, terms, privacy, and how to reach us for IP or legal questions.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mypatternreset.com/legal">
     <meta property="og:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
     
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://mypatternreset.com/legal">
     
-    <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Legal & Intellectual Property | Pattern Reset™">
-    <meta name="twitter:description" content="Legal information, intellectual property notices, and terms of use for Pattern Reset™ - protecting our brand and your rights.">
+    <meta name="twitter:title" content="Legal | Pattern Reset™">
+    <meta name="twitter:description" content="Trademarks, terms, privacy, and contact for legal questions.">
     <meta name="twitter:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
     
-    <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "name": "Legal & Intellectual Property | Pattern Reset™",
-      "description": "Legal information, intellectual property notices, and terms of use for Pattern Reset™",
+      "name": "Legal | Pattern Reset™",
+      "description": "Trademarks, terms, privacy, and contact for legal questions about Pattern Reset™",
       "url": "https://mypatternreset.com/legal",
-      "publisher": {
-        "@type": "Organization",
-        "name": "Pattern Reset™"
-      },
-      "dateModified": "2026-02-06"
+      "publisher": { "@type": "Organization", "name": "Pattern Reset™" },
+      "dateModified": "2026-04-23"
     }
     </script>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=block" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -55,40 +47,26 @@
         <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=block" rel="stylesheet">
     </noscript>
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Styles -->
     <link rel="stylesheet" href="style.css?v=4">
-    <link rel="stylesheet" href="legal.css?v=1">
+    <link rel="stylesheet" href="legal.css?v=8">
 </head>
-<body>
+<body class="page-legal">
 
+    <button class="page-close-btn" type="button" aria-label="Close legal page" onclick="window.history.back()">&times;</button>
 
-            <button class="page-close-btn" 
-                type="button"
-                aria-label="Close legal page"
-                onclick="window.history.back()">
-          &times;
-        </button>
-    
     <main>
         <div class="legal-container">
-            <div class="legal-header">
-                <h1>Legal & Intellectual Property</h1>
-                <p>Protecting our brand, your rights, and our community</p>
+            <!-- Use div, not <header> — global style.css targets header { background: cream } and breaks this block on dark legal -->
+            <div class="legal-header" role="banner" aria-label="Legal">
+                <h1>Legal</h1>
+                <p class="legal-header-lede">Trademarks, site terms, privacy, and how to reach us.</p>
             </div>
 
-            <!-- Trademarks Section -->
-            <section class="legal-section">
-                <h2>Intellectual Property & Trademarks</h2>
-                
-                <div class="important-notice">
-                    <h4>⚠️ Trademark Notice</h4>
-                    <p>The following marks are unregistered trademarks of Pattern Reset™ used under common law trademark rights. Any unauthorized use may constitute trademark infringement.</p>
-                </div>
+            <p class="legal-p legal-p--muted">This page is general information about how we run Pattern Reset™. It is <strong>not</strong> legal advice. If you need advice for your own situation, consult a qualified attorney.</p>
 
-                <h3>Our Trademarks</h3>
+            <section class="legal-section" aria-labelledby="sec-ip">
+                <h2 id="sec-ip">Trademarks &amp; copyright</h2>
+                <p class="legal-p">The names below are unregistered marks we use in U.S. commerce, shown with ™. We assert our rights, including from use and under common law, against use that is likely to confuse about who runs or backs a product or service.</p>
                 <div class="trademark-list">
                     <ul>
                         <li>Pattern Reset™</li>
@@ -104,138 +82,55 @@
                         <li>This is where we let it out together.™</li>
                     </ul>
                 </div>
-
-                <h3>Copyright Protection</h3>
-                <p>© 2026 Pattern Reset™. All rights reserved. © 2026 Common Ground Social Club™. All rights reserved. All content on this website, including but not limited to text, graphics, logos, images, audio clips, digital downloads, and data compilations, is the property of Pattern Reset™, Common Ground Social Club™, or their content suppliers and is protected by United States and international copyright laws.</p>
+                <p class="legal-p">© 2026 Pattern Reset™. All rights reserved. Site content is owned by Pattern Reset™ or our licensors, except for material you or others own (e.g. content you post) as described in these terms, and is protected by U.S. and international copyright law where it applies.</p>
             </section>
 
-            <!-- Terms of Use Section -->
-            <section class="legal-section">
-                <h2>Terms of Use</h2>
-                
-                <h3>Acceptance of Terms</h3>
-                <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
-
-                <h3>Use License</h3>
-                <p>Permission is granted to temporarily download one copy of the materials (information or software) on Pattern Reset™'s website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
-                <ul>
-                    <li>Modify or copy the materials</li>
-                    <li>Use the materials for any commercial purpose or for any public display (commercial or non-commercial)</li>
-                    <li>Attempt to reverse engineer any software contained on Pattern Reset™'s website</li>
-                    <li>Remove any copyright or other proprietary notations from the materials</li>
-                    <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
-                </ul>
-
-                <h3>User-Generated Content</h3>
-                <p>When you submit content to our platforms (including "Let It Out™" posts), you retain ownership of your content but grant Pattern Reset™ a worldwide, non-exclusive, royalty-free license to use, reproduce, modify, and distribute your content in connection with our services.</p>
+            <section class="legal-section" aria-labelledby="sec-terms">
+                <h2 id="sec-terms">Terms of use</h2>
+                <p class="legal-p">By using this site, you agree to these terms. You may view and temporarily download one copy of our materials for personal, non-commercial use. You may not modify, republish, reverse engineer, remove notices, or mirror this site.</p>
             </section>
 
-            <!-- Privacy & Data Protection -->
-            <section class="legal-section">
-                <h2>Privacy & Data Protection</h2>
-                
-                <h3>Information We Collect</h3>
-                <p>We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us. This may include your name, email address, phone number, and payment information.</p>
-
-                <h3>How We Use Your Information</h3>
-                <p>We use the information we collect to:</p>
-                <ul>
-                    <li>Provide, maintain, and improve our services</li>
-                    <li>Process transactions and send related information</li>
-                    <li>Send you technical notices, updates, security alerts, and support messages</li>
-                    <li>Respond to your comments, questions, and customer service requests</li>
-                    <li>Communicate with you about products, services, offers, and events</li>
-                </ul>
-
-                <h3>Data Security</h3>
-                <p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+            <section class="legal-section" aria-labelledby="sec-ugc">
+                <h2 id="sec-ugc">User content (including Let It Out™)</h2>
+                <p class="legal-p"><strong>What you own.</strong> Text and other content you post stays yours, subject to the license you give us below.</p>
+                <p class="legal-p"><strong>What you give us.</strong> You grant Pattern Reset™ a non-exclusive, worldwide, royalty-free license to host, copy, store, display, reformat, moderate, and otherwise use that content to operate, secure, and improve the site and products (including the Let It Out™ wall, inbox, anonymity features, and related tools you see today or later), and to use anonymized or aggregated data that does not identify you for analytics and product improvement, where the law allows.</p>
+                <p class="legal-p"><strong>What you promise.</strong> You are responsible for what you post. You represent you have the rights to post it and that it is not, to your knowledge, unlawful, infringing, or defamatory in a way that creates unjustified serious harm. We may remove or restrict any content, or limit or end access, at any time, with or without notice, if we think it is necessary for safety, law, or the health of the community&mdash;and we are not required to pre-screen or monitor all posts. You agree, to the extent the law allows, to defend and hold harmless Pattern Reset™ and its people from third-party claims that arise from your own posts and use of the site.</p>
+                <p class="legal-p"><strong>What others post.</strong> The site can include what other people write. We are not responsible for their words or for disputes between you and them, except as required by law. If you believe a post infringes your <strong>copyright</strong> or is otherwise abusive or unlawful, contact us with enough detail to review (email below); we will handle good-faith reports in line with applicable law, including, where it applies, notice-and-takedown for copyright. We are not a court and cannot resolve every disagreement.</p>
             </section>
 
-            <!-- Brand Protection -->
-            <section class="legal-section">
-                <h2>Brand Protection</h2>
-                
-                <h3>Unauthorized Use</h3>
-                <p>Pattern Reset™ actively monitors and protects our intellectual property rights. Unauthorized use of our trademarks, copyrighted materials, or brand assets may result in legal action.</p>
-
-                <h3>Reporting Violations</h3>
-                <p>If you believe someone is using our intellectual property without permission, please contact us immediately with details of the suspected infringement.</p>
-                
-                <h3>Infringement Reporting Requirements</h3>
-                <p>To report trademark infringement, please provide:</p>
-                <ul>
-                    <li>Description of the infringing use</li>
-                    <li>Screenshots or evidence</li>
-                    <li>Contact information of the infringer</li>
-                    <li>Your contact information</li>
-                </ul>
-                
-                <h3>Domain Name Protection</h3>
-                <p>Pattern Reset™ owns and controls the following domain names and all associated subdomains:</p>
-                <ul>
-                    <li>mypatternreset.com</li>
-                    <li>resetmypattern.com</li>
-                </ul>
-                <p>Unauthorized use of similar domain names may constitute cybersquatting and trademark infringement.</p>
-                
-                <h3>Social Media & Digital Assets</h3>
-                <p>Pattern Reset™ maintains official social media accounts and digital presence. Any unauthorized accounts using our trademarks may constitute infringement.</p>
-                
-                <h3>Brand Monitoring</h3>
-                <p>Pattern Reset™ actively monitors for unauthorized use of our trademarks through:</p>
-                <ul>
-                    <li>Online brand monitoring</li>
-                    <li>Social media surveillance</li>
-                    <li>Domain name monitoring</li>
-                    <li>Marketplace surveillance</li>
-                </ul>
-                
-                <div class="important-notice">
-                    <h4>📋 Complete Trademark List</h4>
-                    <p>Our protected trademarks include: Pattern Reset™, The Pattern Reset™, The 22 Day Pattern Reset™, 22 Day Pattern Reset™, Pattern Analysis™, Let It Out™, Common Ground™, Common Ground Social Club™, Time Wealth™, Your words hold power. Your truth matters.™, and This is where we let it out together.™.</p>
-                </div>
-
-                <div class="contact-info">
-                    <h4>Contact for Legal Matters</h4>
-                    <p><strong>For General Inquiries:</strong> <a href="mailto:resetmypattern@gmail.com">resetmypattern@gmail.com</a></p>
-                </div>
+            <section class="legal-section" aria-labelledby="sec-privacy">
+                <h2 id="sec-privacy">Privacy</h2>
+                <p class="legal-p">We collect information you give us (for example name, email, phone, and payment data when you sign up or buy). We use it to provide our services, process orders, send service-related messages, and support you. We use safeguards we consider appropriate to protect your information. We may update this description as our practices change; the &ldquo;last updated&rdquo; line below will change when we do. Our services are not directed at children under 13, and we do not knowingly collect their personal information.</p>
             </section>
 
-            <!-- Disclaimers -->
-            <section class="legal-section">
-                <h2>Disclaimers</h2>
-                
-                <h3>Website Accuracy</h3>
-                <p>The materials on Pattern Reset™'s website are provided on an 'as is' basis. Pattern Reset™ makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
-
-                <h3>Limitation of Liability</h3>
-                <p>In no event shall Pattern Reset™ or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on Pattern Reset™'s website.</p>
+            <section class="legal-section" aria-labelledby="sec-brand">
+                <h2 id="sec-brand">Brand &amp; contact</h2>
+                <p class="legal-p">We work to protect our marks and content. If you see misuse, email us with a clear description and any evidence. We control <strong>mypatternreset.com</strong> and <strong>resetmypattern.com</strong> (and their subdomains). Confusingly similar domains may infringe our rights.</p>
+                <p class="legal-contact"><a href="mailto:resetmypattern@gmail.com">resetmypattern@gmail.com</a> — legal and IP</p>
             </section>
 
-            <!-- Updates & Changes -->
-            <section class="legal-section">
-                <h2>Updates to This Page</h2>
-                <p>We may update this legal page from time to time. We will notify you of any changes by posting the new legal page on this page and updating the "Last Updated" date below.</p>
-                
-                <p><strong>Last Updated:</strong> February 2026</p>
+            <section class="legal-section" aria-labelledby="sec-disclaimers">
+                <h2 id="sec-disclaimers">Disclaimers</h2>
+                <p class="legal-p">Programs, tools, and our own content on this site are for general information and self-education. They are <strong>not</strong> medical, mental-health, or legal advice and are not a substitute for a licensed professional who knows your situation. This site and its materials are provided &ldquo;as is&rdquo; without warranties, to the fullest extent permitted by law. We are not liable for indirect or consequential damages arising from your use of the site, including your exposure to or reliance on content posted by other people or third parties, except as required by law. Nothing on this page limits rights that law does not allow us to limit.</p>
             </section>
 
-            <a href="/" class="back-link">← Back to Home</a>
+            <p class="legal-updated" role="status">Last updated <time datetime="2026-04-23">April 23, 2026</time></p>
+
+            <a href="/" class="back-link">← Back to home</a>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer id="footer" style="margin-top: 2rem;" class="pr-footer-std">
+    <footer id="footer" class="pr-footer-std">
         <p>
             &copy; 2026 Pattern Reset™
             <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
-            <a href="index.html">My Pattern</a>
+            <a href="index.html">Get Clarity</a>
             <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
-            <a href="letitout.html">Let It Out</a>
+            <a href="letitout.html">Let It Out&trade;</a>
             <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
             <a href="legal.html">Legal</a>
         </p>
     </footer>
 
 </body>
-</html> 
+</html>

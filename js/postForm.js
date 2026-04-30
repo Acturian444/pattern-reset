@@ -1,8 +1,13 @@
+/** Max characters for Let It Out post body (enforced on textarea; no visible counter). */
+const LETITOUT_MAX_CONTENT_LENGTH = 800;
+
 // Post Form Handler
 class PostForm {
     constructor() {
         this.form = document.createElement('form');
         this.form.className = 'letitout-form';
+        /** Submit CTA lives outside the DOM node; `form` attribute on the button wires native submit. */
+        this.form.id = 'letitout-post-form';
         
         // Initialize premium packs with safety check
         if (window.PremiumPacks) {
@@ -117,61 +122,58 @@ class PostForm {
             // MVP: Single static prompt when prompts are hidden
             const mvpPrompt = document.createElement('div');
             mvpPrompt.className = 'letitout-mvp-prompt';
-            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Say What You Can't Say</span><span class=\"letitout-mvp-subtitle\">Anonymous. Get it off your chest.</span>";
+            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Write what you’ve been holding in</span><span class=\"letitout-mvp-subtitle\">Anonymous. No pressure. Just release.</span>";
             formContent.appendChild(mvpPrompt);
         }
 
-        // Create wrapper for textarea and counter
+        this._submitAttemptedWithoutEmotion = false;
+
+        // Textarea: max length, no visible character count (length tracked for draft/submit only)
         const textareaWrapper = document.createElement('div');
         textareaWrapper.className = 'textarea-wrapper';
         
         const textarea = document.createElement('textarea');
-        textarea.placeholder = "What\u2019s one thing you\u2019ve been holding in?";
-        textarea.maxLength = 500;
-        textarea.required = true;
-        
-        const counter = document.createElement('div');
-        counter.className = 'char-counter';
-        counter.textContent = '0/500';
-        
-        textarea.addEventListener('input', () => {
-            counter.textContent = `${textarea.value.length}/500`;
-            this.saveDraft(); // Save draft on text change
+        textarea.placeholder = "Say what you haven\u2019t been able to say…";
+        textarea.maxLength = LETITOUT_MAX_CONTENT_LENGTH;
 
-            // Auto-expand textarea
+        textarea.addEventListener('input', () => {
+            this._letitoutContentLength = textarea.value.length;
+            this.saveDraft();
+
             textarea.style.height = 'auto';
             textarea.style.height = `${textarea.scrollHeight}px`;
         });
+        this._letitoutContentLength = 0;
         
         textareaWrapper.appendChild(textarea);
         formContent.appendChild(textareaWrapper);
-        formContent.appendChild(counter);
 
         // --- EMOTION TAGGING UPGRADE ---
         // Emotion categories and sub-emotions
         this.emotionCategories = [
             {
-                name: 'Pain & Relationship Conflict',
+                name: 'Core Pain',
                 emotions: [
-                    'Heartbreak', 'Confusion', 'Rejection', 'Loneliness', 'Jealousy', 'Betrayal', 'Abandonment', 'Resentment', 'Regret', 'Shame'
+                    'Heartbreak', 'Rejection', 'Abandonment', 'Betrayal', 'Loneliness', 'Shame', 'Regret', 'Resentment'
                 ]
             },
             {
-                name: 'Stress & Emotional Overload',
+                name: 'Emotional State',
                 emotions: [
-                    'Anxiety', 'Fear', 'Overwhelmed', 'Exhausted', 'Hopeless', 'Powerless'
+                    'Anxious', 'Overthinking', 'Drained', 'Numb', 'Stuck', 'Lost', 'Powerless',
+                    'Confused', 'Obsessing', 'Keeps happening', 'Insecure'
                 ]
             },
             {
-                name: 'Love & Desire',
+                name: 'Longing & Connection',
                 emotions: [
                     'Longing', 'Missing Someone', 'Still in Love', 'Wanting Connection', 'Wanting to Feel Chosen'
                 ]
             },
             {
-                name: 'Growth & Healing',
+                name: 'Growth / Release',
                 emotions: [
-                    'Healing', 'Letting Go', 'Forgiveness', 'Clarity'
+                    'Letting Go', 'Healing', 'Forgiveness', 'Clarity'
                 ]
             }
         ];
@@ -180,10 +182,37 @@ class PostForm {
         this.customCity = null;
         this.isCustomCity = false;
         this.selectedSituation = null;
-        this.situationList = [
-            'Dating', 'Situationship', 'Talking Stage', 'Relationship', 'Breakup', 'No Contact',
-            'Ex', 'Marriage', 'Family', 'Friendship', 'Work', 'Self', 'Trauma', 'Healing'
-        ];
+        this.situationList =
+            typeof LET_IT_OUT_SITUATION_TAGS !== 'undefined' && Array.isArray(LET_IT_OUT_SITUATION_TAGS)
+                ? [...LET_IT_OUT_SITUATION_TAGS]
+                : [
+                      'Relationships',
+                      'Dating',
+                      'Situationship',
+                      'Relationship',
+                      'Breakup',
+                      'No Contact',
+                      'Ex',
+                      'Mixed Signals',
+                      'One-Sided',
+                      'Not Committing',
+                      'On and Off',
+                      'Breadcrumbing',
+                      'Ghosted',
+                      'Didn’t Say It',
+                      'Holding It In',
+                      'Avoided the Conversation',
+                      'Said Something I Regret',
+                      'Left on Read',
+                      'Past',
+                      'Family',
+                      'Friendship',
+                      'Work',
+                      'Self',
+                      'Childhood',
+                      'Closure I Never Got',
+                      'Still Thinking About It'
+                  ];
         this.cityList = [
             'Atlanta, GA', 'Austin, TX', 'Bay Area, CA', 'Boston, MA', 'Chicago, IL', 'Denver, CO',
             'Houston, TX', 'Las Vegas, NV', 'Los Angeles, CA', 'Miami, FL', 'Minneapolis, MN',
@@ -205,12 +234,13 @@ class PostForm {
         const emotionBtn = document.createElement('button');
         emotionBtn.type = 'button';
         emotionBtn.className = 'letitout-emotion-btn';
+        emotionBtn.setAttribute('aria-label', 'How it feels, required');
         emotionBtn.innerHTML = `
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            Tag a feeling
+            <span class="letitout-tag-btn-label">How it feels</span><span class="letitout-required-asterisk" aria-hidden="true">*</span>
         `;
         emotionBtn.onclick = () => {
             this.openEmotionModal();
@@ -229,7 +259,7 @@ class PostForm {
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            Tag situation
+            What it&rsquo;s about
         `;
         situationBtn.onclick = () => {
             this.openSituationModal();
@@ -247,38 +277,43 @@ class PostForm {
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            Tag City
+            City
         `;
         cityBtn.onclick = () => this.openCityModal();
 
-        // Selected tags display
+        // Selected tags display (primary row)
         this.selectedTagsDisplay = document.createElement('div');
         this.selectedTagsDisplay.className = 'letitout-selected-tags';
 
-        // Selected situation display
+        // Secondary meta row: situation + city (single line when possible)
+        this.selectedMetaDisplay = document.createElement('div');
+        this.selectedMetaDisplay.className = 'letitout-selected-meta';
+
         this.selectedSituationDisplay = document.createElement('div');
         this.selectedSituationDisplay.className = 'letitout-selected-situation';
-        this.updateSelectedSituation();
-
-        // Selected city display
         this.selectedCityDisplay = document.createElement('div');
         this.selectedCityDisplay.className = 'letitout-selected-city';
+
+        this.selectedMetaDisplay.appendChild(this.selectedSituationDisplay);
+        this.selectedMetaDisplay.appendChild(this.selectedCityDisplay);
+
+        this.updateSelectedSituation();
         this.updateSelectedCity();
 
         // Error message
         this.emotionError = document.createElement('div');
         this.emotionError.className = 'letitout-emotion-error';
+        this.emotionError.setAttribute('role', 'alert');
         this.emotionError.style.display = 'none';
 
-        // Assemble emotion section
+        // Assemble emotion section — error directly under pill row (only after failed submit)
         emotionBtnRow.appendChild(emotionBtn);
         emotionBtnRow.appendChild(situationBtn);
         emotionBtnRow.appendChild(cityBtn);
         emotionSection.appendChild(emotionBtnRow);
-        emotionSection.appendChild(this.selectedTagsDisplay);
-        emotionSection.appendChild(this.selectedSituationDisplay);
-        emotionSection.appendChild(this.selectedCityDisplay);
         emotionSection.appendChild(this.emotionError);
+        emotionSection.appendChild(this.selectedTagsDisplay);
+        emotionSection.appendChild(this.selectedMetaDisplay);
         formContent.appendChild(emotionSection);
 
         // Assemble form
@@ -290,7 +325,7 @@ class PostForm {
         this.emotionModal.innerHTML = `
             <div class="letitout-emotion-modal">
                 <div class="letitout-emotion-modal-header">
-                    <div class="letitout-emotion-modal-title">Select Feelings (1-3)</div>
+                    <div class="letitout-emotion-modal-title">How it feels (required)</div>
                     <button class="letitout-emotion-modal-close">&times;</button>
                 </div>
                 <div class="letitout-emotion-modal-content"></div>
@@ -451,9 +486,19 @@ class PostForm {
             return;
         }
 
-        // Emotion tags are now optional - no validation needed
+        if (this.selectedEmotions.length === 0) {
+            this._submitAttemptedWithoutEmotion = true;
+            this.updateSelectedTags();
+            window.LetItOutUtils.showError(
+                'Name a feeling to help others feel it too. Tap “Feelings” and choose 1–3.'
+            );
+            this.emotionError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            return;
+        }
 
-        const submitButton = this.form.querySelector('.letitout-submit-btn');
+        const submitButton =
+            (this.buttonContainer && this.buttonContainer.querySelector('.letitout-submit-btn')) ||
+            this.form.querySelector('.letitout-submit-btn');
         if (submitButton) {
             submitButton.disabled = true;
             submitButton.textContent = 'Posting...';
@@ -473,7 +518,8 @@ class PostForm {
 
             // Reset form
             textarea.value = '';
-            this.form.querySelector('.char-counter').textContent = '0/500';
+            this._letitoutContentLength = 0;
+            textarea.dispatchEvent(new Event('input', { bubbles: true }));
             this.selectedEmotions = [];
             this.selectedCity = null;
             this.customCity = null;
@@ -481,9 +527,11 @@ class PostForm {
             this.selectedSituation = null;
             this.updateSelectedCity();
             this.updateSelectedSituation();
+            this._submitAttemptedWithoutEmotion = false;
+            this.updateSelectedTags();
             this.clearDraft(); // Clear draft on successful post
             if (submitButton) {
-                submitButton.textContent = 'Post Anonymously';
+                submitButton.textContent = 'Let It Out';
                 submitButton.disabled = false;
             }
 
@@ -493,7 +541,7 @@ class PostForm {
             window.LetItOutUtils.showError('Error posting. Please try again.');
             if (submitButton) {
                 submitButton.disabled = false;
-                submitButton.textContent = 'Post Anonymously';
+                submitButton.textContent = 'Let It Out';
             }
         }
     }
@@ -502,46 +550,27 @@ class PostForm {
         this.showConfirmationModal(truthNumber, newPostId);
     }
 
-    showConfirmationModal(truthNumber, newPostId) {
+    showConfirmationModal(_truthNumber, newPostId) {
         // Remove any existing overlay
         this.hideConfirmationModal();
         const overlay = document.createElement('div');
         overlay.className = 'letitout-confirmation-overlay';
-        
-        // Create the confirmation message with Truth number if available
-        const truthLine = truthNumber ? `Story #${truthNumber} is on the wall.` : 'Your story is on the wall.';
-        
+
         overlay.innerHTML = `
           <div class="letitout-confirmation-modal">
             <div class="letitout-confirmation-text">
-              <span class="confirmation-title">You let it out.</span>
-              <span class="confirmation-line">${truthLine}</span>
-              <span class="confirmation-line">You're not alone here.</span>
-            </div>
-            <div class="letitout-confirmation-funnel">
-              <p class="letitout-confirmation-funnel-text">Why does this keep happening in your relationships?</p>
-              <a href="index.html#quiz-section" class="letitout-confirmation-cta" id="confirmation-quiz-cta">Show Me My Pattern</a>
+              <span class="confirmation-title">YOU LET IT OUT.</span>
+              <span class="confirmation-line">Your story is on the wall.</span>
+              <span class="confirmation-line">You&rsquo;re not the only one carrying this.</span>
             </div>
           </div>
         `;
         document.body.appendChild(overlay);
 
-        // Redirect to wall after 6 seconds if user doesn't click CTA
         const redirectTimeout = setTimeout(() => {
             this.hideConfirmationModal();
             window.location.replace('letitout.html?post=' + encodeURIComponent(newPostId) + '#wall');
-        }, 6000);
-
-        // If user clicks CTA, go to quiz and cancel redirect
-        const cta = overlay.querySelector('#confirmation-quiz-cta');
-        if (cta) {
-            cta.addEventListener('click', (e) => {
-                e.preventDefault();
-                clearTimeout(redirectTimeout);
-                this.hideConfirmationModal();
-                window.location.href = 'index.html#quiz-section';
-            });
-        }
+        }, 3200);
     }
 
     hideConfirmationModal() {
@@ -558,6 +587,75 @@ class PostForm {
         return prompt;
     }
 
+    /** Valid feeling labels from emotion categories (for wall → Write preset). */
+    _getValidEmotionLabelSet() {
+        const s = new Set();
+        this.emotionCategories.forEach((c) => c.emotions.forEach((e) => s.add(e)));
+        return s;
+    }
+
+    /**
+     * Apply tags from wall filter (session handoff). One situation slot on Write; first situation tag wins.
+     */
+    applyWallPresetFromTags(tags) {
+        if (!Array.isArray(tags) || tags.length === 0) return;
+
+        const emotionOk = this._getValidEmotionLabelSet();
+        const situationOk = new Set(this.situationList);
+
+        const emotions = [];
+        for (const t of tags) {
+            if (t && t.type === 'emotion' && emotionOk.has(t.label) && !emotions.includes(t.label)) {
+                emotions.push(t.label);
+            }
+            if (emotions.length >= 3) break;
+        }
+
+        let situation = null;
+        for (const t of tags) {
+            if (t && t.type === 'situation' && situationOk.has(t.label)) {
+                situation = t.label;
+                break;
+            }
+        }
+
+        this.selectedEmotions = emotions;
+        this.selectedSituation = situation;
+
+        this.updateSelectedTags();
+        this.updateSelectedSituation();
+        this.saveDraft();
+
+        // Wall → Write: show chips on the form only; do not open picker modals.
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                const ta = this.form.querySelector('textarea');
+                if (ta) ta.focus();
+            });
+        });
+    }
+
+    consumeWallPresetFromSession() {
+        let raw;
+        try {
+            raw = sessionStorage.getItem('letitout_wall_to_write_preset');
+        } catch (_) {
+            return;
+        }
+        if (!raw) return;
+        try {
+            sessionStorage.removeItem('letitout_wall_to_write_preset');
+        } catch (_) {
+            /* ignore */
+        }
+        try {
+            const tags = JSON.parse(raw);
+            this.applyWallPresetFromTags(tags);
+        } catch (_) {
+            /* ignore */
+        }
+    }
+
     render(container) {
         // Remove button from form if present
         if (this.buttonContainer && this.buttonContainer.parentNode === this.form) {
@@ -568,6 +666,8 @@ class PostForm {
         
         // Load draft after form is in the DOM
         this.loadDraft();
+        // Wall empty-state CTA: preset tags override draft feelings/situation for this navigation
+        this.consumeWallPresetFromSession();
         
         // Add My Posts button to global container
         this.renderMyPostsButton();
@@ -580,20 +680,17 @@ class PostForm {
             this.buttonContainer.style.flexDirection = 'column';
             this.buttonContainer.style.alignItems = 'center';
             const submitButton = document.createElement('button');
-            submitButton.type = 'button';
+            submitButton.type = 'submit';
+            submitButton.setAttribute('form', this.form.id);
             submitButton.className = 'letitout-submit-btn';
-            submitButton.textContent = 'Post Anonymously';
-            submitButton.onclick = (e) => {
-                e.preventDefault();
-                this.form.requestSubmit();
-            };
+            submitButton.textContent = 'Let It Out';
             this.buttonContainer.appendChild(submitButton);
 
-            // Add Pattern Analysis funnel (matching copy + CTA link)
-            const quizFunnel = document.createElement('div');
-            quizFunnel.className = 'letitout-quiz-funnel';
-            quizFunnel.innerHTML = '<p class="letitout-quiz-funnel-text">Why does this keep happening in your relationships?</p><a href="index.html#quiz-section" class="letitout-quiz-funnel-cta">Show Me My Pattern</a>';
-            this.buttonContainer.appendChild(quizFunnel);
+            // Intentionally no pre-post quiz funnel here.
+            // The Write tab has ONE job: emotional release. The quiz CTA
+            // belongs at the highest-intent moment — the post-submission
+            // confirmation modal (see showConfirmationModal), not competing
+            // with the primary "Let It Out" action.
 
             // Add "Need Support" button
             const supportButton = document.createElement('button');
@@ -1104,32 +1201,25 @@ class PostForm {
 
         // Container for all categories
         const categoriesContainer = document.createElement('div');
-        categoriesContainer.className = 'emotion-categories-container';
+        categoriesContainer.className = 'emotion-categories-container emotion-categories-container--flat';
         content.appendChild(categoriesContainer);
 
-        // Helper to render categories and emotions
+        // Helper: one pill grid (no category headings — easier to scan)
         const renderEmotions = (filter = '') => {
             categoriesContainer.innerHTML = '';
             const filterVal = filter.trim().toLowerCase();
+            const pillsWrap = document.createElement('div');
+            pillsWrap.className = 'emotion-subtags emotion-subtags--flat';
+
             this.emotionCategories.forEach(category => {
-                // Filter emotions in this category
                 const filteredEmotions = filterVal
                     ? category.emotions.filter(e => e.toLowerCase().includes(filterVal))
                     : category.emotions;
-                if (filteredEmotions.length === 0) return; // Hide category if no emotions
-
-                const categoryDiv = document.createElement('div');
-                categoryDiv.className = 'emotion-category';
-
-                const categoryTitle = document.createElement('div');
-                categoryTitle.className = 'emotion-category-title';
-                categoryTitle.textContent = category.name;
-
-                const subTagsDiv = document.createElement('div');
-                subTagsDiv.className = 'emotion-subtags';
+                if (filteredEmotions.length === 0) return;
 
                 filteredEmotions.forEach(emotion => {
                     const subTag = document.createElement('button');
+                    subTag.type = 'button';
                     subTag.className = 'emotion-subtag';
                     subTag.textContent = emotion;
                     if (this.selectedEmotions.includes(emotion)) {
@@ -1146,17 +1236,14 @@ class PostForm {
                         }
                         this.updateSelectedTags();
                         doneBtn.disabled = false; // Emotions are now optional
-                        // Re-render to update selected state
                         renderEmotions(searchInput.value);
                     };
 
-                    subTagsDiv.appendChild(subTag);
+                    pillsWrap.appendChild(subTag);
                 });
-
-                categoryDiv.appendChild(categoryTitle);
-                categoryDiv.appendChild(subTagsDiv);
-                categoriesContainer.appendChild(categoryDiv);
             });
+
+            categoriesContainer.appendChild(pillsWrap);
         };
 
         // Initial render
@@ -1234,9 +1321,12 @@ class PostForm {
             this.selectedTagsDisplay.appendChild(tag);
         });
 
-        // Update error message - emotions are now optional
-        if (this.selectedEmotions.length === 0) {
-            this.emotionError.textContent = 'Tag a feeling to help others feel it too.';
+        // Error only after user taps Let It Out with text but no feeling (not on first paint)
+        if (this.selectedEmotions.length > 0) {
+            this._submitAttemptedWithoutEmotion = false;
+            this.emotionError.style.display = 'none';
+        } else if (this._submitAttemptedWithoutEmotion) {
+            this.emotionError.textContent = 'Name a feeling to help others feel it too.';
             this.emotionError.style.display = 'block';
         } else {
             this.emotionError.style.display = 'none';
@@ -1258,6 +1348,13 @@ class PostForm {
         }
     }
 
+    updateSelectedMetaRow() {
+        if (!this.selectedMetaDisplay) return;
+        const hasSituation = !!this.selectedSituation;
+        const hasCity = !!this.selectedCity;
+        this.selectedMetaDisplay.style.display = hasSituation || hasCity ? 'flex' : 'none';
+    }
+
     updateSelectedSituation() {
         this.selectedSituationDisplay.innerHTML = '';
         if (this.selectedSituation) {
@@ -1274,6 +1371,7 @@ class PostForm {
             };
             this.selectedSituationDisplay.appendChild(tag);
         }
+        this.updateSelectedMetaRow();
     }
 
     updateSelectedCity() {
@@ -1294,6 +1392,7 @@ class PostForm {
             };
             this.selectedCityDisplay.appendChild(tag);
         }
+        this.updateSelectedMetaRow();
     }
 
     openSituationModal() {
@@ -1303,7 +1402,7 @@ class PostForm {
             this.situationModal.innerHTML = `
                 <div class="letitout-situation-modal">
                     <div class="letitout-situation-modal-header">
-                        <div class="letitout-situation-modal-title">Tag Situation (Optional)</div>
+                        <div class="letitout-situation-modal-title">What it&rsquo;s about (optional)</div>
                         <button class="letitout-situation-modal-close">&times;</button>
                     </div>
                     <div class="letitout-situation-modal-content"></div>
@@ -1368,14 +1467,14 @@ class PostForm {
             this.cityModal.innerHTML = `
                 <div class="letitout-city-modal">
                     <div class="letitout-city-modal-header">
-                        <div class="letitout-city-modal-title">Tag Your City (Optional)</div>
+                        <div class="letitout-city-modal-title">City (optional)</div>
                         <button class="letitout-city-modal-close">&times;</button>
                     </div>
                     <div class="letitout-city-modal-content">
                         <input type="text" class="city-search-input" placeholder="Search cities..." autocomplete="off" />
                         <div class="city-suggested-list"></div>
                         <div class="city-other-section">
-                            <label for="city-other-input">Add your city</label>
+                            <label for="city-other-input">Your city</label>
                             <input type="text" class="city-other-input" placeholder="Enter your city" />
                             <button class="city-other-btn">Add</button>
                         </div>
@@ -1487,13 +1586,14 @@ class PostForm {
             const textarea = this.form.querySelector('textarea');
             
             textarea.value = draft.content || '';
+            this._letitoutContentLength = textarea.value.length;
             this.selectedEmotions = draft.emotions || [];
             this.selectedCity = draft.city || null;
             this.isCustomCity = draft.isCustomCity || false;
             this.selectedSituation = draft.situation || null;
 
             // Trigger updates to reflect loaded data
-            textarea.dispatchEvent(new Event('input', { bubbles: true })); // Updates counter and auto-expands
+            textarea.dispatchEvent(new Event('input', { bubbles: true })); // Auto-expands; input handler updates length
             this.updateSelectedTags();
             this.updateSelectedSituation();
             this.updateSelectedCity();
@@ -1652,6 +1752,7 @@ class PostForm {
         this.customCity = null;
         this.isCustomCity = false;
         this.selectedSituation = null;
+        this._submitAttemptedWithoutEmotion = false;
         this.updateSelectedTags();
         this.updateSelectedSituation();
         this.updateSelectedCity();

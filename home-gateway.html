@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<!-- ARCHIVE: Long-form homepage v1 — not the default entry. Use home.html for the live gateway. -->
+<!-- ARCHIVED: Full marketing gateway (preserved for later). Not linked in nav. Public home is home.html (Weekly Reset). Long-form v1: home-v1.html -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#050505">
+    <meta name="robots" content="noindex, nofollow">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEZQRBTLR7"></script>
@@ -15,18 +16,17 @@
     gtag('config', 'G-ZEZQRBTLR7');
     </script>
 
-    <title>Pattern Reset™ — Home (long-form archive)</title>
-    <meta name="description" content="Pattern Reset is a movement helping you decode why men act the way they do, understand the patterns keeping you stuck, and transform your relationships and your life.">
+    <title>Pattern Reset™ — Full gateway (archive)</title>
+    <meta name="description" content="Archived full Pattern Reset gateway page — not for public search. Use the live site home for The Weekly Reset.">
     <meta name="author" content="Liam | Pattern Reset™">
-    <meta name="robots" content="noindex, nofollow">
 
-    <meta property="og:title" content="Pattern Reset™ — I decode why men do what they do.">
+    <meta property="og:title" content="Pattern Reset™ — Home">
     <meta property="og:description" content="Understanding the pattern is the first step. Pattern Reset gives you the map — to decode what's happening, interrupt what's keeping you stuck, and reset your life.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mypatternreset.com/home">
     <meta property="og:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
 
-    <link rel="canonical" href="https://mypatternreset.com/home.html">
+    <link rel="canonical" href="https://mypatternreset.com/home">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -56,7 +56,7 @@
         --pr-read-max: 40rem;
         /* Content column widths (home narrative sections) */
         --pr-max-content: 1100px;
-        --pr-max-hero: 860px;
+        --pr-max-hero: 900px;
         --pr-max-doctrine: 760px;
         --pr-max-story: 720px;
         --pr-max-email: 640px;
@@ -662,20 +662,41 @@
         text-align: center;
         max-width: var(--pr-max-hero);
         margin: 0 auto;
+        position: relative;
+        z-index: 1;
     }
-    .pr-hero-movement .pr-hero-headline { font-size: clamp(2.4rem, 5.5vw, 5rem); }
+    /* Headline: same horizontal band as quiz (#home-hero .pr-hero-headline.pr-lp-hero-title) — full column width, not a narrow measure */
+    .pr-hero-movement .pr-lp-hero-title {
+        max-width: 100%;
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+        box-sizing: border-box;
+        text-wrap: pretty;
+    }
+    .pr-hero-movement .pr-hero-headline.pr-lp-hero-title {
+        font-size: clamp(2.05rem, 3.8vw + 0.55rem, 3.85rem);
+        line-height: 1.14;
+        letter-spacing: 0.015em;
+    }
+    /* Breathing room between stacked lines (quiz uses one flowing line) */
+    .pr-hero-movement .pr-lp-hero-title .pr-hero-line + .pr-hero-line {
+        margin-top: 0.12em;
+    }
     .pr-hero-movement .pr-hero-subtext {
         font-family: 'DM Sans', sans-serif;
-        font-size: clamp(1.05rem, 2.15vw, 1.4rem);
+        font-size: clamp(1rem, 2vw, 1.15rem);
         font-weight: 500;
-        color: rgba(255, 252, 241, 0.78);
-        line-height: 1.45;
+        color: rgba(255, 255, 255, 0.8);
+        line-height: 1.6;
         margin: clamp(1.1rem, 2.5vw, 1.5rem) auto 0;
-        max-width: min(36rem, 100%);
-        letter-spacing: 0.03em;
+        max-width: min(40rem, 100%);
+        letter-spacing: 0.01em;
         text-wrap: balance;
     }
-    .pr-hero-movement .pr-hero-ctas { justify-content: center; margin-top: 3rem; }
+    .pr-hero-movement .pr-hero-ctas { justify-content: center; margin-top: 3rem; flex-wrap: wrap; gap: 1rem; }
     .pr-hero-cta-note {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.8125rem;
@@ -688,7 +709,7 @@
     .pr-hero-movement .pr-hero-cta-note {
         margin-left: auto;
         margin-right: auto;
-        max-width: 22rem;
+        max-width: min(28rem, 100%);
     }
     .pr-hero-byline {
         font-family: 'DM Sans', sans-serif;
@@ -712,25 +733,104 @@
         display: block;
         margin: 0.5rem 0 0.75rem;
     }
-    .pr-hero-spiral-bg {
+    /* Gateway hero background: same layered logo + motion as quiz intro & quiz landing #home-hero */
+    .pr-hero .pr-hero-spiral-wrap {
         position: absolute;
         inset: 0;
-        margin: auto;
-        width: min(700px, 90vw);
-        height: min(700px, 90vw);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .pr-hero .pr-hero-spiral-wrap::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 72% 68% at 50% 45%, rgba(255, 252, 241, 0.045) 0%, transparent 62%);
+        pointer-events: none;
+    }
+    .pr-hero .pr-hero-spiral-bg {
+        width: min(100vmin, 46rem);
+        height: min(100vmin, 46rem);
         max-width: 100%;
         max-height: 100%;
-        opacity: 0.035;
-        pointer-events: none;
-        color: var(--pr-cream);
-        box-sizing: border-box;
+        flex-shrink: 0;
+        overflow: visible;
+        color: rgba(255, 252, 241, 0.28);
+        animation: pr-homeQuizIntroMapFloat 16s ease-in-out infinite alternate;
+        will-change: transform;
+    }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer {
+        transform-origin: 50% 50%;
+        transform-box: fill-box;
+    }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--outer {
+        animation: pr-homeQuizMapOrbit 38s linear infinite;
+    }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--middle {
+        animation: pr-homeQuizMapOrbit 28s linear infinite reverse;
+    }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--inner {
+        animation: pr-homeQuizMapOrbit 21s linear infinite;
+    }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--center {
+        animation: pr-homeQuizMapOrbit 24s linear infinite reverse;
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .pr-hero .pr-hero-spiral-bg {
+            animation: none;
+        }
+        .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--outer,
+        .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--middle,
+        .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--inner,
+        .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--center {
+            animation: none;
+        }
+    }
+    @keyframes pr-homeQuizMapOrbit {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    @keyframes pr-homeQuizIntroMapFloat {
+        from { transform: translateY(5px) scale(1); }
+        to { transform: translateY(-7px) scale(1.02); }
     }
     @media (max-width: 768px) {
-        .pr-hero .pr-hero-spiral-bg {
+        .pr-hero .pr-hero-spiral-wrap {
             transform: translateY(-8vh);
         }
         .pr-hero-movement { min-height: auto; }
         .pr-hero-movement .pr-hero-inner { text-align: center; }
+    }
+
+    /* Gateway hero only: same horizontal rhythm + mobile “almost full-screen” padding as quiz landing */
+    body.page-home--v2 .pr-hero.pr-hero-movement {
+        padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 4vw, 2.5rem) clamp(4rem, 10vw, 6rem);
+    }
+    @media (max-width: 768px) {
+        body.page-home--v2 .pr-hero.pr-hero-movement {
+            min-height: 100dvh;
+            min-height: 100svh;
+            align-items: center;
+            justify-content: center;
+            padding-top: calc(env(safe-area-inset-top, 0px) + clamp(7.5rem, 20vh, 14rem));
+            padding-right: clamp(1.25rem, 4.5vw, 1.5rem);
+            padding-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(8rem, 26vh, 17rem));
+            padding-left: clamp(1.25rem, 4.5vw, 1.5rem);
+        }
+        body.page-home--v2 .pr-hero-movement .pr-hero-headline.pr-lp-hero-title {
+            margin-bottom: 0.85rem;
+        }
+        body.page-home--v2 .pr-hero-movement .pr-hero-subtext {
+            margin-top: clamp(1.5rem, 5vw, 2rem);
+        }
+        body.page-home--v2 .pr-hero-movement .pr-lp-hero-ctas {
+            margin-top: clamp(2.85rem, 11vw, 4rem);
+        }
+        body.page-home--v2 .pr-hero-movement .pr-lp-hero-note {
+            margin-top: 1.15rem;
+        }
     }
 
     /* =========== THE STAKES =========== */
@@ -2532,6 +2632,352 @@
         margin-top: 0;
     }
 
+    /* =========== LP V2 GATEWAY (body.page-home--v2) =========== */
+    body.page-home--v2 .pr-lp-hero-title .pr-hero-line { display: block; }
+    body.page-home--v2 .pr-lp-hero-ctas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem 1rem;
+        justify-content: center;
+        align-items: center;
+        margin-top: clamp(1.75rem, 4vw, 2.5rem);
+    }
+    /* Hero CTAs: match quiz landing (#home-hero) spacing */
+    body.page-home--v2 .pr-hero-movement .pr-lp-hero-ctas {
+        margin-top: 3rem;
+        gap: 1rem;
+    }
+    body.page-home--v2 .pr-lp-hero-ctas .pr-btn-ghost {
+        font-size: clamp(0.88rem, 1.5vw, 1rem);
+        padding: 1rem 2rem;
+    }
+    body.page-home--v2 .pr-lp-hero-note {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.8rem;
+        color: rgba(255,252,241,0.4);
+        margin: 1rem 0 0;
+        letter-spacing: 0.04em;
+    }
+    body.page-home--v2 .pr-lp-hero-inner { max-width: var(--pr-max-hero); margin: 0 auto; text-align: center; }
+
+    .pr-lp-section {
+        background: #080808;
+        border-top: 1px solid rgba(255,252,241,0.04);
+    }
+    .pr-lp-section--alt { background: var(--pr-dark); }
+    body.page-home--v2 .pr-lp-inner > .pr-label {
+        margin-bottom: 0.75rem;
+    }
+    .pr-lp-inner {
+        max-width: 640px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    .pr-lp-inner--wide { max-width: 960px; }
+    .pr-lp-kicker {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--pr-red);
+        margin: 0 0 0.75rem;
+    }
+    .pr-lp-kicker--section { margin-top: 2rem; }
+    .pr-lp-h2 {
+        font-family: 'Anton', sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: var(--pr-cream);
+        font-size: clamp(1.5rem, 3.2vw, 2.15rem);
+        line-height: 1.12;
+        margin: 0 0 1.25rem;
+        letter-spacing: 0.02em;
+    }
+    .pr-lp-punch {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(1.05rem, 2vw, 1.22rem);
+        color: rgba(255,252,241,0.88);
+        line-height: 1.55;
+        margin: 0 0 0.65rem;
+        font-weight: 500;
+    }
+    .pr-lp-punch:last-child { margin-bottom: 0; }
+    #seen h2 + .pr-lp-punch {
+        font-size: clamp(1.12rem, 2.15vw, 1.32rem);
+        font-weight: 600;
+        color: rgba(255,252,241, 0.93);
+    }
+    .pr-lp-muted {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.98rem, 1.85vw, 1.1rem);
+        color: rgba(255,252,241,0.58);
+        line-height: 1.65;
+        margin: 1.25rem 0 0;
+    }
+    .pr-lp-muted--flush { margin-top: 0; }
+    .pr-lp-muted--shift-close { margin-top: 1.5rem; }
+    .pr-lp-muted--movement { margin-top: 1rem; }
+    .pr-lp-em {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(1.1rem, 2.1vw, 1.28rem);
+        color: var(--pr-cream);
+        font-weight: 600;
+        margin: 1.5rem 0 0;
+        line-height: 1.45;
+    }
+    .pr-lp-em--tight { margin-top: 1.25rem; }
+    .pr-lp-em--model-close { margin-top: 0.5rem; }
+    .pr-lp-scope-reveal {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(1.08rem, 2.05vw, 1.3rem);
+        font-weight: 600;
+        color: var(--pr-cream);
+        line-height: 1.4;
+        margin: 1.35rem 0 0;
+        text-wrap: balance;
+    }
+    .pr-lp-scope-reveal + .pr-lp-scope-reveal {
+        margin-top: 1.15rem;
+    }
+    .pr-lp-list {
+        margin: 1rem 0 0;
+        padding: 0;
+        list-style: none;
+    }
+    .pr-lp-list li {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.95rem, 1.75vw, 1.05rem);
+        color: rgba(255,252,241,0.75);
+        line-height: 1.55;
+        padding: 0.4rem 0;
+        padding-left: 1.1rem;
+        position: relative;
+    }
+    .pr-lp-list li::before {
+        content: '·';
+        position: absolute;
+        left: 0;
+        color: var(--pr-red);
+        font-weight: 800;
+    }
+    .pr-lp-shift-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        margin: 1.25rem 0 0;
+    }
+    @media (min-width: 640px) {
+        .pr-lp-shift-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 0.65rem;
+        }
+    }
+    .pr-lp-shift-item {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.95rem, 1.75vw, 1.05rem);
+        color: rgba(255,252,241,0.82);
+        padding: 0.65rem 1rem;
+        border-left: 2px solid rgba(241,0,0,0.45);
+        background: rgba(255,252,241,0.03);
+        border-radius: 0 8px 8px 0;
+    }
+    .pr-lp-model-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        margin: 1.5rem 0;
+    }
+    @media (min-width: 680px) {
+        .pr-lp-model-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .pr-lp-model-card {
+        padding: clamp(1.2rem, 2.2vw, 1.55rem) clamp(1rem, 2vw, 1.25rem);
+        border: 1px solid var(--pr-border);
+        border-radius: 12px;
+        background: rgba(255,252,241,0.02);
+        text-align: center;
+        transition: border-color 0.25s, transform 0.25s;
+    }
+    .pr-lp-model-card:hover {
+        border-color: rgba(241,0,0,0.25);
+        transform: translateY(-2px);
+    }
+    .pr-lp-model-focus {
+        font-family: 'Anton', sans-serif;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--pr-red);
+        display: block;
+        margin-bottom: 0.4rem;
+    }
+    .pr-lp-model-out {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.92rem;
+        color: rgba(255,252,241,0.72);
+        line-height: 1.45;
+        margin: 0;
+    }
+    .pr-lp-method-steps {
+        display: grid;
+        gap: 0.65rem;
+        margin: 1.25rem 0 0;
+        counter-reset: lpstep;
+    }
+    .pr-lp-method-step {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        padding: 0.85rem 0;
+        border-bottom: 1px solid rgba(255,252,241,0.06);
+    }
+    .pr-lp-method-step:last-child { border-bottom: none; }
+    .pr-lp-method-step::before {
+        counter-increment: lpstep;
+        content: counter(lpstep);
+        flex-shrink: 0;
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 50%;
+        background: rgba(241,0,0,0.15);
+        color: var(--pr-red);
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0.1rem;
+    }
+    .pr-lp-method-step strong {
+        font-family: 'DM Sans', sans-serif;
+        font-weight: 700;
+        color: var(--pr-cream);
+        display: block;
+        margin-bottom: 0;
+        font-size: 0.95rem;
+        line-height: 1.35;
+    }
+    .pr-lp-method-tag {
+        font-weight: 600;
+        font-size: 0.88em;
+        color: rgba(255,252,241,0.45);
+        letter-spacing: 0.02em;
+    }
+    .pr-lp-method-quote {
+        display: block;
+        margin-top: 0.4rem;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.88rem;
+        font-style: italic;
+        font-weight: 400;
+        color: rgba(255,252,241,0.55);
+        line-height: 1.5;
+    }
+    .pr-lp-method-step span.desc {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.9rem;
+        color: rgba(255,252,241,0.62);
+        line-height: 1.45;
+    }
+    .pr-lp-entries {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+    @media (min-width: 720px) {
+        .pr-lp-entries { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    }
+    .pr-lp-entry-card {
+        border: 1px solid var(--pr-border);
+        border-radius: 14px;
+        padding: clamp(1.25rem, 2.5vw, 1.65rem);
+        background: rgba(255,252,241,0.03);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .pr-lp-entry-card:hover {
+        border-color: rgba(241,0,0,0.2);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .pr-lp-entry-badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(255,252,241,0.4);
+        margin-bottom: 0.5rem;
+    }
+    .pr-lp-entry-title {
+        font-family: 'Anton', sans-serif;
+        font-size: clamp(1.15rem, 2vw, 1.45rem);
+        color: var(--pr-cream);
+        margin: 0 0 0.75rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+    .pr-lp-entry-card .pr-lp-list { margin-top: 0.5rem; }
+    .pr-lp-entry-card .pr-lp-list li { font-size: 0.9rem; }
+    .pr-lp-entry-cta { margin-top: auto; padding-top: 1.25rem; }
+    .pr-lp-entry-cta .pr-btn-primary,
+    .pr-lp-entry-cta .pr-btn-ghost { width: 100%; text-align: center; box-sizing: border-box; }
+
+    .pr-lp-movement-block {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(1rem, 1.85vw, 1.12rem);
+        color: rgba(255,252,241,0.72);
+        line-height: 1.75;
+        margin: 0 0 1rem;
+    }
+    .pr-lp-movement-block--spaced { margin-top: 1.25rem; }
+    .pr-lp-final-ctas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem 1rem;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+    .pr-lp-final-ctas--spaced { margin-top: 1.5rem; }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .pr-lp-fade-in {
+            animation: pr-lp-fade-in 0.85s ease-out both;
+        }
+        .pr-lp-model-card {
+            animation: pr-lp-fade-in 0.7s ease-out both;
+        }
+        .pr-lp-model-card:nth-child(1) { animation-delay: 0.05s; }
+        .pr-lp-model-card:nth-child(2) { animation-delay: 0.12s; }
+        .pr-lp-model-card:nth-child(3) { animation-delay: 0.19s; }
+    }
+    @keyframes pr-lp-fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    body.page-home--v2 .pr-story-inner { max-width: 680px; }
+
+    body.page-home--v2 .pr-email .pr-email-kicker {
+        letter-spacing: 0.22em;
+    }
+
+    .pr-lp-philosophy-teaser {
+        text-align: center;
+        border-top: 1px solid rgba(255,252,241,0.06);
+    }
+    .pr-lp-philosophy-teaser .pr-lp-muted {
+        max-width: 26rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .pr-lp-philosophy-teaser .pr-btn-ghost {
+        margin-top: 1.25rem;
+    }
+
     /* =========== FOOTER =========== */
     .pr-footer-std {
         background: var(--pr-dark);
@@ -2560,7 +3006,7 @@
     .pr-footer-dot { opacity: 0.3; }
     </style>
 </head>
-<body class="page-home">
+<body class="page-home page-home--v2">
 
 <!-- ====== HEADER / NAV ====== -->
 <header>
@@ -2602,27 +3048,45 @@
     </div>
 </header>
 
-<main>
+<main id="main-content">
 
-    <!-- ====== HERO ====== -->
-    <section class="pr-hero pr-hero-movement">
-        <svg class="pr-hero-spiral-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <path d="M50,18 Q18,18 18,50 Q18,82 50,82 Q82,82 82,50 Q82,18 50,18" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <path d="M50,31 Q31,31 31,50 Q31,69 50,69 Q69,69 69,50 Q69,31 50,31" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <path d="M50,42 Q42,42 42,50 Q42,58 50,58 Q58,58 58,50 Q58,42 50,42" stroke="currentColor" stroke-width="1.5" fill="none"/>
-            <circle cx="50" cy="50" r="3" fill="currentColor"/>
-        </svg>
-        <div class="pr-hero-inner">
+    <!-- HERO -->
+    <section class="pr-hero pr-hero-movement pr-lp-fade-in" aria-labelledby="lp-hero-heading">
+        <div class="pr-hero-spiral-wrap" aria-hidden="true">
+            <svg class="pr-hero-spiral-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <style>
+                        .quiz-map-ring { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+                    </style>
+                </defs>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--outer" aria-hidden="true">
+                    <path class="quiz-map-ring" d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke-width="0.32" opacity="0.26"/>
+                </g>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--middle" aria-hidden="true">
+                    <path class="quiz-map-ring" d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke-width="0.28" opacity="0.22"/>
+                </g>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--inner" aria-hidden="true">
+                    <path class="quiz-map-ring" d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke-width="0.24" opacity="0.18"/>
+                </g>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--center" aria-hidden="true">
+                    <circle class="quiz-map-center" cx="50" cy="50" r="1.2" fill="currentColor" opacity="0.14"/>
+                </g>
+            </svg>
+        </div>
+        <div class="pr-hero-inner pr-lp-hero-inner">
             <div class="pr-hero-text">
                 <span class="pr-label">Pattern Reset™</span>
-                <h1 class="pr-hero-headline"><span class="pr-hero-line">You’re not stuck.</span><span class="pr-hero-line">You’re repeating a pattern you haven’t seen yet.</span></h1>
+                <h1 class="pr-hero-headline pr-lp-hero-title" id="lp-hero-heading">
+                    <span class="pr-hero-line">You’re not stuck.</span>
+                    <span class="pr-hero-line">You’re repeating a pattern</span>
+                    <span class="pr-hero-line">you haven’t seen yet.</span>
+                </h1>
                 <p class="pr-hero-subtext">See the pattern. Release it. Reset your life.</p>
-                <div class="pr-hero-ctas">
+                <div class="pr-hero-ctas pr-lp-hero-ctas">
                     <a href="index.html" class="pr-btn-primary">Show Me My Pattern</a>
-                    <a href="letitout.html" class="pr-btn-ghost">Let It Out →</a>
+                    <a href="letitout.html" class="pr-btn-ghost">Let It Out</a>
                 </div>
-                <p class="pr-hero-cta-note">Find your pattern in about 5 minutes</p>
+                <p class="pr-lp-hero-note">Find your pattern in about 5 minutes</p>
             </div>
         </div>
         <div class="pr-hero-scroll-hint" aria-hidden="true">
@@ -2630,249 +3094,212 @@
         </div>
     </section>
 
-    <!-- ====== ROOT → RESULT (compact) ====== -->
-    <section class="pr-section pr-root-map" id="pattern-path" aria-labelledby="pr-root-map-heading">
-        <div class="pr-inner pr-root-map-inner">
-            <span class="pr-label">The pattern</span>
-            <h2 class="pr-h2 pr-root-map-title" id="pr-root-map-heading">The things you don’t face don’t stay inside.</h2>
-            <div class="pr-root-strip" aria-label="From root to result">
-                <div class="pr-root-cell">
-                    <span class="pr-root-cell-label">Root</span>
-                    <p class="pr-root-cell-lead">What happened—and what you had to carry.</p>
-                    <ul class="pr-root-bullets">
-                        <li>Experiences that hurt, confused, or shaped you</li>
-                        <li>Wounds that never got processed</li>
-                        <li>Feelings you had to suppress to move forward</li>
-                    </ul>
+    <!-- PROBLEM -->
+    <section class="pr-section pr-lp-section" id="seen" aria-labelledby="lp-problem-heading">
+        <div class="pr-lp-inner">
+            <p class="pr-label">The problem</p>
+            <h2 class="pr-lp-h2" id="lp-problem-heading">You’re not broken—you’re in a pattern you haven’t seen yet.</h2>
+            <p class="pr-lp-punch">You feel stuck.</p>
+            <p class="pr-lp-punch">You overthink.</p>
+            <p class="pr-lp-punch">You work hard.</p>
+            <p class="pr-lp-punch">But your life keeps feeling like the same year on repeat.</p>
+            <p class="pr-lp-punch">You repeat the same relationships.</p>
+            <p class="pr-lp-punch">You lose yourself trying to fix everything.</p>
+            <p class="pr-lp-em">It’s not random. It’s a pattern.</p>
+            <p class="pr-lp-muted">And until you see it, you’ll keep living it—no matter how badly you want to move forward.</p>
+        </div>
+    </section>
+
+    <!-- WHAT IS PATTERN RESET -->
+    <section class="pr-section pr-lp-section pr-lp-section--alt" id="what-is" aria-labelledby="lp-define-heading">
+        <div class="pr-lp-inner">
+            <p class="pr-label">Clarity</p>
+            <h2 class="pr-lp-h2" id="lp-define-heading">What is a Pattern Reset?</h2>
+            <p class="pr-lp-muted pr-lp-muted--flush">A Pattern Reset is the process of becoming aware of the patterns running your life, releasing what’s been holding you, and choosing a new direction.</p>
+            <p class="pr-lp-muted">Most people don’t realize: they’re not stuck—they’re repeating something they haven’t seen or processed yet.</p>
+            <p class="pr-lp-em pr-lp-em--tight">Once you see it, you can change it.</p>
+            <h3 class="pr-lp-kicker pr-lp-kicker--section">Why this matters</h3>
+            <p class="pr-lp-muted">If you don’t see the pattern:</p>
+            <ul class="pr-lp-list">
+                <li>you repeat the same relationships</li>
+                <li>you stay stuck in the same thoughts</li>
+                <li>you keep feeling the same emotions</li>
+            </ul>
+            <p class="pr-lp-em pr-lp-em--tight">Not because you’re broken—because nothing has interrupted the pattern.</p>
+        </div>
+    </section>
+
+    <!-- WHOLE LIFE + RELATIONSHIPS AS MIRROR -->
+    <section class="pr-section pr-lp-section" id="whole-life" aria-labelledby="lp-scope-heading">
+        <div class="pr-lp-inner">
+            <p class="pr-label">How it shows up</p>
+            <h2 class="pr-lp-h2" id="lp-scope-heading">Pattern Reset works across your whole life.</h2>
+            <p class="pr-lp-muted pr-lp-muted--flush">Your habits, your decisions, your direction.</p>
+            <p class="pr-lp-scope-reveal">Your relationships are the clearest mirror of the patterns running your life.</p>
+            <p class="pr-lp-muted">The people you choose, what you tolerate, what you stay in—it all reflects something back to you.</p>
+            <p class="pr-lp-scope-reveal">Relationships don’t create your patterns.<br>They reveal them.</p>
+            <p class="pr-lp-muted">And once you see the pattern clearly, you start seeing it everywhere—in your career, your finances, your habits, how you show up.</p>
+            <p class="pr-lp-em pr-lp-em--tight">That’s where real change starts.</p>
+        </div>
+    </section>
+
+    <!-- THE SHIFT -->
+    <section class="pr-section pr-lp-section" id="shift" aria-labelledby="lp-shift-heading">
+        <div class="pr-lp-inner">
+            <p class="pr-label">The shift</p>
+            <h2 class="pr-lp-h2" id="lp-shift-heading">Pattern Reset is a system that shows you</h2>
+            <div class="pr-lp-shift-grid">
+                <div class="pr-lp-shift-item">what pattern you’re in</div>
+                <div class="pr-lp-shift-item">where it comes from</div>
+                <div class="pr-lp-shift-item">how to release it</div>
+                <div class="pr-lp-shift-item">how to move forward</div>
+            </div>
+            <p class="pr-lp-muted pr-lp-muted--shift-close">Not by thinking more. By becoming aware, releasing, and choosing differently.</p>
+        </div>
+    </section>
+
+    <!-- THE MODEL -->
+    <section class="pr-section pr-lp-section pr-lp-section--alt" id="model" aria-labelledby="lp-model-heading">
+        <div class="pr-lp-inner pr-lp-inner--wide">
+            <p class="pr-label">The model</p>
+            <h2 class="pr-lp-h2" id="lp-model-heading">Your energy follows your attention.</h2>
+            <div class="pr-lp-model-grid pr-lp-fade-in">
+                <div class="pr-lp-model-card">
+                    <span class="pr-lp-model-focus">Focus on the past</span>
+                    <p class="pr-lp-model-out">→ you stay stuck</p>
                 </div>
-                <div class="pr-root-cell">
-                    <span class="pr-root-cell-label">Becomes</span>
-                    <p class="pr-root-cell-lead">How you learned to cope.</p>
-                    <ul class="pr-root-bullets">
-                        <li>Shutdown · withdrawal · anger</li>
-                        <li>Numbing · escaping · control</li>
-                        <li>Avoidance · inconsistency · secrecy</li>
-                    </ul>
+                <div class="pr-lp-model-card">
+                    <span class="pr-lp-model-focus">Focus too far ahead</span>
+                    <p class="pr-lp-model-out">→ you feel anxious</p>
                 </div>
-                <div class="pr-root-cell">
-                    <span class="pr-root-cell-label">Shows up as</span>
-                    <p class="pr-root-cell-lead">How it plays out in your life.</p>
-                    <ul class="pr-root-bullets">
-                        <li>Who you choose</li>
-                        <li>What you tolerate</li>
-                        <li>How you react</li>
-                        <li>How you communicate</li>
-                        <li>How you connect and love</li>
-                    </ul>
+                <div class="pr-lp-model-card">
+                    <span class="pr-lp-model-focus">Compare</span>
+                    <p class="pr-lp-model-out">→ you lose yourself</p>
                 </div>
-                <div class="pr-root-cell">
-                    <span class="pr-root-cell-label">Result</span>
-                    <p class="pr-root-cell-lead">What you end up living with.</p>
-                    <ul class="pr-root-bullets">
-                        <li>Feeling stuck, lost, or disconnected</li>
-                        <li>Repeating the same fights</li>
-                        <li>Confusion</li>
-                        <li>Lack of self-trust</li>
+            </div>
+            <p class="pr-lp-em pr-lp-em--model-close">When you learn to reset your attention, you change your direction.</p>
+        </div>
+    </section>
+
+    <!-- THE METHOD — Pattern Reset system (7 steps) -->
+    <section class="pr-section pr-lp-section" id="method" aria-labelledby="lp-method-heading">
+        <div class="pr-lp-inner">
+            <p class="pr-label">The method</p>
+            <h2 class="pr-lp-h2" id="lp-method-heading">Pattern Reset system</h2>
+            <div class="pr-lp-method-steps">
+                <div class="pr-lp-method-step">
+                    <div>
+                        <strong>Awareness <span class="pr-lp-method-tag">(Pattern Quiz)</span></strong>
+                        <span class="pr-lp-method-quote">I see the pattern.</span>
+                    </div>
+                </div>
+                <div class="pr-lp-method-step">
+                    <div>
+                        <strong>Locate</strong>
+                        <span class="pr-lp-method-quote">I see where it comes from.</span>
+                    </div>
+                </div>
+                <div class="pr-lp-method-step">
+                    <div>
+                        <strong>Release <span class="pr-lp-method-tag">(Let It Out)</span></strong>
+                        <span class="pr-lp-method-quote">I process and express what was held.</span>
+                    </div>
+                </div>
+                <div class="pr-lp-method-step">
+                    <div>
+                        <strong>Cut</strong>
+                        <span class="pr-lp-method-quote">The pattern loses its grip.</span>
+                    </div>
+                </div>
+                <div class="pr-lp-method-step">
+                    <div>
+                        <strong>Reclaim</strong>
+                        <span class="pr-lp-method-quote">My energy returns to the present.</span>
+                    </div>
+                </div>
+                <div class="pr-lp-method-step">
+                    <div>
+                        <strong>Redirect</strong>
+                        <span class="pr-lp-method-quote">I choose, I focus, I move forward intentionally.</span>
+                    </div>
+                </div>
+                <div class="pr-lp-method-step">
+                    <div>
+                        <strong>Act</strong>
+                        <span class="pr-lp-method-quote">I reinforce the new path daily.</span>
+                    </div>
+                </div>
+            </div>
+            <p class="pr-lp-em pr-lp-em--tight">This isn’t theory. It’s something you practice daily.</p>
+        </div>
+    </section>
+
+    <!-- ENTRY: QUIZ vs LET IT OUT -->
+    <section class="pr-section pr-lp-section pr-lp-section--alt" id="start" aria-labelledby="lp-entry-heading">
+        <div class="pr-lp-inner pr-lp-inner--wide">
+            <p class="pr-label">Start here</p>
+            <h2 class="pr-lp-h2" id="lp-entry-heading">Pick your entry</h2>
+            <p class="pr-lp-muted pr-lp-muted--flush">Two ways in—same goal: see what’s running the show.</p>
+            <div class="pr-lp-entries">
+                <div class="pr-lp-entry-card">
+                    <span class="pr-lp-entry-badge">Option 1</span>
+                    <h3 class="pr-lp-entry-title">Pattern Quiz</h3>
+                    <ul class="pr-lp-list">
+                        <li>Find your pattern in ~2 minutes</li>
+                        <li>See how it shows up in your life</li>
+                        <li>Especially in relationships</li>
+                        <li>Get clarity instantly</li>
                     </ul>
+                    <div class="pr-lp-entry-cta">
+                        <a href="index.html" class="pr-btn-primary">Show Me My Pattern</a>
+                    </div>
+                </div>
+                <div class="pr-lp-entry-card">
+                    <span class="pr-lp-entry-badge">Option 2</span>
+                    <h3 class="pr-lp-entry-title">Let It Out</h3>
+                    <ul class="pr-lp-list">
+                        <li>Release what you’ve been holding</li>
+                        <li>Say what you’ve never said</li>
+                        <li>Process what you’ve avoided</li>
+                        <li>Start letting go</li>
+                    </ul>
+                    <div class="pr-lp-entry-cta">
+                        <a href="letitout.html" class="pr-btn-ghost">Let It Out</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ====== FRAMEWORK: Relationships (headline + two patterns → dynamic) ====== -->
-    <section class="pr-section pr-framework" id="framework" aria-labelledby="pr-framework-heading">
-        <div class="pr-inner">
-            <span class="pr-label">Where patterns show up first</span>
-            <h2 class="pr-h2" id="pr-framework-heading">Relationships</h2>
-            <div class="pr-framework-copy pr-framework-copy--relationships">
-                <p>You see it in who you choose. In what you tolerate. In how you react. And in the relationships you stay in. <strong>The gap is what nobody talks about:</strong> the pain, trauma, and experiences that were normalized and buried. What stays buried doesn’t disappear. It shows up in your life in ways you don’t immediately recognize. And relationships are where it becomes impossible to ignore—because intimacy doesn’t let what’s underneath stay hidden.</p>
-                <p>You can’t build real connection and emotional intimacy while hiding parts of yourself. And until you face what’s unresolved in you, you’ll keep repeating the same patterns—just with different people.</p>
-            </div>
-
-            <div class="pr-framework-how">
-                <div class="pr-chain-flow" role="region" aria-label="From root and patterns to what gets passed on">
-                    <div class="pr-chain-node">
-                        <div class="pr-chain-marker"><span class="pr-chain-dot"></span><span class="pr-chain-line"></span></div>
-                        <div class="pr-chain-content">
-                            <p class="pr-chain-title pr-chain-title--sentence">The Root: What You’ve Been Holding In</p>
-                            <p class="pr-chain-desc">What you went through, what you were forced to normalize, and what you buried without ever processing did not disappear. It stayed inside you and became the foundation for how you think, feel, and show up in your life.</p>
-                        </div>
-                    </div>
-                    <div class="pr-chain-node">
-                        <div class="pr-chain-marker"><span class="pr-chain-dot"></span><span class="pr-chain-line"></span></div>
-                        <div class="pr-chain-content">
-                            <p class="pr-chain-title pr-chain-title--sentence">Your Pattern: How You Show Up</p>
-                            <p class="pr-chain-desc">When things get difficult, you may chase, overthink, carry the emotional weight, stay longer than you should, or pretend everything is fine. This is not who you are; it is how you learned to survive.</p>
-                        </div>
-                    </div>
-                    <div class="pr-chain-node">
-                        <div class="pr-chain-marker"><span class="pr-chain-dot"></span><span class="pr-chain-line"></span></div>
-                        <div class="pr-chain-content">
-                            <p class="pr-chain-title pr-chain-title--sentence">Their Pattern: How They Show Up</p>
-                            <p class="pr-chain-desc">When things get difficult, they may withdraw, shut down, avoid, become inconsistent, or hide behind “I’m fine.” It comes from the same root, just expressed differently, and it is not yours to fix.</p>
-                        </div>
-                    </div>
-                    <div class="pr-chain-node">
-                        <div class="pr-chain-marker"><span class="pr-chain-dot"></span><span class="pr-chain-line"></span></div>
-                        <div class="pr-chain-content">
-                            <p class="pr-chain-title pr-chain-title--sentence">The Problem: Where It Gets Stuck</p>
-                            <p class="pr-chain-desc">These patterns do not resolve each other; they lock together. The more you try to understand, fix, or hold things together, the more the same cycle repeats.</p>
-                        </div>
-                    </div>
-                    <div class="pr-chain-node">
-                        <div class="pr-chain-marker"><span class="pr-chain-dot"></span><span class="pr-chain-line"></span></div>
-                        <div class="pr-chain-content">
-                            <p class="pr-chain-title pr-chain-title--sentence">The Relationship: The Dynamic You’re In</p>
-                            <p class="pr-chain-desc">This becomes the relationship you experience day to day—the same emotional pattern, again and again.</p>
-                            <ul class="pr-chain-pills" aria-label="What the dynamic can look like">
-                                <li>Emotional unavailability and distance</li>
-                                <li>Inconsistency that keeps you guessing</li>
-                                <li>Avoidance when things get real</li>
-                                <li>Secrecy, betrayal, or broken trust</li>
-                                <li>Control, manipulation, or harm</li>
-                                <li>Numbing, disconnection, or escape</li>
-                                <li>Conversations that never fully resolve</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="pr-chain-node">
-                        <div class="pr-chain-marker"><span class="pr-chain-dot"></span><span class="pr-chain-line"></span></div>
-                        <div class="pr-chain-content">
-                            <p class="pr-chain-title pr-chain-title--sentence">What This Is Really About</p>
-                            <p class="pr-chain-desc">You are not just reacting to behavior; you are living inside what was never faced or processed. You cannot force someone else to change, but you can see the pattern, stop participating in it, and choose differently.</p>
-                        </div>
-                    </div>
-                    <div class="pr-chain-node pr-chain-node--last">
-                        <div class="pr-chain-marker"><span class="pr-chain-dot pr-chain-dot--red"></span></div>
-                        <div class="pr-chain-content">
-                            <p class="pr-chain-title pr-chain-title--sentence">What Gets Passed On</p>
-                            <p class="pr-chain-desc">What gets passed forward is not what you say, but what you live. The patterns in your relationships become what others learn, absorb, and eventually repeat.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="pr-chain-break">
-                    <div class="pr-chain-break-inner">
-                        <p class="pr-chain-break-lead">
-                            <span class="pr-chain-break-lead-a">The problem isn’t just what happened.</span>
-                            <span class="pr-chain-break-lead-b">It’s what stayed inside.</span>
-                        </p>
-                        <p class="pr-chain-break-triad" role="group" aria-label="What stayed inside">
-                            <span class="pr-chain-break-triad-w">Unsaid</span><span class="pr-chain-break-triad-dot" aria-hidden="true">·</span><span class="pr-chain-break-triad-w">Unfaced</span><span class="pr-chain-break-triad-dot" aria-hidden="true">·</span><span class="pr-chain-break-triad-w">Unprocessed</span>
-                        </p>
-                        <p class="pr-chain-break-bridge">That’s why it keeps repeating.</p>
-                        <p class="pr-chain-break-cta">
-                            <span class="pr-chain-break-cta-line">You don’t need more answers.</span>
-                            <span class="pr-chain-break-cta-line pr-chain-break-cta-line--action">You need to <a href="letitout.html" class="pr-chain-break-letout-link">LET IT OUT</a>.</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ====== MIRROR: PATTERN MAP ====== -->
-    <section class="pr-section pr-mirror" id="mirror">
-        <div class="pr-inner">
-            <div class="pr-pattern-map" role="region" aria-labelledby="pr-map-title">
-                <div class="pr-pattern-map-head">
-                    <span class="pr-label">One pattern · everywhere</span>
-                    <h3 class="pr-h2 pr-mirror-subhead" id="pr-map-title">This is what your pattern looks like</h3>
-                </div>
-                <div class="pr-pattern-map-intro">
-                    <p>You think these are separate problems. They’re not. It’s the same pattern—showing up in who you choose, what you tolerate, and why you keep ending up in the same situations.</p>
-                </div>
-                <div class="pr-word-orbit-wrap">
-                    <div class="pr-word-orbit" aria-label="Ways your pattern can show up">
-                        <span class="pr-word-float pr-word-float--xl pr-word-float--anchor" style="--x:50.0%; --y:42.0%; --delay:-0.1s;">Numbing</span>
-                        <span class="pr-word-float pr-word-float--lg pr-word-float--multi" style="--x:36.0%; --y:22.0%; --delay:-0.9s;">Closed off · shuts down</span>
-                        <span class="pr-word-float pr-word-float--lg pr-word-float--multi" style="--x:66.0%; --y:18.0%; --delay:-1.8s;">Inconsistent · hot and cold</span>
-                        <span class="pr-word-float pr-word-float--md" style="--x:56.0%; --y:54.0%; --delay:-2.6s;">Avoidance</span>
-                        <span class="pr-word-float pr-word-float--xl pr-word-float--anchor" style="--x:72.0%; --y:28.0%; --delay:-3.5s;">Shame</span>
-                        <span class="pr-word-float pr-word-float--md" style="--x:44.0%; --y:68.0%; --delay:-4.3s;">Defensiveness</span>
-                        <span class="pr-word-float pr-word-float--md" style="--x:20.0%; --y:50.0%; --delay:-5.2s;">Overthinking</span>
-                        <span class="pr-word-float pr-word-float--md" style="--x:46.0%; --y:34.0%; --delay:-6.0s;">People-pleasing</span>
-                        <span class="pr-word-float pr-word-float--md" style="--x:74.0%; --y:62.0%; --delay:-6.9s;">Addiction</span>
-                        <span class="pr-word-float pr-word-float--md" style="--x:32.0%; --y:76.0%; --delay:-7.7s;">Escaping</span>
-                        <span class="pr-word-float pr-word-float--xl pr-word-float--anchor" style="--x:28.0%; --y:56.0%; --delay:-0.15s;">Disconnection</span>
-                        <span class="pr-word-float pr-word-float--xl pr-word-float--anchor" style="--x:82.0%; --y:52.0%; --delay:-1.1s;">Loneliness</span>
-                        <span class="pr-word-float pr-word-float--xl pr-word-float--anchor" style="--x:18.0%; --y:34.0%; --delay:-2.0s;">Self-sabotage</span>
-                        <span class="pr-word-float pr-word-float--md pr-word-float--multi" style="--x:88.0%; --y:42.0%; --delay:-2.7s;">Choosing the same type of person</span>
-                        <span class="pr-word-float pr-word-float--md pr-word-float--multi" style="--x:12.0%; --y:62.0%; --delay:-3.4s;">Staying when you should leave</span>
-                        <span class="pr-word-float pr-word-float--md pr-word-float--multi" style="--x:18.0%; --y:26.0%; --delay:-4.4s;">Losing yourself in relationships</span>
-                        <span class="pr-word-float pr-word-float--md pr-word-float--multi" style="--x:58.0%; --y:88.0%; --delay:-5.3s;">Settling for less than you deserve</span>
-                        <span class="pr-word-float pr-word-float--md pr-word-float--multi" style="--x:38.0%; --y:14.0%; --delay:-6.1s;">Repeating the same situation</span>
-                        <span class="pr-word-float pr-word-float--md pr-word-float--multi" style="--x:52.0%; --y:82.0%; --delay:-7.0s;">Tolerating what hurts</span>
-                    </div>
-                </div>
-                <p class="pr-pattern-map-orbit-lead">You won’t see yourself in all of this—but you’ll recognize more than one.</p>
-            </div>
-
-            <div class="pr-mirror-cta">
+    <!-- MOVEMENT -->
+    <section class="pr-section pr-lp-section" id="movement" aria-labelledby="lp-movement-heading">
+        <div class="pr-lp-inner">
+            <p class="pr-label">The movement</p>
+            <h2 class="pr-lp-h2" id="lp-movement-heading">This isn’t just about you.</h2>
+            <p class="pr-lp-movement-block">When you change your patterns:</p>
+            <ul class="pr-lp-list">
+                <li>your relationships change</li>
+                <li>your family shifts</li>
+                <li>your environment evolves</li>
+            </ul>
+            <p class="pr-lp-movement-block pr-lp-movement-block--spaced">Pattern Reset is about reconnecting—with yourself, with others, with real life.</p>
+            <p class="pr-lp-em">This is the beginning of a new way of living.</p>
+            <p class="pr-lp-muted pr-lp-muted--movement">Start with awareness.</p>
+            <div class="pr-lp-final-ctas pr-lp-final-ctas--spaced">
                 <a href="index.html" class="pr-btn-primary">Show Me My Pattern</a>
+                <a href="letitout.html" class="pr-btn-ghost">Let It Out</a>
             </div>
         </div>
     </section>
 
-    <!-- ====== BECOME A PATTERN BREAKER ====== -->
-    <section class="pr-section pr-tribe" id="start">
-        <div class="pr-inner">
-            <span class="pr-label">Become a pattern breaker</span>
-            <h2 class="pr-h2">The pattern ends with you.</h2>
-            <div class="pr-tribe-grid">
-                <div class="pr-tribe-item">
-                    <span class="pr-tribe-check" aria-hidden="true">&#10003;</span>
-                    <p>You’ve seen the patterns your family normalized—and you’ve always known something about them wasn’t right.</p>
-                </div>
-                <div class="pr-tribe-item">
-                    <span class="pr-tribe-check" aria-hidden="true">&#10003;</span>
-                    <p>You’re the one who feels it, questions it, and can’t fully ignore it—even when everyone else does.</p>
-                </div>
-                <div class="pr-tribe-item">
-                    <span class="pr-tribe-check" aria-hidden="true">&#10003;</span>
-                    <p>You’ve watched the same dynamics repeat across relationships, across time—and part of you knows it’s not random.</p>
-                </div>
-                <div class="pr-tribe-item">
-                    <span class="pr-tribe-check" aria-hidden="true">&#10003;</span>
-                    <p>If nothing changes, it doesn’t stop with you. It continues—through your choices, your relationships, and what gets passed down.</p>
-                </div>
-                <div class="pr-tribe-item">
-                    <span class="pr-tribe-check" aria-hidden="true">&#10003;</span>
-                    <p>You don’t just want to understand it. You want it to end.</p>
-                </div>
-                <div class="pr-tribe-item">
-                    <span class="pr-tribe-check" aria-hidden="true">&#10003;</span>
-                    <p>And whether you’ve fully admitted it or not—you already know you’re the one who has to face it.</p>
-                </div>
-            </div>
-            <div class="pr-tribe-capture">
-                <div class="pr-tribe-capture-inner">
-                    <div class="pr-tribe-capture-col pr-tribe-capture-col--email">
-                        <form class="pr-tribe-email-form" id="prTribeEmailForm" novalidate>
-                            <label class="pr-tribe-email-label" for="prTribeEmailInput">Weekly emails</label>
-                            <div class="pr-tribe-email-fields">
-                                <input type="email" class="pr-tribe-email-input" id="prTribeEmailInput" name="email" placeholder="you@email.com" required autocomplete="email" inputmode="email" aria-label="Email address for weekly Pattern Breakers emails">
-                                <button type="submit" class="pr-tribe-email-submit">Join</button>
-                            </div>
-                        </form>
-                        <p class="pr-tribe-email-success-inline" id="prTribeEmailSuccess" aria-live="polite">You’re in — weekly notes for pattern breakers.</p>
-                    </div>
-                    <div class="pr-tribe-capture-col pr-tribe-capture-col--cta">
-                        <a href="index.html" class="pr-btn-primary pr-tribe-pattern-cta"><span class="pr-tribe-pattern-cta-text">Show Me My Pattern</span><span class="pr-tribe-pattern-cta-arrow" aria-hidden="true"> →</span></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ====== LIAM'S STORY ====== -->
-    <section class="pr-section pr-story" id="liam">
+    <!-- STORY (short + expand) -->
+    <section class="pr-section pr-story pr-lp-section--alt" id="liam" aria-labelledby="pr-story-heading">
         <div class="pr-story-inner">
             <span class="pr-label">Why this exists</span>
             <h2 class="pr-h2 pr-story-title" id="pr-story-heading">I didn’t learn this. I lived it.</h2>
             <div class="pr-story-byline">
                 <div class="pr-story-avatar">
-                    <img src="images/founder.png" alt="Liam" loading="lazy">
+                    <img src="images/founder.png" alt="Liam" loading="lazy" width="52" height="52">
                 </div>
                 <div>
                     <span class="pr-story-byline-name">Liam</span>
@@ -2914,40 +3341,17 @@
         </div>
     </section>
 
-    <!-- ====== THE CURE ====== -->
-    <section class="pr-section pr-products" id="start-here">
-        <div class="pr-inner">
-            <div class="pr-cure-header">
-                <span class="pr-label">Start here</span>
-                <h3 class="pr-h2">Say it. See it. Break it.</h3>
-                <p class="pr-cure-lead">You don’t break a pattern by thinking about it. <span class="pr-cure-lead-payoff">You break it by saying it, seeing it, and choosing differently.</span> <span class="pr-cure-lead-reset">Then reset it.</span></p>
-            </div>
-
-            <div class="pr-cure-tools">
-                <a href="letitout.html" class="pr-product-card">
-                    <svg class="pr-product-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                    </svg>
-                    <h3 class="pr-product-name">Let It Out</h3>
-                    <p class="pr-product-desc">Release what you’ve been holding in—anonymously.</p>
-                    <span class="pr-product-cta">Let it out</span>
-                </a>
-                <a href="index.html" class="pr-product-card">
-                    <svg class="pr-product-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
-                        <path d="M50,22 Q28,22 28,50 Q28,78 50,78 Q72,78 72,50 Q72,22 50,22" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
-                        <path d="M50,38 Q38,38 38,50 Q38,62 50,62 Q62,62 62,50 Q62,38 50,38" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round"/>
-                        <circle cx="50" cy="50" r="5" fill="currentColor"/>
-                    </svg>
-                    <h3 class="pr-product-name">See Your Pattern</h3>
-                    <p class="pr-product-desc">Understand what’s been repeating.</p>
-                    <span class="pr-product-cta">See your pattern</span>
-                </a>
-            </div>
+    <!-- PATTERN RESET SYSTEM -->
+    <section class="pr-section pr-lp-section pr-lp-philosophy-teaser" id="pattern-reset-system" aria-labelledby="lp-system-heading">
+        <div class="pr-lp-inner">
+            <p class="pr-label">Go deeper</p>
+            <h2 class="pr-lp-h2" id="lp-system-heading">The Pattern Reset System™</h2>
+            <p class="pr-lp-muted pr-lp-muted--flush">A system for breaking the patterns running your life—structured, repeatable, life-wide. How it works, why relationships are the gateway, and what runs inside the system.</p>
+            <a href="philosophy.html" class="pr-btn-ghost">Explore the Pattern Reset System™</a>
         </div>
     </section>
 
-    <!-- ====== THE MISSION ====== -->
+    <!-- NEWSLETTER -->
     <section class="pr-section pr-email" id="newsletter">
         <div class="pr-email-inner">
             <span class="pr-email-kicker">Ready to break your pattern?</span>
@@ -2964,6 +3368,7 @@
     </section>
 
 </main>
+
 
 <!-- ====== FOOTER ====== -->
 <footer class="pr-footer-std">
@@ -3098,21 +3503,23 @@ if (tribeEmailForm) {
 }
 
 // Email form — simple feedback
-document.getElementById('prEmailForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    var input = document.getElementById('prEmailInput');
-    var success = document.getElementById('prEmailSuccess');
-    if (!input.value || !input.value.includes('@')) {
-        input.style.borderColor = 'var(--pr-red)';
-        input.focus();
-        return;
-    }
-    // In production: POST to your email service API here
-    input.style.display = 'none';
-    this.querySelector('button').style.display = 'none';
-    success.style.display = 'block';
-    document.getElementById('prEmailInput').style.borderColor = '';
-});
+var prEmailFormEl = document.getElementById('prEmailForm');
+if (prEmailFormEl) {
+    prEmailFormEl.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var input = document.getElementById('prEmailInput');
+        var success = document.getElementById('prEmailSuccess');
+        if (!input.value || !input.value.includes('@')) {
+            input.style.borderColor = 'var(--pr-red)';
+            input.focus();
+            return;
+        }
+        input.style.display = 'none';
+        this.querySelector('button').style.display = 'none';
+        success.style.display = 'block';
+        input.style.borderColor = '';
+    });
+}
 </script>
 
 </body>

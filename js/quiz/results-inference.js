@@ -60,11 +60,12 @@
 
     // Her response display names
     const HER_RESPONSE_NAMES = {
-        'reassurance-seeker': 'The Reassurance Seeker',
-        'space-giver': 'The Space Giver',
-        'direct-communicator': 'The Direct Communicator',
-        'protector': 'The Protector',
-        'balanced': 'The Self-Aware One'
+        'reassurance-seeker': 'The One Who Needs to Feel Sure',
+        'space-giver': 'The One Who Backs Off to Keep It',
+        'direct-communicator': 'The One Who Says It Straight',
+        'hopeful-waiter': 'The One Who Hopes It\'ll Change',
+        'protector': 'The One Who Pulls Back First',
+        'balanced': 'The One Who Sees It Clearly'
     };
 
     // Dynamic interaction: her response + his PRIMARY pattern only
@@ -133,60 +134,59 @@
         const opt = (qIdx) => getAnswerOption(answers, quizData, qIdx);
         const add = (scores, key, weight) => { if (scores[key] !== undefined) scores[key] += weight; };
 
-        // --- PRIMARY: Avoidant Pullback ---
-        // Q2 low emotional openness, Q3 tension creates distance/disappears, Q5 distant/defensive, Q4 avoids future, Q9 hot-cold-cycle
+        // v6.0 indices: 0 predictability, 1 pain, 2 conflict, 3 investment, 4 aftermath, 5 anchor, 6 her, 7 future, 8 decision, 9 desire
+        const o1 = opt(0);
         const o2 = opt(1);
-        if (o2 && (o2.subDimension === 'emotional-distance' || o2.subDimension === 'one-sided')) add(primaryScores, 'avoidant-pullback', (o2.score || 0) * 1.5);
         const o3 = opt(2);
-        if (o3 && (o3.subDimension === 'emotional-distance' || o3.subDimension === 'hot-cold')) add(primaryScores, 'avoidant-pullback', (o3.score || 0) * 1.5);
-        const o5 = opt(4);
-        if (o5 && (o5.subDimension === 'hot-cold' || o5.subDimension === 'emotional-distance')) add(primaryScores, 'avoidant-pullback', (o5.score || 0) * 1.5);
         const o4 = opt(3);
-        if (o4 && o4.subDimension === 'commitment-avoidance') add(primaryScores, 'avoidant-pullback', (o4.score || 0) * 0.8);
-        const o9 = opt(8);
-        if (o9 && o9.subDimension === 'hot-cold-cycle') add(primaryScores, 'avoidant-pullback', (o9.score || 0) * 2);
+        const o5 = opt(4);
+        const oAnchor = opt(5);
+        const oHer = opt(6);
+        const oDesire = opt(9);
+
+        // --- PRIMARY: Avoidant Pullback ---
+        if (o2 && (o2.subDimension === 'emotional-distance' || o2.subDimension === 'one-sided-investment')) add(primaryScores, 'avoidant-pullback', (o2.score || 0) * 1.5);
+        if (o3 && (o3.subDimension === 'emotional-distance' || o3.subDimension === 'hot-cold')) add(primaryScores, 'avoidant-pullback', (o3.score || 0) * 1.5);
+        if (o5 && (o5.subDimension === 'hot-cold-cycle' || o5.subDimension === 'hot-cold')) add(primaryScores, 'avoidant-pullback', (o5.score || 0) * 1.5);
+        if (o2 && o2.subDimension === 'commitment-avoidance') add(primaryScores, 'avoidant-pullback', (o2.score || 0) * 0.8);
+        if (o4 && o4.subDimension === 'breadcrumb-dynamic') add(primaryScores, 'avoidant-pullback', (o4.score || 0) * 0.6);
+        if (oAnchor && oAnchor.subDimension === 'hot-cold-cycle') add(primaryScores, 'avoidant-pullback', (oAnchor.score || 0) * 2);
 
         // --- PRIMARY: Mixed Signals ---
-        // Q1 inconsistent attention, Q4 vague/no follow-through, Q5 reassures but nothing changes, Q9 words/actions don't match
-        const o1 = opt(0);
         if (o1 && o1.subDimension === 'hot-cold') add(primaryScores, 'mixed-signals', (o1.score || 0) * 1.2);
-        if (o4 && o4.subDimension === 'mixed-signals') add(primaryScores, 'mixed-signals', (o4.score || 0) * 2);
+        if (o1 && o1.subDimension === 'mixed-signals') add(primaryScores, 'mixed-signals', (o1.score || 0) * 1.4);
+        if (o2 && o2.subDimension === 'mixed-signals-loop') add(primaryScores, 'mixed-signals', (o2.score || 0) * 1.5);
+        if (o4 && o4.subDimension === 'hot-cold-cycle') add(primaryScores, 'mixed-signals', (o4.score || 0) * 1);
         if (o5 && o5.subDimension === 'mixed-signals') add(primaryScores, 'mixed-signals', (o5.score || 0) * 2);
-        if (o9 && o9.subDimension === 'mixed-signals-loop') add(primaryScores, 'mixed-signals', (o9.score || 0) * 2.5);
+        if (oAnchor && oAnchor.subDimension === 'mixed-signals-loop') add(primaryScores, 'mixed-signals', (oAnchor.score || 0) * 2.5);
 
         // --- PRIMARY: Low Investment ---
-        // Q6 effort imbalance, Q7 initiation imbalance, Q8 anxious/drained, Q15 she wants more/he holds power, Q9 one-sided/breadcrumb
-        const o6 = opt(5);
-        if (o6 && (o6.subDimension === 'one-sided-investment' || o6.subDimension === 'breadcrumb-dynamic')) add(primaryScores, 'low-investment', (o6.score || 0) * 1.5);
-        const o7 = opt(6);
-        if (o7 && (o7.subDimension === 'one-sided-investment' || o7.subDimension === 'breadcrumb-dynamic' || o7.subDimension === 'hot-cold-cycle')) add(primaryScores, 'low-investment', (o7.score || 0) * 1.2);
-        const o8 = opt(7);
-        if (o8 && (o8.subDimension === 'one-sided-investment' || o8.subDimension === 'breadcrumb-dynamic' || o8.subDimension === 'hot-cold-cycle')) add(primaryScores, 'low-investment', (o8.score || 0) * 1.2);
-        const o15 = opt(14);
-        if (o15 && (o15.subDimension === 'she-wants-more' || o15.subDimension === 'he-holds-cards')) add(primaryScores, 'low-investment', (o15.score || 0) * 1.5);
-        if (o9 && (o9.subDimension === 'one-sided-investment' || o9.subDimension === 'breadcrumb-dynamic')) add(primaryScores, 'low-investment', (o9.score || 0) * 2);
+        if (o5 && (o5.subDimension === 'one-sided-investment' || o5.subDimension === 'breadcrumb-dynamic')) add(primaryScores, 'low-investment', (o5.score || 0) * 1.2);
+        if (o4 && (o4.subDimension === 'one-sided-investment' || o4.subDimension === 'breadcrumb-dynamic')) add(primaryScores, 'low-investment', (o4.score || 0) * 1.8);
+        if (oHer && oHer.subDimension === 'reassurance-seeker') add(primaryScores, 'low-investment', (oHer.score || 0) * 0.4);
+        if (oAnchor && (oAnchor.subDimension === 'one-sided-investment' || oAnchor.subDimension === 'breadcrumb-dynamic' || oAnchor.subDimension === 'hot-cold-cycle')) add(primaryScores, 'low-investment', (oAnchor.score || 0) * 1.2);
+        if (oAnchor && (oAnchor.subDimension === 'one-sided-investment' || oAnchor.subDimension === 'breadcrumb-dynamic')) add(primaryScores, 'low-investment', (oAnchor.score || 0) * 2);
 
         // --- PRIMARY: Emotionally Closed ---
-        // Q2 rarely/almost never open, Q3 avoids tension, Q5 shuts down, Q8 emotionally drained
         if (o2 && o2.subDimension === 'emotional-distance') add(primaryScores, 'emotionally-closed', (o2.score || 0) * 2);
         if (o3 && (o3.subDimension === 'avoidant' || o3.subDimension === 'emotional-distance')) add(primaryScores, 'emotionally-closed', (o3.score || 0) * 1.2);
         if (o5 && o5.subDimension === 'emotional-distance') add(primaryScores, 'emotionally-closed', (o5.score || 0) * 2);
-        if (o8 && o8.subDimension === 'one-sided-investment') add(primaryScores, 'emotionally-closed', (o8.score || 0) * 0.8);
+        if (oHer && oHer.subDimension === 'direct-communicator') add(primaryScores, 'emotionally-closed', (oHer.score || 0) * 0.5);
 
         // --- MODIFIER: Future Faking ---
-        // Q4 "says same things but doesn't follow through", Q5 "reassures but nothing changes" — threshold 6 so one strong signal is enough
-        if (o4 && o4.subDimension === 'mixed-signals') add(modifierScores, 'future-faking', (o4.score || 0) * 2);
+        if (o2 && o2.subDimension === 'mixed-signals-loop') add(modifierScores, 'future-faking', (o2.score || 0) * 1);
         if (o5 && o5.subDimension === 'mixed-signals') add(modifierScores, 'future-faking', (o5.score || 0) * 2);
 
         // --- MODIFIER: Push–Pull ---
         if (o1 && o1.subDimension === 'hot-cold') add(modifierScores, 'push-pull', (o1.score || 0) * 1.5);
         if (o3 && (o3.subDimension === 'emotional-distance' || o3.subDimension === 'hot-cold')) add(modifierScores, 'push-pull', (o3.score || 0) * 1.2);
-        if (o8 && (o8.subDimension === 'hot-cold-cycle' || o8.subDimension === 'one-sided-investment')) add(modifierScores, 'push-pull', (o8.score || 0) * 1);
-        if (o9 && o9.subDimension === 'hot-cold-cycle') add(modifierScores, 'push-pull', (o9.score || 0) * 2);
+        if (oHer && (oHer.subDimension === 'space-giver' || oHer.subDimension === 'reassurance-seeker')) add(modifierScores, 'push-pull', (oHer.score || 0) * 0.5);
+        if (oAnchor && oAnchor.subDimension === 'hot-cold-cycle') add(modifierScores, 'push-pull', (oAnchor.score || 0) * 2);
 
         // --- MODIFIER: Passive-Indecisive ---
-        if (o4 && o4.subDimension === 'commitment-avoidance') add(modifierScores, 'passive-indecisive', (o4.score || 0) * 1.2);
-        if (o15 && (o15.subDimension === 'mutual-uncertainty' || o15.subDimension === 'she-wants-more')) add(modifierScores, 'passive-indecisive', (o15.score || 0) * 1);
+        if (o2 && o2.subDimension === 'commitment-avoidance') add(modifierScores, 'passive-indecisive', (o2.score || 0) * 1.2);
+        if (o1 && (o1.subDimension === 'mixed-signals' || o1.subDimension === 'hot-cold') && (o1.score || 0) >= 4) add(modifierScores, 'passive-indecisive', (o1.score || 0) * 0.4);
+        if (oDesire && (oDesire.subDimension === 'mutual-uncertainty' || oDesire.subDimension === 'she-wants-more')) add(modifierScores, 'passive-indecisive', (oDesire.score || 0) * 1);
         const o14 = opt(13);
         if (o14 && (o14.subDimension === 'long' || o14.subDimension === 'very-long')) add(modifierScores, 'passive-indecisive', (o14.score || 0) * 1.2);
 
@@ -254,7 +254,7 @@
      * Infer emotional compatibility from answers
      */
     function inferEmotionalCompatibility(answers, quizData) {
-        if (!answers || !Array.isArray(answers) || answers.length < 8) {
+        if (!answers || !Array.isArray(answers) || answers.length < 7) {
             return EMOTIONAL_COMPATIBILITY.misaligned;
         }
 

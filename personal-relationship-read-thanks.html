@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050505">
+    <title>Your read is confirmed | Pattern Reset™</title>
+    <meta name="description" content="Your Personal Relationship Read is confirmed. Here is what happens next and how to reach us if you need anything.">
+    <meta name="robots" content="noindex,follow">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="stylesheet" href="styles/personal-relationship-read.css?v=10">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEZQRBTLR7"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZEZQRBTLR7');
+    </script>
+</head>
+<body class="page-home page-pr-read">
+
+<div class="pr-read-shell">
+<header>
+    <div class="container">
+        <nav class="nav-centered">
+            <div class="nav-left">
+                <button class="hamburger nav-hamburger" type="button" aria-label="Open menu" onclick="openMenu()">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
+                </button>
+                <a href="/home" class="logo-brand-combo" aria-label="Pattern Reset Home">
+                    <span class="center-logo nav-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-hidden="true">
+                            <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="50" cy="50" r="3.5" fill="currentColor"/>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="/">Get Clarity</a></li>
+                    <li><a href="/letitout" class="letitout-link">Let It Out</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="close-btn hamburger" type="button" onclick="closeMenu()" aria-label="Close menu">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
+        </button>
+        <nav>
+            <a href="/" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Get Clarity</span><span class="menu-nav-subtitle">Discover your relationship pattern</span></a>
+            <a href="/letitout" class="menu-nav-link letitout-link" onclick="closeMenu()"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your situation anonymously</span></a>
+            <a href="/home#newsletter" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Reset</span><span class="menu-nav-subtitle">Your weekly Sunday reset</span></a>
+        </nav>
+    </div>
+</header>
+
+<main class="pr-read-main" id="main-content">
+
+    <div id="pr-thanks-loading" class="pr-read-thanks-view pr-thanks-loading" hidden>
+        <div class="pr-thanks-loading__inner" role="status" aria-live="polite">
+            <span class="pr-thanks-loading__dot" aria-hidden="true"></span>
+            <p class="pr-thanks-loading__text">Confirming your order…</p>
+            <p class="pr-thanks-loading__hint">One moment while we connect to Stripe.</p>
+        </div>
+    </div>
+
+    <section id="pr-thanks-verified" class="pr-read-step pr-read-thanks-view" hidden aria-labelledby="pr-thanks-title">
+        <header class="pr-thanks-hero">
+            <p class="pr-read-eyebrow">Order confirmed</p>
+            <h1 class="pr-thanks-title" id="pr-thanks-title">Got it. Thank you for trusting me with this.</h1>
+            <p class="pr-thanks-lead">I have everything you shared. Your written answer is coming to the email you used at checkout.</p>
+        </header>
+
+        <div class="pr-read-panel pr-thanks-panel">
+            <h2 class="pr-thanks-panel-heading">What happens next</h2>
+            <ol class="pr-thanks-steps">
+                <li><span class="pr-thanks-steps__num">1</span><span class="pr-thanks-steps__body"><strong>Your Stripe receipt is on its way.</strong> If you use Gmail, check Promotions or Spam just in case.</span></li>
+                <li><span class="pr-thanks-steps__num">2</span><span class="pr-thanks-steps__body"><strong>I&rsquo;ll sit with what you wrote</strong> and write back to you personally &mdash; what&rsquo;s actually going on, and the next step that fits your situation.</span></li>
+                <li><span class="pr-thanks-steps__num">3</span><span class="pr-thanks-steps__body"><strong>Your answer arrives within 48&ndash;72 hours.</strong> Often sooner.</span></li>
+            </ol>
+            <p class="pr-thanks-panel-foot">Questions in the meantime? You can reach me at <a class="pr-thanks-inline-link" href="mailto:resetmypattern@gmail.com">resetmypattern@gmail.com</a>.</p>
+        </div>
+    </section>
+
+    <section id="pr-thanks-unverified" class="pr-read-step pr-read-thanks-view" hidden aria-labelledby="pr-thanks-fail-title">
+        <header class="pr-thanks-hero pr-thanks-hero--alert">
+            <p class="pr-read-eyebrow">Couldn&rsquo;t auto-confirm</p>
+            <h1 class="pr-thanks-title" id="pr-thanks-fail-title">Your payment may still have gone through</h1>
+            <p class="pr-thanks-lead">This link didn&rsquo;t verify in our system. That sometimes happens with refresh timing, privacy tools, or an old tab—<strong>it doesn&rsquo;t always mean the charge failed</strong>.</p>
+        </header>
+        <div class="pr-read-panel pr-thanks-panel">
+            <h2 class="pr-thanks-panel-heading">What to do</h2>
+            <ol class="pr-thanks-steps pr-thanks-steps--compact">
+                <li><span class="pr-thanks-steps__num">1</span><span class="pr-thanks-steps__body">Check your email for a <strong>Stripe receipt</strong>. If it&rsquo;s there, your order likely went through—we&rsquo;ll still fulfill from that.</span></li>
+                <li><span class="pr-thanks-steps__num">2</span><span class="pr-thanks-steps__body">No receipt and you&rsquo;re unsure? Email <a class="pr-thanks-inline-link" href="mailto:resetmypattern@gmail.com">resetmypattern@gmail.com</a> with the time you paid and we&rsquo;ll sort it.</span></li>
+                <li><span class="pr-thanks-steps__num">3</span><span class="pr-thanks-steps__body">If checkout didn&rsquo;t finish, you can return to the application below—your progress may still be saved in this browser session.</span></li>
+            </ol>
+            <p class="pr-thanks-panel-foot pr-thanks-panel-foot--muted">If you opened this page from a <strong>file on your computer</strong> or a <strong>static preview</strong> that doesn&rsquo;t run the site&rsquo;s server, we can&rsquo;t reach Stripe to verify—your payment in Stripe can still be fine. Use your normal site URL (or local dev server) after checkout, or trust the receipt email.</p>
+        </div>
+        <div class="pr-read-actions pr-read-actions--row pr-read-actions--thanks">
+            <a class="pr-read-btn pr-read-btn--primary" href="/personal-relationship-read">Back to application</a>
+            <a class="pr-read-btn pr-read-btn--ghost" href="mailto:resetmypattern@gmail.com">Email support</a>
+        </div>
+        <p class="pr-thanks-foot-link"><a href="/#quiz-section">Get Clarity quiz</a></p>
+    </section>
+
+    <section id="pr-thanks-nosession" class="pr-read-step pr-read-thanks-view" hidden aria-labelledby="pr-thanks-ns-title">
+        <header class="pr-thanks-hero">
+            <p class="pr-read-eyebrow">Order status</p>
+            <h1 class="pr-thanks-title" id="pr-thanks-ns-title">Looking for your order?</h1>
+            <p class="pr-thanks-lead">If you just paid, your <strong>Stripe receipt email</strong> is your proof &mdash; check the inbox you used at checkout.</p>
+        </header>
+        <div class="pr-read-panel pr-thanks-panel">
+            <h2 class="pr-thanks-panel-heading">Can&rsquo;t find your receipt?</h2>
+            <p class="pr-thanks-while-intro">Email <a class="pr-thanks-inline-link" href="mailto:resetmypattern@gmail.com">resetmypattern@gmail.com</a> with the email you used at checkout and roughly when you paid. I&rsquo;ll find your order and confirm.</p>
+        </div>
+    </section>
+</main>
+
+<footer id="footer" class="pr-footer-std">
+    <p>
+        &copy; 2026 Pattern Reset™
+        <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+            <a href="/">Get Clarity</a>
+        <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+            <a href="/letitout">Let It Out&trade;</a>
+        <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+            <a href="/legal">Legal</a>
+    </p>
+</footer>
+</div>
+
+<script src="js/personal-relationship-read-thanks.js?v=6"></script>
+<script>
+function openMenu() {
+    var overlay = document.getElementById('menuOverlay');
+    if (overlay) {
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+function closeMenu() {
+    var overlay = document.getElementById('menuOverlay');
+    if (overlay) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeMenu();
+});
+document.addEventListener('DOMContentLoaded', function () {
+    var overlay = document.getElementById('menuOverlay');
+    if (overlay) {
+        overlay.addEventListener('click', function (ev) {
+            if (ev.target === overlay) closeMenu();
+        });
+        overlay.querySelectorAll('nav a').forEach(function (a) {
+            a.addEventListener('click', closeMenu);
+        });
+    }
+});
+</script>
+</body>
+</html>

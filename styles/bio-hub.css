@@ -9,7 +9,10 @@
   --bio-accent: #f10000;
   --bio-accent-hover: #cc0000;
   --bio-radius: 1rem;
-  --bio-max: 26rem;
+  --bio-max: 30rem;
+  /* Match home.html newsletter (cream + red) */
+  --pr-red: #f10000;
+  --pr-cream: #fffcf1;
 }
 
 *,
@@ -36,7 +39,7 @@ body.page-bio-hub {
 .bio-hub {
   max-width: var(--bio-max);
   margin: 0 auto;
-  padding: 2rem 1.25rem 3rem;
+  padding: 2rem 0.75rem 3rem;
 }
 
 /* Profile first — no brand bar above */
@@ -68,15 +71,7 @@ body.page-bio-hub {
   text-align: center;
   font-size: 0.95rem;
   color: var(--bio-muted);
-  margin: 0 0 1rem;
-}
-
-.bio-hub__bio {
-  text-align: center;
-  font-size: 0.95rem;
-  color: var(--bio-muted);
-  margin: 0 0 1.75rem;
-  line-height: 1.55;
+  margin: 0 0 1.65rem;
 }
 
 .bio-hub__actions {
@@ -92,7 +87,7 @@ body.page-bio-hub {
   justify-content: center;
   gap: 0.5rem;
   width: 100%;
-  padding: 0.95rem 1.25rem;
+  padding: 0.95rem 1rem;
   border-radius: var(--bio-radius);
   font-family: "DM Sans", sans-serif;
   font-size: 0.95rem;
@@ -145,6 +140,14 @@ body.page-bio-hub {
   line-height: 1.25;
 }
 
+.bio-hub__btn-line--caps {
+  font-family: "Anton", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .bio-hub__btn-sub {
   display: block;
   font-size: 0.75rem;
@@ -155,6 +158,7 @@ body.page-bio-hub {
 }
 
 .bio-hub__btn--ghost .bio-hub__btn-sub {
+  max-width: 100%;
   color: rgba(255, 255, 255, 0.72);
 }
 
@@ -162,10 +166,10 @@ body.page-bio-hub {
   color: rgba(255, 255, 255, 0.88);
 }
 
-/* Quiz promo card — logo, headline, sub, CTA */
-.bio-hub__quiz-card {
+/* Weekly Reset — same structure as home.html #newsletter */
+.bio-hub__newsletter {
   position: relative;
-  padding: 1.35rem 1.2rem 1.25rem;
+  padding: 1.35rem 0.85rem 1.25rem;
   border-radius: 1.125rem;
   background: linear-gradient(165deg, #151515 0%, #0c0c0c 45%, #080808 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -176,64 +180,183 @@ body.page-bio-hub {
   overflow: hidden;
 }
 
-.bio-hub__quiz-card::before {
+.bio-hub__newsletter::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, var(--bio-accent), transparent);
+  background: linear-gradient(90deg, transparent, var(--pr-red), transparent);
   opacity: 0.85;
 }
 
-.bio-hub__quiz-card-logo {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 0.85rem;
-  color: var(--bio-accent);
-  filter: drop-shadow(0 0 12px rgba(241, 0, 0, 0.25));
+.bio-hub__pr-hero-waitlist {
+  text-align: center;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  padding: 0 0.1rem;
+  box-sizing: border-box;
 }
 
-.bio-hub__quiz-card-title {
+.bio-hub__pr-hero-waitlist .pr-email-kicker {
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--pr-red);
+  display: block;
+  margin: 0 auto clamp(0.55rem, 1.4vw, 0.85rem);
+  max-width: 100%;
+  line-height: 1.35;
+  text-wrap: balance;
+}
+
+.bio-hub__pr-hero-waitlist .pr-hero-waitlist-title {
   font-family: "Anton", sans-serif;
-  font-size: 1.25rem;
-  text-align: center;
-  margin: 0 0 0.85rem;
-  letter-spacing: 0.02em;
-  line-height: 1.25;
-  color: var(--bio-text);
+  font-weight: 400;
+  text-transform: uppercase;
+  color: var(--pr-cream);
+  max-width: 100%;
+  margin: 0 auto;
+  text-wrap: balance;
+  font-size: clamp(1.25rem, 3.2vw + 0.4rem, 1.75rem);
+  line-height: 1.1;
+  letter-spacing: 0.015em;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
-.bio-hub__quiz-card-ask-list {
-  list-style: none;
-  margin: 0 0 1rem;
-  padding: 0;
-}
-
-.bio-hub__quiz-card-ask-list li {
-  margin: 0 0 0.45rem;
-  font-size: 0.8rem;
-  line-height: 1.45;
-  color: rgba(255, 255, 255, 0.72);
-  text-align: center;
-}
-
-.bio-hub__quiz-card-ask-list li:last-child {
-  margin-bottom: 0;
-}
-
-.bio-hub__quiz-card-cta {
-  margin-top: 0.35rem;
-}
-
-.bio-hub__btn--primary.bio-hub__btn--stacked .bio-hub__btn-sub {
-  color: rgba(255, 255, 255, 0.92);
+.bio-hub__pr-hero-waitlist .pr-hero-waitlist-lead {
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(0.88rem, 1.8vw, 0.98rem);
   font-weight: 500;
+  font-style: normal;
+  color: rgba(255, 252, 241, 0.78);
+  line-height: 1.55;
+  margin: clamp(0.8rem, 2vw, 1.1rem) auto 0;
+  max-width: 100%;
+  padding: 0 0.15rem;
+  letter-spacing: 0.01em;
+  text-align: center;
+  text-wrap: pretty;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.bio-hub__btn--primary.bio-hub__btn--stacked:hover .bio-hub__btn-sub {
+.bio-hub__pr-hero-waitlist .pr-body {
+  color: rgba(255, 252, 241, 0.82);
+}
+
+.bio-hub__pr-hero-waitlist .pr-waitlist-lead__br {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .bio-hub__pr-hero-waitlist .pr-waitlist-lead__br {
+    display: block;
+  }
+}
+
+.bio-hub__pr-hero-waitlist .pr-email-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.7rem;
+  margin-top: clamp(1.25rem, 2.8vw, 1.75rem);
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bio-hub__pr-hero-waitlist .pr-email-input {
+  width: 100%;
+  min-width: 0;
+  min-height: 3rem;
+  box-sizing: border-box;
+  background: rgba(255, 252, 241, 0.08);
+  border: 1px solid rgba(255, 252, 241, 0.16);
+  border-radius: 10px;
+  padding: 0.95rem 1.1rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1rem;
+  color: var(--pr-cream);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.bio-hub__pr-hero-waitlist .pr-email-input::placeholder {
+  color: rgba(255, 252, 241, 0.35);
+}
+
+.bio-hub__pr-hero-waitlist .pr-email-input:focus {
+  border-color: var(--pr-red);
+}
+
+.bio-hub__pr-hero-waitlist .pr-home-cta {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 3.1rem;
+  background: var(--pr-red);
   color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 1.05rem 1.5rem;
+  font-family: "Anton", sans-serif;
+  font-size: 1.02rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.bio-hub__pr-hero-waitlist .pr-home-cta:hover {
+  background: #cc0000;
+  transform: translateY(-1px);
+}
+
+.bio-hub__pr-hero-waitlist .pr-home-cta:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bio-hub__pr-hero-waitlist .pr-home-cta:hover {
+    transform: none;
+  }
+}
+
+.bio-hub__pr-hero-waitlist .pr-home-micro {
+  font-family: "DM Sans", sans-serif;
+  font-size: clamp(0.72rem, 1vw, 0.82rem);
+  font-weight: 400;
+  color: rgba(255, 252, 241, 0.45);
+  margin: clamp(0.65rem, 1.5vw, 0.85rem) auto 0;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  max-width: min(26rem, 100%);
+}
+
+.bio-hub__pr-hero-waitlist .pr-email-success {
+  display: none;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.95rem;
+  color: var(--pr-cream);
+  margin-top: 1.25rem;
+  padding: 0.9rem 1.15rem;
+  background: rgba(241, 0, 0, 0.1);
+  border: 1px solid rgba(241, 0, 0, 0.3);
+  border-radius: 8px;
+  text-align: left;
 }
 
 .bio-hub__social {

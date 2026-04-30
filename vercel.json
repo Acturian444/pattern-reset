@@ -20,6 +20,62 @@
       "destination": "/philosophy.html"
     },
     {
+      "source": "/home",
+      "destination": "/home.html"
+    },
+    {
+      "source": "/home/",
+      "destination": "/home.html"
+    },
+    {
+      "source": "/letitout",
+      "destination": "/letitout.html"
+    },
+    {
+      "source": "/letitout/",
+      "destination": "/letitout.html"
+    },
+    {
+      "source": "/patterns",
+      "destination": "/patterns.html"
+    },
+    {
+      "source": "/patterns/",
+      "destination": "/patterns.html"
+    },
+    {
+      "source": "/pattern-theory",
+      "destination": "/pattern-theory.html"
+    },
+    {
+      "source": "/pattern-theory/",
+      "destination": "/pattern-theory.html"
+    },
+    {
+      "source": "/product/breakup-course",
+      "destination": "/product/breakup-course.html"
+    },
+    {
+      "source": "/product/breakup-course/",
+      "destination": "/product/breakup-course.html"
+    },
+    {
+      "source": "/course/breakup-course",
+      "destination": "/course/breakup-course.html"
+    },
+    {
+      "source": "/course/breakup-course/",
+      "destination": "/course/breakup-course.html"
+    },
+    {
+      "source": "/personal-relationship-read",
+      "destination": "/personal-relationship-read.html"
+    },
+    {
+      "source": "/personal-relationship-read/",
+      "destination": "/personal-relationship-read.html"
+    },
+    {
       "source": "/create-checkout-session",
       "destination": "/server.js"
     },
@@ -28,7 +84,19 @@
       "destination": "/server.js"
     },
     {
+      "source": "/api/stripe-client-config",
+      "destination": "/server.js"
+    },
+    {
+      "source": "/api/stripe-webhook",
+      "destination": "/server.js"
+    },
+    {
       "source": "/api/common-ground-google-form",
+      "destination": "/server.js"
+    },
+    {
+      "source": "/api/quiz-google-form-sync",
       "destination": "/server.js"
     }
   ],
@@ -67,28 +135,23 @@
       "permanent": true
     },
     {
-      "source": "/home",
-      "destination": "/home.html",
-      "permanent": false
-    },
-    {
-      "source": "/home/",
-      "destination": "/home.html",
-      "permanent": false
+      "source": "/home.html",
+      "destination": "/home",
+      "permanent": true
     },
     {
       "source": "/home-v2",
-      "destination": "/home.html",
+      "destination": "/home",
       "permanent": true
     },
     {
       "source": "/home-v2/",
-      "destination": "/home.html",
+      "destination": "/home",
       "permanent": true
     },
     {
       "source": "/home-v2.html",
-      "destination": "/home.html",
+      "destination": "/home",
       "permanent": true
     },
     {
@@ -127,49 +190,34 @@
       "permanent": false
     },
     {
-      "source": "/product/breakup-course",
-      "destination": "/",
-      "permanent": false
+      "source": "/patterns.html",
+      "destination": "/patterns",
+      "permanent": true
     },
     {
-      "source": "/product/breakup-course.html",
-      "destination": "/",
-      "permanent": false
+      "source": "/pattern-theory.html",
+      "destination": "/pattern-theory",
+      "permanent": true
     },
     {
-      "source": "/product/breakup-course/",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/course/breakup-course",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/course/breakup-course.html",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/course/breakup-course/",
-      "destination": "/",
-      "permanent": false
-    },
-    {
-      "source": "/letitout",
-      "destination": "/",
-      "permanent": false
+      "source": "/personal-relationship-read.html",
+      "destination": "/personal-relationship-read",
+      "permanent": true
     },
     {
       "source": "/letitout.html",
-      "destination": "/",
-      "permanent": false
+      "destination": "/letitout",
+      "permanent": true
     },
     {
-      "source": "/letitout/",
-      "destination": "/",
-      "permanent": false
+      "source": "/product/breakup-course.html",
+      "destination": "/product/breakup-course",
+      "permanent": true
+    },
+    {
+      "source": "/course/breakup-course.html",
+      "destination": "/course/breakup-course",
+      "permanent": true
     }
   ]
 } 

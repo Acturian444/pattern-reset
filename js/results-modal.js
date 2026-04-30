@@ -72,6 +72,19 @@
             alert('Please complete the quiz first to view your results.');
             return false;
         }
+
+        // $19 tier hard-hidden 2026-04. The full results modal WAS the $19 product,
+        // so it must not be accessible for free. Any call path into this modal for a
+        // relationship-dynamic quiz now routes to the paywall ($59 / $197).
+        var patternKeyGate = state.patternKey || null;
+        var isRelationshipDynamicQuiz = !!(patternKeyGate && window.relationshipPatterns && window.relationshipPatterns[patternKeyGate]);
+        if (isRelationshipDynamicQuiz) {
+            if (typeof window.showClarityPaywallModal === 'function') {
+                window.showClarityPaywallModal();
+                return false;
+            }
+        }
+
         
         // Note: We allow viewing results even if form not submitted
         // The form submission is optional for viewing results
@@ -416,6 +429,18 @@
                 const totalScore = state.totalScore || 0;
                 const answers = state.answers || [];
                 const quizData = window.quizData || [];
+
+                function derivePersonalizationFromAnswers(ans, qd) {
+                    const out = { relationshipStatus: null, currentPain: null, biggestFear: null };
+                    if (!qd || !qd.length || !ans || !ans.length) return out;
+                    var q2 = qd[1] && qd[1].options && ans[1] !== undefined ? qd[1].options[ans[1]] : null;
+                    out.currentPain = (q2 && q2.painKey) ? q2.painKey : null;
+                    if (q2 && q2.painKey === 'situationship') out.relationshipStatus = 'situationship';
+                    var qDec = qd[8] && qd[8].options && ans[8] !== undefined ? qd[8].options[ans[8]] : null;
+                    out.biggestFear = (qDec && qDec.fearKey) ? qDec.fearKey : null;
+                    return out;
+                }
+                const derivedPerson = derivePersonalizationFromAnswers(answers, quizData);
                 
                 // Get pattern key
                 let patternKey = state.patternKey || null;
@@ -517,9 +542,9 @@
                 
                 // Get personalization data
                 const birthDate = state.birthDate || null;
-                const relationshipStatus = state.relationshipStatus || null;
-                const currentPain = state.currentPain || null;
-                const biggestFear = state.biggestFear || null;
+                const relationshipStatus = state.relationshipStatus || derivedPerson.relationshipStatus || null;
+                const currentPain = state.currentPain || derivedPerson.currentPain || null;
+                const biggestFear = state.biggestFear || derivedPerson.biggestFear || null;
                 const currentPainOtherText = state.currentPainOtherText || null;
                 const biggestFearOtherText = state.biggestFearOtherText || null;
                 
@@ -551,6 +576,10 @@
                     .sort((a, b) => b[1] - a[1])
                     .map(([driver, percentage]) => [driver, percentage]);
                 
+                // $19 breakdown renderer (ResultsBreakdown) hard-hidden 2026-04.
+                // Code preserved at js/results-breakdown.js for future reuse, not loaded.
+                // All quiz types now render via ResultsRenderer.renderFullResults below.
+
                 // Use ResultsRenderer if available, otherwise render directly
                 if (window.ResultsRenderer && window.ResultsRenderer.renderFullResults) {
                     try {

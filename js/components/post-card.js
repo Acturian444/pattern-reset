@@ -130,7 +130,10 @@ class PostCard {
                 cityLine.textContent = `Anonymous · ${timeString}`;
             }
         }
-        contentArea.appendChild(cityLine);
+
+        const footerStack = document.createElement('div');
+        footerStack.className = 'post-card-footer-stack';
+        footerStack.appendChild(cityLine);
 
         const meta = document.createElement('div');
         meta.className = 'post-meta';
@@ -235,7 +238,8 @@ class PostCard {
         }
         meta.appendChild(actions);
 
-        contentArea.appendChild(meta);
+        footerStack.appendChild(meta);
+        contentArea.appendChild(footerStack);
 
         card.appendChild(contentArea);
 
@@ -494,7 +498,9 @@ class PostCard {
     static showSuccessMessage() {
         const message = document.createElement('div');
         message.className = 'reply-success-message';
-        message.innerHTML = 'Your love was sent anonymously.<br>You won\'t be able to see it again.';
+        message.innerHTML =
+            '<span class="reply-success-message__title">Your message was sent.<br>Someone will feel this.</span>' +
+            '<span class="reply-success-message__sub">Sent anonymously.</span>';
         document.body.appendChild(message);
         setTimeout(() => message.classList.add('visible'), 10);
         setTimeout(() => {

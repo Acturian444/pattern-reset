@@ -9,5 +9,12 @@ const firebaseConfig = {
     measurementId: "G-ZEZQRBTLR7"  // pattern-reset property @ analytics.google.com
 };
 
+/**
+ * Optional: App Check (reCAPTCHA v3) **site key** from Firebase Console → App Check → Web.
+ * Public; restrict by domain in Google Cloud. Leave empty until you register the web app there.
+ * When set, firebase.js activates App Check; send `X-Firebase-AppCheck` from the client to your API.
+ */
+window.firebaseAppCheckSiteKey = '';
+
 // Export for use in other modules
-window.firebaseConfig = firebaseConfig; 
+window.firebaseConfig = firebaseConfig;

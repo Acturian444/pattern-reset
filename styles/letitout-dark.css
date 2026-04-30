@@ -244,6 +244,17 @@ body.page-letitout.dark-mode .copyright a:visited {
     color: #e02020;
 }
 
+/* --- Wall empty CTA --- */
+.dark-mode .wall-empty-cta-btn {
+    background: #f10000;
+    color: #fff;
+}
+
+.dark-mode .wall-empty-cta-btn:hover,
+.dark-mode .wall-empty-cta-btn:focus {
+    background: #ff2222;
+}
+
 /* --- Main Content: Post Cards (Wall tab) --- */
 .dark-mode .post-card-container {
     background-color: transparent;
@@ -255,9 +266,9 @@ body.page-letitout.dark-mode .copyright a:visited {
     color: #ffffff;
 }
 .dark-mode .post-card .post-content-area .emotion-tag.emotion-tag-small {
-    background-color: #f10000 !important;
-    color: #ffffff !important;
-    border-color: transparent !important;
+    background-color: #2a2a2a !important;
+    color: #f0f0f0 !important;
+    border: 1px solid #444 !important;
 }
 .dark-mode .post-card:hover,
 .dark-mode .post-card:focus {
@@ -391,6 +402,10 @@ DARK MODE - FIXES & ADDITIONS
     opacity: 1;
 }
 
+.dark-mode .letitout-form .letitout-emotion-error {
+    color: #ff8a8a;
+}
+
 .dark-mode .letitout-form .char-counter {
     color: #888;
 }
@@ -421,33 +436,33 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 
-/* --- Emotion, Situation & City Tags --- */
+/* --- Emotion, Situation & City Tags (same grey pill as light) --- */
 .dark-mode .emotion-tag,
 .dark-mode .situation-tag,
 .dark-mode .city-tag {
-    background-color: #3a3a3a;
-    border-color: #555;
-    color: #f10000;
+    background-color: var(--letitout-pill-tag-bg, #e8e8e8);
+    border-color: var(--letitout-pill-tag-border, #cfcfcf);
+    color: var(--letitout-pill-tag-text, #141414);
 }
 .dark-mode .emotion-tag.selected {
-    background: #f10000;
-    color: #fff;
-    border-color: #f10000;
+    background: var(--letitout-pill-tag-selected-bg, #d2d2d2);
+    color: var(--letitout-pill-tag-text, #141414);
+    border-color: var(--letitout-pill-tag-selected-border, #9a9a9a);
 }
 
 .dark-mode .letitout-selected-tags .emotion-tag,
 .dark-mode .letitout-selected-situation .situation-tag,
 .dark-mode .letitout-selected-city .city-tag {
-    background-color: #f10000;
-    color: #fff;
-    border-color: #f10000;
+    background-color: var(--letitout-pill-tag-bg, #e8e8e8);
+    color: var(--letitout-pill-tag-text, #141414);
+    border-color: var(--letitout-pill-tag-border, #cfcfcf);
 }
 
 .dark-mode .letitout-selected-tags .emotion-tag .remove-tag,
 .dark-mode .letitout-selected-situation .situation-tag .remove-tag,
 .dark-mode .letitout-selected-city .city-tag .remove-tag {
-    color: #fff;
-    opacity: 0.7;
+    color: var(--letitout-pill-tag-remove, #5a5a5a);
+    opacity: 0.85;
 }
 
 .dark-mode .letitout-selected-tags .emotion-tag .remove-tag:hover,
@@ -467,17 +482,19 @@ DARK MODE - FIXES & ADDITIONS
     border-color: #666;
 }
 .dark-mode .felt-it-btn.felt {
-    background-color: #f10000;
-    border-color: #f10000;
-    color: #fff;
+    background-color: rgba(241, 0, 0, 0.2);
+    border-color: var(--letitout-primary, #f10000);
+    color: #ffffff;
 }
 .dark-mode .share-love-btn {
-    background-color: #3a3a3a;
-    color: #ffffff;
-    border: 1px solid #555;
+    background-color: transparent;
+    color: var(--letitout-primary, #f10000);
+    border: 1px solid var(--letitout-primary, #f10000);
 }
 .dark-mode .share-love-btn:hover {
-    background-color: #4a4a4a;
+    background-color: rgba(241, 0, 0, 0.12);
+    color: var(--letitout-primary, #f10000);
+    border-color: var(--letitout-primary, #f10000);
 }
 .dark-mode .letitout-submit {
     background-color: #f10000;
@@ -521,6 +538,62 @@ DARK MODE - FIXES & ADDITIONS
     color: #ffffff;
     border-color: #333;
 }
+
+.dark-mode .wall-about-sentence-btn {
+    color: #e8e8e8;
+}
+
+.dark-mode .wall-about-sentence-btn:hover,
+.dark-mode .wall-about-sentence-btn:focus {
+    background: #252525;
+}
+
+.dark-mode .wall-about-chip-head-row:hover,
+.dark-mode .wall-about-chip-head-row:focus {
+    background: #252525;
+}
+
+.dark-mode .wall-about-chip-heading {
+    color: #a0a0a0;
+}
+
+.dark-mode .wall-about-default {
+    color: #e8e8e8;
+}
+
+.dark-mode .wall-about-inline-label {
+    color: #a0a0a0;
+}
+
+.dark-mode .wall-about-brand {
+    color: var(--letitout-primary, #f10000);
+}
+
+.dark-mode .wall-about-default-suffix {
+    color: #e8e8e8;
+}
+
+.dark-mode .wall-about-inline-collapse:hover,
+.dark-mode .wall-about-inline-collapse:focus {
+    background: #252525;
+}
+
+.dark-mode .wall-about-chevron {
+    color: #f10000;
+}
+
+.dark-mode .wall-filter-chip {
+    background: #1a1a1a;
+    border-color: #444;
+    color: #e8e8e8;
+}
+
+.dark-mode .wall-filter-chip:hover,
+.dark-mode .wall-filter-chip:focus {
+    background: #252525;
+    border-color: #666;
+}
+
 .dark-mode .wall-search-input {
     background-color: #1a1a1a;
     color: #ffffff;
@@ -614,6 +687,42 @@ DARK MODE - FIXES & ADDITIONS
     color: #a0a0a0;
 }
 
+.dark-mode .wall-filter-modal .letitout-emotion-modal-footer.wall-filter-modal-footer {
+    background-color: #1a1a1a;
+    border-top-color: #333;
+}
+
+/* Explore stories modal: dark pills + brand red when selected (overrides global light-grey emotion pills) */
+.dark-mode .wall-filter-modal .emotion-subtag:not(.selected) {
+    background-color: #2a2a2a !important;
+    color: #f0f0f0 !important;
+    border-color: #444 !important;
+}
+
+.dark-mode .wall-filter-modal .emotion-subtag:hover:not(.selected):not(.wall-unified-filter-tag--max) {
+    background-color: #363636 !important;
+    border-color: #555 !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .wall-filter-modal .emotion-subtag.selected,
+.dark-mode .wall-filter-modal .emotion-subtag.selected:hover {
+    background-color: var(--letitout-primary, #f10000) !important;
+    color: #ffffff !important;
+    border-color: var(--letitout-primary, #f10000) !important;
+}
+
+.dark-mode .wall-filter-modal .emotion-subtag.selected .emotion-subtag-count {
+    color: rgba(255, 255, 255, 0.92) !important;
+    opacity: 1;
+}
+
+.dark-mode .wall-filter-modal button.emotion-subtag.wall-unified-filter-tag--max:not(.selected) {
+    background-color: #222222 !important;
+    color: #6a6a6a !important;
+    border-color: #383838 !important;
+}
+
 .dark-mode .letitout-emotion-modal-close,
 .dark-mode .letitout-situation-modal-close,
 .dark-mode .letitout-city-modal-close {
@@ -650,32 +759,95 @@ DARK MODE - FIXES & ADDITIONS
 .dark-mode .situation-option-btn,
 .dark-mode .filter-situation-btn,
 .dark-mode .city-suggestion-btn {
-    background-color: #3a3a3a;
-    color: #ffffff;
-    border-color: #555;
+    background-color: var(--letitout-pill-tag-bg, #e8e8e8);
+    color: var(--letitout-pill-tag-text, #141414);
+    border-color: var(--letitout-pill-tag-border, #cfcfcf);
 }
 .dark-mode .situation-option-btn.selected,
 .dark-mode .filter-situation-btn.selected,
 .dark-mode .situation-option-btn:hover,
 .dark-mode .filter-situation-btn:hover {
-    background-color: #f10000;
-    color: #fff;
-    border-color: #f10000;
+    background-color: var(--letitout-pill-tag-selected-bg, #d2d2d2);
+    color: var(--letitout-pill-tag-text, #141414);
+    border-color: var(--letitout-pill-tag-selected-border, #9a9a9a);
 }
 
 .dark-mode .emotion-subtag.selected,
 .dark-mode .emotion-subtag:hover,
 .dark-mode .city-suggestion-btn.selected,
 .dark-mode .city-suggestion-btn:hover {
-    background-color: #f10000;
-    color: #fff;
-    border-color: #f10000;
+    background-color: var(--letitout-pill-tag-selected-bg, #d2d2d2);
+    color: var(--letitout-pill-tag-text, #141414);
+    border-color: var(--letitout-pill-tag-selected-border, #9a9a9a);
 }
 .dark-mode .emotion-subtag .emotion-subtag-count {
     opacity: 0.85;
 }
 .dark-mode .emotion-subtag.selected .emotion-subtag-count {
     opacity: 0.95;
+}
+
+/* Write tab modals (feelings / situation / city overlays): dark pills + brand red when selected */
+.dark-mode .letitout-emotion-modal-overlay .emotion-subtag:not(.selected) {
+    background-color: #2a2a2a !important;
+    color: #f0f0f0 !important;
+    border-color: #444 !important;
+}
+
+.dark-mode .letitout-emotion-modal-overlay .emotion-subtag:hover:not(.selected) {
+    background-color: #363636 !important;
+    border-color: #555 !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .letitout-emotion-modal-overlay .emotion-subtag.selected,
+.dark-mode .letitout-emotion-modal-overlay .emotion-subtag.selected:hover {
+    background-color: var(--letitout-primary, #f10000) !important;
+    color: #ffffff !important;
+    border-color: var(--letitout-primary, #f10000) !important;
+}
+
+.dark-mode .letitout-emotion-modal-overlay .emotion-subtag.selected .emotion-subtag-count {
+    color: rgba(255, 255, 255, 0.92) !important;
+    opacity: 1;
+}
+
+.dark-mode .letitout-situation-modal-overlay .situation-option-btn:not(.selected) {
+    background-color: #2a2a2a !important;
+    color: #f0f0f0 !important;
+    border-color: #444 !important;
+}
+
+.dark-mode .letitout-situation-modal-overlay .situation-option-btn:hover:not(.selected) {
+    background-color: #363636 !important;
+    border-color: #555 !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .letitout-situation-modal-overlay .situation-option-btn.selected,
+.dark-mode .letitout-situation-modal-overlay .situation-option-btn.selected:hover {
+    background-color: var(--letitout-primary, #f10000) !important;
+    color: #ffffff !important;
+    border-color: var(--letitout-primary, #f10000) !important;
+}
+
+.dark-mode .letitout-city-modal-overlay .city-suggestion-btn:not(.selected) {
+    background-color: #2a2a2a !important;
+    color: #f0f0f0 !important;
+    border-color: #444 !important;
+}
+
+.dark-mode .letitout-city-modal-overlay .city-suggestion-btn:hover:not(.selected) {
+    background-color: #363636 !important;
+    border-color: #555 !important;
+    color: #ffffff !important;
+}
+
+.dark-mode .letitout-city-modal-overlay .city-suggestion-btn.selected,
+.dark-mode .letitout-city-modal-overlay .city-suggestion-btn.selected:hover {
+    background-color: var(--letitout-primary, #f10000) !important;
+    color: #ffffff !important;
+    border-color: var(--letitout-primary, #f10000) !important;
 }
 
 .dark-mode .letitout-emotion-modal-footer,
@@ -700,9 +872,9 @@ DARK MODE - FIXES & ADDITIONS
 }
 /* Post card - situation pill: outline style, matches emotion height, distinct but cohesive */
 .dark-mode .post-emotion-tags .situation-tag.situation-tag-small {
-    background: rgba(241, 0, 0, 0.2);
-    border-color: rgba(241, 0, 0, 0.6);
-    color: #ffffff;
+    background: #2a2a2a;
+    border-color: #444;
+    color: #f0f0f0;
 }
 
 .dark-mode .letitout-emotion-modal-btn.cancel,
@@ -748,7 +920,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 .dark-mode .letitout-my-posts-modal {
     background-color: #0a0a0a;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    box-shadow: none;
 }
 .dark-mode .letitout-my-posts-title,
 .dark-mode .letitout-my-posts-content .empty-state {
@@ -770,10 +942,12 @@ DARK MODE - FIXES & ADDITIONS
     color: #ffffff;
 }
 .dark-mode .my-post-card .emotion-tag,
-.dark-mode .original-post-card .emotion-tag {
-    background-color: #f10000;
-    color: #fff;
-    border-color: #f10000;
+.dark-mode .original-post-card .emotion-tag,
+.dark-mode .my-post-card .situation-tag,
+.dark-mode .original-post-card .situation-tag {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    border-color: #444;
 }
 .dark-mode .my-post-reply-line {
     background-color: #3a3a3a;
@@ -823,14 +997,19 @@ DARK MODE - FIXES & ADDITIONS
 
 .dark-mode .letitout-intro-lede {
     color: #f0f0f0;
+    font-weight: 700;
 }
 
-.dark-mode .letitout-intro-desc {
+.dark-mode .letitout-intro-section-lead {
+    color: #e4e4e4;
+}
+
+.dark-mode .letitout-intro-copy {
     color: #c8c8c8;
 }
 
-.dark-mode .letitout-intro-steps {
-    color: #eaeaea;
+.dark-mode .letitout-intro-copy strong {
+    color: #f0f0f0;
 }
 
 .dark-mode .letitout-intro-age {
@@ -1013,32 +1192,40 @@ DARK MODE - FIXES & ADDITIONS
     color: #ffffff;
     border: 1px solid #555;
 }
-.dark-mode .post-card .felt-it-btn.felt,
-.dark-mode .post-card .felt-it-btn:hover {
+.dark-mode .post-card .felt-it-btn:hover,
+.dark-mode .post-card .felt-it-btn:focus {
     background-color: #4a4a4a;
     color: #ffffff;
+    border-color: var(--letitout-primary, #f10000);
 }
 .dark-mode .post-card .felt-it-btn svg {
     stroke: #ffffff;
 }
-.dark-mode .post-card .felt-it-btn.felt svg,
-.dark-mode .post-card .felt-it-btn:hover svg {
-    stroke: #ffffff;
+.dark-mode .post-card .felt-it-btn:hover svg,
+.dark-mode .post-card .felt-it-btn:focus svg {
+    stroke: var(--letitout-primary, #f10000);
+}
+
+.dark-mode .post-card .felt-it-btn.felt {
+    background-color: rgba(241, 0, 0, 0.22);
+    border-color: var(--letitout-primary, #f10000);
+    color: #ffffff;
 }
 
 .dark-mode .post-card .felt-it-btn.felt svg {
-    stroke: #f10000;
-    fill: #f10000;
+    stroke: var(--letitout-primary, #f10000);
+    fill: var(--letitout-primary, #f10000);
 }
 
 .dark-mode .post-card .share-love-btn {
-    background-color: #f10000;
-    color: #ffffff;
-    border: 1px solid #f10000;
+    background-color: transparent;
+    color: var(--letitout-primary, #f10000);
+    border: 1px solid var(--letitout-primary, #f10000);
 }
 .dark-mode .post-card .share-love-btn:hover {
-    background-color: #cc0000;
-    border-color: #cc0000;
+    background-color: rgba(241, 0, 0, 0.12);
+    border-color: var(--letitout-primary, #f10000);
+    color: var(--letitout-primary, #f10000);
 }
 .dark-mode .post-card .share-love-btn.sent {
     background-color: #1a1a1a !important;
@@ -1402,7 +1589,60 @@ DARK MODE - FIXES & ADDITIONS
   color: #fff !important;
   border-color: #444 !important;
   outline: none !important;
-} 
+}
+
+/* Mobile form pills: default + hover like desktop (no text jump — layout locked) */
+@media (max-width: 600px) {
+  .dark-mode .letitout-form .emotion-btn-row .letitout-emotion-btn,
+  .dark-mode .letitout-form .emotion-btn-row .letitout-situation-btn,
+  .dark-mode .letitout-form .emotion-btn-row .letitout-city-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    font-size: 0.68rem !important;
+    line-height: 1.2 !important;
+    padding: 0.5rem 0.2rem !important;
+    font-weight: 500 !important;
+    background: #3a3a3a !important;
+    color: #e0e0e0 !important;
+    border: 1.5px solid #555 !important;
+    border-radius: 6px !important;
+    outline: none !important;
+  }
+
+  /* Match desktop dark hover / focus */
+  .dark-mode .letitout-form .emotion-btn-row .letitout-emotion-btn:hover,
+  .dark-mode .letitout-form .emotion-btn-row .letitout-emotion-btn:focus,
+  .dark-mode .letitout-form .emotion-btn-row .letitout-situation-btn:hover,
+  .dark-mode .letitout-form .emotion-btn-row .letitout-situation-btn:focus,
+  .dark-mode .letitout-form .emotion-btn-row .letitout-city-btn:hover,
+  .dark-mode .letitout-form .emotion-btn-row .letitout-city-btn:focus {
+    font-size: 0.68rem !important;
+    line-height: 1.2 !important;
+    padding: 0.5rem 0.2rem !important;
+    flex: 1 1 0 !important;
+    flex-grow: 1 !important;
+    min-width: 0 !important;
+    background: #232325 !important;
+    color: #fff !important;
+    border: 1.5px solid #444 !important;
+  }
+
+  .dark-mode .letitout-form .emotion-btn-row .letitout-emotion-btn:active,
+  .dark-mode .letitout-form .emotion-btn-row .letitout-situation-btn:active,
+  .dark-mode .letitout-form .emotion-btn-row .letitout-city-btn:active {
+    font-size: 0.68rem !important;
+    line-height: 1.2 !important;
+    padding: 0.5rem 0.2rem !important;
+    flex: 1 1 0 !important;
+    flex-grow: 1 !important;
+    min-width: 0 !important;
+    background: #3a3a3a !important;
+    color: #e0e0e0 !important;
+    border: 1.5px solid #555 !important;
+  }
+}
 
 /* Wall Controls - Sort by Filter Button Dark Mode Fix */
 .dark-mode .wall-sort-trigger {
@@ -1541,6 +1781,10 @@ DARK MODE - FIXES & ADDITIONS
     background: #3a3a3a !important;
 }
 
+.dark-mode .reply-success-message__sub {
+    color: rgba(255, 255, 255, 0.68) !important;
+}
+
 /* Mobile Inbox Button - dark mode (header top right) */
 @media (max-width: 600px) {
     .dark-mode .letitout-mobile-inbox-btn i {
@@ -1603,19 +1847,31 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .letitout-about-hero.letitout-about-hero--brand {
-    color: #ff6b6b;
+    color: #f10000;
 }
 
 .dark-mode .letitout-about-copy {
     color: #d0d0d0;
 }
 
-.dark-mode .letitout-about-copy strong {
-    color: #fafafa;
-}
-
 .dark-mode .letitout-about-foot.letitout-about-foot--human {
     color: #9a9a9a;
+}
+
+.dark-mode .letitout-about-copy strong {
+    color: #f0f0f0;
+}
+
+.dark-mode .letitout-about-closer {
+    border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+.dark-mode .letitout-about-closer-text {
+    color: #c8c8c8;
+}
+
+.dark-mode .letitout-about-closer-text strong {
+    color: #ff6b6b;
 }
 
 .dark-mode .letitout-about-purpose-label,
