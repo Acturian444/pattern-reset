@@ -202,14 +202,15 @@
 <script src="js/services/google-form-sync.js?v=2"></script>
 <script>
 /**
- * Publishable key (public, safe in HTML). MUST match mode + account of STRIPE_SECRET_KEY (test pk with sk_test, live pk with sk_live).
- * Local test (Pattern Reset): pk_test below. Before production deploy: use pk_live for same account OR rely on Vercel STRIPE_PUBLISHABLE_KEY only and set this to ''.
+ * Publishable key (public, safe in HTML). MUST match STRIPE_SECRET_KEY account + mode (pk_live + sk_live).
+ * Prefer STRIPE_PUBLISHABLE_KEY on the server (/api/stripe-client-config); this is fallback if that fails.
+ * For local testing only, temporarily use pk_test + sk_test in .env — never mix live pk with test sk.
  */
-window.PR_READ_STRIPE_PUBLIC_KEY = 'pk_test_51STVhKBiV6S6xuimvhfAOIyykqvXHB5KW06rjVOX65SD65OE2t9ITlA84TGJDEFEG6HpVdyV8QiYh9sP48GVYHvn009KDjyKjz';
+window.PR_READ_STRIPE_PUBLIC_KEY = 'pk_live_51STVhKBiV6S6xuim5vWHE56AhQqgIpqlP9VNvQ06hHBz4Ths2DGUHc0dYfNHBYaG4bpJObKJNtHA7ahxmFkEN0Av00cVYGN8ye';
 </script>
 <script src="js/quiz/quiz-data.js"></script>
 <script src="js/quiz/pattern-determiner.js"></script>
-<script src="js/personal-relationship-read.js?v=15"></script>
+<script src="js/personal-relationship-read.js?v=16"></script>
 <script>
 function openMenu() {
     var overlay = document.getElementById('menuOverlay');

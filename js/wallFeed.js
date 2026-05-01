@@ -1054,31 +1054,50 @@ class WallFeed {
         wrap.className = 'wall-empty-message';
         wrap.setAttribute('role', 'status');
 
+        const searchTrimmed = (this.currentSearch || '').trim();
+        const isAllStoriesView =
+            this.wallFilterTags.length === 0 &&
+            this.currentCity === 'Global' &&
+            !searchTrimmed;
+
+        let titleText;
+        let subtitleText;
+        if (isAllStoriesView) {
+            titleText = "Nothing here yet—that's okay.";
+            subtitleText =
+                "If something's on your mind, you can be the first to share it. It's anonymous.";
+        } else {
+            titleText = 'Nothing matches right now.';
+            subtitleText =
+                'Try different filters or search—or start writing with what you had in mind.';
+        }
+
         const p1 = document.createElement('p');
         p1.className = 'wall-empty-title';
-        p1.textContent = "No one's shared this yet.";
+        p1.textContent = titleText;
 
         const p2 = document.createElement('p');
         p2.className = 'wall-empty-subtitle';
-        p2.textContent = 'Be the first to write about.';
+        p2.textContent = subtitleText;
 
         wrap.appendChild(p1);
         wrap.appendChild(p2);
 
-        // CTA only when filters are set — tags stay in About bar; preset still ships on click.
-        if (this.wallFilterTags.length > 0) {
-            const writeBlock = document.createElement('div');
-            writeBlock.className = 'wall-empty-write-block';
+        const writeBlock = document.createElement('div');
+        writeBlock.className = 'wall-empty-write-block';
 
-            const cta = document.createElement('button');
-            cta.type = 'button';
-            cta.className = 'wall-empty-cta-btn';
-            cta.textContent = 'Start writing';
-            cta.onclick = () => this.goToWriteTabWithPreset();
+        const cta = document.createElement('button');
+        cta.type = 'button';
+        cta.className = 'wall-empty-cta-btn';
+        cta.textContent = 'Let it out';
+        cta.setAttribute(
+            'aria-label',
+            'Go to Write and share your story'
+        );
+        cta.onclick = () => this.goToWriteTabWithPreset();
 
-            writeBlock.appendChild(cta);
-            wrap.appendChild(writeBlock);
-        }
+        writeBlock.appendChild(cta);
+        wrap.appendChild(writeBlock);
 
         return wrap;
     }
