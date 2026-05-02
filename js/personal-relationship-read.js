@@ -408,13 +408,14 @@
         if (submitBtn) {
             submitBtn.disabled = true;
             submitBtn.setAttribute('data-prev-label', submitBtn.textContent);
-            submitBtn.textContent = 'Redirecting…';
+            // Avoid "redirecting" — sounds broken/technical. Handoff to Stripe Checkout.
+            submitBtn.textContent = 'Opening secure checkout…';
         }
 
         function resetSubmitBtn() {
             if (submitBtn) {
                 submitBtn.disabled = false;
-                submitBtn.textContent = submitBtn.getAttribute('data-prev-label') || 'Get my answer';
+                submitBtn.textContent = submitBtn.getAttribute('data-prev-label') || 'Get my answer — $59';
             }
         }
 

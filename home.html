@@ -158,7 +158,7 @@
     @media (max-width: 640px) {
         .pr-hero-waitlist { padding: 0 0.5rem; }
         .pr-hero-waitlist .pr-email-form { max-width: min(24.5rem, 94%); gap: 0.75rem; margin-top: 1.5rem; }
-        .pr-email-success { max-width: min(24.5rem, 94%) !important; box-sizing: border-box; }
+        .pr-email-success { max-width: min(22rem, 94%) !important; box-sizing: border-box; }
         .pr-email-input { font-size: 16px; min-height: 3.25rem; padding: 0.85rem 1rem; border-radius: 10px; }
     }
     .pr-email-input::placeholder { color: rgba(255,252,241,0.35); }
@@ -170,7 +170,26 @@
     .pr-home-cta:hover { background: #cc0000; transform: translateY(-1px); }
     .pr-home-cta:disabled { opacity: 0.6; cursor: not-allowed; }
     @media (prefers-reduced-motion: reduce) { .pr-home-cta:hover { transform: none; } }
-    .pr-email-success { display: none; font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--pr-cream); margin-top: 1.5rem; padding: 1rem 1.5rem; background: rgba(241,0,0,0.1); border: 1px solid rgba(241,0,0,0.3); border-radius: 8px; }
+    /* Success: minimal pill — centered, matches input glass tone (no heavy red fill) */
+    .pr-email-success {
+        display: none;
+        box-sizing: border-box;
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.9rem, 2.8vw, 0.98rem);
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        line-height: 1.45;
+        color: rgba(255, 252, 241, 0.92);
+        text-align: center;
+        text-wrap: balance;
+        margin: 1.35rem auto 0;
+        padding: 0.65rem 1rem;
+        width: fit-content;
+        max-width: min(22rem, 100%);
+        background: rgba(255, 252, 241, 0.06);
+        border: 1px solid rgba(255, 252, 241, 0.14);
+        border-radius: 999px;
+    }
     .pr-hero-movement { min-height: 0; }
     .pr-hero-movement .pr-hero-inner { display: block; width: 100%; }
     .pr-hero .pr-hero-spiral-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; }

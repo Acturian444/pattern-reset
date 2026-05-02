@@ -15,6 +15,14 @@ const OFFER_LABELS = {
     decide_with_me_197: '$197 — 1:1 call (decide with me)',
 };
 
+/**
+ * Pattern Reset — Stripe catalog defaults for "Get a Direct Answer" ($59, live).
+ * Used only when STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ and STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ are both unset
+ * (missing .env locally or unset on host). Set either env var to override.
+ * For Stripe **test** mode, set STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ to a **test** price_… in .env so it matches sk_test.
+ */
+const DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ = 'price_1TNUFLBiV6S6xuimZH8beoiV';
+
 // ============================================================
 // Google Form sync — mirrors js/services/google-form-sync.js
 // Appends a "paid" row when the Stripe webhook confirms payment.
@@ -732,6 +740,9 @@ app.post('/create-checkout-session', async (req, res) => {
             // (2) Webhook checkout.session.completed → Resend/etc. — reassemble metadata keys ip0..ipN (see buildPrReadIntakeMetadata).
             let prPriceId = (process.env.STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ || '').trim();
             const prodId = (process.env.STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ || '').trim();
+            if (!prPriceId && !prodId) {
+                prPriceId = DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ;
+            }
             if (!prPriceId && prodId) {
                 try {
                     const prices = await stripe.prices.list({
@@ -931,6 +942,7 @@ app.get('/api/verify-checkout', async (req, res) => {
 // Clean URLs — same mapping as vercel.json rewrites (local `node server.js` has no Vercel layer)
 const _prRoot = path.join(__dirname);
 const _cleanHtml = [
+    ['home', 'home.html'],
     ['personal-relationship-read', 'personal-relationship-read.html'],
     ['letitout', 'letitout.html'],
     ['patterns', 'patterns.html'],
