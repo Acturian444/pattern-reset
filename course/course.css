@@ -24,7 +24,7 @@ body {
 }
 .progress-bar-inner {
   font-family: 'Anton', sans-serif;
-  color: #ca0013;
+  color: #f10000;
   font-size: 1.4rem;
   font-weight: 900;
   letter-spacing: 1px;
@@ -48,7 +48,7 @@ body {
 }
 .info-icon {
   font-size: 1.2em;
-  color: #ca0013;
+  color: #f10000;
   cursor: pointer;
   transition: color 0.2s ease;
   opacity: 0.8;
@@ -58,13 +58,13 @@ body {
   width: 1.5em;
   height: 1.5em;
   border-radius: 50%;
-  background: rgba(202, 0, 19, 0.05);
+  background: rgba(241, 0, 0, 0.05);
 }
 
 .info-icon:hover {
   color: #7a0010;
   opacity: 1;
-  background: rgba(202, 0, 19, 0.1);
+  background: rgba(241, 0, 0, 0.1);
 }
 #courseReminder {
   font-size: 1.08rem;
@@ -87,8 +87,8 @@ body {
 }
 .toggle-btn {
   background: none;
-  border: 2px solid #ca0013;
-  color: #ca0013;
+  border: 2px solid #f10000;
+  color: #f10000;
   border-radius: 20px;
   padding: 0.5rem 1.2rem;
   font-family: 'DM Sans', sans-serif;
@@ -98,7 +98,7 @@ body {
   transition: all 0.2s;
 }
 .toggle-btn.active {
-  background: #ca0013;
+  background: #f10000;
   color: #fff;
 }
 
@@ -124,13 +124,13 @@ body {
 }
 .week-title {
   font-family: 'Anton', sans-serif;
-  color: #ca0013;
+  color: #f10000;
   font-size: 1.2rem;
   letter-spacing: 0.5px;
 }
 .week-chevron {
   font-size: 1.6rem;
-  color: #ca0013;
+  color: #f10000;
   transition: transform 0.2s;
 }
 .week-chevron.expanded {
@@ -190,7 +190,7 @@ body {
 }
 .day-chevron {
   font-size: 1.5rem;
-  color: #ca0013;
+  color: #f10000;
   transition: transform 0.2s;
 }
 .day-chevron.expanded {
@@ -251,21 +251,21 @@ body {
   display: inline;
   margin: 0;
   font-size: inherit;
-  color: #ca0013;
+  color: #f10000;
   font-family: inherit;
   letter-spacing: normal;
 }
 .day-section-prompt {
-  background: rgba(202, 0, 19, 0.05);
+  background: rgba(241, 0, 0, 0.05);
   border-radius: 8px;
   padding: 1rem;
-  color: #ca0013;
+  color: #f10000;
   font-size: 1.05rem;
   margin-top: 0.5rem;
-  border-left: 3px solid #ca0013;
+  border-left: 3px solid #f10000;
 }
 .day-complete-btn {
-  background: #ca0013;
+  background: #f10000;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -280,7 +280,7 @@ body {
 }
 .day-complete-btn:active,
 .day-complete-btn:focus {
-  background: #a00012;
+  background: #cc0000;
 }
 .day-complete-btn:disabled {
   background: #ccc;
@@ -307,8 +307,8 @@ body {
 }
 .course-cta-btn {
   background: transparent;
-  color: #ca0013;
-  border: 2px solid #ca0013;
+  color: #f10000;
+  border: 2px solid #f10000;
   border-radius: 6px;
   padding: 0.65rem 1.3rem;
   font-family: 'Anton', sans-serif;
@@ -320,7 +320,7 @@ body {
 .course-cta-btn:active,
 .course-cta-btn:focus,
 .course-cta-btn:hover {
-  background: #ca0013;
+  background: #f10000;
   color: #fff;
 }
 
@@ -343,17 +343,17 @@ body {
   display: inline-block;
   margin: 0 0.13em;
   background: #eee;
-  border: 2px solid #ca0013;
+  border: 2px solid #f10000;
   vertical-align: middle;
 }
 .progress-week-dot.filled {
-  background: #ca0013;
-  border-color: #ca0013;
+  background: #f10000;
+  border-color: #f10000;
 }
 .progress-week-dot.current {
   background: #fff;
-  border-color: #ca0013;
-  box-shadow: 0 0 0 2px #ca0013;
+  border-color: #f10000;
+  box-shadow: 0 0 0 2px #f10000;
 }
 
 /* Locked Week Header */
@@ -452,7 +452,7 @@ body {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: #ca0013;
+  background: #f10000;
   box-shadow: none;
   padding: 0;
   overflow: hidden;
@@ -484,7 +484,7 @@ body {
 }
 .course-linear-bar {
   height: 100%;
-  background: #ca0013;
+  background: #f10000;
   border-radius: 8px 0 0 8px;
   width: 0%;
   transition: width 0.7s cubic-bezier(.4,1.4,.6,1);
@@ -536,7 +536,7 @@ body {
   right: 0.7em;
   background: #f7f7f7;
   border: none;
-  color: #ca0013;
+  color: #f10000;
   border-radius: 50%;
   width: 1.3em;
   height: 1.3em;
@@ -594,7 +594,7 @@ body {
 .journal-toggle-btn {
   background: none;
   border: none;
-  color: #ca0013;
+  color: #f10000;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
@@ -649,7 +649,7 @@ body {
 
 .journal-textarea:focus {
   outline: none;
-  border-color: #ca0013;
+  border-color: #f10000;
 }
 
 .journal-textarea::placeholder {

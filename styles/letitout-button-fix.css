@@ -17,6 +17,7 @@
 
 /* COMPLETELY OVERRIDE conflicting hover rules that cause layout changes */
 .letitout-emotion-btn:hover,
+.letitout-situation-btn:hover,
 .letitout-city-btn:hover {
     background: #ffe6ea !important;
     color: #000 !important;
@@ -40,12 +41,14 @@
 
 /* Ensure proper transitions */
 .letitout-emotion-btn,
+.letitout-situation-btn,
 .letitout-city-btn {
     transition: background-color 0.2s ease, border-color 0.2s ease !important;
 }
 
 /* Active state - maintain original layout */
 .letitout-emotion-btn:active,
+.letitout-situation-btn:active,
 .letitout-city-btn:active {
     background: #fff !important;
     color: #000 !important;
@@ -68,6 +71,7 @@
 
 /* Focus state - maintain original layout */
 .letitout-emotion-btn:focus,
+.letitout-situation-btn:focus,
 .letitout-city-btn:focus {
     background: #ffe6ea !important;
     color: #000 !important;
@@ -87,6 +91,18 @@
     width: auto !important;
     min-width: fit-content !important;
     box-sizing: border-box !important;
+}
+
+/* Dark mode: override hover/focus to match emotion & city buttons */
+.dark-mode .letitout-emotion-btn:hover,
+.dark-mode .letitout-emotion-btn:focus,
+.dark-mode .letitout-situation-btn:hover,
+.dark-mode .letitout-situation-btn:focus,
+.dark-mode .letitout-city-btn:hover,
+.dark-mode .letitout-city-btn:focus {
+    background: #232325 !important;
+    color: #fff !important;
+    border-color: #444 !important;
 }
 
 @media (min-width: 768px) {
@@ -124,7 +140,8 @@
   }
 
   .letitout-selected-tags .emotion-tag,
-  .letitout-selected-tags .city-tag {
+  .letitout-selected-tags .city-tag,
+  .letitout-selected-situation .situation-tag {
     font-size: 12px !important;
     padding: 4px 10px !important;
     border-radius: 999px !important;
@@ -136,7 +153,8 @@
     display: inline-block !important;
   }
 
-  .letitout-selected-city .city-tag {
+  .letitout-selected-city .city-tag,
+  .letitout-selected-situation .situation-tag {
     font-size: 12px !important;
     padding: 4px 10px !important;
     border-radius: 999px !important;
@@ -150,6 +168,7 @@
 }
 
 .letitout-selected-tags,
+.letitout-selected-situation,
 .letitout-selected-city {
     display: flex !important;
     justify-content: center !important;

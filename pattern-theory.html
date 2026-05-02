@@ -15,15 +15,15 @@
     </script>
     
     <title>The Science Behind Patterns | Pattern Reset™</title>
-    <meta name="description" content="Learn the psychology and science behind emotional patterns, loops, and how they shape your life. Evidence-based framework from psychology, psychiatry, and therapy experts.">
+    <meta name="description" content="Why you repeat the same relationship and emotional loops—and what research says about breaking them. A clear, human framework (not clinical advice).">
     <meta name="robots" content="index, follow">
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="The Science Behind Patterns | Pattern Reset™">
-    <meta property="og:description" content="Learn the psychology and science behind emotional patterns, loops, and how they shape your life. Evidence-based framework from psychology, psychiatry, and therapy experts.">
+    <meta property="og:description" content="Why the same relationship and emotional loops keep showing up—and what actually helps you see them clearly enough to interrupt.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mypatternreset.com/pattern-theory">
-    <meta property="og:image" content="https://mypatternreset.com/images/Let%20It%20Out%20Logo.png">
+    <meta property="og:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://mypatternreset.com/pattern-theory">
@@ -31,8 +31,8 @@
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="The Science Behind Patterns | Pattern Reset™">
-    <meta name="twitter:description" content="Learn the psychology and science behind emotional patterns, loops, and how they shape your life. Evidence-based framework from psychology, psychiatry, and therapy experts.">
-    <meta name="twitter:image" content="https://mypatternreset.com/images/Let%20It%20Out%20Logo.png">
+    <meta name="twitter:description" content="Patterns, loops, and the psychology behind why we repeat—without the clinical fog.">
+    <meta name="twitter:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
@@ -48,6 +48,14 @@
     <link rel="stylesheet" href="style.css?v=4">
     
     <style>
+        /* Logo: spiral red, text black */
+        header .logo-brand-combo .logo-text { color: #000000 !important; }
+        header .logo-brand-combo .center-logo,
+        header .logo-brand-combo .nav-logo,
+        header .logo-brand-combo .nav-logo svg { color: #f10000 !important; }
+        header .logo-brand-combo:hover .center-logo,
+        header .logo-brand-combo:hover .nav-logo { color: #cc0000 !important; }
+        
         .theory-page {
             padding: 4rem 2rem;
             max-width: 1000px;
@@ -68,7 +76,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(202, 0, 19, 0.12) 0%, transparent 60%);
+            background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(241, 0, 0, 0.12) 0%, transparent 60%);
             pointer-events: none;
         }
         .theory-hero::after {
@@ -78,7 +86,7 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(202, 0, 19, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(241, 0, 0, 0.3), transparent);
             pointer-events: none;
         }
         .theory-hero .label {
@@ -89,7 +97,7 @@
             font-weight: 700;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #ca0013;
+            color: #f10000;
             margin-bottom: 1rem;
             display: block;
         }
@@ -127,7 +135,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             padding-bottom: 0.75rem;
-            border-bottom: 3px solid #ca0013;
+            border-bottom: 3px solid #f10000;
         }
         
         .theory-section h3 {
@@ -169,7 +177,7 @@
         
         .highlight-box {
             background: #fff5f5;
-            border-left: 4px solid #ca0013;
+            border-left: 4px solid #f10000;
             padding: 1.5rem 2rem;
             margin: 2rem 0;
             border-radius: 4px;
@@ -202,7 +210,7 @@
             background: #f8f8f8;
             padding: 1rem 1.5rem;
             border-radius: 6px;
-            border: 2px solid #ca0013;
+            border: 2px solid #f10000;
             font-family: 'DM Sans', sans-serif;
             font-weight: 600;
             color: #000;
@@ -211,13 +219,13 @@
         }
         
         .framework-arrow {
-            color: #ca0013;
+            color: #f10000;
             font-size: 1.5rem;
         }
         
         .expert-quote {
             background: #f8f8f8;
-            border-left: 4px solid #ca0013;
+            border-left: 4px solid #f10000;
             padding: 1.5rem 2rem;
             margin: 2rem 0;
             border-radius: 4px;
@@ -231,7 +239,7 @@
         .expert-quote .author {
             font-style: normal;
             font-weight: 600;
-            color: #ca0013;
+            color: #f10000;
             font-size: 0.95rem;
         }
         
@@ -262,7 +270,7 @@
         }
         
         .cta-btn-primary {
-            background: #ca0013;
+            background: #f10000;
             color: #fffcf1;
             padding: 1rem 2rem;
             border-radius: 6px;
@@ -275,15 +283,15 @@
         }
         
         .cta-btn-primary:hover {
-            background: #b80011;
+            background: #d40000;
         }
         
         .cta-btn-secondary {
             background: transparent;
-            color: #ca0013;
+            color: #f10000;
             padding: 1rem 2rem;
             border-radius: 6px;
-            border: 2px solid #ca0013;
+            border: 2px solid #f10000;
             font-family: 'DM Sans', sans-serif;
             font-weight: 700;
             text-decoration: none;
@@ -293,7 +301,7 @@
         }
         
         .cta-btn-secondary:hover {
-            background: #ca0013;
+            background: #f10000;
             color: #fffcf1;
         }
         
@@ -351,21 +359,37 @@
         <div class="container">
             <nav class="nav-centered">
                 <div class="nav-left">
-                    <a href="index.html" class="logo-brand-combo" aria-label="Pattern Reset Home">
+                    <button class="hamburger nav-hamburger" aria-label="Open menu" onclick="openMenu()">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
+                    </button>
+                    <a href="home.html" class="logo-brand-combo" aria-label="Pattern Reset Home">
                         <span class="center-logo nav-logo">
                             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="#ca0013" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke="#ca0013" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke="#ca0013" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="50" cy="50" r="3.5" fill="#ca0013"/>
+                                <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="50" cy="50" r="3.5" fill="currentColor"/>
                             </svg>
                         </span>
-                        <span class="logo-text">My Pattern Quiz</span>
                     </a>
                 </div>
                 <div class="nav-right">
-                    <a href="index.html#quiz-section" class="nav-cta-button" onclick="event.preventDefault(); window.location.href='index.html#quiz-section'; return false;">Start the Quiz</a>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Get Clarity</a></li>
+                        <li><a href="letitout.html" class="letitout-link">Let It Out</a></li>
+                    </ul>
+                    <a href="index.html#quiz-section" class="nav-cta-button" onclick="event.preventDefault(); window.location.href='index.html#quiz-section'; return false;">Get Clarity</a>
                 </div>
+            </nav>
+        </div>
+        <div class="menu-overlay" id="menuOverlay">
+            <button class="close-btn hamburger" onclick="closeMenu()" aria-label="Close menu">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
+            </button>
+            <nav>
+                <a href="index.html" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Get Clarity</span><span class="menu-nav-subtitle">Discover your relationship pattern</span></a>
+                <a href="letitout.html" class="menu-nav-link letitout-link" onclick="closeMenu()"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your situation anonymously</span></a>
+                <a href="home.html#newsletter" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Reset</span><span class="menu-nav-subtitle">Your weekly Sunday reset</span></a>
             </nav>
         </div>
     </header>
@@ -540,13 +564,21 @@
         </div>
     </main>
 
-    <footer id="footer" style="margin-top: 2rem;">
-        <div class="footer-content">
-            <div class="footer-main"></div>
-            <div class="copyright">
-                <p>&copy; 2026 Pattern Reset™. All rights reserved. | <a href="legal.html">Legal</a></p>
-            </div>
-        </div>
+    <footer id="footer" style="margin-top: 2rem;" class="pr-footer-std">
+        <p>
+            &copy; 2026 Pattern Reset™
+            <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+            <a href="index.html">Get Clarity</a>
+            <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+            <a href="letitout.html">Let It Out&trade;</a>
+            <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+            <a href="legal.html">Legal</a>
+        </p>
     </footer>
+    <script>
+    function openMenu() { document.getElementById('menuOverlay')?.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { document.getElementById('menuOverlay')?.classList.remove('open'); document.body.style.overflow = ''; }
+    document.getElementById('menuOverlay')?.addEventListener('click', function(e) { if (e.target === this) closeMenu(); });
+    </script>
 </body>
 </html>

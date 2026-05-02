@@ -44,9 +44,16 @@ class PostCard {
         // Always set the full text content. The CSS will handle truncation.
         content.textContent = fullText;
 
-        // Emotion tags (one per pill, small)
+        // Situation + Emotion tags
         const emotionTags = document.createElement('div');
         emotionTags.className = 'post-emotion-tags';
+        // Situation tag (single, distinct styling)
+        if (post.situation) {
+            const situationTag = document.createElement('span');
+            situationTag.className = 'situation-tag situation-tag-small';
+            situationTag.textContent = post.situation;
+            emotionTags.appendChild(situationTag);
+        }
         if (post.isInbox) {
             // This is logic for the "My Posts" view, not the main wall.
             // It won't run here but is kept for component consistency.
@@ -103,17 +110,17 @@ class PostCard {
             contentArea.appendChild(readMoreLink);
         }
 
-        // City line with timestamp (Truth #147 · Miami, FL · 22h ago)
+        // City line with timestamp (Story #147 · Miami, FL · 22h ago)
         const cityLine = document.createElement('div');
         cityLine.className = 'post-city-line';
         const timeString = window.LetItOutUtils.formatDate(post.timestamp);
         
-        // NEW LOGIC: Show Truth number if available, fallback to old format
+        // NEW LOGIC: Show Anonymous Story number if available, fallback to old format
         if (post.truthNumber) {
             if (post.city) {
-                cityLine.textContent = `Truth #${post.truthNumber} · ${post.city} · ${timeString}`;
+                cityLine.textContent = `Story #${post.truthNumber} · ${post.city} · ${timeString}`;
             } else {
-                cityLine.textContent = `Truth #${post.truthNumber} · ${timeString}`;
+                cityLine.textContent = `Story #${post.truthNumber} · ${timeString}`;
             }
         } else {
             // Fallback for existing posts without truthNumber
@@ -123,7 +130,10 @@ class PostCard {
                 cityLine.textContent = `Anonymous · ${timeString}`;
             }
         }
-        contentArea.appendChild(cityLine);
+
+        const footerStack = document.createElement('div');
+        footerStack.className = 'post-card-footer-stack';
+        footerStack.appendChild(cityLine);
 
         const meta = document.createElement('div');
         meta.className = 'post-meta';
@@ -140,7 +150,7 @@ class PostCard {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
-                <span class="felt-it-text">Felt It</span>
+                <span class="felt-it-text">I Feel This Too</span>
                 ${post.feltCount >= 2 ? `<span class="felt-it-count">${post.feltCount}</span>` : ''}
             `;
 
@@ -228,7 +238,8 @@ class PostCard {
         }
         meta.appendChild(actions);
 
-        contentArea.appendChild(meta);
+        footerStack.appendChild(meta);
+        contentArea.appendChild(footerStack);
 
         card.appendChild(contentArea);
 
@@ -239,7 +250,7 @@ class PostCard {
                 .love-received-pill {
                     display: inline-block;
                     background: #ffe5e9;
-                    color: #ca0013;
+                    color: #f10000;
                     border-radius: 1.2em;
                     padding: 0.32em 1.1em 0.32em 0.9em;
                     font-size: 1.01em;
@@ -247,7 +258,7 @@ class PostCard {
                     letter-spacing: 0.01em;
                     margin-bottom: 0.5em;
                     margin-right: 0.2em;
-                    box-shadow: 0 1px 4px rgba(193,0,22,0.04);
+                    box-shadow: 0 1px 4px rgba(241,0,0,0.04);
                     border: none;
                 }
             `;
@@ -398,13 +409,14 @@ class PostCard {
         modal.className = 'reply-modal';
         modal.innerHTML = `
             <div class="reply-modal-header">
-                <div class="reply-modal-title">Send a message of support</div>
+                <div class="reply-modal-title">Send them some support</div>
+                <div class="reply-modal-microcopy">Your message will be anonymous.</div>
             </div>
-            <textarea class="reply-textarea" placeholder="Write a message to remind them they're not alone..." maxlength="250"></textarea>
+            <textarea class="reply-textarea" placeholder="Example: I went through something similar. You're not alone." maxlength="250"></textarea>
             <div class="char-counter">0/250</div>
             <div class="reply-actions">
                 <button class="cancel-btn">Cancel</button>
-                <button class="send-btn" disabled>Send Love</button>
+                <button class="send-btn" disabled>Send Support</button>
             </div>
         `;
 
@@ -486,7 +498,9 @@ class PostCard {
     static showSuccessMessage() {
         const message = document.createElement('div');
         message.className = 'reply-success-message';
-        message.innerHTML = 'Your love was sent anonymously.<br>You won\'t be able to see it again.';
+        message.innerHTML =
+            '<span class="reply-success-message__title">Your message was sent.<br>Someone will feel this.</span>' +
+            '<span class="reply-success-message__sub">Sent anonymously.</span>';
         document.body.appendChild(message);
         setTimeout(() => message.classList.add('visible'), 10);
         setTimeout(() => {

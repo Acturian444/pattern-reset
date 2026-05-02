@@ -46,10 +46,10 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" widt
   </defs>
   <rect width="1200" height="630" fill="#fffcf1"/>
   <g transform="translate(475, 80) scale(2.5)">
-    <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="#ca0013" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke="#ca0013" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke="#ca0013" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="50" cy="50" r="3.5" fill="#ca0013"/>
+    <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="#f10000" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke="#f10000" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke="#f10000" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="50" cy="50" r="3.5" fill="#f10000"/>
   </g>
   <text x="600" y="458" text-anchor="middle" class="brand-text" font-size="72" letter-spacing="2">PATTERN RESET</text>
   <text x="600" y="478" text-anchor="middle" class="tagline-text" font-size="28" letter-spacing="1">Discover Your Life Pattern</text>

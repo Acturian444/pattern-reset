@@ -11,9 +11,9 @@
 
   // SVG icons
   const ICONS = {
-    book: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 15.5V5.5C3.5 4.39543 4.39543 3.5 5.5 3.5H9.5C10.0523 3.5 10.5 3.94772 10.5 4.5V15.5M10.5 15.5V4.5C10.5 3.94772 10.9477 3.5 11.5 3.5H15.5C16.6046 3.5 17.5 4.39543 17.5 5.5V15.5M10.5 15.5C10.5 16.0523 10.0523 16.5 9.5 16.5H5.5C4.39543 16.5 3.5 15.6046 3.5 14.5V15.5M10.5 15.5C10.5 16.0523 10.9477 16.5 11.5 16.5H15.5C16.6046 16.5 17.5 15.6046 17.5 14.5V15.5" stroke="#ca0013" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    book: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.5 15.5V5.5C3.5 4.39543 4.39543 3.5 5.5 3.5H9.5C10.0523 3.5 10.5 3.94772 10.5 4.5V15.5M10.5 15.5V4.5C10.5 3.94772 10.9477 3.5 11.5 3.5H15.5C16.6046 3.5 17.5 4.39543 17.5 5.5V15.5M10.5 15.5C10.5 16.0523 10.0523 16.5 9.5 16.5H5.5C4.39543 16.5 3.5 15.6046 3.5 14.5V15.5M10.5 15.5C10.5 16.0523 10.9477 16.5 11.5 16.5H15.5C16.6046 16.5 17.5 15.6046 17.5 14.5V15.5" stroke="#f10000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     lock: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="7" width="10" height="6" rx="2" stroke="#bbb" stroke-width="1.5"/><path d="M5 7V5.5C5 3.567 6.567 2 8.5 2C10.433 2 12 3.567 12 5.5V7" stroke="#bbb" stroke-width="1.5" stroke-linecap="round"/></svg>',
-    check: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="8" fill="#ca0013"/><path d="M5 8.5L7.2 11L11 6.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    check: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="8" fill="#f10000"/><path d="M5 8.5L7.2 11L11 6.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   };
 
   // --- 1. Unlock logic from query string ---
@@ -59,10 +59,10 @@
   function showLockedMessage() {
     document.body.innerHTML = `
       <main style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#fffcf1;">
-        <h1 style="font-family:'Anton',sans-serif;color:#ca0013;font-size:2rem;margin-bottom:1.5rem;">Course Locked</h1>
+        <h1 style="font-family:'Anton',sans-serif;color:#f10000;font-size:2rem;margin-bottom:1.5rem;">Course Locked</h1>
         <div style="font-family:'DM Sans',sans-serif;color:#555;font-size:1.1rem;margin-bottom:2rem;max-width:320px;text-align:center;">
           You need to purchase the course to access this page.<br><br>
-          <a href="../product/breakup-course.html" style="color:#ca0013;font-weight:bold;text-decoration:underline;">Go to Course Page</a>
+          <a href="../product/breakup-course.html" style="color:#f10000;font-weight:bold;text-decoration:underline;">Go to Course Page</a>
         </div>
       </main>
     `;
@@ -279,7 +279,7 @@
     html += `
       <div class="course-week-accordion">
         <div class="week-header" onclick="toggleIntroAccordion()">
-          <div class="week-title"><span style="color: #000;">${introLabel}</span> <span style="color: #ca0013;">${introName}</span>${isDay0Completed ? '<span class=\"intro-checkmark\">' + ICONS.check + '</span>' : ''}</div>
+          <div class="week-title"><span style="color: #000;">${introLabel}</span> <span style="color: #f10000;">${introName}</span>${isDay0Completed ? '<span class=\"intro-checkmark\">' + ICONS.check + '</span>' : ''}</div>
           <div class="week-chevron ${introAccordionState ? 'expanded' : ''}" id="intro-chevron">˅</div>
         </div>
         <div class="week-content ${introAccordionState ? 'expanded' : ''}" id="intro-content">
@@ -351,7 +351,7 @@
       
       // Apply locked styling if week is locked
       const weekNumberColor = isUnlocked ? '#000' : '#bbb';
-      const weekNameColor = isUnlocked ? '#ca0013' : '#bbb';
+      const weekNameColor = isUnlocked ? '#f10000' : '#bbb';
       
       // Use saved week state or default
       const weekState = accordionState.weeks[weekIndex] !== undefined ? accordionState.weeks[weekIndex] : isExpanded;

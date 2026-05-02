@@ -9,6 +9,14 @@
     <priority>1.0</priority>
   </url>
   
+  <!-- Pattern Reset System™ (philosophy) -->
+  <url>
+    <loc>https://mypatternreset.com/pattern-reset-system</loc>
+    <lastmod>2026-03-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
   <!-- Legal Page -->
   <url>
     <loc>https://mypatternreset.com/legal</loc>

@@ -1,8 +1,13 @@
+/** Max characters for Let It Out post body (enforced on textarea; no visible counter). */
+const LETITOUT_MAX_CONTENT_LENGTH = 800;
+
 // Post Form Handler
 class PostForm {
     constructor() {
         this.form = document.createElement('form');
         this.form.className = 'letitout-form';
+        /** Submit CTA lives outside the DOM node; `form` attribute on the button wires native submit. */
+        this.form.id = 'letitout-post-form';
         
         // Initialize premium packs with safety check
         if (window.PremiumPacks) {
@@ -56,131 +61,119 @@ class PostForm {
         formContent.className = 'letitout-form-content';
 
         // --- PROMPT TITLE, SHUFFLE, RESET ---
-        // Create a wrapper for the prompt title and button row
-        const promptBar = document.createElement('div');
-        promptBar.className = 'letitout-prompt-bar';
-        promptBar.style.display = 'flex';
-        promptBar.style.flexDirection = 'column';
-        promptBar.style.alignItems = 'center';
-        promptBar.style.marginBottom = '1.2rem';
+        // MVP: Hide prompts and Unlock More Prompts when HIDE_PROMPTS_FOR_MVP is true
+        const hidePrompts = window.MVP_CONFIG && window.MVP_CONFIG.HIDE_PROMPTS_FOR_MVP;
+        if (!hidePrompts) {
+            const promptBar = document.createElement('div');
+            promptBar.className = 'letitout-prompt-bar';
+            promptBar.style.display = 'flex';
+            promptBar.style.flexDirection = 'column';
+            promptBar.style.alignItems = 'center';
+            promptBar.style.marginBottom = '1.2rem';
 
-        // --- NEW PROMPT CONTROLS ---
-        const promptControls = document.createElement('div');
-        promptControls.className = 'prompt-controls';
+            // --- NEW PROMPT CONTROLS ---
+            const promptControls = document.createElement('div');
+            promptControls.className = 'prompt-controls';
 
-        // Back button
-        this.backBtn = document.createElement('button');
-        this.backBtn.type = 'button';
-        this.backBtn.className = 'prompt-nav-btn back-btn';
-        this.backBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
-        this.backBtn.onclick = () => this.handleBackClick();
+            // Back button
+            this.backBtn = document.createElement('button');
+            this.backBtn.type = 'button';
+            this.backBtn.className = 'prompt-nav-btn back-btn';
+            this.backBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+            this.backBtn.onclick = () => this.handleBackClick();
 
-        // Main prompt title
-        this.promptTitle = document.createElement('div');
-        this.promptTitle.className = 'letitout-subtitle';
-        
-        // Next button
-        this.nextBtn = document.createElement('button');
-        this.nextBtn.type = 'button';
-        this.nextBtn.className = 'prompt-nav-btn next-btn';
-        this.nextBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-        this.nextBtn.onclick = () => this.handleNextClick();
+            // Main prompt title
+            this.promptTitle = document.createElement('div');
+            this.promptTitle.className = 'letitout-subtitle';
+            
+            // Next button
+            this.nextBtn = document.createElement('button');
+            this.nextBtn.type = 'button';
+            this.nextBtn.className = 'prompt-nav-btn next-btn';
+            this.nextBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+            this.nextBtn.onclick = () => this.handleNextClick();
 
-        promptControls.appendChild(this.backBtn);
-        promptControls.appendChild(this.promptTitle);
-        promptControls.appendChild(this.nextBtn);
+            promptControls.appendChild(this.backBtn);
+            promptControls.appendChild(this.promptTitle);
+            promptControls.appendChild(this.nextBtn);
 
-        // --- PACK SELECTOR DROPDOWN ---
-        if (this.premiumPacks) {
-            this.createPackSelector(promptBar);
-        }
+            // --- PACK SELECTOR DROPDOWN ---
+            if (this.premiumPacks) {
+                this.createPackSelector(promptBar);
+            }
 
-        promptBar.appendChild(promptControls);
+            promptBar.appendChild(promptControls);
 
-        // --- PREMIUM PACKS CTA BUTTON ---
-        this.premiumCtaBtn = document.createElement('button');
-        this.premiumCtaBtn.type = 'button';
-        this.premiumCtaBtn.className = 'premium-packs-cta';
-        // MVP Mode: Update button text based on MVP configuration
-        if (window.MVP_CONFIG && window.MVP_CONFIG.MANUAL_UNLOCK_MODE) {
-            this.premiumCtaBtn.textContent = 'Unlock More Prompts';
+            // --- PREMIUM PACKS CTA BUTTON ---
+            this.premiumCtaBtn = document.createElement('button');
+            this.premiumCtaBtn.type = 'button';
+            this.premiumCtaBtn.className = 'premium-packs-cta';
+            // MVP Mode: Update button text based on MVP configuration
+            if (window.MVP_CONFIG && window.MVP_CONFIG.MANUAL_UNLOCK_MODE) {
+                this.premiumCtaBtn.textContent = 'Unlock More Prompts';
+            } else {
+            this.premiumCtaBtn.textContent = this.premiumPacks ? (this.premiumPacks.hasUnlockedPacks() ? 'Explore More Prompts' : 'Unlock Healing Prompts') : 'Unlock Healing Prompts';
+            }
+            this.premiumCtaBtn.onclick = () => this.openPremiumPacksModal();
+            promptBar.appendChild(this.premiumCtaBtn);
+
+            formContent.appendChild(promptBar);
         } else {
-        this.premiumCtaBtn.textContent = this.premiumPacks ? (this.premiumPacks.hasUnlockedPacks() ? 'Explore More Prompts' : 'Unlock Healing Prompts') : 'Unlock Healing Prompts';
+            // MVP: Single static prompt when prompts are hidden
+            const mvpPrompt = document.createElement('div');
+            mvpPrompt.className = 'letitout-mvp-prompt';
+            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Write what you’ve been holding in</span><span class=\"letitout-mvp-subtitle\">Anonymous. No pressure. Just release.</span>";
+            formContent.appendChild(mvpPrompt);
         }
-        this.premiumCtaBtn.onclick = () => this.openPremiumPacksModal();
-        promptBar.appendChild(this.premiumCtaBtn);
 
-        formContent.appendChild(promptBar);
+        this._submitAttemptedWithoutEmotion = false;
 
-        // Create wrapper for textarea and counter
+        // Textarea: max length, no visible character count (length tracked for draft/submit only)
         const textareaWrapper = document.createElement('div');
         textareaWrapper.className = 'textarea-wrapper';
         
         const textarea = document.createElement('textarea');
-        textarea.placeholder = 'Let it out anonymously…';
-        textarea.maxLength = 500;
-        textarea.required = true;
-        
-        const counter = document.createElement('div');
-        counter.className = 'char-counter';
-        counter.textContent = '0/500';
-        
-        textarea.addEventListener('input', () => {
-            counter.textContent = `${textarea.value.length}/500`;
-            this.saveDraft(); // Save draft on text change
+        textarea.placeholder = "Say what you haven\u2019t been able to say…";
+        textarea.maxLength = LETITOUT_MAX_CONTENT_LENGTH;
 
-            // Auto-expand textarea
+        textarea.addEventListener('input', () => {
+            this._letitoutContentLength = textarea.value.length;
+            this.saveDraft();
+
             textarea.style.height = 'auto';
             textarea.style.height = `${textarea.scrollHeight}px`;
         });
+        this._letitoutContentLength = 0;
         
         textareaWrapper.appendChild(textarea);
         formContent.appendChild(textareaWrapper);
-        formContent.appendChild(counter);
 
         // --- EMOTION TAGGING UPGRADE ---
         // Emotion categories and sub-emotions
         this.emotionCategories = [
             {
-                name: 'Pain & Pressure',
+                name: 'Core Pain',
                 emotions: [
-                    'Abandonment', 'Alone', 'Anger', 'Anxiety', 'Bitterness', 'Confusion', 'Depression', 'Embarrassment', 'Emptiness', 'Envy', 'Exhausted', 'Fear', 'Frustration', 'Grief', 'Guilt', 'Heartbreak', 'Hopelessness', 'Insecurity', 'Jealousy', 'Loneliness', 'Overwhelm', 'Panic', 'Powerlessness', 'Rejection', 'Regret', 'Resentment', 'Sadness', 'Self-hate', 'Shame', 'Stuck'
+                    'Heartbreak', 'Rejection', 'Abandonment', 'Betrayal', 'Loneliness', 'Shame', 'Regret', 'Resentment'
                 ]
             },
             {
-                name: 'Unspoken & Unsaid',
+                name: 'Emotional State',
                 emotions: [
-                    'What I can\'t forgive', 'What I can\'t tell anyone', 'What I carry in silence', 'What I hide behind my smile', 'What I miss', 'What I needed to hear', 'What I never believed I deserved', 'What I never got to say', 'What I still don\'t understand', 'What I want to scream', 'What I wish I could take back', 'What I\'m afraid to admit', 'What I\'ve never said', 'What\'s been eating me alive'
+                    'Anxious', 'Overthinking', 'Drained', 'Numb', 'Stuck', 'Lost', 'Powerless',
+                    'Confused', 'Obsessing', 'Keeps happening', 'Insecure'
                 ]
             },
             {
-                name: 'Hope & Healing',
+                name: 'Longing & Connection',
                 emotions: [
-                    'Acceptance', 'Clarity', 'Closure', 'Compassion', 'Courage', 'Faith', 'Forgiveness', 'Gratitude', 'Healing', 'Joy', 'Letting go', 'Lightness', 'Peace', 'Presence', 'Relief', 'Stillness', 'Surrender', 'Trust'
+                    'Longing', 'Missing Someone', 'Still in Love', 'Wanting Connection', 'Wanting to Feel Chosen'
                 ]
             },
             {
-                name: 'Longing & Love',
+                name: 'Growth / Release',
                 emotions: [
-                    'Desire', 'I don\'t feel lovable', 'I loved them more than they knew', 'I miss someone', 'I need connection', 'I never said I loved them', 'I still love them', 'I want to feel loved', 'I\'m falling for someone', 'I\'m scared to love again', 'I feel unloved', 'Missed Connection'
-                ]
-            },
-            {
-                name: 'Identity & Self',
-                emotions: [
-                    'I crave touch', 'I don\'t know who I am', 'I feel invisible', 'I feel like not enough', 'I feel misunderstood', 'I feel too much', 'I hate who I used to be', 'I want to be authentic', 'I want to be seen', 'I want to feel chosen', 'I want to love myself', 'I want to start over', 'I\'m ashamed of who I am', 'I\'m learning to love myself', 'I\'m learning who I am', 'I\'m not okay', 'I\'m tired of pretending', 'I\'m trying to change'
-                ]
-            },
-            {
-                name: 'Transformation & Release',
-                emotions: [
-                    'I forgive myself', 'I made it through', 'I want to begin again', 'I want to heal', 'I\'m becoming someone new', 'I\'m finally saying it', 'I\'m letting it out', 'I\'m not who I was', 'I\'m ready to grow', 'I\'m ready to move on', 'I\'m still here', 'I\'ve been carrying this but I\'m ready to be free', 'I\'ve been holding this too long', 'It\'s time to let go', 'This is my turning point'
-                ]
-            },
-            {
-                name: 'Light & Alive',
-                emotions: [
-                    'Adventurous', 'Becoming me', 'Breakthrough', 'Celebration', 'Energized', 'Excitement', 'Freedom', 'Hope returned', 'I made it through', 'Peaceful inside', 'Pride', 'Safe now', 'Self-love'
+                    'Letting Go', 'Healing', 'Forgiveness', 'Clarity'
                 ]
             }
         ];
@@ -188,6 +181,38 @@ class PostForm {
         this.selectedCity = null;
         this.customCity = null;
         this.isCustomCity = false;
+        this.selectedSituation = null;
+        this.situationList =
+            typeof LET_IT_OUT_SITUATION_TAGS !== 'undefined' && Array.isArray(LET_IT_OUT_SITUATION_TAGS)
+                ? [...LET_IT_OUT_SITUATION_TAGS]
+                : [
+                      'Relationships',
+                      'Dating',
+                      'Situationship',
+                      'Relationship',
+                      'Breakup',
+                      'No Contact',
+                      'Ex',
+                      'Mixed Signals',
+                      'One-Sided',
+                      'Not Committing',
+                      'On and Off',
+                      'Breadcrumbing',
+                      'Ghosted',
+                      'Didn’t Say It',
+                      'Holding It In',
+                      'Avoided the Conversation',
+                      'Said Something I Regret',
+                      'Left on Read',
+                      'Past',
+                      'Family',
+                      'Friendship',
+                      'Work',
+                      'Self',
+                      'Childhood',
+                      'Closure I Never Got',
+                      'Still Thinking About It'
+                  ];
         this.cityList = [
             'Atlanta, GA', 'Austin, TX', 'Bay Area, CA', 'Boston, MA', 'Chicago, IL', 'Denver, CO',
             'Houston, TX', 'Las Vegas, NV', 'Los Angeles, CA', 'Miami, FL', 'Minneapolis, MN',
@@ -209,12 +234,13 @@ class PostForm {
         const emotionBtn = document.createElement('button');
         emotionBtn.type = 'button';
         emotionBtn.className = 'letitout-emotion-btn';
+        emotionBtn.setAttribute('aria-label', 'How it feels, required');
         emotionBtn.innerHTML = `
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            Tag a feeling
+            <span class="letitout-tag-btn-label">How it feels</span><span class="letitout-required-asterisk" aria-hidden="true">*</span>
         `;
         emotionBtn.onclick = () => {
             this.openEmotionModal();
@@ -223,6 +249,24 @@ class PostForm {
         // Blur after tap/click to prevent persistent focus on mobile
         emotionBtn.addEventListener('mouseup', function() { this.blur(); });
         emotionBtn.addEventListener('touchend', function() { this.blur(); });
+
+        // --- SITUATION TAG BUTTON (Optional) ---
+        const situationBtn = document.createElement('button');
+        situationBtn.type = 'button';
+        situationBtn.className = 'letitout-situation-btn';
+        situationBtn.innerHTML = `
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            What it&rsquo;s about
+        `;
+        situationBtn.onclick = () => {
+            this.openSituationModal();
+            this.saveDraft();
+        };
+        situationBtn.addEventListener('mouseup', function() { this.blur(); });
+        situationBtn.addEventListener('touchend', function() { this.blur(); });
 
         // --- CITY TAG BUTTON ---
         const cityBtn = document.createElement('button');
@@ -233,31 +277,43 @@ class PostForm {
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            Tag City
+            City
         `;
         cityBtn.onclick = () => this.openCityModal();
 
-        // Selected tags display
+        // Selected tags display (primary row)
         this.selectedTagsDisplay = document.createElement('div');
         this.selectedTagsDisplay.className = 'letitout-selected-tags';
 
-        // Selected city display
+        // Secondary meta row: situation + city (single line when possible)
+        this.selectedMetaDisplay = document.createElement('div');
+        this.selectedMetaDisplay.className = 'letitout-selected-meta';
+
+        this.selectedSituationDisplay = document.createElement('div');
+        this.selectedSituationDisplay.className = 'letitout-selected-situation';
         this.selectedCityDisplay = document.createElement('div');
         this.selectedCityDisplay.className = 'letitout-selected-city';
+
+        this.selectedMetaDisplay.appendChild(this.selectedSituationDisplay);
+        this.selectedMetaDisplay.appendChild(this.selectedCityDisplay);
+
+        this.updateSelectedSituation();
         this.updateSelectedCity();
 
         // Error message
         this.emotionError = document.createElement('div');
         this.emotionError.className = 'letitout-emotion-error';
+        this.emotionError.setAttribute('role', 'alert');
         this.emotionError.style.display = 'none';
 
-        // Assemble emotion section
+        // Assemble emotion section — error directly under pill row (only after failed submit)
         emotionBtnRow.appendChild(emotionBtn);
+        emotionBtnRow.appendChild(situationBtn);
         emotionBtnRow.appendChild(cityBtn);
         emotionSection.appendChild(emotionBtnRow);
-        emotionSection.appendChild(this.selectedTagsDisplay);
-        emotionSection.appendChild(this.selectedCityDisplay);
         emotionSection.appendChild(this.emotionError);
+        emotionSection.appendChild(this.selectedTagsDisplay);
+        emotionSection.appendChild(this.selectedMetaDisplay);
         formContent.appendChild(emotionSection);
 
         // Assemble form
@@ -269,7 +325,7 @@ class PostForm {
         this.emotionModal.innerHTML = `
             <div class="letitout-emotion-modal">
                 <div class="letitout-emotion-modal-header">
-                    <div class="letitout-emotion-modal-title">Select Feelings (1-3)</div>
+                    <div class="letitout-emotion-modal-title">How it feels (required)</div>
                     <button class="letitout-emotion-modal-close">&times;</button>
                 </div>
                 <div class="letitout-emotion-modal-content"></div>
@@ -286,8 +342,10 @@ class PostForm {
             this.myPostsBtn.onclick = () => this.openMyPostsModal();
         }
 
-        // Initialize the prompt system
-        this.initializePrompts();
+        // Initialize the prompt system (skip when prompts hidden for MVP)
+        if (!hidePrompts) {
+            this.initializePrompts();
+        }
     }
 
     initializePrompts() {
@@ -298,6 +356,7 @@ class PostForm {
     }
 
     updatePromptUI() {
+        if (!this.promptTitle) return; // MVP: prompts hidden
         if (!this.premiumPacks) {
             // Fallback to original logic
             if (this.currentHistoryIndex === -1) {
@@ -427,9 +486,19 @@ class PostForm {
             return;
         }
 
-        // Emotion tags are now optional - no validation needed
+        if (this.selectedEmotions.length === 0) {
+            this._submitAttemptedWithoutEmotion = true;
+            this.updateSelectedTags();
+            window.LetItOutUtils.showError(
+                'Name a feeling to help others feel it too. Tap “Feelings” and choose 1–3.'
+            );
+            this.emotionError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            return;
+        }
 
-        const submitButton = this.form.querySelector('.letitout-submit-btn');
+        const submitButton =
+            (this.buttonContainer && this.buttonContainer.querySelector('.letitout-submit-btn')) ||
+            this.form.querySelector('.letitout-submit-btn');
         if (submitButton) {
             submitButton.disabled = true;
             submitButton.textContent = 'Posting...';
@@ -442,18 +511,24 @@ class PostForm {
                 content,
                 this.selectedEmotions.join(', '),
                 this.selectedCity,
-                this.isCustomCity
+                this.isCustomCity,
+                this.selectedSituation
             );
             newPostId = post.id;
 
             // Reset form
             textarea.value = '';
-            this.form.querySelector('.char-counter').textContent = '0/500';
+            this._letitoutContentLength = 0;
+            textarea.dispatchEvent(new Event('input', { bubbles: true }));
             this.selectedEmotions = [];
             this.selectedCity = null;
             this.customCity = null;
             this.isCustomCity = false;
+            this.selectedSituation = null;
             this.updateSelectedCity();
+            this.updateSelectedSituation();
+            this._submitAttemptedWithoutEmotion = false;
+            this.updateSelectedTags();
             this.clearDraft(); // Clear draft on successful post
             if (submitButton) {
                 submitButton.textContent = 'Let It Out';
@@ -472,33 +547,30 @@ class PostForm {
     }
 
     showConfirmationAndRedirect(newPostId, truthNumber) {
-        this.showConfirmationModal(truthNumber);
-        setTimeout(() => {
-            this.hideConfirmationModal();
-            // Redirect to Let It Out wall page with post highlight
-            window.location.replace('letitout.html?post=' + encodeURIComponent(newPostId) + '#wall');
-        }, 1500);
+        this.showConfirmationModal(truthNumber, newPostId);
     }
 
-    showConfirmationModal(truthNumber) {
+    showConfirmationModal(_truthNumber, newPostId) {
         // Remove any existing overlay
         this.hideConfirmationModal();
         const overlay = document.createElement('div');
         overlay.className = 'letitout-confirmation-overlay';
-        
-        // Create the confirmation message with Truth number if available
-        const truthLine = truthNumber ? `Truth #${truthNumber} is on the wall.` : 'Your truth is on the wall.';
-        
+
         overlay.innerHTML = `
           <div class="letitout-confirmation-modal">
             <div class="letitout-confirmation-text">
-              <span class="confirmation-title">You let it out.</span>
-              <span class="confirmation-line">${truthLine}</span>
-              <span class="confirmation-line">You're not alone here.</span>
+              <span class="confirmation-title">YOU LET IT OUT.</span>
+              <span class="confirmation-line">Your story is on the wall.</span>
+              <span class="confirmation-line">You&rsquo;re not the only one carrying this.</span>
             </div>
           </div>
         `;
         document.body.appendChild(overlay);
+
+        const redirectTimeout = setTimeout(() => {
+            this.hideConfirmationModal();
+            window.location.replace('letitout.html?post=' + encodeURIComponent(newPostId) + '#wall');
+        }, 3200);
     }
 
     hideConfirmationModal() {
@@ -515,6 +587,75 @@ class PostForm {
         return prompt;
     }
 
+    /** Valid feeling labels from emotion categories (for wall → Write preset). */
+    _getValidEmotionLabelSet() {
+        const s = new Set();
+        this.emotionCategories.forEach((c) => c.emotions.forEach((e) => s.add(e)));
+        return s;
+    }
+
+    /**
+     * Apply tags from wall filter (session handoff). One situation slot on Write; first situation tag wins.
+     */
+    applyWallPresetFromTags(tags) {
+        if (!Array.isArray(tags) || tags.length === 0) return;
+
+        const emotionOk = this._getValidEmotionLabelSet();
+        const situationOk = new Set(this.situationList);
+
+        const emotions = [];
+        for (const t of tags) {
+            if (t && t.type === 'emotion' && emotionOk.has(t.label) && !emotions.includes(t.label)) {
+                emotions.push(t.label);
+            }
+            if (emotions.length >= 3) break;
+        }
+
+        let situation = null;
+        for (const t of tags) {
+            if (t && t.type === 'situation' && situationOk.has(t.label)) {
+                situation = t.label;
+                break;
+            }
+        }
+
+        this.selectedEmotions = emotions;
+        this.selectedSituation = situation;
+
+        this.updateSelectedTags();
+        this.updateSelectedSituation();
+        this.saveDraft();
+
+        // Wall → Write: show chips on the form only; do not open picker modals.
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                const ta = this.form.querySelector('textarea');
+                if (ta) ta.focus();
+            });
+        });
+    }
+
+    consumeWallPresetFromSession() {
+        let raw;
+        try {
+            raw = sessionStorage.getItem('letitout_wall_to_write_preset');
+        } catch (_) {
+            return;
+        }
+        if (!raw) return;
+        try {
+            sessionStorage.removeItem('letitout_wall_to_write_preset');
+        } catch (_) {
+            /* ignore */
+        }
+        try {
+            const tags = JSON.parse(raw);
+            this.applyWallPresetFromTags(tags);
+        } catch (_) {
+            /* ignore */
+        }
+    }
+
     render(container) {
         // Remove button from form if present
         if (this.buttonContainer && this.buttonContainer.parentNode === this.form) {
@@ -525,6 +666,8 @@ class PostForm {
         
         // Load draft after form is in the DOM
         this.loadDraft();
+        // Wall empty-state CTA: preset tags override draft feelings/situation for this navigation
+        this.consumeWallPresetFromSession();
         
         // Add My Posts button to global container
         this.renderMyPostsButton();
@@ -537,27 +680,23 @@ class PostForm {
             this.buttonContainer.style.flexDirection = 'column';
             this.buttonContainer.style.alignItems = 'center';
             const submitButton = document.createElement('button');
-            submitButton.type = 'button';
+            submitButton.type = 'submit';
+            submitButton.setAttribute('form', this.form.id);
             submitButton.className = 'letitout-submit-btn';
             submitButton.textContent = 'Let It Out';
-            submitButton.onclick = (e) => {
-                e.preventDefault();
-                this.form.requestSubmit();
-            };
             this.buttonContainer.appendChild(submitButton);
 
-            // Add info text below the CTA button
-            const infoText = document.createElement('div');
-            infoText.className = 'letitout-info-text';
-            infoText.style.marginTop = '1.5rem';
-            infoText.textContent = 'Your words hold power. Your truth matters.';
-            this.buttonContainer.appendChild(infoText);
+            // Intentionally no pre-post quiz funnel here.
+            // The Write tab has ONE job: emotional release. The quiz CTA
+            // belongs at the highest-intent moment — the post-submission
+            // confirmation modal (see showConfirmationModal), not competing
+            // with the primary "Let It Out" action.
 
             // Add "Need Support" button
             const supportButton = document.createElement('button');
             supportButton.type = 'button';
             supportButton.className = 'support-link-btn';
-            supportButton.textContent = 'Need support right now?';
+            supportButton.textContent = 'Feeling overwhelmed?';
             supportButton.onclick = () => this.openSupportModal();
             this.buttonContainer.appendChild(supportButton);
 
@@ -587,7 +726,7 @@ class PostForm {
             <button class="letitout-my-posts-close">&times;</button>
             <div class="letitout-my-posts-title">${localId}</div>
             <div class="letitout-my-posts-tabs">
-              <button class="my-posts-tab active">My Journals <span class="my-posts-notification-dot" style="display:none;"></span></button>
+              <button class="my-posts-tab active">My Stories <span class="my-posts-notification-dot" style="display:none;"></span></button>
             </div>
             <div class="letitout-my-posts-content"></div>
           </div>
@@ -638,25 +777,31 @@ class PostForm {
                 // Handle format like "Aug 2, 2025, 10:15 AM" -> get "Aug 2, 2025"
                 const parts = formattedDate.split(',');
                 const dateOnly = parts.length >= 2 ? `${parts[0]},${parts[1]}` : formattedDate;
-                timestamp = `${dateOnly} · Truth #${post.truthNumber}`;
+                timestamp = `${dateOnly} · Story #${post.truthNumber}`;
             } else {
                 timestamp = formattedDate;
             }
             
-            // Render emotion tags if present, using WallFeed markup
-            let emotionsHtml = '';
-            if (Array.isArray(post.emotions) && post.emotions.length) {
-                emotionsHtml = `<div class="post-emotions">${post.emotions.map(e => `<span class="emotion-tag">${e}</span>`).join(' ')}</div>`;
-            } else if (post.emotion && typeof post.emotion === 'string') {
-                // If emotion is a comma-separated string, split and render each as a tag
-                const emotionArr = post.emotion.includes(',') ? post.emotion.split(',').map(e => e.trim()) : [post.emotion];
-                emotionsHtml = `<div class="post-emotions">${emotionArr.map(e => `<span class="emotion-tag">${e}</span>`).join(' ')}</div>`;
+            // Render situation + emotion tags (same markup as wall feed)
+            let tagsHtml = '';
+            const hasSituation = post.situation && typeof post.situation === 'string';
+            const emotionItems = Array.isArray(post.emotions) && post.emotions.length
+                ? post.emotions
+                : (post.emotion && typeof post.emotion === 'string')
+                    ? (post.emotion.includes(',') ? post.emotion.split(',').map(e => e.trim()) : [post.emotion])
+                    : [];
+            if (hasSituation || emotionItems.length) {
+                const situationSpan = hasSituation
+                    ? `<span class="situation-tag situation-tag-small">${post.situation}</span>`
+                    : '';
+                const emotionSpans = emotionItems.map(e => `<span class="emotion-tag emotion-tag-small">${e}</span>`).join('');
+                tagsHtml = `<div class="post-emotion-tags">${situationSpan}${emotionSpans}</div>`;
             }
             
             // Generate a unique id for the post card
             const postId = post.id || Math.random().toString(36).substr(2, 9);
             html += `<div class="my-post-card" data-post-id="${postId}">
-                ${emotionsHtml}
+                ${tagsHtml}
                 <div class="my-post-message" data-expanded="false">${post.content}</div>
                 <a href="#" class="my-post-read-more" style="display:none;">Read more</a>
                 <div class="my-post-timestamp" style="font-size:0.97rem;color:#888;margin-top:0.3rem;font-weight:400;letter-spacing:0.01em;line-height:1.4;">${timestamp}</div>
@@ -837,13 +982,20 @@ class PostForm {
             let postDate = post.timestamp?.toDate?.() || new Date(post.timestamp);
             const postTimestamp = !isNaN(postDate) ? postDate.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : '';
 
-            // Render emotion tags
-            let emotionsHtml = '';
-            if (Array.isArray(post.emotions) && post.emotions.length) {
-                emotionsHtml = `<div class="post-emotions">${post.emotions.map(e => `<span class="emotion-tag">${e}</span>`).join(' ')}</div>`;
-            } else if (post.emotion && typeof post.emotion === 'string') {
-                const emotionArr = post.emotion.includes(',') ? post.emotion.split(',').map(e => e.trim()) : [post.emotion];
-                emotionsHtml = `<div class="post-emotions">${emotionArr.map(e => `<span class="emotion-tag">${e}</span>`).join(' ')}</div>`;
+            // Render situation + emotion tags (same markup as wall feed)
+            let tagsHtml = '';
+            const hasSituation = post.situation && typeof post.situation === 'string';
+            const emotionItems = Array.isArray(post.emotions) && post.emotions.length
+                ? post.emotions
+                : (post.emotion && typeof post.emotion === 'string')
+                    ? (post.emotion.includes(',') ? post.emotion.split(',').map(e => e.trim()) : [post.emotion])
+                    : [];
+            if (hasSituation || emotionItems.length) {
+                const situationSpan = hasSituation
+                    ? `<span class="situation-tag situation-tag-small">${post.situation}</span>`
+                    : '';
+                const emotionSpans = emotionItems.map(e => `<span class="emotion-tag emotion-tag-small">${e}</span>`).join('');
+                tagsHtml = `<div class="post-emotion-tags">${situationSpan}${emotionSpans}</div>`;
             }
 
             // Render replies
@@ -866,11 +1018,11 @@ class PostForm {
             }
 
             modalContent.innerHTML = `
-                <button class="back-to-posts-btn">← My Journals</button>
+                <button class="back-to-posts-btn">← My Stories</button>
                 <div class="letitout-my-posts-title">Replies</div>
                 <div class="letitout-my-posts-content">
                     <div class="original-post-card">
-                        ${emotionsHtml}
+                        ${tagsHtml}
                         <div class="original-post-message">${post.content}</div>
                         <div class="original-post-timestamp">${postTimestamp}</div>
                     </div>
@@ -912,7 +1064,7 @@ class PostForm {
         banner.className = 'free-unlock-banner';
         banner.innerHTML = `
             You've unlocked replies for this post! You have <b>${left}</b> free reply view${left === 1 ? '' : 's'} left.
-            <button class="close-btn" style="position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 1.2rem; color: #ca0013; cursor: pointer; padding: 0.5rem; line-height: 1;">&times;</button>
+            <button class="close-btn" style="position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%); background: none; border: none; font-size: 1.2rem; color: #f10000; cursor: pointer; padding: 0.5rem; line-height: 1;">&times;</button>
         `;
         const modalContent = document.querySelector('.letitout-my-posts-modal');
         if (modalContent) {
@@ -1049,32 +1201,25 @@ class PostForm {
 
         // Container for all categories
         const categoriesContainer = document.createElement('div');
-        categoriesContainer.className = 'emotion-categories-container';
+        categoriesContainer.className = 'emotion-categories-container emotion-categories-container--flat';
         content.appendChild(categoriesContainer);
 
-        // Helper to render categories and emotions
+        // Helper: one pill grid (no category headings — easier to scan)
         const renderEmotions = (filter = '') => {
             categoriesContainer.innerHTML = '';
             const filterVal = filter.trim().toLowerCase();
+            const pillsWrap = document.createElement('div');
+            pillsWrap.className = 'emotion-subtags emotion-subtags--flat';
+
             this.emotionCategories.forEach(category => {
-                // Filter emotions in this category
                 const filteredEmotions = filterVal
                     ? category.emotions.filter(e => e.toLowerCase().includes(filterVal))
                     : category.emotions;
-                if (filteredEmotions.length === 0) return; // Hide category if no emotions
-
-                const categoryDiv = document.createElement('div');
-                categoryDiv.className = 'emotion-category';
-
-                const categoryTitle = document.createElement('div');
-                categoryTitle.className = 'emotion-category-title';
-                categoryTitle.textContent = category.name;
-
-                const subTagsDiv = document.createElement('div');
-                subTagsDiv.className = 'emotion-subtags';
+                if (filteredEmotions.length === 0) return;
 
                 filteredEmotions.forEach(emotion => {
                     const subTag = document.createElement('button');
+                    subTag.type = 'button';
                     subTag.className = 'emotion-subtag';
                     subTag.textContent = emotion;
                     if (this.selectedEmotions.includes(emotion)) {
@@ -1091,17 +1236,14 @@ class PostForm {
                         }
                         this.updateSelectedTags();
                         doneBtn.disabled = false; // Emotions are now optional
-                        // Re-render to update selected state
                         renderEmotions(searchInput.value);
                     };
 
-                    subTagsDiv.appendChild(subTag);
+                    pillsWrap.appendChild(subTag);
                 });
-
-                categoryDiv.appendChild(categoryTitle);
-                categoryDiv.appendChild(subTagsDiv);
-                categoriesContainer.appendChild(categoryDiv);
             });
+
+            categoriesContainer.appendChild(pillsWrap);
         };
 
         // Initial render
@@ -1179,9 +1321,12 @@ class PostForm {
             this.selectedTagsDisplay.appendChild(tag);
         });
 
-        // Update error message - emotions are now optional
-        if (this.selectedEmotions.length === 0) {
-            this.emotionError.textContent = 'Tag a feeling to help others feel it too.';
+        // Error only after user taps Let It Out with text but no feeling (not on first paint)
+        if (this.selectedEmotions.length > 0) {
+            this._submitAttemptedWithoutEmotion = false;
+            this.emotionError.style.display = 'none';
+        } else if (this._submitAttemptedWithoutEmotion) {
+            this.emotionError.textContent = 'Name a feeling to help others feel it too.';
             this.emotionError.style.display = 'block';
         } else {
             this.emotionError.style.display = 'none';
@@ -1203,6 +1348,32 @@ class PostForm {
         }
     }
 
+    updateSelectedMetaRow() {
+        if (!this.selectedMetaDisplay) return;
+        const hasSituation = !!this.selectedSituation;
+        const hasCity = !!this.selectedCity;
+        this.selectedMetaDisplay.style.display = hasSituation || hasCity ? 'flex' : 'none';
+    }
+
+    updateSelectedSituation() {
+        this.selectedSituationDisplay.innerHTML = '';
+        if (this.selectedSituation) {
+            const tag = document.createElement('div');
+            tag.className = 'situation-tag';
+            tag.innerHTML = `
+                ${this.selectedSituation}
+                <span class="remove-tag">&times;</span>
+            `;
+            tag.querySelector('.remove-tag').onclick = () => {
+                this.selectedSituation = null;
+                this.updateSelectedSituation();
+                this.saveDraft();
+            };
+            this.selectedSituationDisplay.appendChild(tag);
+        }
+        this.updateSelectedMetaRow();
+    }
+
     updateSelectedCity() {
         this.selectedCityDisplay.innerHTML = '';
         if (this.selectedCity) {
@@ -1221,6 +1392,72 @@ class PostForm {
             };
             this.selectedCityDisplay.appendChild(tag);
         }
+        this.updateSelectedMetaRow();
+    }
+
+    openSituationModal() {
+        if (!this.situationModal) {
+            this.situationModal = document.createElement('div');
+            this.situationModal.className = 'letitout-situation-modal-overlay';
+            this.situationModal.innerHTML = `
+                <div class="letitout-situation-modal">
+                    <div class="letitout-situation-modal-header">
+                        <div class="letitout-situation-modal-title">What it&rsquo;s about (optional)</div>
+                        <button class="letitout-situation-modal-close">&times;</button>
+                    </div>
+                    <div class="letitout-situation-modal-content"></div>
+                    <div class="letitout-situation-modal-footer">
+                        <button class="letitout-situation-modal-btn cancel">Cancel</button>
+                        <button class="letitout-situation-modal-btn done" disabled>Done</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(this.situationModal);
+        }
+        const modal = this.situationModal;
+        const content = modal.querySelector('.letitout-situation-modal-content');
+        const doneBtn = modal.querySelector('.letitout-situation-modal-btn.done');
+        const closeBtn = modal.querySelector('.letitout-situation-modal-close');
+        const cancelBtn = modal.querySelector('.letitout-situation-modal-btn.cancel');
+
+        content.innerHTML = '';
+        this.situationList.forEach(situation => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'situation-option-btn';
+            btn.textContent = situation;
+            if (this.selectedSituation === situation) btn.classList.add('selected');
+            btn.onclick = () => {
+                // Single select: toggle or select
+                content.querySelectorAll('.situation-option-btn').forEach(b => b.classList.remove('selected'));
+                if (this.selectedSituation === situation) {
+                    this.selectedSituation = null;
+                } else {
+                    this.selectedSituation = situation;
+                    btn.classList.add('selected');
+                }
+                doneBtn.disabled = false;
+            };
+            content.appendChild(btn);
+        });
+
+        doneBtn.disabled = false; /* Situation is optional - always allow Done to apply/close */
+
+        const closeModal = () => modal.classList.remove('visible');
+        closeBtn.onclick = () => {
+            closeModal();
+        };
+        cancelBtn.onclick = closeModal;
+        doneBtn.onclick = () => {
+            this.updateSelectedSituation();
+            this.saveDraft();
+            closeModal();
+        };
+        modal.onclick = (e) => {
+            if (e.target === modal) closeModal();
+        };
+
+        modal.classList.add('visible');
     }
 
     openCityModal() {
@@ -1230,14 +1467,14 @@ class PostForm {
             this.cityModal.innerHTML = `
                 <div class="letitout-city-modal">
                     <div class="letitout-city-modal-header">
-                        <div class="letitout-city-modal-title">Tag Your City (Optional)</div>
+                        <div class="letitout-city-modal-title">City (optional)</div>
                         <button class="letitout-city-modal-close">&times;</button>
                     </div>
                     <div class="letitout-city-modal-content">
                         <input type="text" class="city-search-input" placeholder="Search cities..." autocomplete="off" />
                         <div class="city-suggested-list"></div>
                         <div class="city-other-section">
-                            <label for="city-other-input">Add your city</label>
+                            <label for="city-other-input">Your city</label>
                             <input type="text" class="city-other-input" placeholder="Enter your city" />
                             <button class="city-other-btn">Add</button>
                         </div>
@@ -1335,6 +1572,7 @@ class PostForm {
             emotions: this.selectedEmotions,
             city: this.selectedCity,
             isCustomCity: this.isCustomCity,
+            situation: this.selectedSituation,
         };
         sessionStorage.setItem(this.draftKey, JSON.stringify(draft));
     }
@@ -1348,13 +1586,16 @@ class PostForm {
             const textarea = this.form.querySelector('textarea');
             
             textarea.value = draft.content || '';
+            this._letitoutContentLength = textarea.value.length;
             this.selectedEmotions = draft.emotions || [];
             this.selectedCity = draft.city || null;
             this.isCustomCity = draft.isCustomCity || false;
+            this.selectedSituation = draft.situation || null;
 
             // Trigger updates to reflect loaded data
-            textarea.dispatchEvent(new Event('input', { bubbles: true })); // Updates counter and auto-expands
+            textarea.dispatchEvent(new Event('input', { bubbles: true })); // Auto-expands; input handler updates length
             this.updateSelectedTags();
+            this.updateSelectedSituation();
             this.updateSelectedCity();
 
         } catch (error) {
@@ -1380,8 +1621,8 @@ class PostForm {
         overlay.innerHTML = `
             <div class="support-modal">
                 <button class="support-modal-close">&times;</button>
-                <h3 class="support-modal-title">You're not alone.</h3>
-                <p class="support-modal-body">If you're in immediate danger or feel overwhelmed, you can call or text 988 for 24/7 free and confidential support.</p>
+                <h3 class="support-modal-title">You don't have to go through this alone.</h3>
+                <p class="support-modal-body">If you're feeling overwhelmed or in immediate danger, free and confidential support is available 24/7.</p>
                 <div class="support-modal-actions">
                     <a href="tel:988" class="support-modal-btn call-btn">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -1396,6 +1637,7 @@ class PostForm {
                         <span>Text 988</span>
                     </a>
                 </div>
+                <p class="support-modal-footer">You deserve support.</p>
             </div>
         `;
 
@@ -1504,12 +1746,15 @@ class PostForm {
             textarea.value = '';
             textarea.dispatchEvent(new Event('input', { bubbles: true }));
         }
-        // Clear emotion tags and city
+        // Clear emotion tags, situation, and city
         this.selectedEmotions = [];
         this.selectedCity = null;
         this.customCity = null;
         this.isCustomCity = false;
+        this.selectedSituation = null;
+        this._submitAttemptedWithoutEmotion = false;
         this.updateSelectedTags();
+        this.updateSelectedSituation();
         this.updateSelectedCity();
         // Clear draft
         this.clearDraft();
@@ -1750,14 +1995,15 @@ class PostForm {
     }
 
     renderMyPostsButton() {
-        // Ensure the button exists and has the event handler
+        const openInbox = () => this.openMyPostsModal();
+        // Desktop: header Inbox button (hidden on mobile via CSS)
         if (!this.myPostsBtn) {
             this.myPostsBtn = document.getElementById('my-posts-btn');
             if (this.myPostsBtn) {
-                this.myPostsBtn.onclick = () => this.openMyPostsModal();
+                this.myPostsBtn.onclick = openInbox;
             }
         }
-        
+        // Mobile Inbox button is handled by inline handler in letitout.html (works when on Wall tab too)
         // Update unread badge
         if (window.LetItOutUtils && window.LetItOutUtils.updateUnreadBadge) {
             window.LetItOutUtils.updateUnreadBadge();

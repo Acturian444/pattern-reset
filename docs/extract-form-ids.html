@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extract Google Form Entry IDs</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { font-size: 1.25rem; }
+        textarea { width: 100%; height: 80px; font-family: monospace; font-size: 0.85rem; padding: 0.5rem; }
+        button { margin-top: 0.5rem; padding: 0.5rem 1rem; cursor: pointer; }
+        pre { background: #f5f5f5; padding: 1rem; overflow-x: auto; font-size: 0.85rem; }
+        .field-names { font-size: 0.9rem; color: #666; margin-top: 0.5rem; }
+    </style>
+</head>
+<body>
+    <h1>Extract Google Form Entry IDs</h1>
+    <p>Paste your pre-filled Google Form URL below. Get it from: Form → ⋮ → Get pre-filled link → fill once → Get link.</p>
+    <textarea id="url" placeholder="https://docs.google.com/forms/d/e/1FAIpQLSe.../viewform?usp=pp_url&entry.123=test&entry.456=test"></textarea>
+    <button type="button" onclick="extract()">Extract Entry IDs</button>
+    <div id="output" style="margin-top: 1.5rem;"></div>
+
+    <script>
+        const FIELD_ORDER = [
+            'firstName', 'lastName', 'email', 'phone', 'city', 'ageRange', 'instagram',
+            'clubs', 'lifeStage', 'availability', 'relationshipStatus', 'whyJoin', 'eventInterest',
+            'attendPreference', 'guidelinesAgreed', 'contactShareConsent'
+        ];
+
+        function extract() {
+            const url = document.getElementById('url').value.trim();
+            const out = document.getElementById('output');
+            if (!url) {
+                out.innerHTML = '<p style="color:#c00;">Paste a URL first.</p>';
+                return;
+            }
+            const params = new URL(url).searchParams;
+            const entries = [];
+            params.forEach((value, key) => {
+                if (key.startsWith('entry.')) entries.push({ key, value });
+            });
+            if (entries.length === 0) {
+                out.innerHTML = '<p style="color:#c00;">No entry.XXXXX params found. Make sure you used "Get pre-filled link" and the URL has entry.XXX=... in it.</p>';
+                return;
+            }
+            let js = 'const GOOGLE_FORM = {\n    formId: \'' + (url.match(/\/d\/e\/([^/]+)\//) || [])[1] || 'PASTE_FORM_ID' + '\',\n    entries: {\n';
+            entries.forEach((e, i) => {
+                const name = FIELD_ORDER[i] || 'field' + (i + 1);
+                js += '        ' + name + ': \'' + e.key + '\',\n';
+                if (name === 'clubs') js += '        interests: \'' + e.key + '\',  // same as clubs\n';
+            });
+            js += '    },\n};';
+            out.innerHTML = '<p><strong>Form ID:</strong> ' + ((url.match(/\/d\/e\/([^/]+)\//) || [])[1] || 'not found') + '</p>' +
+                '<p><strong>Entry IDs (in order):</strong></p>' +
+                '<pre>' + js + '</pre>' +
+                '<p class="field-names">Copy the <code>entries</code> block into <code>js/common-ground.js</code> and update <code>formId</code>.</p>';
+        }
+    </script>
+</body>
+</html>

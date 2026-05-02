@@ -6,9 +6,16 @@ class WallFeed {
         this.unsubscribe = null;
         this.currentCity = localStorage.getItem('selectedCity') || 'Global';
         this.currentSort = 'newest';
-        this.currentFilter = null;
+        /** @type {{ type: 'emotion'|'situation', label: string }[]} Up to 3; any mix; posts match if ANY tag matches */
+        this.wallFilterTags = [];
+        this._locationBtn = null;
+        this._showingRow = null;
         this.currentSearch = '';
         this.posts = [];
+        this.filteredPosts = [];
+        this.viewMode = localStorage.getItem('wallViewMode') || 'list';
+        this.currentIndex = 0;
+        this.container = null;
         this.initializeEventListeners();
     }
 
@@ -226,6 +233,7 @@ class WallFeed {
     }
 
     render(container) {
+        this.container = container;
         // Create controls section
         const controls = document.createElement('div');
         controls.className = 'wall-controls';
@@ -251,57 +259,289 @@ class WallFeed {
         // Add controls to container
         container.appendChild(controls);
 
-        // Sort dropdown (left-aligned, with label)
+        // Sort + View toggle row
+        const sortViewRow = document.createElement('div');
+        sortViewRow.className = 'wall-sort-view-row';
         const sortDropdown = this.createSortDropdown();
-        // Remove centering margin if present
         sortDropdown.style.margin = '';
-        container.appendChild(sortDropdown);
+        sortViewRow.appendChild(sortDropdown);
+        const viewToggle = this.createViewToggle();
+        sortViewRow.appendChild(viewToggle);
+        container.appendChild(sortViewRow);
         
         // Add feed
         container.appendChild(this.feed);
         
         // Subscribe to posts
         this.subscribeToPosts();
+
+        if (this.viewMode === 'single') {
+            this.setupSingleCardKeyboard();
+        }
+    }
+
+    createViewToggle() {
+        const toggle = document.createElement('div');
+        toggle.className = 'wall-view-toggle';
+        toggle.setAttribute('role', 'group');
+        toggle.setAttribute('aria-label', 'View mode');
+        const listBtn = document.createElement('button');
+        listBtn.className = `wall-view-btn ${this.viewMode === 'list' ? 'active' : ''}`;
+        listBtn.type = 'button';
+        listBtn.setAttribute('aria-label', 'List view');
+        listBtn.setAttribute('aria-pressed', this.viewMode === 'list');
+        listBtn.innerHTML = '<i class="fas fa-list" aria-hidden="true"></i>';
+        listBtn.setAttribute('title', 'List view');
+        listBtn.onclick = () => this.setViewMode('list');
+        const singleBtn = document.createElement('button');
+        singleBtn.className = `wall-view-btn ${this.viewMode === 'single' ? 'active' : ''}`;
+        singleBtn.type = 'button';
+        singleBtn.setAttribute('aria-label', 'Single card view');
+        singleBtn.setAttribute('aria-pressed', this.viewMode === 'single');
+        singleBtn.innerHTML = '<i class="fas fa-window-maximize" aria-hidden="true"></i>';
+        singleBtn.setAttribute('title', 'Single story view');
+        singleBtn.onclick = () => this.setViewMode('single');
+        toggle.appendChild(listBtn);
+        toggle.appendChild(singleBtn);
+        return toggle;
+    }
+
+    setViewMode(mode) {
+        if (mode === this.viewMode) return;
+        if (mode === 'single' && this.viewMode === 'list') {
+            this.captureViewportCardIndex();
+        }
+        this.viewMode = mode;
+        localStorage.setItem('wallViewMode', mode);
+        this.updateViewToggleUI();
+        this.updateFeed();
+        if (mode === 'single') {
+            this.setupSingleCardKeyboard();
+        } else {
+            this.removeSingleCardKeyboard();
+        }
+    }
+
+    captureViewportCardIndex() {
+        const cards = this.feed.querySelectorAll('.post-card');
+        if (cards.length === 0) return;
+        const feed = this.feed;
+        const scrollTop = feed.scrollTop;
+        const viewportCenter = scrollTop + feed.clientHeight / 2;
+        let bestIndex = 0;
+        let bestDist = Infinity;
+        cards.forEach((card, i) => {
+            const cardCenter = card.offsetTop + card.offsetHeight / 2;
+            const dist = Math.abs(cardCenter - viewportCenter);
+            if (dist < bestDist) { bestDist = dist; bestIndex = i; }
+        });
+        this.currentIndex = Math.min(bestIndex, this.filteredPosts.length - 1);
+    }
+
+    updateViewToggleUI() {
+        const row = this.container?.querySelector('.wall-sort-view-row');
+        if (!row) return;
+        const toggle = row.querySelector('.wall-view-toggle');
+        if (!toggle) return;
+        const listBtn = toggle.querySelector('.wall-view-btn:first-child');
+        const singleBtn = toggle.querySelector('.wall-view-btn:last-child');
+        if (listBtn) {
+            listBtn.classList.toggle('active', this.viewMode === 'list');
+            listBtn.setAttribute('aria-pressed', this.viewMode === 'list');
+        }
+        if (singleBtn) {
+            singleBtn.classList.toggle('active', this.viewMode === 'single');
+            singleBtn.setAttribute('aria-pressed', this.viewMode === 'single');
+        }
+    }
+
+    setupSingleCardKeyboard() {
+        this._singleCardKeyHandler = (e) => {
+            if (this.viewMode !== 'single') return;
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                this.goToPrevCard();
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                this.goToNextCard();
+            }
+        };
+        document.addEventListener('keydown', this._singleCardKeyHandler);
+    }
+
+    removeSingleCardKeyboard() {
+        if (this._singleCardKeyHandler) {
+            document.removeEventListener('keydown', this._singleCardKeyHandler);
+            this._singleCardKeyHandler = null;
+        }
+    }
+
+    goToPrevCard() {
+        if (this.currentIndex > 0) {
+            this.currentIndex--;
+            this.renderSingleCardView();
+        }
+    }
+
+    goToNextCard() {
+        if (this.currentIndex < this.filteredPosts.length - 1) {
+            this.currentIndex++;
+            this.renderSingleCardView();
+        }
     }
 
     createLocationFilter() {
+        const stack = document.createElement('div');
+        stack.className = 'wall-location-filter-stack';
+
         const locationFilter = document.createElement('div');
         locationFilter.className = 'wall-location-filter';
-        
+
         const locationBtn = document.createElement('button');
         locationBtn.className = 'wall-location-btn';
+        locationBtn.type = 'button';
         locationBtn.innerHTML = this.getLocationButtonHTML();
-        
         locationBtn.onclick = () => this.openLocationModal();
-        
+        this._locationBtn = locationBtn;
+
         locationFilter.appendChild(locationBtn);
-        return locationFilter;
+
+        const showingRow = document.createElement('div');
+        showingRow.className = 'wall-about-filters';
+        this._showingRow = showingRow;
+
+        stack.appendChild(locationFilter);
+        stack.appendChild(showingRow);
+
+        this.updateShowingRow();
+        return stack;
     }
 
     getLocationButtonHTML() {
         const isGlobal = this.currentCity === 'Global';
-        const hasEmotionFilter = this.currentFilter;
-        
-        let icon, locationText, emotionText;
-        
-        if (isGlobal) {
-            icon = '<i class="fas fa-map-marker-alt"></i>';
-            locationText = 'Global';
-        } else {
-            icon = '<i class="fas fa-map-marker-alt"></i>';
-            locationText = this.currentCity;
-        }
-        
-        if (hasEmotionFilter) {
-            emotionText = this.currentFilter;
-        } else {
-            emotionText = 'All Feelings';
-        }
-        
+        const icon = '<i class="fas fa-map-marker-alt"></i>';
+        const locationText = isGlobal ? 'Global' : this.currentCity;
         return `
-            <span>${icon} ${locationText} — ${emotionText}</span>
-            <i class="fas fa-chevron-down"></i>
+            <span class="wall-location-btn-text">${icon} ${locationText}</span>
+            <i class="fas fa-chevron-down wall-location-btn-chevron" aria-hidden="true"></i>
         `;
+    }
+
+    postMatchesWallTag(post, t) {
+        if (t.type === 'emotion') {
+            if (!post.emotion) return false;
+            return post.emotion
+                .split(',')
+                .map((e) => e.trim())
+                .includes(t.label);
+        }
+        return post.situation === t.label;
+    }
+
+    applyWallTagFilter(posts) {
+        if (!this.wallFilterTags.length) return posts;
+        return posts.filter((post) =>
+            this.wallFilterTags.some((t) => this.postMatchesWallTag(post, t))
+        );
+    }
+
+    isWallTagSelected(tag) {
+        return this.wallFilterTags.some(
+            (t) => t.type === tag.type && t.label === tag.label
+        );
+    }
+
+    createFilterChip(entry) {
+        const { type, label } = entry;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'wall-filter-chip';
+        btn.setAttribute('role', 'listitem');
+        btn.setAttribute('aria-label', `Remove filter ${label}`);
+
+        const mid = document.createElement('span');
+        mid.className = 'wall-filter-chip-text';
+        mid.textContent = label;
+        btn.appendChild(mid);
+
+        const times = document.createElement('span');
+        times.className = 'wall-filter-chip-remove';
+        times.setAttribute('aria-hidden', 'true');
+        times.textContent = '\u00D7';
+
+        btn.appendChild(times);
+
+        btn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.wallFilterTags = this.wallFilterTags.filter(
+                (t) => !(t.type === type && t.label === label)
+            );
+            this.updateFeed();
+            this.updateLocationButton();
+        };
+
+        return btn;
+    }
+
+    getActiveFilterCount() {
+        return this.wallFilterTags.length;
+    }
+
+    /**
+     * Adding this tag would exceed 3 active filters (deselecting always allowed).
+     */
+    canToggleUnifiedFilter(tag) {
+        if (this.isWallTagSelected(tag)) return true;
+        return this.wallFilterTags.length < 3;
+    }
+
+    normalizeWallFilters() {
+        if (this.wallFilterTags.length > 3) {
+            this.wallFilterTags = this.wallFilterTags.slice(0, 3);
+        }
+    }
+
+    updateShowingRow() {
+        if (!this._showingRow) return;
+
+        const n = this.wallFilterTags.length;
+
+        if (n === 0) {
+            this._showingRow.hidden = false;
+            this._showingRow.innerHTML = '';
+            const defaultLine = document.createElement('div');
+            defaultLine.className = 'wall-about-default';
+            defaultLine.setAttribute('role', 'status');
+            defaultLine.innerHTML =
+                '<span class="wall-about-brand">About:</span>' +
+                '<span class="wall-about-default-suffix"> All stories</span>';
+            this._showingRow.appendChild(defaultLine);
+            return;
+        }
+
+        this._showingRow.hidden = false;
+        this._showingRow.innerHTML = '';
+
+        const bar = document.createElement('div');
+        bar.className = 'wall-about-inline-bar';
+        bar.setAttribute('role', 'group');
+        bar.setAttribute('aria-label', 'Active filters');
+
+        const aboutLabel = document.createElement('span');
+        aboutLabel.className = 'wall-about-inline-label';
+        aboutLabel.innerHTML = '<span class="wall-about-brand">About:</span>';
+
+        const list = document.createElement('div');
+        list.className = 'wall-filter-chip-list wall-filter-chip-list--inline';
+        list.setAttribute('role', 'list');
+        this.wallFilterTags.forEach((entry) => {
+            list.appendChild(this.createFilterChip(entry));
+        });
+
+        bar.appendChild(aboutLabel);
+        bar.appendChild(list);
+        this._showingRow.appendChild(bar);
     }
 
     createSearchBar() {
@@ -464,11 +704,28 @@ class WallFeed {
         }
     }
 
+    getPostCountForCity(city) {
+        let posts = this.applyWallTagFilter(this.posts);
+        if (city === 'Global') {
+            return posts.length;
+        }
+        return posts.filter((p) => p.city === city).length;
+    }
+
     openLocationModal() {
         // Create and show location modal with proper overlay structure
         const modalOverlay = document.createElement('div');
         modalOverlay.className = 'wall-location-modal-overlay visible';
         
+        const getCityChipHTML = (city) => {
+            const count = this.getPostCountForCity(city);
+            const showCount = count >= 3;
+            const countSuffix = showCount ? ` — ${count} post${count === 1 ? '' : 's'}` : '';
+            const label = city === 'Global' ? 'Global' : city;
+            const icon = (city === 'Global' && this.currentCity === 'Global') || (city !== 'Global' && this.currentCity === city) ? '<i class="fas fa-map-marker-alt"></i> ' : '';
+            return `<button class="wall-city-chip ${this.currentCity === city ? 'selected' : ''}" data-city="${city}">${icon}${label}${countSuffix}</button>`;
+        };
+
         const modal = document.createElement('div');
         modal.className = 'wall-location-modal';
         modal.innerHTML = `
@@ -481,14 +738,8 @@ class WallFeed {
                     <input type="text" placeholder="Search cities..." class="wall-location-search-input">
                 </div>
                 <div class="wall-city-chip-list">
-                    <button class="wall-city-chip ${this.currentCity === 'Global' ? 'selected' : ''}" data-city="Global">
-                        ${this.currentCity === 'Global' ? '<i class="fas fa-map-marker-alt"></i> ' : ''}Global
-                    </button>
-                    ${this.getCityList().map(city => `
-                        <button class="wall-city-chip ${this.currentCity === city ? 'selected' : ''}" data-city="${city}">
-                            ${this.currentCity === city ? '<i class="fas fa-map-marker-alt"></i> ' : ''}${city}
-                        </button>
-                    `).join('')}
+                    ${getCityChipHTML('Global')}
+                    ${this.getCityList().map(city => getCityChipHTML(city)).join('')}
                 </div>
             </div>
         `;
@@ -530,113 +781,200 @@ class WallFeed {
         };
     }
 
+    getAllEmotionLabels() {
+        const out = new Set();
+        this.getEmotionCategories().forEach((cat) => {
+            this.getSubEmotions(cat).forEach((e) => out.add(e));
+        });
+        return out;
+    }
+
+    /**
+     * Single interleaved list of feeling + situation tags (relatability-first; see UNIFIED_FILTER_LABEL_ORDER).
+     */
+    getUnifiedFilterTags() {
+        const situations = new Set(this.getSituationList());
+        const emotionSet = this.getAllEmotionLabels();
+        const order = WallFeed.UNIFIED_FILTER_LABEL_ORDER;
+        const tagFor = (label) => ({
+            type: situations.has(label) ? 'situation' : 'emotion',
+            label
+        });
+        const ordered = [];
+        const seen = new Set();
+
+        for (const label of order) {
+            if (seen.has(label)) continue;
+            if (!emotionSet.has(label) && !situations.has(label)) continue;
+            ordered.push(tagFor(label));
+            seen.add(label);
+        }
+
+        [...emotionSet]
+            .filter((e) => !seen.has(e))
+            .sort((a, b) => a.localeCompare(b))
+            .forEach((label) => {
+                ordered.push({ type: 'emotion', label });
+                seen.add(label);
+            });
+
+        this.getSituationList().forEach((label) => {
+            if (seen.has(label)) return;
+            ordered.push({ type: 'situation', label });
+            seen.add(label);
+        });
+
+        return ordered;
+    }
+
+    getSituationList() {
+        if (typeof LET_IT_OUT_SITUATION_TAGS !== 'undefined' && Array.isArray(LET_IT_OUT_SITUATION_TAGS)) {
+            return [...LET_IT_OUT_SITUATION_TAGS];
+        }
+        return [
+            'Relationships',
+            'Dating',
+            'Situationship',
+            'Relationship',
+            'Breakup',
+            'No Contact',
+            'Ex',
+            'Mixed Signals',
+            'One-Sided',
+            'Not Committing',
+            'On and Off',
+            'Breadcrumbing',
+            'Ghosted',
+            'Didn’t Say It',
+            'Holding It In',
+            'Avoided the Conversation',
+            'Said Something I Regret',
+            'Left on Read',
+            'Past',
+            'Family',
+            'Friendship',
+            'Work',
+            'Self',
+            'Childhood',
+            'Closure I Never Got',
+            'Still Thinking About It'
+        ];
+    }
+
     openFilterModal() {
         const modal = document.createElement('div');
         modal.className = 'wall-filter-modal visible';
         modal.innerHTML = `
-            <div class="letitout-emotion-modal">
+            <div class="letitout-emotion-modal wall-filter-modal-inner">
                 <div class="letitout-emotion-modal-header">
-                    <div class="letitout-emotion-modal-title">Filter by Feeling</div>
-                    <button class="letitout-emotion-modal-close">&times;</button>
+                    <div class="wall-filter-modal-header-text">
+                        <div class="letitout-emotion-modal-title">Explore stories</div>
+                        <p class="wall-filter-modal-hint">Pick up to 3 to filter stories</p>
+                    </div>
+                    <button type="button" class="letitout-emotion-modal-close" aria-label="Close">&times;</button>
                 </div>
-                <div class="letitout-emotion-modal-content"></div>
-                <div class="letitout-emotion-modal-footer">
-                    <button class="letitout-emotion-modal-btn clear">Clear Filter</button>
-                    <button class="letitout-emotion-modal-btn done">Apply</button>
+                <div class="letitout-emotion-modal-content wall-filter-modal-scroll">
+                    <div class="filter-unified-wrapper"></div>
+                </div>
+                <div class="letitout-emotion-modal-footer wall-filter-modal-footer">
+                    <button type="button" class="letitout-emotion-modal-btn clear">Clear Filter</button>
+                    <button type="button" class="letitout-emotion-modal-btn done">Apply</button>
                 </div>
             </div>
         `;
         document.body.appendChild(modal);
 
-        const content = modal.querySelector('.letitout-emotion-modal-content');
+        const unifiedWrap = modal.querySelector('.filter-unified-wrapper');
         const doneBtn = modal.querySelector('.letitout-emotion-modal-btn.done');
         const clearBtn = modal.querySelector('.letitout-emotion-modal-btn.clear');
         const closeBtn = modal.querySelector('.letitout-emotion-modal-close');
 
-        // Add search input
         const searchInput = document.createElement('input');
         searchInput.type = 'text';
-        searchInput.className = 'emotion-search-input';
-        searchInput.placeholder = 'Search feelings...';
+        searchInput.className = 'emotion-search-input wall-filter-unified-search';
+        searchInput.placeholder = 'Search feelings or situations...';
         searchInput.autocomplete = 'off';
-        searchInput.style.marginBottom = '8px';
-        content.appendChild(searchInput);
+        searchInput.setAttribute('aria-label', 'Search feelings or situations');
 
-        // Container for all categories
         const categoriesContainer = document.createElement('div');
-        categoriesContainer.className = 'emotion-categories-container';
-        content.appendChild(categoriesContainer);
+        categoriesContainer.className = 'emotion-categories-container emotion-categories-container--flat wall-filter-unified-container';
 
-        // Helper to render categories and emotions
-        const renderEmotions = (filter = '') => {
+        unifiedWrap.appendChild(searchInput);
+        unifiedWrap.appendChild(categoriesContainer);
+
+        const renderUnified = (filter = '') => {
             categoriesContainer.innerHTML = '';
             const filterVal = filter.trim().toLowerCase();
-            this.getEmotionCategories().forEach(category => {
-                // Filter emotions in this category
-                const filteredEmotions = filterVal
-                    ? this.getSubEmotions(category).filter(e => e.toLowerCase().includes(filterVal))
-                    : this.getSubEmotions(category);
-                if (filteredEmotions.length === 0) return; // Hide category if no emotions
+            const pillsWrap = document.createElement('div');
+            pillsWrap.className = 'emotion-subtags emotion-subtags--flat wall-filter-unified-grid';
 
-                const categoryDiv = document.createElement('div');
-                categoryDiv.className = 'emotion-category';
+            this.getUnifiedFilterTags().forEach((tag) => {
+                if (filterVal && !tag.label.toLowerCase().includes(filterVal)) return;
 
-                const categoryTitle = document.createElement('div');
-                categoryTitle.className = 'emotion-category-title';
-                categoryTitle.textContent = category;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'emotion-subtag wall-unified-filter-tag';
+                if (tag.type === 'situation') {
+                    btn.classList.add('wall-unified-filter-tag--situation');
+                }
 
-                const subTagsDiv = document.createElement('div');
-                subTagsDiv.className = 'emotion-subtags';
+                const labelSpan = document.createElement('span');
+                labelSpan.className = 'emotion-subtag-label';
+                labelSpan.textContent = tag.label;
+                btn.appendChild(labelSpan);
 
-                filteredEmotions.forEach(emotion => {
-                    const subTag = document.createElement('button');
-                    subTag.className = 'emotion-subtag';
-                    subTag.textContent = emotion;
-                    if (this.currentFilter === emotion) {
-                        subTag.classList.add('selected');
+                if (this.isWallTagSelected(tag)) {
+                    btn.classList.add('selected');
+                }
+
+                const canToggle = this.canToggleUnifiedFilter(tag);
+                if (!canToggle) {
+                    btn.classList.add('wall-unified-filter-tag--max');
+                    btn.setAttribute('aria-disabled', 'true');
+                    btn.title = 'Choose up to 3 tags — remove one to add another';
+                }
+
+                btn.onclick = () => {
+                    if (!this.canToggleUnifiedFilter(tag)) {
+                        return;
                     }
-                    subTag.onclick = () => {
-                        // Only one can be selected
-                        categoriesContainer.querySelectorAll('.emotion-subtag').forEach(t => t.classList.remove('selected'));
-                        if (this.currentFilter === emotion) {
-                            this.currentFilter = null;
-                        } else {
-                            subTag.classList.add('selected');
-                            this.currentFilter = emotion;
-                        }
-                    };
-                    subTagsDiv.appendChild(subTag);
-                });
+                    if (this.isWallTagSelected(tag)) {
+                        this.wallFilterTags = this.wallFilterTags.filter(
+                            (t) => !(t.type === tag.type && t.label === tag.label)
+                        );
+                    } else {
+                        this.wallFilterTags.push({
+                            type: tag.type,
+                            label: tag.label
+                        });
+                    }
+                    renderUnified(searchInput.value);
+                };
 
-                categoryDiv.appendChild(categoryTitle);
-                categoryDiv.appendChild(subTagsDiv);
-                categoriesContainer.appendChild(categoryDiv);
+                pillsWrap.appendChild(btn);
             });
+
+            categoriesContainer.appendChild(pillsWrap);
         };
 
-        // Initial render
-        renderEmotions();
+        renderUnified();
 
-        // Search handler
         searchInput.oninput = () => {
-            renderEmotions(searchInput.value);
+            renderUnified(searchInput.value);
         };
 
-        // Clear Filter button
         clearBtn.onclick = () => {
-            this.currentFilter = null;
+            this.wallFilterTags = [];
             this.updateLocationButton();
-            renderEmotions(searchInput.value);
+            renderUnified(searchInput.value);
         };
 
-        // Apply button
         doneBtn.onclick = () => {
             this.updateFeed();
             this.updateLocationButton();
             modal.remove();
         };
 
-        // Close handlers
         const closeModal = () => {
             modal.remove();
         };
@@ -653,13 +991,20 @@ class WallFeed {
     }
 
     updateLocationButton() {
-        const locationBtn = document.querySelector('.wall-location-btn');
-        if (locationBtn) {
-            locationBtn.innerHTML = this.getLocationButtonHTML();
+        if (this._locationBtn) {
+            this._locationBtn.innerHTML = this.getLocationButtonHTML();
+        } else {
+            const locationBtn = document.querySelector('.wall-location-btn');
+            if (locationBtn) {
+                locationBtn.innerHTML = this.getLocationButtonHTML();
+            }
         }
+        this.updateShowingRow();
     }
 
     updateFeed() {
+        this.normalizeWallFilters();
+
         let filteredPosts = [...this.posts];
         
         // Apply city filter
@@ -667,15 +1012,8 @@ class WallFeed {
             filteredPosts = filteredPosts.filter(post => post.city === this.currentCity);
         }
         
-        // Apply emotion filter
-        if (this.currentFilter) {
-            filteredPosts = filteredPosts.filter(post => {
-                if (!post.emotion) return false;
-                // Handle comma-separated emotions
-                const postEmotions = post.emotion.split(',').map(e => e.trim());
-                return postEmotions.includes(this.currentFilter);
-            });
-        }
+        // Wall tags: match ANY selected tag (feelings and/or situations)
+        filteredPosts = this.applyWallTagFilter(filteredPosts);
         
         // Apply search
         if (this.currentSearch) {
@@ -683,6 +1021,7 @@ class WallFeed {
             filteredPosts = filteredPosts.filter(post => 
                 post.content.toLowerCase().includes(searchTerm) ||
                 (post.emotion && post.emotion.toLowerCase().includes(searchTerm)) ||
+                (post.situation && post.situation.toLowerCase().includes(searchTerm)) ||
                 (post.truthNumber && post.truthNumber.toString().includes(searchTerm.replace(/[^\d]/g, ''))) // Search Truth numbers
             );
         }
@@ -699,6 +1038,7 @@ class WallFeed {
                 filteredPosts.sort((a, b) => b.timestamp - a.timestamp);
         }
         
+        this.filteredPosts = filteredPosts;
         this.renderPosts(filteredPosts);
     }
 
@@ -709,17 +1049,139 @@ class WallFeed {
         });
     }
 
+    buildWallEmptyContent() {
+        const wrap = document.createElement('div');
+        wrap.className = 'wall-empty-message';
+        wrap.setAttribute('role', 'status');
+
+        const searchTrimmed = (this.currentSearch || '').trim();
+        const isAllStoriesView =
+            this.wallFilterTags.length === 0 &&
+            this.currentCity === 'Global' &&
+            !searchTrimmed;
+
+        let titleText;
+        let subtitleText;
+        if (isAllStoriesView) {
+            titleText = "Nothing here yet—that's okay.";
+            subtitleText =
+                "If something's on your mind, you can be the first to share it. It's anonymous.";
+        } else {
+            titleText = 'Nothing matches right now.';
+            subtitleText =
+                'Try different filters or search—or start writing with what you had in mind.';
+        }
+
+        const p1 = document.createElement('p');
+        p1.className = 'wall-empty-title';
+        p1.textContent = titleText;
+
+        const p2 = document.createElement('p');
+        p2.className = 'wall-empty-subtitle';
+        p2.textContent = subtitleText;
+
+        wrap.appendChild(p1);
+        wrap.appendChild(p2);
+
+        const writeBlock = document.createElement('div');
+        writeBlock.className = 'wall-empty-write-block';
+
+        const cta = document.createElement('button');
+        cta.type = 'button';
+        cta.className = 'wall-empty-cta-btn';
+        cta.textContent = 'Let it out';
+        cta.setAttribute(
+            'aria-label',
+            'Go to Write and share your story'
+        );
+        cta.onclick = () => this.goToWriteTabWithPreset();
+
+        writeBlock.appendChild(cta);
+        wrap.appendChild(writeBlock);
+
+        return wrap;
+    }
+
+    goToWriteTabWithPreset() {
+        try {
+            sessionStorage.setItem(
+                'letitout_wall_to_write_preset',
+                JSON.stringify(this.wallFilterTags)
+            );
+        } catch (_) {
+            /* ignore */
+        }
+        const writeTab = document.getElementById('write-tab');
+        if (writeTab) writeTab.click();
+    }
+
     renderPosts(posts) {
         this.feed.innerHTML = '';
-        if (posts.length > 0) {
-            posts.forEach(post => {
-                const card = PostCard.create(post);
-                this.feed.appendChild(card);
-            });
+        this.feed.className = 'wall-feed';
+        if (this.viewMode === 'single') {
+            this.feed.classList.add('wall-feed-single');
+            this.renderSingleCardView();
         } else {
-            this.feed.innerHTML = '<p class="wall-empty-message">No posts found. Try adjusting your filters.</p>';
+            if (posts.length > 0) {
+                posts.forEach(post => {
+                    const card = PostCard.create(post);
+                    this.feed.appendChild(card);
+                });
+            } else {
+                this.feed.appendChild(this.buildWallEmptyContent());
+            }
+            this.highlightPostFromUrl();
         }
-        this.highlightPostFromUrl();
+    }
+
+    renderSingleCardView() {
+        this.feed.innerHTML = '';
+        const posts = this.filteredPosts;
+        if (posts.length === 0) {
+            this.feed.appendChild(this.buildWallEmptyContent());
+            return;
+        }
+        this.currentIndex = Math.min(this.currentIndex, posts.length - 1);
+        const post = posts[this.currentIndex];
+        const card = PostCard.create(post);
+        card.classList.add('post-card-single');
+
+        const cardWrapper = document.createElement('div');
+        cardWrapper.className = 'wall-single-card-wrapper';
+        const cardContainer = document.createElement('div');
+        cardContainer.className = 'wall-single-card-container';
+        cardContainer.appendChild(card);
+        cardWrapper.appendChild(cardContainer);
+
+        const navRow = document.createElement('div');
+        navRow.className = 'wall-single-card-nav';
+
+        const backBtn = document.createElement('button');
+        backBtn.className = 'wall-single-nav-btn wall-single-nav-back';
+        backBtn.type = 'button';
+        backBtn.setAttribute('aria-label', 'Previous post');
+        backBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+        backBtn.onclick = () => this.goToPrevCard();
+        backBtn.disabled = this.currentIndex === 0;
+
+        const progress = document.createElement('div');
+        progress.className = 'wall-single-card-progress';
+        progress.textContent = `${this.currentIndex + 1} of ${posts.length}`;
+
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'wall-single-nav-btn wall-single-nav-next';
+        nextBtn.type = 'button';
+        nextBtn.setAttribute('aria-label', 'Next post');
+        nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        nextBtn.onclick = () => this.goToNextCard();
+        nextBtn.disabled = this.currentIndex === posts.length - 1;
+
+        navRow.appendChild(backBtn);
+        navRow.appendChild(progress);
+        navRow.appendChild(nextBtn);
+
+        this.feed.appendChild(cardWrapper);
+        this.feed.appendChild(navRow);
     }
 
     highlightPostFromUrl() {
@@ -819,7 +1281,7 @@ class WallFeed {
                 tag.textContent = e;
                 Object.assign(tag.style, {
                     fontFamily: '"Anton", sans-serif', // Anton font
-                    color: '#ca0013', // Brand red for both light and dark modes
+                    color: '#f10000', // Brand red for both light and dark modes
                     fontSize: '42px', // Same size as body text
                     fontWeight: '400', // Normal weight for Anton
                     textTransform: 'uppercase', // Uppercase for Anton
@@ -864,7 +1326,7 @@ class WallFeed {
         });
 
         const watermark = document.createElement('p');
-        watermark.innerHTML = `Truth #${post.truthNumber || ''} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; LetItOut &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Pattern Reset`;
+        watermark.innerHTML = `Story #${post.truthNumber || ''} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; LetItOut`;
         Object.assign(watermark.style, {
             fontFamily: '"DM Sans", sans-serif',
             fontSize: '24px',
@@ -963,6 +1425,7 @@ class WallFeed {
 
     destroy() {
         this.cleanup();
+        this.removeSingleCardKeyboard();
         // Remove event listeners
         if (this.feed) {
             this.feed.removeEventListener('click', this.handleFeedClick.bind(this));
@@ -982,42 +1445,92 @@ class WallFeed {
 
     getEmotionCategories() {
         return [
-            'Pain & Pressure',
-            'Unspoken & Unsaid',
-            'Hope & Healing',
-            'Longing & Love',
-            'Identity & Self',
-            'Transformation & Release',
-            'Light & Alive'
+            'Core Pain',
+            'Emotional State',
+            'Longing & Connection',
+            'Growth / Release'
         ];
     }
 
     getSubEmotions(category) {
         const emotions = {
-            'Pain & Pressure': [
-                'Abandonment', 'Alone', 'Anger', 'Anxiety', 'Bitterness', 'Confusion', 'Depression', 'Embarrassment', 'Emptiness', 'Envy', 'Exhausted', 'Fear', 'Frustration', 'Grief', 'Guilt', 'Heartbreak', 'Hopelessness', 'Insecurity', 'Jealousy', 'Loneliness', 'Overwhelm', 'Panic', 'Powerlessness', 'Rejection', 'Regret', 'Resentment', 'Sadness', 'Self-hate', 'Shame', 'Stuck'
+            'Core Pain': [
+                'Heartbreak', 'Rejection', 'Abandonment', 'Betrayal', 'Loneliness', 'Shame', 'Regret', 'Resentment'
             ],
-            'Unspoken & Unsaid': [
-                "What I can't forgive", "What I can't tell anyone", "What I carry in silence", "What I hide behind my smile", "What I miss", "What I needed to hear", "What I never believed I deserved", "What I never got to say", "What I still don't understand", "What I want to scream", "What I wish I could take back", "What I'm afraid to admit", "What I've never said", "What's been eating me alive"
+            'Emotional State': [
+                'Anxious', 'Overthinking', 'Drained', 'Numb', 'Stuck', 'Lost', 'Powerless',
+                'Confused', 'Obsessing', 'Keeps happening', 'Insecure'
             ],
-            'Hope & Healing': [
-                'Acceptance', 'Clarity', 'Closure', 'Compassion', 'Courage', 'Faith', 'Forgiveness', 'Gratitude', 'Healing', 'Joy', 'Letting go', 'Lightness', 'Peace', 'Presence', 'Relief', 'Stillness', 'Surrender', 'Trust'
+            'Longing & Connection': [
+                'Longing', 'Missing Someone', 'Still in Love', 'Wanting Connection', 'Wanting to Feel Chosen'
             ],
-            'Longing & Love': [
-                'Desire', 'I don\'t feel lovable', 'I loved them more than they knew', 'I miss someone', 'I need connection', 'I never said I loved them', 'I still love them', 'I want to feel loved', 'I\'m falling for someone', 'I\'m scared to love again', 'I feel unloved', 'Missed Connection'
-            ],
-            'Identity & Self': [
-                'I crave touch', 'I don\'t know who I am', 'I feel invisible', 'I feel like not enough', 'I feel misunderstood', 'I feel too much', 'I hate who I used to be', 'I want to be authentic', 'I want to be seen', 'I want to feel chosen', 'I want to love myself', 'I want to start over', 'I\'m ashamed of who I am', 'I\'m learning to love myself', 'I\'m learning who I am', 'I\'m not okay', 'I\'m tired of pretending', 'I\'m trying to change'
-            ],
-            'Transformation & Release': [
-                'I forgive myself', 'I made it through', 'I want to begin again', 'I want to heal', 'I\'m becoming someone new', 'I\'m finally saying it', 'I\'m letting it out', 'I\'m not who I was', 'I\'m ready to grow', 'I\'m ready to move on', 'I\'m still here', 'I\'ve been carrying this but I\'m ready to be free', 'I\'ve been holding this too long', 'It\'s time to let go', 'This is my turning point'
-            ],
-            'Light & Alive': [
-                'Adventurous', 'Becoming me', 'Breakthrough', 'Celebration', 'Energized', 'Excitement', 'Freedom', 'Hope returned', 'I made it through', 'Peaceful inside', 'Pride', 'Safe now', 'Self-love'
+            'Growth / Release': [
+                'Letting Go', 'Healing', 'Forgiveness', 'Clarity'
             ]
         };
         return emotions[category] || [];
     }
 }
+
+/**
+ * Relatability-first interleaving of feelings + situations for the wall filter modal.
+ * Any tag missing here is appended automatically (emotions A–Z, then remaining situations).
+ */
+WallFeed.UNIFIED_FILTER_LABEL_ORDER = [
+    'Heartbreak',
+    'Ghosted',
+    'Mixed Signals',
+    'Drained',
+    'Anxious',
+    'Confused',
+    'Situationship',
+    'Breakup',
+    'Rejection',
+    'Breadcrumbing',
+    'On and Off',
+    'One-Sided',
+    'Not Committing',
+    'Overthinking',
+    'Obsessing',
+    'Numb',
+    'Stuck',
+    'Lost',
+    'Powerless',
+    'Keeps happening',
+    'Insecure',
+    'Longing',
+    'Missing Someone',
+    'Still in Love',
+    'Wanting Connection',
+    'Wanting to Feel Chosen',
+    'No Contact',
+    'Ex',
+    'Dating',
+    'Relationship',
+    'Relationships',
+    'Abandonment',
+    'Betrayal',
+    'Loneliness',
+    'Shame',
+    'Regret',
+    'Resentment',
+    'Didn\u2019t Say It',
+    'Holding It In',
+    'Avoided the Conversation',
+    'Said Something I Regret',
+    'Left on Read',
+    'Family',
+    'Friendship',
+    'Work',
+    'Self',
+    'Childhood',
+    'Past',
+    'Closure I Never Got',
+    'Still Thinking About It',
+    'Letting Go',
+    'Healing',
+    'Forgiveness',
+    'Clarity'
+];
 
 window.WallFeed = WallFeed;

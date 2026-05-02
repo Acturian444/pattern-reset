@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#fffcf1">
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="index, follow">
     <meta name="author" content="Pattern Reset™">
     
     <!-- Google tag (gtag.js) - pattern-reset property @ analytics.google.com -->
@@ -16,12 +16,12 @@
 
     gtag('config', 'G-ZEZQRBTLR7');
     </script>
-    <title>Let It Out | An Anonymous Space to Share Your Story & Heal</title>
-    <meta name="description" content="Let It Out is a public emotional wall where you can post anonymously, release your truth, and read what others are carrying too. No login. No judgment. The most honest wall on the internet.">
+    <title>Let It Out — anonymous wall to vent and feel less alone | Pattern Reset™</title>
+    <meta name="description" content="Post anonymously on a public wall—breakup, family, anxiety, situationship spirals, anything heavy. No account. Read others&rsquo; truths and remember you are not the only one carrying it.">
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Let It Out | An Anonymous Space to Share Your Story & Heal">
-    <meta property="og:description" content="Let It Out is a public emotional wall where you can post anonymously, release your truth, and read what others are carrying too. No login. No judgment. The most honest wall on the internet.">
+    <meta property="og:title" content="Let It Out — anonymous emotional wall | Pattern Reset™">
+    <meta property="og:description" content="Say the thing you cannot post anywhere else. Anonymous posts, real-time wall, no login—vent, release, and see you are not alone.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mypatternreset.com/letitout">
     <meta property="og:image" content="https://mypatternreset.com/images/Let%20It%20Out%20Logo.png">
@@ -31,8 +31,8 @@
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Let It Out | An Anonymous Space to Share Your Story & Heal">
-    <meta name="twitter:description" content="Let It Out is a public emotional wall where you can post anonymously, release your truth, and read what others are carrying too. No login. No judgment. The most honest wall on the internet.">
+    <meta name="twitter:title" content="Let It Out — anonymous wall | Pattern Reset™">
+    <meta name="twitter:description" content="Anonymous vent wall: post what you are holding, read what others released. No login. Part of Pattern Reset™.">
     <meta name="twitter:image" content="https://mypatternreset.com/images/Let%20It%20Out%20Logo.png">
     
     <!-- Structured Data (JSON-LD) -->
@@ -41,7 +41,7 @@
       "@context": "https://schema.org",
       "@type": "WebApplication",
       "name": "Let It Out",
-      "description": "An anonymous emotional release tool for people silently carrying emotional weight. A mirror for people to see they're not alone. A healing space for letting go of what's never been shared. A community wall for unspoken truths.",
+      "description": "Anonymous public wall for emotional release—relationship stress, grief, anxiety, and hard truths. Post without an account; read others and feel less alone. Part of Pattern Reset™.",
       "url": "https://mypatternreset.com/letitout",
       "applicationCategory": "SocialNetworkingApplication",
       "operatingSystem": "Web Browser",
@@ -96,11 +96,11 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="style.css?v=2">
-            <link rel="stylesheet" href="styles/letitout.css?v=16">
+    <link rel="stylesheet" href="styles/letitout-theme.css?v=3">
+    <link rel="stylesheet" href="styles/letitout.css?v=55">
     <link rel="stylesheet" href="styles/letitout-mobile.css?v=2">
-    <link rel="stylesheet" href="styles/letitout-theme.css?v=2">
-    <link rel="stylesheet" href="styles/letitout-dark.css?v=1">
-    <link rel="stylesheet" href="styles/letitout-location-fix.css?v=1">
+    <link rel="stylesheet" href="styles/letitout-dark.css?v=29">
+    <link rel="stylesheet" href="styles/letitout-location-fix.css?v=7">
     <link rel="stylesheet" href="styles/letitout-button-fix.css?v=1">
     <style>
     .letitout-title-bar {
@@ -131,7 +131,7 @@
         font-family: 'DM Sans', sans-serif;
         font-size: 1.1rem;
         font-weight: 600;
-        color: #ca0013;
+        color: #f10000;
         background: none;
         border: none;
         border-radius: 2rem;
@@ -140,14 +140,19 @@
         transition: background 0.2s, color 0.2s;
     }
     .segment-btn.active {
-        background: #ca0013;
+        background: #f10000;
         color: #fff !important;
         font-weight: 700;
-        box-shadow: 0 2px 8px rgba(193,0,22,0.08);
+        box-shadow: 0 2px 8px rgba(241,0,0,0.08);
     }
     @media (max-width: 600px) {
+        .letitout-title-bar {
+            margin-top: 1.35rem;
+            margin-bottom: 1.5rem;
+        }
         .letitout-title {
             font-size: 2rem;
+            margin-bottom: 1.25rem;
         }
         .letitout-segmented-control {
             gap: 0.25rem;
@@ -157,291 +162,45 @@
             padding: 0.4rem 1.2rem;
         }
     }
-    .letitout-intro-modal-overlay {
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0,0,0,0.72);
-        z-index: 2000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        animation: fadeInModal 0.5s;
-    }
-    .letitout-intro-modal {
-        background: #252526;
-        border-radius: 1.5rem;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 8px rgba(0,0,0,0.06);
-        max-width: 520px;
-        width: 98vw;
-        padding: 2.5rem 2.5rem 2rem 2.5rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        animation: fadeInModal 0.5s;
-    }
-    .letitout-intro-modal-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        width: 100%;
-    }
-    .letitout-intro-title {
-        font-family: 'Anton', sans-serif;
-        font-size: 2.5rem;
-        font-weight: 900;
-        color: #D4D4D4;
-        letter-spacing: 1.2px;
-        line-height: 1.18;
-        margin-bottom: 0.1rem;
-        text-align: center;
-        text-transform: uppercase;
-    }
-    .letitout-intro-title .subtitle {
-        display: block;
-        font-size: 1.25rem;
-        font-weight: 400;
-        color: #ca0013;
-        letter-spacing: 0.5px;
-        margin-top: 0.25em;
-        text-transform: none;
-    }
-    .letitout-intro-copy {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 1.13rem;
-        color: #b0b0b0;
-        margin-bottom: 1.2rem;
-        margin-top: 1.5rem;
-        line-height: 1.7;
-        text-align: left;
-        max-width: 420px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .intro-subtext {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 1rem;
-        font-weight: 500;
-        color: #b0b0b0;
-        text-align: center;
-        margin-top: 0.1rem;
-        margin-bottom: 0.8rem;
-        line-height: 1.6;
-        padding: 0 0.5rem;
-        text-transform: none;
-        max-width: 420px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .intro-section {
-        display: flex;
-        align-items: flex-start;
-        margin-bottom: 1rem;
-        gap: 1rem;
-    }
-    .intro-icon {
-        font-size: 1.3rem;
-        margin-top: 0.2rem;
-        flex-shrink: 0;
-        color: #ca0013;
-        width: 2rem;
-        text-align: center;
-    }
-    .intro-text h3 {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #D4D4D4;
-        margin: 0 0 0.3rem 0;
-        text-transform: none;
-        letter-spacing: 0.2px;
-    }
-    .intro-text p {
-        font-family: 'DM Sans', sans-serif;
-        font-size: 1rem;
-        line-height: 1.5;
-        color: #b0b0b0;
-        margin: 0;
-    }
-    .letitout-intro-copy p:not(.intro-subtext) {
-        margin-bottom: 1.1em;
-        margin-top: 0;
-    }
-    .letitout-intro-age {
-        color: #D4D4D4 !important;
-        font-size: 1.13rem;
-        font-weight: 700;
-        margin-top: 0;
-        margin-bottom: 1.5rem;
-        text-align: center;
-    }
-    .letitout-intro-btn {
-        background: #ca0013;
-        color: #fff;
-        font-family: 'DM Sans', sans-serif;
-        font-size: 1rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.8px;
-        border: none;
-        border-radius: 4px;
-        padding: 0.9rem 1.8rem;
-        cursor: pointer;
-        box-shadow: none;
-        transition: background 0.2s;
-        margin-top: 0;
-        margin-bottom: 0;
-    }
-    .letitout-intro-btn:hover {
-        background: #7a0010;
-    }
-    @media (max-width: 600px) {
-        .letitout-intro-modal {
-            width: 100vw;
-            max-width: 100vw;
-            margin: 0;
-            padding: 1.8rem 1.1rem 1.5rem 1.1rem;
-            box-sizing: border-box;
-            background: linear-gradient(180deg, #252526 80%, #1E1E1E 100%);
-            background-size: cover;
-            border: none;
-            box-shadow: none;
-        }
-        .letitout-intro-title {
-            margin-top: 0.2rem;
-            margin-bottom: 1.1rem;
-        }
-        .letitout-intro-btn {
-            margin-top: 0;
-            margin-bottom: 0.3rem;
-            width: 100%;
-            max-width: 260px;
-        }
-        .letitout-intro-copy {
-            margin-bottom: 1.1rem;
-            margin-top: 1.2rem;
-            padding-left: 0.1rem;
-            padding-right: 0.1rem;
-        }
-        .intro-subtext {
-            font-size: 1rem;
-            margin-bottom: 1.3rem;
-            padding: 0 0.3rem;
-        }
-        .intro-section {
-            margin-bottom: 1.2rem;
-            gap: 0.8rem;
-        }
-        .intro-icon {
-            font-size: 1.2rem;
-            width: 1.8rem;
-        }
-        .intro-text h3 {
-            font-size: 1rem;
-        }
-        .intro-text p {
-            font-size: 0.95rem;
-        }
-    }
-    @media (min-width: 601px) and (max-width: 900px) {
-        .letitout-intro-modal {
-            max-width: 420px;
-            padding: 2.2rem 1.2rem 2rem 1.2rem;
-        }
-        .letitout-intro-title {
-            font-size: 1.55rem;
-        }
-        .letitout-intro-copy {
-            font-size: 1.13rem;
-        }
-        .letitout-intro-btn {
-            font-size: 1.13rem;
-            padding: 1.05rem 2rem;
-        }
-    }
-    @media (min-width: 901px) {
-        .letitout-intro-modal {
-            max-width: 520px;
-            padding: 3.5rem 2.5rem 3rem 2.5rem;
-        }
-        .letitout-intro-title {
-            font-size: 2.1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.18;
-        }
-        .letitout-intro-copy {
-            font-size: 1.25rem;
-            margin-bottom: 1.7rem;
-            line-height: 1.8;
-        }
-        .letitout-intro-age {
-            font-size: 1.13rem;
-            margin-top: 0;
-            margin-bottom: 2rem;
-        }
-    }
-    @keyframes fadeInModal {
-        from { opacity: 0; transform: scale(0.98); }
-        to { opacity: 1; transform: scale(1); }
-    }
     </style>
 </head>
-<body class="has-reset-banner">
-    <div id="letitout-intro-modal" class="letitout-intro-modal-overlay" style="display:none;">
+<body class="page-letitout">
+    <script>
+    window.openMenu=function(){var e=document.getElementById("menuOverlay");e&&(e.classList.add("open"),document.body.style.overflow="hidden")};
+    window.closeMenu=function(){var e=document.getElementById("menuOverlay");e&&(e.classList.remove("open"),document.body.style.overflow="")};
+    document.addEventListener("DOMContentLoaded",function(){var e=document.getElementById("menuOverlay");if(e){e.addEventListener("click",function(t){t.target===e&&closeMenu()});e.querySelectorAll("nav a").forEach(function(a){a.addEventListener("click",closeMenu)})}});
+    </script>
+    <div id="letitout-intro-modal" class="letitout-intro-modal-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="letitout-intro-heading">
         <div class="letitout-intro-modal">
+            <div class="letitout-intro-accent" aria-hidden="true"></div>
             <div class="letitout-intro-modal-content">
-                <h2 class="letitout-intro-title">
-                    Let It Out
-                    <span class="subtitle">Your space to release what you carry.</span>
-                </h2>
-                <div class="letitout-intro-copy">
-                    <div class="intro-section">
-                        <div class="intro-icon">
-                            <i class="fas fa-pen"></i>
-                </div>
-                        <div class="intro-text">
-                            <h3>Write It Out</h3>
-                            <p>Type your thoughts, feelings, truth, story, or secret. No login. No judgment.</p>
-                        </div>
-                    </div>
-                    <div class="intro-section">
-                        <div class="intro-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <div class="intro-text">
-                            <h3>Share Anonymously</h3>
-                            <p>Your words are shared on the public wall— never tracked, safely stored.</p>
-                        </div>
-                    </div>
-                    <div class="intro-section">
-                        <div class="intro-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="intro-text">
-                            <h3>Feel Seen and Supported</h3>
-                            <p>Others can react to your post or send anonymous support replies.</p>
-                        </div>
-                    </div>
+                <h2 id="letitout-intro-heading" class="letitout-intro-title">LET IT OUT</h2>
+                <p class="letitout-intro-lede">Anonymous. No pressure.</p>
+                <div class="letitout-intro-body">
+                    <section class="letitout-intro-section" aria-label="Why it builds up">
+                        <p class="letitout-intro-copy">The things you keep inside don’t disappear.<br>They stay with you.</p>
+                        <p class="letitout-intro-copy">When you put it into words,<br>it stops running in your head.</p>
+                    </section>
+                    <section class="letitout-intro-section" aria-label="What to write">
+                        <p class="letitout-intro-section-lead">Write what happened.<br>What you felt.<br>What you never said.</p>
+                        <p class="letitout-intro-copy letitout-intro-copy--brand letitout-intro-copy--brand-tight">Don’t overthink it. Just write it.</p>
+                        <p class="letitout-intro-copy letitout-intro-copy--brand">Just get it out.</p>
+                    </section>
                 </div>
                 <p class="letitout-intro-age">You must be 13 or older to enter.</p>
-                <button class="letitout-intro-btn" id="letitout-intro-btn">Let It Out</button>
+                <button type="button" class="letitout-intro-btn" id="letitout-intro-btn">Let It Out Now</button>
             </div>
         </div>
     </div>
-    <a href="product/breakup-course.html" class="global-reset-banner">
-        <span class="banner-label">Next Reset Starts In:</span>
-        <div class="banner-content-row">
-            <span class="banner-countdown" id="reset-countdown">--</span>
-            <span class="banner-cta">Join the Next Reset <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline-block; margin-left: 0.3rem; vertical-align: middle;"><path d="M6 1L11 6L6 11M11 6H1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        </div>
-    </a>
     <header>
         <div class="container">
             <nav class="nav-centered">
                 <div class="nav-left">
-                    <a href="index.html" class="center-logo nav-logo" aria-label="Pattern Reset Home">
+                    <button class="hamburger nav-hamburger" aria-label="Open menu" onclick="openMenu()">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
+                    </button>
+                    <a href="home.html" class="logo-brand-combo" aria-label="Pattern Reset Home">
+                        <span class="center-logo nav-logo">
                         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <!-- Outer spiral ring -->
                             <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" 
@@ -467,35 +226,41 @@
                             <!-- Center point connecting all rings -->
                             <circle cx="50" cy="50" r="3.5" fill="currentColor"/>
                         </svg>
+                        </span>
                     </a>
                 </div>
-                <ul class="nav-links nav-right">
-                    <li><a href="index.html#quiz-section">My Pattern Quiz</a></li>
-                    <li><a href="product/breakup-course.html" id="desktopBreakupResetLink">Pattern Reset</a></li>
-                    <li><a href="letitout.html" class="active">Let It Out</a></li>
-                    <li id="myCourseLink" style="display: none;"><a href="course/breakup-course.html" id="desktopContinueBreakupResetLink">Continue Pattern Reset</a></li>
-                    <!-- Join the Movement hidden temporarily -->
-                </ul>
-                <button class="hamburger" aria-label="Open menu" onclick="openMenu()">
-                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-                        <rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/>
-                        <rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/>
-                        <rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/>
-                    </svg>
-                </button>
+                <div class="nav-right">
+                    <ul class="nav-links">
+                        <li><a href="index.html">Get Clarity</a></li>
+                        <li><a href="letitout.html" class="letitout-link active">Let It Out</a></li>
+                        <li id="myCourseLink" style="display: none;"><a href="course/breakup-course.html" id="desktopContinueBreakupResetLink">Continue Pattern Reset</a></li>
+                    </ul>
+                    <button type="button" class="nav-cta-button letitout-my-posts-btn-global letitout-inbox-cta" id="my-posts-btn" aria-label="My Stories & Inbox">
+                        <i class="fas fa-envelope"></i> Inbox
+                    </button>
+                </div>
             </nav>
         </div>
         <div class="menu-overlay" id="menuOverlay">
+            <button class="close-btn hamburger" onclick="closeMenu()" aria-label="Close menu">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
+            </button>
             <nav>
-            <a href="index.html#quiz-section">My Pattern Quiz</a>
-            <a id="mobileBreakupResetLink" href="product/breakup-course.html">Pattern Reset</a>
-            <a href="letitout.html" class="active">Let It Out</a>
-            <a id="mobileCourseLink" href="course/breakup-course.html" style="display: none;">Continue Pattern Reset</a>
+                <a href="index.html" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Get Clarity</span><span class="menu-nav-subtitle">Discover your relationship pattern</span></a>
+                <a href="letitout.html" class="menu-nav-link letitout-link active" onclick="closeMenu()"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your situation anonymously</span></a>
+                <a href="home.html#newsletter" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Reset</span><span class="menu-nav-subtitle">Your weekly Sunday reset</span></a>
+                <a id="mobileCourseLink" href="course/breakup-course.html" class="menu-nav-link" style="display: none;" onclick="closeMenu()"><span class="menu-nav-title">Continue Pattern Reset</span><span class="menu-nav-subtitle">Pick up where you left off</span></a>
             </nav>
         </div>
+        <button type="button" class="letitout-mobile-inbox-btn letitout-my-posts-btn-global" id="mobile-inbox-btn" aria-label="My Stories & Inbox">
+            <i class="fas fa-envelope"></i>
+        </button>
     </header>
 
     <main id="letitout-main">
+        <button type="button" id="letitout-about-btn" class="letitout-about-btn" aria-label="What is Let It Out?" aria-haspopup="dialog" aria-controls="letitout-about-modal" aria-expanded="false">
+            <span class="letitout-about-btn-icon" aria-hidden="true">?</span>
+        </button>
         <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle theme">
             <i class="fas fa-moon"></i>
         </button>
@@ -507,29 +272,46 @@
             </div>
         </div>
         <div id="letitout-tab-content"></div>
-        <!-- Global My Posts Button Container -->
-        <div id="letitout-my-posts-container" class="letitout-my-posts-container">
-            <button class="letitout-my-posts-btn letitout-my-posts-btn-global" id="my-posts-btn" aria-label="My Posts & Inbox">
-                <span class="my-posts-icon" style="display:inline-flex;align-items:center;">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="18" height="4" rx="2"/>
-                        <path d="M3 7v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7"/>
-                        <path d="M9 12h6"/>
-                    </svg>
-                </span>
-            </button>
-        </div>
     </main>
 
-    <footer id="footer">
-        <div class="footer-content">
-            <div class="copyright">
-                <p>&copy; 2026 Pattern Reset™. All rights reserved. | <a href="legal.html">Legal</a></p>
-            </div>          <!-- /.copyright -->
-        </div>              <!-- /.footer-content -->
+    <footer id="footer" class="pr-footer-std">
+        <p>
+            &copy; 2026 Pattern Reset™
+            <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+            <a href="index.html">Get Clarity</a>
+            <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+            <a href="letitout.html">Let It Out&trade;</a>
+            <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+            <a href="legal.html">Legal</a>
+        </p>
     </footer>
 
     <div id="toast-notification" class="toast-notification"></div>
+
+    <!-- Let It Out — Why this exists -->
+    <div id="letitout-about-modal" class="letitout-about-overlay" role="dialog" aria-modal="true" aria-labelledby="letitout-about-heading" hidden>
+        <div class="letitout-about-panel">
+            <button type="button" class="letitout-about-close" aria-label="Close">&times;</button>
+            <div class="letitout-about-accent" aria-hidden="true"></div>
+            <div class="letitout-about-inner letitout-about-inner--card">
+                <h2 id="letitout-about-heading" class="letitout-about-hero letitout-about-hero--brand">Why Let It Out Works</h2>
+                <div class="letitout-about-prose">
+                    <p class="letitout-about-copy">You’re not stuck because you don’t want to change. You’re stuck because there are things you never got to say.</p>
+                    <p class="letitout-about-copy">Things you kept to yourself. Things you pushed down. Things you moved on from but never actually let go of.</p>
+                    <p class="letitout-about-copy"><strong>You carried it.</strong> And it shows up in your life—in your thoughts, in your reactions, in your relationships—over and over again, until it starts to feel like who you are.</p>
+                    <p class="letitout-about-copy">That’s why it feels like nothing really changes.</p>
+                    <p class="letitout-about-copy"><strong>Letting it out is how you break that.</strong> When you write it down, you get it out of your head and in front of you.</p>
+                    <p class="letitout-about-copy">You can finally see it clearly, instead of just feeling it. <strong>That’s the moment.</strong></p>
+                    <p class="letitout-about-copy">What felt stuck starts to move. What felt isolating becomes shared. You realize you’re not the only one carrying this.</p>
+                    <p class="letitout-about-copy">Real change doesn’t start by fixing yourself. It starts by creating space—by saying what’s true, by facing what you’ve been avoiding.</p>
+                </div>
+                <div class="letitout-about-closer" role="group" aria-label="How it works">
+                    <p class="letitout-about-closer-text">Not by forcing it. Not by overthinking it. <strong>By letting it out.</strong></p>
+                </div>
+                <button type="button" class="letitout-about-dismiss">Got it</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Report Post Modal -->
     <div id="report-modal-overlay" class="letitout-emotion-modal-overlay">
@@ -558,33 +340,65 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-check-compat.js"></script>
 
     <!-- Application Scripts -->
-    <script src="js/config/firebase-config.js?v=2"></script>
+    <script src="js/config/firebase-config.js?v=3"></script>
     <script src="js/config/mvp-config.js?v=1"></script>
     <script src="js/localId.js?v=2"></script>
     <script src="js/utils.js?v=3"></script>
-    <script src="js/menu.js"></script>
     <script src="js/darkMode.js"></script>
-    <script src="js/firebase.js?v=2"></script>
+    <script src="js/firebase.js?v=3"></script>
     <!-- <script src="js/firebase-debug.js?v=1"></script> -->
     <script src="js/services/post-service.js?v=2"></script>
-    <script src="js/components/post-card.js?v=2"></script>
+    <script src="js/components/post-card.js?v=5"></script>
     <script src="js/premium-packs.js?v=1"></script>
-    <script src="js/postForm.js?v=4"></script>
-    <script src="js/wallFeed.js?v=2"></script>
+    <script src="js/letitout-situations.js?v=3"></script>
+    <script src="js/postForm.js?v=26"></script>
+    <script src="js/wallFeed.js?v=21"></script>
     
     <!-- Test Script -->
     <!-- <script src="js/test-setup.js"></script> -->
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Let It Out — Why this exists modal (runs even if LetItOutUtils fails)
+        (function initLetItOutAboutModal() {
+            const overlay = document.getElementById('letitout-about-modal');
+            const trigger = document.getElementById('letitout-about-btn');
+            if (!overlay || !trigger) return;
+
+            const closeModal = () => {
+                overlay.setAttribute('hidden', '');
+                document.body.style.overflow = '';
+                trigger.setAttribute('aria-expanded', 'false');
+                trigger.focus();
+            };
+
+            const openModal = () => {
+                overlay.removeAttribute('hidden');
+                document.body.style.overflow = 'hidden';
+                trigger.setAttribute('aria-expanded', 'true');
+                overlay.querySelector('.letitout-about-dismiss')?.focus();
+            };
+
+            trigger.addEventListener('click', openModal);
+            overlay.querySelector('.letitout-about-close')?.addEventListener('click', closeModal);
+            overlay.querySelector('.letitout-about-dismiss')?.addEventListener('click', closeModal);
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !overlay.hasAttribute('hidden')) closeModal();
+            });
+        })();
+
         // Ensure utils are initialized before using them
         if (!window.LetItOutUtils) {
             console.error('LetItOutUtils not initialized');
             return;
         }
 
-        // Initialize My Posts button
+        // Initialize My Posts button (now in header)
         const myPostsBtn = document.getElementById('my-posts-btn');
         if (myPostsBtn && !window.postFormInstance) {
             // Create a temporary PostForm instance just for the button
@@ -593,6 +407,17 @@
                 window.postFormInstance = tempForm;
             }
         }
+
+        // Mobile Inbox button (floating, like theme toggle)
+        document.getElementById('mobile-inbox-btn')?.addEventListener('click', function() {
+            if (window.postFormInstance && typeof window.postFormInstance.openMyPostsModal === 'function') {
+                window.postFormInstance.openMyPostsModal();
+            } else if (window.PostForm) {
+                const temp = new window.PostForm();
+                window.postFormInstance = temp;
+                temp.openMyPostsModal();
+            }
+        });
 
         const writeTab = document.getElementById('write-tab');
         const wallTab = document.getElementById('wall-tab');
@@ -1055,6 +880,5 @@
 
     });
     </script>
-    <script src="js/reset-banner.js"></script>
 </body>
 </html> 

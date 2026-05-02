@@ -1,0 +1,29 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "letitout-posts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "localId", "order": "ASCENDING" },
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "letitout-posts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "timestamp", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "letitout-posts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "truthNumber", "order": "ASCENDING" },
+        { "fieldPath": "timestamp", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

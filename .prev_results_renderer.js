@@ -4943,7 +4943,7 @@
                 <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 500;">Most people only change when life forces them to—through trauma, loss, breakdown, or hitting rock bottom. We carry patterns that drive our lives, keeping us stuck in loops of trauma we haven't processed, problems that repeat, unhappiness that feels unshakeable, and lack of progress in all areas of life.</p>
                 <p class="content-text" style="margin-bottom: 1rem;">It feels hopeless because we don't know how to address it or where to start. It feels impossible because the pattern is invisible—we can't fix what we can't see.</p>
                 <p class="content-text" style="margin-bottom: 1rem; color: #000; font-weight: 600;">But you don't have to wait for a breakdown to have a breakthrough.</p>
-                <p class="content-text" style="margin-bottom: 0; color: #000;">The Pattern Quiz and pattern recognition provide the solution: <strong>awareness</strong> of what's been running your life, <strong>understanding</strong> of why it developed, and the power to <strong>consciously choose</strong> to change—before life forces it. Through awareness + decision + daily repetition, you can transform your life.</p>
+                <p class="content-text" style="margin-bottom: 0; color: #000;">The Pattern Analysis and pattern recognition provide the solution: <strong>awareness</strong> of what's been running your life, <strong>understanding</strong> of why it developed, and the power to <strong>consciously choose</strong> to change—before life forces it. Through awareness + decision + daily repetition, you can transform your life.</p>
             </div>
 
             <div style="margin-bottom: 2rem;">

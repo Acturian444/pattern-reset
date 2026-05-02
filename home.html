@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<!-- Pattern Reset — /home: Weekly Reset waitlist (hero + email). Full long-form gateway saved as home-gateway.html (noindex, not in nav). -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050505">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEZQRBTLR7"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZEZQRBTLR7');
+    </script>
+
+    <title>Sunday reset email | Pattern Reset™</title>
+    <meta name="description" content="A weekly Sunday reset to release what you’re holding, get clear, and start fresh. Don’t carry this week into the next one.">
+    <meta name="author" content="Liam | Pattern Reset™">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="Sunday reset | Pattern Reset™">
+    <meta property="og:description" content="A weekly Sunday reset to release what you’re holding, get clear, and start fresh.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mypatternreset.com/home">
+    <meta property="og:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sunday reset | Pattern Reset™">
+    <meta name="twitter:description" content="A weekly Sunday reset to release what you are holding, get clear, and start fresh. From Pattern Reset™.">
+    <meta name="twitter:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
+
+    <link rel="canonical" href="https://mypatternreset.com/home">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=block" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=5">
+
+    <!--
+      WEEKLY RESET — GOOGLE FORM + SHEET (once per environment; then paste into <script> at bottom)
+
+      A) Create the form
+      1) drive.google.com → New → Google Forms → blank. Title: e.g. "Weekly Reset — /home".
+
+      2) Questions (pick one):
+         - Email only: one question, type Email (or Short answer, required). In code, set PR_FORM_ENTRY_SOURCE to ''.
+         - Email + Source: Q1 Email (required), Q2 Short answer "Source" (required if you need the POST to succeed—our page sends hidden "weekly_reset_home" so you can filter in Sheets).
+
+      B) Link responses to a new Sheet
+      3) In the form, open the Responses tab → link icon (Google Sheets) → "Create a new spreadsheet". Confirm columns match your questions. New signups append as new rows.
+
+      C) formResponse URL + entry IDs
+      4) Form ID: from the editor URL forms.google.com/d/FORM_ID/edit (or from Send → the share link: .../d/e/FORM_ID/viewform for published forms that use /e/ paths).
+         POST URL: https://docs.google.com/forms/d/e/FORM_ID_PASTE/formResponse  (use the exact /e/... id from your form if Google shows that pattern).
+
+      5) Entry IDs: in the form editor, use "Get pre-filled link" (⋯ menu), type dummy text in every field, click Get link. The prefill URL has entry.XXXXXXXX= for each question. Map Q1 email → PR_FORM_ENTRY_EMAIL, Q2 source (if any) → PR_FORM_ENTRY_SOURCE.
+
+      D) Wire the site
+      6) Paste into home.html: PR_WEEKLY_RESET_FORM_ACTION, PR_FORM_ENTRY_EMAIL, and (if the form has a second field) PR_FORM_ENTRY_SOURCE. The script sends "weekly_reset_home" for source when that field is configured.
+
+      E) Back end
+      7) Deploy Firestore rules for weeklyResetSignups if not already (firebase deploy --only firestore:rules). Test /home: Sheet gets a row, Firestore gets a document.
+
+      8) Optional: same Form can feed one Sheet; you can add a "Source" column in Sheets to segment /home vs other forms if you reuse a form (not recommended—prefer a dedicated form for the newsletter list).
+    -->
+
+    <style>
+    :root {
+        --pr-red: #f10000;
+        --pr-dark: #050505;
+        --pr-cream: #fffcf1;
+        --pr-grey: rgba(255,252,241,0.55);
+        --pr-border: rgba(255,252,241,0.1);
+        --pr-section-pad-x: clamp(1.25rem, 4vw, 3rem);
+        --pr-title-max: 42rem;
+        --pr-read-max: 40rem;
+        --pr-max-hero: 900px;
+        --pr-max-email: 640px;
+        --pr-max-newsletter-lead: 520px;
+    }
+    html, body { background: var(--pr-dark) !important; }
+    body.page-home { min-height: 100dvh; min-height: 100svh; display: flex; flex-direction: column; }
+    body.page-home #main-content { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+    .pr-body { font-family: 'DM Sans', sans-serif; line-height: 1.7; margin: 0; }
+    .pr-hero { background: var(--pr-dark); max-width: 100%; flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: calc(4.5rem + env(safe-area-inset-top, 0px)) clamp(0.75rem, 2.5vw, 1.5rem) calc(1.25rem + env(safe-area-inset-bottom, 0px)); box-sizing: border-box; position: relative; overflow: hidden; }
+    .pr-hero-inner { max-width: min(56rem, 100%); margin: 0 auto; width: 100%; }
+    .pr-hero-waitlist { text-align: center; max-width: 100%; margin: 0 auto; position: relative; z-index: 1; padding: 0 0.2rem; box-sizing: border-box; }
+    /* Match #quiz-section .quiz-intro-label */
+    /* #home-hero .pr-label--quiz-hero + .pr-hero-headline (index quiz) */
+    .pr-hero-waitlist .pr-email-kicker { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--pr-red); display: block; margin: 0 auto clamp(0.65rem, 1.5vw, 0.95rem); max-width: 100%; line-height: 1.35; text-wrap: balance; }
+    .pr-hero-waitlist .pr-hero-waitlist-title {
+        font-family: 'Anton', sans-serif;
+        font-weight: 400;
+        text-transform: uppercase;
+        color: var(--pr-cream);
+        max-width: min(36rem, 100%);
+        margin: 0 auto;
+        text-wrap: balance;
+        font-size: clamp(1.85rem, 3.4vw + 0.45rem, 3.65rem);
+        line-height: 1.08;
+        letter-spacing: 0.015em;
+        hyphens: none;
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+    @media (max-width: 767px) {
+        .pr-hero-waitlist .pr-hero-waitlist-title {
+            font-size: clamp(2rem, 8vw, 2.55rem);
+            line-height: 1.06;
+        }
+    }
+    @media (max-width: 480px) {
+        .pr-hero-waitlist .pr-hero-waitlist-title {
+            font-size: clamp(1.65rem, 5.2vw, 2.1rem);
+            line-height: 1.08;
+        }
+    }
+    /* Match #home-hero .pr-hero-supporting */
+    .pr-hero-waitlist .pr-hero-waitlist-lead {
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.95rem, 2.15vw, 1.1rem);
+        font-weight: 500;
+        font-style: normal;
+        color: rgba(255, 252, 241, 0.78);
+        line-height: 1.55;
+        margin: clamp(0.95rem, 2.5vw, 1.45rem) auto 0;
+        max-width: min(36rem, 100%);
+        padding: 0 clamp(0.25rem, 2vw, 0.5rem);
+        letter-spacing: 0.01em;
+        text-align: center;
+        text-wrap: pretty;
+        overflow-wrap: break-word;
+        word-break: normal;
+        hyphens: none;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    @media (max-width: 480px) {
+        .pr-hero-waitlist .pr-hero-waitlist-lead {
+            font-size: clamp(0.92rem, 3.8vw, 1.02rem);
+            line-height: 1.52;
+            max-width: 100%;
+        }
+    }
+    .pr-waitlist-lead__br { display: none; }
+    @media (max-width: 640px) {
+        .pr-waitlist-lead__br { display: block; }
+    }
+    .pr-body { color: rgba(255,252,241,0.82); }
+    .pr-home-micro { font-family: 'DM Sans', sans-serif; font-size: clamp(0.75rem, 1.1vw, 0.85rem); font-weight: 400; color: rgba(255,252,241,0.45); margin: clamp(0.7rem, 1.8vw, 0.95rem) auto 0; line-height: 1.5; letter-spacing: 0.02em; max-width: min(26rem, 100%); }
+    .pr-hero-waitlist .pr-email-form { display: flex; flex-direction: column; align-items: stretch; gap: 0.7rem; margin-top: clamp(1.75rem, 3.5vw, 2.35rem); width: 100%; max-width: min(32rem, 100%); margin-left: auto; margin-right: auto; }
+    .pr-email-input { width: 100%; min-width: 0; min-height: 3rem; box-sizing: border-box; background: rgba(255,252,241,0.08); border: 1px solid rgba(255,252,241,0.16); border-radius: 10px; padding: 0.95rem 1.1rem; font-family: 'DM Sans', sans-serif; font-size: 1.0625rem; color: var(--pr-cream); outline: none; transition: border-color 0.2s, background 0.2s; }
+    @media (max-width: 640px) {
+        .pr-hero-waitlist { padding: 0 0.5rem; }
+        .pr-hero-waitlist .pr-email-form { max-width: min(24.5rem, 94%); gap: 0.75rem; margin-top: 1.5rem; }
+        .pr-email-success { max-width: min(22rem, 94%) !important; box-sizing: border-box; }
+        .pr-email-input { font-size: 16px; min-height: 3.25rem; padding: 0.85rem 1rem; border-radius: 10px; }
+    }
+    .pr-email-input::placeholder { color: rgba(255,252,241,0.35); }
+    .pr-email-input:focus { border-color: var(--pr-red); }
+    /* Match red CTAs on quiz / home */
+    .pr-home-cta { width: 100%; box-sizing: border-box; min-height: 3.1rem; background: var(--pr-red); color: #fff; border: none; border-radius: 10px; padding: 1.05rem 1.5rem; font-family: 'Anton', sans-serif; font-size: 1.05rem; font-weight: 400; letter-spacing: 0.04em; text-transform: none; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+    @media (min-width: 768px) { .pr-home-cta { min-height: 3.2rem; padding: 1.1rem 2rem; font-size: 1.1rem; } }
+    @media (max-width: 640px) { .pr-home-cta { min-height: 3.4rem; font-size: 1.02rem; letter-spacing: 0.04em; padding: 1rem 1.25rem; } }
+    .pr-home-cta:hover { background: #cc0000; transform: translateY(-1px); }
+    .pr-home-cta:disabled { opacity: 0.6; cursor: not-allowed; }
+    @media (prefers-reduced-motion: reduce) { .pr-home-cta:hover { transform: none; } }
+    /* Success: minimal pill — centered, matches input glass tone (no heavy red fill) */
+    .pr-email-success {
+        display: none;
+        box-sizing: border-box;
+        font-family: 'DM Sans', sans-serif;
+        font-size: clamp(0.9rem, 2.8vw, 0.98rem);
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        line-height: 1.45;
+        color: rgba(255, 252, 241, 0.92);
+        text-align: center;
+        text-wrap: balance;
+        margin: 1.35rem auto 0;
+        padding: 0.65rem 1rem;
+        width: fit-content;
+        max-width: min(22rem, 100%);
+        background: rgba(255, 252, 241, 0.06);
+        border: 1px solid rgba(255, 252, 241, 0.14);
+        border-radius: 999px;
+    }
+    .pr-hero-movement { min-height: 0; }
+    .pr-hero-movement .pr-hero-inner { display: block; width: 100%; }
+    .pr-hero .pr-hero-spiral-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; }
+    .pr-hero .pr-hero-spiral-wrap::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 72% 68% at 50% 50%, rgba(255, 252, 241, 0.045) 0%, transparent 62%); pointer-events: none; }
+    .pr-hero .pr-hero-spiral-bg { width: min(100vmin, 46rem); height: min(100vmin, 46rem); max-width: 100%; max-height: 100%; flex-shrink: 0; overflow: visible; color: rgba(255, 252, 241, 0.28); animation: pr-homeQuizIntroMapFloat 16s ease-in-out infinite alternate; will-change: transform; }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer { transform-origin: 50% 50%; transform-box: fill-box; }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--outer { animation: pr-homeQuizMapOrbit 38s linear infinite; }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--middle { animation: pr-homeQuizMapOrbit 28s linear infinite reverse; }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--inner { animation: pr-homeQuizMapOrbit 21s linear infinite; }
+    .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--center { animation: pr-homeQuizMapOrbit 24s linear infinite reverse; }
+    @media (prefers-reduced-motion: reduce) {
+        .pr-lp-fade-in { animation: none !important; }
+        .pr-hero .pr-hero-spiral-bg, .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--outer, .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--middle, .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--inner, .pr-hero .pr-hero-spiral-bg .quiz-map-ring-layer--center { animation: none; }
+    }
+    @keyframes pr-homeQuizMapOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    @keyframes pr-homeQuizIntroMapFloat { from { transform: translateY(5px) scale(1); } to { transform: translateY(-7px) scale(1.02); } }
+    @media (max-width: 768px) {
+        .pr-hero .pr-hero-spiral-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            transform: none;
+        }
+        .pr-hero .pr-hero-spiral-bg {
+            display: block;
+            width: min(92vw, 26rem);
+            height: min(92vw, 26rem);
+            margin: 0 auto;
+            flex-shrink: 0;
+        }
+    }
+    body.page-home--v2 .pr-lp-hero-inner { max-width: min(56rem, 100%); margin: 0 auto; text-align: center; width: 100%; }
+    @media (prefers-reduced-motion: no-preference) {
+        .pr-lp-fade-in { animation: pr-lp-fade-in 0.85s ease-out both; }
+    }
+    @keyframes pr-lp-fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .pr-footer-std { background: var(--pr-dark); border-top: 1px solid rgba(255,252,241,0.07); padding: 2rem 1.5rem; text-align: center; }
+    .pr-footer-std p { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: rgba(255,252,241,0.35); margin: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.2rem 0.6rem; line-height: 2; }
+    .pr-footer-std a { color: rgba(255,252,241,0.45); text-decoration: none; transition: color 0.2s; }
+    .pr-footer-std a:hover { color: var(--pr-red); }
+    .pr-footer-dot { opacity: 0.3; }
+    /* Weekly /home: dark header + light hamburger + dark slide menu (match index quiz) */
+    body.page-home--v2 header {
+        background: #0a0a0a !important;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+    }
+    body.page-home--v2 .nav-links a { color: rgba(255, 255, 255, 0.9) !important; }
+    body.page-home--v2 .nav-links a:hover,
+    body.page-home--v2 .nav-links a.active { color: #f10000 !important; }
+    body.page-home--v2 .logo-brand-combo,
+    body.page-home--v2 .logo-brand-combo .center-logo,
+    body.page-home--v2 .nav-logo { color: #f10000 !important; }
+    body.page-home--v2 .logo-brand-combo:hover .center-logo { color: #cc0000 !important; }
+    body.page-home--v2 .nav-hamburger,
+    body.page-home--v2 button.hamburger.nav-hamburger { color: rgba(255, 255, 255, 0.95) !important; }
+    body.page-home--v2 .nav-hamburger svg,
+    body.page-home--v2 button.hamburger.nav-hamburger svg { fill: currentColor; }
+    body.page-home--v2 .nav-hamburger svg rect,
+    body.page-home--v2 button.hamburger.nav-hamburger svg rect { fill: rgba(255, 255, 255, 0.95) !important; }
+    body.page-home--v2 .nav-cta-button { background: #f10000 !important; color: #fffcf1 !important; }
+    body.page-home--v2 .nav-cta-button:hover,
+    body.page-home--v2 .nav-cta-button:focus { background: #d40000 !important; color: #fffcf1 !important; }
+    body.page-home--v2 .menu-overlay nav {
+        background: #0a0a0a !important;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4) !important;
+    }
+    body.page-home--v2 .menu-overlay .menu-nav-title { color: rgba(255, 255, 255, 0.95) !important; }
+    body.page-home--v2 .menu-overlay .menu-nav-subtitle { color: rgba(255, 255, 255, 0.7) !important; }
+    body.page-home--v2 .menu-overlay .menu-nav-link:hover .menu-nav-title,
+    body.page-home--v2 .menu-overlay .menu-nav-link.active .menu-nav-title { color: #f10000 !important; }
+    body.page-home--v2 .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
+    body.page-home--v2 .menu-overlay .menu-nav-link.active .menu-nav-subtitle { color: rgba(241, 0, 0, 0.9) !important; }
+    body.page-home--v2 .menu-overlay .close-btn,
+    body.page-home--v2 .menu-overlay .close-btn.hamburger { color: rgba(255, 255, 255, 0.95) !important; }
+    body.page-home--v2 .menu-overlay .close-btn svg rect,
+    body.page-home--v2 .menu-overlay .close-btn.hamburger svg rect { fill: rgba(255, 255, 255, 0.95) !important; }
+    /* Same-page #newsletter works in every dev/prod context; /home can 404 on static file servers or drop hash on redirect */
+    #newsletter { scroll-margin-top: calc(4.5rem + env(safe-area-inset-top, 0px)); }
+    </style>
+</head>
+<body class="page-home page-home--v2">
+
+<header>
+    <div class="container">
+        <nav class="nav-centered">
+            <div class="nav-left">
+                <button class="hamburger nav-hamburger" type="button" aria-label="Open menu" onclick="openMenu()">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
+                </button>
+                <a href="home.html" class="logo-brand-combo" aria-label="Pattern Reset Home">
+                    <span class="center-logo nav-logo">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="40" height="40" aria-hidden="true">
+                            <path d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="50" cy="50" r="3.5" fill="currentColor"/>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html">Get Clarity</a></li>
+                    <li><a href="letitout.html" class="letitout-link">Let It Out</a></li>
+                </ul>
+                <a href="#newsletter" class="nav-cta-button">Reset</a>
+            </div>
+        </nav>
+    </div>
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="close-btn hamburger" type="button" onclick="closeMenu()" aria-label="Close menu">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
+        </button>
+        <nav>
+            <a href="index.html" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Get Clarity</span><span class="menu-nav-subtitle">Discover your relationship pattern</span></a>
+            <a href="letitout.html" class="menu-nav-link letitout-link" onclick="closeMenu()"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your situation anonymously</span></a>
+            <a href="#newsletter" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Reset</span><span class="menu-nav-subtitle">Your weekly Sunday reset</span></a>
+        </nav>
+    </div>
+</header>
+
+<main id="main-content">
+    <section class="pr-hero pr-hero-movement pr-lp-fade-in" aria-labelledby="hero-heading">
+        <div class="pr-hero-spiral-wrap" aria-hidden="true">
+            <svg class="pr-hero-spiral-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--outer"><path class="quiz-map-ring" d="M50,5 Q5,5 5,50 Q5,95 50,95 Q95,95 95,50 Q95,5 50,5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.32" opacity="0.26"/></g>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--middle"><path class="quiz-map-ring" d="M50,20 Q25,20 25,50 Q25,80 50,80 Q75,80 75,50 Q75,20 50,20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.28" opacity="0.22"/></g>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--inner"><path class="quiz-map-ring" d="M50,35 Q35,35 35,50 Q35,65 50,65 Q65,65 65,50 Q65,35 50,35" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.24" opacity="0.18"/></g>
+                <g class="quiz-map-ring-layer quiz-map-ring-layer--center"><circle cx="50" cy="50" r="1.2" fill="currentColor" opacity="0.14"/></g>
+            </svg>
+        </div>
+        <div class="pr-hero-inner pr-lp-hero-inner">
+            <div class="pr-hero-waitlist" id="newsletter">
+                <span class="pr-email-kicker">Pattern Reset&trade;</span>
+                <h1 class="pr-hero-waitlist-title" id="hero-heading">Don&rsquo;t carry this week into the next one.</h1>
+                <p class="pr-hero-waitlist-lead pr-body">A weekly Sunday reset to release what you&rsquo;re holding,<br class="pr-waitlist-lead__br" /> get clear, and start fresh.</p>
+                <form class="pr-email-form" id="prEmailForm" novalidate>
+                    <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for Sunday&rsquo;s reset">
+                    <button type="submit" class="pr-home-cta" id="prEmailSubmit">Get this Sunday&rsquo;s Reset &rarr;</button>
+                </form>
+                <p class="pr-home-micro">Delivered every Sunday evening. Join live or reset on your own.</p>
+                <div class="pr-email-success" id="prEmailSuccess" role="status" aria-live="polite">You&rsquo;re in. Look for this Sunday&rsquo;s reset in your inbox.</div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<iframe name="weekly-reset-iframe" id="weekly-reset-iframe" title="Form submit" style="display:none;width:0;height:0;border:0;" aria-hidden="true"></iframe>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-check-compat.js"></script>
+<script src="js/config/firebase-config.js?v=3"></script>
+<script src="js/firebase.js?v=3"></script>
+
+<footer class="pr-footer-std">
+    <p>
+        &copy; 2026 Pattern Reset™
+        <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+        <a href="index.html">Get Clarity</a>
+        <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+        <a href="letitout.html">Let It Out&trade;</a>
+        <span class="pr-footer-dot">&nbsp;&middot;&nbsp;</span>
+        <a href="legal.html">Legal</a>
+    </p>
+</footer>
+
+<script>
+function openMenu() {
+    var overlay = document.getElementById('menuOverlay');
+    if (overlay) {
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+}
+function closeMenu() {
+    var overlay = document.getElementById('menuOverlay');
+    if (overlay) {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+}
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMenu();
+});
+
+/**
+ * Weekly Reset — Google Form (see HTML comment in <head> for full walkthrough).
+ * After you create a dedicated form + Sheet, paste your formResponse URL and entry IDs here.
+ * Email-only form: set PR_FORM_ENTRY_SOURCE to '' and only the email field is POSTed.
+ */
+var PR_WEEKLY_RESET_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSfyNFXWb8mZ0A-EOemynRlZemc1_Pm1fvYvl5O9DKqpfwjAAw/formResponse';
+var PR_FORM_ENTRY_EMAIL = 'entry.2011616989';
+var PR_FORM_ENTRY_SOURCE = '';
+
+function postWeeklyResetToGoogleForm(email) {
+    if (!PR_WEEKLY_RESET_FORM_ACTION || !PR_FORM_ENTRY_EMAIL) return;
+    var f = document.createElement('form');
+    f.setAttribute('method', 'POST');
+    f.setAttribute('action', PR_WEEKLY_RESET_FORM_ACTION);
+    f.setAttribute('target', 'weekly-reset-iframe');
+    f.setAttribute('accept-charset', 'UTF-8');
+    f.style.cssText = 'position:absolute;left:-9999px;opacity:0;pointer-events:none;';
+    if (PR_FORM_ENTRY_SOURCE) {
+        var t = document.createElement('input');
+        t.setAttribute('type', 'hidden');
+        t.setAttribute('name', PR_FORM_ENTRY_SOURCE);
+        t.setAttribute('value', 'weekly_reset_home');
+        f.appendChild(t);
+    }
+    var m = document.createElement('input');
+    m.setAttribute('type', 'hidden');
+    m.setAttribute('name', PR_FORM_ENTRY_EMAIL);
+    m.setAttribute('value', email);
+    f.appendChild(m);
+    document.body.appendChild(f);
+    f.submit();
+    document.body.removeChild(f);
+}
+
+var prEmailFormEl = document.getElementById('prEmailForm');
+if (prEmailFormEl) {
+    prEmailFormEl.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var form = this;
+        var input = document.getElementById('prEmailInput');
+        var btn = document.getElementById('prEmailSubmit');
+        var success = document.getElementById('prEmailSuccess');
+        if (!input || !success) return;
+        var v = (input.value || '').trim();
+        if (!v || v.indexOf('@') === -1) {
+            input.style.borderColor = 'var(--pr-red)';
+            input.focus();
+            return;
+        }
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+        var db = window.letitoutDb;
+        var doneUi = function() {
+            if (input) { input.style.display = 'none'; input.style.borderColor = ''; }
+            if (btn) { btn.style.display = 'none'; }
+            if (typeof form.querySelectorAll === 'function') {
+                form.querySelectorAll('label').forEach(function(l) { l.style.display = 'none'; });
+            }
+            if (document.querySelector('.pr-home-micro')) {
+                var micro = document.querySelector('.pr-home-micro');
+                if (micro) micro.style.display = 'none';
+            }
+            success.style.display = 'block';
+            if (typeof gtag === 'function') {
+                gtag('event', 'sign_up', { method: 'weekly_reset_home' });
+            }
+        };
+
+        var runGoogle = function() { try { postWeeklyResetToGoogleForm(v); } catch (err) { console.error(err); } };
+
+        var finish = function() {
+            runGoogle();
+            setTimeout(doneUi, 400);
+        };
+
+        if (db) {
+            firebase.auth().signInAnonymously()
+                .then(function() {
+                    return db.collection('weeklyResetSignups').add({
+                        email: v,
+                        source: 'home',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                })
+                .then(finish)
+                .catch(function(err) {
+                    console.error('weeklyResetSignups or auth', err);
+                    finish();
+                });
+        } else {
+            finish();
+        }
+    });
+}
+</script>
+</body>
+</html>

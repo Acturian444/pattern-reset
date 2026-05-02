@@ -1,6 +1,6 @@
 :root {
     /* Colors */
-    --letitout-primary: #ca0013;
+    --letitout-primary: #f10000;
     --letitout-secondary: #7a0010;
     --letitout-background: #fffcf1;
     --letitout-text: #000000;
@@ -35,4 +35,23 @@
     --letitout-transition-fast: 0.2s ease;
     --letitout-transition-normal: 0.3s ease;
     --letitout-transition-slow: 0.5s ease;
-} 
+
+    /* Feeling / situation / city pills (light + dark use same surface) */
+    --letitout-pill-tag-bg: #e8e8e8;
+    --letitout-pill-tag-border: #cfcfcf;
+    --letitout-pill-tag-text: #141414;
+    --letitout-pill-tag-remove: #5a5a5a;
+    --letitout-pill-tag-selected-bg: #d2d2d2;
+    --letitout-pill-tag-selected-border: #9a9a9a;
+}
+
+/* Let It Out main column: 600 default, 680 on desktop */
+body.page-letitout {
+    --letitout-content-max-width: 600px;
+}
+
+@media (min-width: 900px) {
+    body.page-letitout {
+        --letitout-content-max-width: 680px;
+    }
+}
