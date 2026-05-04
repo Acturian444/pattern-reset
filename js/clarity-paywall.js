@@ -164,7 +164,7 @@
             '<div class="clarity-paywall-panel">' +
             '<button type="button" class="clarity-paywall-close" aria-label="Close">&times;</button>' +
             '<div class="clarity-paywall-header" role="group" aria-labelledby="clarity-paywall-title">' +
-            '<h2 id="clarity-paywall-title" class="clarity-paywall-title"><span class="clarity-paywall-title-accent">You can keep guessing \u2014 or finally know for sure.</span></h2>' +
+            '<h2 id="clarity-paywall-title" class="clarity-paywall-title">You can keep guessing\u2014or get clarity on what this actually is.</h2>' +
             '<p class="clarity-paywall-sub">If you&rsquo;re unsure, you&rsquo;re who this is for.</p>' +
             '</div>' +
             '<div class="clarity-paywall-tiers clarity-paywall-tiers--two">' +

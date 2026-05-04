@@ -502,16 +502,6 @@ body.page-bio-hub {
   color: rgba(255, 252, 241, 0.82);
 }
 
-.bio-hub__pr-hero-waitlist .pr-waitlist-lead__br {
-  display: none;
-}
-
-@media (max-width: 640px) {
-  .bio-hub__pr-hero-waitlist .pr-waitlist-lead__br {
-    display: block;
-  }
-}
-
 .bio-hub__pr-hero-waitlist .pr-email-form {
   display: flex;
   flex-direction: column;
@@ -584,13 +574,18 @@ body.page-bio-hub {
 
 .bio-hub__pr-hero-waitlist .pr-home-micro {
   font-family: "DM Sans", sans-serif;
-  font-size: clamp(0.72rem, 1vw, 0.82rem);
   font-weight: 400;
   color: rgba(255, 252, 241, 0.45);
   margin: clamp(0.65rem, 1.5vw, 0.85rem) auto 0;
-  line-height: 1.5;
-  letter-spacing: 0.02em;
-  max-width: min(26rem, 100%);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 clamp(0.35rem, 2vw, 0.75rem);
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(0.5rem, 1.65vw + 0.34rem, 0.82rem);
 }
 
 .bio-hub__pr-hero-waitlist .pr-email-success {

@@ -1,6 +1,6 @@
 /* ===== Header & Footer: light mode - cream background to match page ===== */
 body.page-letitout header {
-    background-color: #fffcf1 !important;
+    background-color: var(--letitout-background) !important;
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
     min-height: 70px !important;
 }
@@ -44,7 +44,7 @@ body.page-letitout .nav-cta-button:focus {
 }
 /* Mobile menu overlay - light */
 body.page-letitout .menu-overlay nav {
-    background: #fffcf1 !important;
+    background: var(--letitout-background) !important;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
 }
 body.page-letitout .menu-overlay .menu-nav-title {
@@ -54,12 +54,14 @@ body.page-letitout .menu-overlay .menu-nav-subtitle {
     color: #666 !important;
 }
 body.page-letitout .menu-overlay .menu-nav-link:hover .menu-nav-title,
+body.page-letitout .menu-overlay .menu-nav-link:focus .menu-nav-title,
 body.page-letitout .menu-overlay .menu-nav-link.active .menu-nav-title {
     color: #f10000 !important;
 }
 body.page-letitout .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
+body.page-letitout .menu-overlay .menu-nav-link:focus .menu-nav-subtitle,
 body.page-letitout .menu-overlay .menu-nav-link.active .menu-nav-subtitle {
-    color: #b03030 !important;
+    color: #f10000 !important;
 }
 body.page-letitout .menu-overlay .close-btn,
 body.page-letitout .menu-overlay .close-btn.hamburger {
@@ -75,7 +77,7 @@ body.page-letitout .menu-overlay .close-btn.hamburger svg rect {
 }
 /* Footer — Let It Out: light cream bar in default theme; global .pr-footer-std is dark for other pages */
 body.page-letitout:not(.dark-mode) footer.pr-footer-std {
-    background: #fffcf1;
+    background: var(--letitout-background);
     border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 body.page-letitout:not(.dark-mode) footer.pr-footer-std p {
@@ -118,6 +120,30 @@ header .container {
 @media (min-width: 900px) {
     #letitout-main {
         padding: var(--letitout-spacing-lg) 1rem;
+    }
+}
+
+/* Mobile: pin footer to viewport bottom when content is short (match /home + other pages) */
+@media (max-width: 900px) {
+    body.page-letitout {
+        min-height: 100dvh;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+    }
+    body.page-letitout > header {
+        flex-shrink: 0;
+    }
+    body.page-letitout > main#letitout-main {
+        flex: 1 1 auto;
+        min-height: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    body.page-letitout > footer.pr-footer-std {
+        flex-shrink: 0;
+        margin-top: auto;
+        padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
     }
 }
 

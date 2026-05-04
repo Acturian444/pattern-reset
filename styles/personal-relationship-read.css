@@ -70,7 +70,7 @@ body.page-pr-read .nav-cta-button:focus {
 }
 
 body.page-pr-read .menu-overlay nav {
-    background: #0a0a0a !important;
+    background: #050505 !important;
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
 }
 
@@ -83,7 +83,14 @@ body.page-pr-read .menu-overlay .menu-nav-subtitle {
 }
 
 body.page-pr-read .menu-overlay .menu-nav-link:hover .menu-nav-title,
+body.page-pr-read .menu-overlay .menu-nav-link:focus .menu-nav-title,
 body.page-pr-read .menu-overlay .menu-nav-link.active .menu-nav-title {
+    color: var(--prr-red) !important;
+}
+
+body.page-pr-read .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
+body.page-pr-read .menu-overlay .menu-nav-link:focus .menu-nav-subtitle,
+body.page-pr-read .menu-overlay .menu-nav-link.active .menu-nav-subtitle {
     color: var(--prr-red) !important;
 }
 
@@ -401,6 +408,39 @@ body.page-pr-read .menu-overlay .close-btn.hamburger {
     font-size: 0.9rem;
     cursor: pointer;
     color: var(--prr-text);
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    padding-left: 0;
+}
+.pr-read-faq summary::-webkit-details-marker {
+    display: none;
+}
+.pr-read-faq summary::marker {
+    content: '';
+}
+/* CSS chevron — avoids OS/emoji disclosure markers in Safari/iOS production */
+.pr-read-faq summary::before {
+    content: '';
+    flex-shrink: 0;
+    width: 0.42em;
+    height: 0.42em;
+    margin-top: 0.32em;
+    border-right: 2px solid rgba(255, 252, 241, 0.45);
+    border-bottom: 2px solid rgba(255, 252, 241, 0.45);
+    transform: rotate(-45deg);
+    transition: transform 0.2s ease;
+}
+.pr-read-faq details[open] summary::before {
+    transform: rotate(45deg);
+    margin-top: 0.2em;
+}
+.pr-read-hint-line {
+    display: block;
+}
+.pr-read-hint--closing .pr-read-hint-line + .pr-read-hint-line {
+    margin-top: 0.35em;
 }
 .pr-read-faq p {
     font-size: 0.86rem;
