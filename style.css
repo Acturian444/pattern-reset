@@ -1918,7 +1918,7 @@ button.nav-cta-button {
 .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
 .menu-overlay .menu-nav-link:focus .menu-nav-subtitle,
 .menu-overlay .menu-nav-link.active .menu-nav-subtitle {
-    color: #b30000;
+    color: #f10000;
 }
 
 .menu-overlay.open nav {
@@ -9984,6 +9984,18 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     gap: 0.2rem 0.6rem;
     line-height: 2;
 }
+@media (max-width: 560px) {
+    .pr-footer-std {
+        padding: 1.25rem 0.45rem;
+    }
+    .pr-footer-std p {
+        flex-wrap: wrap;
+        gap: 0.1rem 0.35rem;
+        line-height: 1.35;
+        font-size: clamp(0.56rem, 2.55vw, 0.7rem);
+        letter-spacing: -0.02em;
+    }
+}
 .pr-footer-std a {
     color: rgba(255, 252, 241, 0.45);
     text-decoration: none;
@@ -10000,21 +10012,17 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     inset: 0;
     z-index: 100002;
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: clamp(1rem, 3vh, 2rem) clamp(1rem, 3vw, 2.5rem)
-        max(1rem, env(safe-area-inset-bottom, 0px));
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     box-sizing: border-box;
     overflow-y: auto;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.22s ease, visibility 0.22s ease;
-}
-@media (min-width: 768px) {
-    .clarity-paywall-overlay {
-        align-items: center;
-    }
 }
 .clarity-paywall-overlay.is-visible {
     opacity: 1;
@@ -10030,69 +10038,44 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 .clarity-paywall-panel {
     position: relative;
     z-index: 1;
-    width: min(52rem, 100%);
-    /* Horizontal center only—margin: auto also sets vertical auto margins and can break flex layout on mobile */
-    margin: 0 auto;
-    padding: clamp(1.35rem, 3vw, 2rem);
-    padding-top: clamp(2.65rem, 6.5vw, 3.1rem);
-    padding-bottom: clamp(1.25rem, 2.8vw, 1.85rem);
-    border-radius: clamp(12px, 2vw, 18px);
-    border: 1px solid rgba(255, 252, 241, 0.1);
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: clamp(1.15rem, 3vw, 1.75rem) clamp(1rem, 4vw, 2rem);
+    padding-top: max(clamp(2.35rem, 6vw, 3rem), env(safe-area-inset-top, 0px));
+    padding-bottom: max(clamp(1.25rem, 3vw, 1.75rem), env(safe-area-inset-bottom, 0px));
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid rgba(255, 252, 241, 0.08);
     background: #161616;
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.28);
+    box-shadow: none;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    /*
-     * On desktop the panel caps its height to avoid feeling oversized on tall
-     * viewports. Mobile override below removes the cap + inner scroll to avoid
-     * the nested-scroll anti-pattern (overlay + panel both scrolling) which
-     * felt broken on phones.
-     */
-    max-height: min(92vh, 56rem);
-    overflow-y: auto;
-}
-@media (max-width: 767px) {
-    /*
-     * Mobile: single natural scroll (overlay handles it).
-     * - Panel takes its intrinsic height so content flows naturally.
-     * - Overlay stays overflow-y: auto + flex-start, so if content exceeds
-     *   viewport the whole modal scrolls as one document (no nested scroll).
-     * - Tightened internal spacing so the 2 stacked tier cards fit in-viewport
-     *   on all common phone sizes (iPhone 13/14/15, Pixel, Galaxy).
-     */
-    .clarity-paywall-panel {
-        max-height: none;
-        overflow-y: visible;
-        padding: clamp(1.05rem, 3.5vw, 1.35rem);
-        padding-top: clamp(2.25rem, 6vw, 2.75rem);
-        padding-bottom: clamp(1rem, 3vw, 1.35rem);
-        gap: 0;
-    }
+    max-height: none;
+    overflow-y: visible;
 }
 @media (min-width: 768px) {
     .clarity-paywall-panel {
-        width: min(68rem, calc(100vw - 2.5rem));
-        max-width: 68rem;
-        padding: clamp(1.65rem, 3.2vw, 2.35rem) clamp(1.5rem, 3vw, 2.35rem);
-        padding-top: clamp(2.35rem, 4vw, 2.85rem);
-        padding-bottom: clamp(1.35rem, 2.6vw, 1.95rem);
+        padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 5vw, 3rem);
+        padding-top: max(clamp(2.5rem, 4vw, 3.25rem), env(safe-area-inset-top, 0px));
+        padding-bottom: max(clamp(1.5rem, 2.5vw, 2rem), env(safe-area-inset-bottom, 0px));
     }
 }
 @media (min-width: 1100px) {
     .clarity-paywall-panel {
-        width: min(72rem, calc(100vw - 3rem));
-        max-width: 72rem;
-        padding: clamp(1.75rem, 3.2vw, 2.5rem) clamp(1.85rem, 3vw, 2.5rem);
-        padding-top: clamp(2.4rem, 3.5vw, 2.95rem);
-        padding-bottom: clamp(1.4rem, 2.5vw, 2rem);
+        padding-left: clamp(2rem, 6vw, 4rem);
+        padding-right: clamp(2rem, 6vw, 4rem);
     }
 }
 .clarity-paywall-close {
     position: absolute;
-    top: 0.65rem;
-    right: 0.75rem;
+    top: max(0.65rem, env(safe-area-inset-top, 0px));
+    right: max(0.75rem, env(safe-area-inset-right, 0px));
     width: 2.25rem;
     height: 2.25rem;
     border: none;
@@ -10122,7 +10105,7 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     margin-bottom: clamp(1rem, 2.4vw, 1.35rem);
     max-width: 48rem;
     width: 100%;
-    background: #161616;
+    background: transparent;
     box-shadow: none !important;
     position: relative;
     left: auto !important;
@@ -10148,6 +10131,9 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
 }
 .clarity-paywall-tiers.clarity-paywall-tiers--two {
     margin-top: clamp(0.5rem, 1.2vw, 0.85rem);
+    max-width: min(72rem, 100%);
+    margin-left: auto;
+    margin-right: auto;
 }
 .clarity-paywall-title {
     font-family: 'DM Sans', sans-serif;
@@ -10174,8 +10160,8 @@ body:has(.results-modal-overlay.visible) .theme-toggle-btn,
     margin: 0 0 0.5rem 0;
 }
 .clarity-paywall-title-accent {
-    color: #fff;
-    font-weight: 800;
+    color: inherit;
+    font-weight: inherit;
 }
 .clarity-paywall-sub {
     font-family: 'DM Sans', sans-serif;

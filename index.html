@@ -107,7 +107,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=block" rel="stylesheet">
     </noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=14">
+    <link rel="stylesheet" href="style.css?v=17">
     <!-- html2pdf.js for PDF generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
@@ -131,6 +131,11 @@
     <style>
     /* Homepage dark theme - consistent with hero (#050505) */
     body { background: #050505 !important; }
+    /* One pill width for hero + LP sections + quiz intro + results primary CTA (mobile + desktop) */
+    body.page-home {
+        /* Wide enough for “Get Clarity on My Situation” on one line with nowrap */
+        --pr-quiz-cta-pill-max: min(24rem, calc(100% - 1.25rem));
+    }
     #home-hero, .pr-search-cluster-section, .pattern-signals-section, .pain-stack-section, .faq-section { margin-bottom: 0 !important; }
     .faq-section { margin-top: 0 !important; }
 
@@ -194,6 +199,10 @@
     .pr-lp-quiz-cta-wrap--left {
         justify-content: flex-start;
     }
+    /*
+     * LP section anchors (Loop, bridge, etc.) — pill sizing.
+     * Hero primary + #start-quiz-btn use the paired block below with quiz intro.
+     */
     a.pr-btn-primary.pr-lp-quiz-cta {
         flex: 0 0 auto;
         display: inline-flex;
@@ -204,19 +213,21 @@
         font-family: 'Anton', sans-serif;
         font-size: clamp(0.78rem, 0.35rem + 1.85vw, 1rem);
         font-weight: 400;
-        letter-spacing: clamp(0.08em, 0.04em + 0.35vw, 0.12em);
-        text-transform: uppercase;
+        letter-spacing: clamp(0.06em, 0.03em + 0.25vw, 0.1em);
+        text-transform: none;
         text-decoration: none;
         padding: clamp(0.7rem, 0.55rem + 0.65vw, 1.125rem) clamp(1.15rem, 0.75rem + 2.75vw, 2.5rem);
         line-height: 1;
         min-height: clamp(44px, 2.65rem + 1vw, 52px);
         width: auto;
-        max-width: min(18rem, 100%);
+        max-width: var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem)));
+        min-width: 0;
         border-radius: 6px;
         transition: background 0.2s, transform 0.15s;
         box-sizing: border-box;
         text-align: center;
         white-space: nowrap;
+        box-shadow: none;
     }
     a.pr-btn-primary.pr-lp-quiz-cta:hover,
     a.pr-btn-primary.pr-lp-quiz-cta:focus {
@@ -227,54 +238,77 @@
         outline: 2px solid rgba(255, 255, 255, 0.45);
         outline-offset: 3px;
     }
-    /*
-     * Section CTAs (Real cost + Loop): intrinsic width on larger screens reads as a deliberate
-     * “button” (editorial / premium); full-width on small screens improves tap targets.
-     */
-    @media (max-width: 520px) {
-        #pattern-data-signals .pr-lp-quiz-cta-wrap .pr-lp-quiz-cta,
-        #pain-stack-section .pr-path-desired-cta {
+    /* Hero CTA row: same 36rem rail as headline — centered column (not full 900px strip) */
+    #home-hero .pr-hero-ctas {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
         width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
+        max-width: min(36rem, 100%);
+        margin-left: auto;
+        margin-right: auto;
+        align-self: center;
+        box-sizing: border-box;
     }
-    /* Loop section: stronger CTA + air (desktop) */
     #pattern-data-signals .pr-lp-quiz-cta-wrap {
         margin-top: clamp(1.85rem, 4.5vw, 2.85rem);
         margin-bottom: clamp(0.35rem, 1.5vw, 0.85rem);
     }
+    /*
+     * Loop + search-cluster bridge + Decision card: CTA matches section/card content
+     * width (same as loop stages / list rows). Hero + quiz intro keep pill rules above.
+     */
+    #pattern-data-signals .pr-lp-quiz-cta-wrap {
+        width: 100%;
+        max-width: 100%;
+        align-self: stretch;
+        box-sizing: border-box;
+    }
+    /* Match The loop column width (.pattern-signals-inner.pr-lp-inner = 640px), not the wider bridge inner */
+    #pr-search-cluster-section .pr-lp-quiz-cta-wrap {
+        width: 100%;
+        max-width: min(640px, 100%);
+        margin-left: auto;
+        margin-right: auto;
+        align-self: stretch;
+        box-sizing: border-box;
+    }
+    #pattern-data-signals .pr-lp-quiz-cta-wrap .pr-lp-quiz-cta,
+    #pr-search-cluster-section .pr-lp-quiz-cta-wrap .pr-lp-quiz-cta {
+        width: 100%;
+        max-width: 100%;
+        flex: 1 1 auto;
+        align-self: stretch;
+        box-sizing: border-box;
+    }
     @media (min-width: 521px) {
-        /*
-         * Loop CTA on desktop: matches the full width of the section inner
-         * column (max 640px) so left/right spacing aligns with the title,
-         * subhead, and stage list above it. Visually anchors the section.
-         */
-        #pattern-data-signals .pr-lp-quiz-cta-wrap .pr-lp-quiz-cta {
+        a.pr-btn-primary.pr-lp-quiz-cta {
             font-size: clamp(0.9rem, 0.45rem + 1.1vw, 1.12rem);
-            letter-spacing: clamp(0.09em, 0.05em + 0.2vw, 0.14em);
+            letter-spacing: clamp(0.06em, 0.04em + 0.15vw, 0.1em);
             padding: clamp(0.9rem, 0.9vw, 1.15rem) clamp(2rem, 5vw, 3.35rem);
             min-height: clamp(50px, 3.2rem, 58px);
-            width: 100%;
-            min-width: 100%;
-            max-width: 100%;
+            line-height: 1;
+            width: auto;
+            min-width: 0;
+            max-width: var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem)));
             border-radius: 8px;
         }
-        /*
-         * Desired-state CTA: standard button proportions. It's pinned to the
-         * card bottom via margin-top: auto (see shared rule), so the cards
-         * end with the CTA and the callout box aligned at the same baseline.
-         */
-        #pain-stack-section .pr-path-desired-cta {
-            font-size: clamp(0.9rem, 0.45rem + 1.1vw, 1.05rem);
-            letter-spacing: clamp(0.08em, 0.04em + 0.2vw, 0.12em);
-            padding: clamp(0.85rem, 1.8vw, 1.1rem) clamp(1rem, 2.8vw, 1.4rem);
-            min-height: clamp(48px, 3rem, 54px);
+        #pattern-data-signals .pr-lp-quiz-cta-wrap .pr-lp-quiz-cta,
+        #pr-search-cluster-section .pr-lp-quiz-cta-wrap .pr-lp-quiz-cta,
+        #pain-stack-section .pr-path-card--desired a.pr-btn-primary.pr-lp-quiz-cta.pr-path-desired-cta {
             width: 100%;
-            min-width: 100%;
             max-width: 100%;
-            border-radius: 10px;
-            box-sizing: border-box;
+        }
+    }
+    @media (max-width: 400px) {
+        /* Pill CTAs only — section-block CTAs stay full width with base type scale */
+        #home-hero .pr-hero-ctas .pr-btn-primary.pr-hero-quiz-cta,
+        #quiz-section #start-quiz-btn.btn-mission-primary,
+        #quiz-section .quiz-intro .btn-mission-primary {
+            font-size: clamp(0.62rem, 2.5vw + 0.42rem, 0.78rem) !important;
+            letter-spacing: 0.045em !important;
+            padding: clamp(0.62rem, 1.8vw, 0.75rem) clamp(0.65rem, 2.5vw, 1rem) !important;
         }
     }
 
@@ -424,7 +458,7 @@
         flex-direction: column;
     }
     .pain-stack-section .pr-path-callout,
-    .pain-stack-section .pr-path-desired-cta,
+    #pain-stack-section .pr-path-card--desired a.pr-btn-primary.pr-lp-quiz-cta.pr-path-desired-cta,
     .pain-stack-section .pr-path-desired-cta-wrap {
         margin-top: auto;
     }
@@ -572,15 +606,15 @@
         margin-top: 0.5rem;
     }
     /*
-     * Desired-state CTA: pinned to the card bottom so both cards end with a
-     * balanced block at the same baseline. margin-top: auto (from the shared
-     * rule above) pushes it down; a floor margin keeps a minimum gap above
-     * it when the card's natural content is already taller than its sibling.
-     * Desktop sizing is applied via the (min-width: 521px) block above.
-     * On mobile, the shared max-width:520 rule stretches it full-width.
+     * Desired-state CTA: full card width (beats a.pr-btn-primary.pr-lp-quiz-cta pill max-width).
+     * Must use #pain-stack-section + full class chain for specificity.
      */
-    .pain-stack-section .pr-path-desired-cta {
+    #pain-stack-section .pr-path-card--desired a.pr-btn-primary.pr-lp-quiz-cta.pr-path-desired-cta {
         margin-top: auto;
+        align-self: stretch;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     .pain-stack-section .pr-path-card--desired .pr-path-list {
         margin-bottom: clamp(1rem, 2.5vw, 1.25rem);
@@ -748,12 +782,14 @@
     .pr-search-cluster-eyebrow {
         font-family: 'DM Sans', sans-serif;
         text-align: center;
-        margin: 0 0 clamp(1rem, 2.5vw, 1.35rem);
+        margin: 0 auto clamp(1rem, 2.5vw, 1.35rem);
         display: flex;
         flex-direction: column;
-            align-items: center;
+        align-items: center;
         justify-content: center;
         gap: clamp(0.45rem, 1.2vw, 0.65rem);
+        max-width: min(30rem, 100%);
+        box-sizing: border-box;
     }
     .pr-search-cluster-eyebrow__main {
         font-size: clamp(0.95rem, 2.1vw, 1.2rem);
@@ -762,7 +798,7 @@
         text-transform: none;
         color: rgba(255, 252, 241, 0.88);
         line-height: 1.45;
-        max-width: min(28rem, 94vw);
+        max-width: 100%;
         text-wrap: balance;
     }
     .pr-search-cluster-eyebrow__sub {
@@ -772,8 +808,13 @@
         text-transform: none;
         color: #f10000;
         line-height: 1.35;
-        max-width: min(30rem, 94vw);
+        max-width: 100%;
         text-wrap: balance;
+    }
+    @media (min-width: 768px) {
+        .pr-search-cluster-eyebrow {
+            max-width: min(28rem, 92%);
+        }
     }
     .pr-search-cluster {
         display: flex;
@@ -1037,6 +1078,7 @@
         margin-left: auto;
         margin-right: auto;
         justify-content: center;
+        align-items: stretch;
         box-sizing: border-box;
         overflow: hidden;
     }
@@ -1281,13 +1323,19 @@
         font-style: normal;
     }
 
-    /* Match #home-hero .pr-btn-primary — !important beats global .btn-mission-primary in style.css */
+    /* Match results .quiz-success-pattern-cta--next — !important beats global .btn-mission-primary in style.css */
     #quiz-section .quiz-intro .btn-mission-primary,
     #quiz-section #start-quiz-btn.btn-mission-primary {
         margin-top: var(--qi-gap-sub-cta, 2.25rem);
+    }
+    /* Hero primary + Start Here — one selector list so size never diverges */
+    #home-hero .pr-hero-ctas .pr-btn-primary.pr-hero-quiz-cta,
+    #quiz-section .quiz-intro .btn-mission-primary,
+    #quiz-section #start-quiz-btn.btn-mission-primary {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
+        align-self: center !important;
         box-sizing: border-box;
         background: #f10000 !important;
         color: #fff !important;
@@ -1295,20 +1343,47 @@
         font-family: 'Anton', sans-serif !important;
         font-size: clamp(0.78rem, 0.35rem + 1.85vw, 1rem) !important;
         font-weight: 400 !important;
-        letter-spacing: clamp(0.08em, 0.04em + 0.35vw, 0.12em) !important;
-        text-transform: uppercase;
+        letter-spacing: clamp(0.06em, 0.03em + 0.25vw, 0.1em) !important;
+        text-transform: none !important;
+        text-decoration: none !important;
         padding: clamp(0.7rem, 0.55rem + 0.65vw, 1.125rem) clamp(1.15rem, 0.75rem + 2.75vw, 2.5rem) !important;
         line-height: 1 !important;
         min-height: clamp(44px, 2.65rem + 1vw, 52px) !important;
         width: auto !important;
-        max-width: min(18rem, 100%) !important;
+        max-width: var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem))) !important;
+        min-width: 0 !important;
         border-radius: 6px !important;
-        white-space: nowrap;
+        white-space: nowrap !important;
         cursor: pointer;
         transition: background 0.2s, transform 0.15s;
         box-shadow: none;
     }
+    @media (min-width: 521px) {
+        #home-hero .pr-hero-ctas .pr-btn-primary.pr-hero-quiz-cta,
+        #quiz-section .quiz-intro .btn-mission-primary,
+        #quiz-section #start-quiz-btn.btn-mission-primary {
+            font-size: clamp(0.9rem, 0.45rem + 1.1vw, 1.12rem) !important;
+            letter-spacing: clamp(0.06em, 0.04em + 0.15vw, 0.1em) !important;
+            padding: clamp(0.9rem, 0.9vw, 1.15rem) clamp(2rem, 5vw, 3.35rem) !important;
+            min-height: clamp(50px, 3.2rem, 58px) !important;
+            line-height: 1 !important;
+            width: auto !important;
+            max-width: var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem))) !important;
+            border-radius: 8px !important;
+        }
+    }
+    @media (max-width: 520px) {
+        #home-hero .pr-hero-ctas .pr-btn-primary.pr-hero-quiz-cta,
+        #quiz-section .quiz-intro .btn-mission-primary,
+        #quiz-section #start-quiz-btn.btn-mission-primary {
+            width: min(100%, var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem)))) !important;
+            max-width: var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem))) !important;
+        }
+    }
 
+    #home-hero .pr-hero-ctas .pr-btn-primary.pr-hero-quiz-cta:hover,
+    #home-hero .pr-hero-ctas .pr-btn-primary.pr-hero-quiz-cta:focus,
+    #home-hero .pr-hero-ctas .pr-btn-primary.pr-hero-quiz-cta:active,
     #quiz-section .quiz-intro .btn-mission-primary:hover,
     #quiz-section .quiz-intro .btn-mission-primary:focus,
     #quiz-section .quiz-intro .btn-mission-primary:active,
@@ -1321,6 +1396,12 @@
         outline: none;
         transform: translateY(-1px);
         box-shadow: none;
+    }
+    #home-hero .pr-hero-ctas .pr-btn-primary.pr-hero-quiz-cta:focus-visible,
+    #quiz-section .quiz-intro .btn-mission-primary:focus-visible,
+    #quiz-section #start-quiz-btn.btn-mission-primary:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.45) !important;
+        outline-offset: 3px !important;
     }
 
     .quiz-story-step {
@@ -1401,16 +1482,23 @@
         background: #f10000 !important;
         color: #fffcf1 !important;
         border: none !important;
-        padding: 1.1rem 2.5rem;
-        font-size: 0.9rem;
-        font-weight: 700;
-        min-height: 56px;
-        min-width: 180px;
+        padding: clamp(0.7rem, 0.55rem + 0.65vw, 1.125rem) clamp(1.15rem, 0.75rem + 2.75vw, 2.5rem);
+        font-family: 'Anton', sans-serif;
+        font-size: clamp(0.78rem, 0.35rem + 1.85vw, 1rem);
+        font-weight: 400;
+        min-height: clamp(44px, 2.65rem + 1vw, 52px);
+        width: min(100%, var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem))));
+        max-width: var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem)));
+        min-width: 0;
+        align-self: center;
         cursor: pointer;
         transition: all 0.25s ease;
         border-radius: 8px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
+        letter-spacing: clamp(0.06em, 0.03em + 0.25vw, 0.1em);
+        text-transform: none;
+        line-height: 1;
+        white-space: nowrap;
+        text-align: center;
         box-shadow: 0 4px 24px rgba(241, 0, 0, 0.4);
     }
     .quiz-story-step .btn-mission-primary:hover {
@@ -1525,21 +1613,38 @@
         background: #f10000 !important;
         color: #fffcf1 !important;
         border: none !important;
-        padding: 1.1rem 2.5rem;
-        font-size: 0.9rem;
-        font-weight: 700;
-        min-height: 56px;
-        min-width: 180px;
+        padding: clamp(0.7rem, 0.55rem + 0.65vw, 1.125rem) clamp(1.15rem, 0.75rem + 2.75vw, 2.5rem);
+        font-family: 'Anton', sans-serif;
+        font-size: clamp(0.78rem, 0.35rem + 1.85vw, 1rem);
+        font-weight: 400;
+        min-height: clamp(44px, 2.65rem + 1vw, 52px);
+        width: min(100%, var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem))));
+        max-width: var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem)));
+        min-width: 0;
+        align-self: center;
         cursor: pointer;
         transition: background 0.2s ease, color 0.2s ease;
         border-radius: 8px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
+        letter-spacing: clamp(0.06em, 0.03em + 0.25vw, 0.1em);
+        text-transform: none;
+        line-height: 1;
+        white-space: nowrap;
+        text-align: center;
         box-shadow: none;
     }
     .quiz-contact-step .btn-mission-primary:hover {
         background: #d40000 !important;
         box-shadow: none;
+    }
+    @media (min-width: 521px) {
+        .quiz-story-step .btn-mission-primary,
+        .quiz-contact-step .btn-mission-primary {
+            font-size: clamp(0.9rem, 0.45rem + 1.1vw, 1.12rem);
+            letter-spacing: clamp(0.06em, 0.04em + 0.15vw, 0.1em);
+            padding: clamp(0.9rem, 0.9vw, 1.15rem) clamp(2rem, 5vw, 3.35rem);
+            min-height: clamp(50px, 3.2rem, 58px);
+            line-height: 1;
+        }
     }
 
     .quiz-content {
@@ -2258,7 +2363,7 @@
         background: #f10000;
         color: #fff !important;
         border: 2px solid #f10000;
-        text-transform: uppercase;
+        text-transform: none;
         transition: all 0.3s ease;
     }
 
@@ -3197,24 +3302,26 @@
     .quiz-success-cta-stack .quiz-success-pattern-display {
         margin-top: 0;
     }
-    /* Match the "The loop" section CTA look (pr-btn-primary pr-lp-quiz-cta):
-       Anton uppercase, compact button, solid red, no gradient. */
+    /* Primary results CTA — same type scale as LP / hero / quiz intro (see a.pr-btn-primary.pr-lp-quiz-cta). */
     .quiz-success-pattern-cta--next {
         font-family: 'Anton', sans-serif;
         font-size: clamp(0.78rem, 0.35rem + 1.85vw, 1rem);
         font-weight: 400;
-        text-transform: uppercase;
-        letter-spacing: clamp(0.08em, 0.04em + 0.35vw, 0.12em);
+        text-transform: none;
+        letter-spacing: clamp(0.06em, 0.03em + 0.25vw, 0.1em);
         line-height: 1;
         background: #f10000;
         box-shadow: none;
         border-radius: 6px;
         min-height: clamp(44px, 2.65rem + 1vw, 52px);
         width: auto;
-        max-width: min(18rem, 100%);
+        max-width: var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem)));
+        min-width: 0;
         padding: clamp(0.7rem, 0.55rem + 0.65vw, 1.125rem) clamp(1.15rem, 0.75rem + 2.75vw, 2.5rem);
         margin-left: auto;
         margin-right: auto;
+        white-space: nowrap;
+        text-align: center;
     }
     .quiz-success-pattern-cta--next:hover,
     .quiz-success-pattern-cta--next:focus {
@@ -3223,23 +3330,35 @@
     }
     @media (max-width: 520px) {
         .quiz-success-pattern-cta--next {
-            width: 100%;
-            max-width: 100%;
+            width: min(100%, var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem))));
+            max-width: var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem)));
         }
     }
-    /*
-     * Desktop: match "The loop" CTA sizing + span full content container width
-     * (same as epilogue panel + means / identity cards above) so the CTA reads as
-     * a deliberate, anchored end-of-flow button, not a narrow floating pill.
-     */
     @media (min-width: 521px) {
         .quiz-success-pattern-cta--next {
             font-size: clamp(0.9rem, 0.45rem + 1.1vw, 1.12rem);
-            letter-spacing: clamp(0.09em, 0.05em + 0.2vw, 0.14em);
+            letter-spacing: clamp(0.06em, 0.04em + 0.15vw, 0.1em);
             padding: clamp(0.9rem, 0.9vw, 1.15rem) clamp(2rem, 5vw, 3.35rem);
             min-height: clamp(50px, 3.2rem, 58px);
-            width: 100%;
-            max-width: 100%;
+            line-height: 1;
+            width: auto;
+            max-width: var(--pr-quiz-cta-pill-max, min(24rem, calc(100% - 1.25rem)));
+            border-radius: 8px;
+        }
+    }
+    /* Narrow phones: must come after base .quiz-success-pattern-cta--next / story / contact rules so it wins */
+    @media (max-width: 400px) {
+        .quiz-success-pattern-cta--next {
+            font-size: clamp(0.62rem, 2.5vw + 0.42rem, 0.78rem) !important;
+            letter-spacing: 0.045em !important;
+            padding: clamp(0.62rem, 1.8vw, 0.75rem) clamp(0.65rem, 2.5vw, 1rem) !important;
+            min-height: clamp(40px, 11vw, 48px) !important;
+        }
+        .quiz-story-step .btn-mission-primary,
+        .quiz-contact-step .btn-mission-primary {
+            font-size: clamp(0.62rem, 2.5vw + 0.42rem, 0.78rem) !important;
+            letter-spacing: 0.045em !important;
+            padding: clamp(0.62rem, 1.8vw, 0.75rem) clamp(0.65rem, 2.5vw, 1rem) !important;
         }
     }
     .quiz-success-cta-stack .quiz-success-subtext {
@@ -3596,13 +3715,6 @@
         .quiz-subtitle .desktop-break {
             display: none;
         }
-        #quiz-section .quiz-intro .btn-mission-primary,
-        #quiz-section #start-quiz-btn.btn-mission-primary {
-            padding: clamp(0.85rem, 0.6rem + 0.8vw, 1.125rem) clamp(1.35rem, 1rem + 2vw, 2.25rem) !important;
-            font-size: clamp(0.88rem, 0.4rem + 1.2vw, 1rem) !important;
-            min-height: clamp(48px, 11vw, 52px) !important;
-            max-width: min(18rem, 100%) !important;
-        }
     }
 
     @media (max-width: 600px) {
@@ -3630,16 +3742,6 @@
         .quiz-intro-meta {
             font-size: 0.8rem;
             margin-bottom: 1.5rem;
-        }
-        #quiz-section .quiz-intro .btn-mission-primary,
-        #quiz-section #start-quiz-btn.btn-mission-primary {
-            padding: clamp(0.65rem, 0.5rem + 0.85vw, 1rem) clamp(1rem, 0.6rem + 2.4vw, 1.75rem) !important;
-            font-size: clamp(0.74rem, 0.3rem + 1.75vw, 0.95rem) !important;
-            letter-spacing: clamp(0.07em, 0.04em + 0.2vw, 0.1em) !important;
-            min-height: clamp(44px, 10.5vw, 50px) !important;
-            width: auto !important;
-            max-width: min(17.5rem, 100%) !important;
-            min-width: 0 !important;
         }
         /* Horizontal padding comes from .quiz-section (--quiz-screen-pad); keep panel vertical rhythm only */
         .quiz-panel:not(.quiz-intro) {
@@ -4106,7 +4208,7 @@
 
     /* Dark header & footer - Option A: all dark for consistent experience */
     body.page-home header {
-        background: #0a0a0a !important;
+        background: #050505 !important;
         box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
     }
     body.page-home .nav-links a,
@@ -4149,7 +4251,7 @@
     }
     /* Mobile menu overlay - dark */
     body.page-home .menu-overlay nav {
-        background: #0a0a0a !important;
+        background: #050505 !important;
         box-shadow: 4px 0 20px rgba(0, 0, 0, 0.4);
     }
     body.page-home .menu-overlay .menu-nav-title {
@@ -4159,12 +4261,14 @@
         color: rgba(255, 255, 255, 0.7) !important;
     }
     body.page-home .menu-overlay .menu-nav-link:hover .menu-nav-title,
+    body.page-home .menu-overlay .menu-nav-link:focus .menu-nav-title,
     body.page-home .menu-overlay .menu-nav-link.active .menu-nav-title {
         color: #f10000 !important;
     }
     body.page-home .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
+    body.page-home .menu-overlay .menu-nav-link:focus .menu-nav-subtitle,
     body.page-home .menu-overlay .menu-nav-link.active .menu-nav-subtitle {
-        color: rgba(241, 0, 0, 0.9) !important;
+        color: #f10000 !important;
     }
     body.page-home .menu-overlay .close-btn,
     body.page-home .menu-overlay .close-btn.hamburger {
@@ -4270,9 +4374,9 @@
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect y="6" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="13" width="28" height="2.5" rx="1.25" fill="currentColor"/><rect y="20" width="28" height="2.5" rx="1.25" fill="currentColor"/></svg>
             </button>
             <nav>
-                <a href="index.html" class="menu-nav-link active" onclick="closeMenu()"><span class="menu-nav-title">Get Clarity</span><span class="menu-nav-subtitle">Know what this is and what to do next</span></a>
-                <a href="letitout.html" class="menu-nav-link letitout-link" onclick="closeMenu()"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your situation anonymously</span></a>
-                <a href="home.html#newsletter" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Reset</span><span class="menu-nav-subtitle">Your weekly Sunday reset</span></a>
+                <a href="index.html" class="menu-nav-link active" onclick="closeMenu()"><span class="menu-nav-title">Get Clarity</span><span class="menu-nav-subtitle">Understand your situation</span></a>
+                <a href="letitout.html" class="menu-nav-link letitout-link" onclick="closeMenu()"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your story</span></a>
+                <a href="home.html#newsletter" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Reset</span><span class="menu-nav-subtitle">Join Sunday Reset</span></a>
                 <a id="mobileCourseLink" href="course/breakup-course.html" class="menu-nav-link" style="display: none;" onclick="closeMenu()"><span class="menu-nav-title">Continue Pattern Reset</span><span class="menu-nav-subtitle">Pick up where you left off</span></a>
             </nav>
         </div>
@@ -4305,9 +4409,9 @@
                 <div class="pr-hero-text" id="hero-text-container">
                     <span class="pr-label pr-label--quiz-hero">You&rsquo;re not overthinking.</span>
                     <h1 class="pr-hero-headline pr-lp-hero-title" id="quiz-hero-heading">Something about him<br class="pr-hero-headline__br--mobile" /> doesn&rsquo;t add up.</h1>
-                    <p class="pr-hero-supporting">I&rsquo;ll show you clearly what this is<br class="pr-hero-supporting__br--mobile" /> <span class="pr-hero-supporting__dash--desktop">&mdash; </span>and what to do next.</p>
+                    <p class="pr-hero-supporting"><span class="pr-hero-supporting-line">I&rsquo;ll show you clearly what this is.</span><span class="pr-hero-supporting-line">And what to do next.</span></p>
                     <div class="pr-hero-ctas">
-                        <a href="#quiz-section" class="pr-btn-primary pr-hero-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Get clarity on my situation</a>
+                        <a href="#quiz-section" class="pr-btn-primary pr-hero-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Get Clarity on My Situation</a>
                 </div>
             </div>
                 </div>
@@ -4405,18 +4509,14 @@
                 line-height: 1.08;
                 letter-spacing: 0.015em;
             }
-            /* Default: mobile-only line breaks hidden (so desktop flows naturally) */
-            #home-hero .pr-hero-headline__br--mobile,
-            #home-hero .pr-hero-supporting__br--mobile { display: none; }
-            /* Desktop keeps the em-dash; mobile hides it (see mobile override below) */
-            #home-hero .pr-hero-supporting__dash--desktop { display: inline; }
+            /* Default: mobile-only headline break hidden on wide screens */
+            #home-hero .pr-hero-headline__br--mobile { display: none; }
             @media (max-width: 767px) {
                 #home-hero .pr-hero-headline__br--after-have {
                     display: none;
                 }
                 /* Force 2-line layout on mobile for visual balance with hero */
-                #home-hero .pr-hero-headline__br--mobile,
-                #home-hero .pr-hero-supporting__br--mobile {
+                #home-hero .pr-hero-headline__br--mobile {
                     display: inline;
                 }
                 /* Bigger hero title on mobile — sized so the longer line
@@ -4433,12 +4533,8 @@
                     overflow-wrap: normal;
                     word-break: normal;
                 }
-                /* Mobile: break the subtext after "is", drop the em-dash */
-                #home-hero .pr-hero-supporting .pr-hero-supporting__dash--desktop {
-                    display: none;
-                }
             }
-            /* Single sentence under headline — one rhythm on mobile + desktop */
+            /* Two sentences, two lines (see .pr-hero-supporting-line) */
             #home-hero .pr-hero-supporting {
               font-family: 'DM Sans', sans-serif;
                 font-size: clamp(0.95rem, 2.15vw, 1.1rem);
@@ -4458,6 +4554,12 @@
                 -webkit-font-smoothing: antialiased;
                 -moz-osx-font-smoothing: grayscale;
             }
+            #home-hero .pr-hero-supporting-line {
+                display: block;
+            }
+            #home-hero .pr-hero-supporting-line + .pr-hero-supporting-line {
+                margin-top: 0.2em;
+            }
             @media (max-width: 480px) {
                 #home-hero .pr-hero-supporting {
                     font-size: clamp(0.92rem, 3.8vw, 1.02rem);
@@ -4466,41 +4568,10 @@
                 }
             }
             #home-hero .pr-hero-ctas {
-                    display: flex;
-                    justify-content: center;
                 margin-top: var(--qi-gap-sub-cta);
-                flex-wrap: wrap;
                 gap: 1rem;
             }
-            /* Aligned with #quiz-section .quiz-intro .btn-mission-primary */
-            #home-hero .pr-btn-primary {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                    text-align: center;
-                background: var(--pr-red);
-                color: #fff;
-                    font-family: 'Anton', sans-serif;
-                font-size: clamp(0.78rem, 0.35rem + 1.85vw, 1rem);
-                font-weight: 400;
-                letter-spacing: clamp(0.08em, 0.04em + 0.35vw, 0.12em);
-                    text-transform: uppercase;
-                text-decoration: none;
-                padding: clamp(0.7rem, 0.55rem + 0.65vw, 1.125rem) clamp(1.15rem, 0.75rem + 2.75vw, 2.5rem);
-                line-height: 1;
-                min-height: clamp(44px, 2.65rem + 1vw, 52px);
-                width: auto;
-                max-width: min(18rem, 100%);
-                border-radius: 6px;
-                transition: background 0.2s, transform 0.15s;
-                white-space: nowrap;
-                box-sizing: border-box;
-            }
-            #home-hero .pr-btn-primary:hover,
-            #home-hero .pr-btn-primary:focus {
-                background: #cc0000;
-                transform: translateY(-1px);
-            }
+            /* Hero primary pill: paired with #start-quiz-btn in page <style> (same sizing all breakpoints) */
             /* Aligned with .quiz-intro-micro */
             #home-hero .pr-hero-cta-note {
                     font-family: 'DM Sans', sans-serif;
@@ -4616,7 +4687,7 @@
                     <li class="pr-search-cluster-pill">lack of intimacy</li>
                 </ul>
                 <div class="pr-lp-quiz-cta-wrap">
-                    <a href="#quiz-section" class="pr-btn-primary pr-lp-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Get clarity on my situation</a>
+                    <a href="#quiz-section" class="pr-btn-primary pr-lp-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Get Clarity on My Situation</a>
                 </div>
             </div>
         </section>
@@ -4667,7 +4738,7 @@
                             <li>You get your time and energy back</li>
                             <li>You trust yourself again</li>
                         </ul>
-                        <a href="#quiz-section" class="pr-btn-primary pr-lp-quiz-cta pr-path-desired-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Get clarity on my situation</a>
+                        <a href="#quiz-section" class="pr-btn-primary pr-lp-quiz-cta pr-path-desired-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Get Clarity on My Situation</a>
                     </article>
                 </div>
             </div>
@@ -4700,7 +4771,7 @@
                     </li>
                 </ol>
                 <div class="pr-lp-quiz-cta-wrap">
-                    <a href="#quiz-section" class="pr-btn-primary pr-lp-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Get clarity on my situation</a>
+                    <a href="#quiz-section" class="pr-btn-primary pr-lp-quiz-cta" onclick="event.preventDefault(); window.scrollToQuizInView('smooth'); return false;">Get Clarity on My Situation</a>
                 </div>
             </div>
         </section>
@@ -4740,7 +4811,7 @@
                     <p class="quiz-intro-label">START HERE</p>
                     <h2 class="quiz-intro-headline">Let&rsquo;s look at your situation.</h2>
                     <p class="quiz-intro-subhead">Answer a few quick questions to get clear on what&rsquo;s actually going on and what to do next.</p>
-                    <button type="button" class="btn btn-mission btn-mission-primary" id="start-quiz-btn">Get clarity on my situation</button>
+                    <button type="button" class="btn btn-mission btn-mission-primary" id="start-quiz-btn">Get Clarity on My Situation</button>
                     <p class="quiz-intro-micro">Takes about 2 minutes.</p>
                 </div>
 
@@ -4763,7 +4834,7 @@
                         <input type="email" id="quiz-contact-email" class="quiz-contact-input" placeholder="Email" required autocomplete="email">
                     </div>
                     <p class="quiz-contact-privacy">Private. I don&rsquo;t share your information.</p>
-                    <button type="button" class="btn btn-mission btn-mission-primary" id="quiz-contact-continue-btn">See my results</button>
+                    <button type="button" class="btn btn-mission btn-mission-primary" id="quiz-contact-continue-btn">See My Results</button>
                 </div>
 
                 <div class="quiz-content quiz-panel" id="quiz-content" style="display: none;">
@@ -4833,7 +4904,7 @@
                             </ul>
                     </div>
                                         <div class="quiz-success-cta-stack">
-                                            <div class="quiz-success-pattern-display quiz-success-pattern-cta quiz-success-pattern-cta--next" id="quiz-success-pattern-display" role="button" tabindex="0" aria-label="Get clarity on my situation" onclick="try { if (typeof window.openPersonalizedHelpFromQuiz === 'function') window.openPersonalizedHelpFromQuiz(); } catch (e) { console.error(e); }" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); this.click(); }">Get clarity on my situation</div>
+                                            <div class="quiz-success-pattern-display quiz-success-pattern-cta quiz-success-pattern-cta--next" id="quiz-success-pattern-display" role="button" tabindex="0" aria-label="Get Clarity on My Situation" onclick="try { if (typeof window.openPersonalizedHelpFromQuiz === 'function') window.openPersonalizedHelpFromQuiz(); } catch (e) { console.error(e); }" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); this.click(); }">Get Clarity on My Situation</div>
                                             <p class="quiz-success-subtext">Answered personally by me. Not AI, not templates.</p>
                         </div>
                     </div>
@@ -5019,7 +5090,7 @@
         });
     };
     </script>
-    <script src="js/clarity-paywall.js?v=14"></script>
+    <script src="js/clarity-paywall.js?v=15"></script>
     <script src="js/results-renderer-v2.js?v=4"></script>
     <!-- js/results-breakdown.js (the $19 breakdown renderer) intentionally NOT loaded.
          Hard-hidden 2026-04. File preserved in repo for future reuse. -->

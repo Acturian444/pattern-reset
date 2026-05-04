@@ -6,19 +6,19 @@ LET IT OUT - DARK MODE STYLES
 
 /* --- General --- */
 .dark-mode {
-    background-color: #0a0a0a;
+    background-color: #050505;
     color: #ffffff;
 }
 
 /* --- Header & Footer: dark mode overrides (when theme toggle is on) --- */
 body.page-letitout.dark-mode header {
-    background-color: #0a0a0a !important;
+    background-color: #050505 !important;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) !important;
     min-height: 70px !important;
 }
 /* Dark footer — match dark page + global .pr-footer-std contrast */
 body.page-letitout.dark-mode footer.pr-footer-std {
-    background: #0a0a0a !important;
+    background: #050505 !important;
     border-top: 1px solid rgba(255, 252, 241, 0.07) !important;
     box-shadow: none !important;
 }
@@ -51,7 +51,7 @@ body.page-letitout.dark-mode button.hamburger.nav-hamburger svg rect {
     fill: rgba(255, 255, 255, 0.95) !important;
 }
 body.page-letitout.dark-mode .menu-overlay nav {
-    background: #0a0a0a !important;
+    background: #050505 !important;
     box-shadow: 4px 0 20px rgba(0,0,0,0.4);
 }
 body.page-letitout.dark-mode .menu-overlay .menu-nav-title {
@@ -60,9 +60,15 @@ body.page-letitout.dark-mode .menu-overlay .menu-nav-title {
 body.page-letitout.dark-mode .menu-overlay .menu-nav-subtitle {
     color: rgba(255, 255, 255, 0.7) !important;
 }
+body.page-letitout.dark-mode .menu-overlay .menu-nav-link:hover .menu-nav-title,
+body.page-letitout.dark-mode .menu-overlay .menu-nav-link:focus .menu-nav-title,
+body.page-letitout.dark-mode .menu-overlay .menu-nav-link.active .menu-nav-title {
+    color: #f10000 !important;
+}
 body.page-letitout.dark-mode .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
+body.page-letitout.dark-mode .menu-overlay .menu-nav-link:focus .menu-nav-subtitle,
 body.page-letitout.dark-mode .menu-overlay .menu-nav-link.active .menu-nav-subtitle {
-    color: rgba(241, 0, 0, 0.9) !important;
+    color: #f10000 !important;
 }
 body.page-letitout.dark-mode .menu-overlay .close-btn,
 body.page-letitout.dark-mode .menu-overlay .close-btn.hamburger {
@@ -111,9 +117,9 @@ body.page-letitout.dark-mode .copyright a:visited {
     color: #f10000; /* Brand red */
 }
 
-/* --- Navigation Dropdown Menu (match Pattern Analysis #0a0a0a) --- */
+/* --- Navigation Dropdown Menu (match Pattern Analysis #050505) --- */
 .dark-mode .nav-dropdown-menu {
-    background: #0a0a0a !important;
+    background: #050505 !important;
     border: 1px solid #333333;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
@@ -131,9 +137,9 @@ body.page-letitout.dark-mode .copyright a:visited {
     color: #ffffff;
 }
 
-/* --- Mobile Menu Drawer (match Pattern Analysis #0a0a0a) --- */
+/* --- Mobile Menu Drawer (match Pattern Analysis #050505) --- */
 .dark-mode .menu-overlay nav {
-    background: #0a0a0a !important;
+    background: #050505 !important;
     box-shadow: 4px 0 20px rgba(0,0,0,0.4);
 }
 
@@ -154,7 +160,7 @@ body.page-letitout.dark-mode .copyright a:visited {
 .dark-mode .menu-overlay .menu-nav-link:hover .menu-nav-subtitle,
 .dark-mode .menu-overlay .menu-nav-link:focus .menu-nav-subtitle,
 .dark-mode .menu-overlay .menu-nav-link.active .menu-nav-subtitle {
-    color: #b03030;
+    color: #f10000;
 }
 
 .dark-mode .menu-overlay .close-btn {
@@ -195,7 +201,7 @@ body.page-letitout.dark-mode .copyright a:visited {
 }
 
 .dark-mode .letitout-post-card-body textarea {
-    background-color: #0a0a0a;
+    background-color: #050505;
     color: #ffffff;
     border-color: #333333;
 }
@@ -528,7 +534,7 @@ DARK MODE - FIXES & ADDITIONS
 /* --- Wall Page Filters --- */
 .dark-mode .wall-controls,
 .dark-mode .wall-search-filter-row {
-     background-color: #0a0a0a; /* Match body background */
+     background-color: #050505; /* Match body background */
 }
 
 .dark-mode .wall-location-btn,
@@ -741,7 +747,7 @@ DARK MODE - FIXES & ADDITIONS
 /* --- Modal Content --- */
 .dark-mode .city-search-input,
 .dark-mode .emotion-search-input {
-    background-color: #0a0a0a;
+    background-color: #050505;
     color: #ffffff;
     border-color: #333;
     box-shadow: none;
@@ -919,7 +925,7 @@ DARK MODE - FIXES & ADDITIONS
     background-color: rgba(0, 0, 0, 0.8);
 }
 .dark-mode .letitout-my-posts-modal {
-    background-color: #0a0a0a;
+    background-color: #050505;
     box-shadow: none;
 }
 .dark-mode .letitout-my-posts-title,
@@ -930,7 +936,7 @@ DARK MODE - FIXES & ADDITIONS
     color: #fff !important;
 }
 .dark-mode .letitout-my-posts-tabs {
-    background-color: #0a0a0a;
+    background-color: #050505;
 }
 .dark-mode .letitout-my-posts-tabs button:not(.active) {
     color: #ffffff;
@@ -1037,7 +1043,7 @@ DARK MODE - FIXES & ADDITIONS
     border-color: #333;
 }
 .dark-mode .location-filter-modal .modal-header {
-    background-color: #0a0a0a;
+    background-color: #050505;
     border-bottom-color: #333;
 }
 .dark-mode .location-filter-modal .modal-title {
@@ -1048,7 +1054,7 @@ DARK MODE - FIXES & ADDITIONS
     color: #ffffff;
 }
 .dark-mode .location-filter-modal .location-option {
-    background-color: #0a0a0a;
+    background-color: #050505;
     border-color: #333;
     color: #ffffff;
 }
@@ -1085,7 +1091,7 @@ DARK MODE - FIXES & ADDITIONS
 .dark-mode .wall-location-modal {
     --letitout-border: #333;
     --letitout-text: #ffffff;
-    --letitout-background: #0a0a0a;
+    --letitout-background: #050505;
     background-color: transparent;
     border-bottom: 1px solid #333;
 }
@@ -1116,7 +1122,7 @@ DARK MODE - FIXES & ADDITIONS
     border: 1px solid #555;
 }
 .dark-mode .wall-location-modal .location-search-input {
-    background-color: #0a0a0a;
+    background-color: #050505;
     border: 1px solid #333;
     color: #ffffff;
 }
@@ -1163,7 +1169,7 @@ DARK MODE - FIXES & ADDITIONS
     color: #b0b0b0;
 }
 .dark-mode #report-modal .report-reasons-container .report-reason {
-    background-color: #0a0a0a;
+    background-color: #050505;
     border: 1px solid #333;
     color: #ffffff;
 }
@@ -1258,7 +1264,7 @@ DARK MODE - FIXES & ADDITIONS
     color: #b0b0b0;
 }
 .dark-mode .reply-modal .reply-textarea {
-    background-color: #0a0a0a;
+    background-color: #050505;
     border: 1px solid #333;
     color: #ffffff;
 }
