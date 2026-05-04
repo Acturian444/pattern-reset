@@ -39,7 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=block" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=16">
+    <link rel="stylesheet" href="style.css?v=17">
 
     <!--
       WEEKLY RESET — GOOGLE FORM + SHEET (once per environment; then paste into <script> at bottom)
@@ -160,8 +160,17 @@
         box-sizing: border-box;
         padding: 0 clamp(0.35rem, 2vw, 0.75rem);
         text-align: center;
-        white-space: nowrap;
-        font-size: clamp(0.5rem, 1.65vw + 0.34rem, 0.82rem);
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        font-size: clamp(0.65rem, 1.65vw + 0.34rem, 0.82rem);
+    }
+    @media (min-width: 480px) {
+        .pr-home-micro {
+            white-space: nowrap;
+            overflow-wrap: normal;
+            word-break: normal;
+        }
     }
     .pr-hero-waitlist .pr-email-form { display: flex; flex-direction: column; align-items: stretch; gap: 0.7rem; margin-top: clamp(1.75rem, 3.5vw, 2.35rem); width: 100%; max-width: min(32rem, 100%); margin-left: auto; margin-right: auto; }
     .pr-email-input { width: 100%; min-width: 0; min-height: 3rem; box-sizing: border-box; background: rgba(255,252,241,0.08); border: 1px solid rgba(255,252,241,0.16); border-radius: 10px; padding: 0.95rem 1.1rem; font-family: 'DM Sans', sans-serif; font-size: 1.0625rem; color: var(--pr-cream); outline: none; transition: border-color 0.2s, background 0.2s; }
@@ -238,8 +247,8 @@
     }
     @keyframes pr-lp-fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .pr-footer-std { background: var(--pr-dark); border-top: 1px solid rgba(255,252,241,0.07); padding: 2rem 1.5rem; text-align: center; }
-    /* One-line footer on narrow phones — overrides inherited wrap from global .pr-footer-std */
-    .pr-footer-std p { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: rgba(255,252,241,0.35); margin: 0; display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; gap: 0.12rem; line-height: 1.35; }
+    /* Footer row — allow wrapping on very small screens so links stay on-screen */
+    .pr-footer-std p { font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: rgba(255,252,241,0.35); margin: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.12rem; line-height: 1.35; }
     @media (max-width: 560px) {
         .pr-footer-std { padding: 1.25rem 0.45rem; }
         .pr-footer-std p {

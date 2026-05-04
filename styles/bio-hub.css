@@ -584,8 +584,18 @@ body.page-bio-hub {
   box-sizing: border-box;
   padding: 0 clamp(0.35rem, 2vw, 0.75rem);
   text-align: center;
-  white-space: nowrap;
-  font-size: clamp(0.5rem, 1.65vw + 0.34rem, 0.82rem);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  font-size: clamp(0.65rem, 1.65vw + 0.34rem, 0.82rem);
+}
+
+@media (min-width: 480px) {
+  .bio-hub__pr-hero-waitlist .pr-home-micro {
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
 }
 
 .bio-hub__pr-hero-waitlist .pr-email-success {
