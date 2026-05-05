@@ -1894,7 +1894,7 @@ header .container {
 .letitout-confirmation-modal {
   background: #f10000; /* brand red background */
   border-radius: min(1.5rem, 4.5vmin);
-  box-shadow: 0 8px 32px 0 rgba(202,0,19,0.3), 0 2px 12px rgba(202,0,19,0.2); /* red-tinted shadow */
+  box-shadow: none;
   padding: clamp(2rem, 5.5vmin, 2.85rem) clamp(1.5rem, 3.8vmin, 2.35rem);
   display: flex;
   flex-direction: column;
@@ -1930,7 +1930,7 @@ header .container {
 .letitout-confirmation-heart svg {
   width: 54px;
   height: 48px;
-  filter: drop-shadow(0 2px 8px #f1000080); /* softer, less harsh glow */
+  filter: none;
   animation: heartBeat 1.8s infinite;
 }
 @keyframes heartBeat {
@@ -2880,9 +2880,10 @@ header .container {
     color: var(--letitout-text);
 }
 
+/* Match location line (“Global” / city) — primary text color, normal weight */
 .wall-about-brand {
-    color: var(--letitout-primary, #f10000);
-    font-weight: 700;
+    color: var(--letitout-text);
+    font-weight: 400;
 }
 
 .wall-about-default-suffix {

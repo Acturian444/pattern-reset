@@ -7,10 +7,10 @@ that appears when clicking the location filter button in the wall controls.
 */
 
 .dark-mode .wall-location-modal .wall-location-modal-content {
-    background: #252526 !important;
-    border: none !important;
-    box-shadow: none !important;
-    color: #D4D4D4 !important;
+    background: #080808 !important;
+    border: 1px solid rgba(255, 252, 241, 0.1) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+    color: #fffcf1 !important;
 }
 
 .dark-mode .wall-location-modal .wall-location-modal-header {
@@ -168,9 +168,9 @@ that appears when clicking the location filter button in the wall controls.
 }
 
 .dark-mode .wall-empty-message {
-    background: #1a1a1a;
-    border: 1px solid #333333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    background: #080808;
+    border: 1px solid rgba(255, 252, 241, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 .dark-mode .wall-empty-message .wall-empty-title {

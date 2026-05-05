@@ -55,3 +55,17 @@ body.page-letitout {
         --letitout-content-max-width: 680px;
     }
 }
+
+/* Dark mode — align with /home (--pr-dark) + index quiz sections (#050505 / #080808) */
+body.page-letitout.dark-mode {
+    --letitout-page-bg: #050505;
+    --letitout-surface: #080808;
+    /* Quiz LP “The Loop” panels (.pattern-loop-stage) */
+    --letitout-loop-panel-bg: rgba(255, 252, 241, 0.02);
+    --letitout-loop-panel-border: rgba(255, 252, 241, 0.08);
+    --letitout-loop-panel-shadow: 0 6px 28px rgba(0, 0, 0, 0.22);
+    --letitout-surface-inset: #0a0a0a;
+    --letitout-border-subtle: rgba(255, 252, 241, 0.1);
+    --letitout-border-soft: rgba(255, 252, 241, 0.08);
+    --letitout-text-cream: #fffcf1;
+}
