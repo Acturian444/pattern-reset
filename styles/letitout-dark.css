@@ -4,16 +4,20 @@ LET IT OUT - DARK MODE STYLES
 ==============================================
 */
 
-/* --- General --- */
-.dark-mode {
+/* --- Page canvas: match home / quiz landing (#050505), not generic body.dark-mode (#080808 in style.css) --- */
+html:has(body.page-letitout.dark-mode) {
     background-color: #050505;
-    color: #ffffff;
+}
+
+body.page-letitout.dark-mode {
+    background-color: #050505 !important;
+    color: #fffcf1;
 }
 
 /* --- Header & Footer: dark mode overrides (when theme toggle is on) --- */
 body.page-letitout.dark-mode header {
     background-color: #050505 !important;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+    box-shadow: 0 1px 0 rgba(255, 252, 241, 0.07) !important;
     min-height: 70px !important;
 }
 /* Dark footer — match dark page + global .pr-footer-std contrast */
@@ -173,8 +177,9 @@ body.page-letitout.dark-mode .copyright a:visited {
 }
 
 .dark-mode .letitout-segmented-control {
-    background: #1a1a1a;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    background: var(--letitout-surface, #080808);
+    border: 1px solid var(--letitout-border-soft, rgba(255, 252, 241, 0.08));
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
 }
 
 .dark-mode .segment-btn {
@@ -188,8 +193,8 @@ body.page-letitout.dark-mode .copyright a:visited {
 
 /* --- Main Content: Post Form (Write tab) --- */
 .dark-mode .letitout-post-card {
-    background-color: #1a1a1a;
-    border-color: #333333;
+    background-color: var(--letitout-surface, #080808);
+    border-color: var(--letitout-border-subtle, rgba(255, 252, 241, 0.1));
 }
 
 .dark-mode .letitout-post-card-header h2 {
@@ -201,9 +206,9 @@ body.page-letitout.dark-mode .copyright a:visited {
 }
 
 .dark-mode .letitout-post-card-body textarea {
-    background-color: #050505;
-    color: #ffffff;
-    border-color: #333333;
+    background-color: var(--letitout-page-bg, #050505);
+    color: #fffcf1;
+    border-color: var(--letitout-border-subtle, rgba(255, 252, 241, 0.1));
 }
 
 .dark-mode .letitout-post-card-body textarea::placeholder {
@@ -266,10 +271,10 @@ body.page-letitout.dark-mode .copyright a:visited {
     background-color: transparent;
 }
 .dark-mode .post-card {
-    background-color: #1a1a1a;
-    border: 1px solid #333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
+    background-color: var(--letitout-surface, #080808);
+    border: 1px solid var(--letitout-border-subtle, rgba(255, 252, 241, 0.1));
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    color: #fffcf1;
 }
 .dark-mode .post-card .post-content-area .emotion-tag.emotion-tag-small {
     background-color: #2a2a2a !important;
@@ -280,17 +285,17 @@ body.page-letitout.dark-mode .copyright a:visited {
 .dark-mode .post-card:focus {
     box-shadow: none !important;
     transform: none !important;
-    background: #1a1a1a !important;
-    border: 1px solid #333 !important;
+    background: var(--letitout-surface, #080808) !important;
+    border: 1px solid var(--letitout-border-subtle, rgba(255, 252, 241, 0.1)) !important;
     cursor: default !important;
 }
 
 .dark-mode .post-card-content {
-    color: #ffffff;
+    color: #fffcf1;
 }
 
 .dark-mode .post-card-footer {
-    border-top-color: #333333;
+    border-top-color: rgba(255, 252, 241, 0.08);
 }
 
 .dark-mode .post-card-footer .post-meta,
@@ -300,7 +305,7 @@ body.page-letitout.dark-mode .copyright a:visited {
 
 .dark-mode .post-card-footer .post-actions .action-icon,
 .dark-mode .post-card-footer .post-actions .more-options-btn {
-    color: #ffffff;
+    color: #fffcf1;
 }
 
 .dark-mode .post-card-footer .post-actions .action-icon.felt {
@@ -310,7 +315,7 @@ body.page-letitout.dark-mode .copyright a:visited {
 /* --- Modals --- */
 .dark-mode .letitout-emotion-modal,
 .dark-mode .modal-bottom-sheet {
-    background: #1a1a1a;
+    background: var(--letitout-surface, #080808);
 }
 
 .dark-mode .letitout-emotion-modal-title {
@@ -359,21 +364,29 @@ DARK MODE - FIXES & ADDITIONS
 ==============================================
 */
 
-/* --- Post Card (Wall) & Form Container (Write) --- */
-.dark-mode .post-card,
+/* --- Post Card (Wall) --- */
+.dark-mode .post-card {
+    background-color: var(--letitout-surface, #080808);
+    border: 1px solid var(--letitout-border-subtle, rgba(255, 252, 241, 0.1));
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    color: #fffcf1;
+}
+
+/* --- Write form: match quiz LP “The Loop” stepped cards (.pattern-loop-stage) --- */
 .dark-mode .letitout-form {
-    background-color: #1a1a1a;
-    border-color: #333333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
+    background: var(--letitout-loop-panel-bg, rgba(255, 252, 241, 0.02));
+    border: 1px solid var(--letitout-loop-panel-border, rgba(255, 252, 241, 0.08));
+    border-radius: 12px;
+    box-shadow: var(--letitout-loop-panel-shadow, 0 6px 28px rgba(0, 0, 0, 0.22));
+    color: #fffcf1;
 }
 
 .dark-mode .post-card:hover,
 .dark-mode .post-card:focus {
     box-shadow: none !important;
     transform: none !important;
-    background: #1a1a1a !important;
-    border: 1px solid #333 !important;
+    background: var(--letitout-surface, #080808) !important;
+    border: 1px solid var(--letitout-border-subtle, rgba(255, 252, 241, 0.1)) !important;
     cursor: default !important;
 }
 
@@ -394,9 +407,9 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .letitout-form textarea {
-    background-color: transparent;
-    border: 1px solid #444;
-    color: #e0e0e0;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 252, 241, 0.1);
+    color: rgba(255, 252, 241, 0.92);
 }
 .dark-mode .letitout-form textarea:hover,
 .dark-mode .letitout-form textarea:focus {
@@ -531,18 +544,23 @@ DARK MODE - FIXES & ADDITIONS
     background-color: #4a4a4a;
 }
 
-/* --- Wall Page Filters --- */
-.dark-mode .wall-controls,
+/* --- Wall Page Filters (raised panel #080808 vs canvas #050505 — matches index strips) --- */
+.dark-mode .wall-controls {
+    background-color: var(--letitout-surface, #080808);
+    border: 1px solid var(--letitout-border-subtle, rgba(255, 252, 241, 0.1));
+    box-shadow: none;
+}
+
 .dark-mode .wall-search-filter-row {
-     background-color: #050505; /* Match body background */
+    background-color: transparent;
 }
 
 .dark-mode .wall-location-btn,
 .dark-mode .wall-filter-btn,
 .dark-mode .wall-sort-trigger {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    border-color: #333;
+    background-color: rgba(255, 252, 241, 0.06);
+    color: #fffcf1;
+    border: 1px solid rgba(255, 252, 241, 0.12);
 }
 
 .dark-mode .wall-about-sentence-btn {
@@ -572,7 +590,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .wall-about-brand {
-    color: var(--letitout-primary, #f10000);
+    color: #fffcf1; /* match .dark-mode .wall-location-btn (“Global”) */
 }
 
 .dark-mode .wall-about-default-suffix {
@@ -589,8 +607,8 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .wall-filter-chip {
-    background: #1a1a1a;
-    border-color: #444;
+    background: rgba(255, 252, 241, 0.06);
+    border-color: rgba(255, 252, 241, 0.12);
     color: #e8e8e8;
 }
 
@@ -601,19 +619,19 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .wall-search-input {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    border-color: #333;
+    background-color: rgba(255, 252, 241, 0.06);
+    color: #fffcf1;
+    border: 1px solid rgba(255, 252, 241, 0.12);
 }
 .dark-mode .wall-search-button {
-    background-color: #3a3a3a;
-    color: #ffffff;
-    border-color: #555;
+    background-color: rgba(255, 252, 241, 0.1);
+    color: #fffcf1;
+    border: 1px solid rgba(255, 252, 241, 0.14);
 }
 .dark-mode .wall-sort-list {
-    background: #1a1a1a;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    border: 1px solid #333;
+    background: var(--letitout-surface-inset, #0a0a0a);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    border: 1px solid var(--letitout-border-subtle, rgba(255, 252, 241, 0.1));
 }
 .dark-mode .wall-sort-label-dropdown {
     color: #ffffff;
@@ -633,7 +651,8 @@ DARK MODE - FIXES & ADDITIONS
 
 /* View Toggle - Dark Mode */
 .dark-mode .wall-view-toggle {
-    background: #1a1a1a;
+    background: rgba(255, 252, 241, 0.05);
+    border: 1px solid rgba(255, 252, 241, 0.08);
 }
 
 .dark-mode .wall-view-btn {
@@ -673,14 +692,14 @@ DARK MODE - FIXES & ADDITIONS
 .dark-mode .letitout-city-modal,
 .dark-mode .wall-location-modal .letitout-emotion-modal,
 .dark-mode .report-modal {
-    background-color: #1a1a1a;
-    color: #ffffff;
+    background-color: var(--letitout-surface, #080808);
+    color: #fffcf1;
 }
 
 .dark-mode .letitout-emotion-modal-header,
 .dark-mode .letitout-situation-modal-header,
 .dark-mode .letitout-city-modal-header {
-    border-bottom-color: #333;
+    border-bottom-color: var(--letitout-border-soft, rgba(255, 252, 241, 0.08));
 }
 
 .dark-mode .letitout-emotion-modal-title,
@@ -694,8 +713,8 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .wall-filter-modal .letitout-emotion-modal-footer.wall-filter-modal-footer {
-    background-color: #1a1a1a;
-    border-top-color: #333;
+    background-color: var(--letitout-surface, #080808);
+    border-top-color: var(--letitout-border-soft, rgba(255, 252, 241, 0.08));
 }
 
 /* Explore stories modal: dark pills + brand red when selected (overrides global light-grey emotion pills) */
@@ -903,7 +922,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .city-other-input {
-    background-color: #1a1a1a;
+    background-color: #080808;
     color: #ffffff;
     border: 1px solid #333;
 }
@@ -943,7 +962,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 .dark-mode .my-post-card,
 .dark-mode .original-post-card {
-    background-color: #1a1a1a;
+    background-color: #080808;
     border-color: #333;
     color: #ffffff;
 }
@@ -977,7 +996,7 @@ DARK MODE - FIXES & ADDITIONS
 
 /* --- Misc --- */
 .dark-mode .toast-notification {
-    background-color: #1a1a1a;
+    background-color: #080808;
     color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -990,7 +1009,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .letitout-intro-modal {
-    background: linear-gradient(165deg, #1a1a1a 0%, #141414 50%, #181818 100%);
+    background: linear-gradient(165deg, #080808 0%, #060606 45%, #0c0c0c 100%);
     border-color: rgba(241, 0, 0, 0.22);
     box-shadow:
         0 24px 48px rgba(0, 0, 0, 0.5),
@@ -1034,12 +1053,12 @@ DARK MODE - FIXES & ADDITIONS
 
 /* --- Wall Control Container --- */
 .dark-mode .wall-control {
-    border: 1px solid #333;
+    border: 1px solid var(--letitout-border-soft, rgba(255, 252, 241, 0.08));
 }
 
 /* --- Location Filter Modal --- */
 .dark-mode .location-filter-modal {
-    background-color: #1a1a1a;
+    background-color: #080808;
     border-color: #333;
 }
 .dark-mode .location-filter-modal .modal-header {
@@ -1050,7 +1069,7 @@ DARK MODE - FIXES & ADDITIONS
     color: #ffffff;
 }
 .dark-mode .location-filter-modal .modal-body {
-    background-color: #1a1a1a;
+    background-color: #080808;
     color: #ffffff;
 }
 .dark-mode .location-filter-modal .location-option {
@@ -1067,19 +1086,14 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 /* --- Sort Dropdown --- */
-.dark-mode .wall-controls {
-    border: 1px solid #444;
-    box-shadow: none;
-}
-
 .dark-mode .wall-sort-container select {
-    background-color: #1a1a1a !important;
+    background-color: #080808 !important;
     color: #ffffff !important;
     border: 1px solid #333 !important;
 }
 
 .dark-mode .wall-sort-container select option {
-    background-color: #1a1a1a;
+    background-color: #080808;
     color: #ffffff;
 }
 
@@ -1097,7 +1111,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .wall-location-modal .wall-location-modal-content {
-    background: #1a1a1a;
+    background: #080808;
     border: none;
     color: #ffffff;
 }
@@ -1149,7 +1163,7 @@ DARK MODE - FIXES & ADDITIONS
 
 /* --- Report Post Modal --- */
 .dark-mode #report-modal.letitout-emotion-modal {
-     background-color: #1a1a1a;
+     background-color: #080808;
 }
 .dark-mode #report-modal .letitout-emotion-modal-header {
     background-color: transparent;
@@ -1189,7 +1203,7 @@ DARK MODE - FIXES & ADDITIONS
 
 @media (max-width: 768px) {
     .dark-mode .wall-location-modal .wall-location-modal-content {
-        background: #1a1a1a !important;
+        background: #080808 !important;
     }
 }
 
@@ -1234,7 +1248,7 @@ DARK MODE - FIXES & ADDITIONS
     color: var(--letitout-primary, #f10000);
 }
 .dark-mode .post-card .share-love-btn.sent {
-    background-color: #1a1a1a !important;
+    background-color: #080808 !important;
     color: #888 !important;
     border-color: #333 !important;
     cursor: not-allowed;
@@ -1252,7 +1266,7 @@ DARK MODE - FIXES & ADDITIONS
     background-color: rgba(0, 0, 0, 0.6);
 }
 .dark-mode .reply-modal {
-    background-color: #1a1a1a;
+    background-color: #080808;
     color: #ffffff;
     border: 1px solid #333;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
@@ -1297,7 +1311,7 @@ DARK MODE - FIXES & ADDITIONS
 
 /* --- Report Post Modal --- */
 .dark-mode #report-modal.letitout-emotion-modal {
-    background-color: #1a1a1a;
+    background-color: #080808;
 }
 
 /* --- Toast Notification --- */
@@ -1320,7 +1334,7 @@ DARK MODE - FIXES & ADDITIONS
 
 /* --- Location Modal --- */
 .dark-mode .wall-location-modal-content {
-    background: #1a1a1a;
+    background: #080808;
     border: none;
     color: #ffffff;
 }
@@ -1359,7 +1373,7 @@ DARK MODE - FIXES & ADDITIONS
 
 /* --- Filter Modal --- */
 .dark-mode .letitout-emotion-modal {
-    background-color: #1a1a1a;
+    background-color: #080808;
 }
 
 .dark-mode .report-modal-cancel:hover {
@@ -1492,7 +1506,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .pack-dropdown {
-    background: #1a1a1a;
+    background: #080808;
     border-color: #333;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -1512,7 +1526,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .premium-packs-modal {
-    background: #1a1a1a;
+    background: #080808;
     color: #ffffff;
 }
 
@@ -1572,14 +1586,14 @@ DARK MODE - FIXES & ADDITIONS
 .dark-mode .letitout-confirmation-modal {
   background: #f10000; /* brand red background */
   color: #fffcf1; /* cream text color */
-  box-shadow: 0 8px 32px 0 rgba(202,0,19,0.3), 0 2px 12px rgba(202,0,19,0.2); /* red-tinted shadow */
+  box-shadow: none;
   border: 1px solid #b30010; /* darker red border */
 }
 .dark-mode .letitout-confirmation-text {
   color: #fffcf1; /* cream text color */
 }
 .dark-mode .letitout-confirmation-heart svg {
-  filter: drop-shadow(0 2px 8px #f1000080);
+  filter: none;
 }
 .dark-mode .letitout-confirmation-note {
   color: #aaa;
@@ -1683,7 +1697,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .wall-sort-list {
-    background: #1a1a1a !important;
+    background: #080808 !important;
     box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
     border: 1px solid #333 !important;
     border-radius: 16px !important;
@@ -1701,7 +1715,7 @@ DARK MODE - FIXES & ADDITIONS
 
 .dark-mode .wall-sort-option {
     color: #ffffff !important;
-    background: #1a1a1a !important;
+    background: #080808 !important;
     border: none !important;
     width: 100% !important;
     text-align: left !important;
@@ -1739,7 +1753,7 @@ DARK MODE - FIXES & ADDITIONS
         transform: none !important;
         border-radius: 16px !important;
         box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
-        background: #1a1a1a !important;
+        background: #080808 !important;
         border: 1px solid #333 !important;
     }
     
@@ -1761,7 +1775,7 @@ DARK MODE - FIXES & ADDITIONS
     
     .dark-mode .wall-sort-option {
         color: #ffffff !important;
-        background: #1a1a1a !important;
+        background: #080808 !important;
     }
     
     .dark-mode .wall-sort-option:hover,
@@ -1818,7 +1832,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .letitout-about-panel {
-    background: linear-gradient(165deg, #1a1a1a 0%, #141414 50%, #181818 100%);
+    background: linear-gradient(165deg, #080808 0%, #060606 45%, #0c0c0c 100%);
     border-color: rgba(241, 0, 0, 0.22);
     box-shadow:
         0 24px 48px rgba(0, 0, 0, 0.5),

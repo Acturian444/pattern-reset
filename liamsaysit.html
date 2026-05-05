@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/bio-hub.css?v=12">
+  <link rel="stylesheet" href="styles/bio-hub.css?v=17">
 
   <meta property="og:title" content="Liam | Pattern Reset™">
   <meta property="og:description" content="Live Sunday reset, Let It Out wall, and the relationship clarity quiz—one place to plug into Pattern Reset™.">
@@ -48,14 +48,14 @@
         <div class="pr-hero-waitlist bio-hub__pr-hero-waitlist" id="newsletter">
           <span class="pr-email-kicker">Pattern Reset&trade;</span>
           <h2 class="pr-hero-waitlist-title" id="bio-newsletter-heading">Don&rsquo;t carry this into next week.</h2>
-          <p class="pr-hero-waitlist-lead pr-body">A live Sunday reset to say what you&rsquo;ve been holding in and leave it behind.</p>
+          <p class="pr-hero-waitlist-lead pr-body">A live Sunday reset to say what you&rsquo;ve been holding&mdash;and leave it behind.</p>
           <form class="pr-email-form" id="prEmailForm" novalidate>
             <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for Sunday&rsquo;s reset">
-            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Join this Sunday</button>
+            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Join Sunday&rsquo;s reset</button>
           </form>
           <p class="pr-home-micro">Every Sunday. Show up, let it out, and leave lighter.</p>
           <div class="pr-email-success" id="prEmailSuccess" role="status" aria-live="polite">
-            <p class="pr-email-success-text">You&rsquo;re in. Look for this Sunday&rsquo;s reset in your inbox.</p>
+            <p class="pr-email-success-text">You&rsquo;re in&mdash;look for this Sunday&rsquo;s reset in your inbox.</p>
             <button type="button" class="bio-hub__newsletter-change-email" id="prEmailChangeDifferent">Use a different email</button>
           </div>
         </div>
@@ -63,7 +63,7 @@
 
       <article class="bio-hub__offer-card">
         <h3 class="bio-hub__offer-title">What&rsquo;s really going on?</h3>
-        <p class="bio-hub__offer-desc">Stop guessing what his behavior means. A few quick questions, then a clear read on your pattern, why it keeps looping, and what to focus on next for <em>your</em> situation.</p>
+        <p class="bio-hub__offer-desc">Stop guessing what your partner&rsquo;s behavior means. A quick quiz&mdash;then clarity on your pattern and what to focus on next for <em>your</em> situation.</p>
         <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="index.html#quiz-section">Take The Quiz</a>
       </article>
 
@@ -73,28 +73,29 @@
         <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Post Anonymously</a>
       </article>
 
+      <p class="bio-hub__section-label">Private support</p>
       <article class="bio-hub__offer-card">
         <h3 class="bio-hub__offer-title">Get Your Written Answer</h3>
-        <p class="bio-hub__offer-desc">Tell me what&rsquo;s going on in writing. I read your situation and send back what&rsquo;s <strong>actually</strong> happening and what to do next.</p>
+        <p class="bio-hub__offer-desc">Send your situation in writing. I reply with what&rsquo;s actually going on, what it means for you, and what to do next.</p>
         <div class="bio-hub__offer-meta">
           <span class="bio-hub__offer-price-amount">$59</span>
-          <span class="bio-hub__offer-price-note">Personal written read, limited spots</span>
+          <span class="bio-hub__offer-price-note bio-hub__offer-price-note--natural">1:1 written reply &middot; limited spots</span>
         </div>
         <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="personal-relationship-read.html">Get Clarity Now</a>
       </article>
 
       <article class="bio-hub__offer-card">
         <h3 class="bio-hub__offer-title">Talk To Me 1:1</h3>
-        <p class="bio-hub__offer-desc">60-minute private clarity call for your relationship situation. We go deep, name what keeps repeating, and you leave with clear next steps. No more guessing or overthinking.</p>
+        <p class="bio-hub__offer-desc">60-minute private call for your relationship situation. We go deep, name what keeps repeating, and you leave with clear next steps. No more guessing or overthinking.</p>
         <div class="bio-hub__offer-meta">
           <span class="bio-hub__offer-price-amount">$197</span>
-          <span class="bio-hub__offer-price-note">Live session, limited spots</span>
+          <span class="bio-hub__offer-price-note bio-hub__offer-price-note--natural">Private call &middot; limited spots</span>
         </div>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="https://calendly.com/resetmypattern/30min" target="_blank" rel="noopener noreferrer">Book Your Call</a>
+        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="https://calendly.com/resetmypattern/60min" target="_blank" rel="noopener noreferrer">Book Your Call</a>
       </article>
 
       <div class="bio-hub__contact-soft">
-        <p class="bio-hub__contact-soft-lead">Something else?</p>
+        <p class="bio-hub__contact-soft-lead">Partnerships, press &amp; other inquiries:</p>
         <p class="bio-hub__contact-soft-row">
           <a href="mailto:liamsaysit@gmail.com?subject=Pattern%20Reset%20from%20bio" class="bio-hub__contact-soft-link" id="bio-contact-mailto">liamsaysit@gmail.com</a>
           <button type="button" class="bio-hub__contact-copy" id="bio-contact-copy" aria-label="Copy liamsaysit@gmail.com">Copy</button>
@@ -336,7 +337,7 @@
         if (btn) {
           btn.style.display = '';
           btn.disabled = false;
-          btn.textContent = 'Join this Sunday';
+          btn.textContent = 'Join Sunday\'s reset';
         }
         if (micro) micro.style.display = '';
         if (input) input.focus();

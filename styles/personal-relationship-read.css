@@ -18,7 +18,7 @@
 /* Match home / philosophy dark chrome */
 body.page-pr-read header {
     background: var(--prr-bg) !important;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) !important;
 }
 
 body.page-pr-read .nav-links a,
@@ -97,6 +97,26 @@ body.page-pr-read .menu-overlay .menu-nav-link.active .menu-nav-subtitle {
 body.page-pr-read .menu-overlay .close-btn,
 body.page-pr-read .menu-overlay .close-btn.hamburger {
     color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Footer — match quiz landing (index) dark chrome; global style.css uses cream #fffcf1 */
+body.page-pr-read footer {
+    background: #050505 !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+body.page-pr-read .copyright {
+    border-top-color: rgba(255, 255, 255, 0.1) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+body.page-pr-read .copyright p {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+body.page-pr-read .copyright a {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+body.page-pr-read .copyright a:hover,
+body.page-pr-read .copyright a:focus {
+    color: #f10000 !important;
 }
 
 @media (max-width: 900px) {

@@ -20,7 +20,7 @@
      * Booking confirmation still tracked via Calendly postMessage event if
      * a Calendly iframe ever renders on a post-paywall page.
      */
-    var CALENDLY_URL_DEFAULT = 'https://calendly.com/resetmypattern/30min';
+    var CALENDLY_URL_DEFAULT = 'https://calendly.com/resetmypattern/60min';
 
     function getCalendlyUrl() {
         var override = window.PATTERN_RESET_CALENDLY_URL;
