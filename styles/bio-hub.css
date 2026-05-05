@@ -636,33 +636,6 @@ body.page-bio-hub {
   margin: 0;
 }
 
-.bio-hub__pr-hero-waitlist .bio-hub__newsletter-next {
-  margin: 0.75rem 0 0;
-  padding: 0;
-  font-size: clamp(0.82rem, 2.4vw, 0.9rem);
-  font-weight: 600;
-  line-height: 1.4;
-  text-align: left;
-}
-
-.bio-hub__pr-hero-waitlist .bio-hub__newsletter-next a {
-  color: var(--pr-cream);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(241, 0, 0, 0.45);
-  transition: color 0.15s ease, border-color 0.15s ease;
-}
-
-.bio-hub__pr-hero-waitlist .bio-hub__newsletter-next a:hover {
-  color: #fff;
-  border-bottom-color: var(--pr-red);
-}
-
-.bio-hub__pr-hero-waitlist .bio-hub__newsletter-next a:focus-visible {
-  outline: 2px solid var(--pr-red);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-
 .bio-hub__pr-hero-waitlist .bio-hub__newsletter-change-email {
   display: block;
   margin: 0.65rem 0 0;
