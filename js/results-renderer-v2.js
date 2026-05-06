@@ -4139,7 +4139,7 @@
                         <p style="font-size: 0.95rem; line-height: 1.6; color: #333; margin: 0;">${data.stronger}</p>
                     </div>
                 </div>
-                <a href="patterns.html" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.25rem; padding: 0.65rem 1.25rem; background: #f10000; color: #fff; font-size: 0.9rem; font-weight: 600; text-decoration: none; border-radius: 6px; transition: background 0.2s;">Explore All Pattern Types <span style="font-size: 0.8em;">→</span></a>
+                <a href="index.html#quiz-section" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.25rem; padding: 0.65rem 1.25rem; background: #f10000; color: #fff; font-size: 0.9rem; font-weight: 600; text-decoration: none; border-radius: 6px; transition: background 0.2s;">Get clarity — take the quiz <span style="font-size: 0.8em;">→</span></a>
             </div>
         `;
     }

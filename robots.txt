@@ -43,8 +43,6 @@ Disallow: /data/
 Disallow: /logs/
 
 # Block hidden pages
-Disallow: /product/breakup-course.html
-Disallow: /course/breakup-course.html
 Disallow: /letitout.html
 
 # Allow sitemap

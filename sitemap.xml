@@ -25,20 +25,4 @@
     <priority>0.6</priority>
   </url>
   
-  <!-- Patterns Page -->
-  <url>
-    <loc>https://mypatternreset.com/patterns</loc>
-    <lastmod>2026-02-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <!-- Pattern Theory Page -->
-  <url>
-    <loc>https://mypatternreset.com/pattern-theory</loc>
-    <lastmod>2026-02-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
 </urlset> 

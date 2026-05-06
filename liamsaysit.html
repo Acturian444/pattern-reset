@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/bio-hub.css?v=17">
+  <link rel="stylesheet" href="styles/bio-hub.css?v=32">
 
   <meta property="og:title" content="Liam | Pattern Reset™">
   <meta property="og:description" content="Live Sunday reset, Let It Out wall, and the relationship clarity quiz—one place to plug into Pattern Reset™.">
@@ -35,12 +35,37 @@
 </head>
 <body class="page-bio-hub">
   <main class="bio-hub" id="main">
-    <div class="bio-hub__avatar-wrap">
-      <img class="bio-hub__avatar" src="images/founder.png" width="120" height="120" alt="Liam">
+    <div class="bio-hub__layout">
+    <div class="bio-hub__sidebar">
+    <div class="bio-hub__profile">
+      <div class="bio-hub__avatar-wrap">
+        <img class="bio-hub__avatar" src="images/founder.png" width="120" height="120" alt="Liam">
+      </div>
+      <div class="bio-hub__profile-text">
+        <h1 class="bio-hub__name">Liam</h1>
+        <p class="bio-hub__handle">@liamsaysit</p>
+        <p class="bio-hub__tagline">
+          <span class="bio-hub__tagline-lead">Tell me your story.</span><br />
+          <span class="bio-hub__tagline-punch">Let&rsquo;s break the loop.</span>
+        </p>
+      </div>
     </div>
 
-    <h1 class="bio-hub__name">Liam</h1>
-    <p class="bio-hub__handle">@liamsaysit</p>
+    <div class="bio-hub__social" aria-label="TikTok">
+      <a href="https://www.tiktok.com/@liamsaysit" target="_blank" rel="noopener noreferrer" aria-label="TikTok @liamsaysit">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 11-2.89-2.89c.09 0 .18.01.27.02V9.6a6.33 6.33 0 00-1-.07A6.34 6.34 0 005 15.95 6.34 6.34 0 0011.34 22a6.34 6.34 0 006.34-6.34V8.56a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-2.86-.99z"/></svg>
+      </a>
+    </div>
+
+    <div class="bio-hub__contact-soft">
+      <p class="bio-hub__contact-soft-lead">Partnerships, press &amp; other inquiries:</p>
+      <p class="bio-hub__contact-soft-row">
+        <a href="mailto:liamsaysit@gmail.com?subject=Pattern%20Reset%20from%20bio" class="bio-hub__contact-soft-link" id="bio-contact-mailto">liamsaysit@gmail.com</a>
+        <button type="button" class="bio-hub__contact-copy" id="bio-contact-copy" aria-label="Copy liamsaysit@gmail.com">Copy</button>
+      </p>
+      <p class="bio-hub__contact-soft-hint" id="bio-contact-copy-status" aria-live="polite"></p>
+    </div>
+    </div>
 
     <div class="bio-hub__actions">
       <!-- Weekly Reset — same copy, Firestore, and Google Form as home.html #newsletter -->
@@ -48,12 +73,12 @@
         <div class="pr-hero-waitlist bio-hub__pr-hero-waitlist" id="newsletter">
           <span class="pr-email-kicker">Pattern Reset&trade;</span>
           <h2 class="pr-hero-waitlist-title" id="bio-newsletter-heading">Don&rsquo;t carry this into next week.</h2>
-          <p class="pr-hero-waitlist-lead pr-body">A live Sunday reset to say what you&rsquo;ve been holding&mdash;and leave it behind.</p>
+          <p class="pr-hero-waitlist-lead pr-body">A guided Sunday reset to release what&rsquo;s been weighing on you.</p>
           <form class="pr-email-form" id="prEmailForm" novalidate>
             <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for Sunday&rsquo;s reset">
-            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Join Sunday&rsquo;s reset</button>
+            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Join the Sunday Reset</button>
           </form>
-          <p class="pr-home-micro">Every Sunday. Show up, let it out, and leave lighter.</p>
+          <p class="pr-home-micro">Every Sunday. Let it out and leave lighter.</p>
           <div class="pr-email-success" id="prEmailSuccess" role="status" aria-live="polite">
             <p class="pr-email-success-text">You&rsquo;re in&mdash;look for this Sunday&rsquo;s reset in your inbox.</p>
             <button type="button" class="bio-hub__newsletter-change-email" id="prEmailChangeDifferent">Use a different email</button>
@@ -63,51 +88,38 @@
 
       <article class="bio-hub__offer-card">
         <h3 class="bio-hub__offer-title">What&rsquo;s really going on?</h3>
-        <p class="bio-hub__offer-desc">Stop guessing what your partner&rsquo;s behavior means. A quick quiz&mdash;then clarity on your pattern and what to focus on next for <em>your</em> situation.</p>
+        <p class="bio-hub__offer-desc">Decode their behavior. See the relationship dynamic you&rsquo;re in, why it keeps repeating, and what to do next.</p>
         <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="index.html#quiz-section">Take The Quiz</a>
       </article>
 
       <article class="bio-hub__offer-card">
         <h3 class="bio-hub__offer-title">Let it out</h3>
-        <p class="bio-hub__offer-desc">Write what happened, what you felt, what you never said. Anonymous. No pressure.</p>
+        <p class="bio-hub__offer-desc">Say what happened, what you felt, or what you never got to say. Let it out and leave lighter.</p>
         <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Post Anonymously</a>
       </article>
 
       <p class="bio-hub__section-label">Private support</p>
       <article class="bio-hub__offer-card">
-        <h3 class="bio-hub__offer-title">Get Your Written Answer</h3>
-        <p class="bio-hub__offer-desc">Send your situation in writing. I reply with what&rsquo;s actually going on, what it means for you, and what to do next.</p>
+        <h3 class="bio-hub__offer-title">Get clarity</h3>
+        <p class="bio-hub__offer-desc">Send me your story. I&rsquo;ll tell you what&rsquo;s really happening, what keeps repeating, and what to do next.</p>
         <div class="bio-hub__offer-meta">
           <span class="bio-hub__offer-price-amount">$59</span>
           <span class="bio-hub__offer-price-note bio-hub__offer-price-note--natural">1:1 written reply &middot; limited spots</span>
         </div>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="personal-relationship-read.html">Get Clarity Now</a>
+        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="personal-relationship-read.html">Get Your Answer</a>
       </article>
 
       <article class="bio-hub__offer-card">
         <h3 class="bio-hub__offer-title">Talk To Me 1:1</h3>
-        <p class="bio-hub__offer-desc">60-minute private call for your relationship situation. We go deep, name what keeps repeating, and you leave with clear next steps. No more guessing or overthinking.</p>
+        <p class="bio-hub__offer-desc">60-minute call to understand what&rsquo;s happening in your relationship, why you feel stuck, and what to do next.</p>
         <div class="bio-hub__offer-meta">
           <span class="bio-hub__offer-price-amount">$197</span>
           <span class="bio-hub__offer-price-note bio-hub__offer-price-note--natural">Private call &middot; limited spots</span>
         </div>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="https://calendly.com/resetmypattern/60min" target="_blank" rel="noopener noreferrer">Book Your Call</a>
+        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="https://calendly.com/resetmypattern/30min" target="_blank" rel="noopener noreferrer">Book Your Call</a>
       </article>
-
-      <div class="bio-hub__contact-soft">
-        <p class="bio-hub__contact-soft-lead">Partnerships, press &amp; other inquiries:</p>
-        <p class="bio-hub__contact-soft-row">
-          <a href="mailto:liamsaysit@gmail.com?subject=Pattern%20Reset%20from%20bio" class="bio-hub__contact-soft-link" id="bio-contact-mailto">liamsaysit@gmail.com</a>
-          <button type="button" class="bio-hub__contact-copy" id="bio-contact-copy" aria-label="Copy liamsaysit@gmail.com">Copy</button>
-        </p>
-        <p class="bio-hub__contact-soft-hint" id="bio-contact-copy-status" aria-live="polite"></p>
-      </div>
     </div>
 
-    <div class="bio-hub__social" aria-label="TikTok">
-      <a href="https://www.tiktok.com/@liamsaysit" target="_blank" rel="noopener noreferrer" aria-label="TikTok @liamsaysit">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 11-2.89-2.89c.09 0 .18.01.27.02V9.6a6.33 6.33 0 00-1-.07A6.34 6.34 0 005 15.95 6.34 6.34 0 0011.34 22a6.34 6.34 0 006.34-6.34V8.56a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-2.86-.99z"/></svg>
-      </a>
     </div>
 
     <footer class="bio-hub__footer">
@@ -337,7 +349,7 @@
         if (btn) {
           btn.style.display = '';
           btn.disabled = false;
-          btn.textContent = 'Join Sunday\'s reset';
+          btn.textContent = 'Join the Sunday Reset';
         }
         if (micro) micro.style.display = '';
         if (input) input.focus();
