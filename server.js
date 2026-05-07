@@ -945,10 +945,6 @@ const _cleanHtml = [
     ['home', 'home.html'],
     ['personal-relationship-read', 'personal-relationship-read.html'],
     ['letitout', 'letitout.html'],
-    ['patterns', 'patterns.html'],
-    ['pattern-theory', 'pattern-theory.html'],
-    ['product/breakup-course', 'product/breakup-course.html'],
-    ['course/breakup-course', 'course/breakup-course.html'],
 ];
 _cleanHtml.forEach(function (pair) {
     var base = '/' + pair[0];

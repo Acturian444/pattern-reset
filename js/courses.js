@@ -8,7 +8,7 @@ const breakupRecoveryCourse = {
   description: 'A 22-day journey to heal your heart and reclaim your power.',
   price: 33,
   image: 'images/Let It Out Logo.png',
-  purchaseUrl: '/product/breakup-course.html',
+  purchaseUrl: '/',
   
   // Use content from course-content.js
   introduction: courseContent.introduction,

@@ -36,7 +36,6 @@ const filesToUpdate = [
     'legal.html',
     
     // Product pages
-    'product/breakup-course.html',
     'product/balance-earrings.html',
     'product/reminder-tshirt.html',
     'product/self-love-bracelet.html',
@@ -44,7 +43,6 @@ const filesToUpdate = [
     
     // Shop and course
     'shop/index.html',
-    'course/breakup-course.html',
     
     // SEO files
     'sitemap.xml',

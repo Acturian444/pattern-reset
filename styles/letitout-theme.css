@@ -68,4 +68,11 @@ body.page-letitout.dark-mode {
     --letitout-border-subtle: rgba(255, 252, 241, 0.1);
     --letitout-border-soft: rgba(255, 252, 241, 0.08);
     --letitout-text-cream: #fffcf1;
+    /* Modal overlays: readability on #050505 canvas (see wall location modal) */
+    --letitout-modal-scrim: rgba(0, 0, 0, 0.78);
+    --letitout-modal-panel-bg: #121212;
+    --letitout-modal-panel-border: rgba(255, 252, 241, 0.12);
+    --letitout-modal-panel-shadow:
+        0 16px 48px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 252, 241, 0.06);
 }

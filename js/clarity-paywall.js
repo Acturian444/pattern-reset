@@ -20,7 +20,8 @@
      * Booking confirmation still tracked via Calendly postMessage event if
      * a Calendly iframe ever renders on a post-paywall page.
      */
-    var CALENDLY_URL_DEFAULT = 'https://calendly.com/resetmypattern/60min';
+    /* Must match an active event slug on the Calendly account (/60min returns HTTP 404). */
+    var CALENDLY_URL_DEFAULT = 'https://calendly.com/resetmypattern/30min';
 
     function getCalendlyUrl() {
         var override = window.PATTERN_RESET_CALENDLY_URL;
@@ -186,7 +187,7 @@
             '<article class="clarity-paywall-tier">' +
             '<div class="clarity-paywall-tier-cardhead">' +
             '<span class="clarity-paywall-tier-price-big">$197</span>' +
-            '<p class="clarity-paywall-tier-label">A 60-MIN CALL WITH ME</p>' +
+            '<p class="clarity-paywall-tier-label">A 30-MIN CALL WITH ME</p>' +
             '</div>' +
             '<ul class="clarity-paywall-tier-list">' +
             '<li>1:1 call with me on Zoom</li>' +

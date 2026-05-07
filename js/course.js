@@ -62,7 +62,7 @@
         <h1 style="font-family:'Anton',sans-serif;color:#f10000;font-size:2rem;margin-bottom:1.5rem;">Course Locked</h1>
         <div style="font-family:'DM Sans',sans-serif;color:#555;font-size:1.1rem;margin-bottom:2rem;max-width:320px;text-align:center;">
           You need to purchase the course to access this page.<br><br>
-          <a href="../product/breakup-course.html" style="color:#f10000;font-weight:bold;text-decoration:underline;">Go to Course Page</a>
+          <a href="/index.html" style="color:#f10000;font-weight:bold;text-decoration:underline;">Back to Get Clarity</a>
         </div>
       </main>
     `;

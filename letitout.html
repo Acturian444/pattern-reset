@@ -96,10 +96,10 @@
     
     <!-- Styles -->
     <link rel="stylesheet" href="style.css?v=16">
-    <link rel="stylesheet" href="styles/letitout-theme.css?v=5">
+    <link rel="stylesheet" href="styles/letitout-theme.css?v=6">
     <link rel="stylesheet" href="styles/letitout.css?v=58">
     <link rel="stylesheet" href="styles/letitout-mobile.css?v=2">
-    <link rel="stylesheet" href="styles/letitout-dark.css?v=33">
+    <link rel="stylesheet" href="styles/letitout-dark.css?v=35">
     <link rel="stylesheet" href="styles/letitout-location-fix.css?v=9">
     <link rel="stylesheet" href="styles/letitout-button-fix.css?v=1">
     <style>
@@ -233,7 +233,6 @@
                     <ul class="nav-links">
                         <li><a href="index.html">Get Clarity</a></li>
                         <li><a href="letitout.html" class="letitout-link active">Let It Out</a></li>
-                        <li id="myCourseLink" style="display: none;"><a href="course/breakup-course.html" id="desktopContinueBreakupResetLink">Continue Pattern Reset</a></li>
                     </ul>
                     <button type="button" class="nav-cta-button letitout-my-posts-btn-global letitout-inbox-cta" id="my-posts-btn" aria-label="My Stories & Inbox">
                         <i class="fas fa-envelope"></i> Inbox
@@ -249,7 +248,6 @@
                 <a href="index.html" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Get Clarity</span><span class="menu-nav-subtitle">Understand your situation</span></a>
                 <a href="letitout.html" class="menu-nav-link letitout-link active" onclick="closeMenu()"><span class="menu-nav-title">Let It Out</span><span class="menu-nav-subtitle">Share your story</span></a>
                 <a href="home.html#newsletter" class="menu-nav-link" onclick="closeMenu()"><span class="menu-nav-title">Reset</span><span class="menu-nav-subtitle">Join Sunday Reset</span></a>
-                <a id="mobileCourseLink" href="course/breakup-course.html" class="menu-nav-link" style="display: none;" onclick="closeMenu()"><span class="menu-nav-title">Continue Pattern Reset</span><span class="menu-nav-subtitle">Pick up where you left off</span></a>
             </nav>
         </div>
         <button type="button" class="letitout-mobile-inbox-btn letitout-my-posts-btn-global" id="mobile-inbox-btn" aria-label="My Stories & Inbox">
@@ -602,34 +600,6 @@
                 window.LetItOutUtils.updateUnreadBadge();
             });
         }
-
-        // Update navigation to show course links when unlocked
-        function updateNavigation() {
-            const isUnlocked = localStorage.getItem('courseUnlocked_breakup') === 'true';
-            const myCourseLink = document.getElementById('myCourseLink');
-            const mobileCourseLink = document.getElementById('mobileCourseLink');
-            const mobileBreakupResetLink = document.getElementById('mobileBreakupResetLink');
-            const desktopBreakupResetLink = document.getElementById('desktopBreakupResetLink');
-            const desktopContinueBreakupResetLink = document.getElementById('desktopContinueBreakupResetLink');
-            if (isUnlocked) {
-                if (myCourseLink) myCourseLink.style.display = 'block';
-                if (mobileCourseLink) {
-                    mobileCourseLink.style.display = 'block';
-                    mobileCourseLink.textContent = 'Continue Pattern Reset';
-                }
-                if (mobileBreakupResetLink) mobileBreakupResetLink.style.display = 'none';
-                if (desktopBreakupResetLink) desktopBreakupResetLink.style.display = 'none';
-                if (desktopContinueBreakupResetLink) desktopContinueBreakupResetLink.style.display = 'block';
-            } else {
-                if (myCourseLink) myCourseLink.style.display = 'none';
-                if (mobileCourseLink) mobileCourseLink.style.display = 'none';
-                if (mobileBreakupResetLink) mobileBreakupResetLink.style.display = 'block';
-                if (desktopBreakupResetLink) desktopBreakupResetLink.style.display = 'block';
-                if (desktopContinueBreakupResetLink) desktopContinueBreakupResetLink.style.display = 'none';
-            }
-        }
-        // Update navigation on page load
-        updateNavigation();
 
         // Custom Google Analytics Events for Let It Out Page Tracking
         function trackLetItOutEvent(eventName, eventParameters = {}) {
