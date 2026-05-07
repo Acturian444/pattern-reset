@@ -325,30 +325,13 @@ body.page-letitout.dark-mode .copyright a:visited {
 }
 
 .dark-mode .letitout-emotion-modal,
-.dark-mode .modal-bottom-sheet {
-    background: var(--letitout-modal-panel-bg, #121212) !important;
-    color: #fffcf1;
-    border: 1px solid var(--letitout-modal-panel-border, rgba(255, 252, 241, 0.12));
-    box-shadow: var(
-        --letitout-modal-panel-shadow,
-        0 16px 48px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(255, 252, 241, 0.06)
-    );
-}
-
+.dark-mode .modal-bottom-sheet,
 .dark-mode .letitout-situation-modal,
-.dark-mode .letitout-city-modal {
-    background: var(--letitout-modal-panel-bg, #121212) !important;
-    color: #fffcf1;
-    border: 1px solid var(--letitout-modal-panel-border, rgba(255, 252, 241, 0.12));
-    box-shadow: var(
-        --letitout-modal-panel-shadow,
-        0 16px 48px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(255, 252, 241, 0.06)
-    );
-}
-
-.dark-mode .wall-filter-modal .letitout-emotion-modal {
+.dark-mode .letitout-city-modal,
+.dark-mode .wall-filter-modal .letitout-emotion-modal,
+.dark-mode .wall-location-modal .letitout-emotion-modal,
+.dark-mode #report-modal.letitout-emotion-modal,
+.dark-mode .report-modal {
     background: var(--letitout-modal-panel-bg, #121212) !important;
     color: #fffcf1;
     border: 1px solid var(--letitout-modal-panel-border, rgba(255, 252, 241, 0.12));
@@ -727,19 +710,7 @@ DARK MODE - FIXES & ADDITIONS
     color: #a0a0a0;
 }
 
-/* --- General Modals (Feeling, Situation, City, Location, Report) — shell handled above; footer/header borders --- */
-.dark-mode .wall-location-modal .letitout-emotion-modal,
-.dark-mode .report-modal {
-    background-color: var(--letitout-modal-panel-bg, #121212);
-    color: #fffcf1;
-    border: 1px solid var(--letitout-modal-panel-border, rgba(255, 252, 241, 0.12));
-    box-shadow: var(
-        --letitout-modal-panel-shadow,
-        0 16px 48px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(255, 252, 241, 0.06)
-    );
-}
-
+/* Modal panel shells consolidated above; footer/header borders below */
 .dark-mode .letitout-emotion-modal-header,
 .dark-mode .letitout-situation-modal-header,
 .dark-mode .letitout-city-modal-header {
@@ -1206,15 +1177,6 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 /* --- Report Post Modal --- */
-.dark-mode #report-modal.letitout-emotion-modal {
-    background-color: var(--letitout-modal-panel-bg, #121212) !important;
-    border: 1px solid var(--letitout-modal-panel-border, rgba(255, 252, 241, 0.12));
-    box-shadow: var(
-        --letitout-modal-panel-shadow,
-        0 16px 48px rgba(0, 0, 0, 0.55),
-        0 0 0 1px rgba(255, 252, 241, 0.06)
-    );
-}
 .dark-mode #report-modal .letitout-emotion-modal-header {
     background-color: transparent;
     border-bottom: 1px solid #333;

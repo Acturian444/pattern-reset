@@ -140,7 +140,7 @@ body.page-bio-hub {
 }
 
 .bio-hub__name {
-  font-family: "Anton", sans-serif;
+  font-family: Anton, sans-serif;
   font-size: 1.65rem;
   text-align: left;
   margin: 0;
@@ -259,7 +259,7 @@ body.page-bio-hub {
 }
 
 .bio-hub__btn-line--caps {
-  font-family: "Anton", sans-serif;
+  font-family: Anton, sans-serif;
   font-size: 1.05rem;
   font-weight: 400;
   letter-spacing: 0.06em;
@@ -302,7 +302,7 @@ body.page-bio-hub {
 /* Offer cards + newsletter headline — same title scale */
 .bio-hub__offer-title,
 .bio-hub__pr-hero-waitlist .pr-hero-waitlist-title {
-  font-family: "Anton", sans-serif;
+  font-family: Anton, sans-serif;
   font-size: clamp(1.05rem, 3vw, 1.2rem);
   font-weight: 400;
   letter-spacing: 0.06em;
@@ -680,7 +680,7 @@ body.page-bio-hub {
   border: none;
   border-radius: 10px;
   padding: 1.05rem 1rem;
-  font-family: "Anton", sans-serif;
+  font-family: Anton, sans-serif;
   font-size: clamp(0.88rem, 3.5vw, 1.02rem);
   font-weight: 400;
   letter-spacing: 0.03em;

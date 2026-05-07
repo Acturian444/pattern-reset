@@ -187,7 +187,7 @@
             '<article class="clarity-paywall-tier">' +
             '<div class="clarity-paywall-tier-cardhead">' +
             '<span class="clarity-paywall-tier-price-big">$197</span>' +
-            '<p class="clarity-paywall-tier-label">A 60-MIN CALL WITH ME</p>' +
+            '<p class="clarity-paywall-tier-label">A 30-MIN CALL WITH ME</p>' +
             '</div>' +
             '<ul class="clarity-paywall-tier-list">' +
             '<li>1:1 call with me on Zoom</li>' +
