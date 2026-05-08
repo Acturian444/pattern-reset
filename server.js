@@ -734,15 +734,36 @@ app.post('/create-checkout-session', async (req, res) => {
                 email: req.body.email || '',
             };
         } else if (type === 'personal_relationship_read') {
-            // $59 Personal Relationship Read — price from env (do not trust client for amount).
-            // Use STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ (price_…) or STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ (prod_…) to resolve first active one-time price.
-            // Confirmation email: (1) Stripe Dashboard → Customer emails / receipts for paid Checkout.
-            // (2) Webhook checkout.session.completed → Resend/etc. — reassemble metadata keys ip0..ipN (see buildPrReadIntakeMetadata).
-            let prPriceId = (process.env.STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ || '').trim();
+            // $59 Personal Relationship Read — server-owned Stripe price resolution.
+            // Resolve in this order:
+            //   (1) STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ if valid
+            //   (2) DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ if valid
+            //   (3) first active one-time price from STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ
+            // This prevents stale env values (deleted or wrong-mode price IDs) from causing 500s.
+            const envPriceId = (process.env.STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ || '').trim();
             const prodId = (process.env.STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ || '').trim();
-            if (!prPriceId && !prodId) {
-                prPriceId = DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ;
+            const candidatePriceIds = [];
+            if (envPriceId) candidatePriceIds.push(envPriceId);
+            if (DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ && envPriceId !== DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ) {
+                candidatePriceIds.push(DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ);
             }
+
+            let prPriceId = '';
+            let lastPriceErr = null;
+            for (let i = 0; i < candidatePriceIds.length; i++) {
+                const candidate = candidatePriceIds[i];
+                try {
+                    const price = await stripe.prices.retrieve(candidate);
+                    if (price && price.active && price.type === 'one_time') {
+                        prPriceId = price.id;
+                        break;
+                    }
+                } catch (e) {
+                    lastPriceErr = e;
+                    console.warn('Stripe prices.retrieve (personal_relationship_read):', candidate, e && e.message);
+                }
+            }
+
             if (!prPriceId && prodId) {
                 try {
                     const prices = await stripe.prices.list({
@@ -755,18 +776,22 @@ app.post('/create-checkout-session', async (req, res) => {
                 } catch (listErr) {
                     console.error('Stripe prices.list (personal_relationship_read):', listErr);
                     res.status(503).json({
-                        error: 'Could not look up price for this product. Check STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ and your Stripe secret key.',
+                        error: 'Could not look up price for this product.',
+                        hint: 'Check STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ and Stripe key mode (test vs live).',
                     });
                     return;
                 }
             }
+
             if (!prPriceId) {
                 res.status(503).json({
                     error: 'Payment is not configured for this product.',
-                    hint: 'Set STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ (price_…) and/or STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ (prod_…) on the server.',
+                    hint: 'Set a valid STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ (price_…) or STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ (prod_…) on the server.',
+                    details: lastPriceErr && lastPriceErr.message ? String(lastPriceErr.message) : undefined,
                 });
                 return;
             }
+
             sessionConfig.line_items = [{
                 price: prPriceId,
                 quantity: 1,
@@ -792,7 +817,20 @@ app.post('/create-checkout-session', async (req, res) => {
         res.json({ id: session.id });
     } catch (error) {
         console.error('Error creating checkout session:', error);
-        res.status(500).json({ error: 'Failed to create checkout session' });
+        const stripeType = error && error.type ? String(error.type) : '';
+        const stripeCode = error && error.code ? String(error.code) : '';
+        const stripeMsg = error && error.message ? String(error.message) : '';
+        const hint =
+            stripeType.indexOf('StripeAuthenticationError') !== -1
+                ? 'Check STRIPE_SECRET_KEY on the server (and ensure mode matches your price IDs).'
+                : stripeCode === 'resource_missing'
+                    ? 'A configured Stripe Price/Product was not found. Recheck STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ / STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ.'
+                    : undefined;
+        res.status(500).json({
+            error: 'Failed to create checkout session',
+            details: stripeMsg || undefined,
+            hint,
+        });
     }
 });
 
