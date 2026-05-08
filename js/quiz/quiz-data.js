@@ -77,7 +77,7 @@ window.relationshipPatterns = {
             futureAfterLead: 'you keep chasing someone who only shows up on his terms—and clarity never arrives, because the pattern is the point.',
             lcfMerged: 'He comes close—then goes cold. You live between relief and anxiety, replaying what happened, and you start blaming yourself when the distance returns. If nothing changes, you keep chasing someone who only shows up on his terms—while clarity never arrives, because the pattern is the point.',
             oneDecision: 'Decide whether you will keep pursuing closeness every time he withdraws—or hold a standard for steadiness that matches what you need.',
-            oneAction: 'Before you pursue, pause and name what you need in one clear sentence (for yourself first): connection, reassurance, or a plan—without sending a novel or chasing “proof.”'
+            oneAction: 'Before you pursue, pause and name what you need in one clear sentence (for yourself first): connection, reassurance, or a plan—without sending a novel or chasing "proof."'
         }
     },
     'breadcrumb-dynamic': {
@@ -146,7 +146,7 @@ window.relationshipPatterns = {
             costAfterLead: 'you shrink what you need to match what he offers, and you start calling inconsistency "potential."',
             futureAfterLead: 'you stay suspended—never secure enough to relax, never gone enough to grieve it and move on.',
             lcfMerged: 'He drops attention in bursts; you wait for the next sign and shrink what you need to match what he offers. You start calling inconsistency "potential" and stay suspended—never secure enough to relax, never gone enough to move on. If nothing changes, hope keeps costing you time and self-trust.',
-            oneDecision: 'Decide whether “just enough” is still a yes—or whether you need consistent, chosen effort you don’t have to beg for.',
+            oneDecision: 'Decide whether "just enough" is still a yes—or whether you need consistent, chosen effort you don\'t have to beg for.',
             oneAction: 'For two weeks, track only behavior: who initiates, who follows through, what actually happens on the calendar—leave his intentions out of it.'
         }
     },
@@ -216,8 +216,8 @@ window.relationshipPatterns = {
             costAfterLead: 'your patience trains you to accept vague as normal—and you put your life on hold for someone who won\'t name what this is.',
             futureAfterLead: 'you stay in something that never becomes real—because "later" never has to become now.',
             lcfMerged: 'You want a real answer; he keeps the future fuzzy—enough hope to stay, never enough to choose. Your patience trains you to accept vague as normal and put your life on hold. If nothing changes, "later" never becomes now—and you stay in something that never becomes real.',
-            oneDecision: 'Decide whether open-ended “someday” still works for your life—or whether you need a direct answer with a timeframe attached.',
-            oneAction: 'Ask one clarity question you can repeat verbatim—and treat vague as information: “What are we, and by when will you know?”'
+            oneDecision: 'Decide whether open-ended "someday" still works for your life—or whether you need a direct answer with a timeframe attached.',
+            oneAction: 'Ask one clarity question you can repeat verbatim—and treat vague as information: "What are we, and by when will you know?"'
         }
     },
     'emotional-distance': {
@@ -322,7 +322,7 @@ window.relationshipPatterns = {
         herPattern: 'You replay what he said vs. what he did. You try to make it make sense — and end up more confused.',
         dynamic: 'His words say one thing. His actions say another. You\'re always interpreting.',
         whatItMeans: 'He gives just enough attention to keep you invested—but not enough consistency to move forward. His words and actions don\'t match. That disconnect isn\'t confusion. It\'s the pattern.',
-        whyYouStay: 'The attention comes in cycles. When he\'s warm, it feels real. When he pulls away, you try to understand it. Your brain keeps solving the inconsistency—that keeps you invested longer than you expected.',
+        whyYouStay: 'When what he says sounds right, it buys another round of hope—even when what he does hasn\'t moved. You stay in decode mode because naming the gap would force a decision you\'re not ready to make yet.',
         ifNothingChanges: ['the relationship stays undefined', 'emotional investment becomes one-sided', 'the confusion increases over time', 'clarity rarely appears suddenly'],
         signsYoureInIt: ['you replay conversations trying to understand what he meant', 'his words and actions don\'t match', 'the relationship feels intense but unclear', 'you keep waiting for clarity that never fully arrives'],
         strengths: 'You notice inconsistencies. You ask questions. You want clarity instead of pretending everything is fine. That awareness is what allows you to break the pattern.',
@@ -356,8 +356,8 @@ window.relationshipPatterns = {
             costAfterLead: 'you live in your head, second-guess your instincts, and feel crazy for noticing what doesn\'t line up.',
             futureAfterLead: 'you keep analyzing instead of deciding—and your trust in yourself is what erodes first.',
             lcfMerged: 'His words promise; his actions hesitate—you replay, decode, and doubt your instincts. That keeps you invested without solid ground. If you keep analyzing instead of deciding, your trust in yourself erodes first.',
-            oneDecision: 'Decide whether you’re building a relationship from his words or from his behavior—because those are often two different futures.',
-            oneAction: 'Same-day log, two lines: what he said he’d do vs. what he actually did—no storytelling, just events.'
+            oneDecision: 'Decide whether you\'re building a relationship from his words or from his behavior—because those are often two different futures.',
+            oneAction: 'Same-day log, two lines: what he said he\'d do vs. what he actually did—no storytelling, just events.'
         }
     },
     'one-sided-investment': {
@@ -426,8 +426,8 @@ window.relationshipPatterns = {
             costAfterLead: 'you get depleted, and your generosity gets mistaken for proof he\'s committed when he\'s mostly receiving.',
             futureAfterLead: 'you keep overgiving until you break—or until you stop, and discover how little he was putting in all along.',
             lcfMerged: 'You initiate, plan, and invest; he shows up when it\'s easy. You get depleted—and your effort gets mistaken for proof he\'s all in when he\'s mostly receiving. If nothing changes, you overgive until you break—or stop and finally see how little he was putting in.',
-            oneDecision: 'Decide whether you’ll keep overgiving—or temporarily match effort and see what the relationship actually is without you carrying it.',
-            oneAction: 'For one week, initiate only as much as he initiates; don’t rescue, don’t compensate—observe what’s left between you.'
+            oneDecision: 'Decide whether you\'ll keep overgiving—or temporarily match effort and see what the relationship actually is without you carrying it.',
+            oneAction: 'For one week, initiate only as much as he initiates; don\'t rescue, don\'t compensate—observe what\'s left between you.'
         }
     }
 };

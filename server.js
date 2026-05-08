@@ -22,6 +22,8 @@ const OFFER_LABELS = {
  * For Stripe **test** mode, set STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ to a **test** price_… in .env so it matches sk_test.
  */
 const DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ = 'price_1TNUFLBiV6S6xuimZH8beoiV';
+/** Live catalog — "Get a Direct Answer" (fallback when STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ is unset). */
+const DEFAULT_STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ = 'prod_UMCeCWNyR0C9Qy';
 
 // ============================================================
 // Google Form sync — mirrors js/services/google-form-sync.js
@@ -741,7 +743,8 @@ app.post('/create-checkout-session', async (req, res) => {
             //   (3) first active one-time price from STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ
             // This prevents stale env values (deleted or wrong-mode price IDs) from causing 500s.
             const envPriceId = (process.env.STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ || '').trim();
-            const prodId = (process.env.STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ || '').trim();
+            const prodIdEnv = (process.env.STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ || '').trim();
+            const prodId = prodIdEnv || DEFAULT_STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ;
             const candidatePriceIds = [];
             if (envPriceId) candidatePriceIds.push(envPriceId);
             if (DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ && envPriceId !== DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ) {
