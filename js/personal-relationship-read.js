@@ -599,6 +599,9 @@
                     if (derr.hint) {
                         msg += ' ' + derr.hint;
                     }
+                    if (derr.details) {
+                        msg += ' (' + derr.details + ')';
+                    }
                     showError('pr-read-intake-error', msg);
                     resetSubmitBtn();
                     return;
