@@ -1,8 +1,11 @@
 User-agent: *
 Allow: /
 
+# Pattern quiz landing paused (see docs/QUIZ-DISABLED.md)
+Disallow: /
+Disallow: /index.html
+
 # Allow all public pages
-Allow: /index.html
 Allow: /legal.html
 
 # Allow CSS and JavaScript files for proper rendering

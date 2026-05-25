@@ -593,15 +593,15 @@
             return `
                     <div class="results-clarity-upsell-grid" role="list">
                         <article class="results-clarity-tier-card" role="listitem">
-                            <p class="results-clarity-tier-card__line">$59 &mdash; APPLY IT TO MY SITUATION</p>
-                            <h3 class="results-clarity-tier-card__title">Get a direct read on your situation</h3>
-                            <p class="results-clarity-tier-card__body">You share what&rsquo;s looping. You get what&rsquo;s real, what to do, and what not to do—so you can decide.</p>
+                            <p class="results-clarity-tier-card__line">$22 &mdash; PATTERN REFLECTION</p>
+                            <h3 class="results-clarity-tier-card__title">Submit your story</h3>
+                            <p class="results-clarity-tier-card__body">Send your story. Uncover the emotional pattern, blind spot, or turning point you may not be seeing.</p>
                             <ul class="results-clarity-tier-card__list">
-                                <li>You share context</li>
-                                <li>I tell you what&rsquo;s real</li>
-                                <li>What to do &mdash; and what not to do</li>
+                                <li>Personal written reflection</li>
+                                <li>Pattern, blind spot, or turning point</li>
+                                <li>Reply in 48&ndash;72 hours</li>
                             </ul>
-                            <a href="${applyHref}" class="results-cta-btn results-cta-btn-secondary results-clarity-tier-card__btn"${applyHref === '#' ? ' aria-disabled="true"' : ''}>Get my situation analyzed</a>
+                            <a href="${applyHref}" class="results-cta-btn results-cta-btn-secondary results-clarity-tier-card__btn"${applyHref === '#' ? ' aria-disabled="true"' : ''}>Submit your story</a>
                         </article>
                         <article class="results-clarity-tier-card results-clarity-tier-card--featured" role="listitem">
                             <span class="results-clarity-tier-card__badge">Highest touch</span>

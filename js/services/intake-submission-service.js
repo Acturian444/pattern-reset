@@ -36,7 +36,7 @@
                 entryPath: p.entryPath === 'quiz' ? 'quiz' : 'direct_url',
                 entrySource: p.entrySource ? String(p.entrySource).slice(0, 120) : null,
                 entryCampaign: p.entryCampaign ? String(p.entryCampaign).slice(0, 120) : null,
-                offerId: String(p.offerId || 'direct_read_59').slice(0, 64),
+                offerId: String(p.offerId || 'pattern_reflection_22').slice(0, 64),
                 patternKey: p.patternKey != null ? String(p.patternKey).slice(0, 80) : null,
                 patternName: p.patternName != null ? String(p.patternName).slice(0, 200) : null,
                 herPatternKey: p.herPatternKey != null ? String(p.herPatternKey).slice(0, 80) : null,
