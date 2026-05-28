@@ -181,12 +181,18 @@
         word-break: break-word;
         font-size: clamp(0.65rem, 1.65vw + 0.34rem, 0.82rem);
     }
-    @media (min-width: 480px) {
-        .pr-home-micro {
-            white-space: nowrap;
-            overflow-wrap: normal;
-            word-break: normal;
-        }
+    .pr-home-micro .pr-home-letitout-link {
+        color: rgba(255, 252, 241, 0.72);
+        font-weight: 500;
+        text-decoration: underline;
+        text-underline-offset: 0.18em;
+        text-decoration-thickness: 1px;
+        transition: color 0.2s ease;
+    }
+    .pr-home-micro .pr-home-letitout-link:hover,
+    .pr-home-micro .pr-home-letitout-link:focus {
+        color: #fffcf1;
+        outline: none;
     }
     .pr-hero-waitlist .pr-email-form { display: flex; flex-direction: column; align-items: stretch; gap: 0.7rem; margin-top: clamp(1.75rem, 3.5vw, 2.35rem); width: 100%; max-width: min(32rem, 100%); margin-left: auto; margin-right: auto; }
     .pr-email-input { width: 100%; min-width: 0; min-height: 3rem; box-sizing: border-box; background: rgba(255,252,241,0.08); border: 1px solid rgba(255,252,241,0.16); border-radius: 10px; padding: 0.95rem 1.1rem; font-family: 'DM Sans', sans-serif; font-size: 1.0625rem; color: var(--pr-cream); outline: none; transition: border-color 0.2s, background 0.2s; }
@@ -368,13 +374,13 @@
         <div class="pr-hero-inner pr-lp-hero-inner">
             <div class="pr-hero-waitlist" id="newsletter">
                 <span class="pr-email-kicker">Pattern Reset&trade;</span>
-                <h1 class="pr-hero-waitlist-title" id="hero-heading">The story you carry becomes the life you live.</h1>
-                <p class="pr-hero-waitlist-lead pr-body">Join the weekly ritual for reflection, release, and transformation.</p>
+                <h1 class="pr-hero-waitlist-title" id="hero-heading">What we don&rsquo;t face eventually starts shaping us.</h1>
+                <p class="pr-hero-waitlist-lead pr-body">A weekly reset ritual for people trying to get unstuck, break cycles, and change the direction of their lives.</p>
                 <form class="pr-email-form" id="prEmailForm" novalidate>
                     <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for the weekly reset">
-                    <button type="submit" class="pr-home-cta" id="prEmailSubmit">Join the Reset</button>
+                    <button type="submit" class="pr-home-cta" id="prEmailSubmit">Join the Sunday Reset</button>
                 </form>
-                <p class="pr-home-micro">See the pattern. Break the loop.</p>
+                <p class="pr-home-micro">Need to get it out of your head? <a href="letitout.html" class="pr-home-letitout-link" aria-label="Let it out anonymously on Let It Out">Let it out anonymously &rarr;</a></p>
                 <div class="pr-email-success" id="prEmailSuccess" role="status" aria-live="polite">You&rsquo;re in&mdash;look for the reset in your inbox.</div>
             </div>
         </div>

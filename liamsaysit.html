@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/bio-hub.css?v=42">
+  <link rel="stylesheet" href="styles/bio-hub.css?v=43">
 
   <meta property="og:title" content="Liam | Pattern Reset™">
   <meta property="og:description" content="Live Sunday reset, Let It Out wall, and the relationship clarity quiz—one place to plug into Pattern Reset™.">
@@ -41,13 +41,12 @@
       <section class="bio-hub__newsletter" aria-labelledby="bio-newsletter-heading">
         <div class="pr-hero-waitlist bio-hub__pr-hero-waitlist" id="newsletter">
           <span class="pr-email-kicker">Pattern Reset&trade;</span>
-          <h2 class="pr-hero-waitlist-title" id="bio-newsletter-heading">The story you carry becomes the life you live.</h2>
-          <p class="pr-hero-waitlist-lead pr-body">Join the weekly ritual for reflection, release, and transformation.</p>
+          <h2 class="pr-hero-waitlist-title" id="bio-newsletter-heading">What we don&rsquo;t face eventually starts shaping us.</h2>
+          <p class="pr-hero-waitlist-lead pr-body">A weekly reset ritual for people trying to get unstuck, break cycles, and change the direction of their lives.</p>
           <form class="pr-email-form" id="prEmailForm" novalidate>
             <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for the weekly reset">
-            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Join the Reset</button>
+            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Join the Sunday Reset</button>
           </form>
-          <p class="pr-home-micro">See the pattern. Break the loop.</p>
           <div class="pr-email-success" id="prEmailSuccess" role="status" aria-live="polite">
             <p class="pr-email-success-text">You&rsquo;re in&mdash;look for the reset in your inbox.</p>
             <button type="button" class="bio-hub__newsletter-change-email" id="prEmailChangeDifferent">Use a different email</button>
@@ -57,16 +56,16 @@
 
       <article class="bio-hub__offer-card">
         <h3 class="bio-hub__offer-title">Let it out</h3>
-        <p class="bio-hub__offer-desc">Say what happened, what you felt, or what you never got to say.</p>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Post Anonymously</a>
+        <p class="bio-hub__offer-desc">Release the story you&rsquo;ve been carrying.<br />Some stories were never meant to stay trapped inside you.</p>
+        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Share Your Story</a>
       </article>
 
       <p class="bio-hub__section-label">Private support</p>
       <article class="bio-hub__offer-card">
-        <h3 class="bio-hub__offer-title">Your Story</h3>
-        <p class="bio-hub__offer-desc">Send me your story. I&rsquo;ll help you uncover the emotional pattern, blind spot, or turning point you may not be seeing.</p>
-        <p class="bio-hub__offer-reflection-meta">Personal written reflection &middot; $22</p>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="personal-relationship-read.html">Submit your story</a>
+        <h3 class="bio-hub__offer-title">Pattern Review</h3>
+        <p class="bio-hub__offer-desc">Send me your story.<br />I&rsquo;ll help you uncover the pattern, blind spot, or truth you may not be seeing.</p>
+        <p class="bio-hub__offer-reflection-meta">Personal written review &middot; $22</p>
+        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="personal-relationship-read.html">Get Clarity</a>
       </article>
 
     </div>
@@ -81,8 +80,8 @@
           <h1 class="bio-hub__name">Liam</h1>
           <p class="bio-hub__handle">@liamsaysit</p>
           <p class="bio-hub__tagline">
-            <span class="bio-hub__tagline-lead">Tell me your story.</span><br />
-            <span class="bio-hub__tagline-punch">Let&rsquo;s break the loop.</span>
+            <span class="bio-hub__tagline-lead">You can&rsquo;t change your life while repeating the same patterns.</span><br />
+            <span class="bio-hub__tagline-punch">Start letting it out &darr;</span>
           </p>
         </div>
       </div>
@@ -336,7 +335,7 @@
         if (btn) {
           btn.style.display = '';
           btn.disabled = false;
-          btn.textContent = 'Join the Reset';
+          btn.textContent = 'Join the Sunday Reset';
         }
         if (micro) micro.style.display = '';
         if (input) input.focus();

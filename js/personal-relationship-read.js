@@ -411,7 +411,7 @@
         function resetSubmitBtn() {
             if (submitBtn) {
                 submitBtn.disabled = false;
-                submitBtn.textContent = submitBtn.getAttribute('data-prev-label') || 'Submit your story — $22';
+                submitBtn.textContent = submitBtn.getAttribute('data-prev-label') || 'Get your review — $22';
             }
         }
 
