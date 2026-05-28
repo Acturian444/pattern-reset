@@ -1875,12 +1875,20 @@ DARK MODE - FIXES & ADDITIONS
     color: #d0d0d0;
 }
 
+.dark-mode .letitout-about-copy--opening {
+    color: #e8e8e8;
+}
+
 .dark-mode .letitout-about-foot.letitout-about-foot--human {
     color: #9a9a9a;
 }
 
 .dark-mode .letitout-about-copy strong {
     color: #f0f0f0;
+}
+
+.dark-mode .letitout-about-copy--hook strong {
+    color: var(--letitout-primary, #f10000);
 }
 
 .dark-mode .letitout-about-closer {
@@ -1892,7 +1900,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .letitout-about-closer-text strong {
-    color: #ff6b6b;
+    color: var(--letitout-primary, #f10000);
 }
 
 .dark-mode .letitout-about-purpose-label,

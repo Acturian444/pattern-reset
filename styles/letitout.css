@@ -6427,10 +6427,33 @@ select {
     margin-bottom: 0.35rem;
 }
 
+.letitout-about-copy--opening {
+    font-weight: 600;
+    color: #2a2a2a;
+}
+
+.letitout-about-copy--stack {
+    margin: 0 0 0.65rem;
+    line-height: 1.58;
+}
+
+.letitout-about-copy--stack-tight {
+    margin-top: -0.15rem;
+    margin-bottom: 0.6rem;
+}
+
+.letitout-about-copy--hook {
+    margin-top: 0.15rem;
+}
+
+.letitout-about-copy--hook strong {
+    color: var(--letitout-primary, #f10000);
+}
+
 .letitout-about-closer {
     margin: 0 0 1rem;
-    padding: 0.75rem 0 0;
-    text-align: center;
+    padding: 0.85rem 0 0;
+    text-align: left;
     border-top: 1px solid rgba(0, 0, 0, 0.08);
     background: none;
     border-radius: 0;
@@ -6449,7 +6472,7 @@ select {
 
 .letitout-about-closer-text strong {
     font-weight: 700;
-    color: #c40000;
+    color: var(--letitout-primary, #f10000);
 }
 
 .letitout-about-kicker {
