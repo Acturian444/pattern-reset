@@ -752,7 +752,7 @@ class WallFeed {
                     <div class="wall-filter-modal-header-text">
                         <div class="letitout-emotion-modal-title">Explore stories</div>
                         <p class="wall-filter-modal-hint">Pick up to 3 to filter stories</p>
-                    </div>
+                </div>
                     <button type="button" class="letitout-emotion-modal-close" aria-label="Close">&times;</button>
                 </div>
                 <div class="letitout-emotion-modal-content wall-filter-modal-scroll">
@@ -824,7 +824,7 @@ class WallFeed {
                         this.wallFilterTags = this.wallFilterTags.filter(
                             (t) => !(t.type === tag.type && t.label === tag.label)
                         );
-                    } else {
+                        } else {
                         this.wallFilterTags.push({
                             type: tag.type,
                             label: tag.label
@@ -881,7 +881,7 @@ class WallFeed {
         this.normalizeWallFilters();
 
         let filteredPosts = [...this.posts];
-
+        
         // Wall tags: match ANY selected tag (feelings and/or situations)
         filteredPosts = this.applyWallTagFilter(filteredPosts);
         
@@ -991,15 +991,15 @@ class WallFeed {
             this.feed.classList.add('wall-feed-single');
             this.renderSingleCardView();
         } else {
-            if (posts.length > 0) {
-                posts.forEach(post => {
-                    const card = PostCard.create(post);
-                    this.feed.appendChild(card);
-                });
-            } else {
+        if (posts.length > 0) {
+            posts.forEach(post => {
+                const card = PostCard.create(post);
+                this.feed.appendChild(card);
+            });
+        } else {
                 this.feed.appendChild(this.buildWallEmptyContent());
-            }
-            this.highlightPostFromUrl();
+        }
+        this.highlightPostFromUrl();
         }
     }
 

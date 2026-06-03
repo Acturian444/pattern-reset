@@ -6,22 +6,22 @@
   <meta name="theme-color" content="#050505">
   <meta name="robots" content="index, follow">
   <title>Liam | Pattern Reset™</title>
-  <meta name="description" content="Liam — Pattern Reset™. Live Sunday reset, relationship clarity tools, and where to start when a pattern keeps repeating.">
+  <meta name="description" content="Liam — Pattern Reset™. Send a message, share on Let It Out, and find where to start when a pattern keeps repeating.">
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/bio-hub.css?v=43">
+  <link rel="stylesheet" href="styles/bio-hub.css?v=46">
 
   <meta property="og:title" content="Liam | Pattern Reset™">
-  <meta property="og:description" content="Live Sunday reset, Let It Out wall, and the relationship clarity quiz—one place to plug into Pattern Reset™.">
+  <meta property="og:description" content="Send Liam a message, use the Let It Out wall, and plug into Pattern Reset™ from one link.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://mypatternreset.com/liamsaysit">
   <meta property="og:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Liam | Pattern Reset™">
-  <meta name="twitter:description" content="Live Sunday reset, Let It Out, and the clarity quiz—start here.">
+  <meta name="twitter:description" content="Send a message, Let It Out, and start here.">
   <meta name="twitter:image" content="https://mypatternreset.com/images/pattern-reset-og.png">
   <link rel="canonical" href="https://mypatternreset.com/liamsaysit">
 
@@ -39,22 +39,25 @@
     <div class="bio-hub__actions">
       <article class="bio-hub__offer-card">
         <h3 class="bio-hub__offer-title">Let it out</h3>
-        <p class="bio-hub__offer-desc">What&rsquo;s a moment that changed your life? Share your story anonymously.</p>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Tell Your Story</a>
+        <p class="bio-hub__offer-desc">Tell us what happened.<br />Anonymous. Honest. Unfiltered.</p>
+        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Share your story</a>
       </article>
 
-      <!-- Weekly Reset — same copy, Firestore, and Google Form as home.html #newsletter -->
-      <section class="bio-hub__newsletter" aria-labelledby="bio-newsletter-heading">
-        <div class="pr-hero-waitlist bio-hub__pr-hero-waitlist" id="newsletter">
-          <h2 class="pr-hero-waitlist-title" id="bio-newsletter-heading">The story of the week</h2>
-          <p class="pr-hero-waitlist-lead pr-body">One powerful story that makes you see life differently every Sunday.</p>
-          <form class="pr-email-form" id="prEmailForm" novalidate>
-            <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for the story of the week">
-            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Get The Story</button>
+      <!-- Message Me — Firestore bioMessages + Google Form "Message Me" sheet -->
+      <section class="bio-hub__newsletter" id="message-me" aria-labelledby="bio-message-heading">
+        <div class="bio-hub__pr-hero-waitlist" id="newsletter">
+          <h2 class="pr-hero-waitlist-title" id="bio-message-heading">Send me a message</h2>
+          <p class="pr-hero-waitlist-lead pr-body">Have a story or question? Send it here instead of a DM.</p>
+          <form class="pr-email-form bio-hub__message-form" id="bioMessageForm" novalidate>
+            <label class="bio-hub__form-label" for="bioMessageText">Your Message</label>
+            <textarea class="pr-email-input bio-hub__message-textarea" id="bioMessageText" name="message" rows="5" required maxlength="5000" placeholder="Your message" aria-label="Your message"></textarea>
+            <label class="bio-hub__form-label" for="bioMessageEmail">Email</label>
+            <input type="email" class="pr-email-input" id="bioMessageEmail" name="email" autocomplete="email" inputmode="email" required placeholder="Email" aria-label="Email">
+            <button type="submit" class="pr-home-cta" id="bioMessageSubmit">Send</button>
           </form>
-          <div class="pr-email-success" id="prEmailSuccess" role="status" aria-live="polite">
-            <p class="pr-email-success-text">You&rsquo;re in&mdash;look for Sunday&rsquo;s story in your inbox.</p>
-            <button type="button" class="bio-hub__newsletter-change-email" id="prEmailChangeDifferent">Use a different email</button>
+          <div class="pr-email-success" id="bioMessageSuccess" role="status" aria-live="polite">
+            <p class="pr-email-success-text">Message sent.</p>
+            <button type="button" class="bio-hub__newsletter-change-email" id="bioMessageSendAnother">Send another message</button>
           </div>
         </div>
       </section>
@@ -70,11 +73,7 @@
         <div class="bio-hub__profile-text">
           <h1 class="bio-hub__name">Liam</h1>
           <p class="bio-hub__handle">@liamsaysit</p>
-          <p class="bio-hub__tagline">
-            <span class="bio-hub__tagline-lead">Trying to understand why people do what they do.</span><br />
-            <span class="bio-hub__tagline-lead">The stories people carry.</span><br />
-            <span class="bio-hub__tagline-punch">The moments that change them.</span>
-          </p>
+          <p class="bio-hub__tagline">The stories we believe shape the lives we live.</p>
         </div>
       </div>
       <div class="bio-hub__profile-connect">
@@ -105,7 +104,7 @@
     </footer>
   </main>
 
-  <iframe name="weekly-reset-iframe" id="weekly-reset-iframe" title="Form submit" style="display:none;width:0;height:0;border:0;" aria-hidden="true"></iframe>
+  <iframe name="bio-message-iframe" id="bio-message-iframe" title="Form submit" style="display:none;width:0;height:0;border:0;" aria-hidden="true"></iframe>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
@@ -116,118 +115,131 @@
   <script>
     document.getElementById('bio-year').textContent = new Date().getFullYear();
 
-    /** Persist newsletter success on this device so refresh / return visits show confirmation (not the empty form). */
-    var WEEKLY_RESET_BIO_STORAGE_KEY = 'patternReset_weeklyReset_liamsaysit_v1';
-
-    function weeklyResetBioAlreadySignedUp() {
-      try {
-        return !!localStorage.getItem(WEEKLY_RESET_BIO_STORAGE_KEY);
-      } catch (e) {
-        return false;
-      }
-    }
-
-    function persistWeeklyResetBioSignup() {
-      try {
-        localStorage.setItem(WEEKLY_RESET_BIO_STORAGE_KEY, new Date().toISOString());
-      } catch (e) {}
-    }
-
     /**
-     * @param {{ skipGtag?: boolean }} opts — skip analytics when restoring from storage (not a new signup)
+     * Message Me — Google Form "Message Me" (same form as former Sunday reset list).
+     * Entry IDs from form prefilled URL / viewform HTML (2026-05).
      */
-    function showWeeklyResetBioSuccessUi(opts) {
-      opts = opts || {};
-      var form = document.getElementById('prEmailForm');
-      var input = document.getElementById('prEmailInput');
-      var btn = document.getElementById('prEmailSubmit');
-      var success = document.getElementById('prEmailSuccess');
-      if (!success) return;
-      if (input) {
-        input.style.display = 'none';
-        input.style.borderColor = '';
-      }
-      if (btn) btn.style.display = 'none';
-      if (form && typeof form.querySelectorAll === 'function') {
-        form.querySelectorAll('label').forEach(function (l) {
-          l.style.display = 'none';
-        });
-      }
-      var micro = document.querySelector('#newsletter .pr-home-micro');
-      if (micro) micro.style.display = 'none';
-      success.style.display = 'block';
-      if (!opts.skipGtag && typeof gtag === 'function') {
-        gtag('event', 'sign_up', { method: 'weekly_reset_liamsaysit' });
-      }
-    }
-
-    /**
-     * Keep PR_WEEKLY_RESET_FORM_ACTION / PR_FORM_ENTRY_* in sync with home.html
-     * (see WEEKLY RESET comment in home.html <head>).
-     */
-    var PR_WEEKLY_RESET_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSfyNFXWb8mZ0A-EOemynRlZemc1_Pm1fvYvl5O9DKqpfwjAAw/formResponse';
+    var PR_MESSAGE_FORM_ACTION =
+      'https://docs.google.com/forms/d/e/1FAIpQLSfyNFXWb8mZ0A-EOemynRlZemc1_Pm1fvYvl5O9DKqpfwjAAw/formResponse';
+    var PR_FORM_ENTRY_MESSAGE = 'entry.1072301583';
     var PR_FORM_ENTRY_EMAIL = 'entry.2011616989';
-    var PR_FORM_ENTRY_SOURCE = '';
 
-    function postWeeklyResetToGoogleForm(email) {
-      if (!PR_WEEKLY_RESET_FORM_ACTION || !PR_FORM_ENTRY_EMAIL) return;
+    function postMessageToGoogleForm(message, emailOptional) {
+      if (!PR_MESSAGE_FORM_ACTION || !PR_FORM_ENTRY_MESSAGE) return;
       var f = document.createElement('form');
       f.setAttribute('method', 'POST');
-      f.setAttribute('action', PR_WEEKLY_RESET_FORM_ACTION);
-      f.setAttribute('target', 'weekly-reset-iframe');
+      f.setAttribute('action', PR_MESSAGE_FORM_ACTION);
+      f.setAttribute('target', 'bio-message-iframe');
       f.setAttribute('accept-charset', 'UTF-8');
       f.style.cssText = 'position:absolute;left:-9999px;opacity:0;pointer-events:none;';
-      if (PR_FORM_ENTRY_SOURCE) {
-        var t = document.createElement('input');
-        t.setAttribute('type', 'hidden');
-        t.setAttribute('name', PR_FORM_ENTRY_SOURCE);
-        t.setAttribute('value', 'weekly_reset_liamsaysit');
-        f.appendChild(t);
+
+      var msg = document.createElement('input');
+      msg.setAttribute('type', 'hidden');
+      msg.setAttribute('name', PR_FORM_ENTRY_MESSAGE);
+      msg.setAttribute('value', message);
+      f.appendChild(msg);
+
+      if (PR_FORM_ENTRY_EMAIL) {
+        var em = document.createElement('input');
+        em.setAttribute('type', 'hidden');
+        em.setAttribute('name', PR_FORM_ENTRY_EMAIL);
+        em.setAttribute('value', emailOptional || '');
+        f.appendChild(em);
       }
-      var m = document.createElement('input');
-      m.setAttribute('type', 'hidden');
-      m.setAttribute('name', PR_FORM_ENTRY_EMAIL);
-      m.setAttribute('value', email);
-      f.appendChild(m);
+
       document.body.appendChild(f);
       f.submit();
       document.body.removeChild(f);
     }
 
-    var prEmailFormEl = document.getElementById('prEmailForm');
-    if (prEmailFormEl) {
-      prEmailFormEl.addEventListener('submit', function (e) {
+    function showBioMessageSuccessUi(opts) {
+      opts = opts || {};
+      var form = document.getElementById('bioMessageForm');
+      var success = document.getElementById('bioMessageSuccess');
+      if (!success) return;
+      if (form) form.style.display = 'none';
+      success.style.display = 'block';
+      if (!opts.skipGtag && typeof gtag === 'function') {
+        gtag('event', 'generate_lead', { method: 'bio_message_me' });
+      }
+    }
+
+    function resetBioMessageFormUi() {
+      var form = document.getElementById('bioMessageForm');
+      var success = document.getElementById('bioMessageSuccess');
+      var textEl = document.getElementById('bioMessageText');
+      var emailEl = document.getElementById('bioMessageEmail');
+      var btn = document.getElementById('bioMessageSubmit');
+      if (success) success.style.display = 'none';
+      if (form) form.style.display = '';
+      if (textEl) {
+        textEl.value = '';
+        textEl.style.borderColor = '';
+      }
+      if (emailEl) {
+        emailEl.value = '';
+        emailEl.style.borderColor = '';
+      }
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = 'Send';
+      }
+      if (textEl) textEl.focus();
+    }
+
+    var bioMessageFormEl = document.getElementById('bioMessageForm');
+    if (bioMessageFormEl) {
+      bioMessageFormEl.addEventListener('submit', function (e) {
         e.preventDefault();
-        var form = this;
-        var input = document.getElementById('prEmailInput');
-        var btn = document.getElementById('prEmailSubmit');
-        var success = document.getElementById('prEmailSuccess');
-        if (!input || !success) return;
-        var v = (input.value || '').trim();
-        if (!v || v.indexOf('@') === -1) {
-          input.style.borderColor = 'var(--pr-red, #f10000)';
-          input.focus();
+        var textEl = document.getElementById('bioMessageText');
+        var emailEl = document.getElementById('bioMessageEmail');
+        var btn = document.getElementById('bioMessageSubmit');
+        if (!textEl) return;
+
+        var message = (textEl.value || '').trim();
+        var emailRaw = emailEl ? (emailEl.value || '').trim() : '';
+
+        if (!message || message.length < 3) {
+          textEl.style.borderColor = 'var(--pr-red, #f10000)';
+          textEl.focus();
           return;
         }
-        if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
-        /** Prefer exported db; fallback if firebase.js ran before export was read (same instance). */
+        if (!emailRaw || emailRaw.indexOf('@') === -1) {
+          if (emailEl) {
+            emailEl.style.borderColor = 'var(--pr-red, #f10000)';
+            emailEl.focus();
+          }
+          return;
+        }
+
+        var emailForStore = emailRaw;
+
+        textEl.style.borderColor = '';
+        if (emailEl) emailEl.style.borderColor = '';
+
+        if (btn) {
+          btn.disabled = true;
+          btn.textContent = 'Sending…';
+        }
+
         var db =
           typeof window.letitoutDb !== 'undefined' && window.letitoutDb
             ? window.letitoutDb
-            : typeof firebase !== 'undefined' &&
-                firebase.apps &&
-                firebase.apps.length
+            : typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length
               ? firebase.firestore()
               : null;
 
-        var doneUi = function () {
-          showWeeklyResetBioSuccessUi({});
-          persistWeeklyResetBioSignup();
-        };
-        var runGoogle = function () { try { postWeeklyResetToGoogleForm(v); } catch (err) { console.error(err); } };
         var finish = function () {
-          runGoogle();
-          setTimeout(doneUi, 400);
+          try {
+            postMessageToGoogleForm(message, emailForStore);
+          } catch (err) {
+            console.error(err);
+          }
+          showBioMessageSuccessUi({});
+          if (btn) {
+            btn.disabled = false;
+            btn.textContent = 'Send';
+          }
         };
 
         if (db && typeof firebase !== 'undefined') {
@@ -236,37 +248,33 @@
             .signInAnonymously()
             .then(function () {
               var u = auth.currentUser;
-              if (!u) throw new Error('weeklyResetSignups: anonymous auth missing after signIn');
+              if (!u) throw new Error('bioMessages: anonymous auth missing after signIn');
               return u.getIdToken(true);
             })
             .then(function () {
-              return db.collection('weeklyResetSignups').add({
-                email: v,
+              var doc = {
+                message: message,
+                email: emailForStore,
                 source: 'liamsaysit',
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
-              });
+              };
+              return db.collection('bioMessages').add(doc);
             })
             .then(finish)
             .catch(function (err) {
-              console.error(
-                'weeklyResetSignups failed',
-                err && err.code,
-                err && err.message,
-                err
-              );
+              console.error('bioMessages failed', err && err.code, err && err.message, err);
               finish();
             });
         } else {
-          console.warn(
-            'weeklyResetSignups: Firestore unavailable — check Firebase scripts and authorized domains'
-          );
+          console.warn('bioMessages: Firestore unavailable — Google Form sync only');
           finish();
         }
       });
     }
 
-    if (weeklyResetBioAlreadySignedUp()) {
-      showWeeklyResetBioSuccessUi({ skipGtag: true });
+    var bioMessageSendAnother = document.getElementById('bioMessageSendAnother');
+    if (bioMessageSendAnother) {
+      bioMessageSendAnother.addEventListener('click', resetBioMessageFormUi);
     }
 
     (function bioContactEmail() {
@@ -309,30 +317,6 @@
       }
     })();
 
-    var prEmailChangeBtn = document.getElementById('prEmailChangeDifferent');
-    if (prEmailChangeBtn) {
-      prEmailChangeBtn.addEventListener('click', function () {
-        try {
-          localStorage.removeItem(WEEKLY_RESET_BIO_STORAGE_KEY);
-        } catch (e) {}
-        var input = document.getElementById('prEmailInput');
-        var btn = document.getElementById('prEmailSubmit');
-        var success = document.getElementById('prEmailSuccess');
-        var micro = document.querySelector('#newsletter .pr-home-micro');
-        if (success) success.style.display = 'none';
-        if (input) {
-          input.style.display = '';
-          input.value = '';
-        }
-        if (btn) {
-          btn.style.display = '';
-          btn.disabled = false;
-          btn.textContent = 'Get The Story';
-        }
-        if (micro) micro.style.display = '';
-        if (input) input.focus();
-      });
-    }
   </script>
 </body>
 </html>
