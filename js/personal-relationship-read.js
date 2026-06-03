@@ -120,7 +120,12 @@
                 var likelyQuizMistake =
                     quiz &&
                     (quiz.relationshipStatus === 'single' || quiz.relationshipStatus === 'not-in-one');
-                if (likelyQuizMistake) {
+                var hasUserAuthoredInput =
+                    !!((draft.happening && String(draft.happening).trim()) ||
+                       (draft.wantKnow && String(draft.wantKnow).trim()) ||
+                       (draft.duration && String(draft.duration).trim()) ||
+                       (draft.scope && String(draft.scope).trim()));
+                if (likelyQuizMistake && !hasUserAuthoredInput) {
                     draft.stage = '';
                 }
             }

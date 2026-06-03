@@ -106,32 +106,32 @@
     },
     {
       "source": "/home.html",
-      "destination": "/liamsaysit",
+      "destination": "/liamsaysit#newsletter",
       "permanent": true
     },
     {
       "source": "/home",
-      "destination": "/liamsaysit",
+      "destination": "/liamsaysit#newsletter",
       "permanent": true
     },
     {
       "source": "/home/",
-      "destination": "/liamsaysit",
+      "destination": "/liamsaysit#newsletter",
       "permanent": true
     },
     {
       "source": "/home-v2",
-      "destination": "/liamsaysit",
+      "destination": "/liamsaysit#newsletter",
       "permanent": true
     },
     {
       "source": "/home-v2/",
-      "destination": "/liamsaysit",
+      "destination": "/liamsaysit#newsletter",
       "permanent": true
     },
     {
       "source": "/home-v2.html",
-      "destination": "/liamsaysit",
+      "destination": "/liamsaysit#newsletter",
       "permanent": true
     },
     {

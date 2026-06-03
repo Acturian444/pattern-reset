@@ -850,7 +850,7 @@ app.post('/create-checkout-session', async (req, res) => {
             stripeType.indexOf('StripeAuthenticationError') !== -1
                 ? 'Check STRIPE_SECRET_KEY on the server (and ensure mode matches your price IDs).'
                 : stripeCode === 'resource_missing'
-                    ? 'A configured Stripe Price/Product was not found. Recheck STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ / STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ.'
+                    ? 'A configured Stripe Price/Product was not found. Recheck STRIPE_PRICE_PATTERN_REFLECTION_22 (or STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ) / STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ.'
                     : undefined;
         res.status(500).json({
             error: 'Failed to create checkout session',

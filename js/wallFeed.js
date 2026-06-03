@@ -847,6 +847,7 @@ class WallFeed {
 
         clearBtn.onclick = () => {
             this.wallFilterTags = [];
+            this.updateFeed();
             this.updateFilterBar();
             renderUnified(searchInput.value);
         };

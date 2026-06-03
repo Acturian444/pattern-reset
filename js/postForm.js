@@ -1384,6 +1384,8 @@ class PostForm {
         optionsWrap.className = 'situation-options-grid';
         content.appendChild(optionsWrap);
 
+        let pendingSituation = this.selectedSituation;
+
         const renderSituations = (filter = '') => {
             optionsWrap.innerHTML = '';
             const filterVal = filter.trim().toLowerCase();
@@ -1393,16 +1395,16 @@ class PostForm {
                 btn.type = 'button';
                 btn.className = 'situation-option-btn';
                 btn.textContent = situation;
-                if (this.selectedSituation === situation) btn.classList.add('selected');
+                if (pendingSituation === situation) btn.classList.add('selected');
                 btn.onclick = () => {
                     content.querySelectorAll('.situation-option-btn').forEach((b) => b.classList.remove('selected'));
-                    if (this.selectedSituation === situation) {
-                        this.selectedSituation = null;
+                    if (pendingSituation === situation) {
+                        pendingSituation = null;
                     } else {
-                        this.selectedSituation = situation;
+                        pendingSituation = situation;
                         btn.classList.add('selected');
                     }
-                    doneBtn.disabled = !this.selectedSituation;
+                    doneBtn.disabled = !pendingSituation;
                 };
                 optionsWrap.appendChild(btn);
             });
@@ -1410,7 +1412,7 @@ class PostForm {
 
         renderSituations();
         searchInput.oninput = () => renderSituations(searchInput.value);
-        doneBtn.disabled = !this.selectedSituation;
+        doneBtn.disabled = !pendingSituation;
 
         const closeModal = () => modal.classList.remove('visible');
         closeBtn.onclick = () => {
@@ -1418,6 +1420,7 @@ class PostForm {
         };
         cancelBtn.onclick = closeModal;
         doneBtn.onclick = () => {
+            this.selectedSituation = pendingSituation;
             this.updateSelectedSituation();
             this.saveDraft();
             closeModal();
