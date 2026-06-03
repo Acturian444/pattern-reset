@@ -4,11 +4,9 @@ class WallFeed {
         this.feed = document.createElement('div');
         this.feed.className = 'wall-feed';
         this.unsubscribe = null;
-        this.currentCity = localStorage.getItem('selectedCity') || 'Global';
         this.currentSort = 'newest';
         /** @type {{ type: 'emotion'|'situation', label: string }[]} Up to 3; any mix; posts match if ANY tag matches */
         this.wallFilterTags = [];
-        this._locationBtn = null;
         this._showingRow = null;
         this.currentSearch = '';
         this.posts = [];
@@ -238,9 +236,9 @@ class WallFeed {
         const controls = document.createElement('div');
         controls.className = 'wall-controls';
         
-        // Location filter
-        const locationFilter = this.createLocationFilter();
-        controls.appendChild(locationFilter);
+        // Active filter chips row
+        const aboutFilters = this.createAboutFiltersSection();
+        controls.appendChild(aboutFilters);
 
         // Search and filter row
         const searchFilterRow = document.createElement('div');
@@ -390,41 +388,12 @@ class WallFeed {
         }
     }
 
-    createLocationFilter() {
-        const stack = document.createElement('div');
-        stack.className = 'wall-location-filter-stack';
-
-        const locationFilter = document.createElement('div');
-        locationFilter.className = 'wall-location-filter';
-
-        const locationBtn = document.createElement('button');
-        locationBtn.className = 'wall-location-btn';
-        locationBtn.type = 'button';
-        locationBtn.innerHTML = this.getLocationButtonHTML();
-        locationBtn.onclick = () => this.openLocationModal();
-        this._locationBtn = locationBtn;
-
-        locationFilter.appendChild(locationBtn);
-
+    createAboutFiltersSection() {
         const showingRow = document.createElement('div');
         showingRow.className = 'wall-about-filters';
         this._showingRow = showingRow;
-
-        stack.appendChild(locationFilter);
-        stack.appendChild(showingRow);
-
         this.updateShowingRow();
-        return stack;
-    }
-
-    getLocationButtonHTML() {
-        const isGlobal = this.currentCity === 'Global';
-        const icon = '<i class="fas fa-map-marker-alt"></i>';
-        const locationText = isGlobal ? 'Global' : this.currentCity;
-        return `
-            <span class="wall-location-btn-text">${icon} ${locationText}</span>
-            <i class="fas fa-chevron-down wall-location-btn-chevron" aria-hidden="true"></i>
-        `;
+        return showingRow;
     }
 
     postMatchesWallTag(post, t) {
@@ -478,7 +447,7 @@ class WallFeed {
                 (t) => !(t.type === type && t.label === label)
             );
             this.updateFeed();
-            this.updateLocationButton();
+            this.updateFilterBar();
         };
 
         return btn;
@@ -497,6 +466,13 @@ class WallFeed {
     }
 
     normalizeWallFilters() {
+        const emotions = this.getAllEmotionLabels();
+        const situations = new Set(this.getSituationList());
+        this.wallFilterTags = this.wallFilterTags.filter((t) => {
+            if (t.type === 'emotion') return emotions.has(t.label);
+            if (t.type === 'situation') return situations.has(t.label);
+            return false;
+        });
         if (this.wallFilterTags.length > 3) {
             this.wallFilterTags = this.wallFilterTags.slice(0, 3);
         }
@@ -704,89 +680,17 @@ class WallFeed {
         }
     }
 
-    getPostCountForCity(city) {
-        let posts = this.applyWallTagFilter(this.posts);
-        if (city === 'Global') {
-            return posts.length;
-        }
-        return posts.filter((p) => p.city === city).length;
-    }
-
-    openLocationModal() {
-        // Create and show location modal with proper overlay structure
-        const modalOverlay = document.createElement('div');
-        modalOverlay.className = 'wall-location-modal-overlay visible';
-        
-        const getCityChipHTML = (city) => {
-            const count = this.getPostCountForCity(city);
-            const showCount = count >= 3;
-            const countSuffix = showCount ? ` — ${count} post${count === 1 ? '' : 's'}` : '';
-            const label = city === 'Global' ? 'Global' : city;
-            const icon = (city === 'Global' && this.currentCity === 'Global') || (city !== 'Global' && this.currentCity === city) ? '<i class="fas fa-map-marker-alt"></i> ' : '';
-            return `<button class="wall-city-chip ${this.currentCity === city ? 'selected' : ''}" data-city="${city}">${icon}${label}${countSuffix}</button>`;
-        };
-
-        const modal = document.createElement('div');
-        modal.className = 'wall-location-modal';
-        modal.innerHTML = `
-            <div class="wall-location-modal-content">
-                <div class="wall-location-modal-header">
-                    <h3>Select Location</h3>
-                    <button class="close-btn">&times;</button>
-                </div>
-                <div class="wall-location-search">
-                    <input type="text" placeholder="Search cities..." class="wall-location-search-input">
-                </div>
-                <div class="wall-city-chip-list">
-                    ${getCityChipHTML('Global')}
-                    ${this.getCityList().map(city => getCityChipHTML(city)).join('')}
-                </div>
-            </div>
-        `;
-        
-        modalOverlay.appendChild(modal);
-        document.body.appendChild(modalOverlay);
-
-        // Handle city selection
-        const cityButtons = modal.querySelectorAll('.wall-city-chip');
-        cityButtons.forEach(btn => {
-            btn.onclick = () => {
-                const city = btn.dataset.city;
-                this.currentCity = city;
-                localStorage.setItem('selectedCity', city);
-                this.updateLocationButton();
-                this.updateFeed();
-                modalOverlay.remove();
-            };
-        });
-
-        // Handle search
-        const searchInput = modal.querySelector('.wall-location-search-input');
-        searchInput.oninput = (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const cityButtons = modal.querySelectorAll('.wall-city-chip');
-            cityButtons.forEach(btn => {
-                const city = btn.dataset.city;
-                btn.style.display = city.toLowerCase().includes(searchTerm) || city === 'Global' ? 'flex' : 'none';
-            });
-        };
-
-        // Handle close
-        const closeBtn = modal.querySelector('.close-btn');
-        closeBtn.onclick = () => modalOverlay.remove();
-
-        // Close on outside click
-        modalOverlay.onclick = (e) => {
-            if (e.target === modalOverlay) modalOverlay.remove();
-        };
-    }
-
     getAllEmotionLabels() {
-        const out = new Set();
-        this.getEmotionCategories().forEach((cat) => {
-            this.getSubEmotions(cat).forEach((e) => out.add(e));
-        });
-        return out;
+        if (typeof LET_IT_OUT_EMOTION_TAGS !== 'undefined' && Array.isArray(LET_IT_OUT_EMOTION_TAGS)) {
+            return new Set(LET_IT_OUT_EMOTION_TAGS);
+        }
+        return new Set([
+            'Heartbroken', 'Rejected', 'Betrayed', 'Lonely', 'Jealous', 'Sad', 'Ashamed', 'Embarrassed',
+            'Guilty', 'Regretful', 'Anxious', 'Scared', 'Overwhelmed', 'Exhausted', 'Numb', 'Stuck',
+            'Lost', 'Confused', 'Powerless', 'Angry', 'Frustrated', 'Disappointed', 'Resentful',
+            'Insecure', 'Obsessed', 'Hopeless', 'Shocked', 'Relieved', 'Hopeful', 'Proud', 'Confident',
+            'Happy', 'Peaceful', 'Free', 'Inspired', 'Loved', 'Healing', 'Grateful'
+        ]);
     }
 
     /**
@@ -832,32 +736,10 @@ class WallFeed {
             return [...LET_IT_OUT_SITUATION_TAGS];
         }
         return [
-            'Relationships',
-            'Dating',
-            'Situationship',
-            'Relationship',
-            'Breakup',
-            'No Contact',
-            'Ex',
-            'Mixed Signals',
-            'One-Sided',
-            'Not Committing',
-            'On and Off',
-            'Breadcrumbing',
-            'Ghosted',
-            'Didn’t Say It',
-            'Holding It In',
-            'Avoided the Conversation',
-            'Said Something I Regret',
-            'Left on Read',
-            'Past',
-            'Family',
-            'Friendship',
-            'Work',
-            'Self',
-            'Childhood',
-            'Closure I Never Got',
-            'Still Thinking About It'
+            'Relationships', 'Dating', 'Breakup', 'Marriage', 'Divorce', 'Infidelity', 'Friendship', 'Family',
+            'Parenthood', 'Childhood', 'School', 'Identity', 'Sexuality', 'Self-Worth', 'Purpose', 'Career', 'Money',
+            'Success', 'Failure', 'Addiction', 'Mental Health', 'Health', 'Trauma', 'Grief & Loss', 'Regret',
+            'Starting Over', 'Life Change', 'Faith & Spirituality', 'Abuse', 'Secret', 'Confession', 'Other'
         ];
     }
 
@@ -965,13 +847,13 @@ class WallFeed {
 
         clearBtn.onclick = () => {
             this.wallFilterTags = [];
-            this.updateLocationButton();
+            this.updateFilterBar();
             renderUnified(searchInput.value);
         };
 
         doneBtn.onclick = () => {
             this.updateFeed();
-            this.updateLocationButton();
+            this.updateFilterBar();
             modal.remove();
         };
 
@@ -990,15 +872,7 @@ class WallFeed {
         this.updateFeed();
     }
 
-    updateLocationButton() {
-        if (this._locationBtn) {
-            this._locationBtn.innerHTML = this.getLocationButtonHTML();
-        } else {
-            const locationBtn = document.querySelector('.wall-location-btn');
-            if (locationBtn) {
-                locationBtn.innerHTML = this.getLocationButtonHTML();
-            }
-        }
+    updateFilterBar() {
         this.updateShowingRow();
     }
 
@@ -1006,12 +880,7 @@ class WallFeed {
         this.normalizeWallFilters();
 
         let filteredPosts = [...this.posts];
-        
-        // Apply city filter
-        if (this.currentCity !== 'Global') {
-            filteredPosts = filteredPosts.filter(post => post.city === this.currentCity);
-        }
-        
+
         // Wall tags: match ANY selected tag (feelings and/or situations)
         filteredPosts = this.applyWallTagFilter(filteredPosts);
         
@@ -1057,7 +926,6 @@ class WallFeed {
         const searchTrimmed = (this.currentSearch || '').trim();
         const isAllStoriesView =
             this.wallFilterTags.length === 0 &&
-            this.currentCity === 'Global' &&
             !searchTrimmed;
 
         let titleText;
@@ -1432,44 +1300,6 @@ class WallFeed {
         }
         document.removeEventListener('click', this.handleDocumentClick.bind(this));
     }
-
-    getCityList() {
-        return [
-            'Atlanta, GA', 'Austin, TX', 'Bay Area, CA', 'Boston, MA', 'Chicago, IL', 'Denver, CO',
-            'Houston, TX', 'Las Vegas, NV', 'Los Angeles, CA', 'Miami, FL', 'Minneapolis, MN',
-            'Nashville, TN', 'New Orleans, LA', 'New York, NY', 'Orlando, FL', 'Philadelphia, PA',
-            'Phoenix, AZ', 'Portland, OR', 'Salt Lake City, UT', 'San Diego, CA', 'San Francisco, CA',
-            'San Jose, CA', 'Seattle, WA', 'Tampa, FL', 'Washington, DC'
-        ];
-    }
-
-    getEmotionCategories() {
-        return [
-            'Core Pain',
-            'Emotional State',
-            'Longing & Connection',
-            'Growth / Release'
-        ];
-    }
-
-    getSubEmotions(category) {
-        const emotions = {
-            'Core Pain': [
-                'Heartbreak', 'Rejection', 'Abandonment', 'Betrayal', 'Loneliness', 'Shame', 'Regret', 'Resentment'
-            ],
-            'Emotional State': [
-                'Anxious', 'Overthinking', 'Drained', 'Numb', 'Stuck', 'Lost', 'Powerless',
-                'Confused', 'Obsessing', 'Keeps happening', 'Insecure'
-            ],
-            'Longing & Connection': [
-                'Longing', 'Missing Someone', 'Still in Love', 'Wanting Connection', 'Wanting to Feel Chosen'
-            ],
-            'Growth / Release': [
-                'Letting Go', 'Healing', 'Forgiveness', 'Clarity'
-            ]
-        };
-        return emotions[category] || [];
-    }
 }
 
 /**
@@ -1477,60 +1307,77 @@ class WallFeed {
  * Any tag missing here is appended automatically (emotions A–Z, then remaining situations).
  */
 WallFeed.UNIFIED_FILTER_LABEL_ORDER = [
-    'Heartbreak',
-    'Ghosted',
-    'Mixed Signals',
-    'Drained',
-    'Anxious',
-    'Confused',
-    'Situationship',
+    'Heartbroken',
     'Breakup',
-    'Rejection',
-    'Breadcrumbing',
-    'On and Off',
-    'One-Sided',
-    'Not Committing',
-    'Overthinking',
-    'Obsessing',
-    'Numb',
-    'Stuck',
-    'Lost',
-    'Powerless',
-    'Keeps happening',
-    'Insecure',
-    'Longing',
-    'Missing Someone',
-    'Still in Love',
-    'Wanting Connection',
-    'Wanting to Feel Chosen',
-    'No Contact',
-    'Ex',
-    'Dating',
-    'Relationship',
+    'Anxious',
+    'Scared',
     'Relationships',
-    'Abandonment',
-    'Betrayal',
-    'Loneliness',
-    'Shame',
-    'Regret',
-    'Resentment',
-    'Didn\u2019t Say It',
-    'Holding It In',
-    'Avoided the Conversation',
-    'Said Something I Regret',
-    'Left on Read',
+    'Betrayed',
+    'Infidelity',
+    'Dating',
+    'Lonely',
+    'Loved',
+    'Jealous',
+    'Sad',
     'Family',
+    'Overwhelmed',
+    'Exhausted',
+    'Numb',
     'Friendship',
-    'Work',
-    'Self',
+    'Rejected',
+    'Divorce',
+    'Stuck',
+    'Marriage',
+    'Ashamed',
+    'Embarrassed',
+    'Mental Health',
+    'Health',
+    'Trauma',
+    'Lost',
+    'Career',
+    'Angry',
+    'Frustrated',
+    'Disappointed',
+    'Grief & Loss',
+    'Hopeless',
+    'Shocked',
     'Childhood',
-    'Past',
-    'Closure I Never Got',
-    'Still Thinking About It',
-    'Letting Go',
+    'School',
     'Healing',
-    'Forgiveness',
-    'Clarity'
+    'Starting Over',
+    'Guilty',
+    'Identity',
+    'Sexuality',
+    'Insecure',
+    'Confident',
+    'Life Change',
+    'Faith & Spirituality',
+    'Regretful',
+    'Self-Worth',
+    'Confused',
+    'Parenthood',
+    'Powerless',
+    'Abuse',
+    'Secret',
+    'Confession',
+    'Resentful',
+    'Purpose',
+    'Obsessed',
+    'Money',
+    'Relieved',
+    'Failure',
+    'Hopeful',
+    'Happy',
+    'Peaceful',
+    'Free',
+    'Inspired',
+    'Confident',
+    'Proud',
+    'Success',
+    'Addiction',
+    'Grateful',
+    'Other',
+    'Regret'
 ];
 
 window.WallFeed = WallFeed;

@@ -37,36 +37,27 @@
   <main class="bio-hub" id="main">
     <div class="bio-hub__layout">
     <div class="bio-hub__actions">
+      <article class="bio-hub__offer-card">
+        <h3 class="bio-hub__offer-title">Let it out</h3>
+        <p class="bio-hub__offer-desc">What&rsquo;s a moment that changed your life? Share your story anonymously.</p>
+        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Tell Your Story</a>
+      </article>
+
       <!-- Weekly Reset — same copy, Firestore, and Google Form as home.html #newsletter -->
       <section class="bio-hub__newsletter" aria-labelledby="bio-newsletter-heading">
         <div class="pr-hero-waitlist bio-hub__pr-hero-waitlist" id="newsletter">
-          <span class="pr-email-kicker">Pattern Reset&trade;</span>
-          <h2 class="pr-hero-waitlist-title" id="bio-newsletter-heading">You were never meant to stay stuck in the same version of yourself.</h2>
-          <p class="pr-hero-waitlist-lead pr-body">A weekly reset ritual to help you break cycles, let go of what&rsquo;s been weighing on you, and change the direction of your life.</p>
+          <h2 class="pr-hero-waitlist-title" id="bio-newsletter-heading">The story of the week</h2>
+          <p class="pr-hero-waitlist-lead pr-body">One powerful story that makes you see life differently every Sunday.</p>
           <form class="pr-email-form" id="prEmailForm" novalidate>
-            <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for the weekly reset">
-            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Join the Sunday Reset</button>
+            <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for the story of the week">
+            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Get The Story</button>
           </form>
           <div class="pr-email-success" id="prEmailSuccess" role="status" aria-live="polite">
-            <p class="pr-email-success-text">You&rsquo;re in&mdash;look for the reset in your inbox.</p>
+            <p class="pr-email-success-text">You&rsquo;re in&mdash;look for Sunday&rsquo;s story in your inbox.</p>
             <button type="button" class="bio-hub__newsletter-change-email" id="prEmailChangeDifferent">Use a different email</button>
           </div>
         </div>
       </section>
-
-      <article class="bio-hub__offer-card">
-        <h3 class="bio-hub__offer-title">Let it out</h3>
-        <p class="bio-hub__offer-desc">Release the story you&rsquo;ve been carrying.<br />Some stories were never meant to stay trapped inside you.</p>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Share Your Story</a>
-      </article>
-
-      <p class="bio-hub__section-label">Private support</p>
-      <article class="bio-hub__offer-card">
-        <h3 class="bio-hub__offer-title">Pattern Review</h3>
-        <p class="bio-hub__offer-desc">Send me your story.<br />I&rsquo;ll help you uncover the pattern, blind spot, or truth you may not be seeing.</p>
-        <p class="bio-hub__offer-reflection-meta">Personal written review &middot; $22</p>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="personal-relationship-read.html">Get Clarity</a>
-      </article>
 
     </div>
 
@@ -80,8 +71,9 @@
           <h1 class="bio-hub__name">Liam</h1>
           <p class="bio-hub__handle">@liamsaysit</p>
           <p class="bio-hub__tagline">
-            <span class="bio-hub__tagline-lead">You can&rsquo;t change your life while repeating the same patterns.</span><br />
-            <span class="bio-hub__tagline-punch">Start letting it out &darr;</span>
+            <span class="bio-hub__tagline-lead">Trying to understand why people do what they do.</span><br />
+            <span class="bio-hub__tagline-lead">The stories people carry.</span><br />
+            <span class="bio-hub__tagline-punch">The moments that change them.</span>
           </p>
         </div>
       </div>
@@ -335,7 +327,7 @@
         if (btn) {
           btn.style.display = '';
           btn.disabled = false;
-          btn.textContent = 'Join the Sunday Reset';
+          btn.textContent = 'Get The Story';
         }
         if (micro) micro.style.display = '';
         if (input) input.focus();

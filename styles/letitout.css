@@ -384,7 +384,8 @@ header .container {
     opacity: 1;
 }
 
-.letitout-form .letitout-emotion-error {
+.letitout-form .letitout-emotion-error,
+.letitout-form .letitout-situation-error {
     color: #c40000;
     font-size: 0.88rem;
     margin: 0.15rem 0 0;
@@ -915,7 +916,8 @@ header .container {
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.letitout-form .letitout-emotion-btn .letitout-required-asterisk {
+.letitout-form .letitout-emotion-btn .letitout-required-asterisk,
+.letitout-form .letitout-situation-btn .letitout-required-asterisk {
     color: var(--letitout-primary, #f10000);
     font-weight: 700;
     margin-left: 0.06em;
@@ -1363,7 +1365,11 @@ header .container {
         font-size: 1.05rem;
     }
     .support-link-btn {
-        font-size: 1rem;
+        font-size: 0.78rem;
+    }
+
+    .letitout-cta-footer-note {
+        font-size: 0.78rem;
     }
 }
 
@@ -1751,6 +1757,14 @@ header .container {
     padding: 20px;
     overflow-y: auto;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 8px;
+    align-content: flex-start;
+}
+
+.situation-options-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -5181,13 +5195,32 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
     border: none;
     padding: 0;
     font-family: 'DM Sans', sans-serif;
-    font-size: 1.08rem;
+    font-size: 0.82rem;
     font-weight: 500;
     color: #555;
     text-decoration: none;
     cursor: pointer;
-    margin-top: 1rem;
+    margin-top: 0;
     transition: color 0.2s, text-decoration 0.2s;
+}
+
+.letitout-cta-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem 0.55rem;
+    margin-top: 1rem;
+    max-width: var(--letitout-content-max-width, 600px);
+    text-align: center;
+    line-height: 1.45;
+}
+
+.letitout-cta-footer-note {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #777;
 }
 
 .support-link-btn:hover {
@@ -6423,7 +6456,7 @@ select {
     margin: 0 0 0.15rem;
 }
 
-.letitout-about-prose .letitout-about-copy:last-child {
+.letitout-about-prose .letitout-about-copy:last-child:not(.letitout-about-copy--tagline):not(.letitout-about-copy--footnote) {
     margin-bottom: 0.35rem;
 }
 
@@ -6442,12 +6475,45 @@ select {
     margin-bottom: 0.6rem;
 }
 
-.letitout-about-copy--hook {
-    margin-top: 0.15rem;
+.letitout-about-copy--finale {
+    margin-top: 0.35rem;
+    margin-bottom: 0.4rem;
 }
 
-.letitout-about-copy--hook strong {
+.letitout-about-copy--finale strong {
+    color: #1a1a1a;
+    font-weight: 700;
+}
+
+.letitout-about-copy--tagline {
+    margin-top: 0;
+    margin-bottom: 1.35rem;
+    font-size: 0.94rem;
+}
+
+.letitout-about-copy--tagline strong {
+    font-weight: 700;
     color: var(--letitout-primary, #f10000);
+}
+
+.letitout-about-copy--ease {
+    color: #555;
+    margin-bottom: 0.55rem;
+}
+
+.letitout-about-copy--brand {
+    color: var(--letitout-primary, #f10000);
+    font-weight: 600;
+    margin-top: 0.1rem;
+    margin-bottom: 0.65rem;
+}
+
+.letitout-about-copy--footnote {
+    font-size: 0.88rem;
+    line-height: 1.52;
+    color: #666;
+    margin-top: 0.1rem;
+    margin-bottom: 1.35rem;
 }
 
 .letitout-about-closer {
@@ -6721,6 +6787,7 @@ select {
 .letitout-about-dismiss {
     width: 100%;
     min-height: 48px;
+    margin-top: 0.25rem;
     padding: 0.85rem 1rem;
     border: none;
     border-radius: 8px;
@@ -6911,7 +6978,7 @@ select {
         font-size: 0.98rem;
         font-weight: 600;
         padding: 0.75rem 1rem;
-        margin-top: 0.15rem;
+        margin-top: 0.35rem;
     }
 }
 
@@ -6997,6 +7064,33 @@ select {
     box-sizing: border-box;
 }
 
+.letitout-intro-copy--opening {
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.55rem;
+}
+
+.letitout-intro-copy--stack {
+    margin: 0 0 0.65rem;
+    line-height: 1.58;
+}
+
+.letitout-intro-copy--write {
+    font-weight: 500;
+    color: #2a2a2a;
+}
+
+.letitout-intro-copy--ease {
+    margin-bottom: 0.5rem;
+    color: #555;
+}
+
+.letitout-intro-copy--brand {
+    color: #f10000;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
 .letitout-intro-section {
     margin: 0 0 0.9rem;
 }
@@ -7032,7 +7126,7 @@ select {
 
 .letitout-intro-copy.letitout-intro-copy--brand {
     color: #f10000;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .letitout-intro-copy.letitout-intro-copy--brand-tight {

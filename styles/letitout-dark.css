@@ -445,7 +445,8 @@ DARK MODE - FIXES & ADDITIONS
     opacity: 1;
 }
 
-.dark-mode .letitout-form .letitout-emotion-error {
+.dark-mode .letitout-form .letitout-emotion-error,
+.dark-mode .letitout-form .letitout-situation-error {
     color: #ff8a8a;
 }
 
@@ -1048,6 +1049,22 @@ DARK MODE - FIXES & ADDITIONS
     color: #c8c8c8;
 }
 
+.dark-mode .letitout-intro-copy--opening {
+    color: #e8e8e8;
+}
+
+.dark-mode .letitout-intro-copy--write {
+    color: #e0e0e0;
+}
+
+.dark-mode .letitout-intro-copy--ease {
+    color: #a8a8a8;
+}
+
+.dark-mode .letitout-intro-copy.letitout-intro-copy--brand {
+    color: #ff6b6b;
+}
+
 .dark-mode .letitout-intro-copy strong {
     color: #f0f0f0;
 }
@@ -1435,6 +1452,10 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 /* --- Support Modal --- */
+.dark-mode .letitout-cta-footer-note {
+    color: #9a9a9a;
+}
+
 .dark-mode .support-link-btn {
     color: #9e9e9e;
 }
@@ -1887,8 +1908,24 @@ DARK MODE - FIXES & ADDITIONS
     color: #f0f0f0;
 }
 
-.dark-mode .letitout-about-copy--hook strong {
+.dark-mode .letitout-about-copy--finale strong {
+    color: #f0f0f0;
+}
+
+.dark-mode .letitout-about-copy--tagline strong {
     color: var(--letitout-primary, #f10000);
+}
+
+.dark-mode .letitout-about-copy--ease {
+    color: #a8a8a8;
+}
+
+.dark-mode .letitout-about-copy--brand {
+    color: #ff6b6b;
+}
+
+.dark-mode .letitout-about-copy--footnote {
+    color: #9a9a9a;
 }
 
 .dark-mode .letitout-about-closer {
