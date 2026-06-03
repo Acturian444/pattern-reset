@@ -107,6 +107,8 @@ service cloud.firestore {
         && request.resource.data.email.size() >= 5
         && request.resource.data.email.size() <= 320
         && request.resource.data.source == 'liamsaysit'
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.createdAt == request.time
         && request.resource.data.keys().hasOnly(['message', 'email', 'source', 'createdAt']);
       allow read, update, delete: if false;
     }

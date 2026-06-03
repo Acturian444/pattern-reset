@@ -52,7 +52,7 @@
             <label class="bio-hub__form-label" for="bioMessageText">Your Message</label>
             <textarea class="pr-email-input bio-hub__message-textarea" id="bioMessageText" name="message" rows="5" required maxlength="5000" placeholder="Your message" aria-label="Your message"></textarea>
             <label class="bio-hub__form-label" for="bioMessageEmail">Email</label>
-            <input type="email" class="pr-email-input" id="bioMessageEmail" name="email" autocomplete="email" inputmode="email" required placeholder="Email" aria-label="Email">
+            <input type="email" class="pr-email-input" id="bioMessageEmail" name="email" autocomplete="email" inputmode="email" required maxlength="320" placeholder="Email" aria-label="Email">
             <button type="submit" class="pr-home-cta" id="bioMessageSubmit">Send</button>
           </form>
           <div class="pr-email-success" id="bioMessageSuccess" role="status" aria-live="polite">
@@ -204,8 +204,9 @@
           textEl.focus();
           return;
         }
-        if (!emailRaw || emailRaw.indexOf('@') === -1) {
+        if (!emailEl || !emailEl.checkValidity() || emailRaw.length > 320) {
           if (emailEl) {
+            emailEl.setAttribute('aria-invalid', 'true');
             emailEl.style.borderColor = 'var(--pr-red, #f10000)';
             emailEl.focus();
           }
@@ -215,7 +216,10 @@
         var emailForStore = emailRaw;
 
         textEl.style.borderColor = '';
-        if (emailEl) emailEl.style.borderColor = '';
+        if (emailEl) {
+          emailEl.style.borderColor = '';
+          emailEl.removeAttribute('aria-invalid');
+        }
 
         if (btn) {
           btn.disabled = true;
@@ -263,7 +267,15 @@
             .then(finish)
             .catch(function (err) {
               console.error('bioMessages failed', err && err.code, err && err.message, err);
-              finish();
+              if (btn) {
+                btn.disabled = false;
+                btn.textContent = 'Send';
+              }
+              if (emailEl) {
+                emailEl.setAttribute('aria-invalid', 'true');
+                emailEl.style.borderColor = 'var(--pr-red, #f10000)';
+                emailEl.focus();
+              }
             });
         } else {
           console.warn('bioMessages: Firestore unavailable — Google Form sync only');
