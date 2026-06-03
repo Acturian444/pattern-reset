@@ -7091,6 +7091,13 @@ select {
     margin-bottom: 0;
 }
 
+.letitout-intro-copy--insight {
+    margin-top: 0.55rem;
+    margin-bottom: 0;
+    color: #444;
+    font-weight: 500;
+}
+
 .letitout-intro-section {
     margin: 0 0 0.9rem;
 }

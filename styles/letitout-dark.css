@@ -1065,6 +1065,10 @@ DARK MODE - FIXES & ADDITIONS
     color: #ff6b6b;
 }
 
+.dark-mode .letitout-intro-copy--insight {
+    color: #b8b8b8;
+}
+
 .dark-mode .letitout-intro-copy strong {
     color: #f0f0f0;
 }
