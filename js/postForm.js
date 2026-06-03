@@ -122,7 +122,7 @@ class PostForm {
             // MVP: Single static prompt when prompts are hidden
             const mvpPrompt = document.createElement('div');
             mvpPrompt.className = 'letitout-mvp-prompt';
-            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">What's a moment that changed your life?</span><span class=\"letitout-mvp-subtitle\">Real stories. Anonymous. No pressure.</span>";
+            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Tell us what happened.</span><span class=\"letitout-mvp-subtitle\">Anonymous. Honest. Unfiltered.</span>";
             formContent.appendChild(mvpPrompt);
         }
 
@@ -133,7 +133,7 @@ class PostForm {
         textareaWrapper.className = 'textarea-wrapper';
         
         const textarea = document.createElement('textarea');
-        textarea.placeholder = "What happened? Tell your story\u2026";
+        textarea.placeholder = "Share your story\u2026";
         textarea.maxLength = LETITOUT_MAX_CONTENT_LENGTH;
 
         textarea.addEventListener('input', () => {
@@ -185,13 +185,13 @@ class PostForm {
         const emotionBtn = document.createElement('button');
         emotionBtn.type = 'button';
         emotionBtn.className = 'letitout-emotion-btn';
-        emotionBtn.setAttribute('aria-label', 'How did it feel, required');
+        emotionBtn.setAttribute('aria-label', 'How did you feel, required');
         emotionBtn.innerHTML = `
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            <span class="letitout-tag-btn-label">How did it feel?</span><span class="letitout-required-asterisk" aria-hidden="true">*</span>
+            <span class="letitout-tag-btn-label">How did you feel?</span><span class="letitout-required-asterisk" aria-hidden="true">*</span>
         `;
         emotionBtn.onclick = () => {
             this.openEmotionModal();
@@ -266,8 +266,8 @@ class PostForm {
             <div class="letitout-emotion-modal">
                 <div class="letitout-emotion-modal-header">
                     <div class="wall-filter-modal-header-text">
-                        <div class="letitout-emotion-modal-title">How did it feel?</div>
-                        <p class="wall-filter-modal-hint">Choose any that fit.</p>
+                        <div class="letitout-emotion-modal-title">How did you feel?</div>
+                        <p class="wall-filter-modal-hint">Select up to 3 that apply.</p>
                     </div>
                     <button class="letitout-emotion-modal-close">&times;</button>
                 </div>
@@ -433,7 +433,7 @@ class PostForm {
             this._submitAttemptedWithoutEmotion = true;
             this.updateSelectedTags();
             window.LetItOutUtils.showError(
-                'Choose how it felt. Tap “How did it feel?” and pick up to 3.'
+                'Choose how you felt. Tap “How did you feel?” and pick up to 3.'
             );
             this.emotionError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             return;
@@ -1285,7 +1285,7 @@ class PostForm {
             this._submitAttemptedWithoutEmotion = false;
             this.emotionError.style.display = 'none';
         } else if (this._submitAttemptedWithoutEmotion) {
-            this.emotionError.textContent = 'Choose how it felt — pick up to 3.';
+            this.emotionError.textContent = 'Choose how you felt — pick up to 3.';
             this.emotionError.style.display = 'block';
         } else {
             this.emotionError.style.display = 'none';

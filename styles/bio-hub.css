@@ -181,8 +181,10 @@ body.page-bio-hub {
   max-width: none;
   font-family: "DM Sans", sans-serif;
   font-size: clamp(0.86rem, 2.65vw, 0.96rem);
+  font-weight: 500;
   line-height: 1.45;
   letter-spacing: 0.01em;
+  color: rgba(255, 252, 241, 0.82);
   text-wrap: balance;
 }
 
@@ -660,6 +662,48 @@ body.page-bio-hub {
 
 .bio-hub__pr-hero-waitlist .pr-hero-waitlist-lead.pr-body {
   color: rgba(255, 252, 241, 0.74);
+}
+
+.bio-hub__pr-hero-waitlist .pr-hero-waitlist-lead + .pr-hero-waitlist-lead {
+  margin-top: 0.55rem;
+}
+
+.bio-hub__message-assurance {
+  margin: clamp(0.85rem, 2vw, 1.1rem) 0 0;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: rgba(255, 252, 241, 0.88);
+}
+
+.bio-hub__message-form {
+  margin-top: clamp(1rem, 2.4vw, 1.35rem);
+}
+
+.bio-hub__form-label {
+  display: block;
+  margin: 0.15rem 0 0.35rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 252, 241, 0.45);
+}
+
+.bio-hub__message-form .bio-hub__form-label:not(:first-of-type) {
+  margin-top: 0.35rem;
+}
+
+.bio-hub__message-textarea {
+  min-height: 7.5rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.bio-hub__pr-hero-waitlist .pr-email-input.bio-hub__message-textarea:focus {
+  border-color: var(--pr-red);
 }
 
 .bio-hub__pr-hero-waitlist .pr-email-form {

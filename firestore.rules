@@ -85,7 +85,7 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
-    // Weekly Reset email capture (home, liamsaysit bio) — email, source, createdAt; anonymous create only
+    // Weekly Reset email capture (legacy) — email, source, createdAt; anonymous create only
     match /weeklyResetSignups/{id} {
       allow create: if request.auth != null
         && request.resource.data.keys().size() == 3
@@ -94,6 +94,20 @@ service cloud.firestore {
         && request.resource.data.email.size() <= 320
         && (request.resource.data.source == 'home' || request.resource.data.source == 'liamsaysit')
         && request.resource.data.keys().hasOnly(['email', 'source', 'createdAt']);
+      allow read, update, delete: if false;
+    }
+
+    // Bio link — Message Me (liamsaysit); message + email required
+    match /bioMessages/{id} {
+      allow create: if request.auth != null
+        && request.resource.data.message is string
+        && request.resource.data.message.size() >= 3
+        && request.resource.data.message.size() <= 5000
+        && request.resource.data.email is string
+        && request.resource.data.email.size() >= 5
+        && request.resource.data.email.size() <= 320
+        && request.resource.data.source == 'liamsaysit'
+        && request.resource.data.keys().hasOnly(['message', 'email', 'source', 'createdAt']);
       allow read, update, delete: if false;
     }
 
