@@ -119,7 +119,7 @@
         var offersShown =
             typeof window !== 'undefined' && Array.isArray(window.PATTERN_RESET_PAYWALL_OFFERS_SHOWN)
                 ? window.PATTERN_RESET_PAYWALL_OFFERS_SHOWN
-                : ['fast_clarity_19', 'direct_read_59', 'decide_with_me_197'];
+                : ['fast_clarity_19', 'pattern_reflection_22', 'decide_with_me_197'];
 
         var submission = {
             createdAt: ts,

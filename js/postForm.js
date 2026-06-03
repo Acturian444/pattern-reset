@@ -122,7 +122,7 @@ class PostForm {
             // MVP: Single static prompt when prompts are hidden
             const mvpPrompt = document.createElement('div');
             mvpPrompt.className = 'letitout-mvp-prompt';
-            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Write what you’ve been holding in</span><span class=\"letitout-mvp-subtitle\">Anonymous. No pressure. Just release.</span>";
+            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">What's a moment that changed your life?</span><span class=\"letitout-mvp-subtitle\">Real stories. Anonymous. No pressure.</span>";
             formContent.appendChild(mvpPrompt);
         }
 
@@ -133,7 +133,7 @@ class PostForm {
         textareaWrapper.className = 'textarea-wrapper';
         
         const textarea = document.createElement('textarea');
-        textarea.placeholder = "Say what you haven\u2019t been able to say…";
+        textarea.placeholder = "What happened? Tell your story\u2026";
         textarea.maxLength = LETITOUT_MAX_CONTENT_LENGTH;
 
         textarea.addEventListener('input', () => {
@@ -148,79 +148,30 @@ class PostForm {
         textareaWrapper.appendChild(textarea);
         formContent.appendChild(textareaWrapper);
 
-        // --- EMOTION TAGGING UPGRADE ---
-        // Emotion categories and sub-emotions
-        this.emotionCategories = [
-            {
-                name: 'Core Pain',
-                emotions: [
-                    'Heartbreak', 'Rejection', 'Abandonment', 'Betrayal', 'Loneliness', 'Shame', 'Regret', 'Resentment'
-                ]
-            },
-            {
-                name: 'Emotional State',
-                emotions: [
-                    'Anxious', 'Overthinking', 'Drained', 'Numb', 'Stuck', 'Lost', 'Powerless',
-                    'Confused', 'Obsessing', 'Keeps happening', 'Insecure'
-                ]
-            },
-            {
-                name: 'Longing & Connection',
-                emotions: [
-                    'Longing', 'Missing Someone', 'Still in Love', 'Wanting Connection', 'Wanting to Feel Chosen'
-                ]
-            },
-            {
-                name: 'Growth / Release',
-                emotions: [
-                    'Letting Go', 'Healing', 'Forgiveness', 'Clarity'
-                ]
-            }
-        ];
+        // --- FEELING + SITUATION TAGS (canonical lists in letitout-emotions.js / letitout-situations.js) ---
+        this.emotionTags =
+            typeof LET_IT_OUT_EMOTION_TAGS !== 'undefined' && Array.isArray(LET_IT_OUT_EMOTION_TAGS)
+                ? [...LET_IT_OUT_EMOTION_TAGS]
+                : [
+                      'Heartbroken', 'Rejected', 'Betrayed', 'Lonely', 'Jealous', 'Sad', 'Ashamed', 'Embarrassed',
+                      'Guilty', 'Regretful', 'Anxious', 'Scared', 'Overwhelmed', 'Exhausted', 'Numb', 'Stuck',
+                      'Lost', 'Confused', 'Powerless', 'Angry', 'Frustrated', 'Disappointed', 'Resentful',
+                      'Insecure', 'Obsessed', 'Hopeless', 'Shocked', 'Relieved', 'Hopeful', 'Proud', 'Confident',
+                      'Happy', 'Peaceful', 'Free', 'Inspired', 'Loved', 'Healing', 'Grateful'
+                  ];
+        this.emotionCategories = [{ name: 'Feelings', emotions: this.emotionTags }];
         this.selectedEmotions = [];
-        this.selectedCity = null;
-        this.customCity = null;
-        this.isCustomCity = false;
         this.selectedSituation = null;
         this.situationList =
             typeof LET_IT_OUT_SITUATION_TAGS !== 'undefined' && Array.isArray(LET_IT_OUT_SITUATION_TAGS)
                 ? [...LET_IT_OUT_SITUATION_TAGS]
                 : [
-                      'Relationships',
-                      'Dating',
-                      'Situationship',
-                      'Relationship',
-                      'Breakup',
-                      'No Contact',
-                      'Ex',
-                      'Mixed Signals',
-                      'One-Sided',
-                      'Not Committing',
-                      'On and Off',
-                      'Breadcrumbing',
-                      'Ghosted',
-                      'Didn’t Say It',
-                      'Holding It In',
-                      'Avoided the Conversation',
-                      'Said Something I Regret',
-                      'Left on Read',
-                      'Past',
-                      'Family',
-                      'Friendship',
-                      'Work',
-                      'Self',
-                      'Childhood',
-                      'Closure I Never Got',
-                      'Still Thinking About It'
+                      'Relationships', 'Dating', 'Breakup', 'Marriage', 'Divorce', 'Infidelity', 'Friendship', 'Family',
+                      'Parenthood', 'Childhood', 'School', 'Identity', 'Sexuality', 'Self-Worth', 'Purpose', 'Career', 'Money',
+                      'Success', 'Failure', 'Addiction', 'Mental Health', 'Health', 'Trauma', 'Grief & Loss', 'Regret',
+                      'Starting Over', 'Life Change', 'Faith & Spirituality', 'Abuse', 'Secret', 'Confession', 'Other'
                   ];
-        this.cityList = [
-            'Atlanta, GA', 'Austin, TX', 'Bay Area, CA', 'Boston, MA', 'Chicago, IL', 'Denver, CO',
-            'Houston, TX', 'Las Vegas, NV', 'Los Angeles, CA', 'Miami, FL', 'Minneapolis, MN',
-            'Nashville, TN', 'New Orleans, LA', 'New York, NY', 'Orlando, FL', 'Philadelphia, PA',
-            'Phoenix, AZ', 'Portland, OR', 'Salt Lake City, UT', 'San Diego, CA', 'San Francisco, CA',
-            'San Jose, CA', 'Seattle, WA', 'Tampa, FL', 'Washington, DC'
-        ];
-        this.filteredCities = [...this.cityList];
+        this._submitAttemptedWithoutSituation = false;
 
         // Create emotion section
         const emotionSection = document.createElement('div');
@@ -234,13 +185,13 @@ class PostForm {
         const emotionBtn = document.createElement('button');
         emotionBtn.type = 'button';
         emotionBtn.className = 'letitout-emotion-btn';
-        emotionBtn.setAttribute('aria-label', 'How it feels, required');
+        emotionBtn.setAttribute('aria-label', 'How did it feel, required');
         emotionBtn.innerHTML = `
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            <span class="letitout-tag-btn-label">How it feels</span><span class="letitout-required-asterisk" aria-hidden="true">*</span>
+            <span class="letitout-tag-btn-label">How did it feel?</span><span class="letitout-required-asterisk" aria-hidden="true">*</span>
         `;
         emotionBtn.onclick = () => {
             this.openEmotionModal();
@@ -254,12 +205,13 @@ class PostForm {
         const situationBtn = document.createElement('button');
         situationBtn.type = 'button';
         situationBtn.className = 'letitout-situation-btn';
+        situationBtn.setAttribute('aria-label', 'What\u2019s this about, required');
         situationBtn.innerHTML = `
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            What it&rsquo;s about
+            <span class="letitout-tag-btn-label">What&rsquo;s this about?</span><span class="letitout-required-asterisk" aria-hidden="true">*</span>
         `;
         situationBtn.onclick = () => {
             this.openSituationModal();
@@ -268,50 +220,38 @@ class PostForm {
         situationBtn.addEventListener('mouseup', function() { this.blur(); });
         situationBtn.addEventListener('touchend', function() { this.blur(); });
 
-        // --- CITY TAG BUTTON ---
-        const cityBtn = document.createElement('button');
-        cityBtn.type = 'button';
-        cityBtn.className = 'letitout-city-btn';
-        cityBtn.innerHTML = `
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            City
-        `;
-        cityBtn.onclick = () => this.openCityModal();
-
-        // Selected tags display (primary row)
+        // Selected feeling tags (primary row)
         this.selectedTagsDisplay = document.createElement('div');
         this.selectedTagsDisplay.className = 'letitout-selected-tags';
 
-        // Secondary meta row: situation + city (single line when possible)
+        // Secondary meta row: selected situation chip
         this.selectedMetaDisplay = document.createElement('div');
         this.selectedMetaDisplay.className = 'letitout-selected-meta';
 
         this.selectedSituationDisplay = document.createElement('div');
         this.selectedSituationDisplay.className = 'letitout-selected-situation';
-        this.selectedCityDisplay = document.createElement('div');
-        this.selectedCityDisplay.className = 'letitout-selected-city';
 
         this.selectedMetaDisplay.appendChild(this.selectedSituationDisplay);
-        this.selectedMetaDisplay.appendChild(this.selectedCityDisplay);
 
         this.updateSelectedSituation();
-        this.updateSelectedCity();
 
-        // Error message
+        // Error messages (shown only after failed submit)
         this.emotionError = document.createElement('div');
         this.emotionError.className = 'letitout-emotion-error';
         this.emotionError.setAttribute('role', 'alert');
         this.emotionError.style.display = 'none';
 
-        // Assemble emotion section — error directly under pill row (only after failed submit)
+        this.situationError = document.createElement('div');
+        this.situationError.className = 'letitout-situation-error';
+        this.situationError.setAttribute('role', 'alert');
+        this.situationError.style.display = 'none';
+
+        // Assemble emotion section — errors directly under pill row
         emotionBtnRow.appendChild(emotionBtn);
         emotionBtnRow.appendChild(situationBtn);
-        emotionBtnRow.appendChild(cityBtn);
         emotionSection.appendChild(emotionBtnRow);
         emotionSection.appendChild(this.emotionError);
+        emotionSection.appendChild(this.situationError);
         emotionSection.appendChild(this.selectedTagsDisplay);
         emotionSection.appendChild(this.selectedMetaDisplay);
         formContent.appendChild(emotionSection);
@@ -325,7 +265,10 @@ class PostForm {
         this.emotionModal.innerHTML = `
             <div class="letitout-emotion-modal">
                 <div class="letitout-emotion-modal-header">
-                    <div class="letitout-emotion-modal-title">How it feels (required)</div>
+                    <div class="wall-filter-modal-header-text">
+                        <div class="letitout-emotion-modal-title">How did it feel?</div>
+                        <p class="wall-filter-modal-hint">Choose any that fit.</p>
+                    </div>
                     <button class="letitout-emotion-modal-close">&times;</button>
                 </div>
                 <div class="letitout-emotion-modal-content"></div>
@@ -490,9 +433,19 @@ class PostForm {
             this._submitAttemptedWithoutEmotion = true;
             this.updateSelectedTags();
             window.LetItOutUtils.showError(
-                'Name a feeling to help others feel it too. Tap “Feelings” and choose 1–3.'
+                'Choose how it felt. Tap “How did it feel?” and pick up to 3.'
             );
             this.emotionError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            return;
+        }
+
+        if (!this.selectedSituation) {
+            this._submitAttemptedWithoutSituation = true;
+            this.updateSelectedSituation();
+            window.LetItOutUtils.showError(
+                'Choose what this is about. Tap “What\u2019s this about?” and pick one.'
+            );
+            this.situationError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             return;
         }
 
@@ -510,8 +463,8 @@ class PostForm {
             const post = await window.PostService.createPost(
                 content,
                 this.selectedEmotions.join(', '),
-                this.selectedCity,
-                this.isCustomCity,
+                null,
+                false,
                 this.selectedSituation
             );
             newPostId = post.id;
@@ -521,13 +474,10 @@ class PostForm {
             this._letitoutContentLength = 0;
             textarea.dispatchEvent(new Event('input', { bubbles: true }));
             this.selectedEmotions = [];
-            this.selectedCity = null;
-            this.customCity = null;
-            this.isCustomCity = false;
             this.selectedSituation = null;
-            this.updateSelectedCity();
             this.updateSelectedSituation();
             this._submitAttemptedWithoutEmotion = false;
+            this._submitAttemptedWithoutSituation = false;
             this.updateSelectedTags();
             this.clearDraft(); // Clear draft on successful post
             if (submitButton) {
@@ -587,11 +537,9 @@ class PostForm {
         return prompt;
     }
 
-    /** Valid feeling labels from emotion categories (for wall → Write preset). */
+    /** Valid feeling labels (for wall → Write preset). */
     _getValidEmotionLabelSet() {
-        const s = new Set();
-        this.emotionCategories.forEach((c) => c.emotions.forEach((e) => s.add(e)));
-        return s;
+        return new Set(this.emotionTags);
     }
 
     /**
@@ -692,13 +640,23 @@ class PostForm {
             // confirmation modal (see showConfirmationModal), not competing
             // with the primary "Let It Out" action.
 
-            // Add "Need Support" button
+            // Encouragement + support link below primary CTA
+            const ctaFooter = document.createElement('div');
+            ctaFooter.className = 'letitout-cta-footer';
+
+            const storyNote = document.createElement('span');
+            storyNote.className = 'letitout-cta-footer-note';
+            storyNote.textContent = 'Your story may help someone else feel less alone.';
+            ctaFooter.appendChild(storyNote);
+
             const supportButton = document.createElement('button');
             supportButton.type = 'button';
             supportButton.className = 'support-link-btn';
             supportButton.textContent = 'Feeling overwhelmed?';
             supportButton.onclick = () => this.openSupportModal();
-            this.buttonContainer.appendChild(supportButton);
+            ctaFooter.appendChild(supportButton);
+
+            this.buttonContainer.appendChild(ctaFooter);
 
         } else {
             // Always update the reference in case of re-render
@@ -1235,7 +1193,7 @@ class PostForm {
                             this.selectedEmotions.push(emotion);
                         }
                         this.updateSelectedTags();
-                        doneBtn.disabled = false; // Emotions are now optional
+                        doneBtn.disabled = this.selectedEmotions.length === 0;
                         renderEmotions(searchInput.value);
                     };
 
@@ -1248,6 +1206,7 @@ class PostForm {
 
         // Initial render
         renderEmotions();
+        doneBtn.disabled = this.selectedEmotions.length === 0;
 
         // Search handler
         searchInput.oninput = () => {
@@ -1326,7 +1285,7 @@ class PostForm {
             this._submitAttemptedWithoutEmotion = false;
             this.emotionError.style.display = 'none';
         } else if (this._submitAttemptedWithoutEmotion) {
-            this.emotionError.textContent = 'Name a feeling to help others feel it too.';
+            this.emotionError.textContent = 'Choose how it felt — pick up to 3.';
             this.emotionError.style.display = 'block';
         } else {
             this.emotionError.style.display = 'none';
@@ -1350,9 +1309,7 @@ class PostForm {
 
     updateSelectedMetaRow() {
         if (!this.selectedMetaDisplay) return;
-        const hasSituation = !!this.selectedSituation;
-        const hasCity = !!this.selectedCity;
-        this.selectedMetaDisplay.style.display = hasSituation || hasCity ? 'flex' : 'none';
+        this.selectedMetaDisplay.style.display = this.selectedSituation ? 'flex' : 'none';
     }
 
     updateSelectedSituation() {
@@ -1371,27 +1328,17 @@ class PostForm {
             };
             this.selectedSituationDisplay.appendChild(tag);
         }
-        this.updateSelectedMetaRow();
-    }
 
-    updateSelectedCity() {
-        this.selectedCityDisplay.innerHTML = '';
-        if (this.selectedCity) {
-            const tag = document.createElement('div');
-            tag.className = 'city-tag';
-            tag.innerHTML = `
-                ${this.selectedCity}
-                <span class="remove-tag">&times;</span>
-            `;
-            tag.querySelector('.remove-tag').onclick = () => {
-                this.selectedCity = null;
-                this.customCity = null;
-                this.isCustomCity = false;
-                this.updateSelectedCity();
-                this.saveDraft(); // Save draft when city is removed
-            };
-            this.selectedCityDisplay.appendChild(tag);
+        if (this.selectedSituation) {
+            this._submitAttemptedWithoutSituation = false;
+            if (this.situationError) this.situationError.style.display = 'none';
+        } else if (this._submitAttemptedWithoutSituation && this.situationError) {
+            this.situationError.textContent = 'Choose what this is about.';
+            this.situationError.style.display = 'block';
+        } else if (this.situationError) {
+            this.situationError.style.display = 'none';
         }
+
         this.updateSelectedMetaRow();
     }
 
@@ -1402,7 +1349,10 @@ class PostForm {
             this.situationModal.innerHTML = `
                 <div class="letitout-situation-modal">
                     <div class="letitout-situation-modal-header">
-                        <div class="letitout-situation-modal-title">What it&rsquo;s about (optional)</div>
+                        <div class="wall-filter-modal-header-text">
+                            <div class="letitout-situation-modal-title">What&rsquo;s this about?</div>
+                            <p class="wall-filter-modal-hint">Choose any that fit.</p>
+                        </div>
                         <button class="letitout-situation-modal-close">&times;</button>
                     </div>
                     <div class="letitout-situation-modal-content"></div>
@@ -1421,27 +1371,48 @@ class PostForm {
         const cancelBtn = modal.querySelector('.letitout-situation-modal-btn.cancel');
 
         content.innerHTML = '';
-        this.situationList.forEach(situation => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'situation-option-btn';
-            btn.textContent = situation;
-            if (this.selectedSituation === situation) btn.classList.add('selected');
-            btn.onclick = () => {
-                // Single select: toggle or select
-                content.querySelectorAll('.situation-option-btn').forEach(b => b.classList.remove('selected'));
-                if (this.selectedSituation === situation) {
-                    this.selectedSituation = null;
-                } else {
-                    this.selectedSituation = situation;
-                    btn.classList.add('selected');
-                }
-                doneBtn.disabled = false;
-            };
-            content.appendChild(btn);
-        });
 
-        doneBtn.disabled = false; /* Situation is optional - always allow Done to apply/close */
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.className = 'emotion-search-input';
+        searchInput.placeholder = 'Search topics...';
+        searchInput.autocomplete = 'off';
+        searchInput.style.marginBottom = '12px';
+        content.appendChild(searchInput);
+
+        const optionsWrap = document.createElement('div');
+        optionsWrap.className = 'situation-options-grid';
+        content.appendChild(optionsWrap);
+
+        let pendingSituation = this.selectedSituation;
+
+        const renderSituations = (filter = '') => {
+            optionsWrap.innerHTML = '';
+            const filterVal = filter.trim().toLowerCase();
+            this.situationList.forEach((situation) => {
+                if (filterVal && !situation.toLowerCase().includes(filterVal)) return;
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'situation-option-btn';
+                btn.textContent = situation;
+                if (pendingSituation === situation) btn.classList.add('selected');
+                btn.onclick = () => {
+                    content.querySelectorAll('.situation-option-btn').forEach((b) => b.classList.remove('selected'));
+                    if (pendingSituation === situation) {
+                        pendingSituation = null;
+                    } else {
+                        pendingSituation = situation;
+                        btn.classList.add('selected');
+                    }
+                    doneBtn.disabled = !pendingSituation;
+                };
+                optionsWrap.appendChild(btn);
+            });
+        };
+
+        renderSituations();
+        searchInput.oninput = () => renderSituations(searchInput.value);
+        doneBtn.disabled = !pendingSituation;
 
         const closeModal = () => modal.classList.remove('visible');
         closeBtn.onclick = () => {
@@ -1449,6 +1420,7 @@ class PostForm {
         };
         cancelBtn.onclick = closeModal;
         doneBtn.onclick = () => {
+            this.selectedSituation = pendingSituation;
             this.updateSelectedSituation();
             this.saveDraft();
             closeModal();
@@ -1460,118 +1432,11 @@ class PostForm {
         modal.classList.add('visible');
     }
 
-    openCityModal() {
-        if (!this.cityModal) {
-            this.cityModal = document.createElement('div');
-            this.cityModal.className = 'letitout-city-modal-overlay';
-            this.cityModal.innerHTML = `
-                <div class="letitout-city-modal">
-                    <div class="letitout-city-modal-header">
-                        <div class="letitout-city-modal-title">City (optional)</div>
-                        <button class="letitout-city-modal-close">&times;</button>
-                    </div>
-                    <div class="letitout-city-modal-content">
-                        <input type="text" class="city-search-input" placeholder="Search cities..." autocomplete="off" />
-                        <div class="city-suggested-list"></div>
-                        <div class="city-other-section">
-                            <label for="city-other-input">Your city</label>
-                            <input type="text" class="city-other-input" placeholder="Enter your city" />
-                            <button class="city-other-btn">Add</button>
-                        </div>
-                    </div>
-                    <div class="letitout-city-modal-footer">
-                        <button class="letitout-city-modal-btn cancel">Cancel</button>
-                        <button class="letitout-city-modal-btn done" disabled>Done</button>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(this.cityModal);
-        }
-        const modal = this.cityModal;
-        const content = modal.querySelector('.letitout-city-modal-content');
-        const doneBtn = modal.querySelector('.letitout-city-modal-btn.done');
-        const closeBtn = modal.querySelector('.letitout-city-modal-close');
-        const cancelBtn = modal.querySelector('.letitout-city-modal-btn.cancel');
-        const searchInput = modal.querySelector('.city-search-input');
-        const suggestedList = modal.querySelector('.city-suggested-list');
-        const otherInput = modal.querySelector('.city-other-input');
-        const otherBtn = modal.querySelector('.city-other-btn');
-
-        // Reset state
-        searchInput.value = '';
-        otherInput.value = '';
-        this.filteredCities = [...this.cityList];
-        this.isCustomCity = false;
-        this.customCity = null;
-        this.renderCitySuggestions(suggestedList, doneBtn);
-        doneBtn.disabled = !this.selectedCity;
-
-        // Search logic
-        searchInput.oninput = () => {
-            const val = searchInput.value.trim().toLowerCase();
-            this.filteredCities = this.cityList.filter(city => city.toLowerCase().includes(val));
-            this.renderCitySuggestions(suggestedList, doneBtn);
-        };
-
-        // Other/city not listed logic
-        otherBtn.onclick = (e) => {
-            e.preventDefault();
-            const val = otherInput.value.trim();
-            if (val) {
-                this.selectedCity = val;
-                this.customCity = val;
-                this.isCustomCity = true;
-                this.updateSelectedCity();
-                this.saveDraft();
-                closeModal();
-            }
-        };
-
-        // Modal close logic
-        const closeModal = () => {
-            modal.classList.remove('visible');
-        };
-        closeBtn.onclick = closeModal;
-        cancelBtn.onclick = closeModal;
-        doneBtn.onclick = () => {
-            this.updateSelectedCity();
-            this.saveDraft();
-            closeModal();
-        };
-        modal.onclick = (e) => {
-            if (e.target === modal) closeModal();
-        };
-
-        // Show modal
-        modal.classList.add('visible');
-    }
-
-    renderCitySuggestions(container, doneBtn) {
-        container.innerHTML = '';
-        this.filteredCities.forEach(city => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'city-suggestion-btn';
-            btn.textContent = city;
-            if (this.selectedCity === city && !this.isCustomCity) btn.classList.add('selected');
-            btn.onclick = () => {
-                this.selectedCity = city;
-                this.customCity = null;
-                this.isCustomCity = false;
-                this.renderCitySuggestions(container, doneBtn);
-                doneBtn.disabled = false;
-            };
-            container.appendChild(btn);
-        });
-    }
-
     // --- DRAFT FUNCTIONS ---
     saveDraft() {
         const draft = {
             content: this.form.querySelector('textarea').value,
             emotions: this.selectedEmotions,
-            city: this.selectedCity,
-            isCustomCity: this.isCustomCity,
             situation: this.selectedSituation,
         };
         sessionStorage.setItem(this.draftKey, JSON.stringify(draft));
@@ -1584,19 +1449,19 @@ class PostForm {
         try {
             const draft = JSON.parse(draftJSON);
             const textarea = this.form.querySelector('textarea');
-            
+            const emotionOk = this._getValidEmotionLabelSet();
+            const situationOk = new Set(this.situationList);
+
             textarea.value = draft.content || '';
             this._letitoutContentLength = textarea.value.length;
-            this.selectedEmotions = draft.emotions || [];
-            this.selectedCity = draft.city || null;
-            this.isCustomCity = draft.isCustomCity || false;
-            this.selectedSituation = draft.situation || null;
+            this.selectedEmotions = (draft.emotions || []).filter((e) => emotionOk.has(e)).slice(0, 3);
+            this.selectedSituation =
+                draft.situation && situationOk.has(draft.situation) ? draft.situation : null;
 
             // Trigger updates to reflect loaded data
-            textarea.dispatchEvent(new Event('input', { bubbles: true })); // Auto-expands; input handler updates length
+            textarea.dispatchEvent(new Event('input', { bubbles: true }));
             this.updateSelectedTags();
             this.updateSelectedSituation();
-            this.updateSelectedCity();
 
         } catch (error) {
             console.error("Error loading draft:", error);
@@ -1746,16 +1611,13 @@ class PostForm {
             textarea.value = '';
             textarea.dispatchEvent(new Event('input', { bubbles: true }));
         }
-        // Clear emotion tags, situation, and city
+        // Clear emotion tags and situation
         this.selectedEmotions = [];
-        this.selectedCity = null;
-        this.customCity = null;
-        this.isCustomCity = false;
         this.selectedSituation = null;
         this._submitAttemptedWithoutEmotion = false;
+        this._submitAttemptedWithoutSituation = false;
         this.updateSelectedTags();
         this.updateSelectedSituation();
-        this.updateSelectedCity();
         // Clear draft
         this.clearDraft();
 

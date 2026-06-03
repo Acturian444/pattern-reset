@@ -11,18 +11,19 @@ app.set('trust proxy', true);
 /** Match js/funnel/offer-constants.js — human labels for Stripe-driven profile updates */
 const OFFER_LABELS = {
     fast_clarity_19: '$19 — See what to do next (in-modal breakdown)',
-    direct_read_59: '$59 — Direct written answer for your situation',
+    pattern_reflection_22: '$22 — Your Story (personal written reflection)',
+    direct_read_59: '$22 — Your Story (legacy offer id)',
     decide_with_me_197: '$197 — 1:1 call (decide with me)',
 };
 
 /**
- * Pattern Reset — Stripe catalog defaults for "Get a Direct Answer" ($59, live).
- * Used only when STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ and STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ are both unset
- * (missing .env locally or unset on host). Set either env var to override.
- * For Stripe **test** mode, set STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ to a **test** price_… in .env so it matches sk_test.
+ * Your Story ($22) — Stripe price fallback when env is unset.
+ * Set STRIPE_PRICE_PATTERN_REFLECTION_22 (or legacy STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ) to override in Vercel.
  */
-const DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ = 'price_1TNUFLBiV6S6xuimZH8beoiV';
-/** Live catalog — "Get a Direct Answer" (fallback when STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ is unset). */
+const DEFAULT_STRIPE_PRICE_PATTERN_REFLECTION_22 = 'price_1Tb7BoBiV6S6xuimh1g8U1RG';
+/** @deprecated Legacy name — same $22 default as DEFAULT_STRIPE_PRICE_PATTERN_REFLECTION_22 */
+const DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ = DEFAULT_STRIPE_PRICE_PATTERN_REFLECTION_22;
+/** Live catalog product (fallback when STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ is unset). */
 const DEFAULT_STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ = 'prod_UMCeCWNyR0C9Qy';
 
 /** True when STRIPE_SECRET_KEY is set and not the repo placeholder (required on Vercel per environment). */
@@ -555,7 +556,7 @@ async function syncPersonalReadPaymentToFirestore(session, meta) {
     const funnel = payload.funnelContext || {};
     const uid = String(funnel.firebaseUid || '').trim();
     const intakeId = String(funnel.intakeId || '').trim();
-    const offerId = String(funnel.offerId || 'direct_read_59').trim().slice(0, 64);
+    const offerId = String(funnel.offerId || 'pattern_reflection_22').trim().slice(0, 64);
     const submissionId = String(funnel.quizSubmissionId || '').trim();
     if (!admin || !uid || !intakeId) {
         console.warn('Firestore payment sync skipped', {
@@ -569,8 +570,8 @@ async function syncPersonalReadPaymentToFirestore(session, meta) {
     const FieldValue = admin.firestore.FieldValue;
     const now = FieldValue.serverTimestamp();
     let customerStatus = 'paid';
-    if (offerId === 'direct_read_59') {
-        customerStatus = 'paid_59';
+    if (offerId === 'pattern_reflection_22' || offerId === 'direct_read_59') {
+        customerStatus = 'paid_22';
     } else if (offerId === 'fast_clarity_19') {
         customerStatus = 'paid_19';
     } else if (offerId === 'decide_with_me_197') {
@@ -751,19 +752,24 @@ app.post('/create-checkout-session', async (req, res) => {
                 });
                 return;
             }
-            // $59 Personal Relationship Read — server-owned Stripe price resolution.
+            // Pattern Reflection ($22) — server-owned Stripe price resolution.
             // Resolve in this order:
-            //   (1) STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ if valid
-            //   (2) DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ if valid
-            //   (3) first active one-time price from STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ
-            // This prevents stale env values (deleted or wrong-mode price IDs) from causing 500s.
-            const envPriceId = (process.env.STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ || '').trim();
+            //   (1) STRIPE_PRICE_PATTERN_REFLECTION_22 if valid
+            //   (2) STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ if valid (legacy env name)
+            //   (3) DEFAULT_STRIPE_PRICE_PATTERN_REFLECTION_22 if valid
+            //   (4) first active one-time price from STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ
+            const envPriceReflection = (process.env.STRIPE_PRICE_PATTERN_REFLECTION_22 || '').trim();
+            const envPriceLegacy = (process.env.STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ || '').trim();
             const prodIdEnv = (process.env.STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ || '').trim();
             const prodId = prodIdEnv || DEFAULT_STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ;
             const candidatePriceIds = [];
-            if (envPriceId) candidatePriceIds.push(envPriceId);
-            if (DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ && envPriceId !== DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ) {
-                candidatePriceIds.push(DEFAULT_STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ);
+            if (envPriceReflection) candidatePriceIds.push(envPriceReflection);
+            if (envPriceLegacy && envPriceLegacy !== envPriceReflection) candidatePriceIds.push(envPriceLegacy);
+            if (
+                DEFAULT_STRIPE_PRICE_PATTERN_REFLECTION_22 &&
+                !candidatePriceIds.includes(DEFAULT_STRIPE_PRICE_PATTERN_REFLECTION_22)
+            ) {
+                candidatePriceIds.push(DEFAULT_STRIPE_PRICE_PATTERN_REFLECTION_22);
             }
 
             let prPriceId = '';
@@ -806,7 +812,7 @@ app.post('/create-checkout-session', async (req, res) => {
             if (!prPriceId) {
                 res.status(503).json({
                     error: 'Payment is not configured for this product.',
-                    hint: 'Set a valid STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ (price_…) or STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ (prod_…) on the server. Keys must be from the same Stripe account/mode as those IDs.',
+                    hint: 'Set STRIPE_PRICE_PATTERN_REFLECTION_22 or STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ (price_…) or STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ (prod_…) on the server. Keys must match the Stripe account/mode.',
                     details: lastPriceErr && lastPriceErr.message ? String(lastPriceErr.message) : undefined,
                 });
                 return;
@@ -844,7 +850,7 @@ app.post('/create-checkout-session', async (req, res) => {
             stripeType.indexOf('StripeAuthenticationError') !== -1
                 ? 'Check STRIPE_SECRET_KEY on the server (and ensure mode matches your price IDs).'
                 : stripeCode === 'resource_missing'
-                    ? 'A configured Stripe Price/Product was not found. Recheck STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ / STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ.'
+                    ? 'A configured Stripe Price/Product was not found. Recheck STRIPE_PRICE_PATTERN_REFLECTION_22 (or STRIPE_PRICE_PERSONAL_RELATIONSHIP_READ) / STRIPE_PRODUCT_PERSONAL_RELATIONSHIP_READ.'
                     : undefined;
         res.status(500).json({
             error: 'Failed to create checkout session',

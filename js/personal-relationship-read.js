@@ -1,5 +1,5 @@
 /**
- * Personal Relationship Read ($59) — intake → Stripe Checkout → thanks page.
+ * Pattern Reflection ($22) — intake → Stripe Checkout → thanks page.
  * Draft autosave: sessionStorage prReadIntakeDraft. Cleared after verified payment on thanks page.
  */
 (function () {
@@ -54,12 +54,24 @@
         return window.location.origin + pathDir + 'personal-relationship-read-thanks.html';
     }
 
+    function selectHasOption(selectEl, value) {
+        if (!selectEl || value == null || value === '') return false;
+        var v = String(value);
+        for (var i = 0; i < selectEl.options.length; i++) {
+            if (selectEl.options[i].value === v) return true;
+        }
+        return false;
+    }
+
     function applyIntakeFromObject(d) {
         if (!d) return;
         var setVal = function (id, val) {
             var el = document.getElementById(id);
             if (!el || val === undefined || val === null) return;
             if (typeof val === 'number' && isNaN(val)) return;
+            if (el.tagName === 'SELECT') {
+                if (!selectHasOption(el, val)) return;
+            }
             el.value = typeof val === 'number' ? String(val) : val;
         };
         setVal('pr-read-email', d.email);
@@ -101,7 +113,23 @@
         try {
             var raw = sessionStorage.getItem(DRAFT_KEY);
             if (!raw) return;
-            applyIntakeFromObject(JSON.parse(raw));
+            var draft = JSON.parse(raw);
+            /* Drop mistaken stage from old quiz prefill (single / not-in-one → self). */
+            if (draft && draft.stage === 'self') {
+                var quiz = parseQuizState();
+                var likelyQuizMistake =
+                    quiz &&
+                    (quiz.relationshipStatus === 'single' || quiz.relationshipStatus === 'not-in-one');
+                var hasUserAuthoredInput =
+                    !!((draft.happening && String(draft.happening).trim()) ||
+                       (draft.wantKnow && String(draft.wantKnow).trim()) ||
+                       (draft.duration && String(draft.duration).trim()) ||
+                       (draft.scope && String(draft.scope).trim()));
+                if (likelyQuizMistake && !hasUserAuthoredInput) {
+                    draft.stage = '';
+                }
+            }
+            applyIntakeFromObject(draft);
         } catch (e) {}
     }
 
@@ -133,43 +161,9 @@
         return age;
     }
 
-    function herPatternNameFromState(state) {
-        if (!state || !state.answers || !window.quizData || !window.PatternDeterminer) return null;
-        if (typeof window.PatternDeterminer.determineHerResponsePattern !== 'function') return null;
-        try {
-            var key = window.PatternDeterminer.determineHerResponsePattern(state.answers, window.quizData);
-            if (!key || !window.herResponsePatterns) return null;
-            var meta = window.herResponsePatterns[key];
-            return meta && meta.name ? meta.name : null;
-        } catch (e) {
-            return null;
-        }
-    }
-
     function prefillFromQuiz() {
         var state = parseQuizState();
-        var banner = document.getElementById('pr-read-quiz-banner');
-        var wrapDyn = document.getElementById('pr-read-quiz-dynamic-wrap');
-        var wrapHer = document.getElementById('pr-read-quiz-her-wrap');
-        var elDyn = document.getElementById('pr-read-quiz-dynamic');
-        var elHer = document.getElementById('pr-read-quiz-her');
-        if (!state || !banner) return;
-
-        var dynName = patternLabel(state.patternKey);
-        var herName = herPatternNameFromState(state);
-
-        if (dynName && elDyn && wrapDyn) {
-            elDyn.textContent = dynName;
-            wrapDyn.hidden = false;
-        }
-        if (herName && elHer && wrapHer) {
-            elHer.textContent = herName;
-            wrapHer.hidden = false;
-        }
-
-        if ((dynName || herName) && banner) {
-            banner.hidden = false;
-        }
+        if (!state) return;
 
         /*
          * Map legacy quiz relationshipStatus values → current stage options.
@@ -177,22 +171,28 @@
          * 'recently-ended', 'single', 'undefined'. Normalize them so prefill
          * continues to work for returning users without forcing a re-pick.
          */
+        /* Quiz status → intake stage. Do not map "single" or "not-in-one" to self — that mislabels most visitors. */
         var STAGE_PREFILL_MAP = {
-            talking: 'early',
+            talking: 'relationships',
+            dating: 'relationships',
             'emotionally-invested': 'relationship',
-            'recently-ended': 'ending',
-            engaged: 'living-engaged',
-            single: 'not-in-one',
-            undefined: 'situationship'
+            'recently-ended': 'breakup',
+            engaged: 'relationship',
+            married: 'relationship',
+            undefined: 'situationship',
+            situationship: 'situationship',
+            'on-off': 'on-and-off',
+            ending: 'breakup',
+            early: 'relationships',
+            'not-in-one': 'relationships',
+            'long-distance': 'relationship',
+            'living-engaged': 'relationship'
         };
         var stageSelect = document.getElementById('pr-read-stage');
         if (stageSelect && state.relationshipStatus && !stageSelect.value) {
-            var stageValue = STAGE_PREFILL_MAP[state.relationshipStatus] || state.relationshipStatus;
-            for (var i = 0; i < stageSelect.options.length; i++) {
-                if (stageSelect.options[i].value === stageValue) {
-                    stageSelect.selectedIndex = i;
-                    break;
-                }
+            var stageValue = STAGE_PREFILL_MAP[state.relationshipStatus];
+            if (stageValue && selectHasOption(stageSelect, stageValue)) {
+                stageSelect.value = stageValue;
             }
         }
 
@@ -256,10 +256,10 @@
     function validateIntake(d) {
         if (!d.email) return 'Please enter your email.';
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)) return 'Please enter a valid email address.';
-        if (!d.happening) return 'Please tell me what is happening.';
-        if (!d.wantKnow) return 'Please tell me what you want me to answer.';
-        if (!d.stage) return 'Please tell me what you two are right now.';
-        if (!d.duration) return 'Please tell me how long you have been with him.';
+        if (!d.happening) return 'Please tell me what\'s going on.';
+        if (!d.wantKnow) return 'Please tell me what you want clarity on.';
+        if (!d.stage) return 'Please choose what this is mainly about.';
+        if (!d.duration) return 'Please choose how long this has been weighing on you.';
         return '';
     }
 
@@ -401,7 +401,8 @@
         }
 
         var OFF =
-            (window.PATTERN_RESET_OFFER_IDS && window.PATTERN_RESET_OFFER_IDS.DIRECT_READ_59) || 'direct_read_59';
+            (window.PATTERN_RESET_OFFER_IDS && window.PATTERN_RESET_OFFER_IDS.PATTERN_REFLECTION_22) ||
+            'pattern_reflection_22';
         var qsPost = new URLSearchParams(window.location.search);
 
         var submitBtn = intakeForm.querySelector('button[type="submit"]');
@@ -415,7 +416,7 @@
         function resetSubmitBtn() {
             if (submitBtn) {
                 submitBtn.disabled = false;
-                submitBtn.textContent = submitBtn.getAttribute('data-prev-label') || 'Get my answer — $59';
+                submitBtn.textContent = submitBtn.getAttribute('data-prev-label') || 'Get your review — $22';
             }
         }
 
@@ -442,7 +443,7 @@
 
                 /*
                  * Fear + age are no longer exposed as form fields — the UI was dropping
-                 * conversions at a $59 paid moment. We still carry whatever the quiz
+                 * conversions at checkout. We still carry whatever the quiz
                  * already captured so backend/tracking signals don't regress.
                  */
                 var quizFear = st && typeof st.biggestFear === 'string' ? st.biggestFear : null;

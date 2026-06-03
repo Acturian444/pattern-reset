@@ -5,19 +5,22 @@
     'use strict';
     window.PATTERN_RESET_OFFER_IDS = {
         FAST_CLARITY_19: 'fast_clarity_19',
+        PATTERN_REFLECTION_22: 'pattern_reflection_22',
+        /** @deprecated Use PATTERN_REFLECTION_22 — kept for legacy intake / webhook rows */
         DIRECT_READ_59: 'direct_read_59',
         DECIDE_WITH_ME_197: 'decide_with_me_197'
     };
     /** Shown together on the relationship quiz paywall (order for analytics only). */
     window.PATTERN_RESET_PAYWALL_OFFERS_SHOWN = [
         'fast_clarity_19',
-        'direct_read_59',
+        'pattern_reflection_22',
         'decide_with_me_197'
     ];
     /** Short labels for Firebase console / events (differentiate tiers at a glance). */
     window.PATTERN_RESET_OFFER_LABELS = {
         fast_clarity_19: '$19 — See what to do next (in-modal breakdown)',
-        direct_read_59: '$59 — Direct written answer for your situation',
+        pattern_reflection_22: '$22 — Your Story (personal written reflection)',
+        direct_read_59: '$22 — Your Story (legacy offer id)',
         decide_with_me_197: '$197 — 1:1 call (decide with me)'
     };
     window.PATTERN_RESET_JOURNEY_STAGES = {

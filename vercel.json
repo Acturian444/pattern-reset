@@ -20,14 +20,6 @@
       "destination": "/philosophy.html"
     },
     {
-      "source": "/home",
-      "destination": "/home.html"
-    },
-    {
-      "source": "/home/",
-      "destination": "/home.html"
-    },
-    {
       "source": "/letitout",
       "destination": "/letitout.html"
     },
@@ -70,6 +62,16 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "destination": "/letitout",
+      "permanent": false
+    },
+    {
+      "source": "/index.html",
+      "destination": "/letitout",
+      "permanent": false
+    },
+    {
       "source": "/(.*)",
       "has": [
         {
@@ -104,22 +106,32 @@
     },
     {
       "source": "/home.html",
-      "destination": "/home",
+      "destination": "/liamsaysit#newsletter",
+      "permanent": true
+    },
+    {
+      "source": "/home",
+      "destination": "/liamsaysit#newsletter",
+      "permanent": true
+    },
+    {
+      "source": "/home/",
+      "destination": "/liamsaysit#newsletter",
       "permanent": true
     },
     {
       "source": "/home-v2",
-      "destination": "/home",
+      "destination": "/liamsaysit#newsletter",
       "permanent": true
     },
     {
       "source": "/home-v2/",
-      "destination": "/home",
+      "destination": "/liamsaysit#newsletter",
       "permanent": true
     },
     {
       "source": "/home-v2.html",
-      "destination": "/home",
+      "destination": "/liamsaysit#newsletter",
       "permanent": true
     },
     {

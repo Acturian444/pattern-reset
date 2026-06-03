@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Quiz landing paused: send visitors to Sunday Reset home (see docs/QUIZ-DISABLED.md). -->
+    <script>window.location.replace('/letitout' + window.location.search + window.location.hash);</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#050505">
@@ -18,8 +20,8 @@
     <meta name="description" content="Mixed signals, situationship stress, or a gut feeling something is off? A free, fast quiz names what&rsquo;s happening between you two—and what to do next. About 5 minutes.">
     <meta name="author" content="Pattern Reset™">
     <meta name="copyright" content="© 2026 Pattern Reset™. All rights reserved.">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
     <meta name="keywords" content="relationship clarity, mixed signals, situationship, relationship patterns, emotional patterns, what to do next, stuck in a loop, overthinking relationship, pattern reset">
     <meta name="brand" content="Pattern Reset™">
     <meta name="trademark" content="Pattern Reset™, The Heart Room™, Let It Out™, Still Healing Collection™">
@@ -822,8 +824,8 @@
     .pr-search-cluster {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
+            justify-content: center;
+            align-items: center;
         align-content: center;
         gap: clamp(0.4rem, 1.2vw, 0.55rem) clamp(0.45rem, 1.4vw, 0.65rem);
         padding: 0.25rem 0 0.15rem;
@@ -1314,7 +1316,7 @@
         margin: 0 auto 1rem;
         line-height: 1.6;
     }
-
+    
     .quiz-honesty-instruction {
         font-family: 'DM Sans', sans-serif;
         font-size: 0.95rem;
@@ -4579,7 +4581,7 @@
                 max-width: min(36rem, 100%);
                 padding: 0 clamp(0.25rem, 2vw, 0.5rem);
               letter-spacing: 0.01em;
-                text-align: center;
+              text-align: center;
                 text-wrap: pretty;
               overflow-wrap: break-word;
                 word-break: normal;
@@ -4920,25 +4922,25 @@
                                             <span class="quiz-success-identity-label quiz-success-means-heading" id="quiz-free-means-label" role="heading" aria-level="3">WHAT&rsquo;S ACTUALLY HAPPENING</span>
                                             <div class="quiz-success-means-content" id="quiz-success-what-it-means"></div>
         </section>
-                        </div>
+                </div>
                                     <div class="quiz-success-legacy-hidden" aria-hidden="true">
                                         <span id="quiz-success-her-pattern"></span>
                                         <span id="quiz-success-dynamic"></span>
-                    </div>
+            </div>
                                     <div class="quiz-success-epilogue">
                                         <div class="quiz-success-epilogue-panel quiz-success-epilogue-panel--v2">
                                             <div class="quiz-success-epilogue-hook">
                                                 <p class="quiz-success-epilogue-hook__bold">Stop wasting time and energy on the same loop.</p>
                                                 <p class="quiz-success-epilogue-hook__same-white">Get a straight outside read from someone who gets men&mdash;what&rsquo;s really going on, why he behaves like this, what it actually means, and what to do next.</p>
-                                            </div>
+                        </div>
                     </div>
                                         <div class="quiz-success-cta-stack">
                                             <div class="quiz-success-pattern-display quiz-success-pattern-cta quiz-success-pattern-cta--next" id="quiz-success-pattern-display" role="button" tabindex="0" aria-label="Get Clarity on My Situation" onclick="try { if (typeof window.openPersonalizedHelpFromQuiz === 'function') window.openPersonalizedHelpFromQuiz(); } catch (e) { console.error(e); }" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); this.click(); }">Get Clarity on My Situation</div>
                                             <p class="quiz-success-subtext">Answered personally by me. Not AI, not templates.</p>
                         </div>
                     </div>
-                                </div>
-                            </div>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -4979,7 +4981,7 @@
                             <i class="fas fa-chevron-down"></i>
                         </button>
                         <div class="faq-answer">
-                            <p>The written answer ($59) comes back within 24&ndash;48 hours.</p>
+                            <p>Pattern Reflection ($22) comes back within 48&ndash;72 hours.</p>
                             <p>The call ($197) is booked directly on my calendar, usually within a few days.</p>
                         </div>
                     </div>
@@ -5084,7 +5086,7 @@
         liveSession: '#',            // fallback booking link
         fullPatternBreakdown: '#',   // $19 - Full Pattern Breakdown (featured)
         getYourAnswer: '#',          // legacy alias for breakdown checkout
-        myTakeWritten: '/personal-relationship-read.html', // $59 — intake → Stripe (Vercel redirects to clean URL; .html works everywhere static is served)
+        myTakeWritten: '/personal-relationship-read.html', // Pattern Reflection $22 — intake → Stripe
         talkDirectly: '#',           // $197 - Private call
         personalBreakdown: '/personal-relationship-read.html' // Same funnel (legacy alias)
     };
@@ -5135,7 +5137,7 @@
                 window.location.href = url;
                 return;
             }
-            // $19 tier hard-hidden 2026-04. CTA always routes to paywall ($59 / $197).
+            // $19 tier hard-hidden 2026-04. CTA always routes to paywall ($22 reflection / $197).
             // The previous "if unlocked, open modal" shortcut was removed — modal full
             // breakdown was the $19 product and is no longer given away.
             if (typeof window.showClarityPaywallModal === 'function') {
@@ -5343,7 +5345,7 @@
             }, 1200);
         });
     }
-
+    
     // Hero scroll cue functionality
     document.addEventListener('DOMContentLoaded', function() {
         const scrollCue = document.querySelector('.hero-scroll-cue');

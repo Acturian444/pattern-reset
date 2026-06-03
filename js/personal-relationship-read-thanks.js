@@ -1,5 +1,5 @@
 /**
- * Personal Relationship Read — post-payment confirmation (full page, not modal).
+ * Pattern Reflection — post-payment confirmation (full page, not modal).
  */
 (function () {
     'use strict';

@@ -1,5 +1,5 @@
 /**
- * Relationship quiz: clarity tier paywall ($59 / $197).
+ * Relationship quiz: clarity tier paywall (Pattern Reflection $22 / $197 call).
  * $19 tier hard-hidden 2026-04 (founder conviction + competitive fit).
  * Legacy isUnlocked/setUnlocked helpers retained for backward-compat
  * with any returning visitors who previously unlocked in-modal content.
@@ -138,7 +138,7 @@
         window.scrollTo(0, y);
     }
 
-    /** $59 intake page — prefer config; fall back to .html so static hosts work (clean /path needs rewrites). */
+    /** Pattern Reflection intake — prefer config; fall back to .html so static hosts work (clean /path needs rewrites). */
     function getWrittenAnswerHref() {
         var urls = window.PATTERN_RESET_CTA_URLS || {};
         var h = (urls.myTakeWritten || urls.personalBreakdown || '').trim();
@@ -171,17 +171,17 @@
             '<div class="clarity-paywall-tiers clarity-paywall-tiers--two">' +
             '<article class="clarity-paywall-tier clarity-paywall-tier--featured">' +
             '<div class="clarity-paywall-tier-cardhead">' +
-            '<span class="clarity-paywall-tier-price-big">$59</span>' +
-            '<p class="clarity-paywall-tier-label">A DIRECT, WRITTEN ANSWER</p>' +
+            '<span class="clarity-paywall-tier-price-big">$22</span>' +
+            '<p class="clarity-paywall-tier-label">YOUR STORY</p>' +
             '</div>' +
             '<ul class="clarity-paywall-tier-list">' +
-            '<li>Share your situation and your question</li>' +
-            '<li>I read it personally and write back with a real answer</li>' +
-            '<li>You&rsquo;ll know what this actually is &mdash; and what to do next</li>' +
-            '<li>In your inbox in 48 hours</li>' +
+            '<li>Send your story</li>' +
+            '<li>Uncover the pattern, blind spot, or turning point you may not see</li>' +
+            '<li>Personal written reflection from me</li>' +
+            '<li>In your inbox in 48&ndash;72 hours</li>' +
             '</ul>' +
             '<div class="clarity-paywall-tier-cta">' +
-            '<a class="clarity-paywall-btn clarity-paywall-btn-primary" id="clarity-paywall-tier-59" href="#">Get my written answer</a>' +
+            '<a class="clarity-paywall-btn clarity-paywall-btn-primary" id="clarity-paywall-tier-59" href="#">Submit your story</a>' +
             '</div>' +
             '</article>' +
             '<article class="clarity-paywall-tier">' +
@@ -214,7 +214,9 @@
         if (a59) {
             a59.href = applyHref;
             a59.addEventListener('click', function (e) {
-                var oid = (window.PATTERN_RESET_OFFER_IDS && window.PATTERN_RESET_OFFER_IDS.DIRECT_READ_59) || 'direct_read_59';
+                var oid =
+                    (window.PATTERN_RESET_OFFER_IDS && window.PATTERN_RESET_OFFER_IDS.PATTERN_REFLECTION_22) ||
+                    'pattern_reflection_22';
                 if (typeof window.trackCustomerEvent === 'function') {
                     window.trackCustomerEvent('offer_clicked', { offerId: oid, source: 'clarity-paywall' });
                 }

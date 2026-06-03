@@ -420,7 +420,7 @@
         out += '<div class="pr-break-upsell">';
         out += '<p class="pr-break-kicker">WANT THIS APPLIED TO YOUR EXACT STORY?</p>';
         out += '<h2 class="pr-break-h2" id="pr-break-upsell-title">You have the read. I can write back on your situation.</h2>';
-        out += '<p class="pr-break-upsell__body">You\u2019re in <strong>' + esc(pattern.name) + '</strong>' + (herResponse.name ? ' with a <strong>' + esc(herResponse.name) + '</strong> response' : '') + '. Send me your story \u2014 I\u2019ll read it personally and send back a written answer.</p>';
+        out += '<p class="pr-break-upsell__body">You\u2019re in <strong>' + esc(pattern.name) + '</strong>' + (herResponse.name ? ' with a <strong>' + esc(herResponse.name) + '</strong> response' : '') + '. Submit your story for a Pattern Reflection \u2014 uncover the pattern or blind spot you may not be seeing.</p>';
         out += '<ul class="pr-break-upsell__bullets">';
         out += '<li><span class="pr-break-upsell__bullet-k">Your specific dynamic</span> named, not guessed at.</li>';
         out += '<li><span class="pr-break-upsell__bullet-k">His likely next 2 moves</span> \u2014 so you stop being surprised by the same thing twice.</li>';
@@ -429,7 +429,7 @@
         out += '<p class="pr-break-upsell__scarcity">I take a limited number of story reads each week. Delivered in 48\u201372 hours.</p>';
         out += '<blockquote class="pr-break-upsell__quote">' + esc(socialProof) + '</blockquote>';
         out += '<div class="pr-break-upsell__cta">';
-        out += '<a href="' + esc(href59) + '" class="pr-break-btn pr-break-btn--primary" id="pr-break-upsell-59"' + (href59 === '#' ? ' aria-disabled="true"' : '') + '>Get my written answer <span class="pr-break-btn__price">$59</span></a>';
+        out += '<a href="' + esc(href59) + '" class="pr-break-btn pr-break-btn--primary" id="pr-break-upsell-59"' + (href59 === '#' ? ' aria-disabled="true"' : '') + '>Submit your story <span class="pr-break-btn__price">$22</span></a>';
         out += '<a href="' + esc(href197) + '" class="pr-break-upsell__alt" id="pr-break-upsell-197"' + (href197 === '#' ? ' aria-disabled="true"' : '') + '>Or get the deep video breakdown &rarr;</a>';
         out += '</div>';
         out += '<p class="pr-break-upsell__foot">Private. Personal. Based on what you share.</p>';
@@ -456,7 +456,9 @@
         var a59 = container.querySelector('#pr-break-upsell-59');
         if (a59) {
             a59.addEventListener('click', function (e) {
-                var oid = (window.PATTERN_RESET_OFFER_IDS && window.PATTERN_RESET_OFFER_IDS.DIRECT_READ_59) || 'direct_read_59';
+                var oid =
+                    (window.PATTERN_RESET_OFFER_IDS && window.PATTERN_RESET_OFFER_IDS.PATTERN_REFLECTION_22) ||
+                    'pattern_reflection_22';
                 if (typeof window.trackCustomerEvent === 'function') {
                     window.trackCustomerEvent('offer_clicked', { offerId: oid, source: 'breakdown' });
                 }

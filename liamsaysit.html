@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/bio-hub.css?v=39">
+  <link rel="stylesheet" href="styles/bio-hub.css?v=43">
 
   <meta property="og:title" content="Liam | Pattern Reset™">
   <meta property="og:description" content="Live Sunday reset, Let It Out wall, and the relationship clarity quiz—one place to plug into Pattern Reset™.">
@@ -37,56 +37,28 @@
   <main class="bio-hub" id="main">
     <div class="bio-hub__layout">
     <div class="bio-hub__actions">
+      <article class="bio-hub__offer-card">
+        <h3 class="bio-hub__offer-title">Let it out</h3>
+        <p class="bio-hub__offer-desc">What&rsquo;s a moment that changed your life? Share your story anonymously.</p>
+        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Tell Your Story</a>
+      </article>
+
       <!-- Weekly Reset — same copy, Firestore, and Google Form as home.html #newsletter -->
       <section class="bio-hub__newsletter" aria-labelledby="bio-newsletter-heading">
         <div class="pr-hero-waitlist bio-hub__pr-hero-waitlist" id="newsletter">
-          <span class="pr-email-kicker">Pattern Reset&trade;</span>
-          <h2 class="pr-hero-waitlist-title" id="bio-newsletter-heading">Don&rsquo;t carry this into next week.</h2>
-          <p class="pr-hero-waitlist-lead pr-body">A guided Sunday reset to let go of what you&rsquo;ve been carrying.</p>
+          <h2 class="pr-hero-waitlist-title" id="bio-newsletter-heading">The story of the week</h2>
+          <p class="pr-hero-waitlist-lead pr-body">One powerful story that makes you see life differently every Sunday.</p>
           <form class="pr-email-form" id="prEmailForm" novalidate>
-            <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for Sunday&rsquo;s reset">
-            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Join the Sunday Reset</button>
+            <input type="email" class="pr-email-input" id="prEmailInput" name="email" placeholder="Enter your email" required autocomplete="email" inputmode="email" aria-label="Email for the story of the week">
+            <button type="submit" class="pr-home-cta" id="prEmailSubmit">Get The Story</button>
           </form>
-          <p class="pr-home-micro">Every Sunday. Let it out and leave lighter.</p>
           <div class="pr-email-success" id="prEmailSuccess" role="status" aria-live="polite">
-            <p class="pr-email-success-text">You&rsquo;re in&mdash;look for this Sunday&rsquo;s reset in your inbox.</p>
+            <p class="pr-email-success-text">You&rsquo;re in&mdash;look for Sunday&rsquo;s story in your inbox.</p>
             <button type="button" class="bio-hub__newsletter-change-email" id="prEmailChangeDifferent">Use a different email</button>
           </div>
         </div>
       </section>
 
-      <article class="bio-hub__offer-card">
-        <h3 class="bio-hub__offer-title">What&rsquo;s really going on?</h3>
-        <p class="bio-hub__offer-desc">See the relationship dynamic you&rsquo;re in, why it keeps repeating, and what to do next.</p>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="index.html#quiz-section">Take The Quiz</a>
-      </article>
-
-      <article class="bio-hub__offer-card">
-        <h3 class="bio-hub__offer-title">Let it out</h3>
-        <p class="bio-hub__offer-desc">Say what happened, what you felt, or what you never got to say.</p>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Post Anonymously</a>
-      </article>
-
-      <p class="bio-hub__section-label">Private support</p>
-      <article class="bio-hub__offer-card">
-        <h3 class="bio-hub__offer-title">Get clarity</h3>
-        <p class="bio-hub__offer-desc">Send me your story. I&rsquo;ll tell you what&rsquo;s really happening, and what to do next.</p>
-        <div class="bio-hub__offer-meta">
-          <span class="bio-hub__offer-price-amount">$59</span>
-          <span class="bio-hub__offer-price-note bio-hub__offer-price-note--natural">1:1 written reply &middot; limited spots</span>
-        </div>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="personal-relationship-read.html">Get Your Answer</a>
-      </article>
-
-      <article class="bio-hub__offer-card">
-        <h3 class="bio-hub__offer-title">Talk To Me 1:1</h3>
-        <p class="bio-hub__offer-desc">60-minute call to understand what&rsquo;s happening in your relationship, and what to do next.</p>
-        <div class="bio-hub__offer-meta">
-          <span class="bio-hub__offer-price-amount">$197</span>
-          <span class="bio-hub__offer-price-note bio-hub__offer-price-note--natural">Private call &middot; limited spots</span>
-        </div>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--accent" href="https://calendly.com/resetmypattern/30min" target="_blank" rel="noopener noreferrer">Book Your Call</a>
-      </article>
     </div>
 
     <div class="bio-hub__sidebar">
@@ -99,8 +71,9 @@
           <h1 class="bio-hub__name">Liam</h1>
           <p class="bio-hub__handle">@liamsaysit</p>
           <p class="bio-hub__tagline">
-            <span class="bio-hub__tagline-lead">Tell me your story.</span><br />
-            <span class="bio-hub__tagline-punch">Let&rsquo;s break the loop.</span>
+            <span class="bio-hub__tagline-lead">Trying to understand why people do what they do.</span><br />
+            <span class="bio-hub__tagline-lead">The stories people carry.</span><br />
+            <span class="bio-hub__tagline-punch">The moments that change them.</span>
           </p>
         </div>
       </div>
@@ -354,7 +327,7 @@
         if (btn) {
           btn.style.display = '';
           btn.disabled = false;
-          btn.textContent = 'Join the Sunday Reset';
+          btn.textContent = 'Get The Story';
         }
         if (micro) micro.style.display = '';
         if (input) input.focus();
