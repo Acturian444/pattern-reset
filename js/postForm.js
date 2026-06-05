@@ -1,5 +1,5 @@
 /** Max characters for Let It Out post body (enforced on textarea; no visible counter). */
-const LETITOUT_MAX_CONTENT_LENGTH = 800;
+const LETITOUT_MAX_CONTENT_LENGTH = 5000;
 
 // Post Form Handler
 class PostForm {
@@ -122,7 +122,7 @@ class PostForm {
             // MVP: Single static prompt when prompts are hidden
             const mvpPrompt = document.createElement('div');
             mvpPrompt.className = 'letitout-mvp-prompt';
-            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Tell us what happened.</span><span class=\"letitout-mvp-subtitle\">Anonymous. Honest. Unfiltered.</span>";
+            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Tell the story you've never told.</span><span class=\"letitout-mvp-subtitle\">Anonymous. Honest. Unfiltered.</span>";
             formContent.appendChild(mvpPrompt);
         }
 
@@ -133,7 +133,7 @@ class PostForm {
         textareaWrapper.className = 'textarea-wrapper';
         
         const textarea = document.createElement('textarea');
-        textarea.placeholder = "Share your story\u2026";
+        textarea.placeholder = "Start wherever the story begins\u2026";
         textarea.maxLength = LETITOUT_MAX_CONTENT_LENGTH;
 
         textarea.addEventListener('input', () => {
@@ -429,6 +429,13 @@ class PostForm {
             return;
         }
 
+        if (content.length > LETITOUT_MAX_CONTENT_LENGTH) {
+            window.LetItOutUtils.showError(
+                `Your story is too long. Please keep it under ${LETITOUT_MAX_CONTENT_LENGTH.toLocaleString()} characters.`
+            );
+            return;
+        }
+
         if (this.selectedEmotions.length === 0) {
             this._submitAttemptedWithoutEmotion = true;
             this.updateSelectedTags();
@@ -646,7 +653,7 @@ class PostForm {
 
             const storyNote = document.createElement('span');
             storyNote.className = 'letitout-cta-footer-note';
-            storyNote.textContent = 'Your story may help someone else feel less alone.';
+            storyNote.textContent = 'The stories we avoid often shape the lives we live.';
             ctaFooter.appendChild(storyNote);
 
             const supportButton = document.createElement('button');

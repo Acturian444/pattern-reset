@@ -7,7 +7,7 @@ service cloud.firestore {
       allow create: if request.auth != null 
         && request.resource.data.content is string
         && request.resource.data.content.size() > 0
-        && request.resource.data.content.size() <= 500
+        && request.resource.data.content.size() <= 5000
         && (request.resource.data.truthNumber is number || request.resource.data.truthNumber == null);
       // Allow post author to update (e.g. mark replies read), and any authenticated user
       // to update for adding replies, felt count, etc.
