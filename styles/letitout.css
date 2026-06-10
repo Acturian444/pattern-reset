@@ -4209,6 +4209,14 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
   line-height: 1.55;
 }
 
+.post-content--expanded,
+.post-content[data-expanded="true"] {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  max-height: none !important;
+}
+
 .post-read-more {
   display: block;
   text-align: left;

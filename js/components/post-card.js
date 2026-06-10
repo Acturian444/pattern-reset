@@ -1,5 +1,78 @@
+// Post IDs with expanded body text on the wall (Firestore snapshots re-render the feed).
+const wallExpandedPostIds = new Set();
+
 // Post Card Component
 class PostCard {
+    static _collapsePostContent(content) {
+        content.classList.remove('post-content--expanded');
+        content.dataset.expanded = 'false';
+        content.style.display = '-webkit-box';
+        content.style.overflow = 'hidden';
+        content.style.maxHeight = '4.8em';
+        content.style.webkitLineClamp = '3';
+    }
+
+    static _expandPostContent(content, { animate } = { animate: false }) {
+        content.classList.add('post-content--expanded');
+        content.dataset.expanded = 'true';
+        content.style.display = 'block';
+        content.style.overflow = 'visible';
+        content.style.webkitLineClamp = 'unset';
+        if (animate) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            setTimeout(() => {
+                content.style.maxHeight = 'none';
+            }, 300);
+        } else {
+            content.style.maxHeight = 'none';
+        }
+    }
+
+    /** Update counts/metadata without rebuilding the card (keeps Read more open). */
+    static patchWallCards(feedEl, posts) {
+        if (!feedEl || !Array.isArray(posts)) return;
+        posts.forEach((post) => {
+            const card = feedEl.querySelector(`.post-card[data-post-id="${post.id}"]`);
+            if (!card) return;
+            PostCard._patchFeltCount(card, post);
+            PostCard._patchCityLine(card, post);
+        });
+    }
+
+    static _patchFeltCount(card, post) {
+        const feltBtn = card.querySelector('.felt-it-btn');
+        if (!feltBtn) return;
+        let countSpan = feltBtn.querySelector('.felt-it-count');
+        const count = post.feltCount || 0;
+        if (count >= 2) {
+            if (countSpan) {
+                countSpan.textContent = String(count);
+            } else {
+                countSpan = document.createElement('span');
+                countSpan.className = 'felt-it-count';
+                countSpan.textContent = String(count);
+                feltBtn.appendChild(countSpan);
+            }
+        } else if (countSpan) {
+            countSpan.remove();
+        }
+    }
+
+    static _patchCityLine(card, post) {
+        const cityLine = card.querySelector('.post-city-line');
+        if (!cityLine || !post.timestamp) return;
+        const timeString = window.LetItOutUtils.formatDate(post.timestamp);
+        if (post.truthNumber) {
+            cityLine.textContent = post.city
+                ? `Story #${post.truthNumber} · ${post.city} · ${timeString}`
+                : `Story #${post.truthNumber} · ${timeString}`;
+        } else if (post.city) {
+            cityLine.textContent = `Anonymous from ${post.city} · ${timeString}`;
+        } else {
+            cityLine.textContent = `Anonymous · ${timeString}`;
+        }
+    }
+
     static create(post) {
         const card = document.createElement('div');
         card.className = 'post-card';
@@ -30,16 +103,20 @@ class PostCard {
         const fullText = post.content;
         const previewLimit = 200;
         const needsPreview = fullText.length > previewLimit;
-        let expanded = false;
+        let expanded = Boolean(post.id && wallExpandedPostIds.has(post.id));
 
         // For smooth expand/collapse
-        content.style.overflow = 'hidden';
+        content.style.overflow = expanded ? 'visible' : 'hidden';
         content.style.transition = 'max-height 0.3s cubic-bezier(0.4,0,0.2,1)';
-        content.style.maxHeight = needsPreview ? '4.8em' : 'none'; // ~3 lines
-        content.style.display = '-webkit-box';
+        content.style.display = expanded ? 'block' : '-webkit-box';
+        content.style.maxHeight = needsPreview && !expanded ? '4.8em' : 'none';
         content.style.webkitBoxOrient = 'vertical';
-        content.style.webkitLineClamp = needsPreview ? '3' : 'unset';
+        content.style.webkitLineClamp = needsPreview && !expanded ? '3' : 'unset';
         content.style.whiteSpace = 'pre-line';
+        if (expanded) {
+            content.classList.add('post-content--expanded');
+            content.dataset.expanded = 'true';
+        }
 
         // Always set the full text content. The CSS will handle truncation.
         content.textContent = fullText;
@@ -88,21 +165,18 @@ class PostCard {
             const readMoreLink = document.createElement('a');
             readMoreLink.href = '#';
             readMoreLink.className = 'post-read-more';
-            readMoreLink.textContent = 'Read more';
+            readMoreLink.textContent = expanded ? 'Show less' : 'Read more';
             
             readMoreLink.onclick = (e) => {
                 e.preventDefault();
                 expanded = !expanded;
                 if (expanded) {
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                    content.style.webkitLineClamp = 'unset';
+                    if (post.id) wallExpandedPostIds.add(post.id);
+                    PostCard._expandPostContent(content, { animate: true });
                     readMoreLink.textContent = 'Show less';
-                    setTimeout(() => {
-                        content.style.maxHeight = 'none';
-                    }, 300);
                 } else {
-                    content.style.maxHeight = '4.8em';
-                    content.style.webkitLineClamp = '3';
+                    if (post.id) wallExpandedPostIds.delete(post.id);
+                    PostCard._collapsePostContent(content);
                     readMoreLink.textContent = 'Read more';
                 }
             };
@@ -542,5 +616,9 @@ class PostCard {
             modal.classList.remove('visible');
             setTimeout(() => modal.remove(), 300);
         };
+    }
+
+    static getExpandedPostIds() {
+        return wallExpandedPostIds;
     }
 }

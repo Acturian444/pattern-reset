@@ -13,6 +13,11 @@ class WallFeed {
         this.filteredPosts = [];
         this.viewMode = localStorage.getItem('wallViewMode') || 'list';
         this.currentIndex = 0;
+        /** Stable anchor in single-card view when the feed re-sorts (e.g. new post). */
+        this.currentPostId = null;
+        /** Last rendered post-id order for list view; skip DOM rebuild when unchanged. */
+        this._wallPostIdSignature = '';
+        this._wallPostIds = [];
         this.container = null;
         this.initializeEventListeners();
     }
@@ -334,6 +339,10 @@ class WallFeed {
             if (dist < bestDist) { bestDist = dist; bestIndex = i; }
         });
         this.currentIndex = Math.min(bestIndex, this.filteredPosts.length - 1);
+        const card = cards[bestIndex];
+        if (card?.dataset?.postId) {
+            this.currentPostId = card.dataset.postId;
+        }
     }
 
     updateViewToggleUI() {
@@ -377,15 +386,26 @@ class WallFeed {
     goToPrevCard() {
         if (this.currentIndex > 0) {
             this.currentIndex--;
-            this.renderSingleCardView();
+            this.currentPostId = this.filteredPosts[this.currentIndex]?.id ?? null;
+            this.renderSingleCardView(true);
         }
     }
 
     goToNextCard() {
         if (this.currentIndex < this.filteredPosts.length - 1) {
             this.currentIndex++;
-            this.renderSingleCardView();
+            this.currentPostId = this.filteredPosts[this.currentIndex]?.id ?? null;
+            this.renderSingleCardView(true);
         }
+    }
+
+    updateSingleCardNavUI(posts) {
+        const backBtn = this.feed.querySelector('.wall-single-nav-back');
+        const nextBtn = this.feed.querySelector('.wall-single-nav-next');
+        const progress = this.feed.querySelector('.wall-single-card-progress');
+        if (backBtn) backBtn.disabled = this.currentIndex === 0;
+        if (nextBtn) nextBtn.disabled = this.currentIndex === posts.length - 1;
+        if (progress) progress.textContent = `${this.currentIndex + 1} of ${posts.length}`;
     }
 
     createAboutFiltersSection() {
@@ -984,34 +1004,155 @@ class WallFeed {
         if (writeTab) writeTab.click();
     }
 
-    renderPosts(posts) {
-        this.feed.innerHTML = '';
-        this.feed.className = 'wall-feed';
-        if (this.viewMode === 'single') {
-            this.feed.classList.add('wall-feed-single');
-            this.renderSingleCardView();
-        } else {
-        if (posts.length > 0) {
-            posts.forEach(post => {
-                const card = PostCard.create(post);
-                this.feed.appendChild(card);
-            });
-        } else {
-                this.feed.appendChild(this.buildWallEmptyContent());
+    /** Keep the story you're reading visually fixed when the feed updates above it. */
+    _captureWallScrollAnchor() {
+        const expanded = PostCard.getExpandedPostIds();
+        for (const id of expanded) {
+            const card = this.feed.querySelector(`.post-card[data-post-id="${id}"]`);
+            if (card) {
+                return { postId: id, top: card.getBoundingClientRect().top };
+            }
         }
-        this.highlightPostFromUrl();
+
+        let best = null;
+        let bestDist = Infinity;
+        const mid = window.innerHeight * 0.4;
+        this.feed.querySelectorAll('.post-card').forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+            const dist = Math.abs(rect.top - mid);
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = { postId: card.dataset.postId, top: rect.top };
+            }
+        });
+        return best;
+    }
+
+    _restoreWallScrollAnchor(anchor) {
+        if (!anchor?.postId) return;
+        const card = this.feed.querySelector(`.post-card[data-post-id="${anchor.postId}"]`);
+        if (!card) return;
+        const delta = card.getBoundingClientRect().top - anchor.top;
+        if (Math.abs(delta) > 1) {
+            window.scrollBy(0, delta);
         }
     }
 
-    renderSingleCardView() {
+    _detectPrependedPostCount(oldIds, newIds) {
+        if (!oldIds.length || newIds.length <= oldIds.length) return 0;
+        const tail = newIds.slice(newIds.length - oldIds.length);
+        if (!tail.every((id, i) => id === oldIds[i])) return 0;
+        return newIds.length - oldIds.length;
+    }
+
+    _detectAppendedPostCount(oldIds, newIds) {
+        if (!oldIds.length || newIds.length <= oldIds.length) return 0;
+        const head = newIds.slice(0, oldIds.length);
+        if (!head.every((id, i) => id === oldIds[i])) return 0;
+        return newIds.length - oldIds.length;
+    }
+
+    renderPosts(posts) {
+        if (this.viewMode === 'single') {
+            this.feed.className = 'wall-feed wall-feed-single';
+            this.renderSingleCardView();
+            return;
+        }
+
+        this.feed.className = 'wall-feed';
+        const newIds = posts.map((p) => p.id);
+        const idSignature = newIds.join('\n');
+        const oldIds = this._wallPostIds;
+        const hasCards = Boolean(this.feed.querySelector('.post-card'));
+
+        if (idSignature && idSignature === this._wallPostIdSignature && hasCards) {
+            PostCard.patchWallCards(this.feed, posts);
+            this.highlightPostFromUrl();
+            return;
+        }
+
+        const anchor = hasCards ? this._captureWallScrollAnchor() : null;
+
+        const prependCount = hasCards ? this._detectPrependedPostCount(oldIds, newIds) : 0;
+        if (prependCount > 0) {
+            const addedPosts = posts.slice(0, prependCount);
+            const fragment = document.createDocumentFragment();
+            addedPosts.forEach((post) => {
+                fragment.appendChild(PostCard.create(post));
+            });
+            this.feed.insertBefore(fragment, this.feed.firstChild);
+            this._wallPostIds = newIds;
+            this._wallPostIdSignature = idSignature;
+            PostCard.patchWallCards(this.feed, posts);
+            requestAnimationFrame(() => {
+                this._restoreWallScrollAnchor(anchor);
+                this.highlightPostFromUrl();
+            });
+            return;
+        }
+
+        const appendCount = hasCards ? this._detectAppendedPostCount(oldIds, newIds) : 0;
+        if (appendCount > 0) {
+            posts.slice(oldIds.length).forEach((post) => {
+                this.feed.appendChild(PostCard.create(post));
+            });
+            this._wallPostIds = newIds;
+            this._wallPostIdSignature = idSignature;
+            PostCard.patchWallCards(this.feed, posts);
+            this.highlightPostFromUrl();
+            return;
+        }
+
+        this._wallPostIdSignature = idSignature;
+        this._wallPostIds = newIds;
         this.feed.innerHTML = '';
+
+        if (posts.length > 0) {
+            posts.forEach((post) => {
+                this.feed.appendChild(PostCard.create(post));
+            });
+        } else {
+            this.feed.appendChild(this.buildWallEmptyContent());
+        }
+
+        requestAnimationFrame(() => {
+            this._restoreWallScrollAnchor(anchor);
+            this.highlightPostFromUrl();
+        });
+    }
+
+    renderSingleCardView(forceRebuild = false) {
         const posts = this.filteredPosts;
         if (posts.length === 0) {
+            this.feed.innerHTML = '';
+            this.currentPostId = null;
             this.feed.appendChild(this.buildWallEmptyContent());
             return;
         }
+
+        if (this.currentPostId) {
+            const idxById = posts.findIndex((p) => p.id === this.currentPostId);
+            if (idxById >= 0) this.currentIndex = idxById;
+        }
         this.currentIndex = Math.min(this.currentIndex, posts.length - 1);
         const post = posts[this.currentIndex];
+        this.currentPostId = post?.id ?? null;
+
+        const existingCard = this.feed.querySelector('.post-card[data-post-id]');
+        if (
+            !forceRebuild &&
+            existingCard &&
+            post.id &&
+            existingCard.dataset.postId === post.id &&
+            this.feed.querySelector('.wall-single-card-nav')
+        ) {
+            PostCard.patchWallCards(this.feed, [post]);
+            this.updateSingleCardNavUI(posts);
+            return;
+        }
+
+        this.feed.innerHTML = '';
         const card = PostCard.create(post);
         card.classList.add('post-card-single');
 
@@ -1075,9 +1216,188 @@ class WallFeed {
         }
     }
 
+    /** Situation + up to 3 feelings from a wall post. */
+    _getShareImageTagsFromPost(post) {
+        const situation =
+            typeof post.situation === 'string' && post.situation.trim()
+                ? post.situation.trim()
+                : null;
+
+        let emotions = [];
+        if (Array.isArray(post.emotions) && post.emotions.length > 0) {
+            emotions = post.emotions
+                .join(',')
+                .split(',')
+                .map((e) => e.trim())
+                .filter(Boolean);
+        } else if (typeof post.emotion === 'string' && post.emotion) {
+            emotions = post.emotion
+                .split(',')
+                .map((e) => e.trim())
+                .filter(Boolean);
+        }
+
+        return { situation, emotions: emotions.slice(0, 3) };
+    }
+
+    /**
+     * Share image header: red SITUATION title + muted feelings subtitle (stacked, no dash).
+     */
+    _getShareImageTitleLayout(post, isDarkMode = false) {
+        const { situation, emotions } = this._getShareImageTagsFromPost(post);
+        const situationText = situation ? situation.toUpperCase() : '';
+        const feelingsText = emotions.join(', ');
+        const hasTitle = Boolean(situationText || feelingsText);
+        const mutedColor = isDarkMode ? '#A3A3A3' : '#5A5A5A';
+
+        if (!hasTitle) {
+            return {
+                hasTitle: false,
+                situationText: '',
+                feelingsText: '',
+                situationFontSize: 0,
+                feelingsFontSize: 0,
+                mutedColor,
+                blockHeight: 0,
+            };
+        }
+
+        const columnWidth = this._getShareImageColumnMetrics().columnWidth;
+        const marginBottom = 15;
+        const subtitleGap = 6;
+
+        const measureSituationWidth = (text, fontSize) =>
+            text.length * (fontSize * 0.54 + 1);
+
+        const measureFeelingsWidth = (text, fontSize) =>
+            text.length * (fontSize * 0.46 + 0.4);
+
+        const fitSingleLine = (text, measure, maxFs, minFs) => {
+            for (let fs = maxFs; fs >= minFs; fs -= fs >= 32 ? 2 : 1) {
+                if (measure(text, fs) <= columnWidth) return fs;
+            }
+            return minFs;
+        };
+
+        const truncateToWidth = (text, fontSize, measure) => {
+            let truncated = text;
+            while (truncated.length > 8 && measure(truncated, fontSize) > columnWidth) {
+                truncated = truncated.slice(0, -1).replace(/[,\s]+$/, '').trim();
+                if (truncated.length <= 8) break;
+                truncated += '\u2026';
+            }
+            return truncated;
+        };
+
+        let situationFontSize = 0;
+        let feelingsFontSize = 0;
+        let displayFeelings = feelingsText;
+
+        if (situationText) {
+            situationFontSize = fitSingleLine(situationText, measureSituationWidth, 42, 22);
+        }
+
+        if (feelingsText) {
+            feelingsFontSize = fitSingleLine(feelingsText, measureFeelingsWidth, 26, 14);
+            displayFeelings = truncateToWidth(feelingsText, feelingsFontSize, measureFeelingsWidth);
+        }
+
+        let blockHeight = marginBottom;
+        if (situationText) {
+            blockHeight += Math.ceil(situationFontSize * 1.1);
+        }
+        if (situationText && feelingsText) {
+            blockHeight += subtitleGap;
+        }
+        if (feelingsText) {
+            blockHeight += Math.ceil(feelingsFontSize * 1.15);
+        }
+
+        return {
+            hasTitle: true,
+            situationText,
+            feelingsText: displayFeelings,
+            situationFontSize,
+            feelingsFontSize,
+            mutedColor,
+            subtitleGap,
+            blockHeight,
+        };
+    }
+
+    /** Fit story text on 1080×1350 share canvas: scale font down, truncate if still too long. */
+    _getShareImageTextLayout(rawText, titleBlockHeight = 72) {
+        const text = (rawText || '').trim();
+        const canvasHeight = 1350;
+        const footerHeight = 148;
+        const verticalPadding = 160;
+        const tagsBlockHeight = titleBlockHeight || 0;
+        const contentWidth = this._getShareImageColumnMetrics().columnWidth;
+        const availableHeight = canvasHeight - verticalPadding - footerHeight - tagsBlockHeight;
+
+        const tiers = [
+            { maxLen: 320, fontSize: 42, lineHeight: 1.6 },
+            { maxLen: 700, fontSize: 36, lineHeight: 1.55 },
+            { maxLen: 1400, fontSize: 30, lineHeight: 1.5 },
+            { maxLen: 2800, fontSize: 24, lineHeight: 1.45 },
+            { maxLen: 5000, fontSize: 20, lineHeight: 1.4 },
+            // 5k+ posts: smaller type + tighter leading to fit ~4k chars on canvas
+            { maxLen: Infinity, fontSize: 16, lineHeight: 1.3 },
+        ];
+
+        const tier = tiers.find((t) => text.length <= t.maxLen) || tiers[tiers.length - 1];
+        const lineHeightPx = tier.fontSize * tier.lineHeight;
+        const charsPerLine = Math.max(18, Math.floor(contentWidth / (tier.fontSize * 0.48)));
+        const maxLines = Math.max(4, Math.floor(availableHeight / lineHeightPx));
+        const maxChars = charsPerLine * maxLines;
+
+        let displayText = text;
+        let truncated = false;
+        if (displayText.length > maxChars) {
+            displayText = displayText.slice(0, Math.max(0, maxChars - 1)).trim() + '\u2026';
+            truncated = true;
+        }
+
+        return {
+            displayText,
+            truncated,
+            fontSize: tier.fontSize,
+            lineHeight: tier.lineHeight,
+            isLong: text.length > 320,
+        };
+    }
+
+    _getShareImageColumnMetrics() {
+        const padX = 60;
+        const canvasWidth = 1080;
+        const innerWidth = canvasWidth - padX * 2;
+        const columnWidth = Math.floor(innerWidth * 0.8);
+        const columnOffset = Math.floor((innerWidth - columnWidth) / 2);
+        return { padX, innerWidth, columnWidth, columnOffset };
+    }
+
+    _getShareImageFooterLine(post) {
+        const storyNum = post.truthNumber ? `#${post.truthNumber}` : '';
+        const storyLabel = storyNum ? `Story ${storyNum}` : 'Story';
+        return `${storyLabel} | Let It Out - Tell Your Story | mypatternreset.com/letitout`;
+    }
+
+    /** Caption for iMessage, WhatsApp, etc. when sharing the story image. */
+    _getShareMessage() {
+        return {
+            text:
+                'Let It Out \u2014 Tell the story you\u2019ve never told.\n' +
+                'https://mypatternreset.com/letitout',
+        };
+    }
+
     async generateShareImage(post) {
         // --- Dark Mode Check ---
         const isDarkMode = document.body.classList.contains('dark-mode');
+        const titleLayout = this._getShareImageTitleLayout(post, isDarkMode);
+        const textLayout = this._getShareImageTextLayout(post.content, titleLayout.blockHeight);
+        const shareMessage = this._getShareMessage(post);
+        const column = this._getShareImageColumnMetrics();
 
         const shareContainer = document.createElement('div');
         shareContainer.id = 'share-image-container';
@@ -1096,7 +1416,7 @@ class WallFeed {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'space-between' // Positions header at top, footer at bottom
+            justifyContent: 'flex-start',
         });
 
         // --- Container for all content ---
@@ -1106,107 +1426,145 @@ class WallFeed {
             textAlign: 'left',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center', // Center content vertically
-            height: '100%'
+            alignItems: 'stretch',
+            justifyContent: textLayout.isLong ? 'flex-start' : 'center',
+            flex: '1',
+            minHeight: '0',
+            paddingBottom: '12px',
         });
 
-        // --- Main Content (centered) ---
-        const mainContent = document.createElement('div');
-        Object.assign(mainContent.style, {
-            width: '80%',
+        // --- Main column (tag, body, footer share one left edge) ---
+        const innerColumn = document.createElement('div');
+        Object.assign(innerColumn.style, {
+            width: `${column.columnWidth}px`,
+            maxWidth: `${column.columnWidth}px`,
+            marginLeft: `${column.columnOffset}px`,
+            marginRight: `${column.columnOffset}px`,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'flex-start'
+            flex: '1',
+            minHeight: '0',
+            boxSizing: 'border-box',
         });
 
-        // --- Emotion Tags with Anton Font ---
+        const mainContent = document.createElement('div');
+        Object.assign(mainContent.style, {
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: textLayout.isLong ? 'flex-start' : 'center',
+            alignItems: 'flex-start',
+            flex: '1',
+            minHeight: '0',
+            overflow: 'hidden',
+            boxSizing: 'border-box',
+        });
+
+        // --- Title block: situation (red) + feelings subtitle below ---
         const tagsContainer = document.createElement('div');
         Object.assign(tagsContainer.style, {
+            width: '100%',
+            marginBottom: '15px',
             display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'flex-start',
-            gap: '15px',
-            marginBottom: '15px' // Reduced from 30px
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            boxSizing: 'border-box',
         });
 
-        let allEmotions = [];
-        if (Array.isArray(post.emotions) && post.emotions.length > 0) {
-            allEmotions = post.emotions.join(',').split(',').map(e => e.trim()).filter(e => e);
-        } else if (typeof post.emotion === 'string' && post.emotion) { // Fallback for older data
-            allEmotions = post.emotion.split(',').map(e => e.trim()).filter(e => e);
-        }
-
-        // --- Show only 1 emotion tag ---
-        let tagsToDisplay = [];
-        if (allEmotions.length > 0) {
-            tagsToDisplay = [allEmotions[0]]; // Only show the first emotion tag
-        }
-        
-        if (tagsToDisplay.length > 0) {
-            tagsToDisplay.forEach(e => {
-                const tag = document.createElement('span');
-                tag.textContent = e;
-                Object.assign(tag.style, {
-                    fontFamily: '"Anton", sans-serif', // Anton font
-                    color: '#f10000', // Brand red for both light and dark modes
-                    fontSize: '42px', // Same size as body text
-                    fontWeight: '400', // Normal weight for Anton
-                    textTransform: 'uppercase', // Uppercase for Anton
-                    letterSpacing: '1px'
+        if (titleLayout.hasTitle) {
+            if (titleLayout.situationText) {
+                const situationEl = document.createElement('p');
+                situationEl.textContent = titleLayout.situationText;
+                Object.assign(situationEl.style, {
+                    fontFamily: '"Anton", sans-serif',
+                    color: '#f10000',
+                    fontSize: `${titleLayout.situationFontSize}px`,
+                    fontWeight: '400',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    lineHeight: '1.1',
+                    margin: '0',
+                    padding: '0',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    maxWidth: '100%',
+                    boxSizing: 'border-box',
                 });
-                tagsContainer.appendChild(tag);
-            });
+                tagsContainer.appendChild(situationEl);
+            }
+
+            if (titleLayout.feelingsText) {
+                const feelingsEl = document.createElement('p');
+                feelingsEl.textContent = titleLayout.feelingsText;
+                Object.assign(feelingsEl.style, {
+                    fontFamily: '"DM Sans", sans-serif',
+                    color: titleLayout.mutedColor,
+                    fontSize: `${titleLayout.feelingsFontSize}px`,
+                    fontWeight: '600',
+                    letterSpacing: '0.02em',
+                    lineHeight: '1.15',
+                    margin: titleLayout.situationText
+                        ? `${titleLayout.subtitleGap}px 0 0`
+                        : '0',
+                    padding: '0',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    maxWidth: '100%',
+                    boxSizing: 'border-box',
+                });
+                tagsContainer.appendChild(feelingsEl);
+            }
         }
         
         const content = document.createElement('p');
-        content.textContent = post.content;
+        content.textContent = textLayout.displayText;
         Object.assign(content.style, {
-            fontSize: '42px',
-            color: isDarkMode ? '#D4D4D4' : 'black', // THEME AWARE
-            lineHeight: '1.6',
+            fontSize: `${textLayout.fontSize}px`,
+            color: isDarkMode ? '#D4D4D4' : 'black',
+            lineHeight: String(textLayout.lineHeight),
             whiteSpace: 'pre-wrap',
             textAlign: 'left',
-            margin: '0'
+            margin: '0',
+            wordBreak: 'break-word',
         });
         
-        mainContent.append(tagsContainer, content);
-        
-        // --- Assemble and Render ---
-        contentWrapper.append(mainContent);
-        shareContainer.append(contentWrapper);
-
-        // --- Footer (Watermark) - Always at bottom ---
         const footer = document.createElement('div');
         Object.assign(footer.style, {
-            position: 'absolute',
-            bottom: '0',
-            left: '0',
-            right: '0',
-            textAlign: 'left',
             width: '100%',
-            height: '120px', // Fixed height for footer
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            paddingLeft: '150px', // Increased to move footer more to the right
-            backgroundColor: isDarkMode ? '#1e1e1e' : '#fffcf1' // Match container background
+            flexShrink: '0',
+            marginTop: 'auto',
+            paddingTop: '28px',
+            paddingLeft: '0',
+            marginBottom: '0',
+            textAlign: 'left',
+            boxSizing: 'border-box',
         });
 
         const watermark = document.createElement('p');
-        watermark.innerHTML = `Story #${post.truthNumber || ''} &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; LetItOut`;
+        watermark.textContent = this._getShareImageFooterLine(post);
         Object.assign(watermark.style, {
             fontFamily: '"DM Sans", sans-serif',
-            fontSize: '24px',
-            color: isDarkMode ? '#888' : '#ccc', // Lighter colors for both modes
+            fontSize: '20px',
+            color: isDarkMode ? '#888' : '#aaa',
             fontWeight: '500',
             margin: '0',
-            textAlign: 'left'
+            padding: '0',
+            textAlign: 'left',
+            lineHeight: '1.45',
+            boxSizing: 'border-box',
         });
-        
+
         footer.appendChild(watermark);
-        shareContainer.appendChild(footer);
+        if (titleLayout.hasTitle) {
+            mainContent.append(tagsContainer, content, footer);
+        } else {
+            mainContent.append(content, footer);
+        }
+        innerColumn.append(mainContent);
+        contentWrapper.append(innerColumn);
+        shareContainer.append(contentWrapper);
         document.body.appendChild(shareContainer);
 
         try {
@@ -1229,10 +1587,10 @@ class WallFeed {
                 const file = new File([blob], 'pattern-reset-post.png', { type: blob.type });
                 await navigator.share({
                     files: [file],
-                    title: 'Someone opened up on Let It Out. Read their journal.',
+                    text: shareMessage.text,
                 });
             } else {
-                this.showShareModal(dataUrl);
+                this.showShareModal(dataUrl, shareMessage);
             }
         } catch (error) {
             if (error.name === 'AbortError') {
@@ -1248,7 +1606,7 @@ class WallFeed {
         }
     }
 
-    showShareModal(dataUrl) {
+    showShareModal(dataUrl, shareMessage) {
         const modalOverlay = document.createElement('div');
         modalOverlay.className = 'share-modal-overlay';
         
@@ -1261,7 +1619,19 @@ class WallFeed {
         closeButton.onclick = () => document.body.removeChild(modalOverlay);
 
         const heading = document.createElement('h3');
-        heading.textContent = 'Share this Post';
+        heading.textContent = 'Share this story';
+
+        const caption = document.createElement('p');
+        caption.className = 'share-modal-caption';
+        caption.textContent = shareMessage?.text || '';
+        Object.assign(caption.style, {
+            fontSize: '0.95rem',
+            lineHeight: '1.5',
+            color: '#555',
+            whiteSpace: 'pre-wrap',
+            margin: '0 0 1rem',
+            textAlign: 'left',
+        });
 
         const image = document.createElement('img');
         image.src = dataUrl;
@@ -1275,7 +1645,7 @@ class WallFeed {
         downloadLink.className = 'share-modal-download-button';
         downloadLink.textContent = 'Download Image';
 
-        modalContent.append(closeButton, heading, image, downloadLink);
+        modalContent.append(closeButton, heading, caption, image, downloadLink);
         modalOverlay.appendChild(modalContent);
         document.body.appendChild(modalOverlay);
         
