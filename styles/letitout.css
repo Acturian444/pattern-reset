@@ -5221,6 +5221,8 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
     font-size: 0.82rem;
     font-weight: 500;
     color: #777;
+    margin: 0;
+    flex: 1 1 100%;
 }
 
 .support-link-btn:hover {

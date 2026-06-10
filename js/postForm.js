@@ -1,5 +1,5 @@
 /** Max characters for Let It Out post body (enforced on textarea; no visible counter). */
-const LETITOUT_MAX_CONTENT_LENGTH = 5000;
+const LETITOUT_MAX_CONTENT_LENGTH = 10000;
 
 // Post Form Handler
 class PostForm {
@@ -651,9 +651,10 @@ class PostForm {
             const ctaFooter = document.createElement('div');
             ctaFooter.className = 'letitout-cta-footer';
 
-            const storyNote = document.createElement('span');
+            const storyNote = document.createElement('p');
             storyNote.className = 'letitout-cta-footer-note';
-            storyNote.textContent = 'The stories we avoid often shape the lives we live.';
+            storyNote.textContent =
+                'Posts are anonymous on the public wall. No names or identifying details.';
             ctaFooter.appendChild(storyNote);
 
             const supportButton = document.createElement('button');
