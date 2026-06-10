@@ -1061,20 +1061,22 @@ class WallFeed {
         }
 
         this.feed.className = 'wall-feed';
+        const leavingSingleView = Boolean(this.feed.querySelector('.wall-single-card-nav'));
         const newIds = posts.map((p) => p.id);
         const idSignature = newIds.join('\n');
         const oldIds = this._wallPostIds;
         const hasCards = Boolean(this.feed.querySelector('.post-card'));
+        const canUseListOptimizations = hasCards && !leavingSingleView;
 
-        if (idSignature && idSignature === this._wallPostIdSignature && hasCards) {
+        if (canUseListOptimizations && idSignature && idSignature === this._wallPostIdSignature) {
             PostCard.patchWallCards(this.feed, posts);
             this.highlightPostFromUrl();
             return;
         }
 
-        const anchor = hasCards ? this._captureWallScrollAnchor() : null;
+        const anchor = canUseListOptimizations ? this._captureWallScrollAnchor() : null;
 
-        const prependCount = hasCards ? this._detectPrependedPostCount(oldIds, newIds) : 0;
+        const prependCount = canUseListOptimizations ? this._detectPrependedPostCount(oldIds, newIds) : 0;
         if (prependCount > 0) {
             const addedPosts = posts.slice(0, prependCount);
             const fragment = document.createDocumentFragment();
@@ -1092,7 +1094,7 @@ class WallFeed {
             return;
         }
 
-        const appendCount = hasCards ? this._detectAppendedPostCount(oldIds, newIds) : 0;
+        const appendCount = canUseListOptimizations ? this._detectAppendedPostCount(oldIds, newIds) : 0;
         if (appendCount > 0) {
             posts.slice(oldIds.length).forEach((post) => {
                 this.feed.appendChild(PostCard.create(post));
@@ -1117,7 +1119,16 @@ class WallFeed {
         }
 
         requestAnimationFrame(() => {
-            this._restoreWallScrollAnchor(anchor);
+            if (leavingSingleView && this.currentPostId) {
+                const card = this.feed.querySelector(
+                    `.post-card[data-post-id="${this.currentPostId}"]`
+                );
+                if (card) {
+                    card.scrollIntoView({ behavior: 'auto', block: 'center' });
+                }
+            } else {
+                this._restoreWallScrollAnchor(anchor);
+            }
             this.highlightPostFromUrl();
         });
     }
