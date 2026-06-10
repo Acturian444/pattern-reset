@@ -1383,11 +1383,16 @@ class WallFeed {
     }
 
     /** Caption for iMessage, WhatsApp, etc. when sharing the story image. */
-    _getShareMessage() {
+    _getShareMessage(post) {
+        const baseUrl = 'https://mypatternreset.com/letitout';
+        const wallUrl = post?.id
+            ? `${baseUrl}?post=${encodeURIComponent(post.id)}`
+            : baseUrl;
         return {
             text:
                 'Let It Out \u2014 Tell the story you\u2019ve never told.\n' +
-                'https://mypatternreset.com/letitout',
+                'Read this on the wall:\n' +
+                wallUrl,
         };
     }
 
