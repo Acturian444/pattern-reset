@@ -1,5 +1,5 @@
 /** Max characters for Let It Out post body (enforced on textarea; no visible counter). */
-const LETITOUT_MAX_CONTENT_LENGTH = 5000;
+const LETITOUT_MAX_CONTENT_LENGTH = 10000;
 
 // Post Form Handler
 class PostForm {
