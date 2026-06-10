@@ -13,6 +13,11 @@ class WallFeed {
         this.filteredPosts = [];
         this.viewMode = localStorage.getItem('wallViewMode') || 'list';
         this.currentIndex = 0;
+        /** Stable anchor in single-card view when the feed re-sorts (e.g. new post). */
+        this.currentPostId = null;
+        /** Last rendered post-id order for list view; skip DOM rebuild when unchanged. */
+        this._wallPostIdSignature = '';
+        this._wallPostIds = [];
         this.container = null;
         this.initializeEventListeners();
     }
@@ -334,6 +339,10 @@ class WallFeed {
             if (dist < bestDist) { bestDist = dist; bestIndex = i; }
         });
         this.currentIndex = Math.min(bestIndex, this.filteredPosts.length - 1);
+        const card = cards[bestIndex];
+        if (card?.dataset?.postId) {
+            this.currentPostId = card.dataset.postId;
+        }
     }
 
     updateViewToggleUI() {
@@ -377,15 +386,26 @@ class WallFeed {
     goToPrevCard() {
         if (this.currentIndex > 0) {
             this.currentIndex--;
-            this.renderSingleCardView();
+            this.currentPostId = this.filteredPosts[this.currentIndex]?.id ?? null;
+            this.renderSingleCardView(true);
         }
     }
 
     goToNextCard() {
         if (this.currentIndex < this.filteredPosts.length - 1) {
             this.currentIndex++;
-            this.renderSingleCardView();
+            this.currentPostId = this.filteredPosts[this.currentIndex]?.id ?? null;
+            this.renderSingleCardView(true);
         }
+    }
+
+    updateSingleCardNavUI(posts) {
+        const backBtn = this.feed.querySelector('.wall-single-nav-back');
+        const nextBtn = this.feed.querySelector('.wall-single-nav-next');
+        const progress = this.feed.querySelector('.wall-single-card-progress');
+        if (backBtn) backBtn.disabled = this.currentIndex === 0;
+        if (nextBtn) nextBtn.disabled = this.currentIndex === posts.length - 1;
+        if (progress) progress.textContent = `${this.currentIndex + 1} of ${posts.length}`;
     }
 
     createAboutFiltersSection() {
@@ -984,34 +1004,155 @@ class WallFeed {
         if (writeTab) writeTab.click();
     }
 
-    renderPosts(posts) {
-        this.feed.innerHTML = '';
-        this.feed.className = 'wall-feed';
-        if (this.viewMode === 'single') {
-            this.feed.classList.add('wall-feed-single');
-            this.renderSingleCardView();
-        } else {
-        if (posts.length > 0) {
-            posts.forEach(post => {
-                const card = PostCard.create(post);
-                this.feed.appendChild(card);
-            });
-        } else {
-                this.feed.appendChild(this.buildWallEmptyContent());
+    /** Keep the story you're reading visually fixed when the feed updates above it. */
+    _captureWallScrollAnchor() {
+        const expanded = PostCard.getExpandedPostIds();
+        for (const id of expanded) {
+            const card = this.feed.querySelector(`.post-card[data-post-id="${id}"]`);
+            if (card) {
+                return { postId: id, top: card.getBoundingClientRect().top };
+            }
         }
-        this.highlightPostFromUrl();
+
+        let best = null;
+        let bestDist = Infinity;
+        const mid = window.innerHeight * 0.4;
+        this.feed.querySelectorAll('.post-card').forEach((card) => {
+            const rect = card.getBoundingClientRect();
+            if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+            const dist = Math.abs(rect.top - mid);
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = { postId: card.dataset.postId, top: rect.top };
+            }
+        });
+        return best;
+    }
+
+    _restoreWallScrollAnchor(anchor) {
+        if (!anchor?.postId) return;
+        const card = this.feed.querySelector(`.post-card[data-post-id="${anchor.postId}"]`);
+        if (!card) return;
+        const delta = card.getBoundingClientRect().top - anchor.top;
+        if (Math.abs(delta) > 1) {
+            window.scrollBy(0, delta);
         }
     }
 
-    renderSingleCardView() {
+    _detectPrependedPostCount(oldIds, newIds) {
+        if (!oldIds.length || newIds.length <= oldIds.length) return 0;
+        const tail = newIds.slice(newIds.length - oldIds.length);
+        if (!tail.every((id, i) => id === oldIds[i])) return 0;
+        return newIds.length - oldIds.length;
+    }
+
+    _detectAppendedPostCount(oldIds, newIds) {
+        if (!oldIds.length || newIds.length <= oldIds.length) return 0;
+        const head = newIds.slice(0, oldIds.length);
+        if (!head.every((id, i) => id === oldIds[i])) return 0;
+        return newIds.length - oldIds.length;
+    }
+
+    renderPosts(posts) {
+        if (this.viewMode === 'single') {
+            this.feed.className = 'wall-feed wall-feed-single';
+            this.renderSingleCardView();
+            return;
+        }
+
+        this.feed.className = 'wall-feed';
+        const newIds = posts.map((p) => p.id);
+        const idSignature = newIds.join('\n');
+        const oldIds = this._wallPostIds;
+        const hasCards = Boolean(this.feed.querySelector('.post-card'));
+
+        if (idSignature && idSignature === this._wallPostIdSignature && hasCards) {
+            PostCard.patchWallCards(this.feed, posts);
+            this.highlightPostFromUrl();
+            return;
+        }
+
+        const anchor = hasCards ? this._captureWallScrollAnchor() : null;
+
+        const prependCount = hasCards ? this._detectPrependedPostCount(oldIds, newIds) : 0;
+        if (prependCount > 0) {
+            const addedPosts = posts.slice(0, prependCount);
+            const fragment = document.createDocumentFragment();
+            addedPosts.forEach((post) => {
+                fragment.appendChild(PostCard.create(post));
+            });
+            this.feed.insertBefore(fragment, this.feed.firstChild);
+            this._wallPostIds = newIds;
+            this._wallPostIdSignature = idSignature;
+            PostCard.patchWallCards(this.feed, posts);
+            requestAnimationFrame(() => {
+                this._restoreWallScrollAnchor(anchor);
+                this.highlightPostFromUrl();
+            });
+            return;
+        }
+
+        const appendCount = hasCards ? this._detectAppendedPostCount(oldIds, newIds) : 0;
+        if (appendCount > 0) {
+            posts.slice(oldIds.length).forEach((post) => {
+                this.feed.appendChild(PostCard.create(post));
+            });
+            this._wallPostIds = newIds;
+            this._wallPostIdSignature = idSignature;
+            PostCard.patchWallCards(this.feed, posts);
+            this.highlightPostFromUrl();
+            return;
+        }
+
+        this._wallPostIdSignature = idSignature;
+        this._wallPostIds = newIds;
         this.feed.innerHTML = '';
+
+        if (posts.length > 0) {
+            posts.forEach((post) => {
+                this.feed.appendChild(PostCard.create(post));
+            });
+        } else {
+            this.feed.appendChild(this.buildWallEmptyContent());
+        }
+
+        requestAnimationFrame(() => {
+            this._restoreWallScrollAnchor(anchor);
+            this.highlightPostFromUrl();
+        });
+    }
+
+    renderSingleCardView(forceRebuild = false) {
         const posts = this.filteredPosts;
         if (posts.length === 0) {
+            this.feed.innerHTML = '';
+            this.currentPostId = null;
             this.feed.appendChild(this.buildWallEmptyContent());
             return;
         }
+
+        if (this.currentPostId) {
+            const idxById = posts.findIndex((p) => p.id === this.currentPostId);
+            if (idxById >= 0) this.currentIndex = idxById;
+        }
         this.currentIndex = Math.min(this.currentIndex, posts.length - 1);
         const post = posts[this.currentIndex];
+        this.currentPostId = post?.id ?? null;
+
+        const existingCard = this.feed.querySelector('.post-card[data-post-id]');
+        if (
+            !forceRebuild &&
+            existingCard &&
+            post.id &&
+            existingCard.dataset.postId === post.id &&
+            this.feed.querySelector('.wall-single-card-nav')
+        ) {
+            PostCard.patchWallCards(this.feed, [post]);
+            this.updateSingleCardNavUI(posts);
+            return;
+        }
+
+        this.feed.innerHTML = '';
         const card = PostCard.create(post);
         card.classList.add('post-card-single');
 
