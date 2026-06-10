@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "build": "echo 'No build step required'",
-    "build:og-image": "node scripts/build-og-image.js"
+    "build:og-image": "node scripts/build-og-image.js",
+    "build:let-it-out-og-image": "node scripts/build-let-it-out-og-image.js"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
