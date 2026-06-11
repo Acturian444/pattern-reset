@@ -21,6 +21,12 @@ class WallFeed {
         this.currentIndex = 0;
         /** Stable anchor in single-card view when the feed re-sorts (e.g. new post). */
         this.currentPostId = null;
+        try {
+            const savedPostId = localStorage.getItem('wallLastPostId');
+            if (savedPostId) this.currentPostId = savedPostId;
+        } catch (_) {
+            /* ignore */
+        }
         /** Last rendered post-id order for list view; skip DOM rebuild when unchanged. */
         this._wallPostIdSignature = '';
         this._wallPostIds = [];
@@ -43,6 +49,74 @@ class WallFeed {
             return this.totalStoryCount;
         }
         return posts.length;
+    }
+
+    /**
+     * Nav label under single-card view.
+     * Unfiltered: Story # (truthNumber) of catalog total — matches the card header.
+     * Filtered/search: position in results (e.g. 3 of 12).
+     */
+    _getSingleCardProgressLabel(posts = this.filteredPosts) {
+        const total = this._getSingleCardProgressTotal(posts);
+        const post = posts[this.currentIndex];
+        if (!post) return `0 of ${total}`;
+        if (!this._hasActiveWallFilters() && post.truthNumber) {
+            return `${post.truthNumber} of ${total}`;
+        }
+        return `${this.currentIndex + 1} of ${total}`;
+    }
+
+    _persistWallReadingPosition() {
+        if (!this.currentPostId) return;
+        try {
+            localStorage.setItem('wallLastPostId', this.currentPostId);
+        } catch (_) {
+            /* ignore */
+        }
+    }
+
+    /** Left/right follow Story # when browsing full catalog (not Most Felt / filtered). */
+    _useChronologicalStoryNav() {
+        return !this._hasActiveWallFilters() && this.currentSort !== 'mostFelt';
+    }
+
+    _canGoOlderStory() {
+        if (this._useChronologicalStoryNav() && this.currentSort === 'newest') {
+            return this.currentIndex < this.filteredPosts.length - 1;
+        }
+        return this.currentIndex > 0;
+    }
+
+    _canGoNewerStory() {
+        if (this._useChronologicalStoryNav() && this.currentSort === 'newest') {
+            return this.currentIndex > 0;
+        }
+        return this.currentIndex < this.filteredPosts.length - 1;
+    }
+
+    _getSingleCardNavLabels() {
+        if (this._useChronologicalStoryNav()) {
+            return { older: 'Older story', newer: 'Newer story' };
+        }
+        return { older: 'Previous story', newer: 'Next story' };
+    }
+
+    goToOlderStory() {
+        if (!this._canGoOlderStory()) return;
+        if (this._useChronologicalStoryNav() && this.currentSort === 'newest') {
+            this.goToNextCard();
+        } else {
+            this.goToPrevCard();
+        }
+    }
+
+    goToNewerStory() {
+        if (!this._canGoNewerStory()) return;
+        if (this._useChronologicalStoryNav() && this.currentSort === 'newest') {
+            this.goToPrevCard();
+        } else {
+            this.goToNextCard();
+        }
     }
 
     initializeEventListeners() {
@@ -351,20 +425,23 @@ class WallFeed {
     captureViewportCardIndex() {
         const cards = this.feed.querySelectorAll('.post-card');
         if (cards.length === 0) return;
-        const feed = this.feed;
-        const scrollTop = feed.scrollTop;
-        const viewportCenter = scrollTop + feed.clientHeight / 2;
+        const viewportMid = window.innerHeight * 0.4;
         let bestIndex = 0;
         let bestDist = Infinity;
         cards.forEach((card, i) => {
-            const cardCenter = card.offsetTop + card.offsetHeight / 2;
-            const dist = Math.abs(cardCenter - viewportCenter);
-            if (dist < bestDist) { bestDist = dist; bestIndex = i; }
+            const rect = card.getBoundingClientRect();
+            const cardMid = rect.top + rect.height / 2;
+            const dist = Math.abs(cardMid - viewportMid);
+            if (dist < bestDist) {
+                bestDist = dist;
+                bestIndex = i;
+            }
         });
         this.currentIndex = Math.min(bestIndex, this.filteredPosts.length - 1);
         const card = cards[bestIndex];
         if (card?.dataset?.postId) {
             this.currentPostId = card.dataset.postId;
+            this._persistWallReadingPosition();
         }
     }
 
@@ -390,10 +467,10 @@ class WallFeed {
             if (this.viewMode !== 'single') return;
             if (e.key === 'ArrowLeft') {
                 e.preventDefault();
-                this.goToPrevCard();
+                this.goToOlderStory();
             } else if (e.key === 'ArrowRight') {
                 e.preventDefault();
-                this.goToNextCard();
+                this.goToNewerStory();
             }
         };
         document.addEventListener('keydown', this._singleCardKeyHandler);
@@ -410,6 +487,7 @@ class WallFeed {
         if (this.currentIndex > 0) {
             this.currentIndex--;
             this.currentPostId = this.filteredPosts[this.currentIndex]?.id ?? null;
+            this._persistWallReadingPosition();
             this.renderSingleCardView(true);
         }
     }
@@ -418,6 +496,7 @@ class WallFeed {
         if (this.currentIndex < this.filteredPosts.length - 1) {
             this.currentIndex++;
             this.currentPostId = this.filteredPosts[this.currentIndex]?.id ?? null;
+            this._persistWallReadingPosition();
             this.renderSingleCardView(true);
         }
     }
@@ -426,10 +505,17 @@ class WallFeed {
         const backBtn = this.feed.querySelector('.wall-single-nav-back');
         const nextBtn = this.feed.querySelector('.wall-single-nav-next');
         const progress = this.feed.querySelector('.wall-single-card-progress');
-        if (backBtn) backBtn.disabled = this.currentIndex === 0;
-        if (nextBtn) nextBtn.disabled = this.currentIndex === posts.length - 1;
+        const navLabels = this._getSingleCardNavLabels();
+        if (backBtn) {
+            backBtn.disabled = !this._canGoOlderStory();
+            backBtn.setAttribute('aria-label', navLabels.older);
+        }
+        if (nextBtn) {
+            nextBtn.disabled = !this._canGoNewerStory();
+            nextBtn.setAttribute('aria-label', navLabels.newer);
+        }
         if (progress) {
-            progress.textContent = `${this.currentIndex + 1} of ${this._getSingleCardProgressTotal(posts)}`;
+            progress.textContent = this._getSingleCardProgressLabel(posts);
         }
     }
 
@@ -1230,6 +1316,7 @@ class WallFeed {
         this.currentIndex = Math.min(this.currentIndex, posts.length - 1);
         const post = posts[this.currentIndex];
         this.currentPostId = post?.id ?? null;
+        this._persistWallReadingPosition();
 
         const existingCard = this.feed.querySelector('.post-card[data-post-id]');
         if (
@@ -1258,25 +1345,27 @@ class WallFeed {
         const navRow = document.createElement('div');
         navRow.className = 'wall-single-card-nav';
 
+        const navLabels = this._getSingleCardNavLabels();
+
         const backBtn = document.createElement('button');
         backBtn.className = 'wall-single-nav-btn wall-single-nav-back';
         backBtn.type = 'button';
-        backBtn.setAttribute('aria-label', 'Previous post');
+        backBtn.setAttribute('aria-label', navLabels.older);
         backBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
-        backBtn.onclick = () => this.goToPrevCard();
-        backBtn.disabled = this.currentIndex === 0;
+        backBtn.onclick = () => this.goToOlderStory();
+        backBtn.disabled = !this._canGoOlderStory();
 
         const progress = document.createElement('div');
         progress.className = 'wall-single-card-progress';
-        progress.textContent = `${this.currentIndex + 1} of ${this._getSingleCardProgressTotal(posts)}`;
+        progress.textContent = this._getSingleCardProgressLabel(posts);
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'wall-single-nav-btn wall-single-nav-next';
         nextBtn.type = 'button';
-        nextBtn.setAttribute('aria-label', 'Next post');
+        nextBtn.setAttribute('aria-label', navLabels.newer);
         nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
-        nextBtn.onclick = () => this.goToNextCard();
-        nextBtn.disabled = this.currentIndex === posts.length - 1;
+        nextBtn.onclick = () => this.goToNewerStory();
+        nextBtn.disabled = !this._canGoNewerStory();
 
         navRow.appendChild(backBtn);
         navRow.appendChild(progress);

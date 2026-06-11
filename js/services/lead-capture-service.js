@@ -10,6 +10,7 @@
     const IFRAME_NAME = 'lead-capture-iframe';
 
     const CONNECT_ONE_ON_ONE_MESSAGE = 'Let It Out — Connect with me 1 on 1';
+    const PERSPECTIVE_BANNER_MESSAGE = 'Let It Out banner — want perspective';
 
     function ensureHiddenIframe() {
         let iframe = document.getElementById('lead-capture-iframe');
@@ -120,9 +121,19 @@
         });
     }
 
+    async function submitPerspectiveBanner(email) {
+        return submitBioLead({
+            email,
+            message: PERSPECTIVE_BANNER_MESSAGE,
+            source: 'letitout',
+        });
+    }
+
     g.LeadCaptureService = {
         submitBioLead,
         submitConnectOneOnOne,
+        submitPerspectiveBanner,
         CONNECT_ONE_ON_ONE_MESSAGE,
+        PERSPECTIVE_BANNER_MESSAGE,
     };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

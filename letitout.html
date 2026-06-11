@@ -99,9 +99,9 @@
     <!-- Styles -->
     <link rel="stylesheet" href="style.css?v=16">
     <link rel="stylesheet" href="styles/letitout-theme.css?v=6">
-    <link rel="stylesheet" href="styles/letitout.css?v=72">
+    <link rel="stylesheet" href="styles/letitout.css?v=81">
     <link rel="stylesheet" href="styles/letitout-mobile.css?v=2">
-    <link rel="stylesheet" href="styles/letitout-dark.css?v=46">
+    <link rel="stylesheet" href="styles/letitout-dark.css?v=53">
     <link rel="stylesheet" href="styles/letitout-location-fix.css?v=9">
     <link rel="stylesheet" href="styles/letitout-button-fix.css?v=1">
     <style>
@@ -110,7 +110,7 @@
         flex-direction: column;
         align-items: center;
         margin-bottom: 2rem;
-        margin-top: 3.5rem;
+        margin-top: 2.25rem;
     }
     .letitout-title {
         font-family: 'Anton', sans-serif;
@@ -149,7 +149,7 @@
     }
     @media (max-width: 600px) {
         .letitout-title-bar {
-            margin-top: 1.35rem;
+            margin-top: 1rem;
             margin-bottom: 1.5rem;
         }
         .letitout-title {
@@ -272,6 +272,13 @@
         </button>
     </header>
 
+    <aside class="letitout-perspective-banner" aria-label="Perspective offer">
+        <div class="letitout-perspective-banner__inner">
+            <p class="letitout-perspective-banner__text">Looking for perspective?</p>
+            <button type="button" class="letitout-perspective-banner__cta" id="letitout-perspective-banner-btn" aria-label="Get my take by email">Get My Take</button>
+        </div>
+    </aside>
+
     <main id="letitout-main">
         <button type="button" id="letitout-about-btn" class="letitout-about-btn" aria-label="What is Let It Out?" aria-haspopup="dialog" aria-controls="letitout-about-modal" aria-expanded="false">
             <span class="letitout-about-btn-icon" aria-hidden="true">?</span>
@@ -368,14 +375,15 @@
     <script src="js/darkMode.js?v=2"></script>
     <script src="js/firebase.js?v=3"></script>
     <!-- <script src="js/firebase-debug.js?v=1"></script> -->
-    <script src="js/services/lead-capture-service.js?v=1"></script>
+    <script src="js/services/lead-capture-service.js?v=2"></script>
+    <script src="js/letitout-perspective-banner.js?v=1"></script>
     <script src="js/services/post-service.js?v=6"></script>
     <script src="js/components/post-card.js?v=9"></script>
     <script src="js/premium-packs.js?v=1"></script>
     <script src="js/letitout-emotions.js?v=4"></script>
     <script src="js/letitout-situations.js?v=7"></script>
-    <script src="js/postForm.js?v=53"></script>
-    <script src="js/wallFeed.js?v=47"></script>
+    <script src="js/postForm.js?v=54"></script>
+    <script src="js/wallFeed.js?v=49"></script>
     
     <!-- Test Script -->
     <!-- <script src="js/test-setup.js"></script> -->

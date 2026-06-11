@@ -110,6 +110,95 @@ header .container {
 }
 
 /* Let It Out Main Styles */
+/* Slim perspective banner — below header, above main */
+.letitout-perspective-banner {
+    width: 100%;
+    background: rgba(241, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(241, 0, 0, 0.1);
+    flex-shrink: 0;
+    cursor: default;
+}
+
+.letitout-perspective-banner__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.38rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 0.75rem;
+    flex-wrap: nowrap;
+}
+
+.letitout-perspective-banner__text {
+    margin: 0;
+    font-family: var(--letitout-font-family, 'DM Sans', sans-serif);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #2a2a2a;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    cursor: default;
+    user-select: none;
+}
+
+.letitout-perspective-banner__cta {
+    flex-shrink: 0;
+    font-family: var(--letitout-font-family, 'DM Sans', sans-serif);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: #2a2a2a;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 6px;
+    padding: 0.34rem 0.8rem;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    box-shadow: none;
+}
+
+.letitout-perspective-banner__cta:hover,
+.letitout-perspective-banner__cta:focus {
+    background: rgba(241, 0, 0, 0.05);
+    border-color: rgba(241, 0, 0, 0.35);
+    color: #f10000;
+    outline: none;
+}
+
+.letitout-perspective-banner__cta:focus-visible {
+    outline: 2px solid #f10000;
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .letitout-perspective-banner__inner {
+        padding: 0.35rem 0.65rem;
+        gap: 0.45rem 0.5rem;
+        justify-content: center;
+    }
+
+    .letitout-perspective-banner__text {
+        font-size: 0.75rem;
+        white-space: nowrap;
+        flex: 0 1 auto;
+    }
+
+    .letitout-perspective-banner__cta {
+        font-size: 0.6875rem;
+        padding: 0.3rem 0.6rem;
+        min-height: 32px;
+    }
+}
+
+@media (min-width: 601px) {
+    body.page-letitout .theme-toggle-btn {
+        top: 2.25rem;
+    }
+}
+
 #letitout-main {
     padding: var(--letitout-spacing-lg);
     max-width: 1200px;
@@ -1102,12 +1191,12 @@ header .container {
 .letitout-emotion-modal-content {
     padding: 20px;
     overflow-y: auto;
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     gap: 18px;
-    max-height: 60vh;
-    min-height: 300px;
+    -webkit-overflow-scrolling: touch;
 }
 
 .emotion-category {
@@ -1178,9 +1267,12 @@ header .container {
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 1rem;
-    padding-left: 20px;
-    padding-right: 20px;
+    flex-shrink: 0;
+    margin-top: 0;
+    padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid #eee;
+    background: #fff;
+    box-sizing: border-box;
 }
 
 .letitout-emotion-modal-btn {
@@ -1235,6 +1327,95 @@ header .container {
     border-color: #f5f5f5;
     color: #222;
     outline: none;
+}
+
+/* Write tab — feeling / situation pickers: use more of the phone screen */
+@media (max-width: 767px) {
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay),
+    .letitout-situation-modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal,
+    .letitout-situation-modal-overlay .letitout-situation-modal {
+        height: min(98dvh, 98vh);
+        max-height: min(98dvh, 98vh);
+        border-radius: 12px 12px 0 0;
+    }
+
+    .letitout-situation-modal-overlay .letitout-situation-modal {
+        padding-top: 0;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-header,
+    .letitout-situation-modal-overlay .letitout-situation-modal-header {
+        padding: 10px 12px;
+        flex-shrink: 0;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .wall-filter-modal-header-text,
+    .letitout-situation-modal-overlay .wall-filter-modal-header-text {
+        gap: 0;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .wall-filter-modal-hint,
+    .letitout-situation-modal-overlay .wall-filter-modal-hint {
+        display: none;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-title,
+    .letitout-situation-modal-overlay .letitout-situation-modal-title {
+        font-size: 0.95rem;
+        line-height: 1.2;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-close,
+    .letitout-situation-modal-overlay .letitout-situation-modal-close {
+        width: 2rem !important;
+        height: 2rem !important;
+        font-size: 1.35rem !important;
+        padding: 0 !important;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-content,
+    .letitout-situation-modal-overlay .letitout-situation-modal-content {
+        padding: 6px 10px 4px;
+        gap: 6px;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .emotion-search-input {
+        margin-bottom: 4px !important;
+        padding: 8px 10px;
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .emotion-subtag,
+    .letitout-situation-modal-overlay .situation-option-btn {
+        padding: 5px 9px;
+        font-size: 12px;
+        line-height: 1.2;
+        border-radius: 14px;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .emotion-subtags.emotion-subtags--flat,
+    .letitout-situation-modal-overlay .situation-options-grid {
+        gap: 5px 6px;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-footer,
+    .letitout-situation-modal-overlay .letitout-situation-modal-footer {
+        padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+        gap: 6px;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-btn,
+    .letitout-situation-modal-overlay .letitout-situation-modal-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+        min-height: 40px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -1784,12 +1965,14 @@ header .container {
 .letitout-situation-modal-content {
     padding: 20px;
     overflow-y: auto;
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     gap: 8px;
     align-content: flex-start;
+    -webkit-overflow-scrolling: touch;
 }
 
 .situation-options-grid {
@@ -1823,11 +2006,14 @@ header .container {
     border-color: #f10000;
 }
 .letitout-situation-modal-footer {
-    padding: 16px 20px;
+    flex-shrink: 0;
+    padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px));
     border-top: 1px solid #eee;
     display: flex;
     justify-content: flex-end;
     gap: 12px;
+    background: #fff;
+    box-sizing: border-box;
 }
 .letitout-situation-modal-btn {
     padding: 10px 20px;
@@ -6395,6 +6581,12 @@ select {
 
 /* —— Let It Out “Why this exists” modal —— */
 /* About (?) button: mirrors .theme-toggle-btn layout — left = theme, right = about */
+@media (min-width: 601px) {
+    body.page-letitout .letitout-about-btn {
+        top: 2.25rem;
+    }
+}
+
 .letitout-about-btn {
     position: absolute;
     top: 3.5rem;
@@ -7248,7 +7440,7 @@ select {
 }
 
 .letitout-intro-copy--brand {
-    color: #f10000;
+    color: var(--letitout-primary, #f10000);
     font-weight: 600;
     margin-bottom: 0;
 }
@@ -7294,7 +7486,7 @@ select {
 }
 
 .letitout-intro-copy.letitout-intro-copy--brand {
-    color: #f10000;
+    color: var(--letitout-primary, #f10000);
     font-weight: 600;
 }
 
@@ -7307,7 +7499,7 @@ select {
     font-size: 1.85rem;
     font-weight: 400;
     letter-spacing: 0.04em;
-    color: #f10000;
+    color: var(--letitout-primary, #f10000);
     margin: 0.35rem 0 0.75rem;
     line-height: 1.15;
     text-transform: none;

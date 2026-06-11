@@ -39,6 +39,29 @@ body.page-letitout.dark-mode footer.pr-footer-std a:focus {
 body.page-letitout.dark-mode footer.pr-footer-std .pr-footer-dot {
     opacity: 0.3 !important;
 }
+
+body.page-letitout.dark-mode .letitout-perspective-banner {
+    background: rgba(241, 0, 0, 0.1);
+    border-bottom-color: rgba(241, 0, 0, 0.22);
+}
+
+body.page-letitout.dark-mode .letitout-perspective-banner__text {
+    color: rgba(255, 252, 241, 0.88);
+}
+
+body.page-letitout.dark-mode .letitout-perspective-banner__cta {
+    background: transparent;
+    color: rgba(255, 252, 241, 0.9);
+    border-color: rgba(255, 252, 241, 0.28);
+    box-shadow: none;
+}
+
+body.page-letitout.dark-mode .letitout-perspective-banner__cta:hover,
+body.page-letitout.dark-mode .letitout-perspective-banner__cta:focus {
+    background: rgba(255, 252, 241, 0.08);
+    border-color: rgba(255, 252, 241, 0.45);
+    color: #fffcf1;
+}
 body.page-letitout.dark-mode .copyright {
     border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
@@ -899,6 +922,7 @@ DARK MODE - FIXES & ADDITIONS
 .dark-mode .letitout-situation-modal-footer,
 .dark-mode .letitout-city-modal-footer {
     border-top-color: #333;
+    background: var(--letitout-modal-panel-bg, #121212);
 }
 .dark-mode .letitout-situation-modal-btn.cancel {
     background-color: #3a3a3a;
@@ -1037,7 +1061,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .letitout-intro-title {
-    color: #ff6b6b;
+    color: #f10000;
 }
 
 .dark-mode .letitout-intro-lede {
@@ -1066,7 +1090,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .letitout-intro-copy.letitout-intro-copy--brand {
-    color: #ff6b6b;
+    color: #f10000;
 }
 
 .dark-mode .letitout-intro-copy--insight {
