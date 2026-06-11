@@ -110,6 +110,95 @@ header .container {
 }
 
 /* Let It Out Main Styles */
+/* Slim perspective banner — below header, above main */
+.letitout-perspective-banner {
+    width: 100%;
+    background: rgba(241, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(241, 0, 0, 0.1);
+    flex-shrink: 0;
+    cursor: default;
+}
+
+.letitout-perspective-banner__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.38rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 0.75rem;
+    flex-wrap: nowrap;
+}
+
+.letitout-perspective-banner__text {
+    margin: 0;
+    font-family: var(--letitout-font-family, 'DM Sans', sans-serif);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: #2a2a2a;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    cursor: default;
+    user-select: none;
+}
+
+.letitout-perspective-banner__cta {
+    flex-shrink: 0;
+    font-family: var(--letitout-font-family, 'DM Sans', sans-serif);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: #2a2a2a;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 6px;
+    padding: 0.34rem 0.8rem;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    box-shadow: none;
+}
+
+.letitout-perspective-banner__cta:hover,
+.letitout-perspective-banner__cta:focus {
+    background: rgba(241, 0, 0, 0.05);
+    border-color: rgba(241, 0, 0, 0.35);
+    color: #f10000;
+    outline: none;
+}
+
+.letitout-perspective-banner__cta:focus-visible {
+    outline: 2px solid #f10000;
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .letitout-perspective-banner__inner {
+        padding: 0.35rem 0.65rem;
+        gap: 0.45rem 0.5rem;
+        justify-content: center;
+    }
+
+    .letitout-perspective-banner__text {
+        font-size: 0.75rem;
+        white-space: nowrap;
+        flex: 0 1 auto;
+    }
+
+    .letitout-perspective-banner__cta {
+        font-size: 0.6875rem;
+        padding: 0.3rem 0.6rem;
+        min-height: 32px;
+    }
+}
+
+@media (min-width: 601px) {
+    body.page-letitout .theme-toggle-btn {
+        top: 2.25rem;
+    }
+}
+
 #letitout-main {
     padding: var(--letitout-spacing-lg);
     max-width: 1200px;
@@ -6395,6 +6484,12 @@ select {
 
 /* —— Let It Out “Why this exists” modal —— */
 /* About (?) button: mirrors .theme-toggle-btn layout — left = theme, right = about */
+@media (min-width: 601px) {
+    body.page-letitout .letitout-about-btn {
+        top: 2.25rem;
+    }
+}
+
 .letitout-about-btn {
     position: absolute;
     top: 3.5rem;
