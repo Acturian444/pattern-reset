@@ -4,7 +4,13 @@ class WallFeed {
         this.feed = document.createElement('div');
         this.feed.className = 'wall-feed';
         this.unsubscribe = null;
-        this.currentSort = 'newest';
+        const savedSort = localStorage.getItem('wallSort');
+        this.currentSort =
+            savedSort === 'oldest' || savedSort === 'mostFelt' || savedSort === 'newest'
+                ? savedSort
+                : 'newest';
+        /** When true, next render scrolls wall to top (user changed filter/search/sort). */
+        this._scrollWallToTopAfterRender = false;
         /** @type {{ type: 'emotion'|'situation', label: string }[]} Up to 3; any mix; posts match if ANY tag matches */
         this.wallFilterTags = [];
         this._showingRow = null;
@@ -485,7 +491,7 @@ class WallFeed {
             this.wallFilterTags = this.wallFilterTags.filter(
                 (t) => !(t.type === type && t.label === label)
             );
-            this.updateFeed();
+            this.refreshFeedFromUserAction();
             this.updateFilterBar();
         };
 
@@ -657,7 +663,8 @@ class WallFeed {
                 li.setAttribute('aria-selected', 'true');
                 dropdown.style.display = 'none';
                 trigger.setAttribute('aria-expanded', 'false');
-                this.updateFeed();
+                localStorage.setItem('wallSort', opt.value);
+                this.refreshFeedFromUserAction();
             };
             li.onkeydown = (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -886,34 +893,39 @@ class WallFeed {
 
         clearBtn.onclick = () => {
             this.wallFilterTags = [];
-            this.updateFeed();
+            this.refreshFeedFromUserAction();
             this.updateFilterBar();
             renderUnified(searchInput.value);
         };
 
-        doneBtn.onclick = () => {
-            this.updateFeed();
+        const applyAndCloseModal = () => {
+            this.refreshFeedFromUserAction();
             this.updateFilterBar();
             modal.remove();
         };
 
-        const closeModal = () => {
-            modal.remove();
-        };
-        closeBtn.onclick = closeModal;
+        doneBtn.onclick = applyAndCloseModal;
+
+        closeBtn.onclick = applyAndCloseModal;
         modal.onclick = (e) => {
-            if (e.target === modal) closeModal();
+            if (e.target === modal) applyAndCloseModal();
         };
     }
 
     handleSearch() {
         const searchInput = document.querySelector('.wall-search-input');
         this.currentSearch = searchInput.value.trim();
-        this.updateFeed();
+        this.refreshFeedFromUserAction();
     }
 
     updateFilterBar() {
         this.updateShowingRow();
+    }
+
+    /** User changed filter, search, or sort — refresh feed and scroll to top. */
+    refreshFeedFromUserAction() {
+        this._scrollWallToTopAfterRender = true;
+        this.updateFeed();
     }
 
     updateFeed() {
@@ -941,7 +953,11 @@ class WallFeed {
                 filteredPosts.sort((a, b) => a.timestamp - b.timestamp);
                 break;
             case 'mostFelt':
-                filteredPosts.sort((a, b) => (b.feltCount || 0) - (a.feltCount || 0));
+                filteredPosts.sort((a, b) => {
+                    const feltDiff = (b.feltCount || 0) - (a.feltCount || 0);
+                    if (feltDiff !== 0) return feltDiff;
+                    return (b.timestamp || 0) - (a.timestamp || 0);
+                });
                 break;
             default: // newest
                 filteredPosts.sort((a, b) => b.timestamp - a.timestamp);
@@ -1070,6 +1086,34 @@ class WallFeed {
         }
     }
 
+    _scrollWallFeedToTop() {
+        const el =
+            this.container?.querySelector('.wall-controls') ||
+            this.container;
+        if (!el) return;
+        const y = window.scrollY + el.getBoundingClientRect().top - 12;
+        window.scrollTo({ top: Math.max(0, y), behavior: 'auto' });
+    }
+
+    _finishWallListRender({ leavingSingleView, anchor }) {
+        const scrollToTop = this._scrollWallToTopAfterRender;
+        this._scrollWallToTopAfterRender = false;
+
+        if (scrollToTop) {
+            this._scrollWallFeedToTop();
+        } else if (leavingSingleView && this.currentPostId) {
+            const card = this.feed.querySelector(
+                `.post-card[data-post-id="${this.currentPostId}"]`
+            );
+            if (card) {
+                card.scrollIntoView({ behavior: 'auto', block: 'center' });
+            }
+        } else {
+            this._restoreWallScrollAnchor(anchor);
+        }
+        this.highlightPostFromUrl();
+    }
+
     _detectPrependedPostCount(oldIds, newIds) {
         if (!oldIds.length || newIds.length <= oldIds.length) return 0;
         const tail = newIds.slice(newIds.length - oldIds.length);
@@ -1087,7 +1131,16 @@ class WallFeed {
     renderPosts(posts) {
         if (this.viewMode === 'single') {
             this.feed.className = 'wall-feed wall-feed-single';
-            this.renderSingleCardView();
+            const scrollToTop = this._scrollWallToTopAfterRender;
+            if (scrollToTop) {
+                this.currentIndex = 0;
+                this.currentPostId = posts[0]?.id ?? null;
+            }
+            this.renderSingleCardView(scrollToTop);
+            if (scrollToTop) {
+                this._scrollWallToTopAfterRender = false;
+                requestAnimationFrame(() => this._scrollWallFeedToTop());
+            }
             return;
         }
 
@@ -1101,11 +1154,19 @@ class WallFeed {
 
         if (canUseListOptimizations && idSignature && idSignature === this._wallPostIdSignature) {
             PostCard.patchWallCards(this.feed, posts);
+            if (this._scrollWallToTopAfterRender) {
+                this._scrollWallToTopAfterRender = false;
+                requestAnimationFrame(() => this._scrollWallFeedToTop());
+            }
             this.highlightPostFromUrl();
             return;
         }
 
-        const anchor = canUseListOptimizations ? this._captureWallScrollAnchor() : null;
+        const scrollToTop = this._scrollWallToTopAfterRender;
+        const anchor =
+            canUseListOptimizations && !scrollToTop
+                ? this._captureWallScrollAnchor()
+                : null;
 
         const prependCount = canUseListOptimizations ? this._detectPrependedPostCount(oldIds, newIds) : 0;
         if (prependCount > 0) {
@@ -1119,8 +1180,7 @@ class WallFeed {
             this._wallPostIdSignature = idSignature;
             PostCard.patchWallCards(this.feed, posts);
             requestAnimationFrame(() => {
-                this._restoreWallScrollAnchor(anchor);
-                this.highlightPostFromUrl();
+                this._finishWallListRender({ leavingSingleView: false, anchor });
             });
             return;
         }
@@ -1150,17 +1210,7 @@ class WallFeed {
         }
 
         requestAnimationFrame(() => {
-            if (leavingSingleView && this.currentPostId) {
-                const card = this.feed.querySelector(
-                    `.post-card[data-post-id="${this.currentPostId}"]`
-                );
-                if (card) {
-                    card.scrollIntoView({ behavior: 'auto', block: 'center' });
-                }
-            } else {
-                this._restoreWallScrollAnchor(anchor);
-            }
-            this.highlightPostFromUrl();
+            this._finishWallListRender({ leavingSingleView, anchor });
         });
     }
 

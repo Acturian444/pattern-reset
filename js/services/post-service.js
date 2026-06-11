@@ -1,6 +1,9 @@
 // Post Service for Firestore Operations
 /** Max wall posts loaded in one realtime query (Firestore cap; raise if catalog grows). */
 const WALL_FEED_MAX_POSTS = 1000;
+/** Send Love / anonymous support reply (enforced in UI + addReply). */
+const LETITOUT_MAX_REPLY_LENGTH = 500;
+window.LETITOUT_MAX_REPLY_LENGTH = LETITOUT_MAX_REPLY_LENGTH;
 
 class PostService {
     constructor() {
@@ -262,6 +265,11 @@ class PostService {
 
             if (!replyData.content) {
                 throw new Error('Reply content is empty.');
+            }
+            if (replyData.content.length > LETITOUT_MAX_REPLY_LENGTH) {
+                throw new Error(
+                    `Reply is too long. Please keep it under ${LETITOUT_MAX_REPLY_LENGTH} characters.`
+                );
             }
 
             console.log('About to update Firestore document:', postId);
