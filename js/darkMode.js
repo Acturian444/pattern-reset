@@ -32,12 +32,14 @@ document.addEventListener('DOMContentLoaded', () => {
         themeToggle.addEventListener('click', toggleTheme);
     }
 
-    // Check for saved theme on initial load
+    // Check for saved theme on initial load (Let It Out defaults to dark)
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        applyTheme(savedTheme);
+    if (savedTheme === 'light') {
+        applyTheme('light');
     } else {
-        // Optional: could default to user's system preference here
-        applyTheme('light'); 
+        applyTheme('dark');
+        if (!savedTheme) {
+            localStorage.setItem('theme', 'dark');
+        }
     }
 }); 

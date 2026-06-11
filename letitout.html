@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#fffcf1">
+    <meta name="theme-color" content="#050505">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Pattern Reset™">
     
@@ -167,6 +167,13 @@
     </style>
 </head>
 <body class="page-letitout">
+    <script>
+    (function () {
+        if (localStorage.getItem('theme') !== 'light') {
+            document.body.classList.add('dark-mode');
+        }
+    })();
+    </script>
     <script>
     window.openMenu=function(){var e=document.getElementById("menuOverlay");e&&(e.classList.add("open"),document.body.style.overflow="hidden")};
     window.closeMenu=function(){var e=document.getElementById("menuOverlay");e&&(e.classList.remove("open"),document.body.style.overflow="")};
@@ -358,17 +365,17 @@
     <script src="js/config/mvp-config.js?v=1"></script>
     <script src="js/localId.js?v=2"></script>
     <script src="js/utils.js?v=3"></script>
-    <script src="js/darkMode.js"></script>
+    <script src="js/darkMode.js?v=2"></script>
     <script src="js/firebase.js?v=3"></script>
     <!-- <script src="js/firebase-debug.js?v=1"></script> -->
     <script src="js/services/lead-capture-service.js?v=1"></script>
-    <script src="js/services/post-service.js?v=3"></script>
+    <script src="js/services/post-service.js?v=5"></script>
     <script src="js/components/post-card.js?v=8"></script>
     <script src="js/premium-packs.js?v=1"></script>
     <script src="js/letitout-emotions.js?v=4"></script>
     <script src="js/letitout-situations.js?v=7"></script>
     <script src="js/postForm.js?v=53"></script>
-    <script src="js/wallFeed.js?v=44"></script>
+    <script src="js/wallFeed.js?v=46"></script>
     
     <!-- Test Script -->
     <!-- <script src="js/test-setup.js"></script> -->
