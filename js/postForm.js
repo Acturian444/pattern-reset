@@ -654,7 +654,7 @@ class PostForm {
             const storyNote = document.createElement('p');
             storyNote.className = 'letitout-cta-footer-note';
             storyNote.textContent =
-                'Posts are anonymous on the public wall. No names or identifying details.';
+                'Anonymous posts on the wall. No names or identifying details.';
             ctaFooter.appendChild(storyNote);
 
             const supportLinks = document.createElement('div');
