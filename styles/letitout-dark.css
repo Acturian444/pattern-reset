@@ -922,6 +922,7 @@ DARK MODE - FIXES & ADDITIONS
 .dark-mode .letitout-situation-modal-footer,
 .dark-mode .letitout-city-modal-footer {
     border-top-color: #333;
+    background: var(--letitout-modal-panel-bg, #121212);
 }
 .dark-mode .letitout-situation-modal-btn.cancel {
     background-color: #3a3a3a;
@@ -1060,7 +1061,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .letitout-intro-title {
-    color: #ff6b6b;
+    color: #f10000;
 }
 
 .dark-mode .letitout-intro-lede {
@@ -1089,7 +1090,7 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .letitout-intro-copy.letitout-intro-copy--brand {
-    color: #ff6b6b;
+    color: #f10000;
 }
 
 .dark-mode .letitout-intro-copy--insight {

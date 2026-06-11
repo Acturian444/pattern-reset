@@ -1191,12 +1191,12 @@ header .container {
 .letitout-emotion-modal-content {
     padding: 20px;
     overflow-y: auto;
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     gap: 18px;
-    max-height: 60vh;
-    min-height: 300px;
+    -webkit-overflow-scrolling: touch;
 }
 
 .emotion-category {
@@ -1267,9 +1267,12 @@ header .container {
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 1rem;
-    padding-left: 20px;
-    padding-right: 20px;
+    flex-shrink: 0;
+    margin-top: 0;
+    padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid #eee;
+    background: #fff;
+    box-sizing: border-box;
 }
 
 .letitout-emotion-modal-btn {
@@ -1324,6 +1327,95 @@ header .container {
     border-color: #f5f5f5;
     color: #222;
     outline: none;
+}
+
+/* Write tab — feeling / situation pickers: use more of the phone screen */
+@media (max-width: 767px) {
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay),
+    .letitout-situation-modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal,
+    .letitout-situation-modal-overlay .letitout-situation-modal {
+        height: min(98dvh, 98vh);
+        max-height: min(98dvh, 98vh);
+        border-radius: 12px 12px 0 0;
+    }
+
+    .letitout-situation-modal-overlay .letitout-situation-modal {
+        padding-top: 0;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-header,
+    .letitout-situation-modal-overlay .letitout-situation-modal-header {
+        padding: 10px 12px;
+        flex-shrink: 0;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .wall-filter-modal-header-text,
+    .letitout-situation-modal-overlay .wall-filter-modal-header-text {
+        gap: 0;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .wall-filter-modal-hint,
+    .letitout-situation-modal-overlay .wall-filter-modal-hint {
+        display: none;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-title,
+    .letitout-situation-modal-overlay .letitout-situation-modal-title {
+        font-size: 0.95rem;
+        line-height: 1.2;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-close,
+    .letitout-situation-modal-overlay .letitout-situation-modal-close {
+        width: 2rem !important;
+        height: 2rem !important;
+        font-size: 1.35rem !important;
+        padding: 0 !important;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-content,
+    .letitout-situation-modal-overlay .letitout-situation-modal-content {
+        padding: 6px 10px 4px;
+        gap: 6px;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .emotion-search-input {
+        margin-bottom: 4px !important;
+        padding: 8px 10px;
+        font-size: 16px;
+        line-height: 1.2;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .emotion-subtag,
+    .letitout-situation-modal-overlay .situation-option-btn {
+        padding: 5px 9px;
+        font-size: 12px;
+        line-height: 1.2;
+        border-radius: 14px;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .emotion-subtags.emotion-subtags--flat,
+    .letitout-situation-modal-overlay .situation-options-grid {
+        gap: 5px 6px;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-footer,
+    .letitout-situation-modal-overlay .letitout-situation-modal-footer {
+        padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+        gap: 6px;
+    }
+
+    .letitout-emotion-modal-overlay:not(#report-modal-overlay) .letitout-emotion-modal-btn,
+    .letitout-situation-modal-overlay .letitout-situation-modal-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+        min-height: 40px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -1873,12 +1965,14 @@ header .container {
 .letitout-situation-modal-content {
     padding: 20px;
     overflow-y: auto;
-    flex: 1;
+    flex: 1 1 auto;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     gap: 8px;
     align-content: flex-start;
+    -webkit-overflow-scrolling: touch;
 }
 
 .situation-options-grid {
@@ -1912,11 +2006,14 @@ header .container {
     border-color: #f10000;
 }
 .letitout-situation-modal-footer {
-    padding: 16px 20px;
+    flex-shrink: 0;
+    padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px));
     border-top: 1px solid #eee;
     display: flex;
     justify-content: flex-end;
     gap: 12px;
+    background: #fff;
+    box-sizing: border-box;
 }
 .letitout-situation-modal-btn {
     padding: 10px 20px;
@@ -7343,7 +7440,7 @@ select {
 }
 
 .letitout-intro-copy--brand {
-    color: #f10000;
+    color: var(--letitout-primary, #f10000);
     font-weight: 600;
     margin-bottom: 0;
 }
@@ -7389,7 +7486,7 @@ select {
 }
 
 .letitout-intro-copy.letitout-intro-copy--brand {
-    color: #f10000;
+    color: var(--letitout-primary, #f10000);
     font-weight: 600;
 }
 
@@ -7402,7 +7499,7 @@ select {
     font-size: 1.85rem;
     font-weight: 400;
     letter-spacing: 0.04em;
-    color: #f10000;
+    color: var(--letitout-primary, #f10000);
     margin: 0.35rem 0 0.75rem;
     line-height: 1.15;
     text-transform: none;

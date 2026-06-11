@@ -1174,7 +1174,6 @@ class PostForm {
         searchInput.className = 'emotion-search-input';
         searchInput.placeholder = 'Search feelings...';
         searchInput.autocomplete = 'off';
-        searchInput.style.marginBottom = '18px';
         content.appendChild(searchInput);
 
         // Container for all categories
