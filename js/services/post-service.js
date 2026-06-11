@@ -1,4 +1,7 @@
 // Post Service for Firestore Operations
+/** Max wall posts loaded in one realtime query (Firestore cap; raise if catalog grows). */
+const WALL_FEED_MAX_POSTS = 1000;
+
 class PostService {
     constructor() {
         this.db = window.letitoutDb;
@@ -172,33 +175,55 @@ class PostService {
         };
     }
 
-    // Real-time updates
+    // Real-time updates — returns unsubscribe
     subscribeToPosts(callback) {
-        // Verify auth before subscribing
-        this.verifyAuth().then(() => {
-            return this.collection
+        let unsub = null;
+
+        const attach = async () => {
+            if (unsub) return;
+
+            let queryLimit = WALL_FEED_MAX_POSTS;
+            try {
+                const counterDoc = await this.db.collection('counters').doc('posts').get();
+                const total =
+                    counterDoc.exists && typeof counterDoc.data().count === 'number'
+                        ? counterDoc.data().count
+                        : null;
+                if (total > 0) {
+                    queryLimit = Math.min(Math.max(total + 25, 100), WALL_FEED_MAX_POSTS);
+                }
+            } catch (err) {
+                console.warn('Could not read story counter for feed limit:', err);
+            }
+
+            unsub = this.collection
                 .orderBy('timestamp', 'desc')
-                .limit(100) // Increased limit for search/filter functionality
-                .onSnapshot(snapshot => {
-                    const posts = snapshot.docs.map(doc => ({
-                        id: doc.id,
-                        ...doc.data()
-                    }));
-                    callback(posts);
-                }, error => {
-                    console.error('Error in posts subscription:', error);
-                    if (error.message.includes('permission')) {
-                        console.error('Permission denied - check Firebase security rules');
+                .limit(queryLimit)
+                .onSnapshot(
+                    (snapshot) => {
+                        const posts = snapshot.docs.map((doc) => ({
+                            id: doc.id,
+                            ...doc.data(),
+                        }));
+                        callback(posts);
+                    },
+                    (error) => {
+                        console.error('Error in posts subscription:', error);
+                        if (error.message.includes('permission')) {
+                            console.error('Permission denied - check Firebase security rules');
+                        }
+                        window.LetItOutUtils.showError('Error loading posts. Please refresh the page.');
                     }
-                    window.LetItOutUtils.showError('Error loading posts. Please refresh the page.');
-                });
-        }).catch(error => {
-            console.error('Authentication failed for subscription:', error);
-            // Retry after a delay
-            setTimeout(() => {
-                this.subscribeToPosts(callback);
-            }, 3000);
+                );
+        };
+
+        this.verifyAuth().then(attach).catch(() => {
+            setTimeout(() => this.subscribeToPosts(callback), 3000);
         });
+
+        return () => {
+            if (unsub) unsub();
+        };
     }
 
     async getPost(postId) {

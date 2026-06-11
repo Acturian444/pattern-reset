@@ -18,8 +18,25 @@ class WallFeed {
         /** Last rendered post-id order for list view; skip DOM rebuild when unchanged. */
         this._wallPostIdSignature = '';
         this._wallPostIds = [];
+        this.totalStoryCount = 0;
+        this._storyCountUnsub = null;
         this.container = null;
         this.initializeEventListeners();
+    }
+
+    _hasActiveWallFilters() {
+        return Boolean(this.currentSearch) || this.wallFilterTags.length > 0;
+    }
+
+    /** Card-view total: full catalog when unfiltered, else filtered result count. */
+    _getSingleCardProgressTotal(posts = this.filteredPosts) {
+        if (this._hasActiveWallFilters()) {
+            return posts.length;
+        }
+        if (this.totalStoryCount > 0) {
+            return this.totalStoryCount;
+        }
+        return posts.length;
     }
 
     initializeEventListeners() {
@@ -405,7 +422,9 @@ class WallFeed {
         const progress = this.feed.querySelector('.wall-single-card-progress');
         if (backBtn) backBtn.disabled = this.currentIndex === 0;
         if (nextBtn) nextBtn.disabled = this.currentIndex === posts.length - 1;
-        if (progress) progress.textContent = `${this.currentIndex + 1} of ${posts.length}`;
+        if (progress) {
+            progress.textContent = `${this.currentIndex + 1} of ${this._getSingleCardProgressTotal(posts)}`;
+        }
     }
 
     createAboutFiltersSection() {
@@ -933,7 +952,19 @@ class WallFeed {
     }
 
     subscribeToPosts() {
-        this.unsubscribe = window.PostService.subscribeToPosts(posts => {
+        if (this._storyCountUnsub) {
+            this._storyCountUnsub();
+        }
+        if (window.PostService?.subscribeToStoryCount) {
+            this._storyCountUnsub = window.PostService.subscribeToStoryCount((count) => {
+                this.totalStoryCount = count;
+                if (this.viewMode === 'single') {
+                    this.updateSingleCardNavUI(this.filteredPosts);
+                }
+            });
+        }
+
+        this.unsubscribe = window.PostService.subscribeToPosts((posts) => {
             this.posts = posts;
             this.updateFeed();
         });
@@ -1187,7 +1218,7 @@ class WallFeed {
 
         const progress = document.createElement('div');
         progress.className = 'wall-single-card-progress';
-        progress.textContent = `${this.currentIndex + 1} of ${posts.length}`;
+        progress.textContent = `${this.currentIndex + 1} of ${this._getSingleCardProgressTotal(posts)}`;
 
         const nextBtn = document.createElement('button');
         nextBtn.className = 'wall-single-nav-btn wall-single-nav-next';
@@ -1675,6 +1706,11 @@ class WallFeed {
     cleanup() {
         if (this.unsubscribe) {
             this.unsubscribe();
+            this.unsubscribe = null;
+        }
+        if (this._storyCountUnsub) {
+            this._storyCountUnsub();
+            this._storyCountUnsub = null;
         }
     }
 
