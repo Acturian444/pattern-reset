@@ -99,9 +99,9 @@
     <!-- Styles -->
     <link rel="stylesheet" href="style.css?v=16">
     <link rel="stylesheet" href="styles/letitout-theme.css?v=6">
-    <link rel="stylesheet" href="styles/letitout.css?v=69">
+    <link rel="stylesheet" href="styles/letitout.css?v=72">
     <link rel="stylesheet" href="styles/letitout-mobile.css?v=2">
-    <link rel="stylesheet" href="styles/letitout-dark.css?v=43">
+    <link rel="stylesheet" href="styles/letitout-dark.css?v=46">
     <link rel="stylesheet" href="styles/letitout-location-fix.css?v=9">
     <link rel="stylesheet" href="styles/letitout-button-fix.css?v=1">
     <style>
@@ -117,7 +117,7 @@
         font-size: 3rem;
         font-weight: bold;
         color: #000 !important;
-        margin-bottom: 2.2rem;
+        margin-bottom: 0.5rem;
         letter-spacing: 1.5px;
         text-align: center;
     }
@@ -154,7 +154,7 @@
         }
         .letitout-title {
             font-size: 2rem;
-            margin-bottom: 1.25rem;
+            margin-bottom: 0.35rem;
         }
         .letitout-segmented-control {
             gap: 0.25rem;
@@ -274,6 +274,7 @@
         </button>
         <div class="letitout-title-bar">
             <h1 class="letitout-title">Let It Out</h1>
+            <p id="letitout-story-count" class="letitout-story-count" aria-live="polite">&nbsp;</p>
             <div class="letitout-segmented-control" id="letitout-segmented-control">
                 <button class="segment-btn active" id="write-tab" type="button">Write</button>
                 <button class="segment-btn" id="wall-tab" type="button">Wall</button>
@@ -360,12 +361,13 @@
     <script src="js/darkMode.js"></script>
     <script src="js/firebase.js?v=3"></script>
     <!-- <script src="js/firebase-debug.js?v=1"></script> -->
-    <script src="js/services/post-service.js?v=2"></script>
+    <script src="js/services/lead-capture-service.js?v=1"></script>
+    <script src="js/services/post-service.js?v=3"></script>
     <script src="js/components/post-card.js?v=8"></script>
     <script src="js/premium-packs.js?v=1"></script>
     <script src="js/letitout-emotions.js?v=4"></script>
     <script src="js/letitout-situations.js?v=7"></script>
-    <script src="js/postForm.js?v=51"></script>
+    <script src="js/postForm.js?v=53"></script>
     <script src="js/wallFeed.js?v=44"></script>
     
     <!-- Test Script -->
@@ -407,6 +409,16 @@
         if (!window.LetItOutUtils) {
             console.error('LetItOutUtils not initialized');
             return;
+        }
+
+        const storyCountEl = document.getElementById('letitout-story-count');
+        if (storyCountEl && window.PostService?.subscribeToStoryCount) {
+            if (typeof window._letitoutStoryCountUnsub === 'function') {
+                window._letitoutStoryCountUnsub();
+            }
+            window._letitoutStoryCountUnsub = window.PostService.subscribeToStoryCount((count) => {
+                storyCountEl.textContent = `${count.toLocaleString('en-US')} stories shared`;
+            });
         }
 
         // Initialize My Posts button (now in header)

@@ -144,6 +144,34 @@ class PostService {
         }
     }
 
+    /** Live total submitted stories (same counter as Story #N). Returns unsubscribe. */
+    subscribeToStoryCount(callback) {
+        const counterRef = this.db.collection('counters').doc('posts');
+        let unsub = null;
+
+        const attach = () => {
+            if (unsub) return;
+            unsub = counterRef.onSnapshot(
+                (doc) => {
+                    const count =
+                        doc.exists && typeof doc.data().count === 'number'
+                            ? doc.data().count
+                            : 0;
+                    callback(count);
+                },
+                (error) => {
+                    console.error('Error subscribing to story count:', error);
+                }
+            );
+        };
+
+        this.verifyAuth().then(attach).catch(attach);
+
+        return () => {
+            if (unsub) unsub();
+        };
+    }
+
     // Real-time updates
     subscribeToPosts(callback) {
         // Verify auth before subscribing
