@@ -171,6 +171,30 @@ header .container {
     gap: 1.5rem;
 }
 
+/* Live story counter under page title (fed by counters/posts) */
+.letitout-story-count {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    color: #5a5a5a;
+    text-align: center;
+    margin: 0 0 1.35rem;
+    padding: 0 1rem;
+    min-height: 1.35em;
+    font-variant-numeric: tabular-nums;
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    .letitout-story-count {
+        font-size: 0.85rem;
+        margin-bottom: 1.1rem;
+        padding: 0 0.75rem;
+    }
+}
+
 /* MVP: Static prompt title when prompts are hidden */
 .letitout-mvp-prompt {
     font-family: 'DM Sans', sans-serif;
@@ -1366,6 +1390,10 @@ header .container {
     }
     .support-link-btn {
         font-size: 0.78rem;
+    }
+
+    .connect-link-btn {
+        font-size: 0.74rem;
     }
 
     .letitout-cta-footer-note {
@@ -5233,6 +5261,19 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
     flex: 1 1 100%;
 }
 
+.letitout-cta-footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    width: 100%;
+}
+
+.connect-link-btn {
+    color: #777;
+    font-size: 0.78rem;
+}
+
 .support-link-btn:hover {
     color: var(--letitout-primary);
     text-decoration: underline;
@@ -5308,6 +5349,32 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
     margin-bottom: 2rem;
 }
 
+.support-modal--connect .support-modal-body {
+    margin-bottom: 1.25rem;
+}
+
+.support-modal--connect .support-modal-connect-panel {
+    margin-top: 0;
+}
+
+.support-modal-crisis-note {
+    font-size: 0.82rem;
+    color: #777;
+    margin: 1.25rem 0 0;
+    line-height: 1.45;
+}
+
+.support-modal-crisis-note a {
+    color: #f10000;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.support-modal-crisis-note a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
 .support-modal-footer {
     font-size: 0.95rem;
     font-weight: 600;
@@ -5346,6 +5413,91 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
 
 .support-modal-btn svg {
     stroke: #ffffff;
+}
+
+.support-modal-btn--connect {
+    margin-top: 1rem;
+    background-color: #ffffff;
+    color: #f10000;
+    border: 2px solid #f10000;
+}
+
+.support-modal-btn--connect:hover {
+    background-color: #fff5f5;
+    color: #a10012;
+    border-color: #a10012;
+}
+
+.support-modal-btn--connect svg {
+    stroke: #f10000;
+}
+
+.support-modal-btn--connect:hover svg {
+    stroke: #a10012;
+}
+
+.support-modal-connect-panel {
+    margin-top: 1rem;
+    text-align: left;
+}
+
+.support-modal-connect-lead {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin: 0 0 0.85rem;
+    text-align: center;
+}
+
+.support-modal-connect-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.support-modal-connect-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #444;
+    text-align: left;
+}
+
+.support-modal-connect-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 0.85rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    color: #111;
+    background: #fff;
+}
+
+.support-modal-connect-input:focus {
+    outline: none;
+    border-color: #f10000;
+    box-shadow: 0 0 0 2px rgba(241, 0, 0, 0.12);
+}
+
+.support-modal-connect-submit {
+    margin-top: 0.25rem;
+}
+
+.support-modal-connect-success {
+    margin-top: 1rem;
+    padding: 1rem 0.85rem;
+    border-radius: 10px;
+    background: rgba(241, 0, 0, 0.06);
+    border: 1px solid rgba(241, 0, 0, 0.15);
+}
+
+.support-modal-connect-success-text {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    line-height: 1.45;
 }
 
 /* --- New Prompt Controls --- */

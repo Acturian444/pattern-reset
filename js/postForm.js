@@ -657,12 +657,24 @@ class PostForm {
                 'Posts are anonymous on the public wall. No names or identifying details.';
             ctaFooter.appendChild(storyNote);
 
+            const supportLinks = document.createElement('div');
+            supportLinks.className = 'letitout-cta-footer-links';
+
             const supportButton = document.createElement('button');
             supportButton.type = 'button';
             supportButton.className = 'support-link-btn';
             supportButton.textContent = 'Feeling overwhelmed?';
             supportButton.onclick = () => this.openSupportModal();
-            ctaFooter.appendChild(supportButton);
+            supportLinks.appendChild(supportButton);
+
+            const connectButton = document.createElement('button');
+            connectButton.type = 'button';
+            connectButton.className = 'support-link-btn connect-link-btn';
+            connectButton.textContent = 'Want to talk 1 on 1?';
+            connectButton.onclick = () => this.openConnectModal();
+            supportLinks.appendChild(connectButton);
+
+            ctaFooter.appendChild(supportLinks);
 
             this.buttonContainer.appendChild(ctaFooter);
 
@@ -1481,19 +1493,90 @@ class PostForm {
         sessionStorage.removeItem(this.draftKey);
     }
 
-    openSupportModal() {
-        // Remove any existing modal to prevent duplicates
-        const existingModal = document.querySelector('.support-modal-overlay');
-        if (existingModal) {
-            existingModal.remove();
-        }
+    _mountModalOverlay(modalInnerHtml, onMount) {
+        document.querySelector('.support-modal-overlay')?.remove();
 
         const overlay = document.createElement('div');
         overlay.className = 'support-modal-overlay';
+        overlay.innerHTML = modalInnerHtml;
+        document.body.appendChild(overlay);
 
-        overlay.innerHTML = `
+        setTimeout(() => overlay.classList.add('visible'), 10);
+
+        const closeModal = () => {
+            overlay.classList.remove('visible');
+            setTimeout(() => overlay.remove(), 300);
+        };
+
+        overlay.querySelector('.support-modal-close')?.addEventListener('click', closeModal);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeModal();
+        });
+
+        if (typeof onMount === 'function') {
+            onMount(overlay, closeModal);
+        }
+
+        return overlay;
+    }
+
+    _wireConnectEmailForm(overlay) {
+        const connectForm = overlay.querySelector('#support-connect-form');
+        const connectPanel = overlay.querySelector('#support-connect-panel');
+        const connectSuccess = overlay.querySelector('#support-connect-success');
+        const connectInput = overlay.querySelector('#support-connect-email');
+        const connectSubmit = overlay.querySelector('#support-connect-submit');
+
+        if (!connectForm || !connectInput) return;
+
+        connectForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = (connectInput.value || '').trim();
+            if (!connectInput.checkValidity() || !email || email.length > 320) {
+                connectInput.setAttribute('aria-invalid', 'true');
+                connectInput.style.borderColor = '#f10000';
+                connectInput.focus();
+                return;
+            }
+
+            connectInput.style.borderColor = '';
+            connectInput.removeAttribute('aria-invalid');
+
+            if (!window.LeadCaptureService?.submitConnectOneOnOne) {
+                console.error('LeadCaptureService unavailable');
+                return;
+            }
+
+            if (connectSubmit) {
+                connectSubmit.disabled = true;
+                connectSubmit.textContent = 'Sending…';
+            }
+
+            try {
+                await window.LeadCaptureService.submitConnectOneOnOne(email);
+                if (connectPanel) connectPanel.hidden = true;
+                if (connectSuccess) connectSuccess.hidden = false;
+                if (typeof gtag === 'function') {
+                    gtag('event', 'generate_lead', { method: 'letitout_connect_1on1' });
+                }
+            } catch (err) {
+                console.error('Connect 1 on 1 submit failed', err);
+                connectInput.setAttribute('aria-invalid', 'true');
+                connectInput.style.borderColor = '#f10000';
+                connectInput.focus();
+                if (connectSubmit) {
+                    connectSubmit.disabled = false;
+                    connectSubmit.textContent = 'Send';
+                }
+            }
+        });
+    }
+
+    openSupportModal() {
+        this._mountModalOverlay(`
             <div class="support-modal">
-                <button class="support-modal-close">&times;</button>
+                <button type="button" class="support-modal-close" aria-label="Close">&times;</button>
                 <h3 class="support-modal-title">You don't have to go through this alone.</h3>
                 <p class="support-modal-body">If you're feeling overwhelmed or in immediate danger, free and confidential support is available 24/7.</p>
                 <div class="support-modal-actions">
@@ -1512,25 +1595,34 @@ class PostForm {
                 </div>
                 <p class="support-modal-footer">You deserve support.</p>
             </div>
-        `;
+        `);
+    }
 
-        document.body.appendChild(overlay);
-
-        // Add visibility for animation
-        setTimeout(() => overlay.classList.add('visible'), 10);
-
-        // Add close listeners
-        const closeModal = () => {
-            overlay.classList.remove('visible');
-            setTimeout(() => overlay.remove(), 300);
-        };
-
-        overlay.querySelector('.support-modal-close').onclick = closeModal;
-        overlay.onclick = (e) => {
-            if (e.target === overlay) {
-                closeModal();
+    openConnectModal() {
+        this._mountModalOverlay(
+            `
+            <div class="support-modal support-modal--connect">
+                <button type="button" class="support-modal-close" aria-label="Close">&times;</button>
+                <h3 class="support-modal-title">I&rsquo;ll reach out personally.</h3>
+                <p class="support-modal-body">Leave your email and I&rsquo;ll get in touch.</p>
+                <div class="support-modal-connect-panel" id="support-connect-panel">
+                    <form class="support-modal-connect-form" id="support-connect-form" novalidate>
+                        <label class="support-modal-connect-label" for="support-connect-email">Email</label>
+                        <input type="email" class="support-modal-connect-input" id="support-connect-email" name="email" autocomplete="email" inputmode="email" required maxlength="320" placeholder="Where can I reach you?">
+                        <button type="submit" class="support-modal-btn support-modal-connect-submit" id="support-connect-submit">Send</button>
+                    </form>
+                </div>
+                <div class="support-modal-connect-success" id="support-connect-success" hidden role="status" aria-live="polite">
+                    <p class="support-modal-connect-success-text">Got it &mdash; I&rsquo;ll reach out soon.</p>
+                </div>
+                <p class="support-modal-crisis-note">In immediate danger? <a href="tel:988">Call 988</a></p>
+            </div>
+        `,
+            (overlay) => {
+                this._wireConnectEmailForm(overlay);
+                overlay.querySelector('#support-connect-email')?.focus();
             }
-        };
+        );
     }
 
     // --- PREMIUM PACKS METHODS ---
