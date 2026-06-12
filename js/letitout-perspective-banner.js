@@ -2,6 +2,32 @@
  * Let It Out — slim header banner → perspective email capture modal.
  */
 (function () {
+    const STORAGE_KEY =
+        window.LeadCaptureService?.LEAD_STORAGE_KEYS?.perspective ||
+        'letitout_perspective_lead_submitted';
+
+    function showLeadFormSuccess(panel, success) {
+        if (panel) panel.hidden = true;
+        if (success) success.hidden = false;
+    }
+
+    function showLeadError(message) {
+        const supportEmail =
+            window.LeadCaptureService?.SUPPORT_EMAIL || 'resetmypattern@gmail.com';
+        const text =
+            message ||
+            `Something went wrong. Please try again or email ${supportEmail}.`;
+        if (window.LeadCaptureService?.showLeadSubmitError) {
+            window.LeadCaptureService.showLeadSubmitError(text);
+            return;
+        }
+        if (window.LetItOutUtils?.showError) {
+            window.LetItOutUtils.showError(text);
+            return;
+        }
+        alert(text);
+    }
+
     function mountPerspectiveModal() {
         document.querySelector('.support-modal-overlay')?.remove();
 
@@ -59,8 +85,15 @@
                 input.removeAttribute('aria-invalid');
             }
 
+            if (
+                window.LeadCaptureService?.hasRecentLeadSubmission?.(STORAGE_KEY, email)
+            ) {
+                showLeadFormSuccess(panel, success);
+                return;
+            }
+
             if (!window.LeadCaptureService?.submitPerspectiveBanner) {
-                console.error('LeadCaptureService unavailable');
+                showLeadError();
                 return;
             }
 
@@ -71,8 +104,8 @@
 
             try {
                 await window.LeadCaptureService.submitPerspectiveBanner(email);
-                if (panel) panel.hidden = true;
-                if (success) success.hidden = false;
+                window.LeadCaptureService.markLeadSubmitted?.(STORAGE_KEY, email);
+                showLeadFormSuccess(panel, success);
                 if (typeof gtag === 'function') {
                     gtag('event', 'generate_lead', { method: 'letitout_perspective_banner' });
                 }
@@ -87,6 +120,7 @@
                     submit.disabled = false;
                     submit.textContent = 'Send';
                 }
+                showLeadError();
             }
         });
 

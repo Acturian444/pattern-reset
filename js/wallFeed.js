@@ -128,6 +128,7 @@ class WallFeed {
 
     handleFeedClick(e) {
         const moreOptionsButton = e.target.closest('.more-options-button');
+        const copyTextButton = e.target.closest('.copy-text-button');
         const copyLinkButton = e.target.closest('.copy-link-button');
         const shareButton = e.target.closest('.share-post-button');
         const reportButton = e.target.closest('.report-post-button');
@@ -135,6 +136,9 @@ class WallFeed {
         if (moreOptionsButton) {
             e.preventDefault();
             this.handleMoreOptionsClick(moreOptionsButton);
+        } else if (copyTextButton) {
+            e.preventDefault();
+            this.handleCopyTextClick(copyTextButton);
         } else if (copyLinkButton) {
             e.preventDefault();
             this.handleCopyLinkClick(copyLinkButton);
@@ -184,6 +188,64 @@ class WallFeed {
             this.showToast('Failed to copy link.', 'error');
         });
         this.closeAllOptionMenus();
+    }
+
+    handleCopyTextClick(button) {
+        const postCard = button.closest('.post-card');
+        const postId = postCard?.dataset.postId;
+        if (!postId) return;
+
+        const post =
+            this.posts.find((p) => p.id === postId) ||
+            this.filteredPosts.find((p) => p.id === postId);
+        const text = PostCard.getCopyableStoryText(post);
+
+        if (!text) {
+            this.showToast('Could not copy text.', 'error');
+            this.closeAllOptionMenus();
+            return;
+        }
+
+        const onSuccess = () => {
+            this.showToast('Story copied!');
+            this.closeAllOptionMenus();
+        };
+        const onFailure = () => {
+            this.showToast('Failed to copy text.', 'error');
+            this.closeAllOptionMenus();
+        };
+
+        if (navigator.clipboard?.writeText) {
+            navigator.clipboard.writeText(text).then(onSuccess).catch((err) => {
+                console.error('Failed to copy text:', err);
+                if (this._fallbackCopyPlainText(text)) {
+                    onSuccess();
+                } else {
+                    onFailure();
+                }
+            });
+        } else if (this._fallbackCopyPlainText(text)) {
+            onSuccess();
+        } else {
+            onFailure();
+        }
+    }
+
+    _fallbackCopyPlainText(text) {
+        try {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', '');
+            ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0;';
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            const ok = document.execCommand('copy');
+            document.body.removeChild(ta);
+            return ok;
+        } catch (_) {
+            return false;
+        }
     }
 
     handleShareClick(button) {
@@ -722,7 +784,7 @@ class WallFeed {
         const options = [
             { value: 'newest', text: 'Newest' },
             { value: 'oldest', text: 'Oldest' },
-            { value: 'mostFelt', text: 'Most Felt' }
+            { value: 'mostFelt', text: 'Trending' }
         ];
         
         options.forEach(opt => {
@@ -807,7 +869,7 @@ class WallFeed {
     getSortText(value) {
         switch (value) {
             case 'oldest': return 'Oldest';
-            case 'mostFelt': return 'Most Felt';
+            case 'mostFelt': return 'Trending';
             default: return 'Newest';
         }
     }

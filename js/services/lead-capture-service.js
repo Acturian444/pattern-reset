@@ -12,6 +12,60 @@
     const CONNECT_ONE_ON_ONE_MESSAGE = 'Let It Out — Connect with me 1 on 1';
     const PERSPECTIVE_BANNER_MESSAGE = 'Let It Out banner — want perspective';
 
+    const SUPPORT_EMAIL = 'resetmypattern@gmail.com';
+    const LEAD_SUBMIT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+    const LEAD_STORAGE_KEYS = {
+        perspective: 'letitout_perspective_lead_submitted',
+        connect: 'letitout_connect_lead_submitted',
+    };
+
+    function normalizeLeadEmail(email) {
+        return (email || '').trim().toLowerCase();
+    }
+
+    function leadStorageKeyForEmail(baseKey, email) {
+        const normalized = normalizeLeadEmail(email);
+        if (!baseKey || !normalized) return baseKey || '';
+        return `${baseKey}:${normalized}`;
+    }
+
+    function markLeadSubmitted(storageKey, email) {
+        const key = leadStorageKeyForEmail(storageKey, email);
+        if (!key) return;
+        try {
+            localStorage.setItem(key, String(Date.now()));
+        } catch (_) {
+            /* ignore */
+        }
+    }
+
+    function hasRecentLeadSubmission(storageKey, email) {
+        const key = leadStorageKeyForEmail(storageKey, email);
+        if (!key || !normalizeLeadEmail(email)) return false;
+        try {
+            const raw = localStorage.getItem(key);
+            if (!raw) return false;
+            const ts = Number(raw);
+            if (!Number.isFinite(ts)) {
+                localStorage.removeItem(key);
+                return false;
+            }
+            return Date.now() - ts < LEAD_SUBMIT_TTL_MS;
+        } catch (_) {
+            return false;
+        }
+    }
+
+    function showLeadSubmitError(
+        message = `Something went wrong. Please try again or email ${SUPPORT_EMAIL}.`
+    ) {
+        if (window.LetItOutUtils?.showError) {
+            window.LetItOutUtils.showError(message);
+            return;
+        }
+        alert(message);
+    }
+
     function ensureHiddenIframe() {
         let iframe = document.getElementById('lead-capture-iframe');
         if (!iframe) {
@@ -133,6 +187,11 @@
         submitBioLead,
         submitConnectOneOnOne,
         submitPerspectiveBanner,
+        markLeadSubmitted,
+        hasRecentLeadSubmission,
+        showLeadSubmitError,
+        SUPPORT_EMAIL,
+        LEAD_STORAGE_KEYS,
         CONNECT_ONE_ON_ONE_MESSAGE,
         PERSPECTIVE_BANNER_MESSAGE,
     };
