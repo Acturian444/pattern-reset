@@ -657,16 +657,6 @@ class PostForm {
                 'Anonymous posts on the wall. No names or identifying details.';
             ctaFooter.appendChild(storyNote);
 
-            const termsNote = document.createElement('p');
-            termsNote.className = 'letitout-cta-footer-terms';
-            termsNote.appendChild(document.createTextNode('By posting, you agree to our '));
-            const termsLink = document.createElement('a');
-            termsLink.href = 'legal.html#sec-ugc';
-            termsLink.textContent = 'user content terms';
-            termsNote.appendChild(termsLink);
-            termsNote.appendChild(document.createTextNode('.'));
-            ctaFooter.appendChild(termsNote);
-
             const supportLinks = document.createElement('div');
             supportLinks.className = 'letitout-cta-footer-links';
 
