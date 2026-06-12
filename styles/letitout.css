@@ -7554,17 +7554,18 @@ select {
     font-size: 0.88rem;
     font-weight: 600;
     color: #666;
-    margin: 0 0 0.65rem;
+    margin: 0 0 1.1rem;
     line-height: 1.4;
 }
 
 .letitout-intro-terms {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: #777;
-    margin: 0 0 1.1rem;
-    line-height: 1.45;
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: #888;
+    margin: 0.75rem 0 0;
+    line-height: 1.4;
+    text-align: center;
 }
 
 .letitout-intro-terms a {
@@ -7650,7 +7651,12 @@ select {
 
     .letitout-intro-age {
         font-size: 0.84rem;
-        margin-bottom: 1.1rem;
+        margin-bottom: 1rem;
+    }
+
+    .letitout-intro-terms {
+        font-size: 0.62rem;
+        margin-top: 0.65rem;
     }
 
     .letitout-intro-btn {
