@@ -11,6 +11,23 @@
         if (success) success.hidden = false;
     }
 
+    function showLeadError(message) {
+        const supportEmail =
+            window.LeadCaptureService?.SUPPORT_EMAIL || 'resetmypattern@gmail.com';
+        const text =
+            message ||
+            `Something went wrong. Please try again or email ${supportEmail}.`;
+        if (window.LeadCaptureService?.showLeadSubmitError) {
+            window.LeadCaptureService.showLeadSubmitError(text);
+            return;
+        }
+        if (window.LetItOutUtils?.showError) {
+            window.LetItOutUtils.showError(text);
+            return;
+        }
+        alert(text);
+    }
+
     function mountPerspectiveModal() {
         document.querySelector('.support-modal-overlay')?.remove();
 
@@ -52,11 +69,6 @@
         const input = overlay.querySelector('#perspective-connect-email');
         const submit = overlay.querySelector('#perspective-connect-submit');
 
-        if (window.LeadCaptureService?.hasRecentLeadSubmission?.(STORAGE_KEY)) {
-            showLeadFormSuccess(panel, success);
-            return;
-        }
-
         form?.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -73,8 +85,15 @@
                 input.removeAttribute('aria-invalid');
             }
 
+            if (
+                window.LeadCaptureService?.hasRecentLeadSubmission?.(STORAGE_KEY, email)
+            ) {
+                showLeadFormSuccess(panel, success);
+                return;
+            }
+
             if (!window.LeadCaptureService?.submitPerspectiveBanner) {
-                window.LeadCaptureService?.showLeadSubmitError?.();
+                showLeadError();
                 return;
             }
 
@@ -85,7 +104,7 @@
 
             try {
                 await window.LeadCaptureService.submitPerspectiveBanner(email);
-                window.LeadCaptureService.markLeadSubmitted?.(STORAGE_KEY);
+                window.LeadCaptureService.markLeadSubmitted?.(STORAGE_KEY, email);
                 showLeadFormSuccess(panel, success);
                 if (typeof gtag === 'function') {
                     gtag('event', 'generate_lead', { method: 'letitout_perspective_banner' });
@@ -101,7 +120,7 @@
                     submit.disabled = false;
                     submit.textContent = 'Send';
                 }
-                window.LeadCaptureService?.showLeadSubmitError?.();
+                showLeadError();
             }
         });
 

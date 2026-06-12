@@ -1541,11 +1541,22 @@ class PostForm {
 
         if (!connectForm || !connectInput) return;
 
-        if (window.LeadCaptureService?.hasRecentLeadSubmission?.(storageKey)) {
-            if (connectPanel) connectPanel.hidden = true;
-            if (connectSuccess) connectSuccess.hidden = false;
-            return;
-        }
+        const showConnectLeadError = (message) => {
+            const supportEmail =
+                window.LeadCaptureService?.SUPPORT_EMAIL || 'resetmypattern@gmail.com';
+            const text =
+                message ||
+                `Something went wrong. Please try again or email ${supportEmail}.`;
+            if (window.LeadCaptureService?.showLeadSubmitError) {
+                window.LeadCaptureService.showLeadSubmitError(text);
+                return;
+            }
+            if (window.LetItOutUtils?.showError) {
+                window.LetItOutUtils.showError(text);
+                return;
+            }
+            alert(text);
+        };
 
         connectForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -1561,8 +1572,16 @@ class PostForm {
             connectInput.style.borderColor = '';
             connectInput.removeAttribute('aria-invalid');
 
+            if (
+                window.LeadCaptureService?.hasRecentLeadSubmission?.(storageKey, email)
+            ) {
+                if (connectPanel) connectPanel.hidden = true;
+                if (connectSuccess) connectSuccess.hidden = false;
+                return;
+            }
+
             if (!window.LeadCaptureService?.submitConnectOneOnOne) {
-                window.LeadCaptureService?.showLeadSubmitError?.();
+                showConnectLeadError();
                 return;
             }
 
@@ -1573,7 +1592,7 @@ class PostForm {
 
             try {
                 await window.LeadCaptureService.submitConnectOneOnOne(email);
-                window.LeadCaptureService.markLeadSubmitted?.(storageKey);
+                window.LeadCaptureService.markLeadSubmitted?.(storageKey, email);
                 if (connectPanel) connectPanel.hidden = true;
                 if (connectSuccess) connectSuccess.hidden = false;
                 if (typeof gtag === 'function') {
@@ -1588,7 +1607,7 @@ class PostForm {
                     connectSubmit.disabled = false;
                     connectSubmit.textContent = 'Send';
                 }
-                window.LeadCaptureService?.showLeadSubmitError?.();
+                showConnectLeadError();
             }
         });
     }

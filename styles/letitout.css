@@ -5470,7 +5470,7 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
 
 .letitout-cta-footer-terms a:hover,
 .letitout-cta-footer-terms a:focus {
-    color: var(--letitout-primary, #f10000);
+    color: var(--letitout-primary-hover, #8a0000);
 }
 
 .letitout-cta-footer-links {
@@ -7581,7 +7581,7 @@ select {
 
 .letitout-intro-terms a:hover,
 .letitout-intro-terms a:focus {
-    color: #f10000;
+    color: #8a0000;
 }
 
 .letitout-intro-btn {
