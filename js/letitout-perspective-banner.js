@@ -2,6 +2,15 @@
  * Let It Out — slim header banner → perspective email capture modal.
  */
 (function () {
+    const STORAGE_KEY =
+        window.LeadCaptureService?.LEAD_STORAGE_KEYS?.perspective ||
+        'letitout_perspective_lead_submitted';
+
+    function showLeadFormSuccess(panel, success) {
+        if (panel) panel.hidden = true;
+        if (success) success.hidden = false;
+    }
+
     function mountPerspectiveModal() {
         document.querySelector('.support-modal-overlay')?.remove();
 
@@ -43,6 +52,11 @@
         const input = overlay.querySelector('#perspective-connect-email');
         const submit = overlay.querySelector('#perspective-connect-submit');
 
+        if (window.LeadCaptureService?.hasRecentLeadSubmission?.(STORAGE_KEY)) {
+            showLeadFormSuccess(panel, success);
+            return;
+        }
+
         form?.addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -60,7 +74,7 @@
             }
 
             if (!window.LeadCaptureService?.submitPerspectiveBanner) {
-                console.error('LeadCaptureService unavailable');
+                window.LeadCaptureService?.showLeadSubmitError?.();
                 return;
             }
 
@@ -71,8 +85,8 @@
 
             try {
                 await window.LeadCaptureService.submitPerspectiveBanner(email);
-                if (panel) panel.hidden = true;
-                if (success) success.hidden = false;
+                window.LeadCaptureService.markLeadSubmitted?.(STORAGE_KEY);
+                showLeadFormSuccess(panel, success);
                 if (typeof gtag === 'function') {
                     gtag('event', 'generate_lead', { method: 'letitout_perspective_banner' });
                 }
@@ -87,6 +101,7 @@
                     submit.disabled = false;
                     submit.textContent = 'Send';
                 }
+                window.LeadCaptureService?.showLeadSubmitError?.();
             }
         });
 

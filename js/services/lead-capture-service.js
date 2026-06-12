@@ -12,6 +12,42 @@
     const CONNECT_ONE_ON_ONE_MESSAGE = 'Let It Out — Connect with me 1 on 1';
     const PERSPECTIVE_BANNER_MESSAGE = 'Let It Out banner — want perspective';
 
+    const LEAD_SUBMIT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+    const LEAD_STORAGE_KEYS = {
+        perspective: 'letitout_perspective_lead_submitted',
+        connect: 'letitout_connect_lead_submitted',
+    };
+
+    function markLeadSubmitted(storageKey) {
+        if (!storageKey) return;
+        try {
+            localStorage.setItem(storageKey, String(Date.now()));
+        } catch (_) {
+            /* ignore */
+        }
+    }
+
+    function hasRecentLeadSubmission(storageKey) {
+        if (!storageKey) return false;
+        try {
+            const raw = localStorage.getItem(storageKey);
+            if (!raw) return false;
+            const ts = Number(raw);
+            if (!Number.isFinite(ts)) return raw === 'true' || raw === '1';
+            return Date.now() - ts < LEAD_SUBMIT_TTL_MS;
+        } catch (_) {
+            return false;
+        }
+    }
+
+    function showLeadSubmitError(
+        message = 'Something went wrong. Please try again or email resetmypattern@gmail.com.'
+    ) {
+        if (window.LetItOutUtils?.showError) {
+            window.LetItOutUtils.showError(message);
+        }
+    }
+
     function ensureHiddenIframe() {
         let iframe = document.getElementById('lead-capture-iframe');
         if (!iframe) {
@@ -133,6 +169,10 @@
         submitBioLead,
         submitConnectOneOnOne,
         submitPerspectiveBanner,
+        markLeadSubmitted,
+        hasRecentLeadSubmission,
+        showLeadSubmitError,
+        LEAD_STORAGE_KEYS,
         CONNECT_ONE_ON_ONE_MESSAGE,
         PERSPECTIVE_BANNER_MESSAGE,
     };

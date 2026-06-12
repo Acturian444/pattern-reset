@@ -1105,6 +1105,19 @@ DARK MODE - FIXES & ADDITIONS
     color: #9a9a9a;
 }
 
+.dark-mode .letitout-intro-terms {
+    color: #9a9a9a;
+}
+
+.dark-mode .letitout-intro-terms a {
+    color: #b0b0b0;
+}
+
+.dark-mode .letitout-intro-terms a:hover,
+.dark-mode .letitout-intro-terms a:focus {
+    color: #ff6b6b;
+}
+
 .dark-mode .letitout-intro-btn {
     background: #f10000;
     color: #fff;
@@ -1486,6 +1499,19 @@ DARK MODE - FIXES & ADDITIONS
 /* --- Support Modal --- */
 .dark-mode .letitout-cta-footer-note {
     color: #9a9a9a;
+}
+
+.dark-mode .letitout-cta-footer-terms {
+    color: #9a9a9a;
+}
+
+.dark-mode .letitout-cta-footer-terms a {
+    color: #b0b0b0;
+}
+
+.dark-mode .letitout-cta-footer-terms a:hover,
+.dark-mode .letitout-cta-footer-terms a:focus {
+    color: #ff6b6b;
 }
 
 .dark-mode .support-link-btn {

@@ -5053,7 +5053,7 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 8px 0;
   z-index: 11;
-  width: 150px;
+  width: 160px;
   overflow: hidden;
 }
 
@@ -5445,6 +5445,27 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
     color: #777;
     margin: 0;
     flex: 1 1 100%;
+}
+
+.letitout-cta-footer-terms {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #888;
+    margin: 0.35rem 0 0;
+    flex: 1 1 100%;
+    line-height: 1.45;
+}
+
+.letitout-cta-footer-terms a {
+    color: #666;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.letitout-cta-footer-terms a:hover,
+.letitout-cta-footer-terms a:focus {
+    color: var(--letitout-primary, #f10000);
 }
 
 .letitout-cta-footer-links {
@@ -7533,8 +7554,28 @@ select {
     font-size: 0.88rem;
     font-weight: 600;
     color: #666;
-    margin: 0 0 1.25rem;
+    margin: 0 0 0.65rem;
     line-height: 1.4;
+}
+
+.letitout-intro-terms {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #777;
+    margin: 0 0 1.1rem;
+    line-height: 1.45;
+}
+
+.letitout-intro-terms a {
+    color: #666;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.letitout-intro-terms a:hover,
+.letitout-intro-terms a:focus {
+    color: #f10000;
 }
 
 .letitout-intro-btn {

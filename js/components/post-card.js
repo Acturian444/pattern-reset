@@ -85,6 +85,7 @@ class PostCard {
         const optionsMenu = document.createElement('div');
         optionsMenu.className = 'options-menu';
         optionsMenu.innerHTML = `
+            <a href="#" class="copy-text-button">Copy Text</a>
             <a href="#" class="copy-link-button">Copy Link</a>
             <a href="#" class="share-post-button">Share</a>
             <a href="#" class="report-post-button">Report Post</a>
@@ -220,11 +221,13 @@ class PostCard {
         if (!post.isInbox) {
             const feltItBtn = document.createElement('button');
             feltItBtn.className = 'felt-it-btn';
+            feltItBtn.setAttribute('type', 'button');
+            feltItBtn.setAttribute('aria-label', 'I see you');
             feltItBtn.innerHTML = `
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
-                <span class="felt-it-text">I Feel This Too</span>
+                <span class="felt-it-text">I See You</span>
                 ${post.feltCount >= 2 ? `<span class="felt-it-count">${post.feltCount}</span>` : ''}
             `;
 
@@ -460,7 +463,7 @@ class PostCard {
             await window.PostService.incrementFeltCount(postId);
         } catch (error) {
             console.error('Error updating felt count:', error);
-            window.LetItOutUtils.showError('Error updating felt count. Please try again.');
+            window.LetItOutUtils.showError('Couldn\'t save your response. Please try again.');
         }
     }
 
@@ -625,6 +628,17 @@ class PostCard {
             modal.classList.remove('visible');
             setTimeout(() => modal.remove(), 300);
         };
+    }
+
+    /** Plain text for clipboard: Let It Out — Story #N + body only (no tags, timestamp, or city). */
+    static getCopyableStoryText(post) {
+        if (!post) return '';
+        const body = typeof post.content === 'string' ? post.content.trim() : '';
+        if (!body) return '';
+        if (post.truthNumber != null && post.truthNumber !== '') {
+            return `Let It Out — Story #${post.truthNumber}\n\n${body}`;
+        }
+        return `Let It Out\n\n${body}`;
     }
 
     static getExpandedPostIds() {
