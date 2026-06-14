@@ -479,8 +479,7 @@ class PostCard {
             return;
         }
 
-        const maxLen = window.LETITOUT_MAX_REPLY_LENGTH || 500;
-        const nearLimit = Math.floor(maxLen * 0.8);
+        const maxLen = window.LETITOUT_MAX_REPLY_LENGTH || 10000;
 
         const overlay = document.createElement('div');
         overlay.className = 'reply-modal-overlay';
@@ -493,7 +492,6 @@ class PostCard {
                 <div class="reply-modal-microcopy">Your message will be anonymous.</div>
             </div>
             <textarea class="reply-textarea" placeholder="Example: I went through something similar. You're not alone." maxlength="${maxLen}"></textarea>
-            <div class="char-counter">0/${maxLen}</div>
             <div class="reply-actions">
                 <button class="cancel-btn">Cancel</button>
                 <button class="send-btn" disabled>Send Support</button>
@@ -505,18 +503,10 @@ class PostCard {
         setTimeout(() => overlay.classList.add('visible'), 10);
 
         const textarea = modal.querySelector('.reply-textarea');
-        const counter = modal.querySelector('.char-counter');
         const sendBtn = modal.querySelector('.send-btn');
         
         textarea.oninput = () => {
-            const length = textarea.value.trim().length;
-            counter.textContent = `${length}/${maxLen}`;
-            if (length > nearLimit) {
-                counter.classList.add('near-limit');
-            } else {
-                counter.classList.remove('near-limit');
-            }
-            sendBtn.disabled = length === 0;
+            sendBtn.disabled = textarea.value.trim().length === 0;
         };
 
         sendBtn.onclick = async () => {

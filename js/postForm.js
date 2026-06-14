@@ -727,14 +727,15 @@ class PostForm {
         
         for (const post of posts) {
             let replyLine = '';
-            let hasReplies = post.replies && post.replies.length;
-            let unreadReplies = hasReplies ? post.replies.filter(r => !r.viewed).length : 0;
+            const { count: replyCount, unread: unreadReplies } =
+                window.PostService.getReplyCounts(post);
+            let hasReplies = replyCount > 0;
             const replyLineClass = hasReplies && unreadReplies > 0 ? 'my-post-reply-line unread' : 'my-post-reply-line';
             let buttonHtml = '';
             if (hasReplies) {
                 const buttonText = unreadReplies > 0 ? 'View New Messages' : 'View Messages';
-                const replyWord = post.replies.length === 1 ? 'reply' : 'replies';
-                replyLine = `<div class="${replyLineClass}">${post.replies.length} ${replyWord} received – <button class="view-messages-btn" data-post-id="${post.id}">${buttonText}</button></div>`;
+                const replyWord = replyCount === 1 ? 'reply' : 'replies';
+                replyLine = `<div class="${replyLineClass}">${replyCount} ${replyWord} received – <button class="view-messages-btn" data-post-id="${post.id}">${buttonText}</button></div>`;
             } else {
                 replyLine = `<div class="${replyLineClass}"><button class="view-messages-btn" data-post-id="${post.id}" disabled style="opacity:0.6;cursor:not-allowed;">No replies yet</button></div>`;
             }
@@ -903,8 +904,18 @@ class PostForm {
             const localId = window.LocalIdManager.getId();
             const posts = await window.PostService.getPostsByUser(localId, 'localId');
             const post = posts.find(p => p.id === postId);
-            
-            if (!post || !post.replies || !post.replies.length) {
+
+            if (!post) {
+                return;
+            }
+
+            const { count: replyCount } = window.PostService.getReplyCounts(post);
+            if (!replyCount) {
+                return;
+            }
+
+            const replies = await window.PostService.getRepliesForPost(postId, post);
+            if (!replies.length) {
                 return;
             }
 
@@ -946,7 +957,9 @@ class PostForm {
             }
 
             // Mark replies as read
-            const unreadReplies = post.replies.filter(r => !r.viewed);
+            const unreadReplies = replies.filter(
+                (reply) => !(reply.viewed === true || reply.read === true)
+            );
             if (unreadReplies.length > 0) {
                 await window.PostService.markRepliesAsRead(postId);
                 
@@ -978,7 +991,7 @@ class PostForm {
 
             // Render replies
             let repliesHtml = '';
-            post.replies.forEach(reply => {
+            replies.forEach(reply => {
                 let replyDate = reply.timestamp?.toDate?.() || new Date(reply.timestamp);
                 const replyTimestamp = !isNaN(replyDate) ? replyDate.toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : '';
                 repliesHtml += `
@@ -1005,7 +1018,7 @@ class PostForm {
                         <div class="original-post-timestamp">${postTimestamp}</div>
                     </div>
                     <div class="replies-section">
-                        <div class="replies-header">${post.replies.length} Message${post.replies.length > 1 ? 's' : ''}</div>
+                        <div class="replies-header">${replies.length} Message${replies.length > 1 ? 's' : ''}</div>
                         <div class="replies-list">
                             ${repliesHtml}
                         </div>
