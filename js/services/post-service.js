@@ -1,8 +1,8 @@
 // Post Service for Firestore Operations
 /** Max wall posts loaded in one realtime query (Firestore cap; raise if catalog grows). */
 const WALL_FEED_MAX_POSTS = 1000;
-/** Send Love / anonymous support reply (enforced in UI + addReply). */
-const LETITOUT_MAX_REPLY_LENGTH = 500;
+/** Send Love / anonymous support reply — same cap as post body (Write tab). */
+const LETITOUT_MAX_REPLY_LENGTH = 10000;
 window.LETITOUT_MAX_REPLY_LENGTH = LETITOUT_MAX_REPLY_LENGTH;
 
 class PostService {
