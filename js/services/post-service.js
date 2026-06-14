@@ -3,6 +3,8 @@
 const WALL_FEED_MAX_POSTS = 1000;
 /** Send Love / anonymous support reply — same cap as post body (Write tab). */
 const LETITOUT_MAX_REPLY_LENGTH = 10000;
+/** Stored in letitout-posts/{postId}/replies — keeps post doc under Firestore 1 MiB limit. */
+const REPLIES_SUBCOLLECTION = 'replies';
 window.LETITOUT_MAX_REPLY_LENGTH = LETITOUT_MAX_REPLY_LENGTH;
 
 class PostService {
@@ -245,10 +247,58 @@ class PostService {
         }
     }
 
+    _legacyReplies(post) {
+        return Array.isArray(post?.replies) ? post.replies : [];
+    }
+
+    _replyTimestampMs(timestamp) {
+        if (!timestamp) return 0;
+        if (typeof timestamp.toDate === 'function') return timestamp.toDate().getTime();
+        if (timestamp.seconds) return timestamp.seconds * 1000;
+        return new Date(timestamp).getTime();
+    }
+
+    _isReplyUnread(reply) {
+        if (reply?.viewed === true || reply?.read === true) return false;
+        return true;
+    }
+
+    /** Reply totals for list UI — merges legacy inline array + subcollection counters. */
+    getReplyCounts(post) {
+        const legacy = this._legacyReplies(post);
+        const subCount = typeof post?.replyCount === 'number' ? post.replyCount : 0;
+        const count = legacy.length + subCount;
+        const legacyUnread = legacy.filter((reply) => this._isReplyUnread(reply)).length;
+        const subUnread =
+            typeof post?.unreadReplyCount === 'number' ? post.unreadReplyCount : 0;
+        return { count, unread: legacyUnread + subUnread };
+    }
+
+    /** All replies for a post: legacy inline array + subcollection docs, oldest first. */
+    async getRepliesForPost(postId, postData = null) {
+        const post = postData || (await this.getPost(postId));
+        const legacy = this._legacyReplies(post);
+
+        const snapshot = await this.collection
+            .doc(postId)
+            .collection(REPLIES_SUBCOLLECTION)
+            .orderBy('timestamp', 'asc')
+            .get();
+
+        const subcollectionReplies = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+
+        return [...legacy, ...subcollectionReplies].sort(
+            (a, b) => this._replyTimestampMs(a.timestamp) - this._replyTimestampMs(b.timestamp)
+        );
+    }
+
     async addReply(postId, reply) {
         try {
             console.log('addReply called with postId:', postId, 'reply:', reply);
-            
+
             const userReply = await this.getUserReply(postId);
             if (userReply) {
                 throw new Error('You have already replied to this post');
@@ -256,9 +306,9 @@ class PostService {
 
             const replyData = {
                 content: (reply.replyText || reply.content || '').trim(),
-                timestamp: new Date(),
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 anonymousId: window.firebaseUserId,
-                read: false
+                viewed: false,
             };
 
             console.log('Processed replyData:', replyData);
@@ -272,21 +322,24 @@ class PostService {
                 );
             }
 
-            console.log('About to update Firestore document:', postId);
-            console.log('Update data:', { replies: firebase.firestore.FieldValue.arrayUnion(replyData) });
-
-            await this.collection.doc(postId).update({
-                replies: firebase.firestore.FieldValue.arrayUnion(replyData)
+            const postRef = this.collection.doc(postId);
+            const replyRef = postRef.collection(REPLIES_SUBCOLLECTION).doc();
+            const batch = this.db.batch();
+            batch.set(replyRef, replyData);
+            batch.update(postRef, {
+                replyCount: firebase.firestore.FieldValue.increment(1),
+                unreadReplyCount: firebase.firestore.FieldValue.increment(1),
             });
+            await batch.commit();
 
-            console.log('Firestore update successful');
+            console.log('Reply saved to subcollection');
             return replyData;
         } catch (error) {
             console.error('Error adding reply:', error);
             console.error('Error details:', {
                 message: error.message,
                 code: error.code,
-                stack: error.stack
+                stack: error.stack,
             });
             throw error;
         }
@@ -294,10 +347,24 @@ class PostService {
 
     async getUserReply(postId) {
         try {
+            const snapshot = await this.collection
+                .doc(postId)
+                .collection(REPLIES_SUBCOLLECTION)
+                .where('anonymousId', '==', window.firebaseUserId)
+                .limit(1)
+                .get();
+
+            if (!snapshot.empty) {
+                const doc = snapshot.docs[0];
+                return { id: doc.id, ...doc.data() };
+            }
+
             const post = await this.getPost(postId);
-            if (!post.replies) return null;
-            
-            return post.replies.find(reply => reply.anonymousId === window.firebaseUserId);
+            return (
+                this._legacyReplies(post).find(
+                    (reply) => reply.anonymousId === window.firebaseUserId
+                ) || null
+            );
         } catch (error) {
             console.error('Error getting user reply:', error);
             throw error;
@@ -306,17 +373,30 @@ class PostService {
 
     async markRepliesAsRead(postId) {
         try {
-            const post = await this.getPost(postId);
-            if (!post.replies) return;
+            const postRef = this.collection.doc(postId);
+            const snapshot = await postRef.collection(REPLIES_SUBCOLLECTION).get();
+            const batch = this.db.batch();
 
-            const updatedReplies = post.replies.map(reply => ({
-                ...reply,
-                viewed: true
-            }));
-
-            await this.collection.doc(postId).update({
-                replies: updatedReplies
+            snapshot.docs.forEach((doc) => {
+                if (this._isReplyUnread(doc.data())) {
+                    batch.update(doc.ref, { viewed: true });
+                }
             });
+
+            const postDoc = await postRef.get();
+            const data = postDoc.data() || {};
+            const updates = { unreadReplyCount: 0 };
+
+            if (this._legacyReplies(data).length) {
+                updates.replies = data.replies.map((reply) => ({
+                    ...reply,
+                    viewed: true,
+                    read: true,
+                }));
+            }
+
+            batch.update(postRef, updates);
+            await batch.commit();
         } catch (error) {
             console.error('Error marking replies as read:', error);
             throw error;
@@ -350,8 +430,7 @@ class PostService {
         try {
             const posts = await this.getPostsByUser();
             return posts.reduce((count, post) => {
-                if (!post.replies) return count;
-                return count + post.replies.filter(reply => !reply.viewed).length;
+                return count + this.getReplyCounts(post).unread;
             }, 0);
         } catch (error) {
             console.error('Error getting unread reply count:', error);
