@@ -122,7 +122,7 @@ class PostForm {
             // MVP: Single static prompt when prompts are hidden
             const mvpPrompt = document.createElement('div');
             mvpPrompt.className = 'letitout-mvp-prompt';
-            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Tell the story you've never told.</span><span class=\"letitout-mvp-subtitle\">Anonymous. Honest. Unfiltered.</span>";
+            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Tell the story you've been carrying.</span><span class=\"letitout-mvp-subtitle\">Anonymous. Honest. Unfiltered.</span>";
             formContent.appendChild(mvpPrompt);
         }
 
