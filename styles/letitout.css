@@ -2073,18 +2073,23 @@ header .container {
     gap: 8px;
 }
 
-/* Post card - situation tag: same pill as feelings */
+/* Post card - situation: slightly stronger neutral chip (topic); feelings stay lighter grey */
+.post-card .post-emotion-tags .situation-tag.situation-tag-small,
+.letitout-my-posts-modal .post-emotion-tags .situation-tag.situation-tag-small,
+.my-post-card .post-emotion-tags .situation-tag.situation-tag-small,
+.original-post-card .post-emotion-tags .situation-tag.situation-tag-small,
 .post-emotion-tags .situation-tag.situation-tag-small {
     font-size: 12px;
     padding: 2px 10px;
     border-radius: 999px;
     font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 0.015em;
     display: inline-flex;
     align-items: center;
-    background: var(--letitout-pill-tag-bg, #e8e8e8);
+    background: var(--letitout-pill-tag-selected-bg, #d2d2d2);
     color: var(--letitout-pill-tag-text, #141414);
-    border: 1px solid var(--letitout-pill-tag-border, #cfcfcf);
+    border: 1px solid var(--letitout-pill-tag-selected-border, #9a9a9a);
     box-shadow: none;
 }
 
@@ -3978,6 +3983,24 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
 .wall-filter-modal .emotion-subtag.selected .emotion-subtag-count {
     color: rgba(255, 255, 255, 0.92);
     opacity: 1;
+}
+
+.wall-filter-modal .emotion-subtag.wall-unified-filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+}
+
+.wall-filter-modal .emotion-subtag-count {
+    font-variant-numeric: tabular-nums;
+    font-size: 0.82em;
+    font-weight: 500;
+    opacity: 0.62;
+    line-height: 1;
+}
+
+.wall-filter-modal .emotion-subtag.selected .emotion-subtag-count {
+    opacity: 0.92;
 }
 
 .wall-filter-modal .emotion-subtag:hover:not(.selected):not(.wall-unified-filter-tag--max) {

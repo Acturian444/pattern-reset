@@ -597,7 +597,45 @@ class WallFeed {
                 .map((e) => e.trim())
                 .includes(t.label);
         }
-        return post.situation === t.label;
+        return post.situation === t.label
+            || (typeof situationTagMatches === 'function' && situationTagMatches(post.situation, t.label));
+    }
+
+    _wallTagCountKey(tag) {
+        return `${tag.type}:${tag.label}`;
+    }
+
+    /** Story counts per tag from loaded wall posts (catalog snapshot, not filtered subset). */
+    buildWallTagCounts(posts = this.posts) {
+        const counts = new Map();
+        const bump = (tag) => {
+            const key = this._wallTagCountKey(tag);
+            counts.set(key, (counts.get(key) || 0) + 1);
+        };
+
+        for (const post of posts) {
+            if (post.emotion) {
+                const seen = new Set();
+                post.emotion
+                    .split(',')
+                    .map((e) => e.trim())
+                    .filter(Boolean)
+                    .forEach((label) => {
+                        if (seen.has(label)) return;
+                        seen.add(label);
+                        bump({ type: 'emotion', label });
+                    });
+            }
+            if (typeof post.situation === 'string' && post.situation.trim()) {
+                const canonical =
+                    typeof canonicalLetItOutSituation === 'function'
+                        ? canonicalLetItOutSituation(post.situation.trim())
+                        : post.situation.trim();
+                bump({ type: 'situation', label: canonical });
+            }
+        }
+
+        return counts;
     }
 
     applyWallTagFilter(posts) {
@@ -931,8 +969,8 @@ class WallFeed {
         }
         return [
             'Relationships', 'Dating', 'Breakup', 'Marriage', 'Divorce', 'Infidelity', 'Friendship', 'Family',
-            'Parenthood', 'Childhood', 'School', 'Identity', 'Sexuality', 'Self-Worth', 'Purpose', 'Career', 'Money',
-            'Success', 'Failure', 'Addiction', 'Mental Health', 'Health', 'Trauma', 'Grief & Loss', 'Regret',
+            'Parenthood', 'Childhood', 'School', 'Identity', 'Sexuality', 'Self-Worth', 'Purpose', 'Work', 'Burnout', 'Money',
+            'Success', 'Failure', 'Addiction', 'Mental Health', 'Illness & Health', 'Trauma', 'Grief & Loss', 'Regret',
             'Starting Over', 'Life Change', 'Faith & Spirituality', 'Abuse', 'Secret', 'Confession', 'Other'
         ];
     }
@@ -978,6 +1016,8 @@ class WallFeed {
         unifiedWrap.appendChild(searchInput);
         unifiedWrap.appendChild(categoriesContainer);
 
+        const tagCounts = this.buildWallTagCounts(this.posts);
+
         const renderUnified = (filter = '') => {
             categoriesContainer.innerHTML = '';
             const filterVal = filter.trim().toLowerCase();
@@ -998,6 +1038,19 @@ class WallFeed {
                 labelSpan.className = 'emotion-subtag-label';
                 labelSpan.textContent = tag.label;
                 btn.appendChild(labelSpan);
+
+                const count = tagCounts.get(this._wallTagCountKey(tag)) || 0;
+                if (count > 0) {
+                    const countSpan = document.createElement('span');
+                    countSpan.className = 'emotion-subtag-count';
+                    countSpan.textContent = String(count);
+                    countSpan.setAttribute('aria-hidden', 'true');
+                    btn.appendChild(countSpan);
+                    const storyWord = count === 1 ? 'story' : 'stories';
+                    btn.setAttribute('aria-label', `${tag.label}, ${count} ${storyWord}`);
+                } else {
+                    btn.setAttribute('aria-label', tag.label);
+                }
 
                 if (this.isWallTagSelected(tag)) {
                     btn.classList.add('selected');
@@ -1633,7 +1686,7 @@ class WallFeed {
             : baseUrl;
         return {
             text:
-                'Let It Out \u2014 Tell the story you\u2019ve never told.\n' +
+                'Let It Out \u2014 Tell the story you\u2019ve been carrying.\n' +
                 'Read this on the wall:\n' +
                 wallUrl,
         };
@@ -1946,6 +1999,7 @@ WallFeed.UNIFIED_FILTER_LABEL_ORDER = [
     'Family',
     'Overwhelmed',
     'Exhausted',
+    'Burnout',
     'Numb',
     'Friendship',
     'Rejected',
@@ -1955,10 +2009,10 @@ WallFeed.UNIFIED_FILTER_LABEL_ORDER = [
     'Ashamed',
     'Embarrassed',
     'Mental Health',
-    'Health',
+    'Illness & Health',
     'Trauma',
     'Lost',
-    'Career',
+    'Work',
     'Angry',
     'Frustrated',
     'Disappointed',

@@ -167,8 +167,8 @@ class PostForm {
                 ? [...LET_IT_OUT_SITUATION_TAGS]
                 : [
                       'Relationships', 'Dating', 'Breakup', 'Marriage', 'Divorce', 'Infidelity', 'Friendship', 'Family',
-                      'Parenthood', 'Childhood', 'School', 'Identity', 'Sexuality', 'Self-Worth', 'Purpose', 'Career', 'Money',
-                      'Success', 'Failure', 'Addiction', 'Mental Health', 'Health', 'Trauma', 'Grief & Loss', 'Regret',
+                      'Parenthood', 'Childhood', 'School', 'Identity', 'Sexuality', 'Self-Worth', 'Purpose', 'Work', 'Burnout', 'Money',
+                      'Success', 'Failure', 'Addiction', 'Mental Health', 'Illness & Health', 'Trauma', 'Grief & Loss', 'Regret',
                       'Starting Over', 'Life Change', 'Faith & Spirituality', 'Abuse', 'Secret', 'Confession', 'Other'
                   ];
         this._submitAttemptedWithoutSituation = false;
