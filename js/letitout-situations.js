@@ -19,13 +19,14 @@
         'Sexuality',
         'Self-Worth',
         'Purpose',
-        'Career',
+        'Work',
+        'Burnout',
         'Money',
         'Success',
         'Failure',
         'Addiction',
         'Mental Health',
-        'Health',
+        'Illness & Health',
         'Trauma',
         'Grief & Loss',
         'Regret',
@@ -37,4 +38,24 @@
         'Confession',
         'Other'
     ];
+
+    /** Older posts may still use pre-rename situation values. */
+    g.LET_IT_OUT_SITUATION_LEGACY_TO_CANONICAL = {
+        Career: 'Work',
+        Health: 'Illness & Health',
+    };
+
+    g.canonicalLetItOutSituation = function canonicalLetItOutSituation(label) {
+        if (!label || typeof label !== 'string') return label;
+        const trimmed = label.trim();
+        return g.LET_IT_OUT_SITUATION_LEGACY_TO_CANONICAL[trimmed] || trimmed;
+    };
+
+    g.situationTagMatches = function situationTagMatches(storedSituation, filterLabel) {
+        if (!storedSituation || !filterLabel) return false;
+        const stored = String(storedSituation).trim();
+        const filter = String(filterLabel).trim();
+        if (stored === filter) return true;
+        return g.canonicalLetItOutSituation(stored) === filter;
+    };
 })(typeof globalThis !== 'undefined' ? globalThis : window);

@@ -785,6 +785,10 @@ DARK MODE - FIXES & ADDITIONS
     opacity: 1;
 }
 
+.dark-mode .wall-filter-modal .emotion-subtag:not(.selected) .emotion-subtag-count {
+    color: #9a9a9a;
+}
+
 .dark-mode .wall-filter-modal button.emotion-subtag.wall-unified-filter-tag--max:not(.selected) {
     background-color: #222222 !important;
     color: #6a6a6a !important;
@@ -939,11 +943,17 @@ DARK MODE - FIXES & ADDITIONS
 .dark-mode .filter-situation-section {
     border-top-color: #333;
 }
-/* Post card - situation pill: outline style, matches emotion height, distinct but cohesive */
+/* Post card - situation: slightly stronger neutral chip (topic) */
+.dark-mode .post-card .post-emotion-tags .situation-tag.situation-tag-small,
+.dark-mode .letitout-my-posts-modal .post-emotion-tags .situation-tag.situation-tag-small,
+.dark-mode .my-post-card .post-emotion-tags .situation-tag.situation-tag-small,
+.dark-mode .original-post-card .post-emotion-tags .situation-tag.situation-tag-small,
 .dark-mode .post-emotion-tags .situation-tag.situation-tag-small {
-    background: #2a2a2a;
-    border-color: #444;
+    background: #383838;
+    border-color: #5a5a5a;
     color: #f0f0f0;
+    font-weight: 600;
+    letter-spacing: 0.015em;
 }
 
 .dark-mode .letitout-emotion-modal-btn.cancel,

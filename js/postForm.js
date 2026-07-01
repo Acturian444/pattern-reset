@@ -122,7 +122,7 @@ class PostForm {
             // MVP: Single static prompt when prompts are hidden
             const mvpPrompt = document.createElement('div');
             mvpPrompt.className = 'letitout-mvp-prompt';
-            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Tell the story you've never told.</span><span class=\"letitout-mvp-subtitle\">Anonymous. Honest. Unfiltered.</span>";
+            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Tell the story you've been carrying.</span><span class=\"letitout-mvp-subtitle\">Anonymous. Honest. Unfiltered.</span>";
             formContent.appendChild(mvpPrompt);
         }
 
@@ -167,8 +167,8 @@ class PostForm {
                 ? [...LET_IT_OUT_SITUATION_TAGS]
                 : [
                       'Relationships', 'Dating', 'Breakup', 'Marriage', 'Divorce', 'Infidelity', 'Friendship', 'Family',
-                      'Parenthood', 'Childhood', 'School', 'Identity', 'Sexuality', 'Self-Worth', 'Purpose', 'Career', 'Money',
-                      'Success', 'Failure', 'Addiction', 'Mental Health', 'Health', 'Trauma', 'Grief & Loss', 'Regret',
+                      'Parenthood', 'Childhood', 'School', 'Identity', 'Sexuality', 'Self-Worth', 'Purpose', 'Work', 'Burnout', 'Money',
+                      'Success', 'Failure', 'Addiction', 'Mental Health', 'Illness & Health', 'Trauma', 'Grief & Loss', 'Regret',
                       'Starting Over', 'Life Change', 'Faith & Spirituality', 'Abuse', 'Secret', 'Confession', 'Other'
                   ];
         this._submitAttemptedWithoutSituation = false;
