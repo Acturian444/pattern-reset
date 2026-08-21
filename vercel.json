@@ -98,6 +98,28 @@
       "has": [
         {
           "type": "host",
+          "value": "letitoutproject.com"
+        }
+      ],
+      "destination": "https://mypatternreset.com/letitout",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.letitoutproject.com"
+        }
+      ],
+      "destination": "https://mypatternreset.com/letitout",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
           "value": "resetmypattern.com"
         }
       ],
