@@ -42,8 +42,9 @@ class PostCard {
     static _patchFeltCount(card, post) {
         const feltBtn = card.querySelector('.felt-it-btn');
         if (!feltBtn) return;
-        let countSpan = feltBtn.querySelector('.felt-it-count');
         const count = post.feltCount || 0;
+        feltBtn.dataset.feltCount = String(count);
+        let countSpan = feltBtn.querySelector('.felt-it-count');
         if (count >= 2) {
             if (countSpan) {
                 countSpan.textContent = String(count);
@@ -52,6 +53,25 @@ class PostCard {
                 countSpan.className = 'felt-it-count';
                 countSpan.textContent = String(count);
                 feltBtn.appendChild(countSpan);
+            }
+        } else if (countSpan) {
+            countSpan.remove();
+        }
+    }
+
+    /** Apply optimistic / live felt count to the I See You button (shows number when >= 2). */
+    static _applyFeltCountToButton(feltItBtn, count) {
+        const safe = Math.max(0, Number(count) || 0);
+        feltItBtn.dataset.feltCount = String(safe);
+        let countSpan = feltItBtn.querySelector('.felt-it-count');
+        if (safe >= 2) {
+            if (countSpan) {
+                countSpan.textContent = String(safe);
+            } else {
+                countSpan = document.createElement('span');
+                countSpan.className = 'felt-it-count';
+                countSpan.textContent = String(safe);
+                feltItBtn.appendChild(countSpan);
             }
         } else if (countSpan) {
             countSpan.remove();
@@ -223,12 +243,14 @@ class PostCard {
             feltItBtn.className = 'felt-it-btn';
             feltItBtn.setAttribute('type', 'button');
             feltItBtn.setAttribute('aria-label', 'I See You');
+            const initialFelt = post.feltCount || 0;
+            feltItBtn.dataset.feltCount = String(initialFelt);
             feltItBtn.innerHTML = `
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
                 <span class="felt-it-text">I See You</span>
-                ${post.feltCount >= 2 ? `<span class="felt-it-count">${post.feltCount}</span>` : ''}
+                ${initialFelt >= 2 ? `<span class="felt-it-count">${initialFelt}</span>` : ''}
             `;
 
             // Check if user has already felt it
@@ -239,38 +261,41 @@ class PostCard {
 
             feltItBtn.onclick = async () => {
                 const hasFeltIt = this.checkIfUserFeltIt(post.id);
-                const countSpan = feltItBtn.querySelector('.felt-it-count');
-                let currentCount = parseInt(countSpan?.textContent || '0');
+                const currentCount = parseInt(feltItBtn.dataset.feltCount || '0', 10) || 0;
                 if (hasFeltIt) {
                     // Remove reaction
                     feltItBtn.classList.remove('felt');
                     let feltPosts = JSON.parse(localStorage.getItem('feltPosts') || '[]');
                     feltPosts = feltPosts.filter(pid => pid !== post.id);
                     localStorage.setItem('feltPosts', JSON.stringify(feltPosts));
-                    if (countSpan) {
-                        const newCount = Math.max(currentCount - 1, 0);
-                        if (newCount < 2) {
-                            countSpan.remove();
-                        } else {
-                            countSpan.textContent = newCount;
-                        }
+                    this._applyFeltCountToButton(feltItBtn, currentCount - 1);
+                    try {
+                        await window.PostService.decrementFeltCount(post.id);
+                    } catch (err) {
+                        console.error('Error decrementing felt count:', err);
+                        this._applyFeltCountToButton(feltItBtn, currentCount);
+                        feltItBtn.classList.add('felt');
+                        feltPosts.push(post.id);
+                        localStorage.setItem('feltPosts', JSON.stringify(feltPosts));
                     }
-                    await window.PostService.decrementFeltCount(post.id);
                 } else {
                     feltItBtn.classList.add('felt');
                     let feltPosts = JSON.parse(localStorage.getItem('feltPosts') || '[]');
                     feltPosts.push(post.id);
                     localStorage.setItem('feltPosts', JSON.stringify(feltPosts));
-                    if (countSpan) {
-                        const newCount = currentCount + 1;
-                        countSpan.textContent = newCount;
-                    } else {
-                        const newCountSpan = document.createElement('span');
-                        newCountSpan.className = 'felt-it-count';
-                        newCountSpan.textContent = '2';
-                        feltItBtn.appendChild(newCountSpan);
+                    this._applyFeltCountToButton(feltItBtn, currentCount + 1);
+                    try {
+                        await window.PostService.incrementFeltCount(post.id);
+                    } catch (err) {
+                        console.error('Error incrementing felt count:', err);
+                        this._applyFeltCountToButton(feltItBtn, currentCount);
+                        feltItBtn.classList.remove('felt');
+                        feltPosts = feltPosts.filter(pid => pid !== post.id);
+                        localStorage.setItem('feltPosts', JSON.stringify(feltPosts));
+                        window.LetItOutUtils?.showError?.(
+                            'Couldn\'t save your response. Please try again.'
+                        );
                     }
-                    await window.PostService.incrementFeltCount(post.id);
                 }
             };
 
@@ -432,6 +457,8 @@ class PostCard {
             return; // Already felt it
         }
 
+        const currentCount = parseInt(button.dataset.feltCount || '0', 10) || 0;
+
         try {
             // Add to felt posts in localStorage
             const feltPosts = JSON.parse(localStorage.getItem('feltPosts') || '[]');
@@ -440,29 +467,17 @@ class PostCard {
 
             // Update UI
             button.classList.add('felt');
-            // Always show 'Felt It', do not change to 'Felt'
-            // button.querySelector('.felt-it-text').textContent = 'Felt';
-
-            // Update count
-            const countSpan = button.querySelector('.felt-it-count');
-            const currentCount = parseInt(countSpan?.textContent || '0');
-            const newCount = currentCount + 1;
-
-            if (newCount >= 2) {
-                if (!countSpan) {
-                    const newCountSpan = document.createElement('span');
-                    newCountSpan.className = 'felt-it-count';
-                    newCountSpan.textContent = newCount;
-                    button.appendChild(newCountSpan);
-                } else {
-                    countSpan.textContent = newCount;
-                }
-            }
+            this._applyFeltCountToButton(button, currentCount + 1);
 
             // Update in Firestore
             await window.PostService.incrementFeltCount(postId);
         } catch (error) {
             console.error('Error updating felt count:', error);
+            this._applyFeltCountToButton(button, currentCount);
+            button.classList.remove('felt');
+            let feltPosts = JSON.parse(localStorage.getItem('feltPosts') || '[]');
+            feltPosts = feltPosts.filter((pid) => pid !== postId);
+            localStorage.setItem('feltPosts', JSON.stringify(feltPosts));
             window.LetItOutUtils.showError('Couldn\'t save your response. Please try again.');
         }
     }

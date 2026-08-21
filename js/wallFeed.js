@@ -1686,7 +1686,7 @@ class WallFeed {
             : baseUrl;
         return {
             text:
-                'Let It Out \u2014 Tell the story you\u2019ve been carrying.\n' +
+                'Let It Out \u2014 A place for the things we don\u2019t say.\n' +
                 'Read this on the wall:\n' +
                 wallUrl,
         };

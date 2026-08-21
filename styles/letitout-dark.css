@@ -199,6 +199,10 @@ body.page-letitout.dark-mode .copyright a:visited {
     color: #ffffff !important;
 }
 
+.dark-mode .letitout-brand-line {
+    color: rgba(255, 252, 241, 0.68);
+}
+
 .dark-mode .letitout-story-count {
     color: rgba(255, 252, 241, 0.62);
 }

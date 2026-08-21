@@ -122,7 +122,7 @@ class PostForm {
             // MVP: Single static prompt when prompts are hidden
             const mvpPrompt = document.createElement('div');
             mvpPrompt.className = 'letitout-mvp-prompt';
-            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Tell the story you've been carrying.</span><span class=\"letitout-mvp-subtitle\">Anonymous. Honest. Unfiltered.</span>";
+            mvpPrompt.innerHTML = "<span class=\"letitout-mvp-title\">Tell the story you've been carrying.</span><span class=\"letitout-mvp-subtitle\">No name. No judgment. Just let it out.</span>";
             formContent.appendChild(mvpPrompt);
         }
 
@@ -654,7 +654,7 @@ class PostForm {
             const storyNote = document.createElement('p');
             storyNote.className = 'letitout-cta-footer-note';
             storyNote.textContent =
-                'Anonymous posts on the wall. No names or identifying details.';
+                'Shared anonymously on the wall. Please leave out identifying details.';
             ctaFooter.appendChild(storyNote);
 
             const supportLinks = document.createElement('div');

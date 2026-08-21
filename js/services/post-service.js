@@ -5,7 +5,33 @@ const WALL_FEED_MAX_POSTS = 1000;
 const LETITOUT_MAX_REPLY_LENGTH = 10000;
 /** Stored in letitout-posts/{postId}/replies — keeps post doc under Firestore 1 MiB limit. */
 const REPLIES_SUBCOLLECTION = 'replies';
+/** Last-known story total for instant header paint (counters/posts). */
+const STORY_COUNT_CACHE_KEY = 'letitout_story_count_cache';
 window.LETITOUT_MAX_REPLY_LENGTH = LETITOUT_MAX_REPLY_LENGTH;
+window.LETITOUT_STORY_COUNT_CACHE_KEY = STORY_COUNT_CACHE_KEY;
+
+function readCachedStoryCount() {
+    try {
+        const raw = localStorage.getItem(STORY_COUNT_CACHE_KEY);
+        if (raw == null) return null;
+        const n = Number(raw);
+        return Number.isFinite(n) && n >= 0 ? Math.floor(n) : null;
+    } catch (_) {
+        return null;
+    }
+}
+
+function writeCachedStoryCount(count) {
+    if (!Number.isFinite(count) || count < 0) return;
+    try {
+        localStorage.setItem(STORY_COUNT_CACHE_KEY, String(Math.floor(count)));
+    } catch (_) {
+        /* ignore */
+    }
+}
+
+window.readCachedStoryCount = readCachedStoryCount;
+window.writeCachedStoryCount = writeCachedStoryCount;
 
 class PostService {
     constructor() {
@@ -157,23 +183,20 @@ class PostService {
         const counterRef = this.db.collection('counters').doc('posts');
         let unsub = null;
 
-        const attach = () => {
-            if (unsub) return;
-            unsub = counterRef.onSnapshot(
-                (doc) => {
-                    const count =
-                        doc.exists && typeof doc.data().count === 'number'
-                            ? doc.data().count
-                            : 0;
-                    callback(count);
-                },
-                (error) => {
-                    console.error('Error subscribing to story count:', error);
-                }
-            );
-        };
-
-        this.verifyAuth().then(attach).catch(attach);
+        // Public read — attach immediately (no auth wait). Cache for instant next paint.
+        unsub = counterRef.onSnapshot(
+            (doc) => {
+                const count =
+                    doc.exists && typeof doc.data().count === 'number'
+                        ? doc.data().count
+                        : 0;
+                writeCachedStoryCount(count);
+                callback(count);
+            },
+            (error) => {
+                console.error('Error subscribing to story count:', error);
+            }
+        );
 
         return () => {
             if (unsub) unsub();
@@ -184,47 +207,32 @@ class PostService {
     subscribeToPosts(callback) {
         let unsub = null;
 
-        const attach = async () => {
-            if (unsub) return;
+        // Public read — attach immediately. Use cached total for query limit (no blocking get).
+        const cachedTotal = readCachedStoryCount();
+        let queryLimit = WALL_FEED_MAX_POSTS;
+        if (cachedTotal > 0) {
+            queryLimit = Math.min(Math.max(cachedTotal + 25, 100), WALL_FEED_MAX_POSTS);
+        }
 
-            let queryLimit = WALL_FEED_MAX_POSTS;
-            try {
-                const counterDoc = await this.db.collection('counters').doc('posts').get();
-                const total =
-                    counterDoc.exists && typeof counterDoc.data().count === 'number'
-                        ? counterDoc.data().count
-                        : null;
-                if (total > 0) {
-                    queryLimit = Math.min(Math.max(total + 25, 100), WALL_FEED_MAX_POSTS);
-                }
-            } catch (err) {
-                console.warn('Could not read story counter for feed limit:', err);
-            }
-
-            unsub = this.collection
-                .orderBy('timestamp', 'desc')
-                .limit(queryLimit)
-                .onSnapshot(
-                    (snapshot) => {
-                        const posts = snapshot.docs.map((doc) => ({
-                            id: doc.id,
-                            ...doc.data(),
-                        }));
-                        callback(posts);
-                    },
-                    (error) => {
-                        console.error('Error in posts subscription:', error);
-                        if (error.message.includes('permission')) {
-                            console.error('Permission denied - check Firebase security rules');
-                        }
-                        window.LetItOutUtils.showError('Error loading posts. Please refresh the page.');
+        unsub = this.collection
+            .orderBy('timestamp', 'desc')
+            .limit(queryLimit)
+            .onSnapshot(
+                (snapshot) => {
+                    const posts = snapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }));
+                    callback(posts);
+                },
+                (error) => {
+                    console.error('Error in posts subscription:', error);
+                    if (error.message.includes('permission')) {
+                        console.error('Permission denied - check Firebase security rules');
                     }
-                );
-        };
-
-        this.verifyAuth().then(attach).catch(() => {
-            setTimeout(() => this.subscribeToPosts(callback), 3000);
-        });
+                    window.LetItOutUtils.showError('Error loading posts. Please refresh the page.');
+                }
+            );
 
         return () => {
             if (unsub) unsub();
