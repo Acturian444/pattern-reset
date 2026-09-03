@@ -1515,16 +1515,12 @@ DARK MODE - FIXES & ADDITIONS
     color: #9a9a9a;
 }
 
-.dark-mode .letitout-cta-footer-terms {
-    color: #9a9a9a;
-}
-
-.dark-mode .letitout-cta-footer-terms a {
+.dark-mode .letitout-cta-footer-note a {
     color: #b0b0b0;
 }
 
-.dark-mode .letitout-cta-footer-terms a:hover,
-.dark-mode .letitout-cta-footer-terms a:focus {
+.dark-mode .letitout-cta-footer-note a:hover,
+.dark-mode .letitout-cta-footer-note a:focus {
     color: #ff6b6b;
 }
 

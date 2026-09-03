@@ -653,15 +653,9 @@ class PostForm {
 
             const storyNote = document.createElement('p');
             storyNote.className = 'letitout-cta-footer-note';
-            storyNote.textContent =
-                'Shared anonymously on the wall. Please leave out identifying details.';
+            storyNote.innerHTML =
+                'Shared anonymously. No identifying details. We may feature it in social posts and videos. <a href="legal.html#sec-ugc">Terms</a>';
             ctaFooter.appendChild(storyNote);
-
-            const reuseNote = document.createElement('p');
-            reuseNote.className = 'letitout-cta-footer-terms';
-            reuseNote.innerHTML =
-                'By posting, you agree we may feature your story anonymously in social posts and videos. <a href="legal.html#sec-ugc">Terms</a>';
-            ctaFooter.appendChild(reuseNote);
 
             const supportLinks = document.createElement('div');
             supportLinks.className = 'letitout-cta-footer-links';

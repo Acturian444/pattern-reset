@@ -5473,26 +5473,17 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
     color: #777;
     margin: 0;
     flex: 1 1 100%;
-}
-
-.letitout-cta-footer-terms {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: #888;
-    margin: 0.35rem 0 0;
-    flex: 1 1 100%;
     line-height: 1.45;
 }
 
-.letitout-cta-footer-terms a {
+.letitout-cta-footer-note a {
     color: #666;
     text-decoration: underline;
     text-underline-offset: 2px;
 }
 
-.letitout-cta-footer-terms a:hover,
-.letitout-cta-footer-terms a:focus {
+.letitout-cta-footer-note a:hover,
+.letitout-cta-footer-note a:focus {
     color: var(--letitout-primary-hover, #8a0000);
 }
 
