@@ -7591,17 +7591,8 @@ select {
     font-size: 0.88rem;
     font-weight: 600;
     color: #666;
-    margin: 0 0 0.45rem;
-    line-height: 1.4;
-}
-
-.letitout-intro-reuse {
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: #777;
     margin: 0 0 1.1rem;
     line-height: 1.4;
-    text-align: center;
 }
 
 .letitout-intro-terms {
@@ -7697,11 +7688,6 @@ select {
 
     .letitout-intro-age {
         font-size: 0.84rem;
-        margin-bottom: 0.4rem;
-    }
-
-    .letitout-intro-reuse {
-        font-size: 0.78rem;
         margin-bottom: 1rem;
     }
 
