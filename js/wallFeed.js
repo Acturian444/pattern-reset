@@ -765,7 +765,7 @@ class WallFeed {
         const searchInput = document.createElement('input');
         searchInput.type = 'text';
         searchInput.className = 'wall-search-input';
-        searchInput.placeholder = 'Search Wall...';
+        searchInput.placeholder = 'Find a story\u2026';
         searchInput.value = this.currentSearch;
         
         const searchButton = document.createElement('button');
@@ -1123,6 +1123,38 @@ class WallFeed {
         this.updateShowingRow();
     }
 
+    /**
+     * Parse wall search: story-number lookup (#6, story 6, bare 6) vs keyword text.
+     * Story lookups use exact truthNumber match only (never digit substring).
+     * @returns {{ type: 'story', number: number } | { type: 'text', term: string } | null}
+     */
+    _parseWallSearchQuery(raw) {
+        const q = (raw || '').trim();
+        if (!q) return null;
+
+        const storyMatch = q.match(
+            /^\s*(?:#|story\s*#?)\s*(\d+)\s*$/i
+        ) || q.match(/^\s*(\d+)\s*$/);
+
+        if (storyMatch) {
+            const number = parseInt(storyMatch[1], 10);
+            if (Number.isFinite(number) && number > 0) {
+                return { type: 'story', number };
+            }
+        }
+
+        return { type: 'text', term: q.toLowerCase() };
+    }
+
+    /** Exact Story # match (handles number or string truthNumber from Firestore). */
+    _postMatchesStoryNumber(post, storyNumber) {
+        if (post == null || post.truthNumber == null || post.truthNumber === '') {
+            return false;
+        }
+        const n = Number(post.truthNumber);
+        return Number.isFinite(n) && n === storyNumber;
+    }
+
     /** User changed filter, search, or sort — refresh feed and scroll to top. */
     refreshFeedFromUserAction() {
         this._scrollWallToTopAfterRender = true;
@@ -1137,15 +1169,25 @@ class WallFeed {
         // Wall tags: match ANY selected tag (feelings and/or situations)
         filteredPosts = this.applyWallTagFilter(filteredPosts);
         
-        // Apply search
-        if (this.currentSearch) {
-            const searchTerm = this.currentSearch.toLowerCase();
-            filteredPosts = filteredPosts.filter(post => 
-                post.content.toLowerCase().includes(searchTerm) ||
-                (post.emotion && post.emotion.toLowerCase().includes(searchTerm)) ||
-                (post.situation && post.situation.toLowerCase().includes(searchTerm)) ||
-                (post.truthNumber && post.truthNumber.toString().includes(searchTerm.replace(/[^\d]/g, ''))) // Search Truth numbers
-            );
+        // Apply search (story # = exact; keywords = content / feelings / situation only)
+        const parsed = this._parseWallSearchQuery(this.currentSearch);
+        if (parsed) {
+            if (parsed.type === 'story') {
+                filteredPosts = filteredPosts.filter((post) =>
+                    this._postMatchesStoryNumber(post, parsed.number)
+                );
+            } else {
+                const searchTerm = parsed.term;
+                filteredPosts = filteredPosts.filter(
+                    (post) =>
+                        (post.content &&
+                            post.content.toLowerCase().includes(searchTerm)) ||
+                        (post.emotion &&
+                            post.emotion.toLowerCase().includes(searchTerm)) ||
+                        (post.situation &&
+                            post.situation.toLowerCase().includes(searchTerm))
+                );
+            }
         }
         
         // Apply sort
@@ -1204,9 +1246,16 @@ class WallFeed {
             subtitleText =
                 "If something's on your mind, you can be the first to share it. It's anonymous.";
         } else {
-            titleText = 'Nothing matches right now.';
-            subtitleText =
-                'Try different filters or search—or start writing with what you had in mind.';
+            const storyLookup = this._parseWallSearchQuery(searchTrimmed);
+            if (storyLookup?.type === 'story') {
+                titleText = `No Story #${storyLookup.number}`;
+                subtitleText =
+                    "That story number isn't on the wall right now. Try another number or clear search.";
+            } else {
+                titleText = 'Nothing matches right now.';
+                subtitleText =
+                    'Try different filters or search—or start writing with what you had in mind.';
+            }
         }
 
         const p1 = document.createElement('p');
