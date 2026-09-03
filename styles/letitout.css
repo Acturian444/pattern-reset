@@ -5498,10 +5498,19 @@ button.emotion-subtag.wall-unified-filter-tag--max:not(.selected):hover {
 
 .letitout-cta-footer-links {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 0.35rem;
+    justify-content: center;
+    gap: 0.35rem 0.45rem;
     width: 100%;
+}
+
+.letitout-cta-footer-sep {
+    color: #aaa;
+    font-size: 0.78rem;
+    line-height: 1;
+    user-select: none;
 }
 
 .connect-link-btn {

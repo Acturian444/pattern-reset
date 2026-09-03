@@ -1540,6 +1540,10 @@ DARK MODE - FIXES & ADDITIONS
     color: rgba(255, 252, 241, 0.5);
 }
 
+.dark-mode .letitout-cta-footer-sep {
+    color: rgba(255, 252, 241, 0.35);
+}
+
 .dark-mode .connect-link-btn:hover {
     color: #ff8a8a;
 }

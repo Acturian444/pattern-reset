@@ -62,6 +62,21 @@
   ],
   "redirects": [
     {
+      "source": "/the-shirt",
+      "destination": "/letitout",
+      "permanent": false
+    },
+    {
+      "source": "/the-shirt/",
+      "destination": "/letitout",
+      "permanent": false
+    },
+    {
+      "source": "/the-shirt.html",
+      "destination": "/letitout",
+      "permanent": false
+    },
+    {
       "source": "/",
       "destination": "/letitout",
       "permanent": false
