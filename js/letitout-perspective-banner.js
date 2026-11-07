@@ -16,7 +16,11 @@
         'Something else',
     ];
 
-    function showLeadFormSuccess(panel, success) {
+    function showLeadFormSuccess(overlay, panel, success) {
+        const title = overlay?.querySelector('.support-modal-title');
+        const body = overlay?.querySelector('.support-modal-body');
+        if (title) title.hidden = true;
+        if (body) body.hidden = true;
         if (panel) panel.hidden = true;
         if (success) success.hidden = false;
     }
@@ -81,7 +85,9 @@
                     </form>
                 </div>
                 <div class="support-modal-connect-success" id="perspective-connect-success" hidden role="status" aria-live="polite">
-                    <p class="support-modal-connect-success-text">Got it. I read these. Some become videos — no names.</p>
+                    <p class="support-modal-connect-success-title">Thank you for trusting me with this.</p>
+                    <p class="support-modal-connect-success-text">I read every story. I don&rsquo;t feature them all. If I need more detail, or if yours may be one I tell, I may email you.</p>
+                    <p class="support-modal-connect-success-close">You&rsquo;re not carrying this alone anymore.</p>
                 </div>
             </div>
         `;
@@ -132,7 +138,7 @@
             clearInvalid(input);
 
             if (g.LeadCaptureService?.hasRecentLeadSubmission?.(STORAGE_KEY, email)) {
-                showLeadFormSuccess(panel, success);
+                showLeadFormSuccess(overlay, panel, success);
                 return;
             }
 
@@ -149,7 +155,7 @@
             try {
                 await g.LeadCaptureService.submitSeriesStory({ email, kind, story });
                 g.LeadCaptureService.markLeadSubmitted?.(STORAGE_KEY, email);
-                showLeadFormSuccess(panel, success);
+                showLeadFormSuccess(overlay, panel, success);
                 if (typeof gtag === 'function') {
                     gtag('event', 'generate_lead', { method: 'letitout_series_story' });
                 }

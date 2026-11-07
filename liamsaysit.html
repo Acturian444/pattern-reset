@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/bio-hub.css?v=50">
+  <link rel="stylesheet" href="styles/bio-hub.css?v=52">
 
   <meta property="og:title" content="Liam | Pattern Reset™">
   <meta property="og:description" content="Send Liam a message, use the Let It Out wall, and plug into Pattern Reset™ from one link.">
@@ -61,7 +61,9 @@
             <p class="bio-hub__message-note">By submitting, you agree this is your own experience, you&rsquo;re 18 or over, and I may tell it anonymously in a video for The Things We Don&rsquo;t Say, with no names.</p>
           </form>
           <div class="pr-email-success" id="bioMessageSuccess" role="status" aria-live="polite">
-            <p class="pr-email-success-text">Got it. I read these. Some become videos — no names.</p>
+            <p class="pr-email-success-title">Thank you for trusting me with this.</p>
+            <p class="pr-email-success-text">I read every story. I don&rsquo;t feature them all. If I need more detail, or if yours may be one I tell, I may email you.</p>
+            <p class="pr-email-success-close">You&rsquo;re not carrying this alone anymore.</p>
             <button type="button" class="bio-hub__newsletter-change-email" id="bioMessageSendAnother">Submit another story</button>
           </div>
         </div>
@@ -185,8 +187,12 @@
       opts = opts || {};
       var form = document.getElementById('bioMessageForm');
       var success = document.getElementById('bioMessageSuccess');
+      var heading = document.getElementById('bio-message-heading');
+      var lead = document.querySelector('#newsletter .pr-hero-waitlist-lead');
       if (!success) return;
       if (form) form.style.display = 'none';
+      if (heading) heading.style.display = 'none';
+      if (lead) lead.style.display = 'none';
       success.style.display = 'block';
       if (!opts.skipGtag && typeof gtag === 'function') {
         gtag('event', 'generate_lead', { method: 'bio_message_me' });
@@ -196,11 +202,15 @@
     function resetBioMessageFormUi() {
       var form = document.getElementById('bioMessageForm');
       var success = document.getElementById('bioMessageSuccess');
+      var heading = document.getElementById('bio-message-heading');
+      var lead = document.querySelector('#newsletter .pr-hero-waitlist-lead');
       var kindEl = document.getElementById('bioMessageKind');
       var textEl = document.getElementById('bioMessageText');
       var emailEl = document.getElementById('bioMessageEmail');
       var btn = document.getElementById('bioMessageSubmit');
       if (success) success.style.display = 'none';
+      if (heading) heading.style.display = '';
+      if (lead) lead.style.display = '';
       if (form) form.style.display = '';
       if (kindEl) {
         kindEl.selectedIndex = 0;
