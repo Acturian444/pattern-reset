@@ -1603,6 +1603,18 @@ DARK MODE - FIXES & ADDITIONS
     color: #f5f5f7;
 }
 
+.dark-mode .support-modal-connect-select {
+    background-color: #1a1a1a;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f5f5f7' fill-opacity='0.7' d='M1.4.8 6 5.4 10.6.8 12 2.2 6 8 0 2.2z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    background-size: 0.7rem;
+}
+
+.dark-mode .support-modal-series-note {
+    color: #9a9a9a;
+}
+
 .dark-mode .support-modal-connect-success {
     background: rgba(241, 0, 0, 0.12);
     border-color: rgba(241, 0, 0, 0.28);

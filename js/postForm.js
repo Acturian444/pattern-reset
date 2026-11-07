@@ -676,8 +676,8 @@ class PostForm {
             const connectButton = document.createElement('button');
             connectButton.type = 'button';
             connectButton.className = 'support-link-btn connect-link-btn';
-            connectButton.textContent = 'Talk 1 on 1 with me →';
-            connectButton.onclick = () => this.openConnectModal();
+            connectButton.textContent = 'Submit a story →';
+            connectButton.onclick = () => window.LetItOutSeriesForm?.open?.();
             supportLinks.appendChild(connectButton);
 
             ctaFooter.appendChild(supportLinks);

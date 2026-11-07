@@ -80,16 +80,15 @@ class PostCard {
 
     static _patchCityLine(card, post) {
         const cityLine = card.querySelector('.post-city-line');
-        if (!cityLine || !post.timestamp) return;
-        const timeString = window.LetItOutUtils.formatDate(post.timestamp);
+        if (!cityLine) return;
         if (post.truthNumber) {
             cityLine.textContent = post.city
-                ? `Story #${post.truthNumber} · ${post.city} · ${timeString}`
-                : `Story #${post.truthNumber} · ${timeString}`;
+                ? `Story #${post.truthNumber} · ${post.city}`
+                : `Story #${post.truthNumber}`;
         } else if (post.city) {
-            cityLine.textContent = `Anonymous from ${post.city} · ${timeString}`;
+            cityLine.textContent = `Anonymous from ${post.city}`;
         } else {
-            cityLine.textContent = `Anonymous · ${timeString}`;
+            cityLine.textContent = 'Anonymous';
         }
     }
 
@@ -205,25 +204,20 @@ class PostCard {
             contentArea.appendChild(readMoreLink);
         }
 
-        // City line with timestamp (Story #147 · Miami, FL · 22h ago)
+        // City line (Story #147 · Miami, FL). Timestamp stays on the post for sorting only.
         const cityLine = document.createElement('div');
         cityLine.className = 'post-city-line';
-        const timeString = window.LetItOutUtils.formatDate(post.timestamp);
-        
-        // NEW LOGIC: Show Anonymous Story number if available, fallback to old format
+
         if (post.truthNumber) {
             if (post.city) {
-                cityLine.textContent = `Story #${post.truthNumber} · ${post.city} · ${timeString}`;
+                cityLine.textContent = `Story #${post.truthNumber} · ${post.city}`;
             } else {
-                cityLine.textContent = `Story #${post.truthNumber} · ${timeString}`;
+                cityLine.textContent = `Story #${post.truthNumber}`;
             }
+        } else if (post.city) {
+            cityLine.textContent = `Anonymous from ${post.city}`;
         } else {
-            // Fallback for existing posts without truthNumber
-            if (post.city) {
-                cityLine.textContent = `Anonymous from ${post.city} · ${timeString}`;
-            } else {
-                cityLine.textContent = `Anonymous · ${timeString}`;
-            }
+            cityLine.textContent = 'Anonymous';
         }
 
         const footerStack = document.createElement('div');

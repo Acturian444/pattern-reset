@@ -21,12 +21,11 @@ class WallFeed {
         this.currentIndex = 0;
         /** Stable anchor in single-card view when the feed re-sorts (e.g. new post). */
         this.currentPostId = null;
-        try {
-            const savedPostId = localStorage.getItem('wallLastPostId');
-            if (savedPostId) this.currentPostId = savedPostId;
-        } catch (_) {
-            /* ignore */
-        }
+        // Do not restore wallLastPostId across page loads — that jumped people to old
+        // stories near the bottom of Newest. Resume only within this wall session.
+        /** List scroll Y when entering single-card view — restore on return, not currentPostId. */
+        this._listScrollYBeforeSingle = null;
+        this._listAnchorPostIdBeforeSingle = null;
         /** Last rendered post-id order for list view; skip DOM rebuild when unchanged. */
         this._wallPostIdSignature = '';
         this._wallPostIds = [];
@@ -472,6 +471,10 @@ class WallFeed {
         if (mode === this.viewMode) return;
         if (mode === 'single' && this.viewMode === 'list') {
             this.captureViewportCardIndex();
+            // Remember where the list was — arrowing to older stories in card view
+            // must not dump the list at the bottom when they switch back.
+            this._listScrollYBeforeSingle = window.scrollY;
+            this._listAnchorPostIdBeforeSingle = this.currentPostId;
         }
         this.viewMode = mode;
         localStorage.setItem('wallViewMode', mode);
@@ -482,6 +485,30 @@ class WallFeed {
         } else {
             this.removeSingleCardKeyboard();
         }
+    }
+
+    _restoreListScrollAfterSingleView() {
+        const savedY = this._listScrollYBeforeSingle;
+        const savedPostId = this._listAnchorPostIdBeforeSingle;
+        this._listScrollYBeforeSingle = null;
+        this._listAnchorPostIdBeforeSingle = null;
+
+        if (typeof savedY === 'number' && Number.isFinite(savedY) && savedY >= 0) {
+            window.scrollTo({ top: savedY, behavior: 'auto' });
+            return;
+        }
+
+        if (savedPostId) {
+            const card = this.feed.querySelector(
+                `.post-card[data-post-id="${savedPostId}"]`
+            );
+            if (card) {
+                card.scrollIntoView({ behavior: 'auto', block: 'start' });
+                return;
+            }
+        }
+
+        this._scrollWallFeedToTop();
     }
 
     captureViewportCardIndex() {
@@ -1301,12 +1328,24 @@ class WallFeed {
         if (writeTab) writeTab.click();
     }
 
-    /** Keep the story you're reading visually fixed when the feed updates above it. */
+    /** True when a card is on screen (or just barely off) — safe for scroll anchoring. */
+    _isCardNearViewport(card) {
+        if (!card) return false;
+        const rect = card.getBoundingClientRect();
+        const slack = window.innerHeight * 0.25;
+        return rect.bottom >= -slack && rect.top <= window.innerHeight + slack;
+    }
+
+    /**
+     * Keep the story you're looking at fixed when the feed updates above it.
+     * Only anchor to cards near the viewport — an expanded "Read more" far off-screen
+     * used to yank the page to that older story (often the bottom / earliest posts).
+     */
     _captureWallScrollAnchor() {
         const expanded = PostCard.getExpandedPostIds();
         for (const id of expanded) {
             const card = this.feed.querySelector(`.post-card[data-post-id="${id}"]`);
-            if (card) {
+            if (card && this._isCardNearViewport(card)) {
                 return { postId: id, top: card.getBoundingClientRect().top };
             }
         }
@@ -1351,13 +1390,8 @@ class WallFeed {
 
         if (scrollToTop) {
             this._scrollWallFeedToTop();
-        } else if (leavingSingleView && this.currentPostId) {
-            const card = this.feed.querySelector(
-                `.post-card[data-post-id="${this.currentPostId}"]`
-            );
-            if (card) {
-                card.scrollIntoView({ behavior: 'auto', block: 'center' });
-            }
+        } else if (leavingSingleView) {
+            this._restoreListScrollAfterSingleView();
         } else {
             this._restoreWallScrollAnchor(anchor);
         }
@@ -1544,19 +1578,32 @@ class WallFeed {
         const postIdFromUrl = urlParams.get('post');
         if (!postIdFromUrl) return;
 
+        if (this.viewMode === 'single') {
+            const idx = this.filteredPosts.findIndex((p) => p.id === postIdFromUrl);
+            if (idx >= 0) {
+                this.currentIndex = idx;
+                this.currentPostId = postIdFromUrl;
+                this._persistWallReadingPosition();
+                this.renderSingleCardView(true);
+            }
+            const url = new URL(window.location);
+            url.searchParams.delete('post');
+            window.history.replaceState({}, document.title, url.pathname + url.search + url.hash);
+            return;
+        }
+
         const postCard = this.feed.querySelector(`.post-card[data-post-id="${postIdFromUrl}"]`);
         if (postCard) {
-            postCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            postCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
             postCard.classList.add('highlight-glow');
             setTimeout(() => {
                 postCard.classList.remove('highlight-glow');
             }, 2500);
-            
-            // Remove the post param after a delay to ensure highlighting is complete
+
             setTimeout(() => {
-            const url = new URL(window.location);
-            url.searchParams.delete('post');
-            window.history.replaceState({}, document.title, url.pathname + url.search + url.hash);
+                const url = new URL(window.location);
+                url.searchParams.delete('post');
+                window.history.replaceState({}, document.title, url.pathname + url.search + url.hash);
             }, 3000);
         }
     }
