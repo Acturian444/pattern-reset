@@ -1616,12 +1616,20 @@ DARK MODE - FIXES & ADDITIONS
 }
 
 .dark-mode .support-modal-connect-success {
-    background: rgba(241, 0, 0, 0.12);
-    border-color: rgba(241, 0, 0, 0.28);
+    background: none;
+    border: none;
+}
+
+.dark-mode .support-modal-connect-success-title {
+    color: #f5f5f7;
 }
 
 .dark-mode .support-modal-connect-success-text {
-    color: #f5f5f7;
+    color: #b0b0b0;
+}
+
+.dark-mode .support-modal-connect-success-close {
+    color: #ff5a5a;
 }
 
 .dark-mode .support-modal-crisis-note {

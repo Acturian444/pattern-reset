@@ -840,29 +840,58 @@ body.page-bio-hub {
   letter-spacing: 0.02em;
   line-height: 1.45;
   color: rgba(255, 252, 241, 0.92);
-  text-align: left;
+  text-align: center;
   text-wrap: balance;
   margin: 1.25rem 0 0;
-  padding: 0.85rem 1rem 0.75rem;
+  padding: 0.35rem 0.15rem 0.15rem;
   width: 100%;
   max-width: 100%;
-  background: rgba(255, 252, 241, 0.06);
-  border: 1px solid rgba(255, 252, 241, 0.14);
-  border-radius: 12px;
+  background: none;
+  border: none;
+  border-radius: 0;
+}
+
+.bio-hub__pr-hero-waitlist .pr-email-success::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin: 0 auto 1.1rem;
+  border-radius: 999px;
+  background: var(--pr-red, #f10000);
+}
+
+.bio-hub__pr-hero-waitlist .pr-email-success-title {
+  margin: 0 0 0.75rem;
+  font-family: "Anton", sans-serif;
+  font-size: clamp(1.4rem, 4.2vw, 1.7rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  color: rgba(255, 252, 241, 0.98);
 }
 
 .bio-hub__pr-hero-waitlist .pr-email-success-text {
+  margin: 0 auto 1rem;
+  max-width: 22rem;
+  font-weight: 500;
+  color: rgba(255, 252, 241, 0.72);
+}
+
+.bio-hub__pr-hero-waitlist .pr-email-success-close {
   margin: 0;
+  font-weight: 700;
+  color: var(--pr-red, #f10000);
 }
 
 .bio-hub__pr-hero-waitlist .bio-hub__newsletter-change-email {
   display: block;
-  margin: 0.65rem 0 0;
+  margin: 1rem 0 0;
   padding: 0.35rem 0.5rem;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  text-align: left;
+  text-align: center;
   font-family: "DM Sans", sans-serif;
   font-size: 0.72rem;
   font-weight: 600;
