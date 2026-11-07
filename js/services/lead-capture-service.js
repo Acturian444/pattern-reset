@@ -11,6 +11,7 @@
 
     const CONNECT_ONE_ON_ONE_MESSAGE = 'Let It Out — Connect with me 1 on 1';
     const PERSPECTIVE_BANNER_MESSAGE = 'Let It Out banner — want perspective';
+    const SERIES_STORY_TAG = 'Let It Out — The Things We Don\'t Say';
 
     const SUPPORT_EMAIL = 'resetmypattern@gmail.com';
     const LEAD_SUBMIT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
@@ -147,7 +148,7 @@
         if (!email || email.length < 5 || email.length > 320) {
             throw new Error('invalid_email');
         }
-        if (!message || message.length < 3 || message.length > 5000) {
+        if (!message || message.length < 3 || message.length > 11000) {
             throw new Error('invalid_message');
         }
 
@@ -183,10 +184,23 @@
         });
     }
 
+    async function submitSeriesStory(payload) {
+        const kind = (payload.kind || '').trim();
+        const story = (payload.story || '').trim();
+        const message = `${SERIES_STORY_TAG}\nWhat is this: ${kind}\n\n${story}`;
+        return submitBioLead({
+            email: payload.email,
+            message,
+            source: 'letitout',
+        });
+    }
+
     g.LeadCaptureService = {
         submitBioLead,
         submitConnectOneOnOne,
         submitPerspectiveBanner,
+        submitSeriesStory,
+        SERIES_STORY_TAG,
         markLeadSubmitted,
         hasRecentLeadSubmission,
         showLeadSubmitError,

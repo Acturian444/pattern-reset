@@ -116,7 +116,7 @@ service cloud.firestore {
       allow create: if request.auth != null
         && request.resource.data.message is string
         && request.resource.data.message.size() >= 3
-        && request.resource.data.message.size() <= 5000
+        && request.resource.data.message.size() <= 11000
         && request.resource.data.email is string
         && request.resource.data.email.size() >= 5
         && request.resource.data.email.size() <= 320

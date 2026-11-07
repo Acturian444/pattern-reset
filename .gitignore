@@ -27,8 +27,3 @@ yarn-error.log*
 *.swp
 *.swo
 .env
-
-# WIP — The Shirt (not public yet; remove these lines when launching)
-/the-shirt.html
-/styles/the-shirt.css
-/images/the-shirt-*.png

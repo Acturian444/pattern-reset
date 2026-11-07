@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles/bio-hub.css?v=46">
+  <link rel="stylesheet" href="styles/bio-hub.css?v=50">
 
   <meta property="og:title" content="Liam | Pattern Reset™">
   <meta property="og:description" content="Send Liam a message, use the Let It Out wall, and plug into Pattern Reset™ from one link.">
@@ -37,30 +37,41 @@
   <main class="bio-hub" id="main">
     <div class="bio-hub__layout">
     <div class="bio-hub__actions">
-      <article class="bio-hub__offer-card">
-        <h3 class="bio-hub__offer-title">Let it out</h3>
-        <p class="bio-hub__offer-desc">Tell the story you&rsquo;ve been carrying.<br />Anonymous. Honest. Unfiltered.</p>
-        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">Share your story</a>
-      </article>
-
-      <!-- Message Me — Firestore bioMessages + Google Form "Message Me" sheet -->
+      <!-- The Things We Don't Say — Firestore bioMessages + Google Form sheet -->
       <section class="bio-hub__newsletter" id="message-me" aria-labelledby="bio-message-heading">
         <div class="bio-hub__pr-hero-waitlist" id="newsletter">
-          <h2 class="pr-hero-waitlist-title" id="bio-message-heading">Send me a message</h2>
-          <p class="pr-hero-waitlist-lead pr-body">Have a story or question? Send it here instead of a DM.</p>
+          <h2 class="pr-hero-waitlist-title" id="bio-message-heading">The Things We Don&rsquo;t Say</h2>
+          <p class="pr-hero-waitlist-lead pr-body">Have something you never told anyone, something you did, something they did, something you regret, or something you can&rsquo;t explain? Submit it here for a chance to be featured in a video. You can stay completely anonymous!</p>
           <form class="pr-email-form bio-hub__message-form" id="bioMessageForm" novalidate>
-            <label class="bio-hub__form-label" for="bioMessageText">Your Message</label>
-            <textarea class="pr-email-input bio-hub__message-textarea" id="bioMessageText" name="message" rows="5" required maxlength="5000" placeholder="Tell me what's going on…" aria-label="Your message"></textarea>
+            <label class="bio-hub__form-label" for="bioMessageKind">What is this?</label>
+            <select class="pr-email-input bio-hub__message-select" id="bioMessageKind" name="kind" required aria-label="What is this?">
+              <option value="" selected disabled>Choose one</option>
+              <option>Something I never told anyone</option>
+              <option>Something I did</option>
+              <option>Something they did</option>
+              <option>Something I regret</option>
+              <option>Something I can't explain</option>
+              <option>Something else</option>
+            </select>
+            <label class="bio-hub__form-label" for="bioMessageText">Your story</label>
+            <textarea class="pr-email-input bio-hub__message-textarea" id="bioMessageText" name="message" rows="5" required maxlength="10000" placeholder="Start with what happened…" aria-label="Your story"></textarea>
             <label class="bio-hub__form-label" for="bioMessageEmail">Email</label>
             <input type="email" class="pr-email-input" id="bioMessageEmail" name="email" autocomplete="email" inputmode="email" required maxlength="320" placeholder="Where can I reach you?" aria-label="Email">
-            <button type="submit" class="pr-home-cta" id="bioMessageSubmit">Send</button>
+            <button type="submit" class="pr-home-cta" id="bioMessageSubmit">Submit</button>
+            <p class="bio-hub__message-note">By submitting, you agree this is your own experience, you&rsquo;re 18 or over, and I may tell it anonymously in a video for The Things We Don&rsquo;t Say, with no names.</p>
           </form>
           <div class="pr-email-success" id="bioMessageSuccess" role="status" aria-live="polite">
-            <p class="pr-email-success-text">Message sent.</p>
-            <button type="button" class="bio-hub__newsletter-change-email" id="bioMessageSendAnother">Send another message</button>
+            <p class="pr-email-success-text">Got it. I read these. Some become videos — no names.</p>
+            <button type="button" class="bio-hub__newsletter-change-email" id="bioMessageSendAnother">Submit another story</button>
           </div>
         </div>
       </section>
+
+      <article class="bio-hub__offer-card">
+        <h3 class="bio-hub__offer-title">Let It Out</h3>
+        <p class="bio-hub__offer-desc">Post it on the wall, or read what other people posted. It&rsquo;s public. Anonymous.</p>
+        <a class="bio-hub__offer-cta bio-hub__offer-cta--light" href="letitout.html">See the wall</a>
+      </article>
 
     </div>
 
@@ -73,7 +84,10 @@
         <div class="bio-hub__profile-text">
           <h1 class="bio-hub__name">Liam</h1>
           <p class="bio-hub__handle">@liamsaysit</p>
-          <p class="bio-hub__tagline">The stories we believe shape the lives we live.</p>
+          <p class="bio-hub__tagline">
+            <span class="bio-hub__tagline-lead">Some things are hard to say.</span><br />
+            <span class="bio-hub__tagline-punch">You can say them here.</span>
+          </p>
         </div>
       </div>
       <div class="bio-hub__profile-connect">
@@ -81,7 +95,10 @@
           <a href="https://www.tiktok.com/@liamsaysit" target="_blank" rel="noopener noreferrer" aria-label="TikTok @liamsaysit">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 11-2.89-2.89c.09 0 .18.01.27.02V9.6a6.33 6.33 0 00-1-.07A6.34 6.34 0 005 15.95 6.34 6.34 0 0011.34 22a6.34 6.34 0 006.34-6.34V8.56a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-2.86-.99z"/></svg>
           </a>
-          <a href="https://www.youtube.com/@patternresetofficial" target="_blank" rel="noopener noreferrer" aria-label="Pattern Reset on YouTube" class="bio-hub__social-link bio-hub__social-link--youtube">
+          <a href="https://www.instagram.com/liamsaysit/" target="_blank" rel="noopener noreferrer" aria-label="Instagram @liamsaysit" class="bio-hub__social-link bio-hub__social-link--instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@liamsaysit" target="_blank" rel="noopener noreferrer" aria-label="YouTube @liamsaysit" class="bio-hub__social-link bio-hub__social-link--youtube">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
           </a>
         </div>
@@ -152,6 +169,18 @@
       document.body.removeChild(f);
     }
 
+    function sizeBioMessageText() {
+      var textEl = document.getElementById('bioMessageText');
+      if (!textEl) return;
+      textEl.style.height = 'auto';
+      textEl.style.height = textEl.scrollHeight + 'px';
+    }
+
+    var bioMessageTextEl = document.getElementById('bioMessageText');
+    if (bioMessageTextEl) {
+      bioMessageTextEl.addEventListener('input', sizeBioMessageText);
+    }
+
     function showBioMessageSuccessUi(opts) {
       opts = opts || {};
       var form = document.getElementById('bioMessageForm');
@@ -167,14 +196,20 @@
     function resetBioMessageFormUi() {
       var form = document.getElementById('bioMessageForm');
       var success = document.getElementById('bioMessageSuccess');
+      var kindEl = document.getElementById('bioMessageKind');
       var textEl = document.getElementById('bioMessageText');
       var emailEl = document.getElementById('bioMessageEmail');
       var btn = document.getElementById('bioMessageSubmit');
       if (success) success.style.display = 'none';
       if (form) form.style.display = '';
+      if (kindEl) {
+        kindEl.selectedIndex = 0;
+        kindEl.style.borderColor = '';
+      }
       if (textEl) {
         textEl.value = '';
         textEl.style.borderColor = '';
+        sizeBioMessageText();
       }
       if (emailEl) {
         emailEl.value = '';
@@ -182,24 +217,37 @@
       }
       if (btn) {
         btn.disabled = false;
-        btn.textContent = 'Send';
+        btn.textContent = 'Submit';
       }
-      if (textEl) textEl.focus();
+      if (kindEl) kindEl.focus();
     }
 
     var bioMessageFormEl = document.getElementById('bioMessageForm');
     if (bioMessageFormEl) {
       bioMessageFormEl.addEventListener('submit', function (e) {
         e.preventDefault();
+        var kindEl = document.getElementById('bioMessageKind');
         var textEl = document.getElementById('bioMessageText');
         var emailEl = document.getElementById('bioMessageEmail');
         var btn = document.getElementById('bioMessageSubmit');
-        if (!textEl) return;
+        if (!textEl || !kindEl) return;
 
-        var message = (textEl.value || '').trim();
+        var kind = (kindEl.value || '').trim();
+        var story = (textEl.value || '').trim();
         var emailRaw = emailEl ? (emailEl.value || '').trim() : '';
+        var message = kind ? ('What is this: ' + kind + '\n' + story) : '';
 
-        if (!message || message.length < 3) {
+        if (!kind) {
+          kindEl.style.borderColor = 'var(--pr-red, #f10000)';
+          kindEl.focus();
+          return;
+        }
+        if (!story || story.length < 3) {
+          textEl.style.borderColor = 'var(--pr-red, #f10000)';
+          textEl.focus();
+          return;
+        }
+        if (story.length > 10000 || message.length > 11000) {
           textEl.style.borderColor = 'var(--pr-red, #f10000)';
           textEl.focus();
           return;
@@ -215,6 +263,7 @@
 
         var emailForStore = emailRaw;
 
+        kindEl.style.borderColor = '';
         textEl.style.borderColor = '';
         if (emailEl) {
           emailEl.style.borderColor = '';
@@ -223,7 +272,7 @@
 
         if (btn) {
           btn.disabled = true;
-          btn.textContent = 'Sending…';
+          btn.textContent = 'Submitting…';
         }
 
         var db =
@@ -242,7 +291,7 @@
           showBioMessageSuccessUi({});
           if (btn) {
             btn.disabled = false;
-            btn.textContent = 'Send';
+            btn.textContent = 'Submit';
           }
         };
 
@@ -269,7 +318,7 @@
               console.error('bioMessages failed', err && err.code, err && err.message, err);
               if (btn) {
                 btn.disabled = false;
-                btn.textContent = 'Send';
+                btn.textContent = 'Submit';
               }
               if (emailEl) {
                 emailEl.setAttribute('aria-invalid', 'true');
